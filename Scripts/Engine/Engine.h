@@ -11,8 +11,8 @@ class Engine {
 private:
 
 public:
-	Engine() = default;
-	~Engine() = default;
+	Engine();
+	~Engine();
 
 	int Run();
 	int Initialize();
