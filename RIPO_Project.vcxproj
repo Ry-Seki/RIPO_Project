@@ -147,7 +147,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Scripts\Engine\Character\CharacterObject.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
@@ -155,10 +154,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Character\CharacterBase.h" />
-    <ClInclude Include="Scripts\Engine\Character\CharacterObject.h" />
     <ClInclude Include="Scripts\Engine\Component.h" />
     <ClInclude Include="Scripts\Engine\Engine.h" />
     <ClInclude Include="Scripts\Engine\GameObject.h" />
+    <ClInclude Include="Scripts\Engine\ModelRenderer.h" />
+    <ClInclude Include="Scripts\Engine\RenderComponent.h" />
+    <ClInclude Include="Scripts\Engine\Scene.h" />
+    <ClInclude Include="Scripts\Engine\SpriteRenderer.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
