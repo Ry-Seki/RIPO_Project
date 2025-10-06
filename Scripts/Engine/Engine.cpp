@@ -3,6 +3,8 @@
  */
 
 #include "Engine.h"
+#include "ModelRenderer.h"
+#include "SpriteRenderer.h"
 #include <iostream>
 
 /*
@@ -83,8 +85,24 @@ void Engine::Update() {
 void Engine::Render() {
     ClearDrawScreen();
 
-}
-/*
+    // 3D•`‰æ
+    for (auto& obj : gameObjects) {
+        if (obj->IsDestroyed()) continue;
+
+        for (auto& model : obj->GetComponents<ModelRenderer>()) {
+            model->Render3D();
+        }
+    }
+
+    // 2D•`‰æ
+    for (auto& obj : gameObjects) {
+        if (obj->IsDestroyed()) continue;
+
+        for (auto& sprite : obj->GetComponents<SpriteRenderer>()) {
+            sprite->Render2D();
+        }
+    }
+}/*
  *  ƒƒCƒ“ƒ‹[ƒv
  */
 int Engine::Run() {

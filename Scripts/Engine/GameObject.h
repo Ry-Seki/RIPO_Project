@@ -63,6 +63,16 @@ public:
         }
         return nullptr;
     }
+    // 指定した型のコンポーネント全てを取得
+    template <class T>
+    std::vector<std::shared_ptr<T>> GetComponents() const {
+        std::vector<std::shared_ptr<T>> results;
+        for (auto& c : components) {
+            if (auto casted = std::dynamic_pointer_cast<T>(c))
+                results.push_back(casted);
+        }
+        return results;
+    }
     // コンポーネントの追加
     template <class T, typename = std::enable_if_t<std::is_base_of_v<Component, T>>>
     std::shared_ptr<T> AddComponent() {
@@ -70,7 +80,7 @@ public:
         // 所有者の設定
         component->owner = this;
         component->Awake();
-        // 追加予定のコンポーネントに追加
+        // 追加予定のコンポーネントリストに追加
         addComponents.push_back(component);
         return component;
     }
@@ -78,7 +88,7 @@ public:
     void RemoveComponent();
 
 private:
-    // pendingAddにあるコンポーネントを正式に追加する
+    // addComponentsにあるコンポーネントを正式に追加する
     void PushAddComponents();
 
 public:
