@@ -26,7 +26,7 @@ private:
     bool isStarted = false;
 
     std::vector<ComponentPtr> components;    // コンポーネントのリスト
-    std::vector<ComponentPtr> pendingAdd;    // 追加予定のコンポーネント
+    std::vector<ComponentPtr> addComponents;    // 追加予定のコンポーネント
 
 public:
     std::string name;
@@ -45,9 +45,6 @@ protected:
     // 毎フレーム更新
     virtual void Update(float deltaTime);
 
-    // 描画処理
-    virtual void Render();
-
     // 衝突イベント
     virtual void OnCollision(const ComponentPtr& self, const ComponentPtr& other);
 
@@ -55,18 +52,26 @@ protected:
     virtual void OnDestroy();
 
 public:
-    // コンポーネント追加
-    template <class T>
+    // コンポーネントの取得
+    template <class T, typename = std::enable_if_t<std::is_base_of_v<Component, T>>>
+    std::shared_ptr<T> GetComponent() const {
+        for (auto& component : components) {
+            auto cast = std::dynamic_pointer_cast<T>(component);
+            if (!cast) continue;
+
+            return cast;
+        }
+        return nullptr;
+    }
+    // コンポーネントの追加
+    template <class T, typename = std::enable_if_t<std::is_base_of_v<Component, T>>>
     std::shared_ptr<T> AddComponent() {
         auto component = std::make_shared<T>();
-        // 所有者をセット
+        // 所有者の設定
         component->owner = this;
-
-        // Awakeの呼び出し
         component->Awake();
-
-        // 現在のフレームではまだ追加しない(安全性のため)
-        pendingAdd.push_back(component);
+        // 追加予定のコンポーネントに追加
+        addComponents.push_back(component);
         return component;
     }
     // コンポーネント削除
@@ -74,7 +79,7 @@ public:
 
 private:
     // pendingAddにあるコンポーネントを正式に追加する
-    void FlushPendingComponents();
+    void PushAddComponents();
 
 public:
     inline Engine* GetEngine() const { return engine; }

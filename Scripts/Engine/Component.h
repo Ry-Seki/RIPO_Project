@@ -5,7 +5,6 @@
 #ifndef _COMPONENT_H_
 #define _COMPONENT_H_
 
-#include "GameObject.h"
 #include <memory>
 
 // ‘O•ûéŒ¾

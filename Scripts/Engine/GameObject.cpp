@@ -27,12 +27,9 @@ void GameObject::Update(float deltaTime) {
     // 既存コンポーネントの更新
     for (auto& component : components) if (!component->IsDestroyed()) component->Update(deltaTime);
     // 追加待機中のコンポーネントを反映
-    FlushPendingComponents();
+    PushAddComponents();
     // 削除予定コンポーネントを整理
     RemoveComponent();
-}
-void GameObject::Render() {
-
 }
 /*
  *  衝突判定
@@ -66,10 +63,10 @@ void GameObject::RemoveComponent() {
 /*
  *  Update中に追加されたコンポーネントの反映
  */
-void GameObject::FlushPendingComponents() {
-    if (pendingAdd.empty()) return;
+void GameObject::PushAddComponents() {
+    if (addComponents.empty()) return;
 
-    for (auto& component : pendingAdd) {
+    for (auto& component : addComponents) {
         components.push_back(component);
 
         // 追加直後にStart()も呼ぶ
@@ -78,5 +75,5 @@ void GameObject::FlushPendingComponents() {
             component->isStarted = true;
         }
     }
-    pendingAdd.clear();
+    addComponents.clear();
 }

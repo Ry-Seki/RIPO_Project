@@ -5,6 +5,9 @@
 #include "Engine.h"
 #include <iostream>
 
+/*
+ *  初期化処理
+ */
 int Engine::Initialize() {
     // フラグ初期化
     dxlibInitialized = false;
@@ -46,7 +49,9 @@ int Engine::Initialize() {
     initialized = true;
     return 0;
 }
-
+/*
+ *  破棄処理
+ */
 void Engine::Teardown() {
     // Effekseer終了
     if (effekseerInitialized) {
@@ -62,7 +67,9 @@ void Engine::Teardown() {
 
     initialized = false;
 }
-
+/*
+ *  更新処理
+ */
 void Engine::Update() {
     float currentTime = static_cast<float>(GetNowCount());
     deltaTime = (currentTime - previousTime) / 1000.0f;
@@ -70,15 +77,16 @@ void Engine::Update() {
 
     UpdateGameObjects(deltaTime);
 }
-
+/*
+ *  描画処理
+ */
 void Engine::Render() {
     ClearDrawScreen();
 
-    for (auto& obj : gameObjects) {
-        if (!obj->IsDestroyed()) obj->Render();
-    }
 }
-
+/*
+ *  メインループ
+ */
 int Engine::Run() {
     if (Initialize() != 0) {
         Teardown();
@@ -96,7 +104,9 @@ int Engine::Run() {
     Teardown();
     return 0;
 }
-
+/*
+ *  オブジェクトの更新処理
+ */
 void Engine::UpdateGameObjects(float deltaTime) {
     for (auto& obj : gameObjects) {
         if (!obj->IsDestroyed()) {
@@ -105,7 +115,9 @@ void Engine::UpdateGameObjects(float deltaTime) {
         }
     }
 }
-
+/*
+ *  オブジェクトの破棄処理
+ */
 void Engine::RemoveGameObjects() {
     const auto itr = std::stable_partition(
         gameObjects.begin(), gameObjects.end(),
@@ -113,7 +125,9 @@ void Engine::RemoveGameObjects() {
 
     gameObjects.erase(itr, gameObjects.end());
 }
-
+/*
+ *  全てのオブジェクトの破棄
+ */
 void Engine::ClearGameObjects() {
     for (auto& obj : gameObjects) {
         obj->OnDestroy();
