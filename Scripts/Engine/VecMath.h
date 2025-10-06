@@ -31,8 +31,6 @@ struct Vector3 {
 		return { x * v, y * v, z * v };
 	}
 	Vector3 operator / (float v) const {
-		if (v == 0.0f) return;
-
 		return { x / v, y * v, z * v };
 	};
 	Vector3 operator + (const Vector3& v) const {
@@ -102,13 +100,9 @@ struct Vector3 {
 	};
 	Vector3 Normalized() const {
 		float magnitude = Magnitude();
-		if (magnitude == 0) return{ 0.0f, 0.0f, 0.0f };
 
 		return { x / magnitude, y / magnitude, z / magnitude };
 	};
 	
 };
-// Ã“Iƒƒ“ƒo•Ï”‚ÌéŒ¾
-Vector3 Vector3::zero = { 0.0f, 0.0f, 0.0f };
-Vector3 Vector3::one = { 1.0f, 1.0f, 1.0f };
 #endif // !_VECMATH_H_

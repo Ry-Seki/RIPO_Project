@@ -150,6 +150,7 @@
     <ClCompile Include="Scripts\Engine\Character\CharacterObject.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
+    <ClCompile Include="Scripts\Engine\VecMath.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
