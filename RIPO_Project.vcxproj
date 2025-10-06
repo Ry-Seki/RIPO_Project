@@ -147,12 +147,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scripts\Engine\Character\CharacterObject.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
+    <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scripts\Engine\Character\CharacterBase.h" />
+    <ClInclude Include="Scripts\Engine\Character\CharacterObject.h" />
+    <ClInclude Include="Scripts\Engine\Component.h" />
     <ClInclude Include="Scripts\Engine\Engine.h" />
-    <ClInclude Include="Scripts\Engine\Task.h" />
+    <ClInclude Include="Scripts\Engine\GameObject.h" />
+    <ClInclude Include="Scripts\Engine\VecMath.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
