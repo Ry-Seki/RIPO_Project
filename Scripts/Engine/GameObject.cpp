@@ -1,4 +1,10 @@
+/*
+ *  @file   GameObject.cpp
+ */
+
 #include "GameObject.h"
+
+#include <DxLib.h>
 
 /*
  *  初期化処理
@@ -24,6 +30,9 @@ void GameObject::Update(float deltaTime) {
     FlushPendingComponents();
     // 削除予定コンポーネントを整理
     RemoveComponent();
+}
+void GameObject::Render() {
+
 }
 /*
  *  衝突判定

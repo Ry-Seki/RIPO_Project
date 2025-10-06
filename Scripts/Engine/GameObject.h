@@ -6,6 +6,7 @@
 #define _GAMEOBJECT_H_
 
 #include "Component.h"
+#include "VecMath.h"
 
 #include <memory>
 #include <vector>
@@ -29,18 +30,23 @@ private:
 
 public:
     std::string name;
-    int meshID = -1;
+    Vector3 position = { 0.0f, 0.0f, 0.0f };		// 平行移動
+    Vector3 rotation = { 0.0f, 0.0f, 0.0f };		// 回転角度
+    Vector3 scale = { 1.0f, 1.0f, 1.0f };			// 拡大率
 
 public:
     GameObject() = default;
     virtual ~GameObject() = default;
 
-public:
+protected:
     // 初期化イベント
     virtual void Start();
 
     // 毎フレーム更新
     virtual void Update(float deltaTime);
+
+    // 描画処理
+    virtual void Render();
 
     // 衝突イベント
     virtual void OnCollision(const ComponentPtr& self, const ComponentPtr& other);
