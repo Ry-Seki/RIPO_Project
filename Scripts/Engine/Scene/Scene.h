@@ -11,6 +11,9 @@
  *	シーンの基底クラス
  */
 class Scene {
+protected:
+	bool isTaskRun = false;
+
 public:
 	Scene() = default;
 	virtual ~Scene() = default;
@@ -18,6 +21,7 @@ public:
 public:
 	virtual bool Initialize(class Engine& engine) { return true; }
 	virtual void Update(class Engine& engine, float deltaTime) {}
+	virtual void Render() {}
 	virtual void Finalize(class Engine& engine) {}
 };
 // 別名定義

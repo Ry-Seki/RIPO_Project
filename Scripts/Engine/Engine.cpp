@@ -3,8 +3,11 @@
  */
 
 #include "Engine.h"
+#include "Time.h"
+#include "Scheduler.h"
 #include "ModelRenderer.h"
 #include "SpriteRenderer.h"
+#include "Scene/TitleScene.h"
 #include <iostream>
 
 /*
@@ -47,7 +50,8 @@ int Engine::Initialize() {
     SetLightAmbColor(GetColorF(0.8f, 0.8f, 0.8f, 1.0f));
 #pragma endregion
 
-    previousTime = static_cast<float>(GetNowCount());
+    // Timeクラス初期化
+    Time::Init();
     initialized = true;
     return 0;
 }
@@ -70,12 +74,42 @@ void Engine::Teardown() {
     initialized = false;
 }
 /*
+ *  メインループ
+ */
+int Engine::Run() {
+    if (Initialize() != 0) {
+        Teardown();
+        return 1;
+    }
+
+    // 初期シーンを設定して即切り替え
+    SetNextScene(std::make_shared<TitleScene>());
+    ChangeScene(); // currentScene が初期化される
+
+    while (ProcessMessage() != -1) {
+        Effekseer_Sync3DSetting();
+
+        Update();
+        Render();
+        RemoveGameObjects();
+    }
+    Teardown();
+    return 0;
+}/*
  *  更新処理
  */
 void Engine::Update() {
-    float currentTime = static_cast<float>(GetNowCount());
-    deltaTime = (currentTime - previousTime) / 1000.0f;
-    previousTime = currentTime;
+    Time::Update();
+    float deltaTime = Time::deltaTime;
+
+    // 非同期タスクの更新
+    Scheduler::Instance().Update();
+
+    // Scene更新
+    if (currentScene) currentScene->Update(*this, deltaTime);
+
+    // シーンの切り替え
+    ChangeScene();
 
     UpdateGameObjects(deltaTime);
 }
@@ -102,25 +136,9 @@ void Engine::Render() {
             sprite->Render2D();
         }
     }
-}/*
- *  メインループ
- */
-int Engine::Run() {
-    if (Initialize() != 0) {
-        Teardown();
-        return 1;
-    }
-    while (ProcessMessage() != -1) {
-        Effekseer_Sync3DSetting();
+    if (currentScene) currentScene->Render();
 
-        Update();
-        Render();
-        RemoveGameObjects();
-
-        ScreenFlip();
-    }
-    Teardown();
-    return 0;
+    ScreenFlip();
 }
 /*
  *  オブジェクトの更新処理
@@ -151,4 +169,14 @@ void Engine::ClearGameObjects() {
         obj->OnDestroy();
     }
     gameObjects.clear();
+}
+
+void Engine::ChangeScene() {
+    // Scene切り替え
+    if (nextScene) {
+        if (currentScene) currentScene->Finalize(*this);
+        currentScene = nextScene;
+        nextScene.reset();
+        if (currentScene) currentScene->Initialize(*this);
+    }
 }

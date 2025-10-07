@@ -7,6 +7,7 @@
 
 #include "GameObject.h"
 #include "VecMath.h"
+#include "Scene/Scene.h"
 
 #include <DxLib.h>
 #include <EffekseerForDXLib.h>
@@ -18,11 +19,12 @@
 class Engine {
 private:
 	GameObjectList gameObjects;		// ゲームオブジェクトの一元管理
-	float previousTime = 0;			// 前回の更新時
-	float deltaTime = 0;			// 前回の更新からの経過時間
 	bool dxlibInitialized = false;
 	bool effekseerInitialized = false;
 	bool initialized = false;
+
+	ScenePtr currentScene;
+	ScenePtr nextScene;
 
 public:
 	Engine() = default;
@@ -62,6 +64,12 @@ public:
 	}
 	// すべてのゲームオブジェクトを削除する
 	void ClearGameObjects();
+
+	// 次のシーンを設定する
+	void SetNextScene(ScenePtr scene) { nextScene = scene; }
+
+	// シーンの切り替え
+	void ChangeScene();
 };
 #endif // !_ENGINE_H_
 

@@ -13,8 +13,7 @@ private:
     int modelID = -1;
 
 public:
-    void SetModel(int id) { modelID = id; }
-
+    // ï`âÊèàóù
     void Render3D() override {
         if (modelID == -1) return;
         auto obj = GetOwner();
@@ -31,6 +30,9 @@ public:
             modelID = -1;
         }
     }
+
+public:
+    void SetModel(int setValue) { modelID = setValue; }
 };
 #endif // !_MODELRENDERER_H_
 

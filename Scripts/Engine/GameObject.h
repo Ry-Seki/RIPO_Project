@@ -51,6 +51,10 @@ protected:
     // 削除イベント
     virtual void OnDestroy();
 
+private:
+    // addComponentsにあるコンポーネントを正式に追加する
+    void PushAddComponents();
+
 public:
     // コンポーネントの取得
     template <class T, typename = std::enable_if_t<std::is_base_of_v<Component, T>>>
@@ -88,10 +92,6 @@ public:
     }
     // コンポーネント削除
     void RemoveComponent();
-
-private:
-    // addComponentsにあるコンポーネントを正式に追加する
-    void PushAddComponents();
 
 public:
     inline Engine* GetEngine() const { return engine; }
