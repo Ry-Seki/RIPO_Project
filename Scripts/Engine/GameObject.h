@@ -64,12 +64,14 @@ public:
         return nullptr;
     }
     // 指定した型のコンポーネント全てを取得
-    template <class T>
+    template <class T, typename = std::enable_if_t<std::is_base_of_v<Component, T>>>
     std::vector<std::shared_ptr<T>> GetComponents() const {
         std::vector<std::shared_ptr<T>> results;
-        for (auto& c : components) {
-            if (auto casted = std::dynamic_pointer_cast<T>(c))
-                results.push_back(casted);
+        for (auto& component : components) {
+            auto cast = std::dynamic_pointer_cast<T>(component);
+            if (!cast)  continue;
+
+            results.push_back(cast);
         }
         return results;
     }
