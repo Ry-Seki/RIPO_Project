@@ -5,7 +5,9 @@
 #ifndef _CHARACTERBASE_H_
 #define _CHATACTERBASE_H_
 
-class CharacterBase {
+#include "../Component.h"
+
+class CharacterBase : public Component {
 private:
 	int ID = -1;
 	int masterID = -1;
@@ -106,6 +108,10 @@ public:
 		rawAttack = setValue;
 	}
 };
+// •Ê–¼’è‹`
+using CharacterBasePtr = std::shared_ptr<CharacterBase>;
+using CharacterBaseList = std::vector<CharacterBasePtr>;
+
 #endif // !_CHARACTERBASE_H_
 
 
