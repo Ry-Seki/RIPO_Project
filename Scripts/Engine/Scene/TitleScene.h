@@ -6,18 +6,14 @@
 
 class TitleScene : public Scene {
 private:
-	std::shared_ptr<Task<>> m_debugTask;
+    //std::shared_ptr<TaskVoid> m_debugTask;
+    bool requestSceneChange = false;
 
 public:
-	TitleScene() = default;
-	virtual ~TitleScene() = default;
+    virtual bool Initialize(Engine& engine) override;
+    virtual void Update(Engine& engine, float deltaTime) override;
+    virtual void Render() override;
 
-public:
-	virtual bool Initialize(Engine& engine) override;
-	virtual void Update(Engine& engine, float deltaTime) override;
-	virtual void Render() override;
-
-public:
-	Task<> DebugTask(Engine& engine);
+    TaskVoid DebugTask(Engine& engine);
 };
 #endif // !_TITLESCENE_H_

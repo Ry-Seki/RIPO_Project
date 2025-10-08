@@ -13,56 +13,48 @@ template<typename T = void>
 class Task : public TaskInterface, public std::enable_shared_from_this<Task<T>> {
 public:
     struct promise_type {
-        T value;
-        std::exception_ptr exception;
-
-        Task get_return_object() {
-            auto t = std::make_shared<Task<T>>();
-            t->handle = std::coroutine_handle<promise_type>::from_promise(*this);
-            Scheduler::Instance().Add(t); // é©ìÆìoò^
-            return *t;
+        Task<T>* get_return_object() {
+            return reinterpret_cast<Task<T>*>(this);
         }
-
         std::suspend_always initial_suspend() { return {}; }
         std::suspend_always final_suspend() noexcept { return {}; }
-
-        // T != void óp
-        void return_value(T v) { value = v; }
-
-        void unhandled_exception() { exception = std::current_exception(); }
+        void return_void() {}
+        void unhandled_exception() {}
     };
 
-    std::coroutine_handle<promise_type> handle;
+    using handle_type = std::coroutine_handle<promise_type>;
+    handle_type handle;
 
-    bool IsDone() const override { return !handle || handle.done(); }
-    void Resume() override { if (handle) handle.resume(); }
+    Task(handle_type h) : handle(h) {}
+
+    void Resume() { if (handle && !handle.done()) handle.resume(); }
+    bool IsDone() const { return !handle || handle.done(); }
 };
 
-// void êÍóp
-template<>
-class Task<void> : public TaskInterface, public std::enable_shared_from_this<Task<void>> {
+// voidêÍóp
+// Task.h
+// TaskVoid.h
+class TaskVoid : public TaskInterface, public std::enable_shared_from_this<TaskVoid> {
 public:
     struct promise_type {
-        std::exception_ptr exception;
-
-        Task get_return_object() {
-            auto t = std::make_shared<Task<void>>();
-            t->handle = std::coroutine_handle<promise_type>::from_promise(*this);
-            Scheduler::Instance().Add(t);
-            return *t;
+        TaskVoid get_return_object() {
+            auto task = std::make_shared<TaskVoid>();
+            task->handle = std::coroutine_handle<promise_type>::from_promise(*this);
+            Scheduler::Instance().Add(task);
+            return *task;
         }
-
         std::suspend_always initial_suspend() { return {}; }
         std::suspend_always final_suspend() noexcept { return {}; }
-
         void return_void() {}
-        void unhandled_exception() { exception = std::current_exception(); }
+        void unhandled_exception() {}
     };
 
     std::coroutine_handle<promise_type> handle;
 
     bool IsDone() const override { return !handle || handle.done(); }
-    void Resume() override { if (handle) handle.resume(); }
-};
 
+    void Resume() override {
+        if (handle && !handle.done()) handle.resume();
+    }
+}; 
 #endif // !1_TASK_H_

@@ -23,6 +23,7 @@ public:
 
     void await_suspend(std::coroutine_handle<> h) {
         handle = h;
+        // shared_from_this() ‚ÅˆÀ‘S‚É“o˜^
         Scheduler::Instance().Add(shared_from_this());
     }
 
@@ -36,5 +37,10 @@ public:
         if (frames <= 0 && handle) handle.resume();
     }
 };
+
+// ƒwƒ‹ƒp[ŠÖ”ico_await DelayFrame(3); ‚ÅŽg‚¦‚éj
+inline std::shared_ptr<DelayFrameTask> DelayFrame(int frameCount) {
+    return std::make_shared<DelayFrameTask>(frameCount);
+}
 #endif // !_DELAYFRAMETASK_H_
 

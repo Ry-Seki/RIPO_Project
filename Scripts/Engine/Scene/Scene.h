@@ -28,4 +28,3 @@ public:
 using ScenePtr = std::shared_ptr<Scene>;
 
 #endif // !_SCENE_H_
-

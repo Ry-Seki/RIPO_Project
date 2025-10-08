@@ -17,7 +17,7 @@
 class Scheduler {
 private:
     std::vector<std::shared_ptr<TaskInterface>> tasks;
-    std::mutex mtx; // マルチスレッド安全
+    std::mutex mtx;
 
 public:
     static Scheduler& Instance() {
@@ -33,20 +33,15 @@ public:
     void Update() {
         std::lock_guard<std::mutex> lock(mtx);
 
-        // 完了タスクを削除
+        for (auto& t : tasks) t->Resume();
+
         tasks.erase(
             std::remove_if(tasks.begin(), tasks.end(),
             [](auto& t) { return t->IsDone(); }),
             tasks.end()
         );
-
-        // 残タスクを resume
-        for (auto& t : tasks) {
-            t->Resume();
-        }
     }
-};
-
+}; 
 #endif // !_SCHEDULER_H_
 
 

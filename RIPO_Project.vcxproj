@@ -158,7 +158,7 @@
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Character\CharacterBase.h" />
     <ClInclude Include="Scripts\Engine\Component.h" />
-    <ClInclude Include="Scripts\Engine\Delay.h" />
+    <ClInclude Include="Scripts\Engine\DelayTask.h" />
     <ClInclude Include="Scripts\Engine\DelayFrameTask.h" />
     <ClInclude Include="Scripts\Engine\Engine.h" />
     <ClInclude Include="Scripts\Engine\GameObject.h" />

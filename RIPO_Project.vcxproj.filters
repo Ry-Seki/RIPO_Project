@@ -92,7 +92,7 @@
     <ClInclude Include="Scripts\Engine\DelayFrameTask.h">
       <Filter>ヘッダー ファイル\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Delay.h">
+    <ClInclude Include="Scripts\Engine\DelayTask.h">
       <Filter>ヘッダー ファイル\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\TaskInterface.h">
