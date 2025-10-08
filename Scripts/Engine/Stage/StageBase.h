@@ -2,6 +2,8 @@
  *	@file	StageBase.h
  */
 
+#include <DxLib.h>
+
 #ifndef _STAGEBASE_H_
 #define _STAGEBASE_H_
 
@@ -10,15 +12,19 @@ private:
 
 
 public:
+	// コンストラクタ
 	StageBase() = default;
-	~StageBase() = default;
+	virtual ~StageBase() = default;
+
+protected:
+	// 片付け処理
+	void Clean(int MHandle) {
+		MV1SetVisible(MHandle, false);
+	}
 
 public:
-	// 片付け処理
-	void 
-
 	// 更新処理
-	
+	virtual void OnLoad() {};
 };
 
 #endif // !_STAGEBASE_H_
