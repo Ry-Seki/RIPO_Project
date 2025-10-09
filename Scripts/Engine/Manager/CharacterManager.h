@@ -7,7 +7,7 @@
 
 #include <vector>
 #include "../Singleton.h"
-#include "../Character/CharacterBase.h"
+#include "../Character/PlayerComponent.h"
 #include "../Engine.h"
 
 /*
@@ -15,22 +15,25 @@
  */
 class CharacterManager : public Singleton<CharacterManager>{
 private:
-	CharacterBaseList createCharacterPtr;
-	GameObjectList createObjectList;
+	GameObjectList useObjectList;
+	GameObjectList unuseObjectList;
+	CharacterBaseList createCharacterList;
 	Engine* engine;
+
+	const int CREATE_OBJECT_MAX;
 
 private:
 	CharacterManager();
 	~CharacterManager() = default;
 
 public:
-	void Initialize(Engine* setEngine);
+	void Initialize(Engine& setEngine);
 	void CreatePlayer(const std::string& name,
 		const Vector3& position = { 0.0f, 0.0f, 0.0f },
 		const Vector3& rotation = { 0.0f, 0.0f, 0.0f });
-	void CreateCharacter(const std::string& name,
-		const Vector3& position = { 0.0f, 0.0f, 0.0f },
-		const Vector3& rotation = { 0.0f, 0.0f, 0.0f });
+	void RemoveCharacter(int characterID);
+	CharacterBasePtr GetCharacter(int characterID);
+	
 
 };
 
