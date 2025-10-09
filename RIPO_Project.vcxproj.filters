@@ -13,51 +13,123 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\Engine">
+      <UniqueIdentifier>{b6d27b81-161d-4bb3-b0f5-ddc27f63fda3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Character">
+      <UniqueIdentifier>{21ade5d8-8002-4f35-ba9c-5b9333c3f9fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene">
+      <UniqueIdentifier>{896ddef5-f230-4537-a264-dcffef2cc9c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine">
+      <UniqueIdentifier>{a6e0d6dc-071b-401a-99ec-feec3b48933e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Fade">
+      <UniqueIdentifier>{5bc016e8-fe80-4132-b5c0-658df14ace1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Character">
+      <UniqueIdentifier>{5242111f-caf1-446e-83f5-80cc00788ab9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Component">
+      <UniqueIdentifier>{54ab25f9-264c-4207-bf54-7a589ccba9ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene">
+      <UniqueIdentifier>{25cc718d-8285-4907-a65e-79be9d91df32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Stage">
+      <UniqueIdentifier>{82d1ef68-d248-4de4-b257-2d438a50a784}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Engine.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\GameObject.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Time.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\VecMath.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Manager\CharacterManager.cpp">
+      <Filter>ソース ファイル\Engine\Character</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\MainGameScene.cpp">
+      <Filter>ソース ファイル\Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\Scene.cpp">
+      <Filter>ソース ファイル\Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp">
+      <Filter>ソース ファイル\Engine\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\GameObject.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scripts\Engine\Singleton.h">
+      <Filter>ヘッダー ファイル\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Character\CharacterBase.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scripts\Engine\Time.h">
+      <Filter>ヘッダー ファイル\Engine</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\VecMath.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\ModelRenderer.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scripts\Engine\Fade\BlackFade.h">
+      <Filter>ヘッダー ファイル\Engine\Fade</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\RenderComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scripts\Engine\Fade\FadeBase.h">
+      <Filter>ヘッダー ファイル\Engine\Fade</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scripts\Engine\Fade\FadeFactory.h">
+      <Filter>ヘッダー ファイル\Engine\Fade</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\SpriteRenderer.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scripts\Engine\Fade\FadeManager.h">
+      <Filter>ヘッダー ファイル\Engine\Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Character\CharacterBase.h">
+      <Filter>ヘッダー ファイル\Engine\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Manager\CharacterManager.h">
+      <Filter>ヘッダー ファイル\Engine\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Component.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Character\PlayerComponent.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\RenderComponent.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\SpriteRenderer.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Scene.h">
+      <Filter>ヘッダー ファイル\Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\MainGameScene.h">
+      <Filter>ヘッダー ファイル\Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\TitleScene.h">
+      <Filter>ヘッダー ファイル\Engine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Stage\StageBase.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engine\Stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
