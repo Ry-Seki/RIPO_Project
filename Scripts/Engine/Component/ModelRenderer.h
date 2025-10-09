@@ -6,7 +6,7 @@
 #define _MODELRENDERER_H_
 
 #include "RenderComponent.h"
-#include "GameObject.h"
+#include "../GameObject.h"
 
 class ModelRenderer : public RenderComponent {
 private:

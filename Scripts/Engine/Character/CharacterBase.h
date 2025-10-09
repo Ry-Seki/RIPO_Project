@@ -5,7 +5,7 @@
 #ifndef _CHARACTERBASE_H_
 #define _CHATACTERBASE_H_
 
-#include "../Component.h"
+#include "../Component/Component.h"
 
 class CharacterBase : public Component {
 private:

@@ -94,10 +94,10 @@ void Engine::Update() {
 	Time::Update();
 
 	// フェードは TimeScale 非依存で更新
-	FadeManager::Instance().Update(Time::unscaledDeltaTime);
+	FadeManager::GetInstance().Update(Time::unscaledDeltaTime);
 
 	// フェードモードを確認
-	bool isFadeStop = FadeManager::Instance().GetMode() == FadeMode::Stop;
+	bool isFadeStop = FadeManager::GetInstance().GetMode() == FadeMode::Stop;
 
 	// シーンの更新
 	if (!isFadeStop && currentScene) currentScene->Update(*this, Time::deltaTime);
@@ -113,7 +113,7 @@ void Engine::Render() {
 	if (currentScene) currentScene->Render();
 
 	// フェード描画
-	FadeManager::Instance().Render();
+	FadeManager::GetInstance().Render();
 	ScreenFlip();
 }
 
@@ -128,7 +128,7 @@ void Engine::ChangeScene() {
 
 void Engine::StartSceneFade(const FadeBasePtr& setFade, std::function<void()> onComplete) {
 	if (!setFade) return;
-	FadeManager::Instance().StartFade(setFade, [this, onComplete]() {
+	FadeManager::GetInstance().StartFade(setFade, [this, onComplete]() {
 		ChangeScene();
 		if (onComplete) onComplete();
 	});

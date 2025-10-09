@@ -1,31 +1,22 @@
 #ifndef _FADEMANAGER_H_
 #define _FADEMANAGER_H_
-#include <memory>
+
 #include "FadeBase.h"
+#include "../Singleton.h"
+
+#include <memory>
 #include <functional>
 
-class FadeManager {
-
+class FadeManager : public Singleton<FadeManager>{
 private:
     FadeBasePtr currentFade;
     std::function<void()> onFadeFinished; // フェード終了時のコールバック
 
-    // private コンストラクタ：外部生成禁止
-    FadeManager() = default;
-
 public:
-    // コピー禁止
-    FadeManager(const FadeManager&) = delete;
-    FadeManager& operator=(const FadeManager&) = delete;
-
+    FadeManager() = default;
     ~FadeManager() = default;
 
-    // 唯一のインスタンス取得（スレッドセーフ）
-    static FadeManager& Instance() {
-        static FadeManager instance;
-        return instance;
-    }
-
+public:
     // フェード開始
     void StartFade(const std::shared_ptr<FadeBase>& setFade, std::function<void()> callback = nullptr) {
         currentFade = setFade;

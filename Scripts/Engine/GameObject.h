@@ -5,7 +5,7 @@
 #ifndef _GAMEOBJECT_H_
 #define _GAMEOBJECT_H_
 
-#include "Component.h"
+#include "Component/Component.h"
 #include "VecMath.h"
 
 #include <memory>

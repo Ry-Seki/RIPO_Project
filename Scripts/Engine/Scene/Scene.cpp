@@ -1,7 +1,7 @@
 #include "Scene.h"
 #include "../Engine.h"
-#include "../ModelRenderer.h"
-#include "../SpriteRenderer.h"
+#include "../Component/ModelRenderer.h"
+#include "../Component/SpriteRenderer.h"
 #include <algorithm>
 
 void Scene::Initialize(Engine& engine) {
