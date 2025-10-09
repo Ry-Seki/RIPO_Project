@@ -1,76 +1,60 @@
-/*
- *	@file	Engine.h
- */
-
 #ifndef _ENGINE_H_
 #define _ENGINE_H_
 
 #include "GameObject.h"
-#include "VecMath.h"
 #include "Scene/Scene.h"
+#include "VecMath.h"
+#include "Fade/FadeBase.h"
 
-#include <DxLib.h>
-#include <EffekseerForDXLib.h>
-#include <algorithm>
-#include <chrono>
-#include <thread>
-#include <iostream>
+#include <memory>
+#include <vector>
+#include <string>
+#include <functional>
 
 class Engine {
 private:
-	GameObjectList gameObjects;		// ゲームオブジェクトの一元管理
-	bool dxlibInitialized = false;
-	bool effekseerInitialized = false;
-	bool initialized = false;
+    ScenePtr currentScene;
+    ScenePtr nextScene;
 
-	ScenePtr currentScene;
-	ScenePtr nextScene;
+    bool dxlibInitialized = false;
+    bool effekseerInitialized = false;
+    bool initialized = false;
+
+    const int WINDOW_WIDTH = 800;
+    const int WINDOW_HEIGHT = 600;
 
 public:
-	Engine() = default;
-	~Engine() = default;
+    Engine() = default;
+    ~Engine() = default;
 
-	int Run();
+    int Run();
 
 private:
-	int Initialize();
-	void Teardown();
-	void Update();
-	void Render();
-
-	void UpdateGameObjects(float deltaTime);
-	void RemoveGameObjects();
+    int Initialize();
+    void Teardown();
+    void Update();
+    void Render();
 
 public:
-	/*
-	 *	ゲームオブジェクトを生成する
-	 *  @param name
-	 *  @param position
-	 *  @param rotation
-	 */
-	template<class T>
-	std::shared_ptr<T> Create(const std::string& name,
-							  const Vector3& position = { 0.0f, 0.0f, 0.0f },
-							  const Vector3& rotation = { 0.0f, 0.0f, 0.0f }) {
-		// オブジェクトのポインタを生成
-		std::shared_ptr<T> object = std::make_shared<T>();
-		object->engine = this;
-		object->name = name;
-		object->position = position;
-		object->rotation = rotation;
-		// 一元管理に追加
-		gameObjects.push_back(object);
-		return object;
-	}
-	// すべてのゲームオブジェクトを削除する
-	void ClearGameObjects();
+    void SetNextScene(ScenePtr setScene) { nextScene = setScene; }
+    void ChangeScene();
+    void StartSceneFade(const FadeBasePtr& setFade, std::function<void()> onComplete = nullptr);
 
-	// 次のシーンを設定する
-	void SetNextScene(ScenePtr scene) { nextScene = scene; }
+    // GameObject生成
+    template<class T>
+    std::shared_ptr<T> Create(const std::string& name = "",
+                              const Vector3& position = Vector3::zero,
+                              const Vector3& rotation = Vector3::zero) {
+        auto obj = std::make_shared<T>();
+        obj->engine = this;
+        obj->name = name;
+        obj->position = position;
+        obj->rotation = rotation;
 
-	// シーンの切り替え
-	void ChangeScene();
+        if (currentScene) currentScene->AddGameObject(obj);
+        return obj;
+    }
 };
-#endif // !_ENGINE_H_
 
+#endif // !_ENGINE_H_
 

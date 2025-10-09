@@ -1,30 +1,30 @@
-/*
- *	@file	Scene.h
- */
-
 #ifndef _SCENE_H_
 #define _SCENE_H_
 
+#include "../GameObject.h"
+#include <vector>
 #include <memory>
 
-/*
- *	シーンの基底クラス
- */
+// 前方宣言
+class Engine;
+
 class Scene {
 protected:
-	bool isTaskRun = false;
+    std::vector<GameObjectPtr> gameObjects;
 
 public:
-	Scene() = default;
-	virtual ~Scene() = default;
+    Scene() = default;
+    virtual ~Scene() = default;
+
+    virtual void Initialize(Engine& engine);
+    virtual void Update(Engine& engine, float deltaTime);
+    virtual void Render();
+    virtual void Finalize(Engine& engine);
 
 public:
-	virtual bool Initialize(class Engine& engine) { return true; }
-	virtual void Update(class Engine& engine, float deltaTime) {}
-	virtual void Render() {}
-	virtual void Finalize(class Engine& engine) {}
+    // GameObject 管理
+    void AddGameObject(const GameObjectPtr& obj);
+    void RemoveDestroyedObjects();
 };
-// 別名定義
 using ScenePtr = std::shared_ptr<Scene>;
-
 #endif // !_SCENE_H_

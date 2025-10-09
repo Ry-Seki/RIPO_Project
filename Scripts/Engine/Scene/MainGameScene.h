@@ -9,11 +9,9 @@
 
 class MainGameScene : public Scene {
 public:
-    bool Initialize(class Engine& engine) override {
-        DrawFormatString(50, 50, GetColor(0, 255, 0), "[MainGameScene] ŠJŽn");
-        return true;
-    }
-    void Update(class Engine& engine, float deltaTime) override {}
+    void Initialize(class Engine& engine) override;
+    void Update(class Engine& engine, float deltaTime) override;
+    void Render() override;
 };
 #endif // !_MAINGAMESCENE_H_
 

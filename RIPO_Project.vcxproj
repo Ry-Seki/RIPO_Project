@@ -150,6 +150,7 @@
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\MainGameScene.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\Scene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp" />
     <ClCompile Include="Scripts\Engine\Time.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
@@ -161,6 +162,10 @@
     <ClInclude Include="Scripts\Engine\DelayTask.h" />
     <ClInclude Include="Scripts\Engine\DelayFrameTask.h" />
     <ClInclude Include="Scripts\Engine\Engine.h" />
+    <ClInclude Include="Scripts\Engine\Fade\BlackFade.h" />
+    <ClInclude Include="Scripts\Engine\Fade\FadeBase.h" />
+    <ClInclude Include="Scripts\Engine\Fade\FadeFactory.h" />
+    <ClInclude Include="Scripts\Engine\Fade\FadeManager.h" />
     <ClInclude Include="Scripts\Engine\GameObject.h" />
     <ClInclude Include="Scripts\Engine\ModelRenderer.h" />
     <ClInclude Include="Scripts\Engine\RenderComponent.h" />
