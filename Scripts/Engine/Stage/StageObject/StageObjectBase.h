@@ -52,15 +52,55 @@ public:
 	inline void SetNameID(int& setValue) {
 		nameID = setValue;
 	}
+
 	/*
 	 *	@function	GetPosition
-	 *	@brief		位置座標の変更
+	 *	@brief		位置の取得
 	 *	@return		Vector3
 	 */
-	inline Vector3 GetPosition() const {
+	inline const Vector3& GetPosition() const {
 		return position;
 	}
-
+	/*
+	 *	@function	SetPosition
+	 *	@brief		位置の変更
+	 *  @param		Vector3& setValue
+	 */
+	inline void SetPosition(Vector3& setValue) {
+		position = setValue;
+	}
+	/*
+	 *	@function	GetRotation
+	 *	@brief		角度の取得
+	 *	@return		Vector3
+	 */
+	inline const Vector3& GetRotation() const {
+		return rotation;
+	}
+	/*
+	 *	@function	SetRotation
+	 *	@brief		角度の変更
+	 *  @param		Vector3& setValue
+	 */
+	inline void SetRotation(Vector3& setValue) {
+		rotation = setValue;
+	}
+	/*
+	 *	@function	GetScale
+	 *	@brief		大きさの取得
+	 *	@return		Vector3
+	 */
+	inline const Vector3& GetScale() const {
+		return scale;
+	}
+	/*
+	 *	@function	SetScale
+	 *	@brief		大きさの変更
+	 *  @param		Vector3& setValue
+	 */
+	inline void SetScale(Vector3& setValue) {
+		scale = setValue;
+	}
 
 
 };
