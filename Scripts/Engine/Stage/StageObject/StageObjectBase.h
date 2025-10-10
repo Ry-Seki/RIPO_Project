@@ -13,6 +13,10 @@ private:
 	int masterID = -1;
 	int nameID = -1;
 
+	Vector3 position;
+	Vector3 rotation;
+	Vector3 scale;
+
 public:
 	/*
 	 *	@function	GetID
