@@ -32,6 +32,8 @@ void CharacterManager::CreatePlayer(
 		CharacterBasePtr playerCharacter = playerObject->AddComponent<PlayerComponent>();
 		// ID設定
 		playerCharacter->SetID(i);
+		// データのセット
+		playerObject->SetObjectData(name, position, rotation);
 		// リストに追加
 		createCharacterList[i] = playerCharacter;
 	}
