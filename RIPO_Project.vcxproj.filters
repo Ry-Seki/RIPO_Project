@@ -40,6 +40,12 @@
     <Filter Include="ヘッダー ファイル\Engine\Stage">
       <UniqueIdentifier>{82d1ef68-d248-4de4-b257-2d438a50a784}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Load">
+      <UniqueIdentifier>{69b3473c-6403-469e-9dea-31f1b2cbdcd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Load">
+      <UniqueIdentifier>{533811ef-5a14-42b7-99a8-31b694d26cc7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
