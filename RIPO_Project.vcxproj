@@ -154,6 +154,7 @@
     <ClCompile Include="Scripts\Engine\Scene\Scene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp" />
     <ClCompile Include="Scripts\Engine\Time.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
   </ItemGroup>
@@ -174,6 +175,10 @@
     <ClInclude Include="Scripts\Engine\Scene\MainGameScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\Scene.h" />
     <ClInclude Include="Scripts\Engine\Scene\TitleScene.h" />
+    <ClInclude Include="Scripts\Engine\Manager\GameObjectManager.h" />
+    <ClInclude Include="Scripts\Engine\ModelRenderer.h" />
+    <ClInclude Include="Scripts\Engine\RenderComponent.h" />
+    <ClInclude Include="Scripts\Engine\Scene.h" />
     <ClInclude Include="Scripts\Engine\Singleton.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageBase.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h" />

@@ -40,7 +40,7 @@ public:
 	 *	@brief		ID‚Ì•ÏX
 	 *	@param[in]	int& setValue;
 	 */
-	inline void GetID(int& setValue) {
+	inline void SetID(int& setValue) {
 		ID = setValue;
 	}
 	/*
@@ -72,7 +72,7 @@ public:
 	 *	@brief		Å‘åHP‚Ì•ÏX
 	 *	@param[in]	int& setValue
 	 */
-	inline void GetMaxHP(int& setValue){
+	inline void SetMaxHP(int& setValue){
 		maxHP = setValue;
 	}
 	/*
@@ -104,7 +104,7 @@ public:
 	 *	@brief		‘f‚ÌUŒ‚—Í‚Ì•ÏX
 	 *	@param[in]	int& setValue
 	 */
-	inline int GetRawAttack(int& setValue) {
+	inline int SetRawAttack(int& setValue) {
 		rawAttack = setValue;
 	}
 };

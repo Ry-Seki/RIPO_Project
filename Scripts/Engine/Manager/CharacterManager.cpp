@@ -1,24 +1,48 @@
+/*
+ *	@file	PlayerComponent.cpp
+ *  @author	Riku
+ */
 #include "CharacterManager.h"
 
-void CharacterManager::Initialize(Engine* setEngine){
-	engine = setEngine;
+ /*
+  *	初期化処理
+  */
+void CharacterManager::Initialize(Engine& setEngine) {
+	engine = &setEngine;
 }
 
+/*
+ *	プレイヤー生成
+ */
 void CharacterManager::CreatePlayer(
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation) {
+	//int objectListCount = static_cast<int>(createObjectList.size());
+	//for (int i = 0; i < objectListCount; i++) {
+	//	if (createObjectList[i] != nullptr) continue;
+	//	// プレイヤーキャラクター生成
+	//	CharacterBasePtr playerCharacter = playerObject->AddComponent<PlayerComponent>();
+	//	// ID設定
+	//	playerCharacter->SetID(i);
+	//
+	//	createObjectList[i] = playerObject;
+	//	createCharacterList[i] = playerCharacter;
+	//}
 
 }
 
-void CharacterManager::CreateCharacter(
-	const std::string& name,
-	const Vector3& position,
-	const Vector3& rotation) {
-	int objectListCount = static_cast<int>(createObjectList.size());
-	for (int i = 0; i < objectListCount; i++) {
-		if (createObjectList[i] != nullptr) continue;
-		engine->Create<GameObject>(name, position, rotation);
-	}
+/*
+ *	ID指定のキャラクター削除
+ */
+void CharacterManager::RemoveCharacter(int characterID) {
+
+	//createObjectList[characterID] = nullptr;
 }
 
+/*
+ *	ID指定のキャラクター取得
+ */
+CharacterBasePtr CharacterManager::GetCharacter(int characterID) {
+	return createCharacterList[characterID];
+}
