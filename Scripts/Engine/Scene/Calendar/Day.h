@@ -16,23 +16,17 @@ public:
     bool morningDone = false;
     bool afternoonDone = false;
 
-    void Advance() override {
-        ResetDay();
-        if (onAdvance) onAdvance();
-    }
-
-    bool IsFinished() const override {
-        return morningDone && afternoonDone;
-    }
+    void Advance() override { ResetDay(); if (onAdvance) onAdvance(); }
+    bool IsFinished() const override { return morningDone && afternoonDone; }
 
 public:
-    void ActionDungeon();
-    void ActionTraining();
-    void ActionShop();
-    void ActionPartTime();
+    void ActionDungeon();     // åﬂëOÅEåﬂå„è¡îÔ
+    void ActionTraining();    // îºì˙è¡îÔ
+    void ActionShop();        // îºì˙è¡îÔ
+    void ActionPartTime();    // îºì˙è¡îÔ
     void AdvanceHalf(const char* actionName);
-    void AdvanceDay();
+    void AdvanceDay();        // ëSì˙è¡îÔ
     void ResetDay();
-};
+}; 
 #endif // !_DAY_H_
 

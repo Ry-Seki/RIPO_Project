@@ -13,14 +13,18 @@ void MainGameScene::Initialize(Engine& engine) {
 }
 
 void MainGameScene::Update(Engine& engine, float deltaTime) {
-    if (CheckHitKey(KEY_INPUT_SPACE)) {
-        calendarSystem->AdvanceDayWithFade(); // フェード付き日送り
+    if (FadeManager::GetInstance().IsFading()) return;
+
+    calendarManager->Update();
+
+    // 日が終わったら Engine 側フェード
+    if (calendarManager->IsDayComplete()) {
+        engine.StartFadeOutIn(0.5f, 0.5f, [this]() {
+            calendarManager->NextDay(); // 日進行
+        });
     }
-    // カレンダー更新
-    if (calendarManager) calendarManager->Update();
 }
 
 void MainGameScene::Render() {
-    // カレンダー描画
-    if (calendarManager) calendarManager->Render();
+    calendarManager->Render();
 }

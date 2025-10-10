@@ -39,6 +39,8 @@ public:
     void SetNextScene(ScenePtr setScene) { nextScene = setScene; }
     void ChangeScene();
     void StartSceneFade(const FadeBasePtr& setFade, std::function<void()> onComplete = nullptr);
+    // フェードアウト → 中間処理 → フェードイン
+    void StartFadeOutIn(float fadeOutTime, float fadeInTime, std::function<void()> onMidPoint);
 
     // GameObject生成
     template<class T>

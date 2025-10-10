@@ -17,12 +17,17 @@ public:
     size_t currentMonthIndex = 0;
 
     void Advance() override {
-        if (currentMonthIndex < months.size()) {
-            months[currentMonthIndex]->Advance();
-            if (months[currentMonthIndex]->IsFinished()) months.erase(months.begin() + currentMonthIndex);
-            else ++currentMonthIndex;
-            if (onAdvance) onAdvance();
+        auto month = GetCurrentMonth();
+        if (!month) return;
+
+        month->Advance(); // Month 内の Week 削除処理は Month が担当
+
+        if (month->IsFinished()) {
+            months.erase(months.begin() + currentMonthIndex);
+            // currentMonthIndex はそのまま、次の Month が現在のインデックスに来る
         }
+
+        if (onAdvance) onAdvance();
     }
 
     bool IsFinished() const override { return months.empty(); }

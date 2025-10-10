@@ -7,8 +7,7 @@
 
 void Day::ActionDungeon() {
     if (morningDone) { DrawFormatString(50, 150, GetColor(255, 0, 0), "ダンジョンは午前のみ！"); return; }
-    morningDone = true;
-    afternoonDone = true;
+    AdvanceDay(); // 午前・午後まとめて消費
     DrawFormatString(50, 150, GetColor(0, 255, 0), "ダンジョンに行きました。午前・午後消費");
 }
 

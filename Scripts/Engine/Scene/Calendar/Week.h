@@ -17,13 +17,16 @@ public:
     size_t currentDayIndex = 0;
 
     void Advance() override {
-        if (currentDayIndex < days.size()) {
-            days[currentDayIndex]->Advance();
-            // 終了したDayを即削除
-            if (days[currentDayIndex]->IsFinished()) days.erase(days.begin() + currentDayIndex);
-            else ++currentDayIndex;
-            if (onAdvance) onAdvance();
+        auto day = GetCurrentDay();
+        if (!day) return;
+
+        // Day が終わっていれば削除
+        if (day->IsFinished()) {
+            days.erase(days.begin() + currentDayIndex);
+            // 削除したので currentDayIndex はそのまま
         }
+        // Day が残っていれば何もしない（次フレームで再確認）
+        if (onAdvance) onAdvance();
     }
 
     bool IsFinished() const override { return days.empty(); }

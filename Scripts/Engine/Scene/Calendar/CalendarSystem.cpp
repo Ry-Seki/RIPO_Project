@@ -44,30 +44,14 @@ std::shared_ptr<Month> CalendarSystem::GetCurrentMonth() {
 void CalendarSystem::AdvanceDay() {
     auto day = GetCurrentDay();
     if (!day) return;
-    if (day->IsFinished()) {
-        GetCurrentWeek()->Advance(); // Week 内で Day を破棄
-    }
-}
 
-void CalendarSystem::AdvanceDayWithFade() {
-    if (fadeInProgress || FadeManager::GetInstance().IsFading())
-        return; // フェード中は無視
+    day->AdvanceDay();  // 1日を完全に消費
 
-    fadeInProgress = true;
+    auto week = GetCurrentWeek();
+    if (week && day->IsFinished()) week->Advance();
 
-    FadeManager::GetInstance().StartFade(
-        CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop),
-        [this]() { OnFadeOutComplete(); }
-    );
-}
+    auto month = GetCurrentMonth();
+    if (month && week && week->IsFinished()) month->Advance();
 
-void CalendarSystem::OnFadeOutComplete() {
-    // 日送り実行
-    AdvanceDay();
-
-    // フェードイン開始
-    FadeManager::GetInstance().StartFade(
-        CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop),
-        [this]() { fadeInProgress = false; } // フェード完了後にリセット
-    );
+    if (currentYear) currentYear->Advance();  // Year も同様に
 }

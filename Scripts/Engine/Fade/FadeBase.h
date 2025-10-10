@@ -42,6 +42,13 @@ public:
     }
 
     virtual void Render() = 0; // DxLib •`‰æ
+
+    void Reset(FadeDirection dir) {
+        elapsed = 0.0f;
+        direction = dir;
+        isFinished = false;
+    }
+
     bool IsFinished() const { return isFinished; }
     FadeMode GetMode() const { return mode; }
 }; 

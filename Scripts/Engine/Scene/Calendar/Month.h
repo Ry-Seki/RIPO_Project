@@ -17,13 +17,18 @@ public:
     size_t currentWeekIndex = 0;
 
     void Advance() override {
-        if (currentWeekIndex < weeks.size()) {
-            weeks[currentWeekIndex]->Advance();
-            // 終了したWeekを即削除
-            if (weeks[currentWeekIndex]->IsFinished()) weeks.erase(weeks.begin() + currentWeekIndex);
-            else ++currentWeekIndex;
-            if (onAdvance) onAdvance();
+        auto week = GetCurrentWeek();
+        if (!week) return;
+
+        week->Advance(); // Week 内の Day 削除処理は Week が担当
+
+        // Week が空なら削除
+        if (week->IsFinished()) {
+            weeks.erase(weeks.begin() + currentWeekIndex);
+            // currentWeekIndex はそのまま、次の Week が現在のインデックスに来る
         }
+
+        if (onAdvance) onAdvance();
     }
 
     bool IsFinished() const override { return weeks.empty(); }

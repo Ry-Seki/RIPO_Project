@@ -1,3 +1,8 @@
+/*
+ *  @file   BlackFade.h
+ *  @author Seki
+ */
+
 #ifndef _BLACKFADE_H_
 #define _BLACKFADE_H_
 

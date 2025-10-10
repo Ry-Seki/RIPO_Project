@@ -14,18 +14,16 @@
 class CalendarManager {
 private:
     std::shared_ptr<CalendarSystem> calendarSystem;
-
-    bool inputHandle = false; // 1フレーム1回の入力制御
-    bool isFading = false;    // フェード中フラグ
+    bool inputHandle = false;
 
 public:
-    CalendarManager(std::shared_ptr<CalendarSystem> system) : calendarSystem(system) {}
+    CalendarManager(const std::shared_ptr<CalendarSystem>& system) : calendarSystem(system) {}
+    void Update(); // 入力処理
+    void Render(); // 描画処理
 
-    void Update();   // 入力処理と日進行
-    void Render();   // 描画
+    void NextDay();       // 日付を進めるだけ
+    bool IsDayComplete() const;
+};
 
-private:
-    void StartDayAdvanceWithFade(); // フェード付き日進行
-}; 
 #endif // !_CARENDER_MANAGER_H_
 

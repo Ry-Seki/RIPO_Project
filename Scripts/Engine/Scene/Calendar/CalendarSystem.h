@@ -26,9 +26,5 @@ public:
     std::shared_ptr<Year> GetYear() { return currentYear; }
 
     void AdvanceDay();   // åªç› Day ÇêiÇﬂÇÈ
-    void AdvanceDayWithFade();
-
-private:
-    void OnFadeOutComplete();
 }; 
 #endif // !_CALENDER_SYSTEM_H_
