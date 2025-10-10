@@ -1,5 +1,10 @@
-#ifndef _FADEBASE_H_
-#define _FADEBASE_H_
+/*
+ *  @file   FadeBase.h
+ *  @author Seki
+ */
+
+#ifndef _FADE_BASE_H_
+#define _FADE_BASE_H_
 
 #include <DxLib.h>
 
@@ -43,4 +48,4 @@ public:
 // •Ê–¼’è‹`
 using FadeBasePtr = std::shared_ptr<FadeBase>;
 
-#endif // !_FADEBASE_H_
+#endif // !_FADE_BASE_H_

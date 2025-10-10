@@ -1,5 +1,10 @@
-#ifndef _FADEMANAGER_H_
-#define _FADEMANAGER_H_
+/*
+ *  @file   FadeManager.h
+ *  @author Seki
+ */
+
+#ifndef _FADE_MANAGER_H_
+#define _FADE_MANAGER_H_
 
 #include "FadeBase.h"
 #include "../Singleton.h"
@@ -52,4 +57,4 @@ public:
         return currentFade != nullptr;
     }
 }; 
-#endif // !_FADEMANAGER_H_
+#endif // !_FADE_MANAGER_H_

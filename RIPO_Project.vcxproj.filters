@@ -81,6 +81,9 @@
     <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp">
       <Filter>ソース ファイル\Engine\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\Calendar\Day.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Calendar</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -142,6 +145,27 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Stage\StageBase.h">
       <Filter>ヘッダー ファイル\Engine\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\DateBase.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Calendar</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\Day.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Calendar</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\Week.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Calendar</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\Month.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Calendar</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\Year.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Calendar</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarManager.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Calendar</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarSystem.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Calendar</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

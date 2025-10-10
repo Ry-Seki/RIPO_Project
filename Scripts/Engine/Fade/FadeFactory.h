@@ -1,5 +1,9 @@
-#ifndef _FADEFACTORY_H_
-#define _FADEFACTORY_H_
+/*
+ *  @file   FadeFactory.h
+ */
+
+#ifndef _FADE_FACTORY_H_
+#define _FADE_FACTORY_H_
 
 #include "FadeBase.h"
 #include "BlackFade.h"
@@ -17,5 +21,5 @@ inline FadeBasePtr CreateFade(FadeType type, float duration,
     }
     return nullptr;
 }
-#endif // !_FADEFACTORY_H_
+#endif // !_FADE_FACTORY_H_
 
