@@ -19,6 +19,10 @@ private:
 	Vector3 rotation;
 	Vector3 scale;
 
+private:
+	StageObjectBase() = default;
+	~StageObjectBase() = default;
+
 public:
 	/*
 	 *	@function	GetID
