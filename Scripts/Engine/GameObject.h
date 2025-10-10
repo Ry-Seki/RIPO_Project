@@ -5,7 +5,7 @@
 #ifndef _GAMEOBJECT_H_
 #define _GAMEOBJECT_H_
 
-#include "Component.h"
+#include "Component/Component.h"
 #include "VecMath.h"
 
 #include <memory>
@@ -38,7 +38,7 @@ public:
     GameObject() = default;
     virtual ~GameObject() = default;
 
-protected:
+public:
     // 初期化イベント
     virtual void Start();
 
@@ -51,7 +51,14 @@ protected:
     // 削除イベント
     virtual void OnDestroy();
 
+private:
+    // addComponentsにあるコンポーネントを正式に追加する
+    void PushAddComponents();
+
 public:
+    // オブジェクトの情報の変更
+    void SetObjectData(const std::string& setName, const Vector3& setPosition, const Vector3& setRotation);
+
     // コンポーネントの取得
     template <class T, typename = std::enable_if_t<std::is_base_of_v<Component, T>>>
     std::shared_ptr<T> GetComponent() const {
@@ -89,9 +96,8 @@ public:
     // コンポーネント削除
     void RemoveComponent();
 
-private:
-    // addComponentsにあるコンポーネントを正式に追加する
-    void PushAddComponents();
+    // ゲームオブジェクトのステータスのリセット
+    void ResetGameObject();
 
 public:
     inline Engine* GetEngine() const { return engine; }

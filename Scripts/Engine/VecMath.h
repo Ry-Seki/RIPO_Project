@@ -22,6 +22,11 @@ struct Vector3 {
 	static Vector3 zero, one;
 	static Vector3 up, down, right, left, forward, back;
 
+	// コンストラクタ
+	Vector3();
+	Vector3(float setX, float setY, float setZ);
+	~Vector3() = default;
+
 	// 演算子
 	Vector3 operator - () {
 		return { -x, -y, -z };

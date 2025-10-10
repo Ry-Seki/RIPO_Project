@@ -18,7 +18,6 @@ void GameObject::Start() {
         }
     }
 }
-
 /*
  *  更新処理
  */
@@ -34,7 +33,6 @@ void GameObject::Update(float deltaTime) {
     // 破棄対象のコンポーネント整理
     RemoveComponent();
 }
-
 /*
  *  衝突判定
  */
@@ -43,7 +41,6 @@ void GameObject::OnCollision(const ComponentPtr& self, const ComponentPtr& other
         if (component) component->OnCollision(self, other);
     }
 }
-
 /*
  *  破棄処理
  */
@@ -54,7 +51,6 @@ void GameObject::OnDestroy() {
     components.clear();
     addComponents.clear();
 }
-
 /*
  *  コンポーネント破棄処理
  */
@@ -83,7 +79,15 @@ void GameObject::RemoveComponent() {
         component->OnDestroy();
     }
 }
-
+/*
+ *  オブジェクトの情報を初期化する
+ */
+void GameObject::ResetGameObject() {
+    name = "";
+    position = Vector3::zero;
+    rotation = Vector3::zero;
+    scale = Vector3::one;
+}
 /*
  *  Update中に追加されたコンポーネントを即時反映
  */
@@ -93,13 +97,23 @@ void GameObject::PushAddComponents() {
     for (auto& component : addComponents) {
         if (!component) continue;
 
+        // コンポーネントに追加
         components.push_back(component);
 
+        // 初期化処理の呼び出し
         if (!component->isStarted) {
             component->Start();
             component->isStarted = true;
         }
     }
-
+    // 空にする
     addComponents.clear();
+}
+/*
+ *  ゲームオブジェクト情報の変更
+ */
+void GameObject::SetObjectData(const std::string& setName, const Vector3& setPosition, const Vector3& setRotation) {
+    name = setName;
+    position = setPosition;
+    rotation = setRotation;
 }

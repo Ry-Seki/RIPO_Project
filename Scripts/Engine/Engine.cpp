@@ -1,154 +1,135 @@
-/*
- *  @file   Engine.cpp
- */
-
 #include "Engine.h"
-#include "ModelRenderer.h"
-#include "SpriteRenderer.h"
+#include "Time.h"
+#include "Scene/TitleScene.h"
+#include "Fade/FadeManager.h"
+#include <DxLib.h>
+#include <EffekseerForDXLib.h>
 #include <iostream>
 
-/*
- *  初期化処理
- */
 int Engine::Initialize() {
-    // フラグ初期化
     dxlibInitialized = false;
     effekseerInitialized = false;
     initialized = false;
 
-#pragma region DxLibの初期化処理
-    SetOutApplicationLogValidFlag(FALSE);
-    SetGraphMode(800, 600, 32, 0);
-    ChangeWindowMode(TRUE);
-    SetBackgroundColor(196, 196, 196);
-    SetUseDirect3DVersion(DX_DIRECT3D_11);
+#pragma region DxLibの初期化処理(理解するまでは触らない)
+	SetOutApplicationLogValidFlag(FALSE);
+	//ウィンドウのサイズを変更する
+	SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, 0);
+	//起動時のウィンドウのモードの設定
+	ChangeWindowMode(TRUE);		// true : Windowモード, false : FullScreen
+	//背景色の設定
+	SetBackgroundColor(196, 196, 196);
 
-    // DxLib初期化
-    if (DxLib_Init() == -1) return 1;
-    dxlibInitialized = true;
+	//DirectXを仕様宣言　理由：Effekseerを使用するために必ず設定する -> DirectX9, 11
+	SetUseDirect3DVersion(DX_DIRECT3D_11);
 
-    // Effekseer初期化
-    if (Effekseer_Init(8000) == -1) return 1;
-    effekseerInitialized = true;
+	//DxLibの初期化
+	if (DxLib_Init() == -1)
+		return 0;
 
-    // 描画先を裏画面に設定
-    SetDrawScreen(DX_SCREEN_BACK);
+	dxlibInitialized = true;
+	//Effekseerの初期化
+	//Effecseer_Init(引数) 引数は最大のパーティクル量
+	if (Effekseer_Init(8000) == -1) {
+		DxLib_End();
+		return 0;
+	}
+	effekseerInitialized = true;
+	//描画する先を設定する　裏画面に変更する
+	SetDrawScreen(DX_SCREEN_BACK);
+	//図形描画のZバッファの有効化
+	{
+		//Zバッファを使用するかどうか	デフォルト : FALSE
+		SetUseZBuffer3D(TRUE);
+		//Zバッファに書き込みを行うか	デフォルト : FALSE
+		SetWriteZBuffer3D(TRUE);
+	}
+	//ライティング
+	{
+		//ライトの計算をするかどうか	デフォルト : TRUE
+		SetUseLighting(TRUE);
+		//標準ライトを使用するかどうか	デフォルト : TRUE
+		SetLightEnable(TRUE);
+		//グローバル環境光の設定
+		SetGlobalAmbientLight(GetColorF(0.3f, 0.3f, 0.3f, 1.0f));	//ライトの計算でα値は使わない	色がfloat型の場合、0.0f～1.0fの範囲
 
-    // Zバッファ
-    SetUseZBuffer3D(TRUE);
-    SetWriteZBuffer3D(TRUE);
-
-    // ライティング
-    SetUseLighting(TRUE);
-    SetLightEnable(TRUE);
-    SetGlobalAmbientLight(GetColorF(0.3f, 0.3f, 0.3f, 1.0f));
-    SetLightDifColor(GetColorF(0.8f, 0.8f, 0.8f, 1.0f));
-    SetLightSpcColor(GetColorF(0.8f, 0.8f, 0.8f, 1.0f));
-    SetLightAmbColor(GetColorF(0.8f, 0.8f, 0.8f, 1.0f));
+		//反射光の設定		Diffuse
+		SetLightDifColor(GetColorF(0.8f, 0.8f, 0.8f, 1.0f));
+		//鏡面反射光の設定	Specular
+		SetLightSpcColor(GetColorF(0.8f, 0.8f, 0.8f, 1.0f));
+		//環境光の設定		Ambient
+		SetLightAmbColor(GetColorF(0.8f, 0.8f, 0.8f, 1.0f));
+	}
 #pragma endregion
 
-    previousTime = static_cast<float>(GetNowCount());
+    Time::Init();
+
     initialized = true;
     return 0;
 }
-/*
- *  破棄処理
- */
+
 void Engine::Teardown() {
-    // Effekseer終了
-    if (effekseerInitialized) {
-        Effkseer_End();
-        effekseerInitialized = false;
-    }
-
-    // DxLib終了
-    if (dxlibInitialized) {
-        DxLib_End();
-        dxlibInitialized = false;
-    }
-
-    initialized = false;
+	if (effekseerInitialized) { Effkseer_End(); effekseerInitialized = false; }
+	if (dxlibInitialized) { DxLib_End(); dxlibInitialized = false; }
+	initialized = false;
 }
-/*
- *  更新処理
- */
-void Engine::Update() {
-    float currentTime = static_cast<float>(GetNowCount());
-    deltaTime = (currentTime - previousTime) / 1000.0f;
-    previousTime = currentTime;
 
-    UpdateGameObjects(deltaTime);
-}
-/*
- *  描画処理
- */
-void Engine::Render() {
-    ClearDrawScreen();
-
-    // 3D描画
-    for (auto& obj : gameObjects) {
-        if (obj->IsDestroyed()) continue;
-
-        for (auto& model : obj->GetComponents<ModelRenderer>()) {
-            model->Render3D();
-        }
-    }
-
-    // 2D描画
-    for (auto& obj : gameObjects) {
-        if (obj->IsDestroyed()) continue;
-
-        for (auto& sprite : obj->GetComponents<SpriteRenderer>()) {
-            sprite->Render2D();
-        }
-    }
-}/*
- *  メインループ
- */
 int Engine::Run() {
-    if (Initialize() != 0) {
-        Teardown();
-        return 1;
-    }
-    while (ProcessMessage() != -1) {
-        Effekseer_Sync3DSetting();
+	if (Initialize() != 0) { Teardown(); return 1; }
 
-        Update();
-        Render();
-        RemoveGameObjects();
+	SetNextScene(std::make_shared<TitleScene>());
+	ChangeScene();
 
-        ScreenFlip();
-    }
-    Teardown();
-    return 0;
-}
-/*
- *  オブジェクトの更新処理
- */
-void Engine::UpdateGameObjects(float deltaTime) {
-    for (auto& obj : gameObjects) {
-        if (!obj->IsDestroyed()) {
-            obj->Start();
-            obj->Update(deltaTime);
-        }
-    }
-}
-/*
- *  オブジェクトの破棄処理
- */
-void Engine::RemoveGameObjects() {
-    const auto itr = std::stable_partition(
-        gameObjects.begin(), gameObjects.end(),
-        [](const auto& obj) { return !obj->IsDestroyed(); });
+	while (ProcessMessage() != -1) {
+		Effekseer_Sync3DSetting();
+		Update();
+		Render();
+	}
 
-    gameObjects.erase(itr, gameObjects.end());
+	Teardown();
+	return 0;
 }
-/*
- *  全てのオブジェクトの破棄
- */
-void Engine::ClearGameObjects() {
-    for (auto& obj : gameObjects) {
-        obj->OnDestroy();
-    }
-    gameObjects.clear();
+
+void Engine::Update() {
+	Time::Update();
+
+	// フェードは TimeScale 非依存で更新
+	FadeManager::GetInstance().Update(Time::unscaledDeltaTime);
+
+	// フェードモードを確認
+	bool isFadeStop = FadeManager::GetInstance().GetMode() == FadeMode::Stop;
+
+	// シーンの更新
+	if (!isFadeStop && currentScene) currentScene->Update(*this, Time::deltaTime);
+
+	// シーンの切り替え
+	ChangeScene();
+}
+
+void Engine::Render() {
+	ClearDrawScreen();
+
+	// シーンの描画
+	if (currentScene) currentScene->Render();
+
+	// フェード描画
+	FadeManager::GetInstance().Render();
+	ScreenFlip();
+}
+
+void Engine::ChangeScene() {
+	if (nextScene) {
+		if (currentScene) currentScene->Finalize(*this);
+		currentScene = nextScene;
+		nextScene.reset();
+		if (currentScene) currentScene->Initialize(*this);
+	}
+}
+
+void Engine::StartSceneFade(const FadeBasePtr& setFade, std::function<void()> onComplete) {
+	if (!setFade) return;
+	FadeManager::GetInstance().StartFade(setFade, [this, onComplete]() {
+		ChangeScene();
+		if (onComplete) onComplete();
+	});
 }
