@@ -1,5 +1,6 @@
 /*
  *	@file	CharacterManager.h
+ *  @author	Riku
  */
 
 #ifndef _CHARACTERMANAGER_H_

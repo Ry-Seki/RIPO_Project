@@ -1,5 +1,6 @@
 /*
  *	@file	PlayerComponent.h
+ *  @author	Riku
  */
 #ifndef _PLAYERCOMPONENT_H_
 #define _PLAYERCOMPONENT_H_

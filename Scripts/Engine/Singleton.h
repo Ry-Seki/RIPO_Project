@@ -1,5 +1,6 @@
 /*
- *	@file Singleton.h
+ *	@file	Singleton.h
+ *  @author Riku
  */
 
 #ifndef _SINGLETON_H_
