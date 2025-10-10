@@ -4,6 +4,8 @@
  */
 #include "GameObjectManager.h"
 
+GameObjectManager::GameObjectManager() {}
+
 /*
  *	‰Šú‰»ˆ—
  */

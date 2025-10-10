@@ -10,6 +10,8 @@
 #include <mutex>
 
 class GameObjectManager : public Singleton<GameObjectManager> {
+	// ƒtƒŒƒ“ƒhéŒ¾
+	friend class Singleton<GameObjectManager>;
 private:
 	Engine* engine;
 	GameObjectList unuseObjectList;

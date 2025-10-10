@@ -2,9 +2,14 @@
  *	@file	PlayerComponent.cpp
  *  @author	Riku
  */
-#include "CharacterManager.h"
 
- /*
+#include "CharacterManager.h"
+#include "../Engine.h"
+#include "GameObjectManager.h"
+
+CharacterManager::CharacterManager() {}
+
+/*
   *	初期化処理
   */
 void CharacterManager::Initialize(Engine& setEngine) {
@@ -18,17 +23,18 @@ void CharacterManager::CreatePlayer(
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation) {
-	//int objectListCount = static_cast<int>(createObjectList.size());
-	//for (int i = 0; i < objectListCount; i++) {
-	//	if (createObjectList[i] != nullptr) continue;
-	//	// プレイヤーキャラクター生成
-	//	CharacterBasePtr playerCharacter = playerObject->AddComponent<PlayerComponent>();
-	//	// ID設定
-	//	playerCharacter->SetID(i);
-	//
-	//	createObjectList[i] = playerObject;
-	//	createCharacterList[i] = playerCharacter;
-	//}
+	int characterListCount = static_cast<int>(createCharacterList.size());
+	for (int i = 0; i < characterListCount; i++) {
+		if (createCharacterList[i] != nullptr) continue;
+		// 未使用状態のオブジェクト取得
+		playerObject = GameObjectManager::GetInstance().GetUnuseObject();
+		// プレイヤーキャラクター生成
+		CharacterBasePtr playerCharacter = playerObject->AddComponent<PlayerComponent>();
+		// ID設定
+		playerCharacter->SetID(i);
+		// リストに追加
+		createCharacterList[i] = playerCharacter;
+	}
 
 }
 
@@ -36,8 +42,10 @@ void CharacterManager::CreatePlayer(
  *	ID指定のキャラクター削除
  */
 void CharacterManager::RemoveCharacter(int characterID) {
-
-	//createObjectList[characterID] = nullptr;
+	// リストから削除
+	createCharacterList[characterID] = nullptr;
+	// オブジェクトのリセット
+	GameObjectManager::GetInstance().ResetObject(playerObject);
 }
 
 /*
