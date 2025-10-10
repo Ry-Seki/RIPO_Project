@@ -1,5 +1,6 @@
 /*
  *	@file	CharacterManager.h
+ *  @author	Riku
  */
 
 #ifndef _CHARACTERMANAGER_H_
@@ -7,16 +8,16 @@
 
 #include <vector>
 #include "../Singleton.h"
-#include "../Character/CharacterBase.h"
-#include "../Engine.h"
+#include "../Character/PlayerComponent.h"
+
 
 /*
  *	キャラクターの管理クラス
  */
 class CharacterManager : public Singleton<CharacterManager>{
 private:
-	CharacterBaseList createCharacterPtr;
-	GameObjectList createObjectList;
+	CharacterBaseList createCharacterList;
+	GameObjectPtr playerObject;
 	Engine* engine;
 
 private:
@@ -24,13 +25,13 @@ private:
 	~CharacterManager() = default;
 
 public:
-	void Initialize(Engine* setEngine);
+	void Initialize(Engine& setEngine);
 	void CreatePlayer(const std::string& name,
 		const Vector3& position = { 0.0f, 0.0f, 0.0f },
 		const Vector3& rotation = { 0.0f, 0.0f, 0.0f });
-	void CreateCharacter(const std::string& name,
-		const Vector3& position = { 0.0f, 0.0f, 0.0f },
-		const Vector3& rotation = { 0.0f, 0.0f, 0.0f });
+	void RemoveCharacter(int characterID);
+	CharacterBasePtr GetCharacter(int characterID);
+	
 
 };
 

@@ -1,5 +1,6 @@
 /*
  *	@file	StageBase.h
+ *  @author kuu
  */
 
 #include <DxLib.h>
