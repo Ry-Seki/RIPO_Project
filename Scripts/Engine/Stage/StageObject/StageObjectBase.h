@@ -1,11 +1,13 @@
 /*
- *	@file	StageObjectBase.h
+ *	@file	StageObjectBase.h]
+ *  @author	kuu
  */
 
 #ifndef _STAGEOBJECTBASE_H_
 #define _STAGEOBJECTBASE_H_
 
-#include "../../Component.h"
+#include "../../Component/Component.h"
+#include "../../VecMath.h"
 
 class StageObjectBase : public Component {
 private:
@@ -49,6 +51,14 @@ public:
 	 */
 	inline void SetNameID(int& setValue) {
 		nameID = setValue;
+	}
+	/*
+	 *	@function	GetPosition
+	 *	@brief		à íuç¿ïWÇÃïœçX
+	 *	@return		Vector3
+	 */
+	inline Vector3 GetPosition() const {
+		return position;
 	}
 
 
