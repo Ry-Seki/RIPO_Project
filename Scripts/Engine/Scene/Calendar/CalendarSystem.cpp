@@ -7,6 +7,9 @@
 #include "../../Fade/FadeManager.h"
 #include "../../Fade/FadeFactory.h"
 
+/*
+ *  ‰Šú‰»ˆ—
+ */
 void CalendarSystem::Initialize(int numMonths, int weeksPerMonth, int daysPerWeek) {
     currentYear = std::make_shared<Year>();
     for (int m = 0; m < numMonths; ++m) {
@@ -21,7 +24,9 @@ void CalendarSystem::Initialize(int numMonths, int weeksPerMonth, int daysPerWee
         currentYear->months.push_back(month);
     }
 }
-
+/*
+ *  Œ»İ‰Ò“­‚µ‚Ä‚¢‚éDayæ“¾
+ */
 std::shared_ptr<Day> CalendarSystem::GetCurrentDay() {
     auto month = currentYear->GetCurrentMonth();
     if (!month) return nullptr;
@@ -29,18 +34,30 @@ std::shared_ptr<Day> CalendarSystem::GetCurrentDay() {
     if (!week) return nullptr;
     return week->GetCurrentDay();
 }
-
+/*
+ *  Œ»İ‰Ò“­‚µ‚Ä‚¢‚éWeekæ“¾
+ */
 std::shared_ptr<Week> CalendarSystem::GetCurrentWeek() {
     auto month = currentYear->GetCurrentMonth();
     if (!month) return nullptr;
     return month->GetCurrentWeek();
 }
-
+/*
+ *  Œ»İ‰Ò“­‚µ‚Ä‚¢‚éMonthæ“¾
+ */
 std::shared_ptr<Month> CalendarSystem::GetCurrentMonth() {
     if (!currentYear) return nullptr;
     return currentYear->GetCurrentMonth();
 }
-
+/*
+ *  Œ»İ‰Ò“­‚µ‚Ä‚¢‚éYearæ“¾
+ */
+std::shared_ptr<Year> CalendarSystem::GetYear() {
+    return currentYear;
+}
+/*
+ *  “ú‚É‚¿‚Ìis
+ */
 void CalendarSystem::AdvanceDay() {
     auto day = GetCurrentDay();
     if (!day) return;

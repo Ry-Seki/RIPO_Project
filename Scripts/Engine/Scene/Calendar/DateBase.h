@@ -2,6 +2,7 @@
  *	@file	DateBase.h
  *	@author	Seki
  */
+
 #ifndef _DATE_BASE_H_
 #define _DATE_BASE_H_
 
@@ -14,10 +15,24 @@
  */
 class DateBase {
 public:
-    std::function<void()> onAdvance;   // 日付が進んだときのコールバック
-    virtual void Advance() = 0;        // 仮想関数で進行処理
-    virtual bool IsFinished() const = 0; // 終了判定
+    /*
+     *  デストラクタ
+     */
     virtual ~DateBase() = default;
+
+public:
+    /*
+     *  進行処理コールバック
+     */
+    std::function<void()> onAdvance;
+    /*
+     *  進行処理
+     */
+    virtual void Advance() = 0;
+    /*
+     *  終了フラグの取得
+     */
+    virtual bool IsFinished() const = 0;
 }; 
 #endif // !_DATE_BASE_H_
 

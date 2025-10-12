@@ -1,5 +1,6 @@
 /*
  *	@file	Main.cpp
+ *  @author	Seki
  */
 
 #include "Engine/Engine.h"

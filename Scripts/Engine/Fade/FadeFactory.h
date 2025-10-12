@@ -1,5 +1,6 @@
 /*
  *  @file   FadeFactory.h
+ *  @author Seki
  */
 
 #ifndef _FADE_FACTORY_H_
@@ -12,7 +13,9 @@
 enum class FadeType {
     Black
 };
-
+/*
+ *  フェード生成処理
+ */
 inline FadeBasePtr CreateFade(FadeType type, float duration,
                                             FadeDirection dir, FadeMode mode) {
     switch (type) {

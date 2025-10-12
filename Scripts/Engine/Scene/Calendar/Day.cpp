@@ -5,6 +5,15 @@
 
 #include "Day.h"
 
+/*
+ *  進行処理
+ */
+void Day::Advance() {
+    ResetDay(); if (onAdvance) onAdvance();
+}
+/*
+ *  ダンジョン行動
+ */
 void Day::ActionDungeon() {
     if (morningDone) { DrawFormatString(50, 150, GetColor(255, 0, 0), "ダンジョンは午前のみ！"); return; }
     AdvanceDay(); // 午前・午後まとめて消費

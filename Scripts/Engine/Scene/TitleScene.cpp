@@ -1,5 +1,6 @@
 /*
  *  @file   TitleScene.cpp
+ *  @author Seki
  */
 
 #include "TitleScene.h"
@@ -10,18 +11,23 @@
 #include <DxLib.h>
 #include <memory>
 
-
+/*
+ *  ‰Šú‰»ˆ—
+ */
 void TitleScene::Initialize(Engine& engine) {
-    auto fadeOut = CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-    engine.StartSceneFade(fadeOut, [&engine]() {
+    engine.StartFadeOutIn(0.5f, 0.5f, [&engine]() {
         engine.SetNextScene(std::make_shared<MainGameScene>());
     });
 }
-
+/*
+ *  XVˆ—
+ */
 void TitleScene::Update(Engine& engine, float deltaTime) {
     
 }
-
+/*
+ *  •`‰æˆ—
+ */
 void TitleScene::Render() {
     DrawFormatString(50, 50, GetColor(255, 255, 255), "[TitleScene] •`‰æ’†...");
 }

@@ -2,6 +2,7 @@
  *	@file	Week.h
  *	@author	Seki
  */
+
 #ifndef _WEEK_H_
 #define _WEEK_H_
 
@@ -13,8 +14,8 @@
  */
 class Week : public DateBase {
 public:
-    std::vector<std::shared_ptr<Day>> days;
-    size_t currentDayIndex = 0;
+    std::vector<std::shared_ptr<Day>> days;     // Day配列
+    int currentDayIndex = 0;                    // 日にちカウント
 
     void Advance() override {
         auto day = GetCurrentDay();
@@ -28,9 +29,13 @@ public:
         // Day が残っていれば何もしない（次フレームで再確認）
         if (onAdvance) onAdvance();
     }
-
+    /*
+     *  一週間の行動終了フラグ
+     */
     bool IsFinished() const override { return days.empty(); }
-
+    /*
+     *  現在稼働しているDayを取得
+     */
     std::shared_ptr<Day> GetCurrentDay() {
         if (currentDayIndex < days.size()) return days[currentDayIndex];
         return nullptr;

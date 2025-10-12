@@ -5,6 +5,9 @@
 
 #include "CalendarManager.h"
 
+/*
+ *  更新処理
+ */
 void CalendarManager::Update() {
     auto day = calendarSystem->GetCurrentDay();
     if (!day) return;
@@ -21,6 +24,9 @@ void CalendarManager::Update() {
         inputHandle = false;
     }
 }
+/*
+ *  描画処理
+ */
 void CalendarManager::Render() {
     auto day = calendarSystem->GetCurrentDay();
     if (!day) {
@@ -36,13 +42,17 @@ void CalendarManager::Render() {
     DrawFormatString(50, 170, GetColor(0, 255, 0), "3: Shop (half day)");
     DrawFormatString(50, 190, GetColor(0, 255, 0), "4: Part-time (half day)");
 }
-
+/*
+ *  次の日に進行処理
+ */
 void CalendarManager::NextDay() {
     auto day = calendarSystem->GetCurrentDay();
     if (day) day->AdvanceDay();
     calendarSystem->AdvanceDay();
 }
-
+/*
+ *  一日の行動終了フラグ取得
+ */
 bool CalendarManager::IsDayComplete() const {
     auto day = calendarSystem->GetCurrentDay();
     return day && day->IsFinished();
