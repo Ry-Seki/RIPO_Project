@@ -1,5 +1,6 @@
 /*
  *	@file	VecMath.h
+ *	@author	Seki
  */
 
 #ifndef _VECMATH_H_

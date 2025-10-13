@@ -1,5 +1,6 @@
 /*
  *	@file	GameObject.h
+ *  @author Seki
  */
 
 #ifndef _GAMEOBJECT_H_
@@ -17,15 +18,18 @@
 // 前方宣言
 class Engine;
 
+/*
+ *  ゲームオブジェクトクラス
+ */
 class GameObject {
 	friend class Engine;	// フレンドクラス
 
 private:
-    Engine* engine = nullptr;
-    bool isDestroyed = false;
-    bool isStarted = false;
+    Engine* engine = nullptr;                   // エンジン
+    bool isDestroyed = false;                   // 破棄フラグ
+    bool isStarted = false;                     // 開始フラグ
 
-    std::vector<ComponentPtr> components;    // コンポーネントのリスト
+    std::vector<ComponentPtr> components;       // コンポーネントのリスト
     std::vector<ComponentPtr> addComponents;    // 追加予定のコンポーネント
 
 public:

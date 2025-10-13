@@ -1,13 +1,27 @@
+/*
+ *  @file   BlackFade.h
+ *  @author Seki
+ */
+
 #ifndef _BLACKFADE_H_
 #define _BLACKFADE_H_
 
 #include "FadeBase.h"
 
+/*
+ *  黒フェード
+ */
 class BlackFade : public FadeBase {
 public:
+    /*
+     *  コンストラクタ
+     */
     BlackFade(float duration, FadeDirection dir, FadeMode mode)
         : FadeBase(duration, dir, mode) {}
 
+    /*
+     *  描画処理
+     */
     void Render() override {
         float alpha = 0.0f;
         if (direction == FadeDirection::In)
