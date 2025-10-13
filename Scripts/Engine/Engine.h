@@ -40,7 +40,7 @@ public:
      *  デストラクタ
      */
     ~Engine() = default;
-private:
+public:
     /*
      *  メインゲーム
      */
