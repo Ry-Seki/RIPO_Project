@@ -1,5 +1,6 @@
 /*
  *	@file	Component.h
+ *	@author	Seki
  */
 
 #ifndef _COMPONENT_H_
@@ -9,6 +10,7 @@
 
 // 前方宣言
 class GameObject;
+
 /*
  *	コンポーネントの基底クラス
  */
@@ -25,29 +27,45 @@ public:
 	virtual ~Component() = default;
 
 public:
-	//	ゲームオブジェクトに追加されたときに呼び出される
+	/*
+	 *	ゲームオブジェクトに追加されたときに呼び出される処理
+	 */
 	virtual void Awake() {}
 
-	// 最初のUpdateの直前に呼び出される
+	/*
+	 *	最初のUpdateの直前に呼び出される処理
+	 */
 	virtual void Start() {}
 
-	//	毎フレーム呼び出される
+	/*
+	 *	更新処理
+	 */
 	virtual void Update(float deltaTime) {}
 
-	//	衝突が起きたときに呼び出される
+	/*
+	 *	衝突が起きたときに呼び出される処理
+	 */
 	virtual void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {}
 
-	//	削除されるときに呼び出される
+	/*
+	 *	削除されるときに呼び出される
+	 */
 	virtual void OnDestroy() {}
 
 public:
-	//	コンポーネントの所有者を取得
+	/*
+	 *	コンポーネントの所有者を取得
+	 */
 	inline GameObject* GetOwner() const { return owner; }
 
-	//	コンポーネントが破棄されているかどうか
+	/*
+	 *	コンポーネントが破棄されているかどうか
+	 */
 	inline bool IsDestroyed() const { return isDestroyed; }
 
-	//	コンポーネントをゲームオブジェクトから削除する
+	/*
+	 *	コンポーネントをゲームオブジェクトから削除する]
+	 */
 	inline void Destroy() { isDestroyed = true; }
 };
 // 別名定義

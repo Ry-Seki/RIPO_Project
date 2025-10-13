@@ -1,5 +1,10 @@
-#ifndef _FADEBASE_H_
-#define _FADEBASE_H_
+/*
+ *  @file   FadeBase.h
+ *  @author Seki
+ */
+
+#ifndef _FADE_BASE_H_
+#define _FADE_BASE_H_
 
 #include <DxLib.h>
 
@@ -13,6 +18,9 @@ enum class FadeDirection {
     Out         // フェードアウト
 };
 
+/*
+ *  フェードの基底処理
+ */
 class FadeBase {
 protected:
     float duration;       // フェード時間（秒）
@@ -22,11 +30,18 @@ protected:
     bool isFinished = false;
 
 public:
+    /*
+     *  コンストラクタ
+     */
     FadeBase(float duration, FadeDirection dir, FadeMode mode)
         : duration(duration), direction(dir), mode(mode) {}
-
+    /*
+     *  デストラクタ
+     */
     virtual ~FadeBase() = default;
-
+    /*
+     *  更新処理
+     */
     virtual void Update(float deltaTime) {
         if (isFinished) return;
         elapsed += deltaTime;
@@ -35,12 +50,28 @@ public:
             isFinished = true;
         }
     }
-
+    /*
+     *  描画処理
+     */
     virtual void Render() = 0; // DxLib 描画
+    /*
+     *  リセット処理
+     */
+    void Reset(FadeDirection dir) {
+        elapsed = 0.0f;
+        direction = dir;
+        isFinished = false;
+    }
+    /*
+     *  終了フラグの取得
+     */
     bool IsFinished() const { return isFinished; }
+    /*
+     *  モードの取得
+     */
     FadeMode GetMode() const { return mode; }
 }; 
 // 別名定義
 using FadeBasePtr = std::shared_ptr<FadeBase>;
 
-#endif // !_FADEBASE_H_
+#endif // !_FADE_BASE_H_

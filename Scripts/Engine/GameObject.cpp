@@ -1,3 +1,8 @@
+/*
+ *  @file   GameObject.cpp
+ *  @author Seki
+ */
+
 #include "GameObject.h"
 #include <DxLib.h>
 #include <algorithm>

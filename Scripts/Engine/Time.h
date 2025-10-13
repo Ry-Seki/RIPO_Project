@@ -1,8 +1,16 @@
+/*
+ *  @file   Time.h
+ *  @author Seki
+ */
+
 #ifndef _TIME_H_
 #define _TIME_H_
 
 #include <chrono>
 
+/*
+ *  時間管理クラス
+ */
 class Time {
 public:
     static float deltaTime;        // スケール付き経過時間

@@ -1,5 +1,6 @@
 /*
  *	@file	CharacterBase.h
+ *	@author	Seki
  */
 
 #ifndef _CHARACTERBASE_H_
@@ -7,6 +8,9 @@
 
 #include "../Component/Component.h"
 
+/*
+ *	キャラクターの基底クラス
+ */
 class CharacterBase : public Component {
 private:
 	int ID = -1;
@@ -19,8 +23,7 @@ private:
 
 public:
 	/*
-	 *	@function	isDead
-	 *	@brief		死亡判定
+	 *	死亡判定
 	 *	@return		bool
 	 */
 	inline bool isDead() const {
@@ -28,80 +31,70 @@ public:
 	}
 public:
 	/*
-	 *	@function	GetID
-	 *	@brief		IDの取得
+	 *	IDの取得 
 	 *	@return		int
 	 */
 	inline int GetID() const {
 		return ID;
 	}
 	/*
-	 *	@function	SetID
-	 *	@brief		IDの変更
+	 *	IDの変更
 	 *	@param[in]	int& setValue;
 	 */
 	inline void SetID(int& setValue) {
 		ID = setValue;
 	}
 	/*
-	 *	@function	GetNameID
-	 *	@brief		名前IDの取得
+	 *	名前IDの取得
 	 *	@return		int
 	 */
 	inline int GetNameID() const {
 		return nameID;
 	}
 	/*
-	 *	@function	SetNameID
-	 *	@brief		名前IDの変更
+	 *	名前IDの変更
 	 *	@param[in]	int& setValue
 	 */
 	inline void SetNameID(int& setValue){
 		nameID = setValue;
 	}
 	/*
-	 *	@function	GetMaxHP
-	 *	@brief		最大HPの取得
+	 *	最大HPの取得
 	 *	@return		int
 	 */
 	inline int GetMaxHP() const {
 		return maxHP;
 	}
 	/*
-	 *	@function	SetMaxHP
-	 *	@brief		最大HPの変更
+	 *	最大HPの変更
 	 *	@param[in]	int& setValue
 	 */
 	inline void SetMaxHP(int& setValue){
 		maxHP = setValue;
 	}
 	/*
-	 *	@function	GetHP
-	 *	@brief		HPの取得
+	 *	HPの取得
 	 *	@return		int
 	 */
 	inline int GetHP() const {
 		return HP;
 	}
 	/*
-	 *	@function	SetHP
-	 *	@brief		HPの変更
+	 *	HPの変更
 	 *	@param[in]	int& setValue
 	 */
 	inline int SetHP(int& setValue){
 		HP = setValue;
 	}
 	/*
-	 *	@function	GetRawAttack
-	 *	@brief		素の攻撃力の取得
+	 *	素の攻撃力の取得
 	 *	@return		int
 	 */
 	inline int GetRawAttack() const {
 		return rawAttack;
 	}
 	/*
-	 *	@function	SetRawAttack
-	 *	@brief		素の攻撃力の変更
+	 *	素の攻撃力の変更
 	 *	@param[in]	int& setValue
 	 */
 	inline int SetRawAttack(int& setValue) {

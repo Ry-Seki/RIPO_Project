@@ -1,3 +1,8 @@
+/*
+ *  @file   Engine.h
+ *  @author Seki
+ */
+
 #ifndef _ENGINE_H_
 #define _ENGINE_H_
 
@@ -11,36 +16,79 @@
 #include <string>
 #include <functional>
 
+/*
+ *  ゲームの基盤クラス
+ */
 class Engine {
 private:
-    ScenePtr currentScene;
-    ScenePtr nextScene;
+    ScenePtr currentScene;                  // 現在のシーン
+    ScenePtr nextScene;                     // 次のシーン
 
-    bool dxlibInitialized = false;
-    bool effekseerInitialized = false;
-    bool initialized = false;
+    bool dxlibInitialized = false;          // DxLibの初期化フラグ
+    bool effekseerInitialized = false;      // Effekseerの初期化フラグ
+    bool initialized = false;               // 初期化フラグ
 
-    const int WINDOW_WIDTH = 800;
-    const int WINDOW_HEIGHT = 600;
+    const int WINDOW_WIDTH = 800;           // ウィンドウの幅
+    const int WINDOW_HEIGHT = 600;          // ウィンドウの高さ
 
 public:
+    /*
+     *  コンストラクタ
+     */
     Engine() = default;
+    /*
+     *  デストラクタ
+     */
     ~Engine() = default;
-
+public:
+    /*
+     *  メインゲーム
+     */
     int Run();
 
 private:
+    /*
+     *  初期化処理
+     */
     int Initialize();
+    /*
+     *  破棄処理
+     */
     void Teardown();
+    /*
+     *  更新処理
+     */
     void Update();
+    /*
+     *  描画処理
+     */
     void Render();
 
 public:
-    void SetNextScene(ScenePtr setScene) { nextScene = setScene; }
+    /*
+     *  シーンの変更
+     */
     void ChangeScene();
+    /*
+     *  フェード呼び出し処理
+     *  param[in]           const FadeBasePtr& setFade          セットするフェード
+     *  param[in]           std::function<void()> onComplete    コールバック
+     */
     void StartSceneFade(const FadeBasePtr& setFade, std::function<void()> onComplete = nullptr);
+    /*
+     *  フェードアウト → 中間処理 → フェードイン（黒フェード）
+     *  @param[in]          float fadeOutTime                   フェードアウト時間
+     *  @param[in]          float fadeInTime                    フェードイン時間
+     *  @param[in]          std::function<void()> onMidPoint    コールバック
+     */
+    void StartFadeOutIn(float fadeOutTime, float fadeInTime, std::function<void()> onMidPoint);
 
-    // GameObject生成
+    /*
+     *  GameObject生成
+     *  param[in]           const std::string& name     オブジェクトの名前
+     *  param[in]           const Vector3& position     オブジェクトの位置
+     *  param[in]           const Vector3& rotation     オブジェクトの回転
+     */
     template<class T>
     std::shared_ptr<T> Create(const std::string& name = "",
                               const Vector3& position = Vector3::zero,
@@ -54,7 +102,10 @@ public:
         if (currentScene) currentScene->AddGameObject(obj);
         return obj;
     }
+    /*
+     *  次のシーンの設定
+     */
+    inline void SetNextScene(ScenePtr setScene) { nextScene = setScene; }
 };
-
 #endif // !_ENGINE_H_
 

@@ -9,19 +9,16 @@
 #include <vector>
 #include "../Singleton.h"
 #include "../Character/PlayerComponent.h"
-#include "../Engine.h"
+
 
 /*
  *	キャラクターの管理クラス
  */
 class CharacterManager : public Singleton<CharacterManager>{
 private:
-	GameObjectList useObjectList;
-	GameObjectList unuseObjectList;
 	CharacterBaseList createCharacterList;
+	GameObjectPtr playerObject;
 	Engine* engine;
-
-	const int CREATE_OBJECT_MAX;
 
 private:
 	CharacterManager();

@@ -1,3 +1,8 @@
+/*
+ *	@file	Time.cpp
+ *	@author	Seki
+ */
+
 #include "Time.h"
 
 // Ã“Iƒƒ“ƒo‚ÌÀ‘Ì’è‹`
