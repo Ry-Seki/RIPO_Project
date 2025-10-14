@@ -8,6 +8,7 @@
 #include "Scene/TitleScene.h"
 #include "Fade/FadeFactory.h"
 #include "Fade/FadeManager.h"
+
 #include <DxLib.h>
 #include <EffekseerForDXLib.h>
 #include <iostream>
@@ -115,7 +116,7 @@ void Engine::Update() {
 	bool isFadeStop = FadeManager::GetInstance().GetMode() == FadeMode::Stop;
 
 	// シーンの更新
-	if (!isFadeStop && currentScene) currentScene->Update(*this, Time::deltaTime);
+	if (currentScene && !isFadeStop) currentScene->Update(*this, Time::deltaTime);
 
 	// シーンの切り替え
 	ChangeScene();

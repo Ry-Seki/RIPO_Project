@@ -150,6 +150,10 @@
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Engine\Input\InputManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\LoadBinary.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\LoadCSV.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\LoadGraph.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\LoadModel.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\CharacterManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarManager.cpp" />
@@ -178,6 +182,13 @@
     <ClInclude Include="Scripts\Engine\Fade\FadeManager.h" />
     <ClInclude Include="Scripts\Engine\GameObject.h" />
     <ClInclude Include="Scripts\Engine\Input\InputManager.h" />
+    <ClInclude Include="Scripts\Engine\Load\LoadBase.h" />
+    <ClInclude Include="Scripts\Engine\Load\LoadBinary.h" />
+    <ClInclude Include="Scripts\Engine\Load\LoadCSV.h" />
+    <ClInclude Include="Scripts\Engine\Load\LoadSprite.h" />
+    <ClInclude Include="Scripts\Engine\Load\LoadJSON.h" />
+    <ClInclude Include="Scripts\Engine\Load\LoadManager.h" />
+    <ClInclude Include="Scripts\Engine\Load\LoadModel.h" />
     <ClInclude Include="Scripts\Engine\Manager\CharacterManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarManager.h" />
