@@ -120,6 +120,9 @@
     <ClCompile Include="Scripts\Engine\Load\LoadModel.cpp">
       <Filter>ソース ファイル\Engine\Load</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\LoadJSON.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
