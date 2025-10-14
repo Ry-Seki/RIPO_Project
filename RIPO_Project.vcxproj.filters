@@ -87,17 +87,17 @@
     <ClCompile Include="Scripts\Engine\Scene\Calendar\Day.cpp">
       <Filter>ソース ファイル\Engine\Scene\Calendar</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarSystem.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Input\InputManager.cpp">
       <Filter>ヘッダー ファイル\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarSystem.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Calendar</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarManager.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Calendar</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
