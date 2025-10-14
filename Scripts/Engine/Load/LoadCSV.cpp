@@ -9,26 +9,30 @@
  *	ファイルの読み込み処理
  */
 void LoadCSV::Load() {
-	// 前回データのクリア
+	// データのクリア
 	csvData.clear();
-	// ファイルの読み込み
-	std::ifstream file(filePath);
-	if (!file.is_open()) return;
+	try {
+		// ファイルの読み込み
+		std::ifstream file(filePath);
+		if (!file.is_open()) return;
 
-	std::string line;
-	// 一行ずつ読み込む
-	while (std::getline(file, line)) {
-		std::stringstream ss(line);
-		std::string cell;
-		std::vector<std::string> row;
+		std::string line;
+		// 一行ずつ読み込む
+		while (std::getline(file, line)) {
+			std::vector<std::string> row;
+			std::stringstream ss(line);
+			std::string cell;
 
-		// セルごとに読み込む
-		while (std::getline(ss, cell, ',')) {
-			row.push_back(cell);
+			// セルごとに読み込む
+			while (std::getline(ss, cell, ',')) {
+				row.push_back(cell);
+			}
+			// 行を追加する
+			csvData.push_back(row);
 		}
-		// 行を追加する
-		csvData.push_back(row);
+		// 読み込み完了
+		isLoaded = true;
+	}catch(const std::exception& exception){
+		std::cerr << "[CSVロード例外] " << exception.what() << " ファイル: " << filePath << std::endl;
 	}
-	// 読み込み完了
-	isLoaded = true;
 }
