@@ -22,8 +22,8 @@ class StageManager : public Singleton<StageManager> {
 
 private:
 
-	Engine* pEngine;                 // ゲームエンジン参照
-	std::unique_ptr<Stage> pStage;   // 現在のステージ *スマートポインタにより自動的に削除されやーつ
+	Engine& engine;						// ゲームエンジン参照
+	std::unique_ptr<StageBase> pStage;	// 現在のステージ(自動的に削除される*)
 
 
 	StageManager();
@@ -34,7 +34,7 @@ public:
 	/*
 	 *  初期化
 	 */
-	void Initialize(Engine* pEngine);
+	void Initialize(Engine& setEngine);
 
 	/*
 	 *  ステージの読み込み

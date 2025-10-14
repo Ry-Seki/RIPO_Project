@@ -1,31 +1,50 @@
 /*
  *	@file	StageBase.h
- *  @author kuu
+ *  @author kuu & oorui
  */
 
-#include <DxLib.h>
 
 #ifndef _STAGEBASE_H_
 #define _STAGEBASE_H_
+#include <DxLib.h>
+#include <string>
 
 class StageBase {
-private:
+protected:
+	// モデルハンドル
+	int modelHandle;
 
 
 public:
 	// コンストラクタ
-	StageBase() = default;
+	StageBase() : modelHandle(-1) {}
 	virtual ~StageBase() = default;
 
 protected:
-	// 片付け処理
+	/*
+	 *	片付け処理
+	 */
 	void Clean(int MHandle) {
-		MV1SetVisible(MHandle, false);
+		if (MHandle >= 0) {
+			MV1SetVisible(MHandle, false);
+		}
 	}
 
 public:
-	// 更新処理
-	virtual void OnLoad() {};
+	// ステージ読み込み
+	virtual void Load(const std::string& csvPath) = 0;
+
+	// 更新
+	virtual void Update() = 0;
+
+	// 描画
+	virtual void Render() = 0;
+
+	// 終了処理
+	virtual void Execute() = 0;
+
+	// 当たり判定の更新
+	virtual void UpdateCollision() = 0;
 };
 
 #endif // !_STAGEBASE_H_
