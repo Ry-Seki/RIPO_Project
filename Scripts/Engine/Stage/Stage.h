@@ -21,7 +21,7 @@ public:
 	virtual ~Stage() override;
 
 	// ステージデータ読み込み
-	void Load(const std::string& csvPath) override;
+	void Load(const std::string& csvPath , ) override;
 
 	// 更新
 	void Update() override;

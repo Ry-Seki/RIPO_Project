@@ -29,7 +29,8 @@ Stage::~Stage() {
  *  @param csvPath 読み込み対象CSVパス
  */
 void Stage::Load(const std::string& csvPath) {
-	modelPath = csvPath; // 仮処理
+	// キャッシュ
+	modelPath = csvPath;
 	modelHandle = MV1LoadModel(modelPath.c_str());
 }
 

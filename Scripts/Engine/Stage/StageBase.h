@@ -14,9 +14,9 @@ protected:
 	// ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
 	int modelHandle;
 
-	Vector3 position;	// À•W
-	Vector3 rotation;	// ‰ñ“]
-	Vector3 scale;		// Šgk
+	//Vector3 position;	// À•W
+	//Vector3 rotation;	// ‰ñ“]
+	//Vector3 scale;		// Šgk
 
 
 
