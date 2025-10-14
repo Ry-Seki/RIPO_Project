@@ -10,8 +10,8 @@
 CharacterManager::CharacterManager() {}
 
 /*
-  *	‰Šú‰»ˆ—
-  */
+ *	‰Šú‰»ˆ—
+ */
 void CharacterManager::Initialize(Engine& setEngine) {
 	engine = &setEngine;
 }

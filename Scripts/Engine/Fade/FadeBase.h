@@ -6,6 +6,7 @@
 #ifndef _FADE_BASE_H_
 #define _FADE_BASE_H_
 
+#include <memory>
 #include <DxLib.h>
 
 enum class FadeMode {
@@ -32,6 +33,9 @@ protected:
 public:
     /*
      *  コンストラクタ
+     *  @param[in]  float         duration  フェード時間
+     *  @param[in]  FadeDirection dir       フェードアウト・フェードインの選択
+     *  @param[in]  FadeMode      mode      フェード中、Sceneの更新を止めるか
      */
     FadeBase(float duration, FadeDirection dir, FadeMode mode)
         : duration(duration), direction(dir), mode(mode) {}
@@ -39,6 +43,8 @@ public:
      *  デストラクタ
      */
     virtual ~FadeBase() = default;
+
+public:
     /*
      *  更新処理
      */
