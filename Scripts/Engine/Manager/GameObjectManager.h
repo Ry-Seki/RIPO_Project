@@ -9,6 +9,9 @@
 #include "../Engine.h"
 #include <mutex>
 
+/*
+ *	ゲームオブジェクトの管理クラス
+ */
 class GameObjectManager : public Singleton<GameObjectManager> {
 	// フレンド宣言
 	friend class Singleton<GameObjectManager>;
