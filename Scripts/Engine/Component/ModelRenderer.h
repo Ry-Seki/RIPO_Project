@@ -1,5 +1,6 @@
 /*
  *  @file   ModelRenderer.h
+ *  @author Seki
  */
 
 #ifndef _MODELRENDERER_H_
@@ -8,12 +9,17 @@
 #include "RenderComponent.h"
 #include "../GameObject.h"
 
+/*
+ *  3Dモデルコンポーネント
+ */
 class ModelRenderer : public RenderComponent {
 private:
     int modelID = -1;
 
 public:
-    // 描画処理
+    /*
+     *  描画処理
+     */
     void Render3D() override {
         if (modelID == -1) return;
         auto obj = GetOwner();
@@ -23,7 +29,9 @@ public:
         MV1SetScale(modelID, VGet(obj->scale.x, obj->scale.y, obj->scale.z));
         MV1DrawModel(modelID);
     }
-
+    /*
+     *  破棄処理
+     */
     void OnDestroy() override {
         if (modelID != -1) {
             MV1DeleteModel(modelID);
@@ -32,7 +40,11 @@ public:
     }
 
 public:
-    void SetModel(int setValue) { modelID = setValue; }
+    /*
+     *  モデルハンドルの設定
+     *  param[in]           int& setValue   モデルハンドル
+     */
+    void SetModel(int& setValue) { modelID = setValue; }
 };
 #endif // !_MODELRENDERER_H_
 

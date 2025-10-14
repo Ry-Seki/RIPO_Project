@@ -1,11 +1,20 @@
+/*
+ *	@file	Engine.cpp
+ *	@author	Seki
+ */
+
 #include "Engine.h"
 #include "Time.h"
 #include "Scene/TitleScene.h"
+#include "Fade/FadeFactory.h"
 #include "Fade/FadeManager.h"
 #include <DxLib.h>
 #include <EffekseerForDXLib.h>
 #include <iostream>
 
+/*
+ *	初期化処理
+ */
 int Engine::Initialize() {
     dxlibInitialized = false;
     effekseerInitialized = false;
@@ -67,13 +76,17 @@ int Engine::Initialize() {
     initialized = true;
     return 0;
 }
-
+/*
+ *	破棄処理
+ */
 void Engine::Teardown() {
 	if (effekseerInitialized) { Effkseer_End(); effekseerInitialized = false; }
 	if (dxlibInitialized) { DxLib_End(); dxlibInitialized = false; }
 	initialized = false;
 }
-
+/*
+ *	メインループ
+ */
 int Engine::Run() {
 	if (Initialize() != 0) { Teardown(); return 1; }
 
@@ -89,7 +102,9 @@ int Engine::Run() {
 	Teardown();
 	return 0;
 }
-
+/*
+ *	更新処理
+ */
 void Engine::Update() {
 	Time::Update();
 
@@ -105,7 +120,9 @@ void Engine::Update() {
 	// シーンの切り替え
 	ChangeScene();
 }
-
+/*
+ *	描画処理
+ */
 void Engine::Render() {
 	ClearDrawScreen();
 
@@ -116,7 +133,9 @@ void Engine::Render() {
 	FadeManager::GetInstance().Render();
 	ScreenFlip();
 }
-
+/*
+ *	シーンの変更
+ */
 void Engine::ChangeScene() {
 	if (nextScene) {
 		if (currentScene) currentScene->Finalize(*this);
@@ -125,11 +144,29 @@ void Engine::ChangeScene() {
 		if (currentScene) currentScene->Initialize(*this);
 	}
 }
-
+/*
+ *	フェードの呼び出し処理
+ */
 void Engine::StartSceneFade(const FadeBasePtr& setFade, std::function<void()> onComplete) {
 	if (!setFade) return;
 	FadeManager::GetInstance().StartFade(setFade, [this, onComplete]() {
 		ChangeScene();
 		if (onComplete) onComplete();
+	});
+}
+/*
+ *	フェードアウト・インコールバック付き同時呼び出し
+ */
+void Engine::StartFadeOutIn(float fadeOutTime, float fadeInTime, std::function<void()> onMidPoint) {
+	// フェードアウト開始
+	auto fadeOut = CreateFade(FadeType::Black, fadeOutTime, FadeDirection::Out, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fadeOut, [this, fadeInTime, onMidPoint]() {
+		// フェードアウト完了 → 中間処理（例：日付更新）
+		if (onMidPoint) onMidPoint();
+
+		// フェードイン開始は必ず新しい Fade または Reset
+		auto fadeIn = CreateFade(FadeType::Black, fadeInTime, FadeDirection::In, FadeMode::NonStop);
+		fadeIn->Reset(FadeDirection::In);
+		FadeManager::GetInstance().StartFade(fadeIn, nullptr);
 	});
 }

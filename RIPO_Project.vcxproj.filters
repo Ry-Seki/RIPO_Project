@@ -52,6 +52,9 @@
     <Filter Include="ソース ファイル\Engine\Scene\Calendar">
       <UniqueIdentifier>{48c843ff-9675-4bdd-87b4-ebd90a97f385}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Input">
+      <UniqueIdentifier>{1a45a64e-7fa7-4173-b945-25cddacebb7b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -80,6 +83,21 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp">
       <Filter>ソース ファイル\Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\Calendar\Day.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Calendar</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Input\InputManager.cpp">
+      <Filter>ヘッダー ファイル\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarSystem.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Calendar</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarManager.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Calendar</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -142,6 +160,36 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Stage\StageBase.h">
       <Filter>ヘッダー ファイル\Engine\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\DateBase.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Calendar</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\Day.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Calendar</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\Week.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Calendar</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\Month.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Calendar</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\Year.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Calendar</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarManager.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Calendar</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarSystem.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Calendar</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Manager\GameObjectManager.h">
+      <Filter>ヘッダー ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h">
+      <Filter>ヘッダー ファイル\Engine\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Input\InputManager.h">
+      <Filter>ヘッダー ファイル\Engine\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

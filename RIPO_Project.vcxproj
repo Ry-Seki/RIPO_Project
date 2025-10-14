@@ -149,7 +149,11 @@
   <ItemGroup>
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
+    <ClCompile Include="Scripts\Engine\Input\InputManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\CharacterManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarSystem.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\Calendar\Day.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\MainGameScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Scene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp" />
@@ -171,16 +175,22 @@
     <ClInclude Include="Scripts\Engine\Fade\FadeFactory.h" />
     <ClInclude Include="Scripts\Engine\Fade\FadeManager.h" />
     <ClInclude Include="Scripts\Engine\GameObject.h" />
+    <ClInclude Include="Scripts\Engine\Input\InputManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\CharacterManager.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarManager.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarSystem.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\DateBase.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\Day.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\Month.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\Week.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Calendar\Year.h" />
     <ClInclude Include="Scripts\Engine\Scene\MainGameScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\Scene.h" />
     <ClInclude Include="Scripts\Engine\Scene\TitleScene.h" />
     <ClInclude Include="Scripts\Engine\Manager\GameObjectManager.h" />
-    <ClInclude Include="Scripts\Engine\ModelRenderer.h" />
-    <ClInclude Include="Scripts\Engine\RenderComponent.h" />
-    <ClInclude Include="Scripts\Engine\Scene.h" />
     <ClInclude Include="Scripts\Engine\Singleton.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageBase.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
   </ItemGroup>
