@@ -121,7 +121,7 @@
       <Filter>ソース ファイル\Engine\Load</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Load\LoadJSON.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Engine\Load</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +241,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\LoadSprite.h">
       <Filter>ヘッダー ファイル\Engine\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\SpawnPoint.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
