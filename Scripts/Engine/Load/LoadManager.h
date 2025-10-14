@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <memory>
+#include <functional>
 
 /*
  *	ファイル読み込み管理クラス
@@ -20,6 +21,7 @@ private:
 	std::vector<LoadBasePtr> loadList;	// 読み込むファイルリスト
 	int currentIndex = 0;				// ロードのインデクス番号
 	bool isComplete = false;			// 読み込み完了フラグ
+	std::function<void()> onComplete;	// ロード終了時のコールバック
 
 public:
 	/*
@@ -44,7 +46,15 @@ public:
 			currentIndex++;
 		}
 		// 読み込み完了
-		if (currentIndex >= loadList.size()) isComplete = true;
+		if (currentIndex >= loadList.size()) {
+			isComplete = true;
+
+			// コールバックの呼び出し
+			if (onComplete) {
+				onComplete();
+				onComplete = nullptr;
+			}
+		}
     }
 
 public:
@@ -56,12 +66,19 @@ public:
 		loadList.push_back(load);
 	}
 	/*
+	 *	ロード完了時コールバックの設定
+	 */
+	inline void SetOnComplete(const std::function<void()>& callback) {
+		onComplete = callback;
+	}
+	/*
 	 *	ロードリストの初期化
 	 */
 	inline void Clear() {
 		loadList.clear();
 		currentIndex = 0;
 		isComplete = false;
+		onComplete = nullptr;
 	}
 
 public:
