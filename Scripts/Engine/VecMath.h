@@ -37,7 +37,7 @@ struct Vector3 {
 		return { x * v, y * v, z * v };
 	}
 	Vector3 operator / (float v) const {
-		return { x / v, y * v, z * v };
+		return { x / v, y / v, z / v };
 	};
 	Vector3 operator + (const Vector3& v) const {
 		return { x + v.x, y + v.y, z + v.z };
@@ -117,6 +117,16 @@ struct Vector3 {
 
 	// 球面線形補間
 	static Vector3 Slerp(const Vector3& a, const Vector3& b, float t) {
+		// tを[ 0 , 1 ]にする
+		t = Clamp(t, 0.0f, 1.0f);
+
+		float magA = a.Magnitude();
+		float magB = b.Magnitude();
+		// 片方でも0だったら線形補間を利用
+		if (magA == 0 || magB == 0) {
+			return Lerp(a, b, t);
+		}
+
 		// 正規化
 		Vector3 v0 = a.Normalized();
 		Vector3 v1 = b.Normalized();
@@ -125,14 +135,28 @@ struct Vector3 {
 		float dot = Dot(v0, v1);
 		dot = Clamp(dot, -1.0f, 1.0f);
 
-		// 角度をラジアン角に変換
-		float rad = std::acos(dot) * t;
+		// dot < 0 の場合、反転して最短経路を選ぶ
+		if (dot < 0.0f) {
+			dot = -dot;
+			v1 = -v1;
+		}
 
-		// 補間方向を求める
-		Vector3 iDir = (v1 - v0 * dot).Normalized();
+		// 角度の計算
+		float theta = std::acos(dot);      // ベクトル間の角度:radian
+		float sinTheta = std::sin(theta);  // sinThetaの計算
 
-		// 球面補間の式
-		return v0 * std::cos(rad) + iDir * std::sin(rad);
+		// 球面補間の係数を計算
+		float w0 = std::sin((1.0f - t) * theta) / sinTheta;
+		float w1 = std::sin(t * theta) / sinTheta;
+
+
+		// 方向ベクトルを足す
+		Vector3 dir = v0 * w0 + v1 * w1;
+
+		// 線形に補間する
+		float len = magA + (magB - magA) * t;
+
+		return dir * len;
 
 	}
 
