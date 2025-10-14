@@ -8,12 +8,11 @@
 #define _STAGEBASE_H_
 #include <DxLib.h>
 #include <string>
-
+#include "../Load/Model/LoadModel.h"
 class StageBase {
 protected:
 	// モデルハンドル
 	int modelHandle;
-
 
 public:
 	// コンストラクタ
@@ -32,7 +31,7 @@ protected:
 
 public:
 	// ステージ読み込み
-	virtual void Load(const std::string& csvPath) = 0;
+	virtual void Load(const std::shared_ptr<LoadModel>& model) = 0;
 
 	// 更新
 	virtual void Update() = 0;
