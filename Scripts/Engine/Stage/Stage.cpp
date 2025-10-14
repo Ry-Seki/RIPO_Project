@@ -29,14 +29,9 @@ Stage::~Stage() {
  *  ステージ読み込み
  *  @param csvPath 読み込み対象CSVパス
  */
-void Stage::Load(const std::string& csvPath) {
+void Stage::Load(const std::shared_ptr<LoadModel>& model) {
 
-	auto StageModel = std::make_shared<LoadModel>("Res/Model/Stage/StageModel_1.mv1");
-	LoadManager::GetInstance().AddLoader(StageModel);
-
-	// キャッシュ
-	modelPath = csvPath;
-	modelHandle = MV1LoadModel(modelPath.c_str());
+	modelHandle = model->GetHandle();
 }
 
 /*
@@ -44,6 +39,10 @@ void Stage::Load(const std::string& csvPath) {
  */
 void Stage::Update() {
 	// ステージのオブジェクト更新
+
+
+	// 接地判定の更新
+	UpdateCollision();
 }
 
 /*

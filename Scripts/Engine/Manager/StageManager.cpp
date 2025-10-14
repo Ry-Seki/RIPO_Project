@@ -5,7 +5,7 @@
 
 #include "StageManager.h"
 #include <DxLib.h>
-#include "../Load/LoadModel.h"
+#include "../Load/Model/LoadModel.h"
 
  /*
   *  コンストラクタ
@@ -27,11 +27,11 @@ void StageManager::Initialize(Engine& setEngine) {
  */
 void StageManager::LoadStage(const std::string& stageCsvPath) {
 
-	auto StageModel = std::make_shared<LoadModel>("Res/Model/Stage/StageModel_1.mv1");
+	auto StageModel = std::make_shared<LoadModel>(stageCsvPath);
 	LoadManager::GetInstance().AddLoader(StageModel);
 
 	pStage = std::make_unique<Stage>();
-	pStage->Load(stageCsvPath);
+	pStage->Load(StageModel);
 }
 
 /*
