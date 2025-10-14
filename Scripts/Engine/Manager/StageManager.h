@@ -22,7 +22,7 @@ class StageManager : public Singleton<StageManager> {
 
 private:
 
-	Engine& engine;						// ゲームエンジン参照
+	Engine* engine;						// ゲームエンジン参照
 	std::unique_ptr<StageBase> pStage;	// 現在のステージ(自動的に削除される*)
 
 
@@ -60,7 +60,7 @@ public:
 	/*
 	 *  現在のステージの取得
 	 */
-	Stage* GetStage() const { return pStage.get(); }
+	StageBase* GetStage() const { return pStage.get(); }
 
 };
 
