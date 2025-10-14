@@ -18,7 +18,7 @@ StageManager::StageManager()
  *  ‰Šú‰»
  */
 void StageManager::Initialize(Engine& setEngine) {
-	this->engine = setEngine;
+	this->engine = &setEngine;
 }
 
 /*
