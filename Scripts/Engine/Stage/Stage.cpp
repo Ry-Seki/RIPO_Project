@@ -8,6 +8,7 @@
 #include <fstream>
 #include <sstream>
 #include <iostream>
+#include "../Load/Model/LoadModel.h"
 
  /*
   *  コンストラクタ
@@ -29,6 +30,10 @@ Stage::~Stage() {
  *  @param csvPath 読み込み対象CSVパス
  */
 void Stage::Load(const std::string& csvPath) {
+
+	auto StageModel = std::make_shared<LoadModel>("Res/Model/Stage/StageModel_1.mv1");
+	LoadManager::GetInstance().AddLoader(StageModel);
+
 	// キャッシュ
 	modelPath = csvPath;
 	modelHandle = MV1LoadModel(modelPath.c_str());
