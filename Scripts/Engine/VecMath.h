@@ -17,7 +17,7 @@ struct Vector2 { float x, y; };
 //	Vector3
 struct Vector3 {
 	// メンバ変数
-	float x, y, z; 
+	float x, y, z;
 
 	// 静的メンバ変数
 	static Vector3 zero, one;
@@ -64,7 +64,7 @@ struct Vector3 {
 		x *= v;
 		y *= v;
 		z *= v;
-		
+
 		return *this;
 	};
 	Vector3& operator /= (float v) {
@@ -106,9 +106,50 @@ struct Vector3 {
 	};
 	Vector3 Normalized() const {
 		float magnitude = Magnitude();
-
+		if (magnitude == 0) return Vector3::zero;
 		return { x / magnitude, y / magnitude, z / magnitude };
 	};
-	
+
+	// 線形補間
+	static Vector3 Lerp(const Vector3& a, const Vector3& b, float t) {
+		return a + (b - a) * t;
+	}
+
+	// 球面線形補間
+	static Vector3 Slerp(const Vector3& a, const Vector3& b, float t) {
+		// 正規化
+		Vector3 v0 = a.Normalized();
+		Vector3 v1 = b.Normalized();
+
+		// 角度
+		float dot = Dot(v0, v1);
+		dot = Clamp(dot, -1.0f, 1.0f);
+
+		// 角度をラジアン角に変換
+		float rad = std::acos(dot) * t;
+
+		// 補間方向を求める
+		Vector3 iDir = (v1 - v0 * dot).Normalized();
+
+		// 球面補間の式
+		return v0 * std::cos(rad) + iDir * std::sin(rad);
+
+	}
+
+	// Vector3のClamp
+	static Vector3 Clamp(const Vector3& v, const Vector3& min, const Vector3& max) {
+		return {
+			std::fmax(min.x, std::fmin(max.x, v.x)),
+			std::fmax(min.y, std::fmin(max.y, v.y)),
+			std::fmax(min.z, std::fmin(max.z, v.z))
+		};
+	}
+
+	// floatのClamp
+	static float Clamp(float value, float min, float max) {
+		return std::fmax(min, std::fmin(max, value));
+	}
+
+
 };
 #endif // !_VECMATH_H_
