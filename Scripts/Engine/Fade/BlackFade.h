@@ -15,6 +15,9 @@ class BlackFade : public FadeBase {
 public:
     /*
      *  コンストラクタ
+     *  @param[in]  float         duration  フェード時間
+     *  @param[in]  FadeDirection dir       フェードアウト・フェードインの選択
+     *  @param[in]  FadeMode      mode      フェード中、Sceneの更新を止めるか
      */
     BlackFade(float duration, FadeDirection dir, FadeMode mode)
         : FadeBase(duration, dir, mode) {}

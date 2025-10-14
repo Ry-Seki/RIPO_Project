@@ -108,6 +108,18 @@
     <ClCompile Include="Scripts\Engine\Stage\Stage.cpp">
       <Filter>ソース ファイル\Engine\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\LoadBinary.cpp">
+      <Filter>ソース ファイル\Engine\Load</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\LoadCSV.cpp">
+      <Filter>ソース ファイル\Engine\Load</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\LoadGraph.cpp">
+      <Filter>ソース ファイル\Engine\Load</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\LoadModel.cpp">
+      <Filter>ソース ファイル\Engine\Load</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -205,6 +217,27 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Stage\Stage.h">
       <Filter>ヘッダー ファイル\Engine\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\LoadBase.h">
+      <Filter>ヘッダー ファイル\Engine\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\LoadBinary.h">
+      <Filter>ヘッダー ファイル\Engine\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\LoadCSV.h">
+      <Filter>ヘッダー ファイル\Engine\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\LoadJSON.h">
+      <Filter>ヘッダー ファイル\Engine\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\LoadManager.h">
+      <Filter>ヘッダー ファイル\Engine\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\LoadModel.h">
+      <Filter>ヘッダー ファイル\Engine\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\LoadSprite.h">
+      <Filter>ヘッダー ファイル\Engine\Load</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

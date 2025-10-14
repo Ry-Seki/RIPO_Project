@@ -8,7 +8,6 @@
 
 #include "FadeBase.h"
 #include "BlackFade.h"
-#include <memory>
 
 enum class FadeType {
     Black

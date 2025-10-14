@@ -9,7 +9,6 @@
 #include "FadeBase.h"
 #include "../Singleton.h"
 
-#include <memory>
 #include <functional>
 
 /*
