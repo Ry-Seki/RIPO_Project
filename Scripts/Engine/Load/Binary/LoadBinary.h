@@ -6,7 +6,7 @@
 #ifndef _LOAD_BINARY_H_
 #define _LOAD_BINARY_H_
 
-#include "LoadBase.h"
+#include "../LoadBase.h"
 #include <fstream>
 #include <vector>
 

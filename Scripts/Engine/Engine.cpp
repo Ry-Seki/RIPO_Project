@@ -112,11 +112,15 @@ void Engine::Update() {
 	// フェードは TimeScale 非依存で更新
 	FadeManager::GetInstance().Update(Time::unscaledDeltaTime);
 
+	// ロード中の処理
+	bool isLoading = LoadManager::GetInstance().IsLoading();
+	if (isLoading) LoadManager::GetInstance().Update();
+
 	// フェードモードを確認
 	bool isFadeStop = FadeManager::GetInstance().GetMode() == FadeMode::Stop;
 
 	// シーンの更新
-	if (currentScene && !isFadeStop) currentScene->Update(*this, Time::deltaTime);
+	if (currentScene && !isLoading && !isFadeStop) currentScene->Update(*this, Time::deltaTime);
 
 	// シーンの切り替え
 	ChangeScene();

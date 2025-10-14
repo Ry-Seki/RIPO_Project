@@ -6,7 +6,7 @@
 #ifndef _LOAD_MODEL_H_
 #define _LOAD_MODEL_H_
 
-#include "LoadBase.h"
+#include "../LoadBase.h"
 
 #include <DxLib.h>
 
@@ -22,7 +22,7 @@ public:
 	 *	コンストラクタ
 	 *	param[in]	const std::string& setFilePath		ファイルパス
 	 */
-	explicit LoadModel(const std::string& setFilePath) : LoadBase(filePath) {}
+	explicit LoadModel(const std::string& setFilePath) : LoadBase(setFilePath) {}
 
 public:
 	/*

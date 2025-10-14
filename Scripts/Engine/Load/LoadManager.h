@@ -52,7 +52,7 @@ public:
 	 *	読み込み対象を追加
 	 *	param[in]	const LoadBasePtr& load		追加するファイル
 	 */
-	inline void AddLoder(const LoadBasePtr& load) {
+	inline void AddLoader(const LoadBasePtr& load) {
 		loadList.push_back(load);
 	}
 	/*
@@ -63,8 +63,15 @@ public:
 		currentIndex = 0;
 		isComplete = false;
 	}
+
+public:
 	/*
-	 *	読み込みフラグの取得
+	 *	読み込み中フラグの取得
+	 *	return	bool
+	 */
+	inline bool IsLoading() const { return !isComplete && !loadList.empty(); }
+	/*
+	 *	読み込み完了フラグの取得
 	 *  return	bool
 	 */
 	inline bool IsComplete() const { return isComplete; }

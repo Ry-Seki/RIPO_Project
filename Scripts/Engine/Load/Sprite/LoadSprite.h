@@ -1,12 +1,12 @@
 /*
- *	@file	LoadGraph.h
+ *	@file	LoadSprite.h
  *	@author	Seki
  */
 
 #ifndef _LOAD_GRAPH_H_
 #define _LOAD_GRAPH_H_
 
-#include "LoadBase.h"
+#include "../LoadBase.h"
 #include <DxLib.h>
 
 /*

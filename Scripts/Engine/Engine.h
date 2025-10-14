@@ -10,6 +10,7 @@
 #include "Scene/Scene.h"
 #include "VecMath.h"
 #include "Fade/FadeBase.h"
+#include "Load/LoadManager.h"
 
 #include <memory>
 #include <vector>
