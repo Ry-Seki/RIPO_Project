@@ -8,6 +8,7 @@
 
 #include "../Singleton.h"
 #include "LoadBase.h"
+#include "Animation/LoadAnimationBase.h"
 
 #include <vector>
 #include <memory>
@@ -18,10 +19,11 @@
  */
 class LoadManager : public Singleton<LoadManager> {
 private:
-	std::vector<LoadBasePtr> loadList;	// 読み込むファイルリスト
-	int currentIndex = 0;				// ロードのインデクス番号
-	bool isComplete = false;			// 読み込み完了フラグ
-	std::function<void()> onComplete;	// ロード終了時のコールバック
+	std::vector<LoadBasePtr> loadList;					// 読み込むファイルリスト
+	std::vector<LoadAnimationPtr> loadAnimationList;	// ロード中に再生されるアニメーション
+	int currentIndex = 0;								// ロードのインデクス番号
+	bool isComplete = false;							// 読み込み完了フラグ
+	std::function<void()> onComplete;					// ロード終了時のコールバック
 
 public:
 	/*
@@ -37,8 +39,11 @@ public:
 	/*
 	 *	更新処理
 	 */
-    void Update() {
+    void Update(float unscaledDeltaTime) {
 		if (isComplete || loadList.empty()) return;
+
+		// アニメーション更新
+		for (auto& anim : loadAnimationList) anim->Update(unscaledDeltaTime);
 
 		// 現在のファイルを読み込む
 		if (currentIndex < loadList.size()) {
@@ -54,8 +59,18 @@ public:
 				onComplete();
 				onComplete = nullptr;
 			}
+
+			// アニメーション破棄
+			for (auto& anim : loadAnimationList) anim.reset();
+			loadAnimationList.clear();
 		}
     }
+	/*
+	 *	描画処理
+	 */
+	void Render() {
+		for (auto& anim : loadAnimationList) if (anim) anim->Render();
+	}
 
 public:
 	/*
@@ -64,6 +79,12 @@ public:
 	 */
 	inline void AddLoader(const LoadBasePtr& load) {
 		loadList.push_back(load);
+	}
+	/*
+	 *	ロードアニメーションを追加
+	 */
+	inline void AddAnimation(const LoadAnimationPtr& anim) {
+		loadAnimationList.push_back(anim);
 	}
 	/*
 	 *	ロード完了時コールバックの設定
@@ -76,6 +97,7 @@ public:
 	 */
 	inline void Clear() {
 		loadList.clear();
+		loadAnimationList.clear();
 		currentIndex = 0;
 		isComplete = false;
 		onComplete = nullptr;

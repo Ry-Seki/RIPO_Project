@@ -58,6 +58,9 @@
     <Filter Include="ソース ファイル\Engine\Stage">
       <UniqueIdentifier>{d0570ce8-4016-4a87-a40b-25a42340f6e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\Load\Animation">
+      <UniqueIdentifier>{bc742f61-1afc-40b4-914b-efe3763a7f05}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -125,6 +128,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Load\Sprite\LoadSprite.cpp">
       <Filter>ソース ファイル\Engine\Load</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.cpp">
+      <Filter>ソース ファイル\Engine\Load\Animation</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -258,6 +264,9 @@
       <Filter>ヘッダー ファイル\Engine\Load</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\Sprite\LoadSprite.h">
+      <Filter>ヘッダー ファイル\Engine\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.h">
       <Filter>ヘッダー ファイル\Engine\Load</Filter>
     </ClInclude>
   </ItemGroup>

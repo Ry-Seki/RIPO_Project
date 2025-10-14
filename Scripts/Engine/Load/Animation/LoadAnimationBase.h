@@ -23,7 +23,7 @@ public:
 	/*
 	 *	XVˆ—
 	 */
-	virtual void Update(float deltaTime) = 0;
+	virtual void Update(float unscaledDeltaTime) = 0;
 	/*
 	 *	•`‰æˆ—
 	 */
