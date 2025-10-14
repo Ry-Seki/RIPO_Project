@@ -17,13 +17,17 @@ class CameraManager : public Singleton<CameraManager> {
 	friend class Singleton<CameraManager>;
 private:
 	Engine* engine;
+	GameObjectPtr camera;
 	
 private:
 	CameraManager();
 	~CameraManager() = default;
 
 public:
-
+	void CreateCamera(const std::string& name,
+		const Vector3& position = { 0.0f, 0.0f, 0.0f },
+		const Vector3& rotation = { 0.0f, 0.0f, 0.0f });
+	inline GameObjectPtr GetCamera() const{ return camera; }
 
 };
 

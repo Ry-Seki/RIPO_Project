@@ -16,9 +16,9 @@
  */
 class CharacterManager : public Singleton<CharacterManager>{
 private:
+	Engine* engine;
 	CharacterBaseList createCharacterList;
 	GameObjectPtr playerObject;
-	Engine* engine;
 
 private:
 	CharacterManager();

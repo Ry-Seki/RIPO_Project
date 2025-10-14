@@ -155,6 +155,7 @@
     <ClCompile Include="Scripts\Engine\Load\JSON\LoadJSON.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Model\LoadModel.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Sprite\LoadSprite.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\CameraManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\CharacterManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarManager.cpp" />
@@ -172,6 +173,7 @@
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Character\CharacterBase.h" />
     <ClInclude Include="Scripts\Engine\Character\PlayerComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Component.h" />
     <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h" />
     <ClInclude Include="Scripts\Engine\Component\RenderComponent.h" />
@@ -191,6 +193,7 @@
     <ClInclude Include="Scripts\Engine\Load\LoadManager.h" />
     <ClInclude Include="Scripts\Engine\Load\Model\LoadModel.h" />
     <ClInclude Include="Scripts\Engine\Load\Sprite\LoadSprite.h" />
+    <ClInclude Include="Scripts\Engine\Manager\CameraManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\CharacterManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
