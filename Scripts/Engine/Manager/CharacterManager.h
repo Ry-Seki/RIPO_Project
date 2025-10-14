@@ -8,7 +8,7 @@
 
 #include <vector>
 #include "../Singleton.h"
-#include "../Character/PlayerComponent.h"
+#include "../Component/Character/PlayerComponent.h"
 
 
 /*
