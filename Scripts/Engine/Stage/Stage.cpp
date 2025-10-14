@@ -12,7 +12,8 @@
   *  コンストラクタ
   */
 Stage::Stage()
-	: modelHandle(-1) {
+	: StageBase() {
+	modelHandle = -1;
 }
 
 /*
@@ -24,17 +25,18 @@ Stage::~Stage() {
 
 /*
  *  ステージ読み込み
- *  @pram std::string& csvPath
+ *  @param csvPath 読み込み対象CSVパス
  */
 void Stage::Load(const std::string& csvPath) {
+	modelPath = csvPath; // 仮処理
+	modelHandle = MV1LoadModel(modelPath.c_str());
 }
 
 /*
  *	更新
  */
 void Stage::Update() {
-	// ステージのオブジェクト、敵の配置
-
+	// ステージのオブジェクト更新
 }
 
 /*
@@ -47,14 +49,19 @@ void Stage::Render() {
 }
 
 /*
- *	終了
+ *	終了処理
  */
 void Stage::Execute() {
+	Clean(modelHandle);
+	if (modelHandle >= 0) {
+		MV1DeleteModel(modelHandle);
+		modelHandle = -1;
+	}
 }
 
 /*
  *	当たり判定の更新
  */
 void Stage::UpdateCollision() {
-
+	// 衝突判定処理
 }
