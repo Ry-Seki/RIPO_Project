@@ -10,6 +10,10 @@
 
 class StageObjectManager : public Singleton<StageObjectManager> {
 
+private:
+	StageObjectManager();
+	~StageObjectManager() = default;
+
 };
 
 #endif // !_STAGEOBJECTMANAGER_H_
