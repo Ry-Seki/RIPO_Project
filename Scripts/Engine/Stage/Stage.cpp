@@ -64,4 +64,12 @@ void Stage::Execute() {
  */
 void Stage::UpdateCollision() {
 	// 衝突判定処理
+	// モデルにあるトライアングルリストの数分繰り返す
+	for (int i = 0; i < MV1GetTriangleListNum(modelHandle); i++) {
+		// トライアングルリストの数分繰り返す
+		for (int j = 0; j < MV1GetTriangleListPolygonNum(modelHandle, i); j++) {
+			// 三角形を構成する三頂点の取得
+
+		}
+	}
 }
