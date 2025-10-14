@@ -14,12 +14,6 @@ protected:
 	// モデルハンドル
 	int modelHandle;
 
-	//Vector3 position;	// 座標
-	//Vector3 rotation;	// 回転
-	//Vector3 scale;		// 拡縮
-
-
-
 public:
 	// コンストラクタ
 	StageBase() : modelHandle(-1) {}
