@@ -4,10 +4,11 @@
  */
 
 #include "CharacterManager.h"
-#include "../Engine.h"
 #include "GameObjectManager.h"
 
-CharacterManager::CharacterManager() {}
+CharacterManager::CharacterManager() 
+	: engine(nullptr) {
+}
 
 /*
  *	‰Šú‰»ˆ—

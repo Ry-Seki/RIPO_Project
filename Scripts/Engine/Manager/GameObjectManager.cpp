@@ -4,7 +4,9 @@
  */
 #include "GameObjectManager.h"
 
-GameObjectManager::GameObjectManager() {}
+GameObjectManager::GameObjectManager()
+	: engine(nullptr) {
+}
 
 /*
  *	‰Šú‰»ˆ—
