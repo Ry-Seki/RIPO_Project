@@ -108,23 +108,26 @@
     <ClCompile Include="Scripts\Engine\Stage\Stage.cpp">
       <Filter>ソース ファイル\Engine\Stage</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\Binary\LoadBinary.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\CSV\LoadCSV.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\JSON\LoadJSON.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\Model\LoadModel.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\Sprite\LoadSprite.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="Scripts\Engine\Manager\CameraManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Load\Binary\LoadBinary.cpp">
-      <Filter>ソース ファイル\Engine\Load</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Load\CSV\LoadCSV.cpp">
-      <Filter>ソース ファイル\Engine\Load</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Load\JSON\LoadJSON.cpp">
-      <Filter>ソース ファイル\Engine\Load</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Load\Model\LoadModel.cpp">
-      <Filter>ソース ファイル\Engine\Load</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Load\Sprite\LoadSprite.cpp">
-      <Filter>ソース ファイル\Engine\Load</Filter>
+    <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -239,26 +242,26 @@
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Manager\CameraManager.h">
+    <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimationBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimationBase.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\Binary\LoadBinary.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\CSV\LoadCSV.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\JSON\LoadJSON.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\Model\LoadModel.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\Sprite\LoadSprite.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Manager\CameraManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

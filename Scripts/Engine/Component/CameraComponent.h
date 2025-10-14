@@ -8,18 +8,19 @@
 
 #include "Component.h"
 #include "../Engine.h"
+#include "../VecMath.h"
 
 class CameraComponent : public Component {
+private:
+	Vector3 currentPosition;	// 現在の位置
+	Vector3 previousPosition;	// 直前の位置
+
 public:
-	CameraComponent() = default;
+	CameraComponent();
 	virtual ~CameraComponent() = default;
 
 public:
-	virtual void Update(float deltaTime) override {
-
-	}
-	
-
+	virtual void Update(float deltaTime) override;
 };
 // 別名定義
 using CameraComponentPtr = std::shared_ptr<CameraComponent>;
