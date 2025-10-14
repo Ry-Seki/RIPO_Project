@@ -101,4 +101,5 @@ public:
 		return static_cast<float>(currentIndex) / static_cast<float>(loadList.size());
 	}
 };
+
 #endif // !_LOAD_MANAGER_H_
