@@ -6,37 +6,34 @@
 #ifndef _STAGE_H_
 #define _STAGE_H_
 
+#include "StageBase.h"
 #include <string>
 #include <vector>
-#include <DxLib.h>
-
  /*
-  *  ステージの基底クラス
+  *  ステージクラス
   */
-class Stage {
+class Stage : public StageBase {
 private:
-	int modelHandle;		// モデルハンドル
 	std::string modelPath;	// モデルのパス
-
 
 public:
 	Stage();
-	virtual ~Stage();
+	virtual ~Stage() override;
 
 	// ステージデータ読み込み
-	virtual void Load(const std::string& csvPath);
+	void Load(const std::string& csvPath) override;
 
 	// 更新
-	virtual void Update();
+	void Update() override;
 
 	// 描画
-	virtual void Render();
+	void Render() override;
 
 	// 終了処理
-	virtual void Execute();
+	void Execute() override;
 
 	// 当たり判定の更新
-	virtual void UpdateCollision();
+	void UpdateCollision() override;
 };
 
 

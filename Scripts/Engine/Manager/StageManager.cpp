@@ -10,15 +10,15 @@
   *  コンストラクタ
   */
 StageManager::StageManager()
-	: pEngine(nullptr)
+	: engine(nullptr)
 	, pStage(nullptr) {
 }
 
 /*
  *  初期化
  */
-void StageManager::Initialize(Engine* pEngine) {
-	this->pEngine = pEngine;
+void StageManager::Initialize(Engine& setEngine) {
+	this->engine = setEngine;
 }
 
 /*
