@@ -8,6 +8,8 @@
 
 #include <string>
 #include <memory>
+#include <iostream>
+
 
 /*
  *	全てのロードクラスの基底クラス
