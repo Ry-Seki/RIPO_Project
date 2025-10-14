@@ -10,7 +10,8 @@
 #ifndef _LOAD_JSON_H_
 #define _LOAD_JSON_H_
 
-#include "LoadBase.h"
+#include "../LoadBase.h"
+
 #include <fstream>
 #include <json.hpp>
 

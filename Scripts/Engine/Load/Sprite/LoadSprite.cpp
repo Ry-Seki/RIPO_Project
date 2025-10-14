@@ -1,5 +1,5 @@
 /*
- *	@file	LoadGraph.cpp
+ *	@file	LoadSprite.cpp
  *	@author	Seki
  */
 

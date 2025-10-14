@@ -6,7 +6,7 @@
 #ifndef _LOAD_MODEL_H_
 #define _LOAD_MODEL_H_
 
-#include "LoadBase.h"
+#include "../LoadBase.h"
 
 #include <DxLib.h>
 
