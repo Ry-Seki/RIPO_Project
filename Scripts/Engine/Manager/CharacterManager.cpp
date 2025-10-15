@@ -5,6 +5,7 @@
 
 #include "CharacterManager.h"
 #include "GameObjectManager.h"
+#include "CameraManager.h"
 
 CharacterManager::CharacterManager() 
 	: engine(nullptr) {
@@ -24,7 +25,10 @@ void CharacterManager::CreatePlayer(
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation) {
+	// リストの要素の数
 	int characterListCount = static_cast<int>(createCharacterList.size());
+	// 生成キャラクターリストの空きをチェック
+	// 今現状だとリストカウントが0で一つも生成できないようになっている
 	for (int i = 0; i < characterListCount; i++) {
 		if (createCharacterList[i] != nullptr) continue;
 		// 未使用状態のオブジェクト取得
@@ -37,6 +41,8 @@ void CharacterManager::CreatePlayer(
 		playerObject->SetObjectData(name, position, rotation);
 		// リストに追加
 		createCharacterList[i] = playerCharacter;
+		// カメラのターゲットに追加
+		CameraManager::GetInstance().SetTarget(playerObject);
 	}
 
 }
