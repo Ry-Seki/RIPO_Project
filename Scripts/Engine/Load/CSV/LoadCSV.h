@@ -35,6 +35,13 @@ public:
 
 public:
 	/*
+	 *	CSV文字列の解析処理
+	 *	param[in]	const std::string& line		1行分の文字列
+	 *	return		std::vector<std::string>	パース結果（1行分）
+	 */
+	std::vector<std::string> ParseCSV(const std::string& line) const;
+public:
+	/*
 	 *	CSVデータの取得
 	 *  return	const std::vector<std::vector<std::string>>
 	 */
