@@ -1,3 +1,8 @@
+/*
+ *	@file	CameraComponent.cpp
+ *  @author	Riku
+ */
+
 #include "CameraComponent.h"
 #include "DxLib.h"
 

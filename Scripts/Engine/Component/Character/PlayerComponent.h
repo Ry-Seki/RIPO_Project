@@ -6,7 +6,7 @@
 #define _PLAYERCOMPONENT_H_
 
 #include "CharacterBase.h"
-#include "../Engine.h"
+#include "../../Engine.h"
 
 class PlayerComponent : public CharacterBase {
 public:

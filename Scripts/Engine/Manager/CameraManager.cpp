@@ -1,3 +1,8 @@
+/*
+ *	@file	CameraManager.cpp
+ *  @author	Riku
+ */
+
 #include "CameraManager.h"
 #include "GameObjectManager.h"
 
