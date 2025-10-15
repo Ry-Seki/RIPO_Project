@@ -174,8 +174,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Character\CharacterBase.h" />
-    <ClInclude Include="Scripts\Engine\Character\PlayerComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Component.h" />
     <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h" />
     <ClInclude Include="Scripts\Engine\Component\RenderComponent.h" />
