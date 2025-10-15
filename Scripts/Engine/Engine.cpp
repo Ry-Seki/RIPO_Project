@@ -112,8 +112,9 @@ void Engine::Update() {
 	// フェードは TimeScale 非依存で更新
 	FadeManager::GetInstance().Update(Time::unscaledDeltaTime);
 
-	// ロード中の処理
+	// ロードフラグの取得
 	bool isLoading = LoadManager::GetInstance().IsLoading();
+	// ロード更新処理
 	if (isLoading) LoadManager::GetInstance().Update(Time::unscaledDeltaTime);
 
 	// フェードモードを確認
@@ -133,6 +134,11 @@ void Engine::Render() {
 
 	// シーンの描画
 	if (currentScene) currentScene->Render();
+
+	// ロードフラグの取得
+	bool isLoading = LoadManager::GetInstance().IsLoading();
+	// ロード更新処理
+	if (isLoading) LoadManager::GetInstance().Render();
 
 	// フェード描画
 	FadeManager::GetInstance().Render();

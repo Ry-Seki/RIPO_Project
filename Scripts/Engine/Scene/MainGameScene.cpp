@@ -40,5 +40,4 @@ void MainGameScene::Update(Engine& engine, float deltaTime) {
  */
 void MainGameScene::Render() {
     calendarManager->Render();
-    StageManager::GetInstance().Render();
 }
