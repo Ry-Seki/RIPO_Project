@@ -153,6 +153,18 @@
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionDungeon\ActionDungeon.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionTraining\ActionTraining.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Action</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -300,6 +312,21 @@
       <Filter>ヘッダー ファイル\Engine\Scene</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\DayAction\DayActionBase.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionDungeon\ActionDungeon.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionTraining\ActionTraining.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionManager.h">
       <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
     </ClInclude>
   </ItemGroup>
