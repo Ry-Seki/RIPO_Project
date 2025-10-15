@@ -102,9 +102,6 @@
     <ClCompile Include="Scripts\Engine\Scene\Calendar\Day.cpp">
       <Filter>ソース ファイル\Engine\Scene\Calendar</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Input\InputManager.cpp">
-      <Filter>ヘッダー ファイル\Engine\Input</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarSystem.cpp">
       <Filter>ソース ファイル\Engine\Scene\Calendar</Filter>
     </ClCompile>
@@ -164,6 +161,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.cpp">
       <Filter>ソース ファイル\Engine\Scene\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Input\InputManager.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
