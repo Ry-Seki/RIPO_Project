@@ -95,7 +95,7 @@ public:
     /*
      *  ロード完了フラグの取得
      */
-    bool IsComplete() const { return isComplete; }
+    bool IsComplete() const { return isComplete || loadList.empty(); }
     /*
      *  ロード進捗度の取得
      */
