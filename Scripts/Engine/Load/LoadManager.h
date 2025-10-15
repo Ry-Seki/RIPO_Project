@@ -7,99 +7,82 @@
 #define _LOAD_MANAGER_H_
 
 #include "../Singleton.h"
-#include "LoadBase.h"
-
-#include <vector>
-#include <memory>
+#include "LoadSystem.h"
 #include <functional>
+#include <memory>
 
 /*
  *	ファイル読み込み管理クラス
  */
 class LoadManager : public Singleton<LoadManager> {
 private:
-	std::vector<LoadBasePtr> loadList;	// 読み込むファイルリスト
-	int currentIndex = 0;				// ロードのインデクス番号
-	bool isComplete = false;			// 読み込み完了フラグ
-	std::function<void()> onComplete;	// ロード終了時のコールバック
+    std::shared_ptr<LoadSystem> system;
+    std::function<void()> onComplete;
 
 public:
-	/*
-	 *	コンストラクタ
-	 */
-	LoadManager() = default;
-	/*
-	 *	デストラクタ
-	 */
-	~LoadManager() = default;
+    /*
+     *  コンストラクタ
+     */
+    LoadManager() : system(std::make_shared<LoadSystem>()) {}
+    /*
+     *  デストラクタ
+     */
+    ~LoadManager() = default;
 
 public:
-	/*
-	 *	更新処理
-	 */
-    void Update() {
-		if (isComplete || loadList.empty()) return;
+    /*
+     *  更新処理
+     */
+    void Update(float unscaledDeltaTime) {
+        if (!system || system->IsComplete()) return;
 
-		// 現在のファイルを読み込む
-		if (currentIndex < loadList.size()) {
-			loadList[currentIndex]->Load();
-			currentIndex++;
-		}
-		// 読み込み完了
-		if (currentIndex >= loadList.size()) {
-			isComplete = true;
+        system->Update(unscaledDeltaTime);
 
-			// コールバックの呼び出し
-			if (onComplete) {
-				onComplete();
-				onComplete = nullptr;
-			}
-		}
+        if (system->IsComplete() && onComplete) {
+            onComplete();
+            onComplete = nullptr;
+        }
+    }
+    /*
+     *  描画処理
+     */
+    void Render() {
+        if (system) system->Render();
     }
 
 public:
-	/*
-	 *	読み込み対象を追加
-	 *	param[in]	const LoadBasePtr& load		追加するファイル
-	 */
-	inline void AddLoader(const LoadBasePtr& load) {
-		loadList.push_back(load);
-	}
-	/*
-	 *	ロード完了時コールバックの設定
-	 */
-	inline void SetOnComplete(const std::function<void()>& callback) {
-		onComplete = callback;
-	}
-	/*
-	 *	ロードリストの初期化
-	 */
-	inline void Clear() {
-		loadList.clear();
-		currentIndex = 0;
-		isComplete = false;
-		onComplete = nullptr;
-	}
+    /*
+     *  コールバック処理設定
+     *  param[in]   const std::function<void()>& callback   void型のコールバック
+     */
+    void SetOnComplete(const std::function<void()>& callback) { onComplete = callback; }
+    /*
+     *  ロード対象追加
+     *  param[in]   const LoadBasePtr& loader   ロード対象
+     */
+    void AddLoader(const LoadBasePtr& loader) { system->AddLoader(loader); }
+    /*
+     *  アニメーション追加
+     *  param[in]   const LoadAnimationPtr& animation    ロードアニメーション
+     */
+    void AddAnimation(const LoadAnimationPtr& animation) { system->AddAnimation(animation); }
+    /*
+     *  解放処理
+     */
+    void Clear() {
+        if (system) system->Clear();
+        onComplete = nullptr;
+    }
 
 public:
-	/*
-	 *	読み込み中フラグの取得
-	 *	return	bool
-	 */
-	inline bool IsLoading() const { return !isComplete && !loadList.empty(); }
-	/*
-	 *	読み込み完了フラグの取得
-	 *  return	bool
-	 */
-	inline bool IsComplete() const { return isComplete; }
-	/*
-	 *	読み込み進捗
-	 *  return	float
-	 */
-	inline float GetProgress() const {
-		if (loadList.empty()) return 1.0f;
-		return static_cast<float>(currentIndex) / static_cast<float>(loadList.size());
-	}
+    /*
+     *  ロード中フラグの取得
+     */
+    bool IsLoading() const { return system && !system->IsComplete(); }
+    /*
+     *  進捗度ゲージ追加
+     */
+    float GetProgress() const { return system ? system->GetProgress() : 1.0f; }
 };
 
 #endif // !_LOAD_MANAGER_H_

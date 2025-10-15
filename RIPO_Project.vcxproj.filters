@@ -58,6 +58,18 @@
     <Filter Include="ソース ファイル\Engine\Stage">
       <UniqueIdentifier>{d0570ce8-4016-4a87-a40b-25a42340f6e2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\Load\Animation">
+      <UniqueIdentifier>{bc742f61-1afc-40b4-914b-efe3763a7f05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Load\Animation">
+      <UniqueIdentifier>{ffab97aa-c776-491b-834e-4773cbcd9620}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\Action">
+      <UniqueIdentifier>{07368507-ebed-455f-b847-37a8ab637382}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\Action">
+      <UniqueIdentifier>{ea40ac7a-bba9-4642-947b-a7862ea4e33f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -126,6 +138,15 @@
     <ClCompile Include="Scripts\Engine\Load\Sprite\LoadSprite.cpp">
       <Filter>ソース ファイル\Engine\Load</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.cpp">
+      <Filter>ソース ファイル\Engine\Load\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.cpp">
+      <Filter>ソース ファイル\Engine\Load\Animation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -165,9 +186,6 @@
       <Filter>ヘッダー ファイル\Engine\Component</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Character\PlayerComponent.h">
       <Filter>ヘッダー ファイル\Engine\Component</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Component\RenderComponent.h">
@@ -242,9 +260,6 @@
     <ClInclude Include="Scripts\Engine\Manager\CameraManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimationBase.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\Binary\LoadBinary.h">
       <Filter>ヘッダー ファイル\Engine\Load</Filter>
     </ClInclude>
@@ -258,6 +273,21 @@
       <Filter>ヘッダー ファイル\Engine\Load</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\Sprite\LoadSprite.h">
+      <Filter>ヘッダー ファイル\Engine\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.h">
+      <Filter>ヘッダー ファイル\Engine\Load\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.h">
+      <Filter>ヘッダー ファイル\Engine\Load\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimationBase.h">
+      <Filter>ヘッダー ファイル\Engine\Load\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\LoadSystem.h">
       <Filter>ヘッダー ファイル\Engine\Load</Filter>
     </ClInclude>
   </ItemGroup>

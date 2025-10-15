@@ -147,9 +147,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Engine\Input\InputManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Binary\LoadBinary.cpp" />
     <ClCompile Include="Scripts\Engine\Load\CSV\LoadCSV.cpp" />
     <ClCompile Include="Scripts\Engine\Load\JSON\LoadJSON.cpp" />
@@ -172,8 +175,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Character\CharacterBase.h" />
-    <ClInclude Include="Scripts\Engine\Character\PlayerComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Component.h" />
     <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h" />
     <ClInclude Include="Scripts\Engine\Component\RenderComponent.h" />
@@ -186,11 +189,14 @@
     <ClInclude Include="Scripts\Engine\GameObject.h" />
     <ClInclude Include="Scripts\Engine\Input\InputManager.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimationBase.h" />
+    <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.h" />
+    <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.h" />
     <ClInclude Include="Scripts\Engine\Load\Binary\LoadBinary.h" />
     <ClInclude Include="Scripts\Engine\Load\CSV\LoadCSV.h" />
     <ClInclude Include="Scripts\Engine\Load\JSON\LoadJSON.h" />
     <ClInclude Include="Scripts\Engine\Load\LoadBase.h" />
     <ClInclude Include="Scripts\Engine\Load\LoadManager.h" />
+    <ClInclude Include="Scripts\Engine\Load\LoadSystem.h" />
     <ClInclude Include="Scripts\Engine\Load\Model\LoadModel.h" />
     <ClInclude Include="Scripts\Engine\Load\Sprite\LoadSprite.h" />
     <ClInclude Include="Scripts\Engine\Manager\CameraManager.h" />

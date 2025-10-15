@@ -12,6 +12,10 @@ class PlayerComponent : public CharacterBase {
 public:
 	PlayerComponent() = default;
 	virtual ~PlayerComponent() = default;
+
+public:
+	virtual void Update(float deltaTime) override;
+
 };
 
 #endif // !_PLAYERCOMPONENT_H_
