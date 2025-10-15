@@ -39,10 +39,6 @@ void Stage::Load(const std::shared_ptr<LoadModel>& model) {
  */
 void Stage::Update() {
 	// ステージのオブジェクト更新
-
-
-	// 接地判定の更新
-	//UpdateCollision();
 }
 
 /*
@@ -72,12 +68,14 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 
 	int i, j, k;									// 汎用カウンタ変数
 	bool moveFlag;									// 水平方向に移動したかどうかのフラグ
-	bool hitFlag;									// ポリゴンに当たったかどうか記憶しておく変数
-	MV1_COLL_RESULT_POLY_DIM hitDim;				// プレイヤーの周囲にあるポリゴンを検出した結果を代入する構造体
+	bool hitFlag = false;							// ポリゴンに当たったかどうか記憶しておく変数
+	auto hitDim = std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
 	int kabeNum;									// 壁ポリゴンと判断されたポリゴンの数
 	int yukaNum;									// 床ポリゴンと判断されたポリゴンの数
-	MV1_COLL_RESULT_POLY* kabe[PLAYER_MAX_HITCOLL];	// 壁ポリゴンと判断されたポリゴンの構造体のアドレスを保存しておくためのポインタ配列
-	MV1_COLL_RESULT_POLY* yuka[PLAYER_MAX_HITCOLL]; // 床ポリゴンと判断されたポリゴンの構造体のアドレスを保存しておくためのポインタ配列
+	std::vector<MV1_COLL_RESULT_POLY*> kabe;		// 壁ポリゴンと判断されたポリゴンの構造体のアドレスを保存しておくためのポインタ配列
+	std::vector<MV1_COLL_RESULT_POLY*> yuka;		// 床ポリゴンと判断されたポリゴンの構造体のアドレスを保存しておくためのポインタ配列
+	kabe.reserve(PLAYER_MAX_HITCOLL);
+	yuka.reserve(PLAYER_MAX_HITCOLL);
 	MV1_COLL_RESULT_POLY* poly;						// ポリゴン構造体にアクセスするために使用するポインタ
 	HITRESULT_LINE lineRes;							// 線分とポリゴンとの当たり判定の結果を代入する構造体
 	Vector3 prevPos;
@@ -100,7 +98,8 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 	// プレイヤーの周囲にあるステージポリゴンを取得する
 	VECTOR posV = Vector3::ToVECTOR(*position); // Vector3->VECTORに変換
 	float radius = PLAYER_ENUM_DEFAULT_SIZE + MoveVec.Magnitude();
-	hitDim = MV1CollCheck_Sphere(modelHandle, -1, posV, radius);
+	// コリジョン検出
+	*hitDim = MV1CollCheck_Sphere(modelHandle, -1, posV, radius);
 
 	// 検出されたポリゴンが壁ポリゴンか床ポリゴンか判断する
 	{
@@ -109,18 +108,18 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 		yukaNum = 0;
 
 		// 検出されたポリゴンの数だけ繰り返す
-		for (i = 0; i < hitDim.HitNum; i++) {
+		for (i = 0; i < hitDim->HitNum; i++) {
 			// XZ平面に垂直かどうかはポリゴンの法線のY成分の値で判断する
-			if (hitDim.Dim[i].Normal.y < 0.7f && hitDim.Dim[i].Normal.y > -0.7f) {
+			if (hitDim->Dim[i].Normal.y < 0.7f && hitDim->Dim[i].Normal.y > -0.7f) {
 				// 壁ポリゴンと判断された場合でも、プレイヤーのＹ座標＋0.3ｆより高いポリゴンのみ当たり判定を行う
-				if (hitDim.Dim[i].Position[0].y > prevPos.y + 0.3f ||
-					hitDim.Dim[i].Position[1].y > prevPos.y + 0.3f ||
-					hitDim.Dim[i].Position[2].y > prevPos.y + 0.3f) {
+				if (hitDim->Dim[i].Position[0].y > prevPos.y + 0.3f ||
+					hitDim->Dim[i].Position[1].y > prevPos.y + 0.3f ||
+					hitDim->Dim[i].Position[2].y > prevPos.y + 0.3f) {
 
 					// ポリゴンの数が列挙できる限界数に達していなかったらポリゴンを配列に追加
 					if (kabeNum < PLAYER_MAX_HITCOLL) {
 						// ポリゴンの構造体のアドレスを壁ポリゴンポインタ配列に保存する
-						kabe[kabeNum] = &hitDim.Dim[i];
+						kabe[kabeNum] = &hitDim->Dim[i];
 
 						// 壁ポリゴンの数を加算する
 						kabeNum++;
@@ -131,7 +130,7 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 				// ポリゴンの数が列挙できる限界数に達していなかったらポリゴンを配列に追加
 				if (yukaNum < PLAYER_MAX_HITCOLL) {
 					// ポリゴンの構造体のアドレスを床ポリゴンポインタ配列に保存する
-					yuka[yukaNum] = &hitDim.Dim[i];
+					yuka[yukaNum] = &hitDim->Dim[i];
 
 					// 床ポリゴンの数を加算する
 					yukaNum++;
@@ -330,9 +329,7 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 		*position = nowPos;
 
 		// モデルの周囲のポリゴンを解放
-		MV1CollResultPolyDimTerminate(hitDim);
-
-
+		MV1CollResultPolyDimTerminate(*hitDim);
 
 
 
