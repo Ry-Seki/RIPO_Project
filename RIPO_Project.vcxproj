@@ -162,6 +162,7 @@
     <ClCompile Include="Scripts\Engine\Manager\CameraManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\CharacterManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarSystem.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\Day.cpp" />
@@ -221,7 +222,6 @@
     <ClInclude Include="Scripts\Engine\Singleton.h" />
     <ClInclude Include="Scripts\Engine\Stage\Stage.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageBase.h" />
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\SpawnPoint.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
