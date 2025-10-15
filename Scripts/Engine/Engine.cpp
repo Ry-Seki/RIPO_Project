@@ -114,7 +114,7 @@ void Engine::Update() {
 
 	// ロード中の処理
 	bool isLoading = LoadManager::GetInstance().IsLoading();
-	if (isLoading) LoadManager::GetInstance().Update();
+	if (isLoading) LoadManager::GetInstance().Update(Time::unscaledDeltaTime);
 
 	// フェードモードを確認
 	bool isFadeStop = FadeManager::GetInstance().GetMode() == FadeMode::Stop;

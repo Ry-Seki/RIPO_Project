@@ -8,18 +8,22 @@
 
 #include "../Singleton.h"
 #include "LoadBase.h"
+#include "Animation/LoadAnimationBase.h"
 
 #include <vector>
 #include <memory>
+#include <functional>
 
 /*
  *	ファイル読み込み管理クラス
  */
 class LoadManager : public Singleton<LoadManager> {
 private:
-	std::vector<LoadBasePtr> loadList;	// 読み込むファイルリスト
-	int currentIndex = 0;				// ロードのインデクス番号
-	bool isComplete = false;			// 読み込み完了フラグ
+	std::vector<LoadBasePtr> loadList;					// 読み込むファイルリスト
+	std::vector<LoadAnimationPtr> loadAnimationList;	// ロード中に再生されるアニメーション
+	int currentIndex = 0;								// ロードのインデクス番号
+	bool isComplete = false;							// 読み込み完了フラグ
+	std::function<void()> onComplete;					// ロード終了時のコールバック
 
 public:
 	/*
@@ -35,8 +39,11 @@ public:
 	/*
 	 *	更新処理
 	 */
-    void Update() {
+    void Update(float unscaledDeltaTime) {
 		if (isComplete || loadList.empty()) return;
+
+		// アニメーション更新
+		for (auto& anim : loadAnimationList) anim->Update(unscaledDeltaTime);
 
 		// 現在のファイルを読み込む
 		if (currentIndex < loadList.size()) {
@@ -44,8 +51,26 @@ public:
 			currentIndex++;
 		}
 		// 読み込み完了
-		if (currentIndex >= loadList.size()) isComplete = true;
+		if (currentIndex >= loadList.size()) {
+			isComplete = true;
+
+			// コールバックの呼び出し
+			if (onComplete) {
+				onComplete();
+				onComplete = nullptr;
+			}
+
+			// アニメーション破棄
+			for (auto& anim : loadAnimationList) anim.reset();
+			loadAnimationList.clear();
+		}
     }
+	/*
+	 *	描画処理
+	 */
+	void Render() {
+		for (auto& anim : loadAnimationList) if (anim) anim->Render();
+	}
 
 public:
 	/*
@@ -56,12 +81,26 @@ public:
 		loadList.push_back(load);
 	}
 	/*
+	 *	ロードアニメーションを追加
+	 */
+	inline void AddAnimation(const LoadAnimationPtr& anim) {
+		loadAnimationList.push_back(anim);
+	}
+	/*
+	 *	ロード完了時コールバックの設定
+	 */
+	inline void SetOnComplete(const std::function<void()>& callback) {
+		onComplete = callback;
+	}
+	/*
 	 *	ロードリストの初期化
 	 */
 	inline void Clear() {
 		loadList.clear();
+		loadAnimationList.clear();
 		currentIndex = 0;
 		isComplete = false;
+		onComplete = nullptr;
 	}
 
 public:
@@ -84,4 +123,5 @@ public:
 		return static_cast<float>(currentIndex) / static_cast<float>(loadList.size());
 	}
 };
+
 #endif // !_LOAD_MANAGER_H_

@@ -12,7 +12,7 @@
 #include "../Stage/Stage.h"
 #include <memory>
 #include <string>
-
+#include "../Load/LoadManager.h"
  /*
   *	ステージ全体の管理
   */

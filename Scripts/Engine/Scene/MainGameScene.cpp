@@ -7,6 +7,7 @@
 #include "../Engine.h"
 #include "../Fade/FadeFactory.h"
 #include "../Fade/FadeManager.h"
+#include "../Manager/StageManager.h"
 
 /*
  *  ‰Šú‰»ˆ—
@@ -39,4 +40,5 @@ void MainGameScene::Update(Engine& engine, float deltaTime) {
  */
 void MainGameScene::Render() {
     calendarManager->Render();
+    StageManager::GetInstance().Render();
 }
