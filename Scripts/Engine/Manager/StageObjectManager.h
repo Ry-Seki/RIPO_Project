@@ -29,7 +29,20 @@ public:
 	/*
 	 *	初期化
 	 */
-	void Initialize(Engine& setEngie);
+	void Initialize(Engine& setEngine);
+
+	/*
+	 *	お宝生成
+	 */
+	void CreateTreasure(const std::string& name,
+		const Vector3& position = { 0.0f, 0.0f, 0.0f },
+		const Vector3& rotation = { 0.0f, 0.0f, 0.0f },
+		const Vector3& scale = { 0.0f, 0.0f, 0.0f });
+
+	/*
+	 *	ID指定のステージオブジェクト削除
+	 */
+	void RemoveStageObject(int stageObjectID);
 
 	/* 
 	 *	ID指定のステージオブジェクト取得

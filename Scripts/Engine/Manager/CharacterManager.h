@@ -15,7 +15,7 @@
  *	キャラクターの管理クラス
  */
 class CharacterManager : public Singleton<CharacterManager>{
-private:
+private:;
 	Engine* engine;
 	CharacterBaseList createCharacterList;
 	GameObjectPtr playerObject;
