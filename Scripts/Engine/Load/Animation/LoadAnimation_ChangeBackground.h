@@ -28,6 +28,7 @@ private:
 	bool fadingOut = false;					// フェードフラグ
 
 public:
+	~LoadAnimation_ChangeBackground() override = default;
 	// 画像を読み込む（ファイルパスリスト）
 	void LoadImages(const std::vector<std::string>& paths) {
 		for (auto& p : paths) {
@@ -47,6 +48,9 @@ public:
 	 *	描画処理
 	 */
 	void Render() override;
+
+	// 画像解放
+	void Unload() override;
 };
 
 #endif // !_LOAD_ANIMATION_CHANGE_BACKGROUND_H_

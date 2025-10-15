@@ -50,3 +50,15 @@ void LoadAnimation_ChangeBackground::Render() {
     }
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 }
+/*
+ *  ‰ğ•úˆ—
+ */
+void LoadAnimation_ChangeBackground::Unload() {
+    for (auto& bg : backgroundList) {
+        if (bg.spriteHandle != -1) {
+            DeleteGraph(bg.spriteHandle);
+            bg.spriteHandle = -1;
+        }
+    }
+    backgroundList.clear();
+}

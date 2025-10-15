@@ -17,7 +17,9 @@ public:
 	/*
 	 *	デストラクタ
 	 */
-	virtual ~LoadAnimationBase() = default;
+	virtual ~LoadAnimationBase() {
+		Unload();
+	};
 
 public:
 	/*
@@ -28,6 +30,10 @@ public:
 	 *	描画処理
 	 */
 	virtual void Render() = 0;
+	/*
+	 *	解放処理
+	 */
+	virtual void Unload() {}
 };
 // 別名定義
 using LoadAnimationPtr = std::shared_ptr<LoadAnimationBase>;
