@@ -147,6 +147,9 @@
     <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.cpp">
       <Filter>ソース ファイル\Engine\Load\Animation</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\DebugScene.cpp">
+      <Filter>ソース ファイル\Engine\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -289,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\LoadSystem.h">
       <Filter>ヘッダー ファイル\Engine\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\DebugScene.h">
+      <Filter>ヘッダー ファイル\Engine\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
