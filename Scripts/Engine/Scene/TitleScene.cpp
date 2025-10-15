@@ -16,7 +16,6 @@
   *  ‰Šú‰»ˆ—
   */
 void TitleScene::Initialize(Engine& engine) {
-	StageManager::GetInstance().LoadStage("Res/Model/Stage/StageModel_1.mv1");
 	engine.StartFadeOutIn(0.5f, 0.5f, [&engine]() {
 		engine.SetNextScene(std::make_shared<MainGameScene>());
 		});

@@ -6,6 +6,7 @@
 #include "Engine.h"
 #include "Time.h"
 #include "Scene/TitleScene.h"
+#include "Scene/DebugScene.h"
 #include "Fade/FadeFactory.h"
 #include "Fade/FadeManager.h"
 
@@ -91,7 +92,7 @@ void Engine::Teardown() {
 int Engine::Run() {
 	if (Initialize() != 0) { Teardown(); return 1; }
 
-	SetNextScene(std::make_shared<TitleScene>());
+	SetNextScene(std::make_shared<DebugScene>());
 	ChangeScene();
 
 	while (ProcessMessage() != -1) {
@@ -112,9 +113,10 @@ void Engine::Update() {
 	// フェードは TimeScale 非依存で更新
 	FadeManager::GetInstance().Update(Time::unscaledDeltaTime);
 
-	// ロード中の処理
+	// ロードフラグの取得
 	bool isLoading = LoadManager::GetInstance().IsLoading();
-	if (isLoading) LoadManager::GetInstance().Update();
+	// ロード更新処理
+	if (isLoading) LoadManager::GetInstance().Update(Time::unscaledDeltaTime);
 
 	// フェードモードを確認
 	bool isFadeStop = FadeManager::GetInstance().GetMode() == FadeMode::Stop;
@@ -133,6 +135,11 @@ void Engine::Render() {
 
 	// シーンの描画
 	if (currentScene) currentScene->Render();
+
+	// ロードフラグの取得
+	bool isLoading = LoadManager::GetInstance().IsLoading();
+	// ロード更新処理
+	if (isLoading) LoadManager::GetInstance().Render();
 
 	// フェード描画
 	FadeManager::GetInstance().Render();
