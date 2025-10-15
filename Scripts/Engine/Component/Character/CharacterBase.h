@@ -6,7 +6,8 @@
 #ifndef _CHARACTERBASE_H_
 #define _CHATACTERBASE_H_
 
-#include "../Component/Component.h"
+#include "../../Component/Component.h"
+#include <vector>
 
 /*
  *	キャラクターの基底クラス
