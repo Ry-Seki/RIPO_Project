@@ -56,6 +56,8 @@ public:
 	 */
 	void Execute();
 
+	void StageCollider(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos2, Vector3 MoveVec);
+
 
 	/*
 	 *  現在のステージの取得
