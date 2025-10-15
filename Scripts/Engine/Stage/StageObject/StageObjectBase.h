@@ -8,6 +8,7 @@
 
 #include "../../Component/Component.h"
 #include "../../VecMath.h"
+#include <vector>
 
 class StageObjectBase : public Component {
 private:
@@ -108,5 +109,9 @@ public:
 
 
 };
+
+// •Ê–¼’è‹`
+using StageObjectBasePtr = std::shared_ptr<StageObjectBase>;
+using StageObjectBaseList = std::vector<StageObjectBasePtr>;
 
 #endif // !_STAGEOBJECTBASE_H_

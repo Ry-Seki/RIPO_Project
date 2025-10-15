@@ -9,6 +9,7 @@
 #include <DxLib.h>
 #include <string>
 #include "../Load/Model/LoadModel.h"
+#include "../VecMath.h"
 class StageBase {
 protected:
 	// モデルハンドル
@@ -42,8 +43,14 @@ public:
 	// 終了処理
 	virtual void Execute() = 0;
 
-	// 当たり判定の更新
-	virtual void UpdateCollision() = 0;
+	/*
+	 *	当たり判定の更新
+	 *  @param Vector3* position
+	 *  @param Vector3  PloyPos1
+	 *	@param Vector3  PloyPos2
+	 *  @param Vector3  MoveVec
+	 */
+	virtual void UpdateCollision(Vector3* position, Vector3 PolyPos1,Vector3 PloyPos2,Vector3 MoveVec) = 0;
 };
 
 #endif // !_STAGEBASE_H_

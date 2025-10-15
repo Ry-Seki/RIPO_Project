@@ -15,9 +15,7 @@
  *	キャラクターの管理クラス
  */
 class CharacterManager : public Singleton<CharacterManager>{
-	// フレンド宣言
-	friend class Singleton<CharacterManager>;
-private:
+private:;
 	Engine* engine;
 	CharacterBaseList createCharacterList;
 	GameObjectPtr playerObject;

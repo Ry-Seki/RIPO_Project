@@ -35,6 +35,13 @@ void StageManager::LoadStage(const std::string& stageCsvPath) {
 }
 
 /*
+ *	ステージの当たり判定
+ */
+void StageManager::StageCollider(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos2, Vector3 MoveVec) {
+	pStage->UpdateCollision(position, PolyPos1, PloyPos2, MoveVec);
+}
+
+/*
  *  更新
  */
 void StageManager::Update() {

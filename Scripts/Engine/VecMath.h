@@ -7,7 +7,7 @@
 #define _VECMATH_H_
 
 #include <cmath>
-
+#include "DxLib.h"  
 #define Pi (3.14159265f)
 #define Deg2Rad (Pi / 180.0f)
 #define Rad2Deg (180.0f / Pi)
@@ -27,6 +27,15 @@ struct Vector3 {
 	Vector3();
 	Vector3(float setX, float setY, float setZ);
 	~Vector3() = default;
+
+	// DxLib‚ÌVECTOR‚Æ‚ÌŒİŠ·ŠÖ”
+	static VECTOR ToVECTOR(const Vector3& v) {
+		return VGet(v.x, v.y, v.z);
+	}
+
+	static Vector3 FromVECTOR(const VECTOR& v) {
+		return { v.x, v.y, v.z };
+	}
 
 	// ‰‰Zq
 	Vector3 operator - () {
@@ -170,6 +179,10 @@ struct Vector3 {
 		return std::fmax(min, std::fmin(max, value));
 	}
 
+	// fabs •‚“®¬”“_”‚Ìâ‘Î’l‚ğ‹‚ß‚é
+	static float fabs(float v) {
+		return (v < 0.0f) ? -v : v;
+	}
 
 };
 #endif // !_VECMATH_H_
