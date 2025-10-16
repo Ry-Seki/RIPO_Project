@@ -193,6 +193,7 @@
     <ClInclude Include="Scripts\Engine\Fade\FadeBase.h" />
     <ClInclude Include="Scripts\Engine\Fade\FadeFactory.h" />
     <ClInclude Include="Scripts\Engine\Fade\FadeManager.h" />
+    <ClInclude Include="Scripts\Engine\GameConst.h" />
     <ClInclude Include="Scripts\Engine\GameObject.h" />
     <ClInclude Include="Scripts\Engine\Input\InputManager.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimationBase.h" />

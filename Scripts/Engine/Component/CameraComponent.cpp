@@ -4,36 +4,46 @@
  */
 
 #include "CameraComponent.h"
+#include "../Manager/CameraManager.h"
 #include "DxLib.h"
 
 CameraComponent::CameraComponent()
-	: currentPosition(Vector3::zero)
-	, previousPosition(Vector3::zero)
-	, moveValue(Vector3::zero) 
-	, sensitivity(0.0f) {
-}
+	: currentMousePosition(Vector3::zero)
+	, previousMousePosition(Vector3::zero)
+	, mouseMoveValue(Vector3::zero)
+	, sensitivity(0.005f) {}
 
 void CameraComponent::Update(float deltaTime) {
 	GameObject* camera = GetOwner();
+	GameObjectPtr player = CameraManager::GetInstance().GetTarget();
 
-	// 直前の位置を更新
-	previousPosition = currentPosition;
+	// 直前のマウスの位置を更新
+	previousMousePosition = currentMousePosition;
 	// マウスの位置を取得
 	int mouseX = 0, mouseY = 0;
 	GetMousePoint(&mouseX, &mouseY);
-	currentPosition.x = mouseX;
-	currentPosition.y = mouseY;
-	
-	if (currentPosition == Vector3::zero ||
-		previousPosition == Vector3::zero) return;
+	currentMousePosition.x = mouseX;
+	currentMousePosition.y = mouseY;
+
+	if (currentMousePosition == Vector3::zero ||
+		previousMousePosition == Vector3::zero) return;
 	// 移動量計算
-	moveValue = currentPosition - previousPosition;
+	mouseMoveValue = currentMousePosition - previousMousePosition;
 	// 感度を加える
-	moveValue *= sensitivity;
+	mouseMoveValue *= sensitivity;
 	// 移動量を角度に変換
-	Vector3 moveRotation = { moveValue.y, moveValue.x, 0 };
+	Vector3 moveRotation = { mouseMoveValue.y, mouseMoveValue.x, 0 };
 	// カメラの角度に移動量を加える
 	camera->rotation += moveRotation;
+	// カメラの位置をプレイヤーと合わせる
+	if (player != nullptr) 
+		camera->position = player->position;
 
-	//DrawFormatString(0, 0, GetColor(255, 255, 255), "Camera.rotation : %.2f, %.2f, %.2f", camera->rotation.x, camera->rotation.y, camera->rotation.z);
+	// カメラの設定に反映する
+	SetCameraPositionAndAngle(
+		Vector3::ToVECTOR(camera->position),
+		camera->rotation.x,
+		camera->rotation.y,
+		moveRotation.z);
+
 }
