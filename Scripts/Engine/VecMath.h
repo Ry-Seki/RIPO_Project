@@ -189,5 +189,13 @@ struct Vector3 {
 		return (a - b).Magnitude();
 	}
 
+	// ”­Ë•ûŒüƒxƒNƒgƒ‹‚Ì¶¬
+	static Vector3 Direction(const Vector3& from, const Vector3& to) {
+		Vector3 dir = to - from;
+		return dir.Normalized();
+	}
+
+
+
 };
 #endif // !_VECMATH_H_
