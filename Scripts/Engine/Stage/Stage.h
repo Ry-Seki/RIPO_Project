@@ -36,8 +36,8 @@ public:
 	void Execute() override;
 
 	/*
-	 * @brief プレイヤー（またはオブジェクト）とステージの当たり判定を更新
-	 * @param position     プレイヤー位置（更新対象）
+	 * @brief ステージの当たり判定を更新
+	 * @param position     オブジェクト位置
 	 * @param PolyPos1     カプセル当たり判定下端
 	 * @param PolyPos2     カプセル当たり判定上端
 	 * @param MoveVec      移動ベクトル
@@ -98,11 +98,6 @@ private:
 		float polyOffset,
 		const std::vector<MV1_COLL_RESULT_POLY*>& floors
 	);
-
-
-
-
-
 };
 
 
