@@ -29,13 +29,17 @@ public:
      */
     virtual void Initialize() = 0;
     /*
-     *  ロード済みのデータをセット
+     *  ロード済みのデータをセット(コールバック)
      */
     virtual void Setup() = 0;
     /*
      *  更新処理
      */
     virtual void Update(float deltaTime) = 0;
+    /*
+     *  描画処理
+     */
+    virtual void Render() = 0;
 
 public:
     /*

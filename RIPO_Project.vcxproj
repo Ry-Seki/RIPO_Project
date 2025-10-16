@@ -166,6 +166,10 @@
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarSystem.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\Day.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionDungeon\ActionDungeon.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionTraining\ActionTraining.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DebugScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\MainGameScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Scene.cpp" />
@@ -214,6 +218,11 @@
     <ClInclude Include="Scripts\Engine\Scene\Calendar\Month.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\Week.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\Year.h" />
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionDungeon\ActionDungeon.h" />
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionManager.h" />
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.h" />
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.h" />
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionTraining\ActionTraining.h" />
     <ClInclude Include="Scripts\Engine\Scene\DayAction\DayActionBase.h" />
     <ClInclude Include="Scripts\Engine\Scene\DebugScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\MainGameScene.h" />
