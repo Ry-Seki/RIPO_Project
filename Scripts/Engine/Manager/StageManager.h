@@ -40,7 +40,6 @@ public:
 	 *  ステージの読み込み
 	 */
 	void LoadStage(const std::string& stageCsvPath);
-
 	/*
 	 *  更新
 	 */
