@@ -19,7 +19,7 @@ void PlayerComponent::Update(float deltaTime) {
 	const float cameraCos = cosf(camera->rotation.y);
 	const float cameraSin = sinf(camera->rotation.y);
 
-	// カメラのX軸移動
+	// カメラから見たX軸移動
 	if (CheckHitKey(KEY_INPUT_A)) {
 		player->position.x -= moveSpeed * cameraCos;
 		player->position.z -= moveSpeed * -cameraSin;
@@ -29,7 +29,7 @@ void PlayerComponent::Update(float deltaTime) {
 		player->position.z += moveSpeed * -cameraSin;
 	}
 
-	// カメラのZ軸移動
+	// カメラから見たZ軸移動
 	if (CheckHitKey(KEY_INPUT_S)) {
 		player->position.x -= moveSpeed * cameraSin;
 		player->position.z -= moveSpeed * cameraCos;
