@@ -3,10 +3,26 @@
  *	@author kuu
  */
 #include "StageObjectManager.h"
+#include "GameObjectManager.h"
+#include "../Stage/StageObject/ExitPoint.h"
 
 StageObjectManager::StageObjectManager()
 	: engine(nullptr) {
 
+}
+
+/*
+ *	出口生成
+ */
+void StageObjectManager::CreateExit(
+	const int setID,
+	const std::string& name,
+	const Vector3& position,
+	const Vector3& rotation,
+	const Vector3& scale) {
+	// 未使用のオブジェクト取得
+	exitObject = GameObjectManager::GetInstance().GetUnuseObject();
+	//GameObjectPtr exitStageObj = exitObject->AddComponent<ExitPoint>();
 }
 
 /*
@@ -17,15 +33,16 @@ void StageObjectManager::Initialize(Engine& setEngine) {
 }
 
 /*
- *	お宝生成
+ *	出口生成
  */
-void StageObjectManager::CreateTreasure(
+void StageObjectManager::GenerateExit(
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation,
 	const Vector3& scale) {
 
 }
+
 
 /*
  *	ID指定のステージオブジェクト削除

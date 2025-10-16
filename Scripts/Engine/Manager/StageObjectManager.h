@@ -20,10 +20,22 @@ class StageObjectManager : public Singleton<StageObjectManager> {
 private:
 	Engine* engine;
 	StageObjectBaseList createStageObjectList;
+	GameObjectPtr exitObject;
 
 private:
 	StageObjectManager();
 	~StageObjectManager() = default;
+
+private:
+	/*
+	 *	èoå˚ê∂ê¨
+	 */
+	void CreateExit(
+		const int setID,
+		const std::string& name,
+		const Vector3& position = { 0.0f, 0.0f, 0.0f },
+		const Vector3& rotation = { 0.0f, 0.0f, 0.0f },
+		const Vector3& scale = { 0.0f, 0.0f, 0.0f });
 
 public:
 	/*
@@ -32,9 +44,10 @@ public:
 	void Initialize(Engine& setEngine);
 
 	/*
-	 *	Ç®ïÛê∂ê¨
+	 *	èoå˚ê∂ê¨
 	 */
-	void CreateTreasure(const std::string& name,
+	void GenerateExit(
+		const std::string& name,
 		const Vector3& position = { 0.0f, 0.0f, 0.0f },
 		const Vector3& rotation = { 0.0f, 0.0f, 0.0f },
 		const Vector3& scale = { 0.0f, 0.0f, 0.0f });
