@@ -184,5 +184,10 @@ struct Vector3 {
 		return (v < 0.0f) ? -v : v;
 	}
 
+	// 2“_ŠÔ‚Ì‹——£‚ğ‹‚ß‚é
+	static float Distance(const Vector3& a, const Vector3& b) {
+		return (a - b).Magnitude();
+	}
+
 };
 #endif // !_VECMATH_H_

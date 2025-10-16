@@ -75,11 +75,11 @@ void StageManager::Execute() {
  *	ステージのFrameを取得
  */
 int StageManager::GetStageFrame(const std::string& frameName) const {
-	if (!pStage) return -1; // ステージ未ロードなら -1 を返す
+	if (!pStage) return -1;
 
 	// StageBase* から Stage* にキャスト
 	Stage* stage = dynamic_cast<Stage*>(pStage.get());
-	if (!stage) return -1; // Stage でない場合も -1
+	if (!stage) return -1;
 
 	// ステージのモデルハンドルを取得
 	int modelHandle = stage->GetModelHandle();

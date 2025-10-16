@@ -294,9 +294,12 @@ void Stage::ProcessFloorCollision(
 }
 
 
-
+/*
+ *	ƒ‚ƒfƒ‹‚ÌƒtƒŒ[ƒ€‚Ìæ“¾
+ */
 int Stage::GetFrameHandleByName(int modelHandle, const std::string& frameName) const {
 	if (modelHandle == -1) return -1;
+	// StageHandle‚Ì“Á’è‚ÌFrame‚ğæ“¾
 	int frameHandle = MV1SearchFrame(modelHandle, frameName.c_str());
 	return frameHandle;
 }
