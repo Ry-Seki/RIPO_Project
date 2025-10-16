@@ -26,6 +26,12 @@ public:
 	// ステージデータ読み込み
 	void Load(const std::shared_ptr<LoadModel>& model) override;
 
+	/*
+	 *	ステージデータの読み込み
+	 *  @pram const int modelHandle
+	 */
+	void ModelLoad(const int modelHandleBase)override;
+
 	// 更新
 	void Update() override;
 

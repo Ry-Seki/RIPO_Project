@@ -36,10 +36,7 @@ public:
 	 */
 	void Initialize(Engine& setEngine);
 
-	/*
-	 *  ステージの読み込み
-	 */
-	void LoadStage(const std::string& stageCsvPath);
+	void LoadStage(const int modelHandleBase);
 
 	/*
 	 *  更新

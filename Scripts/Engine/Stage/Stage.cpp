@@ -35,6 +35,15 @@ void Stage::Load(const std::shared_ptr<LoadModel>& model) {
 	modelHandle = model->GetHandle();
 }
 
+
+/*
+ *	ステージデータの読み込み
+ *  @pram const int modelHandle
+ */
+void Stage::ModelLoad(const int modelHandleBase) {
+	modelHandle = modelHandleBase;
+}
+
 /*
  *	更新
  */

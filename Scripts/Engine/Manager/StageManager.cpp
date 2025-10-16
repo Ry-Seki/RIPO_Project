@@ -22,16 +22,10 @@ void StageManager::Initialize(Engine& setEngine) {
 	this->engine = &setEngine;
 }
 
-/*
- *  ステージの読み込み
- */
-void StageManager::LoadStage(const std::string& stageCsvPath) {
-
-	auto StageModel = std::make_shared<LoadModel>(stageCsvPath);
-	LoadManager::GetInstance().AddLoader(StageModel);
-
+void StageManager::LoadStage(const int modelHandleBase) {
 	pStage = std::make_unique<Stage>();
-	pStage->Load(StageModel);
+	pStage->ModelLoad(modelHandleBase);
+
 }
 
 /*
