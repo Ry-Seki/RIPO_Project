@@ -98,6 +98,15 @@ private:
 		float polyOffset,
 		const std::vector<MV1_COLL_RESULT_POLY*>& floors
 	);
+
+public:
+	// モデルハンドルの取得
+	int GetModelHandle() const { return modelHandle; }
+
+	// モデルのフレームの取得
+	int GetFrameHandleByName(int modelHandle, const std::string& frameName)const;
+
+
 };
 
 

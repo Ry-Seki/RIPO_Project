@@ -58,11 +58,16 @@ public:
 
 	void StageCollider(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos2, Vector3 MoveVec);
 
-
+public:
 	/*
 	 *  現在のステージの取得
 	 */
 	StageBase* GetStage() const { return pStage.get(); }
+
+	/*
+	 *	ステージのFrameを取得
+	 */
+	int GetStageFrame(const std::string& frameName) const;
 
 };
 

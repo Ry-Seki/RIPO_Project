@@ -292,3 +292,11 @@ void Stage::ProcessFloorCollision(
 	if (hitFlag) nowPos.y = MaxY;
 
 }
+
+
+
+int Stage::GetFrameHandleByName(int modelHandle, const std::string& frameName) const {
+	if (modelHandle == -1) return -1;
+	int frameHandle = MV1SearchFrame(modelHandle, frameName.c_str());
+	return frameHandle;
+}
