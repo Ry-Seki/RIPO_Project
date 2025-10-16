@@ -15,6 +15,8 @@
  *	キャラクターの管理クラス
  */
 class CharacterManager : public Singleton<CharacterManager>{
+	// フレンド宣言	
+	friend class Singleton<CharacterManager>;
 private:;
 	Engine* engine;
 	CharacterBaseList createCharacterList;
@@ -24,9 +26,17 @@ private:
 	CharacterManager();
 	~CharacterManager() = default;
 
+private:
+	CharacterBasePtr CreatePlayer(
+		const int setID,
+		const std::string& name,
+		const Vector3& position = { 0.0f, 0.0f, 0.0f },
+		const Vector3& rotation = { 0.0f, 0.0f, 0.0f });
+
 public:
 	void Initialize(Engine& setEngine);
-	void CreatePlayer(const std::string& name,
+	void GeneratePlayer(
+		const std::string& name,
 		const Vector3& position = { 0.0f, 0.0f, 0.0f },
 		const Vector3& rotation = { 0.0f, 0.0f, 0.0f });
 	void RemoveCharacter(int characterID);

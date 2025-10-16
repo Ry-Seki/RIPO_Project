@@ -4,7 +4,38 @@
  */
 
 #include "PlayerComponent.h"
+#include "../../Manager/CameraManager.h"
+#include "DxLib.h"
+
+PlayerComponent::PlayerComponent() 
+	: moveSpeed(5.0f){
+}
 
 void PlayerComponent::Update(float deltaTime) {
+	GameObject* player = GetOwner();
+	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
 
+	// カメラの角度
+	const float cameraCos = cosf(camera->rotation.y);
+	const float cameraSin = sinf(camera->rotation.y);
+
+	// カメラのX軸移動
+	if (CheckHitKey(KEY_INPUT_A)) {
+		player->position.x -= moveSpeed * cameraCos;
+		player->position.z -= moveSpeed * -cameraSin;
+	}
+	if (CheckHitKey(KEY_INPUT_D)) {
+		player->position.x += moveSpeed * cameraCos;
+		player->position.z += moveSpeed * -cameraSin;
+	}
+
+	// カメラのZ軸移動
+	if (CheckHitKey(KEY_INPUT_S)) {
+		player->position.x -= moveSpeed * cameraSin;
+		player->position.z -= moveSpeed * cameraCos;
+	}
+	if (CheckHitKey(KEY_INPUT_W)) {
+		player->position.x += moveSpeed * cameraSin;
+		player->position.z += moveSpeed * cameraCos;
+	}
 }

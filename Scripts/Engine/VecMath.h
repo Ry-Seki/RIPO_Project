@@ -85,14 +85,10 @@ struct Vector3 {
 	};
 
 	bool operator == (const Vector3& v) const {
-		if (*this != v) false;
-
-		return true;
+		return x == v.x && y == v.y && z == v.z;
 	};
 	bool operator != (const Vector3& v) const {
-		if (*this == v) false;
-
-		return true;
+		return !(*this == v);
 	};
 
 	// ‰‰ŽZ

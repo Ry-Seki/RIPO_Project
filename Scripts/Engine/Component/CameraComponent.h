@@ -12,10 +12,10 @@
 
 class CameraComponent : public Component {
 private:
-	Vector3 currentPosition;	// 現在の位置
-	Vector3 previousPosition;	// 直前の位置
-	Vector3 moveValue;			// 移動量
-	float sensitivity;			// 感度
+	Vector3 currentMousePosition;	// マウスの現在の位置
+	Vector3 previousMousePosition;	// マウスの直前の位置
+	Vector3 mouseMoveValue;			// マウスの移動量
+	float sensitivity;				// 感度
 
 public:
 	CameraComponent();
