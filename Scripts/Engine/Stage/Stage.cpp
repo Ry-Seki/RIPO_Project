@@ -173,15 +173,17 @@ void Stage::ProcessWallCollision(
 	const std::vector<MV1_COLL_RESULT_POLY*>& walls,
 	bool moveFlag) {
 
+	// 壁が存在しなければ抜ける
 	if (walls.empty()) return;
 
 	bool hitFlag = false;
 
-	// 移動していた場合
+	// 移動中の壁との衝突チェック
 	if (moveFlag) {
 		for (auto* poly : walls) {
 			Vector3 capsuleStart = nowPos;
 			Vector3 capsuleEnd = nowPos + Vector3(0.0f, polyOffset, 0.0f);
+			// カプセルと三角形の衝突判定
 			if (!HitCheck_Capsule_Triangle(
 				Vector3::ToVECTOR(capsuleStart),
 				Vector3::ToVECTOR(capsuleEnd),
@@ -193,6 +195,7 @@ void Stage::ProcessWallCollision(
 			hitFlag = true;
 
 			// スライドベクトル計算
+			// 進行方向ベクトルから壁方向の成分を除外
 			Vector3 slideVec = Vector3::Cross(MoveVec, Vector3::FromVECTOR(poly->Normal));
 			slideVec = Vector3::Cross(Vector3::FromVECTOR(poly->Normal), slideVec);
 			nowPos = prevPos + slideVec;
