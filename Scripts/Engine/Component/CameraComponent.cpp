@@ -35,11 +35,15 @@ void CameraComponent::Update(float deltaTime) {
 	Vector3 moveRotation = { mouseMoveValue.y, mouseMoveValue.x, 0 };
 	// カメラの角度に移動量を加える
 	camera->rotation += moveRotation;
+	// カメラの位置をプレイヤーと合わせる
+	if (player != nullptr) 
+		camera->position = player->position;
 
 	// カメラの設定に反映する
-	SetCameraPositionAndAngle(VGet(0, 50, 0), camera->rotation.x, camera->rotation.y, moveRotation.z);
+	SetCameraPositionAndAngle(
+		Vector3::ToVECTOR(camera->position),
+		camera->rotation.x,
+		camera->rotation.y,
+		moveRotation.z);
 
-	// カメラの位置をプレイヤーと合わせる
-	if (player == nullptr) return;
-	camera->position = player->position;
 }

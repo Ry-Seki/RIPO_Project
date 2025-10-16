@@ -7,32 +7,35 @@
 #include "../../Manager/CameraManager.h"
 #include "DxLib.h"
 
+PlayerComponent::PlayerComponent() 
+	: moveSpeed(5.0f){
+}
+
 void PlayerComponent::Update(float deltaTime) {
 	GameObject* player = GetOwner();
 	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
 
-	// カメラの移動
-	const float cameraSpeed = 0.05f;
+	// カメラの角度
 	const float cameraCos = cosf(camera->rotation.y);
 	const float cameraSin = sinf(camera->rotation.y);
 
 	// カメラのX軸移動
 	if (CheckHitKey(KEY_INPUT_A)) {
-		camera->position.x -= cameraSpeed * cameraCos;
-		camera->position.z -= cameraSpeed * -cameraSin;
+		player->position.x -= moveSpeed * cameraCos;
+		player->position.z -= moveSpeed * -cameraSin;
 	}
 	if (CheckHitKey(KEY_INPUT_D)) {
-		camera->position.x += cameraSpeed * cameraCos;
-		camera->position.z += cameraSpeed * -cameraSin;
+		player->position.x += moveSpeed * cameraCos;
+		player->position.z += moveSpeed * -cameraSin;
 	}
 
 	// カメラのZ軸移動
-	if (CheckHitKey(KEY_INPUT_W)) {
-		camera->position.x -= cameraSpeed * cameraSin;
-		camera->position.z -= cameraSpeed * cameraCos;
-	}
 	if (CheckHitKey(KEY_INPUT_S)) {
-		camera->position.x += cameraSpeed * cameraSin;
-		camera->position.z += cameraSpeed * cameraCos;
+		player->position.x -= moveSpeed * cameraSin;
+		player->position.z -= moveSpeed * cameraCos;
+	}
+	if (CheckHitKey(KEY_INPUT_W)) {
+		player->position.x += moveSpeed * cameraSin;
+		player->position.z += moveSpeed * cameraCos;
 	}
 }

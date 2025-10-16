@@ -12,10 +12,11 @@
  *	‰Šú‰»ˆ—
  */
 void DebugScene::Initialize(Engine& engine) {
+	SetMouseDispFlag(false);
 	GameObjectManager::GetInstance().Initialize(engine);
 	CharacterManager::GetInstance().Initialize(engine);
 	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
-	CharacterManager::GetInstance().CreatePlayer("player", { 0, 0, 0 }, { 0, 0, 0 });
+	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 });
 }
 /*
  *	XVˆ—

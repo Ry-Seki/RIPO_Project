@@ -9,8 +9,11 @@
 #include "../../Engine.h"
 
 class PlayerComponent : public CharacterBase {
+private:
+	float moveSpeed;
+
 public:
-	PlayerComponent() = default;
+	PlayerComponent();
 	virtual ~PlayerComponent() = default;
 
 public:
