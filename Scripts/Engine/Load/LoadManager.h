@@ -8,81 +8,83 @@
 
 #include "../Singleton.h"
 #include "LoadSystem.h"
+#include "LoadRegistry.h"
+
 #include <functional>
 #include <memory>
+#include <queue>
 
 /*
  *	ファイル読み込み管理クラス
  */
 class LoadManager : public Singleton<LoadManager> {
 private:
-    std::shared_ptr<LoadSystem> system;
-    std::function<void()> onComplete;
+    std::shared_ptr<LoadSystem> system;             // ロードの内部処理
+    std::queue<std::function<void()>> taskQueue;    // フレーム単位で処理するタスク
+    std::function<void()> onComplete;               // コールバック
+    LoadRegistry loadRegistry;                      // リソース管理
 
 public:
-    /*
-     *  コンストラクタ
-     */
     LoadManager() : system(std::make_shared<LoadSystem>()) {}
-    /*
-     *  デストラクタ
-     */
+
     ~LoadManager() = default;
 
 public:
-    /*
-     *  更新処理
-     */
+    // 通常の更新処理（LoadSystem の更新）
     void Update(float unscaledDeltaTime) {
-        if (!system || system->IsComplete()) return;
+        if (system && !system->IsComplete()) {
+            system->Update(unscaledDeltaTime);
+        }
 
-        system->Update(unscaledDeltaTime);
+        // フレーム単位タスク実行
+        if (!taskQueue.empty()) {
+            auto task = taskQueue.front();
+            task();
+            taskQueue.pop();
+        }
 
-        if (system->IsComplete() && onComplete) {
+        // 完了コールバック
+        if ((system && system->IsComplete()) && onComplete) {
             onComplete();
             onComplete = nullptr;
         }
     }
-    /*
-     *  描画処理
-     */
+
     void Render() {
         if (system) system->Render();
     }
 
 public:
-    /*
-     *  コールバック処理設定
-     *  param[in]   const std::function<void()>& callback   void型のコールバック
-     */
     void SetOnComplete(const std::function<void()>& callback) { onComplete = callback; }
-    /*
-     *  ロード対象追加
-     *  param[in]   const LoadBasePtr& loader   ロード対象
-     */
+
     void AddLoader(const LoadBasePtr& loader) { system->AddLoader(loader); }
-    /*
-     *  アニメーション追加
-     *  param[in]   const LoadAnimationPtr& animation    ロードアニメーション
-     */
     void AddAnimation(const LoadAnimationPtr& animation) { system->AddAnimation(animation); }
-    /*
-     *  解放処理
-     */
+
     void Clear() {
         if (system) system->Clear();
+        while (!taskQueue.empty()) taskQueue.pop();
         onComplete = nullptr;
     }
 
-public:
-    /*
-     *  ロード中フラグの取得
-     */
     bool IsLoading() const { return system && !system->IsComplete(); }
-    /*
-     *  進捗度ゲージ追加
-     */
     float GetProgress() const { return system ? system->GetProgress() : 1.0f; }
+
+    // フレーム単位タスクとして登録（逐次ロード向け）
+    void StartTask(const std::function<void()>& task) {
+        if (task) taskQueue.push(task);
+    }
+
+    // LoadRegistry を経由してモデルなどを安全にロード
+    template<typename T>
+    std::shared_ptr<T> LoadResource(const std::string& path) {
+        auto cached = loadRegistry.Get(path);
+        if (cached) return std::dynamic_pointer_cast<T>(cached);
+
+        auto resource = std::make_shared<T>(path);
+        loadRegistry.Register(path, resource);
+        StartTask([resource]() { resource->Load(); });
+        return resource;
+    }
 };
 
 #endif // !_LOAD_MANAGER_H_
