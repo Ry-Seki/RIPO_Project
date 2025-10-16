@@ -153,6 +153,9 @@
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -257,9 +260,6 @@
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\SpawnPoint.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -301,6 +301,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\DayAction\DayActionBase.h">
       <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\GameConst.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

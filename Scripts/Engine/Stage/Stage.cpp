@@ -9,6 +9,7 @@
 #include <sstream>
 #include <iostream>
 #include "../Load/Model/LoadModel.h"
+#include "../GameConst.h"
 
  /*
   *  コンストラクタ
@@ -74,8 +75,8 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 	int yukaNum;									// 床ポリゴンと判断されたポリゴンの数
 	std::vector<MV1_COLL_RESULT_POLY*> kabe;		// 壁ポリゴンと判断されたポリゴンの構造体のアドレスを保存しておくためのポインタ配列
 	std::vector<MV1_COLL_RESULT_POLY*> yuka;		// 床ポリゴンと判断されたポリゴンの構造体のアドレスを保存しておくためのポインタ配列
-	kabe.reserve(PLAYER_MAX_HITCOLL);
-	yuka.reserve(PLAYER_MAX_HITCOLL);
+	kabe.reserve(GameConst::PLAYER_MAX_HITCOLL);
+	yuka.reserve(GameConst::PLAYER_MAX_HITCOLL);
 	MV1_COLL_RESULT_POLY* poly;						// ポリゴン構造体にアクセスするために使用するポインタ
 	HITRESULT_LINE lineRes;							// 線分とポリゴンとの当たり判定の結果を代入する構造体
 	Vector3 prevPos;
@@ -97,7 +98,7 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 
 	// プレイヤーの周囲にあるステージポリゴンを取得する
 	VECTOR posV = Vector3::ToVECTOR(*position); // Vector3->VECTORに変換
-	float radius = PLAYER_ENUM_DEFAULT_SIZE + MoveVec.Magnitude();
+	float radius = GameConst::PLAYER_ENUM_DEFAULT_SIZE + MoveVec.Magnitude();
 	// コリジョン検出
 	*hitDim = MV1CollCheck_Sphere(modelHandle, -1, posV, radius);
 
@@ -117,7 +118,7 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 					hitDim->Dim[i].Position[2].y > prevPos.y + 0.3f) {
 
 					// ポリゴンの数が列挙できる限界数に達していなかったらポリゴンを配列に追加
-					if (kabeNum < PLAYER_MAX_HITCOLL) {
+					if (kabeNum < GameConst::PLAYER_MAX_HITCOLL) {
 						// ポリゴンの構造体のアドレスを壁ポリゴンポインタ配列に保存する
 						kabe[kabeNum] = &hitDim->Dim[i];
 
@@ -128,7 +129,7 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 			}
 			else {
 				// ポリゴンの数が列挙できる限界数に達していなかったらポリゴンを配列に追加
-				if (yukaNum < PLAYER_MAX_HITCOLL) {
+				if (yukaNum < GameConst::PLAYER_MAX_HITCOLL) {
 					// ポリゴンの構造体のアドレスを床ポリゴンポインタ配列に保存する
 					yuka[yukaNum] = &hitDim->Dim[i];
 
@@ -160,7 +161,7 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 				if (HitCheck_Capsule_Triangle(
 					Vector3::ToVECTOR(capsuleStart),
 					Vector3::ToVECTOR(capsuleEnd),
-					PLAYER_HIT_WIDTH,
+					GameConst::PLAYER_HIT_WIDTH,
 					poly->Position[0],
 					poly->Position[1],
 					poly->Position[2]) == FALSE
@@ -193,7 +194,7 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 					if (HitCheck_Capsule_Triangle(
 						Vector3::ToVECTOR(nowPos),
 						Vector3::ToVECTOR(capsulePos),
-						PLAYER_HIT_WIDTH,
+						GameConst::PLAYER_HIT_WIDTH,
 						poly->Position[0],
 						poly->Position[1],
 						poly->Position[2]) == TRUE) break;
@@ -219,7 +220,7 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 				if (HitCheck_Capsule_Triangle(
 					Vector3::ToVECTOR(nowPos),
 					Vector3::ToVECTOR(capsulePos),
-					PLAYER_HIT_WIDTH,
+					GameConst::PLAYER_HIT_WIDTH,
 					poly->Position[0],
 					poly->Position[1],
 					poly->Position[2]) == TRUE) {
@@ -233,7 +234,7 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 		// 壁に当たっていたら壁から押し出す処理を行う
 		if (hitFlag) {
 			// 壁からの押し出し処理を最大数繰り返す
-			for (k = 0; k < HIT_TRYNUM; k++) {
+			for (k = 0; k < GameConst::HIT_TRYNUM; k++) {
 				// 壁ポリゴンの数だけ繰り返し
 				for (i = 0; i < kabeNum; i++) {
 					// i番目の壁ポリゴンのアドレスを壁ポリゴンポインタ配列から取得
@@ -244,14 +245,14 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 					if (HitCheck_Capsule_Triangle(
 						Vector3::ToVECTOR(nowPos),
 						Vector3::ToVECTOR(capsulePos),
-						PLAYER_HIT_WIDTH,
+						GameConst::PLAYER_HIT_WIDTH,
 						poly->Position[0],
 						poly->Position[1],
 						poly->Position[2]) == FALSE) continue;
 
 					// 当たっていたら基底距離分プレイヤーを壁の法線方向に移動させる
 					Vector3 norm = Vector3::FromVECTOR(poly->Normal).Normalized();
-					nowPos = nowPos + norm * HIT_SLIDE_LENGTH;
+					nowPos = nowPos + norm * GameConst::HIT_SLIDE_LENGTH;
 
 					// 移動したうえで壁ポリゴンと接触しているかどうかを判定
 					for (j = 0; j < kabeNum; j++) {
@@ -261,7 +262,7 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 						if (HitCheck_Capsule_Triangle(
 							Vector3::ToVECTOR(nowPos),
 							Vector3::ToVECTOR(capsulePos),
-							PLAYER_HIT_WIDTH,
+							GameConst::PLAYER_HIT_WIDTH,
 							poly->Position[0],
 							poly->Position[1],
 							poly->Position[2]) == TRUE) break;
