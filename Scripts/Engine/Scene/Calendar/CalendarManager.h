@@ -27,6 +27,12 @@ public:
      */
     CalendarManager(const std::shared_ptr<CalendarSystem>& system) : calendarSystem(system) {}
     /*
+     *  デストラクタ
+     */
+    ~CalendarManager() = default;
+
+public:
+    /*
      *  更新処理
      */
     void Update();
@@ -38,6 +44,8 @@ public:
      *  次の日に進行処理
      */
     void NextDay();
+
+public:
     /*
      *  一日の行動終了フラグ取得
      */

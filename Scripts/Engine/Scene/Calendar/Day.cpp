@@ -18,7 +18,6 @@ void Day::Advance() {
 void Day::ActionDungeon() {
     if (morningDone) { DrawFormatString(50, 150, GetColor(255, 0, 0), "ダンジョンは午前のみ！"); return; }
     AdvanceDay(); // 午前・午後まとめて消費
-    ActionManager::GetInstance().SetupAction("Dungeon");
     DrawFormatString(50, 150, GetColor(0, 255, 0), "ダンジョンに行きました。午前・午後消費");
 }
 

@@ -27,12 +27,19 @@ private:
     LoadRegistry loadRegistry;                      // リソース管理
 
 private:
+    /*
+     *  コンストラクタ
+     */
     LoadManager() : system(std::make_shared<LoadSystem>()) {}
-
+    /*
+     *  デストラクタ
+     */
     ~LoadManager() = default;
 
 public:
-    // 通常の更新処理（LoadSystem の更新）
+    /*
+     *  更新処理
+     */
     void Update(float unscaledDeltaTime) {
         if (system && !system->IsComplete()) {
             system->Update(unscaledDeltaTime);
@@ -51,32 +58,41 @@ public:
             onComplete = nullptr;
         }
     }
-
+    /*
+     *  描画処理
+     */
     void Render() {
         if (system) system->Render();
     }
 
 public:
-    void SetOnComplete(const std::function<void()>& callback) { onComplete = callback; }
-
+    /*
+     *  ロードリストに追加
+     */
     void AddLoader(const LoadBasePtr& loader) { system->AddLoader(loader); }
+    /*
+     *  ロードアニメーションに追加
+     */
     void AddAnimation(const LoadAnimationPtr& animation) { system->AddAnimation(animation); }
-
+    /*
+     *  ロードの中身をクリアにする
+     */
     void Clear() {
         if (system) system->Clear();
         while (!taskQueue.empty()) taskQueue.pop();
         onComplete = nullptr;
     }
 
-    bool IsLoading() const { return system && !system->IsComplete(); }
-    float GetProgress() const { return system ? system->GetProgress() : 1.0f; }
-
-    // フレーム単位タスクとして登録（逐次ロード向け）
+public:
+    /*
+     *  フレーム単位タスクとして登録（逐次ロード向け）
+     */
     void StartTask(const std::function<void()>& task) {
         if (task) taskQueue.push(task);
     }
-
-    // LoadRegistry を経由してモデルなどを安全にロード
+    /*
+     *  LoadRegistry を経由してモデルなどを安全にロード
+     */
     template<typename T>
     std::shared_ptr<T> LoadResource(const std::string& path) {
         auto cached = loadRegistry.Get(path);
@@ -87,6 +103,20 @@ public:
         StartTask([resource]() { resource->Load(); });
         return resource;
     }
+
+public:
+    /*
+     *  コールバックの設定
+     */
+    void SetOnComplete(const std::function<void()>& callback) { onComplete = callback; }
+    /*
+     *  ロード中か取得
+     */
+    bool IsLoading() const { return system && !system->IsComplete(); }
+    /*
+     *  ロード進捗度の取得
+     */
+    float GetProgress() const { return system ? system->GetProgress() : 1.0f; }
 };
 
 #endif // !_LOAD_MANAGER_H_
