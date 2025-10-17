@@ -15,13 +15,13 @@ private:
 	int ID = -1;
 	int masterID = -1;
 	int nameID = -1;
-	// モデルハンドル
-	int modelHandle;
 
 	Vector3 position;
 	Vector3 rotation;
 	Vector3 scale;
-
+protected:
+	// モデルハンドル
+	int modelHandle;
 private:
 	StageObjectBase() = default;
 	~StageObjectBase() = default;
