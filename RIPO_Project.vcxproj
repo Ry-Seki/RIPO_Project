@@ -233,6 +233,7 @@
     <ClInclude Include="Scripts\Engine\Stage\Stage.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageBase.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
   </ItemGroup>
