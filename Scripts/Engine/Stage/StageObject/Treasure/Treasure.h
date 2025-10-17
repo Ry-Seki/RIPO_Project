@@ -17,7 +17,6 @@ private:
 	bool isCollected;		// æ“¾Ï‚İ‚©‚Ç‚¤‚©
 	int modelHandle;		// ƒ‚ƒfƒ‹‚Ìƒnƒ“ƒhƒ‹
 
-
 public:
 	Treasure();
 	virtual ~Treasure();
@@ -48,7 +47,7 @@ public:
 	bool IsCollected() const { return isCollected; }
 
 
-	void TreasureHold(const Vector3& position);
+	void TreasureHold(const Vector3& setValue);
 
 };
 

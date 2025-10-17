@@ -9,7 +9,9 @@
   *	コンストラクタ
   */
 Treasure::Treasure()
-	: StageObjectBase(), isCollected(false), modelHandle(-1) {
+	: StageObjectBase()
+	, isCollected(false)
+	, modelHandle(-1) {
 }
 
 Treasure::~Treasure() {
@@ -54,7 +56,7 @@ void Treasure::OnCollision(const std::shared_ptr<Component>& self, const std::sh
  *  @brief		持たれている時の処理
  *  @param		const Vector3& position
  */
-void Treasure::TreasureHold(const Vector3& position) {
-	
+void Treasure::TreasureHold(const Vector3& setValue) {
+	// 指定された位置にお宝を移動
 
 }
