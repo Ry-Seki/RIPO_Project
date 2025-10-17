@@ -8,6 +8,11 @@
 #include "../Fade/FadeFactory.h"
 #include "../Fade/FadeManager.h"
 #include "../Manager/StageManager.h"
+#include "DayAction/ActionManager.h"
+#include "DayAction/ActionDungeon/ActionDungeon.h"
+#include "DayAction/ActionTraining/ActionTraining.h"
+#include "DayAction/ActionShop/ActionShop.h"
+#include "DayAction/ActionPartTime/ActionPartTime.h"
 
 /*
  *  初期化処理
@@ -19,6 +24,16 @@ void MainGameScene::Initialize(Engine& engine) {
 
     // カレンダーマネージャ初期化（入力＆描画担当）
     calendarManager = std::make_shared<CalendarManager>(calendarSystem);
+
+    ActionManager::GetInstance().AddAction(std::make_shared<ActionDungeon>());
+    ActionManager::GetInstance().AddAction(std::make_shared<ActionTraining>());
+    ActionManager::GetInstance().AddAction(std::make_shared<ActionShop>());
+    ActionManager::GetInstance().AddAction(std::make_shared<ActionPartTime>());
+
+    // LoadManager のロード完了時に Action の Setup を呼ぶ（全登録 Action をセットアップする例）
+    LoadManager::GetInstance().SetOnComplete([]() {
+        ActionManager::GetInstance().SetupAll(); // または SetupAction("Dungeon") 等
+    });
 }
 /*
  *  更新処理
@@ -27,6 +42,8 @@ void MainGameScene::Update(Engine& engine, float deltaTime) {
     if (FadeManager::GetInstance().IsFading()) return;
 
     calendarManager->Update();
+
+    ActionManager::GetInstance().Update(deltaTime);
 
     // 日が終わったら Engine 側フェード
     if (calendarManager->IsDayComplete()) {
@@ -40,4 +57,5 @@ void MainGameScene::Update(Engine& engine, float deltaTime) {
  */
 void MainGameScene::Render() {
     calendarManager->Render();
+    ActionManager::GetInstance().Render();
 }

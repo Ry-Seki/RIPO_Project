@@ -35,7 +35,6 @@ void StageManager::StageCollider(Vector3* position, Vector3 PolyPos1, Vector3 Pl
 	if (!pStage)return;
 	pStage->UpdateCollision(position, PolyPos1, PloyPos2, MoveVec);
 }
-
 /*
  *  XV
  */

@@ -329,11 +329,20 @@
     <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionManager.h">
       <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Data\DungeonData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\DungeonStageData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="Scripts\Engine\GameConst.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h">
-      <Filter>ヘッダー ファイル\Engine\Stage</Filter>
+    <ClInclude Include="Scripts\Engine\Load\Dungeon\DungeonDataLoader.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\LoadRegistry.h">
+      <Filter>ヘッダー ファイル\Engine\Load</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
