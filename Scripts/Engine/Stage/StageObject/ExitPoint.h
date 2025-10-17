@@ -9,7 +9,7 @@
 #include "StageObjectBase.h"
 #include "../../Engine.h"
 
-class ExitPoint : StageObjectBase {
+class ExitPoint : public StageObjectBase {
 private:
 
 

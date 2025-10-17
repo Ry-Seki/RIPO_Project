@@ -5,6 +5,7 @@
 #include "StageObjectManager.h"
 #include "GameObjectManager.h"
 #include "../Stage/StageObject/ExitPoint.h"
+#include "../Stage/StageObject/StageObjectBase.h"
 
 StageObjectManager::StageObjectManager()
 	: engine(nullptr) {
@@ -22,7 +23,11 @@ void StageObjectManager::CreateExit(
 	const Vector3& scale) {
 	// 未使用のオブジェクト取得
 	exitObject = GameObjectManager::GetInstance().GetUnuseObject();
-	//GameObjectPtr exitStageObj = exitObject->AddComponent<ExitPoint>();
+	// 出口オブジェクト生成
+	StageObjectBasePtr exitStageObj = exitObject->AddComponent<ExitPoint>();
+	// ID設定
+	//exitStageObj->SetID(setID);
+
 }
 
 /*

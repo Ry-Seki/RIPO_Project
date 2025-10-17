@@ -1,3 +1,4 @@
+#include "ExitPoint.h"
 /*
  *	@file	ExitPoint.cpp
  *	@author kuu
@@ -8,6 +9,10 @@
 
 #include "ExitPoint.h"
 
+
+ExitPoint::ExitPoint()
+{
+}
 
 void ExitPoint::Update() {
 
