@@ -19,9 +19,6 @@ private:
 	Vector3 position;
 	Vector3 rotation;
 	Vector3 scale;
-//protected:
-//	// ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
-//	int modelHandle;
 
 public:
 	StageObjectBase() = default;
