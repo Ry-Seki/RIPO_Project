@@ -20,7 +20,7 @@ class StageObjectManager : public Singleton<StageObjectManager> {
 private:
 	Engine* engine;
 	StageObjectBaseList createStageObjectList;
-	GameObjectPtr exitObject;
+	GameObjectPtr stageObjectObj;
 
 private:
 	StageObjectManager();
@@ -28,9 +28,10 @@ private:
 
 private:
 	/*
-	 *	出口生成
+	 *	ステージオブジェクト生成
 	 */
-	StageObjectBasePtr CreateExit(
+	template <typename T>
+	StageObjectBasePtr CreateStageObject(
 		const int setID,
 		const std::string& name,
 		const Vector3& position = { 0.0f, 0.0f, 0.0f },
@@ -46,6 +47,14 @@ public:
 	 *	出口生成
 	 */
 	void GenerateExit(
+		const std::string& name,
+		const Vector3& position = { 0.0f, 0.0f, 0.0f },
+		const Vector3& rotation = { 0.0f, 0.0f, 0.0f });
+
+	/*
+	 *	お宝生成
+	 */
+	void GenerateTreasure(
 		const std::string& name,
 		const Vector3& position = { 0.0f, 0.0f, 0.0f },
 		const Vector3& rotation = { 0.0f, 0.0f, 0.0f });
