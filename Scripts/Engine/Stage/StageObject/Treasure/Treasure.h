@@ -12,7 +12,7 @@
  *	‚¨•óƒNƒ‰ƒX
  */
 class Treasure : public StageObjectBase {
-	private 
+	
 
 
 };
