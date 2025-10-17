@@ -7,6 +7,7 @@
 #define _GAMEOBJECT_H_
 
 #include "Component/Component.h"
+#include "Component/AABBCollider.h"
 #include "VecMath.h"
 
 #include <memory>
@@ -23,12 +24,15 @@ class Engine;
  */
 class GameObject {
 	friend class Engine;	// フレンドクラス
+    friend class Scene;
 
 private:
     Engine* engine = nullptr;                   // エンジン
     bool isDestroyed = false;                   // 破棄フラグ
     bool isStarted = false;                     // 開始フラグ
 
+
+    std::vector<AABBColliderPtr> colliders;     // コライダーのリスト
     std::vector<ComponentPtr> components;       // コンポーネントのリスト
     std::vector<ComponentPtr> addComponents;    // 追加予定のコンポーネント
 
@@ -92,6 +96,10 @@ public:
         auto component = std::make_shared<T>();
         // 所有者の設定
         component->owner = this;
+        // コライダーならコライダーリストにも追加
+        if constexpr (std::is_base_of_v<AABBCollider, T>)
+            colliders.push_back(component);
+
         component->Awake();
         // 追加予定のコンポーネントリストに追加
         addComponents.push_back(component);
