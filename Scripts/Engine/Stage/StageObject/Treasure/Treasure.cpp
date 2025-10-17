@@ -5,8 +5,11 @@
 
 #include "Treasure.h"
 
-Treasure::Treasure() : StageObjectBase() {
-	
+ /*
+  *	コンストラクタ
+  */
+Treasure::Treasure()
+	: StageObjectBase(), isCollected(false), modelHandle(-1) {
 }
 
 Treasure::~Treasure() {
@@ -19,6 +22,9 @@ Treasure::~Treasure() {
   *  @param		const int modelHandleBase
   */
 void Treasure::ModelLoad(const int modelHandleBase) {
+	// 種類別でモデルを読み込む
+	modelHandle = modelHandleBase;
+
 }
 
 
@@ -28,7 +34,10 @@ void Treasure::ModelLoad(const int modelHandleBase) {
  *  @param		float deltaTime
  */
 void Treasure::Update(float deltaTime) {
+	if (isCollected) return;
 
+
+	// 当たり判定の更新
 
 }
 
@@ -37,4 +46,15 @@ void Treasure::Update(float deltaTime) {
  *	衝突が起きたときに呼び出される処理
  */
 void Treasure::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
+}
+
+
+/*
+ *	@function	TreasureHold
+ *  @brief		持たれている時の処理
+ *  @param		const Vector3& position
+ */
+void Treasure::TreasureHold(const Vector3& position) {
+	
+
 }

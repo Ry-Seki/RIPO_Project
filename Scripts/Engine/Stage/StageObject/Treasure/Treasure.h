@@ -8,18 +8,16 @@
 
 #include "../StageObjectBase.h"
 
- // お宝の種類
-enum class TreasureType {
-	TreaureA,	// お宝A
-	TreaureB,	// お宝B
-	TreaureC,	// お宝C
-	TreaureD,	// お宝D
-};
 
-/*
- *	お宝クラス
- */
+ /*
+  *	お宝クラス
+  */
 class Treasure : public StageObjectBase {
+private:
+	bool isCollected;		// 取得済みかどうか
+	int modelHandle;		// モデルのハンドル
+
+
 public:
 	Treasure();
 	virtual ~Treasure();
@@ -44,7 +42,13 @@ public:
 	 */
 	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
 
+	/*
+	 *	取得済み判定
+	 */
+	bool IsCollected() const { return isCollected; }
 
+
+	void TreasureHold(const Vector3& position);
 
 };
 
