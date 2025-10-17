@@ -22,7 +22,7 @@ private:
 protected:
 	// ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
 	int modelHandle;
-private:
+public:
 	StageObjectBase() = default;
 	~StageObjectBase() = default;
 
