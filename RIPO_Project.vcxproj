@@ -181,6 +181,8 @@
     <ClCompile Include="Scripts\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scripts\Data\DungeonData.h" />
+    <ClInclude Include="Scripts\Data\DungeonStageData.h" />
     <ClInclude Include="Scripts\Engine\Character\CharacterBase.h" />
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
@@ -201,9 +203,11 @@
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.h" />
     <ClInclude Include="Scripts\Engine\Load\Binary\LoadBinary.h" />
     <ClInclude Include="Scripts\Engine\Load\CSV\LoadCSV.h" />
+    <ClInclude Include="Scripts\Engine\Load\Dungeon\DungeonDataLoader.h" />
     <ClInclude Include="Scripts\Engine\Load\JSON\LoadJSON.h" />
     <ClInclude Include="Scripts\Engine\Load\LoadBase.h" />
     <ClInclude Include="Scripts\Engine\Load\LoadManager.h" />
+    <ClInclude Include="Scripts\Engine\Load\LoadRegistry.h" />
     <ClInclude Include="Scripts\Engine\Load\LoadSystem.h" />
     <ClInclude Include="Scripts\Engine\Load\Model\LoadModel.h" />
     <ClInclude Include="Scripts\Engine\Load\Sprite\LoadSprite.h" />
@@ -233,6 +237,7 @@
     <ClInclude Include="Scripts\Engine\Stage\Stage.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageBase.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
   </ItemGroup>

@@ -15,6 +15,8 @@ private:
 	int ID = -1;
 	int masterID = -1;
 	int nameID = -1;
+	// モデルハンドル
+	int modelHandle;
 
 	Vector3 position;
 	Vector3 rotation;
@@ -23,6 +25,14 @@ private:
 private:
 	StageObjectBase() = default;
 	~StageObjectBase() = default;
+
+public:
+	/*
+	 *	@function	ModelLoad
+	 *	@brief		モデルの読み込み
+	 *  @param		const int modelHandle
+	 */
+	virtual void ModelLoad(const int modelHandleBase) = 0;
 
 public:
 	/*
@@ -38,7 +48,7 @@ public:
 	 *	@brief		IDの変更
 	 *	@param[in]	int& setValue;
 	 */
-	inline void GetID(int& setValue) {
+	inline void SetID(int& setValue) {
 		ID = setValue;
 	}
 	/*
