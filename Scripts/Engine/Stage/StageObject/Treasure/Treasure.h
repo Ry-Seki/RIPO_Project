@@ -39,6 +39,10 @@ public:
 	 */
 	void Update(float deltaTime)override;
 
+	/*
+	 *	Õ“Ë‚ª‹N‚«‚½‚Æ‚«‚ÉŒÄ‚Ño‚³‚ê‚éˆ—
+	 */
+	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
 
 
 

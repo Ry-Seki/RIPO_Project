@@ -19,9 +19,10 @@ private:
 	Vector3 position;
 	Vector3 rotation;
 	Vector3 scale;
-protected:
-	// モデルハンドル
-	int modelHandle;
+//protected:
+//	// モデルハンドル
+//	int modelHandle;
+
 public:
 	StageObjectBase() = default;
 	~StageObjectBase() = default;

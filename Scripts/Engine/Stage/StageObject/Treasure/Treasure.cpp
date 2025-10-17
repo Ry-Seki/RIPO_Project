@@ -5,21 +5,20 @@
 
 #include "Treasure.h"
 
- Treasure::Treasure()  : StageObjectBase(){
- 	modelHandle = -1;
- }
- 
- Treasure::~Treasure() {
+Treasure::Treasure() : StageObjectBase() {
 	
- }
+}
 
- /*
-   *	@function	ModelLoad
-   *  @brief		モデルの読み込み
-   *  @param		const int modelHandleBase
-   */
+Treasure::~Treasure() {
+
+}
+
+/*
+  *	@function	ModelLoad
+  *  @brief		モデルの読み込み
+  *  @param		const int modelHandleBase
+  */
 void Treasure::ModelLoad(const int modelHandleBase) {
-	modelHandle = modelHandleBase;
 }
 
 
@@ -31,4 +30,11 @@ void Treasure::ModelLoad(const int modelHandleBase) {
 void Treasure::Update(float deltaTime) {
 
 
+}
+
+
+/*
+ *	衝突が起きたときに呼び出される処理
+ */
+void Treasure::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
 }
