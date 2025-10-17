@@ -1,23 +1,14 @@
-#include "ExitPoint.h"
 /*
- *	@file	ExitPoint.cpp
- *	@author kuu
+ *	@file	ExitPoint.h
+ *  @author kuu
  */
 
-#ifndef _EXITPOINT_CPP_
-#define _EXITPOINT_CPP_
-
 #include "ExitPoint.h"
 
-
-ExitPoint::ExitPoint()
+void ExitPoint::Update()
 {
 }
 
-
-
-void ExitPoint::Update() {
-
+void ExitPoint::ModelLoad(const int modelHandleBase)
+{
 }
-
-#endif // !_EXITPOINT_CPP_

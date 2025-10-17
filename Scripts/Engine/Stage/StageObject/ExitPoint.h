@@ -20,6 +20,8 @@ public:
 public:
 	void Update();
 
+	void ModelLoad(const int modelHandleBase) override;
+
 
 };
 
