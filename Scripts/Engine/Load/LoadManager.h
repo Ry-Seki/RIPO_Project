@@ -18,13 +18,15 @@
  *	ファイル読み込み管理クラス
  */
 class LoadManager : public Singleton<LoadManager> {
+    // フレンド宣言
+    friend class Singleton<LoadManager>;
 private:
     std::shared_ptr<LoadSystem> system;             // ロードの内部処理
     std::queue<std::function<void()>> taskQueue;    // フレーム単位で処理するタスク
     std::function<void()> onComplete;               // コールバック
     LoadRegistry loadRegistry;                      // リソース管理
 
-public:
+private:
     LoadManager() : system(std::make_shared<LoadSystem>()) {}
 
     ~LoadManager() = default;

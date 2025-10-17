@@ -21,6 +21,15 @@ private:
     std::vector<DayActionPtr> actionList;
     DayActionPtr currentAction;
 
+private:
+    /*
+     *  コンストラクタ
+     */
+    ActionManager() = default;
+    /*
+     *  デストラクタ
+     */
+    ~ActionManager() = default;
 public:
     /*
      *  アクションの追加
