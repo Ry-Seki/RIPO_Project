@@ -14,6 +14,8 @@ ExitPoint::ExitPoint()
 {
 }
 
+
+
 void ExitPoint::Update() {
 
 }

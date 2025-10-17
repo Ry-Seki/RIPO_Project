@@ -14,8 +14,8 @@ private:
 
 
 public:
-	ExitPoint();
-	virtual ~ExitPoint() = default;
+	ExitPoint() = default;
+	~ExitPoint() override {};
 
 public:
 	void Update();
