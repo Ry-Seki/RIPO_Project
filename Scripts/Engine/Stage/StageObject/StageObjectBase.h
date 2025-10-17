@@ -15,14 +15,12 @@ private:
 	int ID = -1;
 	int masterID = -1;
 	int nameID = -1;
-	// ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹
-	int modelHandle;
 
 	Vector3 position;
 	Vector3 rotation;
 	Vector3 scale;
 
-private:
+public:
 	StageObjectBase() = default;
 	~StageObjectBase() = default;
 
