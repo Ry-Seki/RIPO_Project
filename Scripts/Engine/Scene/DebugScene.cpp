@@ -7,16 +7,27 @@
 #include "../Manager/CameraManager.h"
 #include "../Manager/GameObjectManager.h"
 #include "../Manager/CharacterManager.h"
+#include "../Manager/StageManager.h"
+#include "../Load/LoadManager.h"
+#include "../Load/Model/LoadModel.h"
 
-/*
- *	‰Šú‰»ˆ—
- */
+ /*
+  *	‰Šú‰»ˆ—
+  */
 void DebugScene::Initialize(Engine& engine) {
 	SetMouseDispFlag(false);
 	GameObjectManager::GetInstance().Initialize(engine);
 	CharacterManager::GetInstance().Initialize(engine);
 	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
 	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 });
+	StageManager::GetInstance().Initialize(engine);
+	auto stageModel = std::make_shared<LoadModel>("Res/Model/Stage/StageModel_1.mv1");
+	LoadManager::GetInstance().AddLoader(stageModel);
+	LoadManager::GetInstance().SetOnComplete(
+		[stageModel]() {
+			StageManager::GetInstance().LoadStage(stageModel->GetHandle());
+		}
+	);
 }
 /*
  *	XVˆ—
@@ -52,7 +63,7 @@ void DebugScene::Render() {
 
 		//  X²
 		{
-			pos1 = VGet(0,0,0);
+			pos1 = VGet(0, 0, 0);
 			pos2 = VScale(VGet(1, 0, 0), 5000.0f);		//  VGet(5000.0f, 0.0f, 0.0f)
 			DrawLine3D(pos1, pos2, GetColor(255, 255, 255));
 		}
@@ -70,4 +81,7 @@ void DebugScene::Render() {
 		}
 
 	}
+
+	StageManager::GetInstance().Render();
+
 }

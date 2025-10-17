@@ -34,6 +34,8 @@ public:
 	// ステージ読み込み
 	virtual void Load(const std::shared_ptr<LoadModel>& model) = 0;
 
+	virtual void ModelLoad(const int modelHandleBase) = 0;
+
 	// 更新
 	virtual void Update() = 0;
 
@@ -50,7 +52,7 @@ public:
 	 *	@param Vector3  PloyPos2
 	 *  @param Vector3  MoveVec
 	 */
-	virtual void UpdateCollision(Vector3* position, Vector3 PolyPos1,Vector3 PloyPos2,Vector3 MoveVec) = 0;
+	virtual void UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos2, Vector3 MoveVec) = 0;
 };
 
 #endif // !_STAGEBASE_H_

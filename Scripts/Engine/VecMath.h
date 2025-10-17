@@ -184,5 +184,18 @@ struct Vector3 {
 		return (v < 0.0f) ? -v : v;
 	}
 
+	// 2点間の距離を求める
+	static float Distance(const Vector3& a, const Vector3& b) {
+		return (a - b).Magnitude();
+	}
+
+	// 発射方向ベクトルの生成
+	static Vector3 Direction(const Vector3& from, const Vector3& to) {
+		Vector3 dir = to - from;
+		return dir.Normalized();
+	}
+
+
+
 };
 #endif // !_VECMATH_H_

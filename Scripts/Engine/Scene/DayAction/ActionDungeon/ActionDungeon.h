@@ -7,21 +7,20 @@
 #define _ACTION_DUNGEON_H_
 
 #include "../DayActionBase.h"
-#include "../../../Load/LoadManager.h"
-#include "../../../Load/Model/LoadModel.h"
-#include "../../../Load/CSV/LoadCSV.h"
-
+#include "../../../../Data/DungeonData.h"
+#include <vector>
 #include <memory>
+
+class DungeonDataLoader; // 前方宣言
 
 /*
  *	ダンジョンアクションクラス
  */
 class ActionDungeon : public DayActionBase {
 private:
-	std::shared_ptr<LoadModel> dungeonModel;
-	std::shared_ptr<LoadCSV> dungeonData;
-	std::shared_ptr<LoadModel> enemyModel;
-	std::shared_ptr<LoadModel> bossModel;
+	std::shared_ptr<DungeonDataLoader> dungeonDataLoader;
+	std::vector<DungeonData> dungeonList;
+	DungeonData currentDungeon;
 
 public:
 	/*
