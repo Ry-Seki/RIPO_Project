@@ -3,10 +3,33 @@
  *	@author kuu
  */
 #include "StageObjectManager.h"
+#include "GameObjectManager.h"
+#include "../Stage/StageObject/ExitPoint.h"
+#include "../Stage/StageObject/StageObjectBase.h"
 
 StageObjectManager::StageObjectManager()
 	: engine(nullptr) {
 
+}
+
+/*
+ *	出口生成
+ */
+StageObjectBasePtr StageObjectManager::CreateExit(
+	int setID,
+	const std::string& name,
+	const Vector3& position,
+	const Vector3& rotation) {
+	// 未使用のオブジェクト取得
+	exitObject = GameObjectManager::GetInstance().GetUnuseObject();
+	// 出口オブジェクト生成
+	StageObjectBasePtr exitStageObj = exitObject->AddComponent<ExitPoint>();
+	// ID設定
+	exitStageObj->SetID(setID);
+	// データのセット
+	exitObject->SetObjectData(name, position, rotation);
+	// 出口オブジェクトを返す
+	return exitStageObj;
 }
 
 /*
@@ -17,15 +40,25 @@ void StageObjectManager::Initialize(Engine& setEngine) {
 }
 
 /*
- *	お宝生成
+ *	出口生成
  */
-void StageObjectManager::CreateTreasure(
+void StageObjectManager::GenerateExit(
 	const std::string& name,
 	const Vector3& position,
-	const Vector3& rotation,
-	const Vector3& scale) {
-
+	const Vector3& rotation) {
+	// リストの要素の数
+	int stageObjectListCount = static_cast<int>(createStageObjectList.size());
+	// 生成ステージオブジェクトの空きをチェック
+	for (int i = 0; i < stageObjectListCount; i++) {
+		if (createStageObjectList[i] != nullptr) continue;
+		// リストの空きに生成
+		createStageObjectList[i] = CreateExit(i, name, position, rotation);
+		return;
+	}
+	// 空きがなかったら一番後ろに生成
+	createStageObjectList.push_back(CreateExit(0, name, position, rotation));
 }
+
 
 /*
  *	ID指定のステージオブジェクト削除
@@ -33,6 +66,8 @@ void StageObjectManager::CreateTreasure(
 void StageObjectManager::RemoveStageObject(int stageObjectID) {
 	// リストから削除
 	createStageObjectList[stageObjectID] = nullptr;
+	// オブジェクトのリセット
+	GameObjectManager::GetInstance().ResetObject(exitObject);
 }
 
 /*

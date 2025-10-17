@@ -20,10 +20,21 @@ class StageObjectManager : public Singleton<StageObjectManager> {
 private:
 	Engine* engine;
 	StageObjectBaseList createStageObjectList;
+	GameObjectPtr exitObject;
 
 private:
 	StageObjectManager();
 	~StageObjectManager() = default;
+
+private:
+	/*
+	 *	出口生成
+	 */
+	StageObjectBasePtr CreateExit(
+		const int setID,
+		const std::string& name,
+		const Vector3& position = { 0.0f, 0.0f, 0.0f },
+		const Vector3& rotation = { 0.0f, 0.0f, 0.0f });
 
 public:
 	/*
@@ -32,12 +43,12 @@ public:
 	void Initialize(Engine& setEngine);
 
 	/*
-	 *	お宝生成
+	 *	出口生成
 	 */
-	void CreateTreasure(const std::string& name,
+	void GenerateExit(
+		const std::string& name,
 		const Vector3& position = { 0.0f, 0.0f, 0.0f },
-		const Vector3& rotation = { 0.0f, 0.0f, 0.0f },
-		const Vector3& scale = { 0.0f, 0.0f, 0.0f });
+		const Vector3& rotation = { 0.0f, 0.0f, 0.0f });
 
 	/*
 	 *	ID指定のステージオブジェクト削除
