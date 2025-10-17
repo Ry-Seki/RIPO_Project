@@ -8,6 +8,7 @@
 
 #include "../DayActionBase.h"
 #include "../../../../Data/DungeonData.h"
+#include "../../../../Data/DungeonStageData.h"
 #include <vector>
 #include <memory>
 
@@ -21,6 +22,7 @@ private:
 	std::shared_ptr<DungeonDataLoader> dungeonDataLoader;
 	std::vector<DungeonData> dungeonList;
 	DungeonData currentDungeon;
+	DungeonStageData currentDungeonStage;
 
 public:
 	/*
@@ -50,5 +52,10 @@ public:
 	 */
 	void Render() override;
 
+public:
+	/*
+	 *	ダンジョンステージデータの設定
+	 */
+	inline void SetDungeonStageData(DungeonStageData setData) { currentDungeonStage = setData; }
 };
 #endif // !_ACTION_DUNGEON_H_
