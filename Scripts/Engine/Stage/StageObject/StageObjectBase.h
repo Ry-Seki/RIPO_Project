@@ -20,9 +20,17 @@ private:
 	Vector3 rotation;
 	Vector3 scale;
 
-private:
+public:
 	StageObjectBase() = default;
 	~StageObjectBase() = default;
+
+public:
+	/*
+	 *	@function	ModelLoad
+	 *	@brief		モデルの読み込み
+	 *  @param		const int modelHandle
+	 */
+	virtual void ModelLoad(const int modelHandleBase) = 0;
 
 public:
 	/*
@@ -38,7 +46,7 @@ public:
 	 *	@brief		IDの変更
 	 *	@param[in]	int& setValue;
 	 */
-	inline void GetID(int& setValue) {
+	inline void SetID(int& setValue) {
 		ID = setValue;
 	}
 	/*
@@ -71,7 +79,7 @@ public:
 	 *	@brief		位置の変更
 	 *  @param		Vector3& setValue
 	 */
-	inline void SetPosition(Vector3& setValue) {
+	inline void SetPosition(const Vector3& setValue) {
 		position = setValue;
 	}
 	/*
@@ -87,7 +95,7 @@ public:
 	 *	@brief		角度の変更
 	 *  @param		Vector3& setValue
 	 */
-	inline void SetRotation(Vector3& setValue) {
+	inline void SetRotation(const Vector3& setValue) {
 		rotation = setValue;
 	}
 	/*
@@ -103,7 +111,7 @@ public:
 	 *	@brief		大きさの変更
 	 *  @param		Vector3& setValue
 	 */
-	inline void SetScale(Vector3& setValue) {
+	inline void SetScale(const Vector3& setValue) {
 		scale = setValue;
 	}
 

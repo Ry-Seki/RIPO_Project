@@ -15,15 +15,12 @@
 #include <fstream>
 #include <json.hpp>
 
- // 別名定義
-using JSON = nlohmann::json;
-
 /*
  *	JSONファイルの読み込みクラス
  */
 class LoadJSON : public LoadBase {
 private:
-	JSON jsonData;	// JSONデータ
+	nlohmann::json jsonData;	// JSONデータ
 
 public:
 	/*
@@ -43,7 +40,9 @@ public:
 	 *	JSONデータの取得
 	 *  return JSON
 	 */
-	const JSON& GetData() const { return jsonData; }
+	const nlohmann::json& GetData() const { return jsonData; }
 };
+// 別名定義
+using JSON = nlohmann::json;
 
 #endif // !_LOAD_JSON_H_

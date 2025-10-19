@@ -168,6 +168,7 @@
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarSystem.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\Day.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionDungeon\ActionDungeon.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionTraining\ActionTraining.cpp" />
@@ -176,6 +177,8 @@
     <ClCompile Include="Scripts\Engine\Scene\Scene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\Stage.cpp" />
+    <ClCompile Include="Scripts\Engine\Stage\StageObject\ExitPoint.cpp" />
+    <ClCompile Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.cpp" />
     <ClCompile Include="Scripts\Engine\Time.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
@@ -234,11 +237,13 @@
     <ClInclude Include="Scripts\Engine\Scene\DebugScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\MainGameScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\Scene.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Select\SelectionBase.h" />
     <ClInclude Include="Scripts\Engine\Scene\TitleScene.h" />
     <ClInclude Include="Scripts\Engine\Manager\GameObjectManager.h" />
     <ClInclude Include="Scripts\Engine\Singleton.h" />
     <ClInclude Include="Scripts\Engine\Stage\Stage.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageBase.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\ExitPoint.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />

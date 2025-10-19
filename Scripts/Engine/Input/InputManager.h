@@ -18,6 +18,8 @@ enum class MouseInput {
  *	入力管理クラス
  */
 class InputManager : public Singleton<InputManager>{
+	// フレンド宣言
+	friend class Singleton<InputManager>;
 private:	//メンバ変数
 	char keyState[256];
 	char prevKeyState[256];
@@ -25,7 +27,7 @@ private:	//メンバ変数
 	int mouseInput[static_cast<int>(MouseInput::MouseInputMax)];
 	bool nowMouseInput[static_cast<int>(MouseInput::MouseInputMax)], prevInput[static_cast<int>(MouseInput::MouseInputMax)];
 
-public:	    //コンストラクタとデストラクタ
+private:	    //コンストラクタとデストラクタ
 	/*
 	 *	コンストラクタ
 	 */

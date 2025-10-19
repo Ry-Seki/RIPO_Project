@@ -15,11 +15,13 @@
  *  フェード管理処理
  */
 class FadeManager : public Singleton<FadeManager>{
+    // フレンド宣言
+    friend class Singleton<FadeManager>;
 private:
     FadeBasePtr currentFade;
     std::function<void()> onFadeFinished; // フェード終了時のコールバック
 
-public:
+private:
     /*
      *  コンストラクタ
      */
