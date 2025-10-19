@@ -5,10 +5,12 @@
 
 #include "ExitPoint.h"
 
-void ExitPoint::Update()
-{
+// XV
+void ExitPoint::Update() {
+
 }
 
-void ExitPoint::ModelLoad(const int modelHandleBase)
-{
+// ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
+void ExitPoint::ModelLoad(const int modelHandleBase) {
+
 }

@@ -18,8 +18,10 @@ public:
 	~ExitPoint() override {};
 
 public:
+	// XV
 	void Update();
 
+	// ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
 	void ModelLoad(const int modelHandleBase) override;
 
 

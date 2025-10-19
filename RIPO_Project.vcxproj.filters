@@ -70,6 +70,9 @@
     <Filter Include="ソース ファイル\Engine\Scene\Action">
       <UniqueIdentifier>{ea40ac7a-bba9-4642-947b-a7862ea4e33f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Stage\StageObject">
+      <UniqueIdentifier>{587d0cde-bdef-4c68-8eca-a6d219a91502}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
