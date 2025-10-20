@@ -24,7 +24,7 @@ CharacterBasePtr CharacterManager::CreateCharacter(
 	// キャラクター生成
 	CharacterBasePtr createCharacter = characterObject->AddComponent<T>();
 	// コライダー生成
-	AABBColliserPtr collider = characterObject->AddComponent<AABBCollider>();
+	AABBColliderPtr collider = characterObject->AddComponent<AABBCollider>();
 	collider->aabb = { AABBMin, AABBMax };
 	// ID設定
 	createCharacter->SetID(setID);
