@@ -20,14 +20,17 @@ class CharacterManager : public Singleton<CharacterManager>{
 private:;
 	Engine* engine;
 	CharacterBaseList createCharacterList;
-	GameObjectPtr playerObject;
+	GameObjectPtr characterObject;
+
+	const size_t CREATE_CHARACTER_COUNT = 16;	// éñëOÇ…ê∂ê¨Ç∑ÇÈêî
 
 private:
 	CharacterManager();
 	~CharacterManager() = default;
 
 private:
-	CharacterBasePtr CreatePlayer(
+	template <typename T>
+	CharacterBasePtr CreateCharacter(
 		const int setID,
 		const std::string& name,
 		const Vector3& position = { 0.0f, 0.0f, 0.0f },

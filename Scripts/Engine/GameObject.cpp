@@ -79,6 +79,20 @@ void GameObject::RemoveComponent() {
     // 残すコンポーネントだけに更新
     components.erase(it, components.end());
 
+    // collidersも同様に
+    auto itcol = std::stable_partition(colliders.begin(), colliders.end(),
+        [&destroyList](const auto& component) {
+            if (!component || component->IsDestroyed()) {
+                if (component) destroyList.push_back(component);
+
+                return false; // 削除対象
+            }
+            return true; // 残す
+        });
+
+    // 残すコライダーだけに更新
+    colliders.erase(itcol, colliders.end());
+
     // 破棄処理呼び出し（軽量化のため移動せず参照で呼ぶ）
     for (auto& component : destroyList) {
         component->OnDestroy();

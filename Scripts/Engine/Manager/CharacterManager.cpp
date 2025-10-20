@@ -11,23 +11,22 @@ CharacterManager::CharacterManager()
 	: engine(nullptr) {
 }
 
-CharacterBasePtr CharacterManager::CreatePlayer(
+template <typename T>
+CharacterBasePtr CharacterManager::CreateCharacter(
 	int setID,
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation) {
 	// 未使用状態のオブジェクト取得
-	playerObject = GameObjectManager::GetInstance().GetUnuseObject();
-	// プレイヤーキャラクター生成
-	CharacterBasePtr playerCharacter = playerObject->AddComponent<PlayerComponent>();
+	characterObject = GameObjectManager::GetInstance().GetUnuseObject();
+	// キャラクター生成
+	CharacterBasePtr createCharacter = characterObject->AddComponent<T>();
 	// ID設定
-	playerCharacter->SetID(setID);
+	createCharacter->SetID(setID);
 	// データのセット
-	playerObject->SetObjectData(name, position, rotation);
-	// カメラのターゲットに追加
-	CameraManager::GetInstance().SetTarget(playerObject);
-	// プレイヤーキャラクターを返す
-	return playerCharacter;
+	characterObject->SetObjectData(name, position, rotation);
+	// キャラクターを返す
+	return createCharacter;
 }
 
 /*
@@ -35,6 +34,12 @@ CharacterBasePtr CharacterManager::CreatePlayer(
  */
 void CharacterManager::Initialize(Engine& setEngine) {
 	engine = &setEngine;
+	// はじめに一定数生成
+	createCharacterList.reserve(CREATE_CHARACTER_COUNT);
+	for (size_t i = 0; i < CREATE_CHARACTER_COUNT; i++) {
+		// 空の要素を生成
+		createCharacterList.push_back(nullptr);
+	}
 }
 
 /*
@@ -45,16 +50,20 @@ void CharacterManager::GeneratePlayer(
 	const Vector3& position,
 	const Vector3& rotation) {
 	// リストの要素の数
-	int characterListCount = static_cast<int>(createCharacterList.size());
+	size_t characterListCount = createCharacterList.size();
 	// 生成キャラクターリストの空きをチェック
-	for (int i = 0; i < characterListCount; i++) {
+	for (size_t i = 0; i < characterListCount; i++) {
 		if (createCharacterList[i] != nullptr) continue;
+		// カメラのターゲットに追加
+		CameraManager::GetInstance().SetTarget(characterObject);
 		// リストの空きに生成
-		createCharacterList[i] = CreatePlayer(i, name, position, rotation);
+		createCharacterList[i] = CreateCharacter<PlayerComponent>(i, name, position, rotation);
 		return;
 	}
+	// カメラのターゲットに追加
+	CameraManager::GetInstance().SetTarget(characterObject);
 	// 空きが無かったら一番後ろに生成
-	createCharacterList.push_back(CreatePlayer(0, name, position, rotation));
+	createCharacterList.push_back(CreateCharacter<PlayerComponent>(0, name, position, rotation));
 }
 
 /*
@@ -64,7 +73,7 @@ void CharacterManager::RemoveCharacter(int characterID) {
 	// リストから削除
 	createCharacterList[characterID] = nullptr;
 	// オブジェクトのリセット
-	GameObjectManager::GetInstance().ResetObject(playerObject);
+	GameObjectManager::GetInstance().ResetObject(characterObject);
 }
 
 /*

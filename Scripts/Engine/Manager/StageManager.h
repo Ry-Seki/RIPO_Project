@@ -66,6 +66,11 @@ public:
 	 */
 	int GetStageFrame(const std::string& frameName) const;
 
+	/*
+	 *	スタート位置の取得
+	 */
+	Vector3 GetStartPos()const;
+
 };
 
 
