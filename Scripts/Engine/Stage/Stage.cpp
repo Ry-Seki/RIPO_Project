@@ -84,7 +84,7 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 	Vector3 prevPos = *position;
 	Vector3 nowPos = prevPos + MoveVec;
 	float polyOffset = PloyPos2.y - PolyPos1.y;
-	bool moveFlag = (Vector3::fabs(MoveVec.x) > 0.01f || Vector3::fabs(MoveVec.z) > 0.01f);
+	bool moveFlag = (fabs(MoveVec.x) > 0.01f || fabs(MoveVec.z) > 0.01f);
 
 	// ƒRƒŠƒWƒ‡ƒ“î•ñæ“¾
 	auto hitDim = SetupCollision(position, MoveVec);
