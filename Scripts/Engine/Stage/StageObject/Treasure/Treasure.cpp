@@ -69,3 +69,16 @@ bool Treasure::IsInView(const Vector3& playerPos) const {
 	return (distance <= viewRadius);
 }
 
+/*
+ *	Žæ“¾‚³‚ê‚½‚Æ‚«
+ */
+void Treasure::Collect() {
+	// ‚·‚Å‚ÉŽæ“¾‚µ‚Ä‚¢‚½‚ç
+	if (isCollected)return;
+
+
+	isCollected = true;
+	isHeld = true;
+
+}
+
