@@ -41,13 +41,14 @@ public:
 	 */
 	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
 
+
+
+public:
+
 	/*
 	 *	æ“¾Ï‚İ”»’è
 	 */
-	bool IsCollected() const { return isCollected; }
-
-
-	void TreasureHold(const Vector3& setValue);
+	bool GetCollected() const { return isCollected; }
 
 };
 

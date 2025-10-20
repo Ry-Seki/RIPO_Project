@@ -8,16 +8,17 @@
 
 #include <functional>
 #include <memory>
-#include <any>
 
 /*
  *	行動の選択肢を管理するクラス
  */
 class SelectionBase {
+protected:
+
 public:
     virtual ~SelectionBase() = default;
 
-    virtual void Update(float dt) = 0;
+    virtual void Update(float deltaTime) = 0;
     virtual void Render() = 0;
     virtual bool IsActive() const = 0;
 };
