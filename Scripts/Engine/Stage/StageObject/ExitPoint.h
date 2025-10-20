@@ -23,10 +23,6 @@ public:
 
 	// ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
 	void ModelLoad(const int modelHandleBase) override;
-
-
-
-
 };
 
 #endif // !_EXITPOINT_H_

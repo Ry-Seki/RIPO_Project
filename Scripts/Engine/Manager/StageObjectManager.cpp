@@ -10,7 +10,6 @@
 
 StageObjectManager::StageObjectManager()
 	: engine(nullptr) {
-
 }
 
 /*
