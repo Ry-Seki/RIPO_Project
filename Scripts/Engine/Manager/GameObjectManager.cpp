@@ -13,8 +13,9 @@ GameObjectManager::GameObjectManager()
  */
 void GameObjectManager::Initialize(Engine& setEngine) {
 	engine = &setEngine;
-
-	for (int i = 0; i < CREATE_OBJECT_MAX; i++) {
+	// はじめに一定数生成
+	unuseObjectList.reserve(CREATE_OBJECT_COUNT);
+	for (size_t i = 0; i < CREATE_OBJECT_COUNT; i++) {
 		// 未使用オブジェクト生成
 		unuseObjectList.push_back(engine->Create<GameObject>());
 	}

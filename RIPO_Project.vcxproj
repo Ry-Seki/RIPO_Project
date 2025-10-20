@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scripts\Engine\Collision.cpp" />
     <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
@@ -187,6 +188,8 @@
     <ClInclude Include="Scripts\Data\DungeonData.h" />
     <ClInclude Include="Scripts\Data\DungeonStageData.h" />
     <ClInclude Include="Scripts\Engine\Character\CharacterBase.h" />
+    <ClInclude Include="Scripts\Engine\Collision.h" />
+    <ClInclude Include="Scripts\Engine\Component\AABBCollider.h" />
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Component.h" />
