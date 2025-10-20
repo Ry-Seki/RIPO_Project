@@ -31,6 +31,7 @@ class ActionManager : public Singleton<ActionManager>{
 
 private:
     std::vector<DayActionPtr> actionList;   // アクションリスト
+    DayActionPtr actionBase;                // アクションクラスのoriginal
     DayActionPtr currentAction;             // 現在のアクション
     std::function<void()> onComplete;       // アクション完了コールバック
 

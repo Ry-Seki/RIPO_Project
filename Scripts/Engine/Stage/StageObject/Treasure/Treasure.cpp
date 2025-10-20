@@ -4,14 +4,16 @@
  */
 
 #include "Treasure.h"
-
+#include "../Scripts/Engine/GameConst.h"
+#include "../Scripts/Engine/VecMath.h"
  /*
   *	コンストラクタ
   */
 Treasure::Treasure()
 	: StageObjectBase()
 	, isCollected(false)
-	, modelHandle(-1) {
+	, modelHandle(-1)
+	, viewRadius(GameConst::VIEW_RADIUS) {
 }
 
 Treasure::~Treasure() {
@@ -52,11 +54,18 @@ void Treasure::OnCollision(const std::shared_ptr<Component>& self, const std::sh
 
 
 /*
- *	@function	TreasureHold
- *  @brief		持たれている時の処理
- *  @param		const Vector3& position
+ *	@function	IsInView
+ *  @brief		プレイヤーが範囲内か判定
+ *  @param		const Vector& playerPos
  */
-void Treasure::TreasureHold(const Vector3& setValue) {
-	// 指定された位置にお宝を移動
+bool Treasure::IsInView(const Vector3& playerPos) const {
+	// お宝自身の座標を取得
+	Vector3 treasurePos = GetPosition();
 
+	// 二点間の距離を求める
+	float distance = Vector3::Distance(treasurePos, playerPos);
+
+	// 取得範囲内であれば
+	return (distance <= viewRadius);
 }
+

@@ -70,6 +70,12 @@
     <Filter Include="ソース ファイル\Engine\Scene\Action">
       <UniqueIdentifier>{ea40ac7a-bba9-4642-947b-a7862ea4e33f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\Selection">
+      <UniqueIdentifier>{b8c2bbc6-5438-4c31-94ac-4bb9ed973672}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\Selection">
+      <UniqueIdentifier>{d4639ea7-e1a9-44e4-8da6-0b22b2204dd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -360,7 +366,7 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\Select\SelectionBase.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

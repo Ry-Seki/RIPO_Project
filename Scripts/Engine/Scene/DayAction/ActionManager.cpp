@@ -5,7 +5,7 @@
  *	ダンジョンアクション開始
  */
 void ActionManager::ActiveDungeon(DungeonStageData setStageData) {
-	auto dungeonAction = std::dynamic_pointer_cast<ActionDungeon>(actionList[(int)ActionType::DungeonAction]);
+	auto dungeonAction = std::dynamic_pointer_cast<ActionDungeon>(actionBase);
 	if (!dungeonAction) return;
 	dungeonAction->SetDungeonStageData(setStageData);
 
