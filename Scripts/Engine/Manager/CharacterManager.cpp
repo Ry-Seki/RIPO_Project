@@ -16,11 +16,16 @@ CharacterBasePtr CharacterManager::CreateCharacter(
 	int setID,
 	const std::string& name,
 	const Vector3& position,
-	const Vector3& rotation) {
+	const Vector3& rotation,
+	const Vector3& AABBMin,
+	const Vector3& AABBMax) {
 	// 未使用状態のオブジェクト取得
 	characterObject = GameObjectManager::GetInstance().GetUnuseObject();
 	// キャラクター生成
 	CharacterBasePtr createCharacter = characterObject->AddComponent<T>();
+	// コライダー生成
+	AABBColliderPtr collider = characterObject->AddComponent<AABBCollider>();
+	collider->aabb = { AABBMin, AABBMax };
 	// ID設定
 	createCharacter->SetID(setID);
 	// データのセット
@@ -48,7 +53,9 @@ void CharacterManager::Initialize(Engine& setEngine) {
 void CharacterManager::GeneratePlayer(
 	const std::string& name,
 	const Vector3& position,
-	const Vector3& rotation) {
+	const Vector3& rotation,
+	const Vector3& AABBMin,
+	const Vector3& AABBMax) {
 	// リストの要素の数
 	size_t characterListCount = createCharacterList.size();
 	// 生成キャラクターリストの空きをチェック
@@ -57,13 +64,13 @@ void CharacterManager::GeneratePlayer(
 		// カメラのターゲットに追加
 		CameraManager::GetInstance().SetTarget(characterObject);
 		// リストの空きに生成
-		createCharacterList[i] = CreateCharacter<PlayerComponent>(i, name, position, rotation);
+		createCharacterList[i] = CreateCharacter<PlayerComponent>(i, name, position, rotation, AABBMin, AABBMax);
 		return;
 	}
 	// カメラのターゲットに追加
 	CameraManager::GetInstance().SetTarget(characterObject);
 	// 空きが無かったら一番後ろに生成
-	createCharacterList.push_back(CreateCharacter<PlayerComponent>(0, name, position, rotation));
+	createCharacterList.push_back(CreateCharacter<PlayerComponent>(0, name, position, rotation, AABBMin, AABBMax));
 }
 
 /*
