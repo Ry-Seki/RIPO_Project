@@ -4,6 +4,7 @@
  */
 
 #include "ExitPoint.h"
+#include "../../Component/Component.h"
 
 // XV
 void ExitPoint::Update() {
