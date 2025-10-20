@@ -16,7 +16,7 @@ void ExitPoint::OnCollision(const std::shared_ptr<Component>& self, const std::s
 	exitTriger = true;
 
 	// フェードさせる
-	CreateFade();
+	//CreateFade();
 
 
 
