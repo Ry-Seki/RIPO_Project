@@ -4,44 +4,52 @@
  */
 
 #include "ActionDungeon.h"
+#include "../../../Engine.h"
 #include "../../../Load/LoadManager.h"
 #include "../../../Load/Dungeon/DungeonDataLoader.h"
 #include "../../../Manager/StageManager.h"
+#include "../../../Manager/CameraManager.h"
+#include "../../../Manager/GameObjectManager.h"
+#include "../../../Manager/CharacterManager.h"
+
 #include <iostream>
 
 /*
  *	初期化処理
  */
-void ActionDungeon::Initialize() {
-    // DungeonData CSV をロード登録
-    dungeonDataLoader = std::make_shared<DungeonDataLoader>("Data/Dungeon/DungeonList.csv");
-    LoadManager::GetInstance().AddLoader(dungeonDataLoader);
+void ActionDungeon::Initialize(Engine& engine) {
+
 }
 /*
  *  ロード済みのデータをセット(コールバック)
  */
-void ActionDungeon::Setup() {
-    if (!dungeonDataLoader || !dungeonDataLoader->IsLoaded()) {
-        std::cerr << "[ActionDungeon] DungeonData がロードされていません" << std::endl;
-        return;
-    }
+void ActionDungeon::Setup(Engine& engine) {
 
-    // CSV データを内部リストにコピー
-    dungeonList = dungeonDataLoader->dungeonList;
-
-    if (!dungeonList.empty()) {
-        currentDungeon = dungeonList[0];
-        std::cout << "[ActionDungeon] CurrentDungeon: " << currentDungeon.name
-            << " Path: " << currentDungeon.dungeonPath << std::endl;
-    }
 }
 /*
  *	更新処理
  */
-void ActionDungeon::Update(float deltaTime) {
+void ActionDungeon::Update(Engine& engine, float deltaTime) {
+
 }
 /*
  *	描画処理
  */
 void ActionDungeon::Render() {
+    StageManager::GetInstance().Render();
+}
+
+void ActionDungeon::DebugInitialize(Engine& engine, std::string setFilePath) {
+    auto dungeonModel = std::make_shared<LoadModel>(setFilePath);
+    LoadManager::GetInstance().AddLoader(dungeonModel);
+    LoadManager::GetInstance().SetOnComplete([this, &engine, dungeonModel]() {DebugSetup(engine, dungeonModel); });
+}
+
+void ActionDungeon::DebugSetup(Engine& engine, std::shared_ptr<LoadModel> setModel) {
+    int modelHandle = setModel->GetHandle();
+    GameObjectManager::GetInstance().Initialize(engine);
+    CharacterManager::GetInstance().Initialize(engine);
+    CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
+    CharacterManager::GetInstance().GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 });
+    StageManager::GetInstance().Initialize(engine);
 }

@@ -12,6 +12,9 @@
 #include "../../Load/LoadManager.h"
 #include "../../Load/LoadBase.h"
 
+// 前方宣言
+class Engine;
+
  /*
   *  1日単位の行動の基底クラス
   */
@@ -27,15 +30,15 @@ public:
     /*
      *  初期化処理(データのロード登録)
      */
-    virtual void Initialize() = 0;
+    virtual void Initialize(Engine& engine) = 0;
     /*
      *  ロード済みのデータをセット(コールバック)
      */
-    virtual void Setup() = 0;
+    virtual void Setup(Engine& engine) = 0;
     /*
      *  更新処理
      */
-    virtual void Update(float deltaTime) = 0;
+    virtual void Update(Engine& engine, float deltaTime) = 0;
     /*
      *  描画処理
      */

@@ -9,8 +9,11 @@
 #include "../DayActionBase.h"
 #include "../../../../Data/DungeonData.h"
 #include "../../../../Data/DungeonStageData.h"
+#include "../../../Load/Model/LoadModel.h"
+
 #include <vector>
 #include <memory>
+#include <string>
 
 class DungeonDataLoader; // 前方宣言
 
@@ -38,19 +41,22 @@ public:
 	/*
 	 *	初期化処理
 	 */
-	void Initialize() override;
+	void Initialize(Engine& engine) override;
 	/*
 	 *  ロード済みのデータをセット(コールバック)
 	 */
-	void Setup() override;
+	void Setup(Engine& engine) override;
 	/*
 	 *	更新処理
 	 */
-	void Update(float deltaTime) override;
+	void Update(Engine& engine, float deltaTime) override;
 	/*
 	 *	描画処理
 	 */
 	void Render() override;
+
+	void DebugInitialize(Engine& engine, std::string setFilePath);
+	void DebugSetup(Engine& engine, std::shared_ptr<LoadModel> setModel);
 
 public:
 	/*
