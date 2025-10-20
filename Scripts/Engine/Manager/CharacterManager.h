@@ -22,6 +22,8 @@ private:;
 	CharacterBaseList createCharacterList;
 	GameObjectPtr characterObject;
 
+	const size_t CREATE_CHARACTER_COUNT = 16;	// –‘O‚É¶¬‚·‚é”
+
 private:
 	CharacterManager();
 	~CharacterManager() = default;

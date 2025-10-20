@@ -34,6 +34,12 @@ CharacterBasePtr CharacterManager::CreateCharacter(
  */
 void CharacterManager::Initialize(Engine& setEngine) {
 	engine = &setEngine;
+	// はじめに一定数生成
+	createCharacterList.reserve(CREATE_CHARACTER_COUNT);
+	for (size_t i = 0; i < CREATE_CHARACTER_COUNT; i++) {
+		// 空の要素を生成
+		createCharacterList.push_back(nullptr);
+	}
 }
 
 /*
@@ -44,9 +50,9 @@ void CharacterManager::GeneratePlayer(
 	const Vector3& position,
 	const Vector3& rotation) {
 	// リストの要素の数
-	int characterListCount = static_cast<int>(createCharacterList.size());
+	size_t characterListCount = createCharacterList.size();
 	// 生成キャラクターリストの空きをチェック
-	for (int i = 0; i < characterListCount; i++) {
+	for (size_t i = 0; i < characterListCount; i++) {
 		if (createCharacterList[i] != nullptr) continue;
 		// カメラのターゲットに追加
 		CameraManager::GetInstance().SetTarget(characterObject);

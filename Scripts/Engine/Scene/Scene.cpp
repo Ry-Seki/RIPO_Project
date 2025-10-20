@@ -81,6 +81,19 @@ void Scene::HandleGameObjectCollision() {
         // ゲームオブジェクト毎の衝突判定
         for (auto A = colliders.begin(); A != colliders.end() - 1; A++) {
             const GameObject* objA = A->at(0).origin->GetOwner();
+            // 削除済みは処理しない
+            if (objA->IsDestroyed())
+                continue;
+
+            for (auto B = A + 1; B != colliders.end(); B++) {
+                const GameObject* objB = B->at(0).origin->GetOwner();
+                // 削除済みは処理しない
+                if (objB->IsDestroyed())
+                    continue;
+
+                // コライダー単位の衝突判定
+                HandleWorldColliderCollision(&*A, &*B);
+            }
         }
     }
 }
@@ -92,6 +105,29 @@ void Scene::HandleGameObjectCollision() {
 void Scene::HandleWorldColliderCollision(
     WorldColliderList* colliderA,
     WorldColliderList* colliderB) {
+    // コライダー毎の衝突判定
+    for (const auto& colA : *colliderA) {
+        for (const auto& colB : *colliderB) {
+            // スタティックなコライダー同士では処理しない
+            if (colA.origin->isStatic && colB.origin->isStatic)
+                continue;
+
+            // 衝突判定
+            Vector3 penetration;
+            if (Intersect(colA.world, colB.world, penetration)) {
+                GameObject* objA = colA.origin->GetOwner();
+                GameObject* objB = colB.origin->GetOwner();
+
+                // イベントの発火
+                objA->OnCollision(colA.origin, colB.origin);
+                objB->OnCollision(colB.origin, colA.origin);
+
+                // イベントの結果、どちらかが削除予定が入ったら処理を抜ける
+                if (objA->IsDestroyed() || objB->IsDestroyed())
+                    return;
+            }
+        }
+    }
 }
 /*
  *  ゲームオブジェクトの追加

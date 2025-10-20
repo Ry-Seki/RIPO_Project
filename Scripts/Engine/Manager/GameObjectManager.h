@@ -20,7 +20,7 @@ private:
 	GameObjectList unuseObjectList;
 	std::mutex unuseMutex;
 
-	const int CREATE_OBJECT_MAX = 32;
+	const size_t CREATE_OBJECT_COUNT= 64;	// éñëOÇ…ê∂ê¨Ç∑ÇÈêî
 
 private:
 	GameObjectManager();
