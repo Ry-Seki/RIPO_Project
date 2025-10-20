@@ -10,6 +10,7 @@
 #include "../Manager/StageManager.h"
 #include "../Load/LoadManager.h"
 #include "../Load/Model/LoadModel.h"
+#include "../Component/ModelRenderer.h"
 
  /*
   *	‰Šú‰»ˆ—
@@ -20,12 +21,18 @@ void DebugScene::Initialize(Engine& engine) {
 	CharacterManager::GetInstance().Initialize(engine);
 	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
 	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f },{ 0.5f,  1.0f,  0.5f });
+	auto player = CharacterManager::GetInstance().GetCharacter(0);
+	player->GetOwner()->AddComponent<ModelRenderer>();
 	StageManager::GetInstance().Initialize(engine);
 	auto stageModel = std::make_shared<LoadModel>("Res/Model/Stage/StageModel_1.mv1");
+	auto playerModel = std::make_shared<LoadModel>("Res/Model/Player/RIPO_Model.mv1");
 	LoadManager::GetInstance().AddLoader(stageModel);
+	LoadManager::GetInstance().AddLoader(playerModel);
 	LoadManager::GetInstance().SetOnComplete(
-		[stageModel]() {
+		[stageModel, player, playerModel]() {
 			StageManager::GetInstance().LoadStage(stageModel->GetHandle());
+			int modelHandle = playerModel->GetHandle();
+			player->GetOwner()->GetComponent<ModelRenderer>()->SetModel(modelHandle);
 		}
 	);
 }
@@ -81,7 +88,7 @@ void DebugScene::Render() {
 		}
 
 	}
-
+	Scene::Render();
 	StageManager::GetInstance().Render();
 
 }
