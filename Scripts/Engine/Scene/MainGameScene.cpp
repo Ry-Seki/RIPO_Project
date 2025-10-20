@@ -9,11 +9,7 @@
 #include "../Fade/FadeManager.h"
 #include "../Manager/StageManager.h"
 #include "DayAction/ActionManager.h"
-#include "DayAction/ActionDungeon/ActionDungeon.h"
-#include "DayAction/ActionTraining/ActionTraining.h"
-#include "DayAction/ActionShop/ActionShop.h"
-#include "DayAction/ActionPartTime/ActionPartTime.h"
-
+#include "Selection/SelectionManager.h"
 /*
  *  ‰Šú‰»ˆ—
  */
@@ -31,7 +27,9 @@ void MainGameScene::Initialize(Engine& engine) {
 void MainGameScene::Update(Engine& engine, float deltaTime) {
     if (FadeManager::GetInstance().IsFading()) return;
 
-    calendarManager->Update();
+    calendarManager->Update(engine);
+
+    SelectionManager::GetInstance().Update(engine, deltaTime);
 
     ActionManager::GetInstance().Update(engine, deltaTime);
 
@@ -47,5 +45,6 @@ void MainGameScene::Update(Engine& engine, float deltaTime) {
  */
 void MainGameScene::Render() {
     calendarManager->Render();
+    SelectionManager::GetInstance().Render();
     ActionManager::GetInstance().Render();
 }

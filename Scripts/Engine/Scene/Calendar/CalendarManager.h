@@ -12,6 +12,9 @@
 
 #include <DxLib.h>
 
+// 前方宣言
+class Engine;
+ 
 /*
  *  カレンダー管理クラス
  */
@@ -35,7 +38,7 @@ public:
     /*
      *  更新処理
      */
-    void Update();
+    void Update(Engine& engine);
     /*
      *  描画処理
      */

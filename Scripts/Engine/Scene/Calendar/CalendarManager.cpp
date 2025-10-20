@@ -8,12 +8,12 @@
 /*
  *  XVˆ—
  */
-void CalendarManager::Update() {
+void CalendarManager::Update(Engine& engine) {
     auto day = calendarSystem->GetCurrentDay();
     if (!day) return;
 
     if (!inputHandle) {
-        if (CheckHitKey(KEY_INPUT_1)) { day->ActionDungeon(); inputHandle = true; }
+        if (CheckHitKey(KEY_INPUT_1)) { day->ActionDungeon(engine); inputHandle = true; }
         else if (CheckHitKey(KEY_INPUT_2)) { day->ActionTraining(); inputHandle = true; }
         else if (CheckHitKey(KEY_INPUT_3)) { day->ActionShop(); inputHandle = true; }
         else if (CheckHitKey(KEY_INPUT_4)) { day->ActionPartTime(); inputHandle = true; }

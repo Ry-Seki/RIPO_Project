@@ -10,6 +10,7 @@
 
 #include <DxLib.h>
 
+class Engine;
 /*
  *  一日の行動管理クラス
  */
@@ -32,7 +33,7 @@ public:
     /*
      *  ダンジョン処理
      */
-    void ActionDungeon();
+    void ActionDungeon(Engine& engine);
     /*
      *  トレーニング処理
      */

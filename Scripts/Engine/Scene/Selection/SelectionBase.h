@@ -9,6 +9,9 @@
 #include <functional>
 #include <memory>
 
+// 前方宣言
+class Engine;
+
 /*
  *	行動の選択肢を管理するクラス
  */
@@ -26,15 +29,15 @@ public:
     /*
      *  初期化処理
      */
-    virtual void Initialize() = 0;
+    virtual void Initialize(Engine& engine) = 0;
     /*
      *  ロード済みデータのセット（コールバック）
      */
-    virtual void Setup() = 0;
+    virtual void Setup(Engine& engine) = 0;
     /*
      *  更新処理
      */
-    virtual void Update(float deltaTime) = 0;
+    virtual void Update(Engine& engine, float deltaTime) = 0;
     /*
      *  描画処理
      */
