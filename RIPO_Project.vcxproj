@@ -167,6 +167,7 @@
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarSystem.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\Day.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionDungeon\ActionDungeon.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionTraining\ActionTraining.cpp" />

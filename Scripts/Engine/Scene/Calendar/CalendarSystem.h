@@ -25,12 +25,24 @@ public:
      */
     CalendarSystem() = default;
     /*
+     *  デストラクタ
+     */
+    ~CalendarSystem() = default;
+
+public:
+    /*
      *  初期化処理
      *  param[in]       int numMonths       生成する月の数
      *  param[in]       int weeksPerMonth   生成する週間の数
      *  param[in]       int daysPerWeek     生成する日にちの数
      */
     void Initialize(int numMonths = 1, int weeksPerMonth = 5, int daysPerWeek = 6);
+    /*
+     *  Dayを進める
+     */
+    void AdvanceDay();
+
+public:
     /*
      *  現在稼働しているDay取得
      */
@@ -47,7 +59,5 @@ public:
      *  現在稼働しているYear取得
      */
     std::shared_ptr<Year> GetYear();
-
-    void AdvanceDay();   // 現在 Day を進める
 }; 
 #endif // !_CALENDER_SYSTEM_H_

@@ -8,18 +8,32 @@
 
 #include "../../Singleton.h"
 #include "DayActionBase.h"
-
+#include "../../../Data/DungeonStageData.h"
 
 #include <vector>
 #include <memory>
 #include <string>
+#include <functional>
 
+enum class ActionType {
+    DungeonAction,
+    TrainingAction,
+    ShopAction,
+    PartTimeAction,
+};
+
+/*
+ *  各アクションの管理クラス 
+ */
 class ActionManager : public Singleton<ActionManager>{
+    // フレンド宣言
     friend class Singleton<ActionManager>;
 
 private:
-    std::vector<DayActionPtr> actionList;
-    DayActionPtr currentAction;
+    std::vector<DayActionPtr> actionList;   // アクションリスト
+    DayActionPtr actionBase;                // アクションクラスのoriginal
+    DayActionPtr currentAction;             // 現在のアクション
+    std::function<void()> onComplete;       // アクション完了コールバック
 
 private:
     /*
@@ -30,26 +44,8 @@ private:
      *  デストラクタ
      */
     ~ActionManager() = default;
+
 public:
-    /*
-     *  アクションの追加
-     */
-    void AddAction(const DayActionPtr& action) {
-        actionList.push_back(action);
-        action->Initialize(); // LoadManager にファイル登録
-    }
-    /*
-     *  アクションの設定
-     */
-    void SetupAction(const std::string& name) {
-        for (auto& action : actionList) {
-            if (action->GetName() == name) {
-                action->Setup();
-                currentAction = action;
-                break;
-            }
-        }
-    }
     /*
      *  更新処理
      */
@@ -62,16 +58,30 @@ public:
     void Render() {
         if (currentAction) currentAction->Render();
     }
+
 public:
     /*
-     *  全てのアクションの ロード済みのデータをセット(コールバック)
+     *  ダンジョンアクション開始
      */
-    void SetupAll() {
-        for (auto& action : actionList) {
-            action->Setup();
-        }
-        if (!actionList.empty()) currentAction = actionList.front();
-    }
+    void ActiveDungeon(DungeonStageData setStageData);
+    /*
+     *  トレーニングアクション開始
+     */
+    void ActiveTraining();
+    /*
+     *  ショップアクション開始
+     */
+    void ActiveShop();
+    /*
+     *  アルバイトアクション開始
+     */
+    void ActivePartTime();
+
+public:
+    /*
+     *  コールバックの設定
+     */
+    inline void SetOnComplete(std::function<void()> callback) { onComplete = callback; }
 };
 
 #endif // !_ACTION_MANAGER_H_
