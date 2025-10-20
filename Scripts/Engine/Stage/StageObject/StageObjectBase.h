@@ -79,7 +79,7 @@ public:
 	 *	@brief		位置の変更
 	 *  @param		Vector3& setValue
 	 */
-	inline void SetPosition(const Vector3& setValue) {
+	inline void SetPosition(Vector3& setValue) {
 		position = setValue;
 	}
 	/*
@@ -95,7 +95,7 @@ public:
 	 *	@brief		角度の変更
 	 *  @param		Vector3& setValue
 	 */
-	inline void SetRotation(const Vector3& setValue) {
+	inline void SetRotation(Vector3& setValue) {
 		rotation = setValue;
 	}
 	/*
@@ -111,7 +111,7 @@ public:
 	 *	@brief		大きさの変更
 	 *  @param		Vector3& setValue
 	 */
-	inline void SetScale(const Vector3& setValue) {
+	inline void SetScale(Vector3& setValue) {
 		scale = setValue;
 	}
 

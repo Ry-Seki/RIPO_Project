@@ -50,13 +50,3 @@ void Treasure::Update(float deltaTime) {
 void Treasure::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
 }
 
-
-/*
- *	@function	TreasureHold
- *  @brief		‚½‚ê‚Ä‚¢‚é‚Ìˆ—
- *  @param		const Vector3& position
- */
-void Treasure::TreasureHold(const Vector3& setValue) {
-	// w’è‚³‚ê‚½ˆÊ’u‚É‚¨•ó‚ğˆÚ“®
-
-}
