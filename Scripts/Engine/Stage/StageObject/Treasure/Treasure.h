@@ -16,6 +16,7 @@ class Treasure : public StageObjectBase {
 private:
 	bool isCollected;		// 取得済みかどうか
 	int modelHandle;		// モデルのハンドル
+	float viewRadius;		// 取得範囲
 
 public:
 	Treasure();
@@ -41,6 +42,12 @@ public:
 	 */
 	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
 
+	/*
+	 *	@function	IsInView
+	 *  @brief		プレイヤーが範囲内か判定
+	 *  @param		const Vector3& playerPos
+	 */
+	bool IsInView(const Vector3& playerPos) const;
 
 
 public:
