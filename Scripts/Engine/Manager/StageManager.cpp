@@ -25,7 +25,6 @@ void StageManager::Initialize(Engine& setEngine) {
 void StageManager::LoadStage(const int modelHandleBase) {
 	pStage = std::make_unique<Stage>();
 	pStage->ModelLoad(modelHandleBase);
-
 }
 
 /*
@@ -77,4 +76,31 @@ int StageManager::GetStageFrame(const std::string& frameName) const {
 	// ステージのモデルハンドルを取得
 	int modelHandle = stage->GetModelHandle();
 	return stage->GetFrameHandleByName(modelHandle, frameName);
+}
+
+
+
+/*
+ *	スタート位置の取得
+ */
+Vector3 StageManager::GetStartPos() const {
+	if (!pStage) return Vector3();
+
+	Stage* stage = dynamic_cast<Stage*>(pStage.get());
+	if (!stage) return Vector3();
+
+	// ステージのモデルハンドルの取得
+	int modelHandle = stage->GetModelHandle();
+
+	// スタート位置のフレーム番号を取得
+	int frameIndex = MV1SearchFrame(modelHandle, GameConst::START_FRAME_NAME);
+
+	// スタート位置の座標を取得
+	VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
+
+	// VECTOR型をVector3型に変換
+	Vector3 startPos = Vector3::FromVECTOR(framePos);
+
+	// 座標を返す
+	return startPos;
 }
