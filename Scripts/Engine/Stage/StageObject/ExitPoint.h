@@ -11,18 +11,20 @@
 
 class ExitPoint : public StageObjectBase {
 private:
-
+	bool exitTriger = false;
 
 public:
 	ExitPoint() = default;
 	~ExitPoint() override {};
 
 public:
-	// 更新
-	void Update();
+	// 出口の衝突イベント
+	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
 
 	// モデルの読み込み
 	void ModelLoad(const int modelHandleBase) override;
+
+
 
 
 };

@@ -4,10 +4,19 @@
  */
 
 #include "ExitPoint.h"
-#include "../../Component/Component.h"
+#include "../../Fade/FadeFactory.h"
 
-// 更新
-void ExitPoint::Update() {
+// 出口の衝突イベント
+void ExitPoint::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
+	// 既にプレイヤーと衝突していたら処理しない
+	if (exitTriger || other->GetOwner()->name != "player")
+		return;
+
+	// 衝突済みにする
+	exitTriger = true;
+
+
+
 
 }
 
