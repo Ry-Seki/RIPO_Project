@@ -19,7 +19,7 @@ void DebugScene::Initialize(Engine& engine) {
 	GameObjectManager::GetInstance().Initialize(engine);
 	CharacterManager::GetInstance().Initialize(engine);
 	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
-	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 });
+	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f },{ 0.5f,  1.0f,  0.5f });
 	StageManager::GetInstance().Initialize(engine);
 	auto stageModel = std::make_shared<LoadModel>("Res/Model/Stage/StageModel_1.mv1");
 	LoadManager::GetInstance().AddLoader(stageModel);
