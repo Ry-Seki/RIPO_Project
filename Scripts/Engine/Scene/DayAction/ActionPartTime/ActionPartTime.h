@@ -33,15 +33,15 @@ public:
     /*
      *  初期化処理
      */
-    void Initialize() override;
+    void Initialize(Engine& engine) override;
     /*
      *  ロード済みのデータをセット(コールバック)
      */
-    void Setup() override;
+    void Setup(Engine& engine) override;
     /*
      *  更新処理
      */
-    void Update(float deltaTime) override;
+    void Update(Engine& engine, float deltaTime) override;
     /*
      *  描画処理
      */

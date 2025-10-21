@@ -183,6 +183,12 @@
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionManager.cpp">
       <Filter>ソース ファイル\Engine\Scene\Action</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionManager.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Selection</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Selection</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -326,9 +332,6 @@
     <ClInclude Include="Scripts\Engine\Scene\DebugScene.h">
       <Filter>ヘッダー ファイル\Engine\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\DayAction\DayActionBase.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionDungeon\ActionDungeon.h">
       <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
     </ClInclude>
@@ -365,7 +368,16 @@
     <ClInclude Include="Scripts\Engine\Stage\StageObject\ExitPoint.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\Select\SelectionBase.h">
+    <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionBase.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionManager.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\DayActionBase.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.h">
       <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
     </ClInclude>
   </ItemGroup>

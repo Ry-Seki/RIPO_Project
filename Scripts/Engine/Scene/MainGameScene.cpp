@@ -33,7 +33,7 @@ void MainGameScene::Update(Engine& engine, float deltaTime) {
 
     calendarManager->Update();
 
-    ActionManager::GetInstance().Update(deltaTime);
+    ActionManager::GetInstance().Update(engine, deltaTime);
 
     // 日が終わったら Engine 側フェード
     if (calendarManager->IsDayComplete()) {

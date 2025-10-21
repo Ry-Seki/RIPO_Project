@@ -1,2 +1,2 @@
 ﻿ID,Name,OpenDay,EventStartDay,EventEndDay,DungeonPath
-0,Tutorial,0,0,0,Res/Model/Stage/StageModel_1.mv1;Res/Model/Stage/StageModel_1_TwoLayer.mv1
+0,Tutorial,0,0,0,Data/Dungeon/TutorialDungeonData.json
