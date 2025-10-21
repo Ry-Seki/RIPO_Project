@@ -20,8 +20,14 @@ struct Vector3 {
 	float x, y, z;
 
 	// 静的メンバ変数
-	static Vector3 zero, one;
-	static Vector3 up, down, right, left, forward, back;
+	static Vector3 zero;
+	static Vector3 one;
+	static Vector3 up;
+	static Vector3 down;
+	static Vector3 right;
+	static Vector3 left;
+	static Vector3 forward;
+	static Vector3 back;
 
 	// コンストラクタ
 	Vector3();
@@ -29,173 +35,86 @@ struct Vector3 {
 	~Vector3() = default;
 
 	// DxLibのVECTORとの互換関数
-	static VECTOR ToVECTOR(const Vector3& v) {
-		return VGet(v.x, v.y, v.z);
-	}
-
-	static Vector3 FromVECTOR(const VECTOR& v) {
-		return { v.x, v.y, v.z };
-	}
-
-	// 演算子
-	Vector3 operator - () {
-		return { -x, -y, -z };
-	}
-
-	Vector3 operator * (float v) const {
-		return { x * v, y * v, z * v };
-	}
-	Vector3 operator / (float v) const {
-		return { x / v, y / v, z / v };
-	};
-	Vector3 operator + (const Vector3& v) const {
-		return { x + v.x, y + v.y, z + v.z };
-	};
-	Vector3 operator - (const Vector3& v) const {
-		return { x - v.x, y - v.y, z - v.z };
-	};
-
-	Vector3& operator += (const Vector3& v) {
-		x += v.x;
-		y += v.y;
-		z += v.z;
-
-		return *this;
-	};
-	Vector3& operator -= (const Vector3& v) {
-		x -= v.x;
-		y -= v.y;
-		z -= v.z;
-
-		return *this;
-	};
-	Vector3& operator *= (float v) {
-		x *= v;
-		y *= v;
-		z *= v;
-
-		return *this;
-	};
-	Vector3& operator /= (float v) {
-		x /= v;
-		y /= v;
-		z /= v;
-
-		return *this;
-	};
-
-	bool operator == (const Vector3& v) const {
-		return x == v.x && y == v.y && z == v.z;
-	};
-	bool operator != (const Vector3& v) const {
-		return !(*this == v);
-	};
+	static VECTOR ToVECTOR(const Vector3& v);
+	static Vector3 FromVECTOR(const VECTOR& v);
 
 	// 演算
-	static Vector3 Scale(const Vector3& v1, const Vector3& v2) {
-		return { v1.x * v2.x, v1.y * v2.y, v1.z * v2.z };
-	}
-	static float Dot(const Vector3& v1, const Vector3& v2) {
-		return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
-	}
-	static Vector3 Cross(const Vector3& v1, const Vector3& v2) {
-		return {
-			v1.y * v2.z - v1.z * v2.y,
-			v1.z * v2.x - v1.x * v2.z,
-			v1.x * v2.y - v1.y * v2.x
-		};
-	}
+	// 各成分の乗算
+	static Vector3 Scale(const Vector3& v1, const Vector3& v2);
+	// 内積
+	static float Dot(const Vector3& v1, const Vector3& v2);
+	// 外積
+	static Vector3 Cross(const Vector3& v1, const Vector3& v2);
 
-	float Magnitude() const {
-		return std::sqrt(x * x + y * y + z * z);
-	};
-	Vector3 Normalized() const {
-		float magnitude = Magnitude();
-		if (magnitude == 0) return Vector3::zero;
-		return { x / magnitude, y / magnitude, z / magnitude };
-	};
+	// 長さ
+	float Magnitude() const;
+	// 正規化
+	Vector3 Normalized() const;
+
+	static float Distance(const Vector3& v1, const Vector3& v2);
+	static Vector3 Direction(const Vector3& from, const Vector3& to);
+	static Vector3 Clamp(const Vector3& v1, const Vector3& min, const Vector3& max);
+	static float Clamp(float value, float min, float max);
 
 	// 線形補間
-	static Vector3 Lerp(const Vector3& a, const Vector3& b, float t) {
-		return a + (b - a) * t;
-	}
+	static Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t);
 
 	// 球面線形補間
-	static Vector3 Slerp(const Vector3& a, const Vector3& b, float t) {
-		// tを[ 0 , 1 ]にする
-		t = Clamp(t, 0.0f, 1.0f);
-
-		float magA = a.Magnitude();
-		float magB = b.Magnitude();
-		// 片方でも0だったら線形補間を利用
-		if (magA == 0 || magB == 0) {
-			return Lerp(a, b, t);
-		}
-
-		// 正規化
-		Vector3 v0 = a.Normalized();
-		Vector3 v1 = b.Normalized();
-
-		// 角度
-		float dot = Dot(v0, v1);
-		dot = Clamp(dot, -1.0f, 1.0f);
-
-		// dot < 0 の場合、反転して最短経路を選ぶ
-		if (dot < 0.0f) {
-			dot = -dot;
-			v1 = -v1;
-		}
-
-		// 角度の計算
-		float theta = std::acos(dot);      // ベクトル間の角度:radian
-		float sinTheta = std::sin(theta);  // sinThetaの計算
-
-		// 球面補間の係数を計算
-		float w0 = std::sin((1.0f - t) * theta) / sinTheta;
-		float w1 = std::sin(t * theta) / sinTheta;
-
-
-		// 方向ベクトルを足す
-		Vector3 dir = v0 * w0 + v1 * w1;
-
-		// 線形に補間する
-		float len = magA + (magB - magA) * t;
-
-		return dir * len;
-
-	}
-
-	// Vector3のClamp
-	static Vector3 Clamp(const Vector3& v, const Vector3& min, const Vector3& max) {
-		return {
-			std::fmax(min.x, std::fmin(max.x, v.x)),
-			std::fmax(min.y, std::fmin(max.y, v.y)),
-			std::fmax(min.z, std::fmin(max.z, v.z))
-		};
-	}
-
-	// floatのClamp
-	static float Clamp(float value, float min, float max) {
-		return std::fmax(min, std::fmin(max, value));
-	}
-
-	// fabs 浮動小数点数の絶対値を求める
-	static float fabs(float v) {
-		return (v < 0.0f) ? -v : v;
-	}
-
-	// 2点間の距離を求める
-	static float Distance(const Vector3& a, const Vector3& b) {
-		return (a - b).Magnitude();
-	}
-
-	// 発射方向ベクトルの生成
-	static Vector3 Direction(const Vector3& from, const Vector3& to) {
-		Vector3 dir = to - from;
-		return dir.Normalized();
-	}
-
-
-
+	static Vector3 Slerp(const Vector3& a, const Vector3& b, float t);
 };
+
+/*
+ *	非メンバ演算子の宣言
+ */
+bool operator==(const Vector3& a, const Vector3& b);
+bool operator!=(const Vector3& a, const Vector3& b);
+
+Vector3 operator+(const Vector3& a, const Vector3& b);
+Vector3 operator-(const Vector3& a, const Vector3& b);
+Vector3 operator*(const Vector3& a, float s);
+Vector3 operator/(const Vector3& a, float s);
+Vector3 operator-(const Vector3& v);
+
+Vector3& operator+=(Vector3& lhs, const Vector3& rhs);
+Vector3& operator-=(Vector3& lhs, const Vector3& rhs);
+Vector3& operator*=(Vector3& lhs, float s);
+Vector3& operator/=(Vector3& lhs, float s);
+
+
+/*
+ *	非メンバ演算関数の宣言
+ */
+Vector3 Scale(const Vector3& v1, const Vector3& v2);
+float   Dot(const Vector3& v1, const Vector3& v2);
+Vector3 Cross(const Vector3& v1, const Vector3& v2);
+
+float   Magnitude(const Vector3& v);
+Vector3 Normalized(const Vector3& v);
+float   Distance(const Vector3& v1, const Vector3& v2);
+Vector3 Direction(const Vector3& from, const Vector3& to);
+
+Vector3 Clamp(const Vector3& v, const Vector3& min, const Vector3& max);
+float   Clamp(float value, float min, float max);
+
+Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t);
+Vector3 Slerp(const Vector3& a, const Vector3& b, float t);
+
+/*
+ *	定数ベクトル
+ */
+extern const Vector3 V_ZERO;
+extern const Vector3 V_ONE;
+extern const Vector3 V_UP;
+extern const Vector3 V_DOWN;
+extern const Vector3 V_RIGHT;
+extern const Vector3 V_LEFT;
+extern const Vector3 V_FORWARD;
+extern const Vector3 V_BACK;
+
+/*
+ *	DxLib VECTOR 互換関数
+ */
+VECTOR ToVECTOR(const Vector3& v);
+Vector3 FromVECTOR(const VECTOR& v);
+
 #endif // !_VECMATH_H_
