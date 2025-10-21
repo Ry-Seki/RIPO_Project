@@ -10,7 +10,10 @@
 
 class PlayerComponent : public CharacterBase {
 private:
-	float moveSpeed;
+	float moveSpeed;		// ˆÚ“®‘¬“x
+	float acceleration;		// ‰Á‘¬“x
+
+	const float DEFAULT_MOVE_SPEED;
 
 public:
 	PlayerComponent();
@@ -18,6 +21,10 @@ public:
 
 public:
 	virtual void Update(float deltaTime) override;
+
+private:
+	void PlayerMove();
+	void PlayerRun();
 
 };
 
