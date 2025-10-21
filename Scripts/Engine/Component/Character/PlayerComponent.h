@@ -13,6 +13,8 @@ private:
 	float moveSpeed;		// ˆÚ“®‘¬“x
 	float acceleration;		// ‰Á‘¬“x
 
+	const float ACCELERATION_MAX;
+	const float ACCELERATION_RATE;
 	const float DEFAULT_MOVE_SPEED;
 
 public:
@@ -24,7 +26,7 @@ public:
 
 private:
 	void PlayerMove();
-	void PlayerRun();
+	void PlayerRun(float deltaTime);
 
 };
 
