@@ -20,7 +20,7 @@ void DebugScene::Initialize(Engine& engine) {
 	GameObjectManager::GetInstance().Initialize(engine);
 	CharacterManager::GetInstance().Initialize(engine);
 	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
-	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f },{ 0.5f,  1.0f,  0.5f });
+	CharacterManager::GetInstance().GeneratePlayer("player", StageManager::GetInstance().GetStartPos(), {0, 0, 0}, {-0.5f, -1.0f, -0.5f}, {0.5f,  1.0f,  0.5f});
 	auto player = CharacterManager::GetInstance().GetCharacter(0);
 	player->GetOwner()->AddComponent<ModelRenderer>();
 	StageManager::GetInstance().Initialize(engine);
