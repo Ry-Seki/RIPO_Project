@@ -92,7 +92,7 @@ void Engine::Teardown() {
 int Engine::Run() {
 	if (Initialize() != 0) { Teardown(); return 1; }
 
-	SetNextScene(std::make_shared<TitleScene>());
+	SetNextScene(std::make_shared<DebugScene>());
 	ChangeScene();
 
 	while (ProcessMessage() != -1) {
