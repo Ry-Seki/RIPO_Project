@@ -42,6 +42,13 @@ void Stage::Load(const std::shared_ptr<LoadModel>& model) {
  */
 void Stage::ModelLoad(const int modelHandleBase) {
 	modelHandle = modelHandleBase;
+
+	SetLightAmbColor(GetColorF(0.2f, 0.25f, 0.3f,1));
+
+	// 方向ライト（上から少し照らす）
+	SetLightDirection(VGet(0.2f, -20.0f, 0.3f));
+	SetLightDifColor(GetColorF(1.5f, 1.5f, 1.3f, 1.0f));
+	SetLightSpcColor(GetColorF(0.2f, 0.2f, 0.2f,1));
 }
 
 /*
