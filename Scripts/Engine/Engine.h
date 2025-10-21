@@ -103,10 +103,17 @@ public:
         if (currentScene) currentScene->AddGameObject(obj);
         return obj;
     }
+
+public:
+    /*
+     *  現在のシーンの取得
+     */
+    inline ScenePtr GetCurrentScene() const { return currentScene; }
     /*
      *  次のシーンの設定
      */
     inline void SetNextScene(ScenePtr setScene) { nextScene = setScene; }
+    
 };
 #endif // !_ENGINE_H_
 

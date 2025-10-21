@@ -10,6 +10,7 @@
 
 
 void SelectionDungeon::Initialize(Engine& engine) {
+	isComplete = false;
 	dungeonDataLoader = std::make_shared<DungeonDataLoader>("Data/Dungeon/DungeonList.csv");
 	LoadManager::GetInstance().AddLoader(dungeonDataLoader);
 	LoadManager::GetInstance().SetOnComplete( [this, &engine]() { Setup(engine); } );

@@ -28,6 +28,8 @@ private:
 	DungeonStageData currentDungeonStage;
 
 	std::string debugPath;
+	bool inputHandle = false;
+
 public:
 	/*
 	 *	コンストラクタ
