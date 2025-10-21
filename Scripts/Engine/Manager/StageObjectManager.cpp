@@ -4,7 +4,6 @@
  */
 #include "StageObjectManager.h"
 #include "GameObjectManager.h"
-#include "../Stage/StageObject/ExitPoint.h"
 #include "../Stage/StageObject/Treasure/Treasure.h"
 #include "../Stage/StageObject/StageObjectBase.h"
 

@@ -10,7 +10,8 @@
 #include "../../Engine.h"
 
 class ExitPoint : public StageObjectBase {
-private:
+public:
+	// 脱出フラグ
 	bool exitTriger = false;
 
 public:
@@ -23,6 +24,11 @@ public:
 
 	// モデルの読み込み
 	void ModelLoad(const int modelHandleBase) override;
+
+	// 脱出フラグの取得
+	inline bool GetExitTriger() const{
+		return exitTriger;
+	}
 };
 
 #endif // !_EXITPOINT_H_

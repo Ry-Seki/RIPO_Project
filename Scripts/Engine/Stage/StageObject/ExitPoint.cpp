@@ -15,12 +15,6 @@ void ExitPoint::OnCollision(const std::shared_ptr<Component>& self, const std::s
 	// 衝突済みにする
 	exitTriger = true;
 
-	// フェードさせる
-	//CreateFade();
-
-
-
-
 }
 
 // モデルの読み込み

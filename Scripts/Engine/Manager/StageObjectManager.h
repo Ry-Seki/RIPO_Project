@@ -9,6 +9,7 @@
 #include "../Singleton.h"
 #include "../Engine.h"
 #include "../Stage/StageObject/StageObjectBase.h"
+#include "../Stage/StageObject/ExitPoint.h"
 
 /*
  *	ステージオブジェクトの管理クラス
@@ -19,6 +20,7 @@ class StageObjectManager : public Singleton<StageObjectManager> {
 
 private:
 	Engine* engine;
+	ExitPoint* exitPoint;
 	StageObjectBaseList createStageObjectList;
 	GameObjectPtr stageObjectObj;
 
@@ -92,6 +94,13 @@ public:
 	 *	ID指定のステージオブジェクト取得
 	 */
 	StageObjectBasePtr GetStageObject(int stageObjectID);
+
+	/*
+	 *	脱出フラグの取得
+	 */
+	inline bool GetExitFlag() const {
+		return exitPoint->GetExitTriger();
+	}
 
 
 };
