@@ -8,15 +8,31 @@
 /*
  *  更新処理
  */
-void CalendarManager::Update() {
+void CalendarManager::Update(Engine& engine) {
     auto day = calendarSystem->GetCurrentDay();
-    if (!day) return;
+    if (!day || !isActive) return;
 
     if (!inputHandle) {
-        if (CheckHitKey(KEY_INPUT_1)) { day->ActionDungeon(); inputHandle = true; }
-        else if (CheckHitKey(KEY_INPUT_2)) { day->ActionTraining(); inputHandle = true; }
-        else if (CheckHitKey(KEY_INPUT_3)) { day->ActionShop(); inputHandle = true; }
-        else if (CheckHitKey(KEY_INPUT_4)) { day->ActionPartTime(); inputHandle = true; }
+        if (CheckHitKey(KEY_INPUT_1)) { 
+            inputHandle = true; 
+            isActive = false;
+            day->ActionDungeon(engine); 
+        }
+        else if (CheckHitKey(KEY_INPUT_2)) { 
+            inputHandle = true; 
+            isActive = false;
+            day->ActionTraining();
+        }
+        else if (CheckHitKey(KEY_INPUT_3)) { 
+            inputHandle = true;
+            isActive = false;
+            day->ActionShop();
+        }
+        else if (CheckHitKey(KEY_INPUT_4)) {
+            inputHandle = true;
+            isActive = false;
+            day->ActionPartTime();
+        }
     }
 
     // キー離しで再度入力受付
@@ -29,10 +45,7 @@ void CalendarManager::Update() {
  */
 void CalendarManager::Render() {
     auto day = calendarSystem->GetCurrentDay();
-    if (!day) {
-        DrawFormatString(50, 50, GetColor(255, 0, 0), "すべての日が終了しました");
-        return;
-    }
+    if (!day || !isActive)  return;
 
     DrawFormatString(50, 50, GetColor(255, 255, 255), "=== Calendar Sample ===");
     DrawFormatString(50, 70, GetColor(255, 255, 0), "Morning Done: %s", day->morningDone ? "Yes" : "No");
@@ -48,6 +61,7 @@ void CalendarManager::Render() {
 void CalendarManager::NextDay() {
     auto day = calendarSystem->GetCurrentDay();
     if (day) day->AdvanceDay();
+    isActive = true;
     calendarSystem->AdvanceDay();
 }
 /*

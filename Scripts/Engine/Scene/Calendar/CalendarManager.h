@@ -12,13 +12,17 @@
 
 #include <DxLib.h>
 
+// 前方宣言
+class Engine;
+ 
 /*
  *  カレンダー管理クラス
  */
 class CalendarManager {
 private:
     std::shared_ptr<CalendarSystem> calendarSystem;     // カレンダーシステム
-    bool inputHandle = false;   // 入力フラグ
+    bool inputHandle = false;                           // 入力フラグ
+    bool isActive = true;                               // 行動フラグ
 
 public:
     /*
@@ -35,7 +39,7 @@ public:
     /*
      *  更新処理
      */
-    void Update();
+    void Update(Engine& engine);
     /*
      *  描画処理
      */

@@ -6,32 +6,34 @@
 #include "SelectionDungeon.h"
 #include "../../../Load/LoadManager.h"
 #include "../../DayAction/ActionManager.h"
+#include "../../Selection/SelectionManager.h"
 
 
-void SelectionDungeon::Initialize() {
+void SelectionDungeon::Initialize(Engine& engine) {
 	dungeonDataLoader = std::make_shared<DungeonDataLoader>("Data/Dungeon/DungeonList.csv");
 	LoadManager::GetInstance().AddLoader(dungeonDataLoader);
-	LoadManager::GetInstance().SetOnComplete( [this]() { Setup(); } );
+	LoadManager::GetInstance().SetOnComplete( [this, &engine]() { Setup(engine); } );
 }
 
-void SelectionDungeon::Setup() {
+void SelectionDungeon::Setup(Engine& engine) {
 	dungeonDataList = dungeonDataLoader->dungeonList;
-	isActive = true;
+	LoadManager::GetInstance().Clear();
 }
 
-void SelectionDungeon::Update(float deltaTime) {
-	if (dungeonDataList.empty() && !isActive) return;
+void SelectionDungeon::Update(Engine& engine, float deltaTime) {
+	if (dungeonDataList.empty() || isComplete) return;
 
-	if (!inputHandle && CheckHitKey(KEY_INPUT_1)) { 
-		DebugStageLoad(0);
+	if (!inputHandle && CheckHitKey(KEY_INPUT_0)) { 
 		inputHandle = true;
+		isComplete = true;
+		DebugStageLoad(engine, 0);
 	}
 
-	if (CheckHitKey(KEY_INPUT_1) == 0) inputHandle = false;
+	if (CheckHitKey(KEY_INPUT_0) == 0) inputHandle = false;
 }
 
 void SelectionDungeon::Render() {
-
+	DrawFormatString(50, 50, GetColor(0, 0, 0), "0: TutorialDungeon");
 }
 
 void SelectionDungeon::StartStageDataLoad(int dungeonID) {
@@ -50,7 +52,7 @@ void SelectionDungeon::SetStageData(std::shared_ptr<LoadJSON> setData) {
 	
 }
 
-void SelectionDungeon::DebugStageLoad(int dungeonID) {
+void SelectionDungeon::DebugStageLoad(Engine& engine, int dungeonID) {
 	DungeonData dungeonData = dungeonDataList[dungeonID];
 	// ファイルパスの取得
 	std::string filePath = dungeonData.dungeonPath;
@@ -59,9 +61,12 @@ void SelectionDungeon::DebugStageLoad(int dungeonID) {
 	auto dungeonStageLoader = std::make_shared<LoadJSON>(filePath);
 	LoadManager::GetInstance().AddLoader(dungeonStageLoader);
 	// コールバック登録
-	LoadManager::GetInstance().SetOnComplete([this, dungeonStageLoader]() {DebugSetStageData(dungeonStageLoader); });
+	LoadManager::GetInstance().SetOnComplete([this, &engine, dungeonStageLoader]() {DebugSetStageData(engine, dungeonStageLoader); });
 }
 
-void SelectionDungeon::DebugSetStageData(std::shared_ptr<LoadJSON> setData) {
-
-}
+void SelectionDungeon::DebugSetStageData(Engine& engine, std::shared_ptr<LoadJSON> setData) {
+	JSON dungeonData = setData->GetData();
+	std::string dungeonPath = dungeonData["StageData"];
+	LoadManager::GetInstance().Clear();
+	ActionManager::GetInstance().DebugActiveDungeon(engine, dungeonPath);
+ }

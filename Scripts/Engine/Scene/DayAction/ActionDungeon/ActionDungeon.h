@@ -27,6 +27,7 @@ private:
 	DungeonData currentDungeon;
 	DungeonStageData currentDungeonStage;
 
+	std::string debugPath;
 public:
 	/*
 	 *	コンストラクタ
@@ -63,5 +64,6 @@ public:
 	 *	ダンジョンステージデータの設定
 	 */
 	inline void SetDungeonStageData(DungeonStageData setData) { currentDungeonStage = setData; }
+	inline void SetDungeonStagePath(std::string setFilePath) { debugPath = setFilePath; }
 };
 #endif // !_ACTION_DUNGEON_H_

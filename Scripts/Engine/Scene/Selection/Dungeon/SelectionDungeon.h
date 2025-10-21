@@ -16,6 +16,9 @@
 #include <vector>
 #include <functional>
 
+// 前方宣言
+class Engine;
+
 /*
  *	ダンジョン選択クラス
  */
@@ -35,15 +38,15 @@ public:
 	/*
 	 *	初期化処理
 	 */
-	void Initialize() override;
+	void Initialize(Engine& engine) override;
 	/*
 	 *	ロード済みデータのセット（コールバック）
 	 */
-	void Setup() override;
+	void Setup(Engine& engine) override;
 	/*
 	 *	更新処理
 	 */
-	void Update(float deltaTime) override;
+	void Update(Engine& engine, float deltaTime) override;
 	/*
 	 *	描画処理
 	 */
@@ -61,13 +64,8 @@ private:
 	void SetStageData(std::shared_ptr<LoadJSON> setData);
 
 private:
-	void DebugStageLoad(int dungeonID);
-	void DebugSetStageData(std::shared_ptr<LoadJSON> setData);
-public:
-	/*
-	 *	有効フラグの取得
-	 */
-	inline bool IsActive() const { return isActive; }
+	void DebugStageLoad(Engine& engine, int dungeonID);
+	void DebugSetStageData(Engine& engine, std::shared_ptr<LoadJSON> setData);
 
 };
 #endif // !_SELECTION_DUNGEON_H_
