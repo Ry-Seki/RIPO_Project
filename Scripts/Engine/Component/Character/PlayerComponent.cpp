@@ -28,7 +28,6 @@ void PlayerComponent::Update(float deltaTime) {
 		player->position.x += moveSpeed * cameraCos;
 		player->position.z += moveSpeed * -cameraSin;
 	}
-
 	// カメラから見たZ軸移動
 	if (CheckHitKey(KEY_INPUT_S)) {
 		player->position.x -= moveSpeed * cameraSin;
@@ -37,5 +36,12 @@ void PlayerComponent::Update(float deltaTime) {
 	if (CheckHitKey(KEY_INPUT_W)) {
 		player->position.x += moveSpeed * cameraSin;
 		player->position.z += moveSpeed * cameraCos;
+	}
+	// デバッグ用Y軸移動
+	if (CheckHitKey(KEY_INPUT_LSHIFT)) {
+		player->position.y -= moveSpeed;
+	}
+	if (CheckHitKey(KEY_INPUT_SPACE)) {
+		player->position.y += moveSpeed;
 	}
 }
