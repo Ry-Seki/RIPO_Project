@@ -99,7 +99,7 @@ Vector3 StageManager::GetStartPos() const {
 	VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
 
 	// VECTORŒ^‚ğVector3Œ^‚É•ÏŠ·
-	Vector3 startPos = Vector3::FromVECTOR(framePos);
+	Vector3 startPos = FromVECTOR(framePos);
 
 	// À•W‚ğ•Ô‚·
 	return startPos;

@@ -8,6 +8,12 @@
  // 静的メンバ変数の宣言
 Vector3 Vector3::zero = { 0.0f, 0.0f, 0.0f };
 Vector3 Vector3::one = { 1.0f, 1.0f, 1.0f };
+Vector3 Vector3::up = { 0.0f, 1.0f, 0.0f };
+Vector3 Vector3::down = { 0.0f,-1.0f, 0.0f };
+Vector3 Vector3::right = { 1.0f, 0.0f, 0.0f };
+Vector3 Vector3::left = { -1.0f, 0.0f, 0.0f };
+Vector3 Vector3::forward = { 0.0f, 0.0f, 1.0f };
+Vector3 Vector3::back = { 0.0f, 0.0f,-1.0f };
 
 /*
  *	コンストラクタ
@@ -153,7 +159,7 @@ Vector3 Vector3::Slerp(const Vector3& a, const Vector3& b, float t) {
 }
 
 
-
+// 比較
 bool operator==(const Vector3& a, const Vector3& b) {
 	const float epsilon = 1e-6f;
 	return (std::fabs(a.x - b.x) < epsilon) &&
@@ -186,6 +192,7 @@ Vector3 operator-(const Vector3& v) {
 	return { -v.x, -v.y, -v.z };
 }
 
+
 // 複合代入演算
 Vector3& operator+=(Vector3& lhs, const Vector3& rhs) {
 	lhs.x += rhs.x;
@@ -213,4 +220,66 @@ Vector3& operator/=(Vector3& lhs, float s) {
 	lhs.y /= s;
 	lhs.z /= s;
 	return lhs;
+}
+
+Vector3 Scale(const Vector3& v1, const Vector3& v2) {
+	return Vector3::Scale(v1, v2);
+}
+
+float Dot(const Vector3& v1, const Vector3& v2) {
+	return Vector3::Dot(v1, v2);
+}
+
+Vector3 Cross(const Vector3& v1, const Vector3& v2) {
+	return Vector3::Cross(v1, v2);
+}
+
+float Magnitude(const Vector3& v) {
+	return  v.Magnitude();
+}
+
+Vector3 Normalized(const Vector3& v) {
+	return v.Normalized();
+}
+
+float Distance(const Vector3& v1, const Vector3& v2) {
+	return Vector3::Distance(v1, v2);
+}
+
+Vector3 Direction(const Vector3& from, const Vector3& to) {
+	return Vector3::Direction(from, to);
+}
+
+Vector3 Clamp(const Vector3& v1, const Vector3& min, const Vector3& max) {
+	return Vector3::Clamp(v1, min, max);
+}
+
+float Clamp(float value, float min, float max) {
+	return Vector3::Clamp(value, min, max);
+}
+
+Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t) {
+	return Vector3::Lerp(v1, v2, t);
+}
+
+Vector3 Slerp(const Vector3& a, const Vector3& b, float t) {
+	return Vector3::Slerp(a, b, t);
+}
+
+
+const Vector3 V_ZERO = Vector3::zero;
+const Vector3 V_ONE = Vector3::one;
+const Vector3 V_UP = Vector3::up;
+const Vector3 V_DOWN = Vector3::down;
+const Vector3 V_RIGHT = Vector3::right;
+const Vector3 V_LEFT = Vector3::left;
+const Vector3 V_FORWARD = Vector3::forward;
+const Vector3 V_BACK = Vector3::back;
+
+VECTOR ToVECTOR(const Vector3& v) {
+	return Vector3::ToVECTOR(v);
+}
+
+Vector3 FromVECTOR(const VECTOR& v) {
+	return Vector3::FromVECTOR(v);
 }

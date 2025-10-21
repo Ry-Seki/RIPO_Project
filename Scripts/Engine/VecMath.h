@@ -20,8 +20,14 @@ struct Vector3 {
 	float x, y, z;
 
 	// 静的メンバ変数
-	static Vector3 zero, one;
-	static Vector3 up, down, right, left, forward, back;
+	static Vector3 zero;
+	static Vector3 one;
+	static Vector3 up;
+	static Vector3 down;
+	static Vector3 right;
+	static Vector3 left;
+	static Vector3 forward;
+	static Vector3 back;
 
 	// コンストラクタ
 	Vector3();
@@ -57,10 +63,11 @@ struct Vector3 {
 	static Vector3 Slerp(const Vector3& a, const Vector3& b, float t);
 };
 
-
+/*
+ *	非メンバ演算子の宣言
+ */
 bool operator==(const Vector3& a, const Vector3& b);
 bool operator!=(const Vector3& a, const Vector3& b);
-
 
 Vector3 operator+(const Vector3& a, const Vector3& b);
 Vector3 operator-(const Vector3& a, const Vector3& b);
@@ -72,5 +79,42 @@ Vector3& operator+=(Vector3& lhs, const Vector3& rhs);
 Vector3& operator-=(Vector3& lhs, const Vector3& rhs);
 Vector3& operator*=(Vector3& lhs, float s);
 Vector3& operator/=(Vector3& lhs, float s);
+
+
+/*
+ *	非メンバ演算関数の宣言
+ */
+Vector3 Scale(const Vector3& v1, const Vector3& v2);
+float   Dot(const Vector3& v1, const Vector3& v2);
+Vector3 Cross(const Vector3& v1, const Vector3& v2);
+
+float   Magnitude(const Vector3& v);
+Vector3 Normalized(const Vector3& v);
+float   Distance(const Vector3& v1, const Vector3& v2);
+Vector3 Direction(const Vector3& from, const Vector3& to);
+
+Vector3 Clamp(const Vector3& v, const Vector3& min, const Vector3& max);
+float   Clamp(float value, float min, float max);
+
+Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t);
+Vector3 Slerp(const Vector3& a, const Vector3& b, float t);
+
+/*
+ *	定数ベクトル
+ */
+extern const Vector3 V_ZERO;
+extern const Vector3 V_ONE;
+extern const Vector3 V_UP;
+extern const Vector3 V_DOWN;
+extern const Vector3 V_RIGHT;
+extern const Vector3 V_LEFT;
+extern const Vector3 V_FORWARD;
+extern const Vector3 V_BACK;
+
+/*
+ *	DxLib VECTOR 互換関数
+ */
+VECTOR ToVECTOR(const Vector3& v);
+Vector3 FromVECTOR(const VECTOR& v);
 
 #endif // !_VECMATH_H_
