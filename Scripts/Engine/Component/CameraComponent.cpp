@@ -36,14 +36,36 @@ void CameraComponent::Update(float deltaTime) {
 	// カメラの角度に移動量を加える
 	camera->rotation += moveRotation;
 	// カメラの位置をプレイヤーと合わせる
-	//if (player != nullptr) 
-	//	camera->position = player->position;
+	if (player != nullptr) 
+		camera->position = player->position;
+
 	// デバッグ用
-	if (CheckHitKey(KEY_INPUT_UP)) {
-		camera->position.y += 5;
+	const float cameraCos = cosf(camera->rotation.y);
+	const float cameraSin = sinf(camera->rotation.y);
+	float moveSpeed = 50;
+	if (CheckHitKey(KEY_INPUT_RSHIFT)) {
+		camera->position.y += moveSpeed;
 	}
+	if (CheckHitKey(KEY_INPUT_RCONTROL)) {
+		camera->position.y -= moveSpeed;
+	}
+	// カメラから見たX軸移動
+	if (CheckHitKey(KEY_INPUT_LEFT)) {
+		camera->position.x -= moveSpeed * cameraCos;
+		camera->position.z -= moveSpeed * -cameraSin;
+	}
+	if (CheckHitKey(KEY_INPUT_RIGHT)) {
+		camera->position.x += moveSpeed * cameraCos;
+		camera->position.z += moveSpeed * -cameraSin;
+	}
+	// カメラから見たZ軸移動
 	if (CheckHitKey(KEY_INPUT_DOWN)) {
-		camera->position.y -= 5;
+		camera->position.x -= moveSpeed * cameraSin;
+		camera->position.z -= moveSpeed * cameraCos;
+	}
+	if (CheckHitKey(KEY_INPUT_UP)) {
+		camera->position.x += moveSpeed * cameraSin;
+		camera->position.z += moveSpeed * cameraCos;
 	}
 
 	// カメラの設定に反映する
