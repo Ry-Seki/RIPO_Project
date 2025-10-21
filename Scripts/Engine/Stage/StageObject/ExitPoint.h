@@ -15,6 +15,7 @@ private:
 	bool exitTriger = false;
 
 public:
+	// コンストラクタ
 	ExitPoint() = default;
 	~ExitPoint() override {};
 
