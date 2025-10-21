@@ -101,6 +101,21 @@ public:
             colliders.push_back(component);
 
         component->Awake();
+        // コンポーネントリストに追加
+        components.push_back(component);
+        return component;
+    }
+    // コンポーネントの追加(Update用)
+    template <class T, typename = std::enable_if_t<std::is_base_of_v<Component, T>>>
+    std::shared_ptr<T> AddCompoentUpdate() {
+        auto component = std::make_shared<T>();
+        // 所有者の設定
+        component->owner = this;
+        // コライダーならコライダーリストにも追加
+        if constexpr (std::is_base_of_v<AABBCollider, T>)
+            colliders.push_back(component);
+
+        component->Awake();
         // 追加予定のコンポーネントリストに追加
         addComponents.push_back(component);
         return component;

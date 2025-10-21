@@ -84,7 +84,7 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 	Vector3 prevPos = *position;
 	Vector3 nowPos = prevPos + MoveVec;
 	float polyOffset = PloyPos2.y - PolyPos1.y;
-	bool moveFlag = (Vector3::fabs(MoveVec.x) > 0.01f || Vector3::fabs(MoveVec.z) > 0.01f);
+	bool moveFlag = (fabs(MoveVec.x) > 0.01f || fabs(MoveVec.z) > 0.01f);
 
 	// コリジョン情報取得
 	auto hitDim = SetupCollision(position, MoveVec);
@@ -113,7 +113,7 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
  */
 std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(Vector3* position, Vector3 MoveVec) {
 	// Vector3からVECOTR型へ変換
-	VECTOR posV = Vector3::ToVECTOR(*position);
+	VECTOR posV = ToVECTOR(*position);
 
 	// 球の半径を求める
 	float radius = GameConst::PLAYER_ENUM_DEFAULT_SIZE + MoveVec.Magnitude();
@@ -194,8 +194,8 @@ void Stage::ProcessWallCollision(
 			Vector3 capsuleEnd = nowPos + Vector3(0.0f, polyOffset, 0.0f);
 			// カプセルと三角形の衝突判定
 			if (!HitCheck_Capsule_Triangle(
-				Vector3::ToVECTOR(capsuleStart),
-				Vector3::ToVECTOR(capsuleEnd),
+				ToVECTOR(capsuleStart),
+				ToVECTOR(capsuleEnd),
 				GameConst::PLAYER_HIT_WIDTH,
 				poly->Position[0],
 				poly->Position[1],
@@ -205,16 +205,16 @@ void Stage::ProcessWallCollision(
 
 			// スライドベクトル計算
 			// 進行方向ベクトルから壁方向の成分を除外
-			Vector3 slideVec = Vector3::Cross(MoveVec, Vector3::FromVECTOR(poly->Normal));
-			slideVec = Vector3::Cross(Vector3::FromVECTOR(poly->Normal), slideVec);
+			Vector3 slideVec = Cross(MoveVec, FromVECTOR(poly->Normal));
+			slideVec = Cross(FromVECTOR(poly->Normal), slideVec);
 			nowPos = prevPos + slideVec;
 
 			// 再衝突確認
 			for (auto* polyCheck : walls) {
 				Vector3 capsulePos = nowPos + Vector3(0.0f, polyOffset, 0.0f);
 				if (HitCheck_Capsule_Triangle(
-					Vector3::ToVECTOR(nowPos),
-					Vector3::ToVECTOR(capsulePos),
+					ToVECTOR(nowPos),
+					ToVECTOR(capsulePos),
 					GameConst::PLAYER_HIT_WIDTH,
 					polyCheck->Position[0],
 					polyCheck->Position[1],
@@ -231,8 +231,8 @@ void Stage::ProcessWallCollision(
 		for (auto* poly : walls) {
 			Vector3 capsulePos = nowPos + Vector3(0.0f, polyOffset, 0.0f);
 			if (HitCheck_Capsule_Triangle(
-				Vector3::ToVECTOR(nowPos),
-				Vector3::ToVECTOR(capsulePos),
+				ToVECTOR(nowPos),
+				ToVECTOR(capsulePos),
 				GameConst::PLAYER_HIT_WIDTH,
 				poly->Position[0],
 				poly->Position[1],
@@ -249,14 +249,14 @@ void Stage::ProcessWallCollision(
 			for (auto* poly : walls) {
 				Vector3 capsulePos = nowPos + Vector3(0.0f, polyOffset, 0.0f);
 				if (!HitCheck_Capsule_Triangle(
-					Vector3::ToVECTOR(nowPos),
-					Vector3::ToVECTOR(capsulePos),
+					ToVECTOR(nowPos),
+					ToVECTOR(capsulePos),
 					GameConst::PLAYER_HIT_WIDTH,
 					poly->Position[0],
 					poly->Position[1],
 					poly->Position[2])) continue;
 
-				Vector3 norm = Vector3::FromVECTOR(poly->Normal).Normalized();
+				Vector3 norm = FromVECTOR(poly->Normal).Normalized();
 				nowPos += norm * GameConst::HIT_SLIDE_LENGTH;
 			}
 		}
@@ -285,8 +285,8 @@ void Stage::ProcessFloorCollision(
 		Vector3 line1 = nowPos + Vector3(0.0f, polyOffset, 0.0f);
 		Vector3 line2 = nowPos + Vector3(0.0f, -0.3f, 0.0f);
 		HITRESULT_LINE res = HitCheck_Line_Triangle(
-			Vector3::ToVECTOR(line1),
-			Vector3::ToVECTOR(line2),
+			ToVECTOR(line1),
+			ToVECTOR(line2),
 			poly->Position[0],
 			poly->Position[1],
 			poly->Position[2]);

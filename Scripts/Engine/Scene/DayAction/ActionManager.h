@@ -30,8 +30,7 @@ class ActionManager : public Singleton<ActionManager>{
     friend class Singleton<ActionManager>;
 
 private:
-    std::vector<DayActionPtr> actionList;   // アクションリスト
-    DayActionPtr actionBase;                // アクションクラスのoriginal
+    DayActionPtr actionBase;                // アクションクラスのオリジナル
     DayActionPtr currentAction;             // 現在のアクション
     std::function<void()> onComplete;       // アクション完了コールバック
 
@@ -49,8 +48,8 @@ public:
     /*
      *  更新処理
      */
-    void Update(float deltaTime) {
-        if (currentAction) currentAction->Update(deltaTime);
+    void Update(Engine& engine, float deltaTime) {
+        if (currentAction) currentAction->Update(engine,deltaTime);
     }
     /*
      *  描画処理
@@ -63,19 +62,19 @@ public:
     /*
      *  ダンジョンアクション開始
      */
-    void ActiveDungeon(DungeonStageData setStageData);
+    void ActiveDungeon(Engine& engine, DungeonStageData setStageData);
     /*
      *  トレーニングアクション開始
      */
-    void ActiveTraining();
+    void ActiveTraining(Engine& engine);
     /*
      *  ショップアクション開始
      */
-    void ActiveShop();
+    void ActiveShop(Engine& engine);
     /*
      *  アルバイトアクション開始
      */
-    void ActivePartTime();
+    void ActivePartTime(Engine& engine);
 
 public:
     /*

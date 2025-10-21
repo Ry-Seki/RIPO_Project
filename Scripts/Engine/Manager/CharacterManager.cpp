@@ -61,16 +61,16 @@ void CharacterManager::GeneratePlayer(
 	// 生成キャラクターリストの空きをチェック
 	for (size_t i = 0; i < characterListCount; i++) {
 		if (createCharacterList[i] != nullptr) continue;
-		// カメラのターゲットに追加
-		CameraManager::GetInstance().SetTarget(characterObject);
 		// リストの空きに生成
 		createCharacterList[i] = CreateCharacter<PlayerComponent>(i, name, position, rotation, AABBMin, AABBMax);
+		// カメラのターゲットに追加
+		CameraManager::GetInstance().SetTarget(characterObject);
 		return;
 	}
-	// カメラのターゲットに追加
-	CameraManager::GetInstance().SetTarget(characterObject);
 	// 空きが無かったら一番後ろに生成
 	createCharacterList.push_back(CreateCharacter<PlayerComponent>(0, name, position, rotation, AABBMin, AABBMax));
+	// カメラのターゲットに追加
+	CameraManager::GetInstance().SetTarget(characterObject);
 }
 
 /*

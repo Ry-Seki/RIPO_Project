@@ -3,19 +3,19 @@
 /*
  *	初期化処理
  */
-void ActionShop::Initialize() {
+void ActionShop::Initialize(Engine& engine) {
 
 }
 /*
  *  ロード済みのデータをセット(コールバック)
  */
-void ActionShop::Setup() {
+void ActionShop::Setup(Engine& engine) {
 
 }
 /*
  *	更新処理
  */
-void ActionShop::Update(float deltaTime) {
+void ActionShop::Update(Engine& engine, float deltaTime) {
 
 }
 /*
