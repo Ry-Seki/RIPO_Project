@@ -19,13 +19,13 @@ void DebugScene::Initialize(Engine& engine) {
 	SetMouseDispFlag(false);
 	GameObjectManager::GetInstance().Initialize(engine);
 	CharacterManager::GetInstance().Initialize(engine);
-	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
-	CharacterManager::GetInstance().GeneratePlayer("player", StageManager::GetInstance().GetStartPos(), {0, 0, 0}, {-0.5f, -1.0f, -0.5f}, {0.5f,  1.0f,  0.5f});
-	auto player = CharacterManager::GetInstance().GetCharacter(0);
-	player->GetOwner()->AddComponent<ModelRenderer>();
 	StageManager::GetInstance().Initialize(engine);
 	auto stageModel = std::make_shared<LoadModel>("Res/Model/Stage/StageModel_1.mv1");
 	auto playerModel = std::make_shared<LoadModel>("Res/Model/Player/RIPO_Model.mv1");
+	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
+	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 0, 0 }, {0, 0, 0}, {-0.5f, -1.0f, -0.5f}, {0.5f,  1.0f,  0.5f});
+	auto player = CharacterManager::GetInstance().GetCharacter(0);
+	player->GetOwner()->AddComponent<ModelRenderer>();
 	LoadManager::GetInstance().AddLoader(stageModel);
 	LoadManager::GetInstance().AddLoader(playerModel);
 	LoadManager::GetInstance().SetOnComplete(
@@ -33,6 +33,7 @@ void DebugScene::Initialize(Engine& engine) {
 			StageManager::GetInstance().LoadStage(stageModel->GetHandle());
 			int modelHandle = playerModel->GetHandle();
 			player->GetOwner()->GetComponent<ModelRenderer>()->SetModel(modelHandle);
+			player->GetOwner()->position = StageManager::GetInstance().GetStartPos();
 		}
 	);
 }
