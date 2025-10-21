@@ -11,18 +11,24 @@
 
 class ExitPoint : public StageObjectBase {
 private:
-
+	// 脱出フラグ
+	bool exitTriger = false;
 
 public:
 	ExitPoint() = default;
 	~ExitPoint() override {};
 
 public:
-	void Update();
+	// 出口の衝突イベント
+	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
 
+	// モデルの読み込み
 	void ModelLoad(const int modelHandleBase) override;
 
-
+	// 脱出フラグの取得
+	inline bool GetExitTriger() const{
+		return exitTriger;
+	}
 };
 
 #endif // !_EXITPOINT_H_
