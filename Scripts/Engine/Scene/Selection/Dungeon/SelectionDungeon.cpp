@@ -17,18 +17,19 @@ void SelectionDungeon::Initialize(Engine& engine) {
 
 void SelectionDungeon::Setup(Engine& engine) {
 	dungeonDataList = dungeonDataLoader->dungeonList;
+	LoadManager::GetInstance().Clear();
 	isActive = true;
 }
 
 void SelectionDungeon::Update(Engine& engine, float deltaTime) {
 	if (dungeonDataList.empty() && !isActive) return;
 
-	if (!inputHandle && CheckHitKey(KEY_INPUT_1)) { 
+	if (!inputHandle && CheckHitKey(KEY_INPUT_0)) { 
 		DebugStageLoad(engine, 0);
 		inputHandle = true;
 	}
 
-	if (CheckHitKey(KEY_INPUT_1) == 0) inputHandle = false;
+	if (CheckHitKey(KEY_INPUT_0) == 0) inputHandle = false;
 }
 
 void SelectionDungeon::Render() {
@@ -66,6 +67,6 @@ void SelectionDungeon::DebugStageLoad(Engine& engine, int dungeonID) {
 void SelectionDungeon::DebugSetStageData(Engine& engine, std::shared_ptr<LoadJSON> setData) {
 	JSON dungeonData = setData->GetData();
 	std::string dungeonPath = dungeonData["StageData"];
-
+	LoadManager::GetInstance().Clear();
 	ActionManager::GetInstance().DebugActiveDungeon(engine, dungeonPath);
 }

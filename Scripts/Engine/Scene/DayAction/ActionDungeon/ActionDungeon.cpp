@@ -11,6 +11,7 @@
 #include "../../../Manager/CameraManager.h"
 #include "../../../Manager/GameObjectManager.h"
 #include "../../../Manager/CharacterManager.h"
+#include "../../../Scene/Scene.h"
 
 #include <iostream>
 
@@ -52,4 +53,6 @@ void ActionDungeon::DebugSetup(Engine& engine, std::shared_ptr<LoadModel> setMod
     CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
     CharacterManager::GetInstance().GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f,  1.0f,  0.5f });
     StageManager::GetInstance().Initialize(engine);
+    StageManager::GetInstance().LoadStage(modelHandle);
+    LoadManager::GetInstance().Clear();
 }

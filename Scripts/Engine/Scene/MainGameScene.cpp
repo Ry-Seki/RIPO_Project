@@ -33,6 +33,7 @@ void MainGameScene::Update(Engine& engine, float deltaTime) {
 
     ActionManager::GetInstance().Update(engine, deltaTime);
 
+    Scene::Update(engine, deltaTime);
     // 日が終わったら Engine 側フェード
     if (calendarManager->IsDayComplete()) {
         engine.StartFadeOutIn(0.5f, 0.5f, [this]() {
@@ -47,4 +48,5 @@ void MainGameScene::Render() {
     calendarManager->Render();
     SelectionManager::GetInstance().Render();
     ActionManager::GetInstance().Render();
+    Scene::Render();
 }
