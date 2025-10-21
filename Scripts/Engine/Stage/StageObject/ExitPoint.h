@@ -10,7 +10,7 @@
 #include "../../Engine.h"
 
 class ExitPoint : public StageObjectBase {
-public:
+private:
 	// ’Eoƒtƒ‰ƒO
 	bool exitTriger = false;
 
