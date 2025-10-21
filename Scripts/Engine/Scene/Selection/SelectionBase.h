@@ -17,7 +17,7 @@ class Engine;
  */
 class SelectionBase {
 protected:
-    bool isActive = false;
+    bool isComplete = false;        // 選択完了フラグ
 
 public:
     /*
@@ -44,7 +44,10 @@ public:
     virtual void Render() = 0;
 
 public:
-    virtual bool IsActive() const = 0;
+    /*
+     *  選択完了フラグの取得
+     */
+    inline virtual bool IsComplete() const { return isComplete; }
 };
 // 別名定義
 using SelectionPtr = std::shared_ptr<SelectionBase>;

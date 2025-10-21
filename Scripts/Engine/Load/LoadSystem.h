@@ -63,14 +63,12 @@ public:
         isComplete = false;
     }
 
-    bool IsLoading() const { return !isComplete && !loadList.empty(); }
-    bool IsComplete() const { return isComplete || loadList.empty(); }
-    float GetProgress() const {
+    inline bool IsLoading() const { return !isComplete && !loadList.empty(); }
+    inline bool IsComplete() const { return isComplete || loadList.empty(); }
+    inline float GetProgress() const {
         return loadList.empty() ? 1.0f : float(currentIndex) / float(loadList.size());
     }
-
-    // 追加：完了フラグをリセットする
-    void ResetCompleteFlag() { isComplete = false; }
+    inline void ResetCompleteFlag() { isComplete = false; }
 };
 
 #endif // !_LOAD_SYSTEM_H_

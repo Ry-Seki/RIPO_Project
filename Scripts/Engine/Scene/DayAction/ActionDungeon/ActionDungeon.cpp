@@ -31,7 +31,6 @@ void ActionDungeon::Setup(Engine& engine) {
  *	XVˆ—
  */
 void ActionDungeon::Update(Engine& engine, float deltaTime) {
-
 }
 /*
  *	•`‰æˆ—

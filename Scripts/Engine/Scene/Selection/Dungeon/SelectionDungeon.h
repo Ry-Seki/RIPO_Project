@@ -66,11 +66,6 @@ private:
 private:
 	void DebugStageLoad(Engine& engine, int dungeonID);
 	void DebugSetStageData(Engine& engine, std::shared_ptr<LoadJSON> setData);
-public:
-	/*
-	 *	—LŒøƒtƒ‰ƒO‚ÌŽæ“¾
-	 */
-	inline bool IsActive() const { return isActive; }
 
 };
 #endif // !_SELECTION_DUNGEON_H_

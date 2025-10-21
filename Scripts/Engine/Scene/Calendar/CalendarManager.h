@@ -21,7 +21,8 @@ class Engine;
 class CalendarManager {
 private:
     std::shared_ptr<CalendarSystem> calendarSystem;     // カレンダーシステム
-    bool inputHandle = false;   // 入力フラグ
+    bool inputHandle = false;                           // 入力フラグ
+    bool isActive = true;                               // 行動フラグ
 
 public:
     /*

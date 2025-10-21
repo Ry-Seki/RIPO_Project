@@ -2,6 +2,27 @@
 #include "ActionDungeon/ActionDungeon.h"
 
 /*
+ *	更新処理
+ */
+void ActionManager::Update(Engine& engine, float deltaTime) {
+	if (!isActive || !currentAction) return;
+
+	currentAction->Update(engine, deltaTime);
+
+	if (currentAction->IsComplete()) {
+		onComplete();
+		currentAction = nullptr;
+		isActive = false;
+	}
+}
+
+void ActionManager::Render() {
+	if (!isActive || !currentAction) return;
+
+	currentAction->Render();
+}
+
+/*
  *	ダンジョンアクション開始
  */
 void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData) {

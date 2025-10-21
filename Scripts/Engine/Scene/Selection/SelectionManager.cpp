@@ -8,9 +8,15 @@
 #include "../../Engine.h"
 
 void SelectionManager::Update(Engine& engine, float deltaTime) {
-	if (!isActive) return;
+	if (!currentSelection || !isActive) return;
 
-	if (currentSelection) currentSelection->Update(engine, deltaTime);
+	currentSelection->Update(engine, deltaTime);
+
+	if (currentSelection->IsComplete()) {
+		isActive = false;
+		prevSelection = currentSelection;
+		currentSelection = nullptr;
+	}
 }
 
 void SelectionManager::Render() {

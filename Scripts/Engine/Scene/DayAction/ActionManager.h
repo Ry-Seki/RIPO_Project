@@ -43,19 +43,11 @@ public:
     /*
      *  XVˆ—
      */
-    inline void Update(Engine& engine, float deltaTime) {
-        if (!isActive) return;
-
-        if (currentAction) currentAction->Update(engine,deltaTime);
-    }
+    void Update(Engine& engine, float deltaTime);
     /*
      *  •`‰æˆ—
      */
-    inline void Render() {
-        if (!isActive) return;
-
-        if (currentAction) currentAction->Render();
-    }
+    void Render();
 
 public:
     /*

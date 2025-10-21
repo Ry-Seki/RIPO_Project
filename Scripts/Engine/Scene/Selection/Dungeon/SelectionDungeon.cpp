@@ -18,22 +18,22 @@ void SelectionDungeon::Initialize(Engine& engine) {
 void SelectionDungeon::Setup(Engine& engine) {
 	dungeonDataList = dungeonDataLoader->dungeonList;
 	LoadManager::GetInstance().Clear();
-	isActive = true;
 }
 
 void SelectionDungeon::Update(Engine& engine, float deltaTime) {
-	if (dungeonDataList.empty() && !isActive) return;
+	if (dungeonDataList.empty() || isComplete) return;
 
 	if (!inputHandle && CheckHitKey(KEY_INPUT_0)) { 
-		DebugStageLoad(engine, 0);
 		inputHandle = true;
+		isComplete = true;
+		DebugStageLoad(engine, 0);
 	}
 
 	if (CheckHitKey(KEY_INPUT_0) == 0) inputHandle = false;
 }
 
 void SelectionDungeon::Render() {
-
+	DrawFormatString(50, 50, GetColor(0, 0, 0), "0: TutorialDungeon");
 }
 
 void SelectionDungeon::StartStageDataLoad(int dungeonID) {
@@ -69,4 +69,4 @@ void SelectionDungeon::DebugSetStageData(Engine& engine, std::shared_ptr<LoadJSO
 	std::string dungeonPath = dungeonData["StageData"];
 	LoadManager::GetInstance().Clear();
 	ActionManager::GetInstance().DebugActiveDungeon(engine, dungeonPath);
-}
+ }

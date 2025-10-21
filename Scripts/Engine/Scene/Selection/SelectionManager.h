@@ -21,6 +21,7 @@ class SelectionManager : public Singleton<SelectionManager>{
 private:
 	SelectionPtr selectionBase;		// 選択クラスのオリジナル
 	SelectionPtr currentSelection;	// 現在の選択肢
+	SelectionPtr prevSelection;		// ひとつ前の選択肢
 	bool inputHandle = false;		// 入力フラグ
 	bool isActive = false;			// 処理有効フラグ
 
