@@ -36,8 +36,15 @@ void CameraComponent::Update(float deltaTime) {
 	// カメラの角度に移動量を加える
 	camera->rotation += moveRotation;
 	// カメラの位置をプレイヤーと合わせる
-	if (player != nullptr) 
-		camera->position = player->position;
+	//if (player != nullptr) 
+	//	camera->position = player->position;
+	// デバッグ用
+	if (CheckHitKey(KEY_INPUT_UP)) {
+		camera->position.y += 5;
+	}
+	if (CheckHitKey(KEY_INPUT_DOWN)) {
+		camera->position.y -= 5;
+	}
 
 	// カメラの設定に反映する
 	SetCameraPositionAndAngle(

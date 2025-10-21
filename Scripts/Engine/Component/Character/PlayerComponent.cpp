@@ -9,7 +9,8 @@
 
 PlayerComponent::PlayerComponent() 
 	: moveSpeed(5.0f)
-	, DEFAULT_MOVE_SPEED(5.0f){
+	, DEFAULT_MOVE_SPEED(5.0f)
+	, acceleration(2.0f){
 }
 
 void PlayerComponent::Update(float deltaTime) {
