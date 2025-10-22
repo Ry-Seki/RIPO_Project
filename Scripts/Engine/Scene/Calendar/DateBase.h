@@ -14,6 +14,9 @@
  *  日付共通インターフェース
  */
 class DateBase {
+protected:
+    std::function<void()> onAdvance;    // 進行時のコールバック処理
+
 public:
     /*
      *  デストラクタ
@@ -22,13 +25,11 @@ public:
 
 public:
     /*
-     *  進行処理コールバック
-     */
-    std::function<void()> onAdvance;
-    /*
      *  進行処理
      */
     virtual void Advance() = 0;
+
+public:
     /*
      *  終了フラグの取得
      */

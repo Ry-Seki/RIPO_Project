@@ -46,5 +46,9 @@ public:
      *  •`‰æˆ—
      */
     void Render() override;
+    /*
+     *  ”jŠüˆ—
+     */
+    void Teardown() override;
 };
 #endif // !_ACTION_PART_TIME_H_

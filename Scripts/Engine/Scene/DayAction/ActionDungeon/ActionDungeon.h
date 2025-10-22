@@ -27,6 +27,9 @@ private:
 	DungeonData currentDungeon;
 	DungeonStageData currentDungeonStage;
 
+	std::string debugPath;
+	bool inputHandle = false;
+
 public:
 	/*
 	 *	コンストラクタ
@@ -54,6 +57,10 @@ public:
 	 *	描画処理
 	 */
 	void Render() override;
+	/*
+	 *	破棄処理
+	 */
+	void Teardown() override;
 
 	void DebugInitialize(Engine& engine, std::string setFilePath);
 	void DebugSetup(Engine& engine, std::shared_ptr<LoadModel> setModel);
@@ -63,5 +70,6 @@ public:
 	 *	ダンジョンステージデータの設定
 	 */
 	inline void SetDungeonStageData(DungeonStageData setData) { currentDungeonStage = setData; }
+	inline void SetDungeonStagePath(std::string setFilePath) { debugPath = setFilePath; }
 };
 #endif // !_ACTION_DUNGEON_H_

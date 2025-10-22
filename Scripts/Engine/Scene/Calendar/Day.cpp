@@ -4,20 +4,22 @@
  */
 
 #include "Day.h"
-#include "../DayAction/ActionManager.h"
-
+#include "../../Engine.h"
 /*
  *  進行処理
  */
 void Day::Advance() {
-    ResetDay(); if (onAdvance) onAdvance();
+    // 日にちのリセット
+    ResetDay(); 
+    // コールバック処理
+    if (onAdvance) onAdvance();
 }
 /*
  *  ダンジョン行動
  */
-void Day::ActionDungeon() {
+void Day::ActionDungeon(Engine& engine) {
     if (morningDone) { DrawFormatString(50, 150, GetColor(255, 0, 0), "ダンジョンは午前のみ！"); return; }
-    AdvanceDay(); // 午前・午後まとめて消費
+    //AdvanceDay(); // 午前・午後まとめて消費
     DrawFormatString(50, 150, GetColor(0, 255, 0), "ダンジョンに行きました。午前・午後消費");
 }
 

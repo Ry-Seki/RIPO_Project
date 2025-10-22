@@ -8,19 +8,13 @@
 
 #include "../../Singleton.h"
 #include "DayActionBase.h"
+#include "ActionDungeon/ActionDungeon.h"
 #include "../../../Data/DungeonStageData.h"
 
 #include <vector>
 #include <memory>
 #include <string>
 #include <functional>
-
-enum class ActionType {
-    DungeonAction,
-    TrainingAction,
-    ShopAction,
-    PartTimeAction,
-};
 
 /*
  *  各アクションの管理クラス 
@@ -33,12 +27,13 @@ private:
     DayActionPtr actionBase;                // アクションクラスのオリジナル
     DayActionPtr currentAction;             // 現在のアクション
     std::function<void()> onComplete;       // アクション完了コールバック
+    bool isActive = false;                  // 処理有効フラグ
 
 private:
     /*
      *  コンストラクタ
      */
-    ActionManager() = default;
+    ActionManager() : actionBase(std::make_shared<ActionDungeon>()) {}
     /*
      *  デストラクタ
      */
@@ -48,21 +43,18 @@ public:
     /*
      *  更新処理
      */
-    void Update(Engine& engine, float deltaTime) {
-        if (currentAction) currentAction->Update(engine,deltaTime);
-    }
+    void Update(Engine& engine, float deltaTime);
     /*
      *  描画処理
      */
-    void Render() {
-        if (currentAction) currentAction->Render();
-    }
+    void Render();
 
 public:
     /*
      *  ダンジョンアクション開始
      */
     void ActiveDungeon(Engine& engine, DungeonStageData setStageData);
+    void DebugActiveDungeon(Engine& engine, std::string setFilePath);
     /*
      *  トレーニングアクション開始
      */
@@ -79,8 +71,13 @@ public:
 public:
     /*
      *  コールバックの設定
+     *  param[in]   std::function<void()> callback      コールバック
      */
     inline void SetOnComplete(std::function<void()> callback) { onComplete = callback; }
+    /*
+     *  処理有効フラグの取得
+     */
+    inline bool IsActive() const { return isActive; }
 };
 
 #endif // !_ACTION_MANAGER_H_

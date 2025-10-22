@@ -10,6 +10,7 @@
 
 #include <DxLib.h>
 
+class Engine;
 /*
  *  一日の行動管理クラス
  */
@@ -17,6 +18,7 @@ class Day : public DateBase {
 public:
     bool morningDone = false;       // 午前行動フラグ
     bool afternoonDone = false;     // 午後行動フラグ
+
 
 public:
     /*
@@ -32,7 +34,7 @@ public:
     /*
      *  ダンジョン処理
      */
-    void ActionDungeon();
+    void ActionDungeon(Engine& engine);
     /*
      *  トレーニング処理
      */
@@ -58,6 +60,7 @@ public:
      *  行動リセット
      */
     void ResetDay();
+
 }; 
 #endif // !_DAY_H_
 

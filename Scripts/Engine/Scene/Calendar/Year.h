@@ -14,37 +14,42 @@
  */
 class Year : public DateBase {
 public:
-    std::vector<std::shared_ptr<Month>> months;     // Month配列
-    int currentMonthIndex = 0;                      // 月カウント
+    std::unique_ptr<Month> month;   // Monthクラス (常に持っている想定)
+    int monthIndex = 0;      // 月カウント
+
+public:
+    int MONTH_END_COUNT = 12;       // 1年を更新する月の数
 
 public:
     /*
-     *  進行処理
+     *  コンストラクタ (Monthクラスの生成)
+     */
+    Year() : month(std::make_unique<Month>()) {}
+
+public:
+    /*
+     *  進行処理 (Month)
      */
     void Advance() override {
-        auto month = GetCurrentMonth();
         if (!month) return;
-
-        // 進行処理の呼び出し
+        // Monthクラスの進行処理
         month->Advance();
-
         if (month->IsFinished()) {
-            months.erase(months.begin() + currentMonthIndex);
-            // currentMonthIndex はそのまま、次の Month が現在のインデックスに来る
+            // MonthCountの更新
+            monthIndex++;
+            if (monthIndex < MONTH_END_COUNT) return;
+            // コールバック処理
+            if (onAdvance) onAdvance();
         }
-        // 進行処理のコールバック
-        if (onAdvance) onAdvance();
     }
     /*
      *  一か月行動終了フラグ
      */
-    bool IsFinished() const override { return months.empty(); }
+    inline bool IsFinished() const override { return monthIndex >= MONTH_END_COUNT; }
     /*
-     *  現在稼働しているMonthの取得
+     *  Monthクラスの取得
+     *  @return Month&
      */
-    std::shared_ptr<Month> GetCurrentMonth() {
-        if (currentMonthIndex < months.size()) return months[currentMonthIndex];
-        return nullptr;
-    }
+    inline Month& GetMonth() const { return *month; }
 };
 #endif // !_YEAR_H_

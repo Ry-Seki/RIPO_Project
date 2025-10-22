@@ -7,14 +7,18 @@
 #include "../../Manager/CameraManager.h"
 #include "DxLib.h"
 
-PlayerComponent::PlayerComponent() 
-	: moveSpeed(5.0f)
-	, DEFAULT_MOVE_SPEED(5.0f){
+PlayerComponent::PlayerComponent()
+	: moveSpeed(0.0f)
+	, acceleration(0.0f)
+	, ACCELERATION_MAX(2.0f)
+	, DEFAULT_MOVE_SPEED(10.0f)
+	, ACCELERATION_RATE(800.0f)
+{
 }
 
 void PlayerComponent::Update(float deltaTime) {
 	PlayerMove();
-	PlayerRun();
+	PlayerRun(deltaTime);
 }
 
 void PlayerComponent::PlayerMove() {
@@ -52,11 +56,19 @@ void PlayerComponent::PlayerMove() {
 	}
 }
 
-void PlayerComponent::PlayerRun() {
+void PlayerComponent::PlayerRun(float deltaTime) {
+	// Ç»ÇﬂÇÁÇ©Ç…â¡ë¨Ç∑ÇÈèàóù
 	if (CheckHitKey(KEY_INPUT_LSHIFT)) {
-		moveSpeed = DEFAULT_MOVE_SPEED * acceleration;
+		if (acceleration < 2)
+			acceleration += sinf(Deg2Rad * deltaTime * ACCELERATION_RATE);
+		else
+			acceleration = 2;
 	}
 	else {
-		moveSpeed = DEFAULT_MOVE_SPEED;
+		if (acceleration > 1)
+			acceleration -= sinf(Deg2Rad * deltaTime * ACCELERATION_RATE);
+		else
+			acceleration = 1;
 	}
+	moveSpeed = DEFAULT_MOVE_SPEED * acceleration;
 }

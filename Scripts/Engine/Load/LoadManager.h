@@ -14,26 +14,25 @@
 #include <memory>
 #include <queue>
 
-/*
- *	ファイル読み込み管理クラス
- */
+ /*
+  *	ファイル読み込み管理クラス（多段階ロード対応版）
+  */
 class LoadManager : public Singleton<LoadManager> {
     // フレンド宣言
     friend class Singleton<LoadManager>;
 private:
-    std::shared_ptr<LoadSystem> system;             // ロードの内部処理
-    std::queue<std::function<void()>> taskQueue;    // フレーム単位で処理するタスク
-    std::function<void()> onComplete;               // コールバック
-    LoadRegistry loadRegistry;                      // リソース管理
+    std::shared_ptr<LoadSystem> system;                     // ロードの内部処理
+    std::queue<std::function<void()>> taskQueue;            // フレーム単位タスク
+    std::queue<std::function<void()>> onCompleteQueue;      // コールバックキュー
+    LoadRegistry loadRegistry;                              // リソースキャッシュ
 
 private:
     /*
      *  コンストラクタ
      */
     LoadManager() : system(std::make_shared<LoadSystem>()) {}
-    /*
-     *  デストラクタ
-     */
+
+public:
     ~LoadManager() = default;
 
 public:
@@ -45,19 +44,24 @@ public:
             system->Update(unscaledDeltaTime);
         }
 
-        // フレーム単位タスク実行
+        // タスク実行（フレーム単位）
         if (!taskQueue.empty()) {
             auto task = taskQueue.front();
             task();
             taskQueue.pop();
         }
 
-        // 完了コールバック
-        if ((system && system->IsComplete()) && onComplete) {
-            onComplete();
-            onComplete = nullptr;
+        // ロード完了判定
+        if (system && system->IsComplete() && !onCompleteQueue.empty()) {
+            auto callback = onCompleteQueue.front();
+            onCompleteQueue.pop();
+            if (callback) callback();
+
+            // 完了後、新しいロードが入るかもしれないため isComplete を false に戻す
+            if (system) system->ResetCompleteFlag();
         }
     }
+
     /*
      *  描画処理
      */
@@ -69,29 +73,39 @@ public:
     /*
      *  ロードリストに追加
      */
-    void AddLoader(const LoadBasePtr& loader) { system->AddLoader(loader); }
+    void AddLoader(const LoadBasePtr& loader) {
+        if (system) system->AddLoader(loader);
+    }
+
     /*
      *  ロードアニメーションに追加
      */
-    void AddAnimation(const LoadAnimationPtr& animation) { system->AddAnimation(animation); }
+    void AddAnimation(const LoadAnimationPtr& animation) {
+        if (system) system->AddAnimation(animation);
+    }
+
     /*
-     *  ロードの中身をクリアにする
+     *  ロード内容をクリア
+     *  （コールバックキューは保持したまま）
      */
-    void Clear() {
+    void Clear(bool clearCallbacks = false) {
         if (system) system->Clear();
         while (!taskQueue.empty()) taskQueue.pop();
-        onComplete = nullptr;
+        if (clearCallbacks) {
+            while (!onCompleteQueue.empty()) onCompleteQueue.pop();
+        }
     }
 
 public:
     /*
-     *  フレーム単位タスクとして登録（逐次ロード向け）
+     *  フレーム単位タスク登録
      */
     void StartTask(const std::function<void()>& task) {
         if (task) taskQueue.push(task);
     }
+
     /*
-     *  LoadRegistry を経由してモデルなどを安全にロード
+     *  リソースをLoadRegistry経由でロード
      */
     template<typename T>
     std::shared_ptr<T> LoadResource(const std::string& path) {
@@ -106,17 +120,25 @@ public:
 
 public:
     /*
-     *  コールバックの設定
+     *  コールバック登録（複数同時対応）
      */
-    void SetOnComplete(const std::function<void()>& callback) { onComplete = callback; }
+    void SetOnComplete(const std::function<void()>& callback) {
+        if (callback) onCompleteQueue.push(callback);
+    }
+
     /*
-     *  ロード中か取得
+     *  ロード中判定
      */
-    bool IsLoading() const { return system && !system->IsComplete(); }
+    bool IsLoading() const {
+        return system && !system->IsComplete();
+    }
+
     /*
-     *  ロード進捗度の取得
+     *  進捗度取得
      */
-    float GetProgress() const { return system ? system->GetProgress() : 1.0f; }
+    float GetProgress() const {
+        return system ? system->GetProgress() : 1.0f;
+    }
 };
 
 #endif // !_LOAD_MANAGER_H_

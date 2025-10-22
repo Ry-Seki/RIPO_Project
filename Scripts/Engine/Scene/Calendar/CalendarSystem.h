@@ -16,9 +16,10 @@
  */
 class CalendarSystem {
 private:
-    std::shared_ptr<Year> currentYear;  // 年
-    bool fadeInProgress = false;        // フェード進行フラグ
-
+    std::unique_ptr<Year> year;     // 年 (常に持っている想定)
+    int yearIndex = 0;              // 年カウント
+    bool fadeInProgress = false;    // フェード進行フラグ
+    
 public:
     /*
      *  コンストラクタ
@@ -32,11 +33,12 @@ public:
 public:
     /*
      *  初期化処理
-     *  param[in]       int numMonths       生成する月の数
-     *  param[in]       int weeksPerMonth   生成する週間の数
-     *  param[in]       int daysPerWeek     生成する日にちの数
      */
-    void Initialize(int numMonths = 1, int weeksPerMonth = 5, int daysPerWeek = 6);
+    void Initialize();
+    /*
+     *  ロード済みのデータをセット(コールバック)
+     */
+    void Setup();
     /*
      *  Dayを進める
      */
@@ -44,20 +46,24 @@ public:
 
 public:
     /*
-     *  現在稼働しているDay取得
+     *  Dayクラスの取得
+     *  @return Day&
      */
-    std::shared_ptr<Day> GetCurrentDay();
+    inline Day& GetDay() { return GetWeek().GetDay(); }
     /*
-     *  現在稼働しているWeek取得
+     *  Weekクラスの取得
+     *  @return Week&
      */
-    std::shared_ptr<Week> GetCurrentWeek();
+    inline Week& GetWeek() { return GetMonth().GetWeek(); }
     /*
-     *  現在稼働しているMonth取得
+     *  Monthクラスの取得
+     *  @return Month&
      */
-    std::shared_ptr<Month> GetCurrentMonth();
+    inline Month& GetMonth() { return GetYear().GetMonth(); }
     /*
-     *  現在稼働しているYear取得
+     *  Yearクラスの取得
+     *  @return Year&
      */
-    std::shared_ptr<Year> GetYear();
+    inline Year& GetYear() { return *year; }
 }; 
 #endif // !_CALENDER_SYSTEM_H_
