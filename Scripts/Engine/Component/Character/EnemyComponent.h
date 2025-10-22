@@ -2,7 +2,6 @@
  *	@file	EnemyComponent.h
  *  @author kuu
  */
-
 #ifndef _ENEMYCOMPONENT_H_
 #define _ENEMYCOMPONENT_H_
 

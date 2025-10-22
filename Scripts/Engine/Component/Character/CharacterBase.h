@@ -4,7 +4,7 @@
  */
 
 #ifndef _CHARACTERBASE_H_
-#define _CHATACTERBASE_H_
+#define _CHARACTERBASE_H_
 
 #include "../../Component/Component.h"
 #include <vector>
