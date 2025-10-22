@@ -36,6 +36,7 @@ void SelectionManager::DungeonSelection(Engine& engine) {
 	auto dungeonSelection = std::dynamic_pointer_cast<SelectionDungeon>(selectionBase);
 	if (!dungeonSelection) return;
 
+	dungeonSelection->SetActiveDungeon(ActiveDungeon);
 	currentSelection = dungeonSelection;
 	currentSelection->Initialize(engine);
 	isActive = true;

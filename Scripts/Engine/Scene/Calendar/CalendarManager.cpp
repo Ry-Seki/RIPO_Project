@@ -14,7 +14,6 @@ void CalendarManager::Initialize() {
     // カレンダーシステムの初期化
     calendarSystem->Initialize();
 }
-
 /*
  *  更新処理
  */
@@ -27,8 +26,8 @@ void CalendarManager::Update(Engine& engine) {
             inputHandle = true; 
             isActive = false;
             day.ActionDungeon(engine); 
-            SelectionManager::GetInstance().DungeonSelection(engine);
-            ActionManager::GetInstance().SetOnComplete([this, &day]() {day.AdvanceDay(); });
+            selection->DungeonSelection(engine);
+            action->SetOnComplete([this, &day]() { day.AdvanceDay(); });
         }
         //else if (CheckHitKey(KEY_INPUT_2)) { 
         //    inputHandle = true; 
@@ -46,7 +45,6 @@ void CalendarManager::Update(Engine& engine) {
         //    day.ActionPartTime();
         //}
     }
-
     // キー離しで再度入力受付
     if (CheckHitKey(KEY_INPUT_1) == 0 && CheckHitKey(KEY_INPUT_2) == 0 && CheckHitKey(KEY_INPUT_3) == 0 && CheckHitKey(KEY_INPUT_4) == 0) {
         inputHandle = false;
