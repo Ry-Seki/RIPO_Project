@@ -20,22 +20,26 @@ class Engine;
  */
 class CalendarManager {
 private:
-    std::shared_ptr<CalendarSystem> calendarSystem;     // カレンダーシステム
+    std::unique_ptr<CalendarSystem> calendarSystem;     // カレンダーシステム (常に持っている想定)
     bool inputHandle = false;                           // 入力フラグ
     bool isActive = true;                               // 行動フラグ
+    int elapsedDay = 0;                                 // 消費した日にち;
 
 public:
     /*
      *  コンストラクタ
-     *  param[in]           const std::shared_ptr<CalendarSystem>& system   カレンダー内部処理クラスのポインタ
      */
-    CalendarManager(const std::shared_ptr<CalendarSystem>& system) : calendarSystem(system) {}
+    CalendarManager() : calendarSystem(std::make_unique<CalendarSystem>()) {}
     /*
      *  デストラクタ
      */
     ~CalendarManager() = default;
 
 public:
+    /*
+     *  初期化処理
+     */
+    void Initialize();
     /*
      *  更新処理
      */
@@ -53,7 +57,11 @@ public:
     /*
      *  一日の行動終了フラグ取得
      */
-    bool IsDayComplete() const;
+    inline bool IsDayComplete() const { return calendarSystem->GetDay().IsFinished(); }
+    /*
+     *  日にち更新終了処理
+     */
+    inline bool IsEndDayAdvance() const { return elapsedDay >= 30; }
 };
 
 #endif // !_CARENDER_MANAGER_H_

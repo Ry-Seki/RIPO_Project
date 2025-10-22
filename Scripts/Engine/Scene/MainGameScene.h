@@ -17,8 +17,7 @@
  */
 class MainGameScene : public Scene {
 private:
-    std::shared_ptr<CalendarSystem> calendarSystem;     // カレンダーシステム
-    std::shared_ptr<CalendarManager> calendarManager;   // カレンダー管理クラス
+    std::unique_ptr<CalendarManager> calendarManager;   // カレンダー管理クラス
 
 public:
     /*

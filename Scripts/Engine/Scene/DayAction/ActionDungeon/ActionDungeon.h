@@ -57,6 +57,10 @@ public:
 	 *	•`‰æˆ—
 	 */
 	void Render() override;
+	/*
+	 *	”jŠüˆ—
+	 */
+	void Teardown() override;
 
 	void DebugInitialize(Engine& engine, std::string setFilePath);
 	void DebugSetup(Engine& engine, std::shared_ptr<LoadModel> setModel);

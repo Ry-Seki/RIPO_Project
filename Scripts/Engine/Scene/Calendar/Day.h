@@ -19,6 +19,7 @@ public:
     bool morningDone = false;       // 午前行動フラグ
     bool afternoonDone = false;     // 午後行動フラグ
 
+
 public:
     /*
      *  進行処理
@@ -59,6 +60,7 @@ public:
      *  行動リセット
      */
     void ResetDay();
+
 }; 
 #endif // !_DAY_H_
 

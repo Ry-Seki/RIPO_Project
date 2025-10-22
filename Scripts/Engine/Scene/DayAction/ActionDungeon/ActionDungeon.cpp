@@ -31,7 +31,7 @@ void ActionDungeon::Setup(Engine& engine) {
  *	XVˆ—
  */
 void ActionDungeon::Update(Engine& engine, float deltaTime) {
-    if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
+    if (!isComplete && !inputHandle && CheckHitKey(KEY_INPUT_2)) {
         inputHandle = true;
         isComplete = true;
     }
@@ -44,6 +44,14 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
 void ActionDungeon::Render() {
     StageManager::GetInstance().Render();
     DrawFormatString(50, 50, GetColor(0, 0, 0), "2 : AdvanveDay");
+}
+/*
+ *  ”jŠüˆ—
+ */
+void ActionDungeon::Teardown() {
+    CharacterManager::GetInstance().RemoveCharacter(0);
+    StageManager::GetInstance().LoadStage(-1);
+
 }
 
 void ActionDungeon::DebugInitialize(Engine& engine, std::string setFilePath) {

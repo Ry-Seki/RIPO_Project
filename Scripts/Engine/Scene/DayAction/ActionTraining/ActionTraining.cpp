@@ -29,3 +29,8 @@ void ActionTraining::Update(Engine& engine, float deltaTime) {
 void ActionTraining::Render() {
 
 }
+/*
+ *	”jŠüˆ—
+ */
+void ActionTraining::Teardown() {
+}
