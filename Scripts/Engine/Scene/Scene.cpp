@@ -53,6 +53,7 @@ void Scene::Finalize(Engine& engine) {
 }
 /*
  *  ゲームオブジェクトの衝突を処理する
+ *  @author Riku
  */
 void Scene::HandleGameObjectCollision() {
     // ワールド座標系の衝突判定を作成
@@ -101,6 +102,7 @@ void Scene::HandleGameObjectCollision() {
  *  コライダー単位の当たり判定
  *  @param  colliderA   判定対象のコライダー配列1
  *  @param  colliderB   判定対象のコライダー配列2
+ *  @author Riku
  */
 void Scene::HandleWorldColliderCollision(
     WorldColliderList* colliderA,
