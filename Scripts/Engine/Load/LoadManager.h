@@ -13,6 +13,7 @@
 #include <functional>
 #include <memory>
 #include <queue>
+#include <mutex>
 
  /*
   *	ファイル読み込み管理クラス（多段階ロード対応版）
@@ -27,6 +28,7 @@ private:
     std::queue<std::function<void()>> onCompleteQueue;      // コールバックキュー
     LoadRegistry loadRegistry;                              // リソースキャッシュ
 
+    std::mutex managerMutex;
 private:
     /*
      *  コンストラクタ
