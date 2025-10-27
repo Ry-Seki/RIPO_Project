@@ -59,12 +59,14 @@ public:
 private:
     /*
      *  ゲームオブジェクトの衝突を処理する
+     *  @author Riku
      */
     void HandleGameObjectCollision();
     /*
      *  コライダー単位の当たり判定
      *  @param  colliderA   判定対象のコライダー配列1
      *  @param  colliderB   判定対象のコライダー配列2
+     *  @autohr Riku
      */
     void HandleWorldColliderCollision(
         WorldColliderList* colliderA, 

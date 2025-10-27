@@ -28,7 +28,10 @@ public:
 	//----------------------------------------------------
 	//				システム関連の定数
 	//----------------------------------------------------
-
+	static constexpr int FORWARD_ANGLE = 0;
+	static constexpr int RIGHT_ANGLE = 90;
+	static constexpr int LEFT_ANGLE = -90;
+	static constexpr int BACK_ANGLE = 180;
 
 
 
