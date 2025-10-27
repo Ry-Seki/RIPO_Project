@@ -50,7 +50,7 @@ public:
      *  ダンジョンアクション開始
      */
     void ActiveDungeon(Engine& engine, DungeonStageData setStageData);
-    void DebugActiveDungeon(Engine& engine, std::string setFilePath);
+    void DebugActiveDungeon(Engine& engine, DungeonStageData setStageData);
     /*
      *  トレーニングアクション開始
      */

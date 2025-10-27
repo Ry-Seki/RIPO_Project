@@ -15,6 +15,7 @@
 
 #include <vector>
 #include <functional>
+#include <string>
 
 // 前方宣言
 class Engine;
@@ -24,11 +25,11 @@ class Engine;
  */
 class SelectionDungeon : public SelectionBase {
 private:
-	std::vector<DungeonData> dungeonDataList;				// ダンジョンデータ配列
-	std::shared_ptr<DungeonDataLoader> dungeonDataLoader;	// ダンジョン用読み込みクラス
-	bool inputHandle = false;								// 入力フラグ
+	std::vector<DungeonData> dungeonDataList;											// ダンジョンデータ配列
+	std::shared_ptr<DungeonDataLoader> dungeonDataLoader;								// ダンジョン用読み込みクラス
+	bool inputHandle = false;															// 入力フラグ
 
-	std::function<void()> ActiveDungeon;					// 行動管理クラスのダンジョン開放関数
+	std::function<void(Engine& engine, DungeonStageData setStageData)> ActiveDungeon;	// 行動管理クラスのダンジョン開放関数
 
 public:
 	/*
@@ -71,7 +72,7 @@ public:
 	 *	ActionManagerのダンジョン管理関数の設定
 	 *	@param[in]	std::function<void()> setActiveDungeon	行動管理クラスのダンジョン解放関数
 	 */
-	inline void SetActiveDungeon(std::function<void()> setActiveDungeon) { ActiveDungeon = setActiveDungeon; }
+	inline void SetActiveDungeon(std::function<void(Engine& engine, DungeonStageData setStageData)> setActiveDungeon) { ActiveDungeon = setActiveDungeon; }
 
 private:
 	void DebugStageLoad(Engine& engine, int dungeonID);
