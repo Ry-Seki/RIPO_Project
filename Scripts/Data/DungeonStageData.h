@@ -24,7 +24,7 @@ enum class ResourceID {
  */
 class DungeonStageData {
 private:
-    std::unordered_map<ResourceID, std::string> dungeonDataList;
+    std::unordered_map<ResourceID, std::string> dungeonDataList;        // ステージデータのマップ
 
 public:
     /*
