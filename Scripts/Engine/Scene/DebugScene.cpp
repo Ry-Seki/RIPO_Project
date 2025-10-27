@@ -23,6 +23,7 @@ void DebugScene::Initialize(Engine& engine) {
 	auto stageModel = std::make_shared<LoadModel>("Res/Model/Stage/StageModel_1.mv1");
 	auto playerModel = std::make_shared<LoadModel>("Res/Model/Player/RIPO_Model.mv1");
 	auto enemyModel = std::make_shared<LoadModel>("Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1");
+	auto stageBoneData = std::make_shared<LoadJSON>("Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json");
 	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
 	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 0, 0 }, {0, 0, 0}, {-0.5f, -1.0f, -0.5f}, {0.5f,  1.0f,  0.5f});
 	auto player = CharacterManager::GetInstance().GetCharacter(0);
@@ -34,14 +35,17 @@ void DebugScene::Initialize(Engine& engine) {
 	LoadManager::GetInstance().AddLoader(stageModel);
 	LoadManager::GetInstance().AddLoader(playerModel);
 	LoadManager::GetInstance().AddLoader(enemyModel);
+	LoadManager::GetInstance().AddLoader(stageBoneData);
 	LoadManager::GetInstance().SetOnComplete(
-		[stageModel, player, playerModel, enemy, enemyModel]() {
+		[stageModel, player, playerModel, enemy, enemyModel, stageBoneData]() {
 			StageManager::GetInstance().LoadStage(stageModel->GetHandle());
+			StageManager::GetInstance().SetStageJSONData(stageBoneData->GetData());
 			int modelHandle = playerModel->GetHandle();
 			player->GetOwner()->GetComponent<ModelRenderer>()->SetModel(modelHandle);
 			player->GetOwner()->position = StageManager::GetInstance().GetStartPos();
 			int enemyModelHandle = enemyModel->GetHandle();
 			enemy->GetOwner()->GetComponent<ModelRenderer>()->SetModel(enemyModelHandle);
+			
 			//enemy->GetOwner()->position = StageManager::GetInstance().GetStartPos();
 		}
 	);
