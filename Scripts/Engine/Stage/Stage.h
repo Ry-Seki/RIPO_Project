@@ -105,6 +105,7 @@ private:
 		const std::vector<MV1_COLL_RESULT_POLY*>& floors
 	);
 
+
 public:
 	// ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹‚ÌŽæ“¾
 	int GetModelHandle() const { return modelHandle; }

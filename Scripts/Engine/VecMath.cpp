@@ -1,6 +1,7 @@
 /*
  *	@file	VecMath.cpp
  *	@author	Seki
+ *  @author oorui
  */
 
 #include "VecMath.h"
