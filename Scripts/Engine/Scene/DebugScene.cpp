@@ -40,9 +40,9 @@ void DebugScene::Initialize(Engine& engine) {
 			int modelHandle = playerModel->GetHandle();
 			player->GetOwner()->GetComponent<ModelRenderer>()->SetModel(modelHandle);
 			player->GetOwner()->position = StageManager::GetInstance().GetStartPos();
-			int enemyModelHandle = enemyModel->GetHandle();
+			/*int enemyModelHandle = enemyModel->GetHandle();
 			enemy->GetOwner()->GetComponent<ModelRenderer>()->SetModel(enemyModelHandle);
-			enemy->GetOwner()->position = StageManager::GetInstance().GetStartPos();
+			enemy->GetOwner()->position = StageManager::GetInstance().GetStartPos();*/
 		}
 	);
 }
