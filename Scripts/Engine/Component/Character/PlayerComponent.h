@@ -13,14 +13,17 @@ private:
 	float moveSpeed;		// 移動速度
 	float acceleration;		// 加速度
 	float avoidMoveValue;	// 回避の移動量
+	float avoidCoolTime;	// 回避のクールタイム
 	bool canAvoid;			// 回避可能か否か
 	bool isAvoid;			// 回避中か否か
 
-	const float DEFAULT_MOVE_SPEED;		// デフォルトの移動速度
-	const float ACCELERATION_RATE;		// 加速度倍率
-	const float RUN_ACCELERATION_MAX;	// ダッシュの最大加速度
-	const float AVOID_ACCELERATION_MAX;	// 回避の最大加速度
-	const float AVOID_MOVE_VALUE_MAX;	// 回避の最大移動距離
+	const float PLAYER_MODEL_ANGLE_CORRECTION;	// プレイヤーのモデル角度を補正する値
+	const float DEFAULT_MOVE_SPEED;				// デフォルトの移動速度
+	const float ACCELERATION_RATE;				// 加速度倍率
+	const float RUN_ACCELERATION_MAX;			// ダッシュの最大加速度
+	const float AVOID_ACCELERATION_MAX;			// 回避の最大加速度
+	const float AVOID_MOVE_VALUE_MAX;			// 回避の最大移動距離
+	const float AVOID_COOL_TIME_MAX;			// 回避のクールタイムの最大
 
 public:
 	PlayerComponent();
