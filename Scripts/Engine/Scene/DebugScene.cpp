@@ -28,7 +28,7 @@ void DebugScene::Initialize(Engine& engine) {
 	auto player = CharacterManager::GetInstance().GetCharacter(0);
 	player->GetOwner()->AddComponent<ModelRenderer>();
 	CharacterManager::GetInstance().GenerateEnemy("enemy", { 1, 0, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f, 1.0f, 0.5f });
-	auto enemy = CharacterManager::GetInstance().GetCharacter(0);
+	auto enemy = CharacterManager::GetInstance().GetCharacter(1);
 	enemy->GetOwner()->AddComponent<ModelRenderer>();
 
 	LoadManager::GetInstance().AddLoader(stageModel);
@@ -40,9 +40,9 @@ void DebugScene::Initialize(Engine& engine) {
 			int modelHandle = playerModel->GetHandle();
 			player->GetOwner()->GetComponent<ModelRenderer>()->SetModel(modelHandle);
 			player->GetOwner()->position = StageManager::GetInstance().GetStartPos();
-			/*int enemyModelHandle = enemyModel->GetHandle();
+			int enemyModelHandle = enemyModel->GetHandle();
 			enemy->GetOwner()->GetComponent<ModelRenderer>()->SetModel(enemyModelHandle);
-			enemy->GetOwner()->position = StageManager::GetInstance().GetStartPos();*/
+			//enemy->GetOwner()->position = StageManager::GetInstance().GetStartPos();
 		}
 	);
 }
