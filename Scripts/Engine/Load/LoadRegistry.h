@@ -6,14 +6,12 @@
 #ifndef _LOAD_REGISTRY_H_
 #define _LOAD_REGISTRY_H_
 
+#include "LoadBase.h"
+
 #include <unordered_map>
 #include <memory>
 #include <string>
 #include <mutex>
-
- // 前方宣言
-class LoadBase;
-using LoadBasePtr = std::shared_ptr<LoadBase>;
 
 /*
  *  同じリソースの二重ロードを防ぐ
