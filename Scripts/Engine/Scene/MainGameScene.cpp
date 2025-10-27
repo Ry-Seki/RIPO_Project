@@ -21,6 +21,9 @@ void MainGameScene::Initialize(Engine& engine) {
     selectionManager = std::make_unique<SelectionManager>();
     // 行動管理クラスの初期化
     actionManager = std::make_unique<ActionManager>();
+    calendarManager->SetSelectionManager(selectionManager.get());
+    calendarManager->SetActionManager(actionManager.get());
+    selectionManager->SetActionManager(actionManager.get());
 }
 /*
  *  更新処理
