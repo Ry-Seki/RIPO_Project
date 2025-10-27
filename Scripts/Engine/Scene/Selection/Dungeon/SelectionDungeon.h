@@ -60,12 +60,12 @@ private:
 	 *	ダンジョンステージデータ読み込み開始
 	 *  param[in]	int dungeonID		ダンジョンID
 	 */
-	void StartStageDataLoad(int dungeonID);
+	void StartStageDataLoad(Engine& engine, int dungeonID);
 	/*
 	 *	読み込んだステージデータをセットし、アクションマネージャーに渡す(コールバック)
 	 *  param[in]	std::shared_ptr<LoadJSON> setData	ロードしたJSONデータ
 	 */
-	void SetStageData(std::shared_ptr<LoadJSON> setData);
+	void SetStageData(Engine& engine, std::shared_ptr<LoadJSON> setData);
 
 public:
 	/*
@@ -73,10 +73,5 @@ public:
 	 *	@param[in]	std::function<void()> setActiveDungeon	行動管理クラスのダンジョン解放関数
 	 */
 	inline void SetActiveDungeon(std::function<void(Engine& engine, DungeonStageData setStageData)> setActiveDungeon) { ActiveDungeon = setActiveDungeon; }
-
-private:
-	void DebugStageLoad(Engine& engine, int dungeonID);
-	void DebugSetStageData(Engine& engine, std::shared_ptr<LoadJSON> setData);
-
 };
 #endif // !_SELECTION_DUNGEON_H_
