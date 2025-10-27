@@ -13,6 +13,7 @@
 
 enum class ResourceID {
     Stage1,
+    StageBone,
     Player,
     Enemy1,
     Boss,
