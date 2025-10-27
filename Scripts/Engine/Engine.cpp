@@ -73,8 +73,9 @@ int Engine::Initialize() {
 	}
 #pragma endregion
 
+	// タイムクラスの初期化
     Time::Init();
-
+	// 初期化フラグの変更
     initialized = true;
     return 0;
 }

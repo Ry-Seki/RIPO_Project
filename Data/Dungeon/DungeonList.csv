@@ -1,2 +1,2 @@
 ﻿ID,Name,OpenDay,EventStartDay,EventEndDay,DungeonPath
-0,Tutorial,0,0,0,Data/Dungeon/TutorialDungeonData.json
+0,Tutorial,0,0,0,Data/Dungeon/Tutorial/TutorialDungeonData.json

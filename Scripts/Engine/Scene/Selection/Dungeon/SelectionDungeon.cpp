@@ -27,7 +27,7 @@ void SelectionDungeon::Update(Engine& engine, float deltaTime) {
 	if (!inputHandle && CheckHitKey(KEY_INPUT_0)) { 
 		inputHandle = true;
 		isComplete = true;
-		DebugStageLoad(engine, 0);
+		StartStageDataLoad(engine, 0);
 	}
 
 	if (CheckHitKey(KEY_INPUT_0) == 0) inputHandle = false;
@@ -37,7 +37,7 @@ void SelectionDungeon::Render() {
 	DrawFormatString(50, 50, GetColor(0, 0, 0), "0: TutorialDungeon");
 }
 
-void SelectionDungeon::StartStageDataLoad(int dungeonID) {
+void SelectionDungeon::StartStageDataLoad(Engine& engine, int dungeonID) {
 	DungeonData dungeonData = dungeonDataList[dungeonID];
 	// ファイルパスの取得
 	std::string filePath = dungeonData.dungeonPath;
@@ -46,30 +46,17 @@ void SelectionDungeon::StartStageDataLoad(int dungeonID) {
 	auto dungeonStageLoader = std::make_shared<LoadJSON>(filePath);
 	LoadManager::GetInstance().AddLoader(dungeonStageLoader);
 	// コールバック登録
-	LoadManager::GetInstance().SetOnComplete([this, dungeonStageLoader]() {SetStageData(dungeonStageLoader); });
+	LoadManager::GetInstance().SetOnComplete([this, &engine, dungeonStageLoader]() {SetStageData(engine, dungeonStageLoader); });
 }
 
-void SelectionDungeon::SetStageData(std::shared_ptr<LoadJSON> setData) {
-	
-}
-
-void SelectionDungeon::DebugStageLoad(Engine& engine, int dungeonID) {
-	DungeonData dungeonData = dungeonDataList[dungeonID];
-	// ファイルパスの取得
-	std::string filePath = dungeonData.dungeonPath;
-	if (filePath.empty()) return;
-	// ダンジョンステージデータの読み込み
-	auto dungeonStageLoader = std::make_shared<LoadJSON>(filePath);
-	LoadManager::GetInstance().AddLoader(dungeonStageLoader);
-	// コールバック登録
-	LoadManager::GetInstance().SetOnComplete([this, &engine, dungeonStageLoader]() {DebugSetStageData(engine, dungeonStageLoader); });
-}
-
-void SelectionDungeon::DebugSetStageData(Engine& engine, std::shared_ptr<LoadJSON> setData) {
+void SelectionDungeon::SetStageData(Engine& engine, std::shared_ptr<LoadJSON> setData) {
+	// JSONデータの取得
 	JSON dungeonData = setData->GetData();
+	if (dungeonData.empty()) return;
+	// ダンジョンステージデータの宣言
 	DungeonStageData stageData;
 	stageData.Register(ResourceID::Stage1, dungeonData["Stage"]["StageData"]);
 	stageData.Register(ResourceID::Player, dungeonData["Character"]["PlayerData"]);
 	LoadManager::GetInstance().Clear();
 	ActiveDungeon(engine, stageData);
- }
+}
