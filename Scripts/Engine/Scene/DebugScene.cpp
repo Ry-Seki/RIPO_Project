@@ -22,12 +22,15 @@ void DebugScene::Initialize(Engine& engine) {
 	StageManager::GetInstance().Initialize(engine);
 	auto stageModel = std::make_shared<LoadModel>("Res/Model/Stage/StageModel_1.mv1");
 	auto playerModel = std::make_shared<LoadModel>("Res/Model/Player/RIPO_Model.mv1");
-	//auto enemyModel = std::make_shared<LoadModel>("Res/Model/Enemy/EnemyModel.mv1");
+	auto enemyModel = std::make_shared<LoadModel>("Res/Model/Enemy/EnemyModel.mv1");
 	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
 	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 0, 0 }, {0, 0, 0}, {-0.5f, -1.0f, -0.5f}, {0.5f,  1.0f,  0.5f});
 	auto player = CharacterManager::GetInstance().GetCharacter(0);
 	player->GetOwner()->AddComponent<ModelRenderer>();
-	//CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f, 1.0f, 0.5f });
+	CharacterManager::GetInstance().GenerateEnemy("enemy", { 1, 0, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f, 1.0f, 0.5f });
+	auto enemy = CharacterManager::GetInstance().GetCharacter(0);
+	enemy->GetOwner()->AddComponent<ModelRenderer>();
+
 	LoadManager::GetInstance().AddLoader(stageModel);
 	LoadManager::GetInstance().AddLoader(playerModel);
 	LoadManager::GetInstance().SetOnComplete(
