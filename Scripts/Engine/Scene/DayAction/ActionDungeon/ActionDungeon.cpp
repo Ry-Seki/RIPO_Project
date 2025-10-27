@@ -7,6 +7,7 @@
 #include "../../../Engine.h"
 #include "../../../Load/LoadManager.h"
 #include "../../../Load/Dungeon/DungeonDataLoader.h"
+#include "../../../Load/JSON/LoadJSON.h"
 #include "../../../Manager/StageManager.h"
 #include "../../../Manager/CameraManager.h"
 #include "../../../Manager/GameObjectManager.h"
@@ -66,15 +67,21 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData setStageDat
     StageManager::GetInstance().Initialize(engine);
 
     std::string dungeonPath = stageData.GetResourcePath(ResourceID::Stage1);
+    std::string dungeonBonePath = stageData.GetResourcePath(ResourceID::StageBone);
     std::string playerPath = stageData.GetResourcePath(ResourceID::Player);
     auto dungeonModel = std::make_shared<LoadModel>(dungeonPath);
+    auto dungeonBoneData = std::make_shared<LoadJSON>(dungeonBonePath);
     auto playerModel = std::make_shared<LoadModel>(playerPath);
     LoadManager::GetInstance().AddLoader(dungeonModel);
+    LoadManager::GetInstance().AddLoader(dungeonBoneData);
     LoadManager::GetInstance().AddLoader(playerModel);
     modelMap[0] = dungeonModel;
     modelMap[1] = playerModel;
 
-    LoadManager::GetInstance().SetOnComplete([this, &engine, modelMap]() {DebugSetup(engine, modelMap); });
+    LoadManager::GetInstance().SetOnComplete([this, &engine, modelMap, dungeonBoneData]() {
+        DebugSetup(engine, modelMap); 
+        StageManager::GetInstance().SetStageJSONData(dungeonBoneData->GetData());
+    });
 }
 
 void ActionDungeon::DebugSetup(Engine& engine, std::unordered_map <int, std::shared_ptr<LoadModel>> setModelMap) {

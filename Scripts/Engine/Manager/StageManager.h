@@ -13,6 +13,7 @@
 #include <memory>
 #include <string>
 #include "../Load/LoadManager.h"
+#include "../Load/JSON/LoadJSON.h"
  /*
   *	ステージ全体の管理
   */
@@ -24,7 +25,7 @@ private:
 
 	Engine* engine;						// ゲームエンジン参照
 	std::unique_ptr<StageBase> pStage;	// 現在のステージ(自動的に削除される*)
-
+	JSON json;
 
 	StageManager();
 	~StageManager() = default;
@@ -70,6 +71,11 @@ public:
 	 *	スタート位置の取得
 	 */
 	Vector3 GetStartPos()const;
+
+	/*
+	 *	jsonの変更
+	 */
+	void SetStageJSONData(JSON setJSON) { json = setJSON; }
 
 };
 

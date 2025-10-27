@@ -18,7 +18,7 @@
 class Stage : public StageBase {
 private:
 	std::string modelPath;	// モデルのパス
-
+	Vector3 lightDirection;
 public:
 	Stage();
 	virtual ~Stage() override;
@@ -105,6 +105,10 @@ private:
 		const std::vector<MV1_COLL_RESULT_POLY*>& floors
 	);
 
+	/*
+	 * ステージのライトの設定
+	 */
+	void LightSettings();
 
 public:
 	// モデルハンドルの取得
