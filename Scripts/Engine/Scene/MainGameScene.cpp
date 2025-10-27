@@ -8,16 +8,22 @@
 #include "../Fade/FadeFactory.h"
 #include "../Fade/FadeManager.h"
 #include "../Manager/StageManager.h"
-#include "DayAction/ActionManager.h"
-#include "Selection/SelectionManager.h"
+
 /*
  *  初期化処理
  */
 void MainGameScene::Initialize(Engine& engine) {
-    // カレンダーマネージャの生成
+    // カレンダー管理クラスの生成
     calendarManager = std::make_unique<CalendarManager>();
-    // カレンダーマネージャ初期化
+    // カレンダー管理クラスの初期化
     calendarManager->Initialize();
+    // 選択管理クラスの生成
+    selectionManager = std::make_unique<SelectionManager>();
+    // 行動管理クラスの初期化
+    actionManager = std::make_unique<ActionManager>();
+    calendarManager->SetSelectionManager(selectionManager.get());
+    calendarManager->SetActionManager(actionManager.get());
+    selectionManager->SetActionManager(actionManager.get());
 }
 /*
  *  更新処理
@@ -27,10 +33,11 @@ void MainGameScene::Update(Engine& engine, float deltaTime) {
 
     calendarManager->Update(engine);
 
-    SelectionManager::GetInstance().Update(engine, deltaTime);
+    selectionManager->Update(engine, deltaTime);
 
-    ActionManager::GetInstance().Update(engine, deltaTime);
+    actionManager->Update(engine, deltaTime);
 
+    // 基底クラスの更新処理
     Scene::Update(engine, deltaTime);
     // 日が終わったら Engine 側フェード
     if (calendarManager->IsDayComplete() && !calendarManager->IsEndDayAdvance()) {
@@ -44,7 +51,7 @@ void MainGameScene::Update(Engine& engine, float deltaTime) {
  */
 void MainGameScene::Render() {
     calendarManager->Render();
-    SelectionManager::GetInstance().Render();
-    ActionManager::GetInstance().Render();
+    selectionManager->Render();
+    actionManager->Render();
     Scene::Render();
 }

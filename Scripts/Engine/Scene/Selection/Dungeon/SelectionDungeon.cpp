@@ -67,7 +67,9 @@ void SelectionDungeon::DebugStageLoad(Engine& engine, int dungeonID) {
 
 void SelectionDungeon::DebugSetStageData(Engine& engine, std::shared_ptr<LoadJSON> setData) {
 	JSON dungeonData = setData->GetData();
-	std::string dungeonPath = dungeonData["StageData"];
+	DungeonStageData stageData;
+	stageData.Register(ResourceID::Stage1, dungeonData["Stage"]["StageData"]);
+	stageData.Register(ResourceID::Player, dungeonData["Character"]["PlayerData"]);
 	LoadManager::GetInstance().Clear();
-	ActionManager::GetInstance().DebugActiveDungeon(engine, dungeonPath);
+	ActiveDungeon(engine, stageData);
  }

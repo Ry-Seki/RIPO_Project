@@ -12,7 +12,7 @@
 #include "../../../Manager/GameObjectManager.h"
 #include "../../../Manager/CharacterManager.h"
 #include "../../../Scene/Scene.h"
-
+#include "../../../Component/ModelRenderer.h"
 #include <iostream>
 
 /*
@@ -34,6 +34,7 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
     if (!isComplete && !inputHandle && CheckHitKey(KEY_INPUT_2)) {
         inputHandle = true;
         isComplete = true;
+        Teardown();
     }
 
     if (CheckHitKey(KEY_INPUT_0) == 0) inputHandle = false;
@@ -50,24 +51,39 @@ void ActionDungeon::Render() {
  */
 void ActionDungeon::Teardown() {
     CharacterManager::GetInstance().RemoveCharacter(0);
-    StageManager::GetInstance().LoadStage(-1);
+    StageManager::GetInstance().Execute();
 
 }
 
-void ActionDungeon::DebugInitialize(Engine& engine, std::string setFilePath) {
+void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData setStageData) {
     isComplete = false;
-    auto dungeonModel = std::make_shared<LoadModel>(setFilePath);
-    LoadManager::GetInstance().AddLoader(dungeonModel);
-    LoadManager::GetInstance().SetOnComplete([this, &engine, dungeonModel]() {DebugSetup(engine, dungeonModel); });
-}
-
-void ActionDungeon::DebugSetup(Engine& engine, std::shared_ptr<LoadModel> setModel) {
-    int modelHandle = setModel->GetHandle();
+    stageData = setStageData;
+    std::unordered_map<int, std::shared_ptr<LoadModel>> modelMap;
     GameObjectManager::GetInstance().Initialize(engine);
     CharacterManager::GetInstance().Initialize(engine);
     CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
     CharacterManager::GetInstance().GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f,  1.0f,  0.5f });
     StageManager::GetInstance().Initialize(engine);
+
+    std::string dungeonPath = stageData.GetResourcePath(ResourceID::Stage1);
+    std::string playerPath = stageData.GetResourcePath(ResourceID::Player);
+    auto dungeonModel = std::make_shared<LoadModel>(dungeonPath);
+    auto playerModel = std::make_shared<LoadModel>(playerPath);
+    LoadManager::GetInstance().AddLoader(dungeonModel);
+    LoadManager::GetInstance().AddLoader(playerModel);
+    modelMap[0] = dungeonModel;
+    modelMap[1] = playerModel;
+
+    LoadManager::GetInstance().SetOnComplete([this, &engine, modelMap]() {DebugSetup(engine, modelMap); });
+}
+
+void ActionDungeon::DebugSetup(Engine& engine, std::unordered_map <int, std::shared_ptr<LoadModel>> setModelMap) {
+    int modelHandle = setModelMap[0]->GetHandle();
+    int playerHandle = setModelMap[1]->GetHandle();
     StageManager::GetInstance().LoadStage(modelHandle);
+    auto player = CharacterManager::GetInstance().GetCharacter(0)->GetOwner();
+    player->AddComponent<ModelRenderer>();
+    player->GetComponent<ModelRenderer>()->SetModel(playerHandle);
+    player->position = StageManager::GetInstance().GetStartPos();
     LoadManager::GetInstance().Clear();
 }

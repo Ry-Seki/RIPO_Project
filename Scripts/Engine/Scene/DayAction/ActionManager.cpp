@@ -34,11 +34,11 @@ void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData)
 	currentAction->Initialize(engine);
 }
 
-void ActionManager::DebugActiveDungeon(Engine& engine, std::string setFilePath) {
+void ActionManager::DebugActiveDungeon(Engine& engine, DungeonStageData setStageData) {
 	auto dungeonAction = std::dynamic_pointer_cast<ActionDungeon>(actionBase);
 	if (!dungeonAction) return;
 	
-	dungeonAction->DebugInitialize(engine, setFilePath);
+	dungeonAction->DebugInitialize(engine, setStageData);
 	currentAction = dungeonAction;
 	isActive = true;
 }

@@ -1,3 +1,9 @@
 {
-  "StageData": "Res/Model/Stage/StageModel_1.mv1"
+  "Stage": {
+    "StageData": "Res/Model/Stage/StageModel_1.mv1"
+  },
+  "Character": {
+    "PlayerData": "Res/Model/Player/RIPO_Model.mv1",
+    "EnemyData" : ""
+  }
 }

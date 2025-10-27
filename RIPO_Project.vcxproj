@@ -186,6 +186,7 @@
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
+    <ClCompile Include="ソース.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Data\DungeonData.h" />
@@ -194,6 +195,7 @@
     <ClInclude Include="Scripts\Engine\Collision.h" />
     <ClInclude Include="Scripts\Engine\Component\AABBCollider.h" />
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Component.h" />

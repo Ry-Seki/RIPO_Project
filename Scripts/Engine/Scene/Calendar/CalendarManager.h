@@ -9,8 +9,11 @@
 #include "CalendarSystem.h"
 #include "../../Fade/FadeFactory.h"
 #include "../../Fade/FadeManager.h"
+#include "../Selection/SelectionManager.h"
+#include "../DayAction/ActionManager.h"
 
 #include <DxLib.h>
+#include <functional>
 
 // 前方宣言
 class Engine;
@@ -24,6 +27,10 @@ private:
     bool inputHandle = false;                           // 入力フラグ
     bool isActive = true;                               // 行動フラグ
     int elapsedDay = 0;                                 // 消費した日にち;
+    std::function<void()> DungeonSelection;             // ダンジョン選択関数
+
+    SelectionManager* selection = nullptr;              // 選択管理クラスの関数呼び出し用参照ポインタ
+    ActionManager* action = nullptr;                    // 行動管理クラスの関数呼び出し用参照ポインタ
 
 public:
     /*
@@ -62,6 +69,16 @@ public:
      *  日にち更新終了処理
      */
     inline bool IsEndDayAdvance() const { return elapsedDay >= 30; }
+    /*
+     *  SelectionManagerの設定
+     *  @param[in]  SelectionManager* setSelection      選択管理クラスのポインタ
+     */
+    inline void SetSelectionManager(SelectionManager* setSelection) { selection = setSelection; }
+    /*
+     *  ActionManagerの設定
+     *  @param[in]  ActionManager* setAction            行動管理クラスのポインタ
+     */
+    inline void SetActionManager(ActionManager* setAction) { action = setAction; }
 };
 
 #endif // !_CARENDER_MANAGER_H_

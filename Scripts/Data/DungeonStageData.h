@@ -8,17 +8,37 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
 
+
+enum class ResourceID {
+    Stage1,
+    Player,
+    Enemy1,
+    Boss,
+    BGM,
+
+};
 /* 
  *  ダンジョンステージデータ
  */
-struct DungeonStageData {
-    int stageID = -1;
-    std::string name;
-    std::string tilesetPath;
-    std::string musicPath;
-    std::vector<std::string> modelPaths;
+class DungeonStageData {
+private:
+    std::unordered_map<ResourceID, std::string> dungeonDataList;
 
-    // 拡張用フィールド（イベント、宝箱、BGMなど）を追加可能
+public:
+    /*
+     *  ステージデータの取得
+     *  @param[in]  ResourceID  setResourceID   取得したいキー
+     *  @return     std::string 
+     */
+    inline std::string GetResourcePath(ResourceID setResourceID) const { return dungeonDataList.at(setResourceID); }
+    /*
+     *  データの登録
+     *  @param[in]  const ResourceID  setResourceID 登録するキー
+     *  @param[in]  const std::string setFilePath   登録するファイルパス
+     */
+    inline void Register(const ResourceID  setResourceID, const std::string setFilePath) { dungeonDataList[setResourceID] = setFilePath; }
+
 };
 #endif // !_DUNGEON_STAGE_DATA_H_

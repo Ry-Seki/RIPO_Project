@@ -15,6 +15,7 @@
 
 #include <vector>
 #include <functional>
+#include <string>
 
 // 前方宣言
 class Engine;
@@ -24,9 +25,11 @@ class Engine;
  */
 class SelectionDungeon : public SelectionBase {
 private:
-	std::vector<DungeonData> dungeonDataList;
-	std::shared_ptr<DungeonDataLoader> dungeonDataLoader;
-	bool inputHandle = false;
+	std::vector<DungeonData> dungeonDataList;											// ダンジョンデータ配列
+	std::shared_ptr<DungeonDataLoader> dungeonDataLoader;								// ダンジョン用読み込みクラス
+	bool inputHandle = false;															// 入力フラグ
+
+	std::function<void(Engine& engine, DungeonStageData setStageData)> ActiveDungeon;	// 行動管理クラスのダンジョン開放関数
 
 public:
 	/*
@@ -51,6 +54,7 @@ public:
 	 *	描画処理
 	 */
 	void Render() override;
+
 private:
 	/*
 	 *	ダンジョンステージデータ読み込み開始
@@ -62,6 +66,13 @@ private:
 	 *  param[in]	std::shared_ptr<LoadJSON> setData	ロードしたJSONデータ
 	 */
 	void SetStageData(std::shared_ptr<LoadJSON> setData);
+
+public:
+	/*
+	 *	ActionManagerのダンジョン管理関数の設定
+	 *	@param[in]	std::function<void()> setActiveDungeon	行動管理クラスのダンジョン解放関数
+	 */
+	inline void SetActiveDungeon(std::function<void(Engine& engine, DungeonStageData setStageData)> setActiveDungeon) { ActiveDungeon = setActiveDungeon; }
 
 private:
 	void DebugStageLoad(Engine& engine, int dungeonID);

@@ -25,7 +25,7 @@ private:
 	std::shared_ptr<DungeonDataLoader> dungeonDataLoader;
 	std::vector<DungeonData> dungeonList;
 	DungeonData currentDungeon;
-	DungeonStageData currentDungeonStage;
+	DungeonStageData stageData;
 
 	std::string debugPath;
 	bool inputHandle = false;
@@ -62,14 +62,14 @@ public:
 	 */
 	void Teardown() override;
 
-	void DebugInitialize(Engine& engine, std::string setFilePath);
-	void DebugSetup(Engine& engine, std::shared_ptr<LoadModel> setModel);
+	void DebugInitialize(Engine& engine, DungeonStageData setStageData);
+	void DebugSetup(Engine& engine, std::unordered_map <int, std::shared_ptr<LoadModel>> setModelMap);
 
 public:
 	/*
 	 *	ダンジョンステージデータの設定
 	 */
-	inline void SetDungeonStageData(DungeonStageData setData) { currentDungeonStage = setData; }
+	inline void SetDungeonStageData(DungeonStageData setData) { stageData = setData; }
 	inline void SetDungeonStagePath(std::string setFilePath) { debugPath = setFilePath; }
 };
 #endif // !_ACTION_DUNGEON_H_
