@@ -92,8 +92,13 @@ Vector3 StageManager::GetStartPos() const {
 	// ステージのモデルハンドルの取得
 	int modelHandle = stage->GetModelHandle();
 
+	// 開始位置の名前の取得
+	std::string frameName = json["Player"]["StartPos"];
+	// string型→const char* 型への型変換
+	const char* cstr = frameName.c_str();
+
 	// スタート位置のフレーム番号を取得
-	int frameIndex = MV1SearchFrame(modelHandle, GameConst::START_FRAME_NAME);
+	int frameIndex = MV1SearchFrame(modelHandle, cstr);
 
 	// スタート位置の座標を取得
 	VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
@@ -103,4 +108,36 @@ Vector3 StageManager::GetStartPos() const {
 
 	// 座標を返す
 	return startPos;
+}
+
+
+/*
+ *	ゴール位置の取得
+ */
+Vector3 StageManager::GetGoalPos() const {
+	if (!pStage)return Vector3();
+	Stage* stage = dynamic_cast<Stage*>(pStage.get());
+	if (!stage)return Vector3();
+
+	// ステージのモデルハンドルの取得
+	int modelHandle = stage->GetModelHandle();
+
+	// 終了位置の名前の取得
+	std::string framName = json["Player"]["GoalPos"];
+
+	// string型→const char* 型への型変換
+	const char* cstr = framName.c_str();
+
+	// 終了位置のフレーム番号を取得
+	int frameIndex = MV1SearchFrame(modelHandle, cstr);
+
+	// 終了位置の座標を取得
+	VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
+
+	// VECTOR型をVector3型に変換
+	Vector3 goalPos = FromVECTOR(framePos);
+
+	// 座標を返す
+	return goalPos;
+
 }
