@@ -14,6 +14,8 @@
 #include <string>
 #include "../Load/LoadManager.h"
 #include "../Load/JSON/LoadJSON.h"
+#include "../VecMath.h"
+
  /*
   *	ステージ全体の管理
   */
@@ -71,6 +73,21 @@ public:
 	 *	スタート位置の取得
 	 */
 	Vector3 GetStartPos()const;
+
+	/*
+	 * ゴール位置の取得
+	 */
+	Vector3 GetGoalPos()const;
+
+	/*
+	 *	敵の初期生成位置の取得
+	 */
+	std::vector<Vector3> GetEnemySpwanPos()const;
+
+	/*
+	 * お宝の生成位置の取得
+	 */
+	std::vector<Vector3> GetTreasureSpwanPos()const;
 
 	/*
 	 *	jsonの変更
