@@ -13,7 +13,9 @@ private:
 	// 移動スピード
 	float moveSpeed;
 	// ウェイポイント
-
+	Vector3 wayPoint;
+	// 目先のウェイポイント予定地
+	Vector3 nextWayPoint;
 
 public:
 	/*
@@ -23,6 +25,11 @@ public:
 	virtual ~EnemyComponent() = default;
 
 public:
+	/*
+	 *	更新処理の前に呼び出す処理
+	 */
+	virtual void Start() override;
+
 	/*
 	 *	更新処理
 	 */

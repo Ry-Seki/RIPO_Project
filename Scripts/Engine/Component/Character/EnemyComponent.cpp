@@ -9,7 +9,14 @@
  */
 EnemyComponent::EnemyComponent()
 	: moveSpeed(3.0f)
+	, wayPoint(0.0f, 0.0f, 0.0f)
+	// “G‚Ì•ûŒü‚É•¹‚¹‚Ä’l‚ð•Ï‚¦‚ç‚ê‚é‚æ‚¤‚É‚µ‚½‚¢‚ª¡‚Í‰¼
+	, nextWayPoint(0.0f, 0.0f, 20.0f)
 {
+}
+
+void EnemyComponent::Start() {
+	wayPoint = nextWayPoint;
 }
 
 /*
@@ -17,7 +24,12 @@ EnemyComponent::EnemyComponent()
  */
 void EnemyComponent::Update(float deltaTime) {
 	GameObject* enemy = GetOwner();
-	EnemyMove(enemy, deltaTime);
+	if (enemy->position == wayPoint) {
+		wayPoint = enemy->position + nextWayPoint;
+	}
+	else {
+		EnemyMove(enemy, deltaTime);
+	}
 }
 
 /*
