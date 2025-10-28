@@ -30,7 +30,7 @@ public:
      */
     size_t LoadFromJson(const JSON& setJSON) {
         // “o˜^‘O‚Ì—v‘f”
-        int before = dungeonDataList.size();
+        size_t before = dungeonDataList.size();
         // ƒf[ƒ^‚Ì“o˜^
         parseRecursive(setJSON, "");
         // V‹K‚Å“o˜^‚³‚ê‚½”‚ğ•Ô‚·
