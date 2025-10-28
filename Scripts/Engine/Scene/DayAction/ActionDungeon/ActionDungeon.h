@@ -62,7 +62,7 @@ public:
 	 */
 	void Teardown() override;
 
-	void DebugInitialize(Engine& engine, DungeonStageData setStageData);
+	void DebugInitialize(Engine& engine, DungeonStageData& setStageData);
 	void DebugSetup(Engine& engine, std::unordered_map <int, std::shared_ptr<LoadModel>> setModelMap);
 
 public:

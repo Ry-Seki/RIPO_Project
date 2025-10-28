@@ -56,7 +56,7 @@ void ActionDungeon::Teardown() {
 
 }
 
-void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData setStageData) {
+void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageData) {
     isComplete = false;
     stageData = setStageData;
     std::unordered_map<int, std::shared_ptr<LoadModel>> modelMap;
@@ -67,14 +67,11 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData setStageDat
     StageManager::GetInstance().Initialize(engine);
 
     std::string dungeonPath;
-    stageData.TryGetByLeafName("StageData", dungeonPath);
-    if (dungeonPath.empty()) return;
+    if(!stageData.TryGetByLeafName("StageData", dungeonPath)) return;
     std::string dungeonBonePath;
-    stageData.TryGetByLeafName("StageBoneData", dungeonBonePath);
-    if (dungeonBonePath.empty()) return;
+    if(!stageData.TryGetByLeafName("StageBoneData", dungeonBonePath)) return;
     std::string playerPath;
-    stageData.TryGetByLeafName("PlayerData", playerPath);
-    if (playerPath.empty()) return;
+    if(!stageData.TryGetByLeafName("PlayerData", playerPath)) return;
 
     auto dungeonModel = std::make_shared<LoadModel>(dungeonPath);
     auto dungeonBoneData = std::make_shared<LoadJSON>(dungeonBonePath);
