@@ -66,9 +66,16 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData setStageDat
     CharacterManager::GetInstance().GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f,  1.0f,  0.5f });
     StageManager::GetInstance().Initialize(engine);
 
-    std::string dungeonPath = stageData.GetResourcePath(ResourceID::Stage1);
-    std::string dungeonBonePath = stageData.GetResourcePath(ResourceID::StageBone);
-    std::string playerPath = stageData.GetResourcePath(ResourceID::Player);
+    std::string dungeonPath;
+    stageData.TryGetByLeafName("StageData", dungeonPath);
+    if (dungeonPath.empty()) return;
+    std::string dungeonBonePath;
+    stageData.TryGetByLeafName("StageBoneData", dungeonBonePath);
+    if (dungeonBonePath.empty()) return;
+    std::string playerPath;
+    stageData.TryGetByLeafName("PlayerData", playerPath);
+    if (playerPath.empty()) return;
+
     auto dungeonModel = std::make_shared<LoadModel>(dungeonPath);
     auto dungeonBoneData = std::make_shared<LoadJSON>(dungeonBonePath);
     auto playerModel = std::make_shared<LoadModel>(playerPath);

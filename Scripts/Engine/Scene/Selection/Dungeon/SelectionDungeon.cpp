@@ -55,9 +55,8 @@ void SelectionDungeon::SetStageData(Engine& engine, std::shared_ptr<LoadJSON> se
 	if (dungeonData.empty()) return;
 	// ダンジョンステージデータの宣言
 	DungeonStageData stageData;
-	stageData.Register(ResourceID::Stage1, dungeonData["Stage"]["StageData"]);
-	stageData.Register(ResourceID::StageBone, dungeonData["Stage"]["StageBoneData"]);
-	stageData.Register(ResourceID::Player, dungeonData["Character"]["PlayerData"]);
+	// JSONデータを再帰的に登録
+	stageData.LoadFromJson(dungeonData);
 	LoadManager::GetInstance().Clear();
 	ActiveDungeon(engine, stageData);
 }
