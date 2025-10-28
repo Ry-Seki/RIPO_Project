@@ -59,7 +59,9 @@ void ActionDungeon::Teardown() {
 void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageData) {
     isComplete = false;
     stageData = setStageData;
-    std::unordered_map<int, std::shared_ptr<LoadModel>> modelMap;
+    LoadManager& load = LoadManager::GetInstance();
+    DungeonResource dungeonResource;
+
     GameObjectManager::GetInstance().Initialize(engine);
     CharacterManager::GetInstance().Initialize(engine);
     CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
@@ -73,28 +75,23 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
     std::string playerPath;
     if(!stageData.TryGetByLeafName("PlayerData", playerPath)) return;
 
-    auto dungeonModel = std::make_shared<LoadModel>(dungeonPath);
-    auto dungeonBoneData = std::make_shared<LoadJSON>(dungeonBonePath);
-    auto playerModel = std::make_shared<LoadModel>(playerPath);
-    LoadManager::GetInstance().AddLoader(dungeonModel);
-    LoadManager::GetInstance().AddLoader(dungeonBoneData);
-    LoadManager::GetInstance().AddLoader(playerModel);
-    modelMap[0] = dungeonModel;
-    modelMap[1] = playerModel;
+    dungeonResource.stageResource.push_back(load.LoadResource<LoadModel>(dungeonPath));
+    dungeonResource.stageBoneResource = load.LoadResource<LoadJSON>(dungeonBonePath);
+    dungeonResource.playerResource = load.LoadResource<LoadModel>(playerPath);
 
-    LoadManager::GetInstance().SetOnComplete([this, &engine, modelMap, dungeonBoneData]() {
-        DebugSetup(engine, modelMap); 
-        StageManager::GetInstance().SetStageJSONData(dungeonBoneData->GetData());
+    load.SetOnComplete([this, &engine, dungeonResource]() {
+        DebugSetup(engine, dungeonResource); 
     });
 }
 
-void ActionDungeon::DebugSetup(Engine& engine, std::unordered_map <int, std::shared_ptr<LoadModel>> setModelMap) {
-    int modelHandle = setModelMap[0]->GetHandle();
-    int playerHandle = setModelMap[1]->GetHandle();
+void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResource) {
+    std::shared_ptr<LoadModel> stageModel = setResource.stageResource[0];
+    int modelHandle = stageModel->GetHandle();
+    int playerHandle = setResource.playerResource->GetHandle();
     StageManager::GetInstance().LoadStage(modelHandle);
+    StageManager::GetInstance().SetStageJSONData(setResource.stageBoneResource->GetData());
     auto player = CharacterManager::GetInstance().GetCharacter(0)->GetOwner();
     player->AddComponent<ModelRenderer>();
     player->GetComponent<ModelRenderer>()->SetModel(playerHandle);
     player->position = StageManager::GetInstance().GetStartPos();
-    LoadManager::GetInstance().Clear();
 }

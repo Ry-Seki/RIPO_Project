@@ -36,26 +36,6 @@ public:
 	 */
 	virtual void Load() = 0;
 	/*
-	 *	フレーム分割ロード
-	 */
-	inline virtual bool LoadStep() {
-		if (!isLoaded) {
-			Load();
-			isLoaded = true;
-			return true;
-		}
-		return true;
-	}
-
-	/*
-	 *	フレーム分割ロード
-	 *  param[in]	float maxMillis		時間予算
-	 */
-	inline virtual bool LoadStep(float maxMillis) {
-		(void)maxMillis;
-		return LoadStep();
-	}
-	/*
 	 *	アンロード
 	 */
 	inline virtual void Unload() { isLoaded = false; }
