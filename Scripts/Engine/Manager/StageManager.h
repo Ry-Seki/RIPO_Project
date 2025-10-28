@@ -73,6 +73,11 @@ public:
 	Vector3 GetStartPos()const;
 
 	/*
+	 * ƒS[ƒ‹ˆÊ’u‚Ìæ“¾
+	 */
+	Vector3 GetGoalPos()const;
+
+	/*
 	 *	json‚Ì•ÏX
 	 */
 	void SetStageJSONData(JSON setJSON) { json = setJSON; }
