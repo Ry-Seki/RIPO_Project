@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="Scripts\Engine\Collision.cpp" />
     <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
@@ -192,8 +193,9 @@
     <ClInclude Include="Scripts\Engine\Collision.h" />
     <ClInclude Include="Scripts\Engine\Component\AABBCollider.h" />
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
-    <ClInclude Include="Scripts\Engine\Component\Character\ArmActionBase.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Component.h" />
     <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h" />
