@@ -18,7 +18,7 @@ Stage::Stage()
 	: StageBase()
 	, lightDirection(0.2f, -20.0f, 0.3f)
 	, pointLightColor(1.0f, 0.8f, 0.6f)  // 色
-	, pointLightRange(50.0f)            // ポイントライトの範囲
+	, pointLightRange(150.0f)            // ポイントライトの範囲
 {
 	modelHandle = -1;
 }
@@ -46,8 +46,7 @@ void Stage::Load(const std::shared_ptr<LoadModel>& model) {
  */
 void Stage::ModelLoad(const int modelHandleBase) {
 	modelHandle = modelHandleBase;
-	// ライトをセット
-	LightSettings();
+
 }
 
 /*
@@ -55,6 +54,7 @@ void Stage::ModelLoad(const int modelHandleBase) {
  */
 void Stage::Update() {
 	// ステージのオブジェクト更新
+
 }
 
 /*
@@ -64,6 +64,8 @@ void Stage::Render() {
 	if (modelHandle >= 0) {
 		// モデルの描画
 		MV1DrawModel(modelHandle);
+		// ライトをセット
+		LightSettings();
 	}
 }
 
@@ -346,7 +348,7 @@ void Stage::LightSettings() {
 		SetLightDifColor(GetColorF(pointLightColor.x, pointLightColor.y, pointLightColor.z, 1.0f));
 
 		// 距離減衰の設定
-		SetLightRangeAtten(pointLightRange, 1.0f / pointLightRange, 0.001f, 0.0f);
+		SetLightRangeAtten(pointLightRange, 1.0f / pointLightRange, 0.001f, 0.01f);
 
 		// ライトを有効化
 		SetLightEnable(TRUE);

@@ -213,16 +213,19 @@ std::vector<Vector3> StageManager::GetPointLightPos()const {
 	// ステージのモデルハンドルの取得
 	int modelHandle = stage->GetModelHandle();
 
-	// ポイントライト生成位置の取得
-	auto spawnArray = json["PointLight"]["LightPos"];
+	if (modelHandle < 0) return result;
 
-	// jsonファイルのテキストを配列で取得
-	for (const auto& spawnName : spawnArray) {
-		int frameIndex = MV1SearchFrame(modelHandle, spawnName.get<std::string>().c_str());
-		if (frameIndex == -1)continue;
+	// jsonから座標を取得
+	if (json.contains("PointLight") && json["PointLight"].contains("LightPos")) {
+		auto spawnArray = json["PointLight"]["LightPos"];
+		for (const auto& frameNameJson : spawnArray) {
+			std::string frameName = frameNameJson.get<std::string>();
+			int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
+			if (frameIndex == -1) continue;
 
-		VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
-		result.push_back(FromVECTOR(framePos));
+			VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
+			result.push_back(FromVECTOR(framePos));
+		}
 	}
 
 	return result;
