@@ -59,6 +59,7 @@ void Stage::Update() {
  */
 void Stage::Render() {
 	if (modelHandle >= 0) {
+		// モデルの描画
 		MV1DrawModel(modelHandle);
 	}
 }
@@ -69,24 +70,32 @@ void Stage::Render() {
 void Stage::Execute() {
 	Clean(modelHandle);
 	if (modelHandle >= 0) {
+		// モデルの片付け
 		MV1DeleteModel(modelHandle);
+		// モデルをnull
 		modelHandle = -1;
 	}
 }
 
 /*
  * @brief ステージの当たり判定を更新
- * @param position     おｚぶてｋとお位置
- * @param PolyPos1     カプセル当たり判定下端
- * @param PolyPos2     カプセル当たり判定上端
+ * @param position     オブジェクト位置	参照渡しで座標変更
  * @param MoveVec      移動ベクトル
  */
-void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos2, Vector3 MoveVec) {
-
-
+void Stage::UpdateCollision(Vector3* position, Vector3 MoveVec) {
+	// 移動前の座標
 	Vector3 prevPos = *position;
-	Vector3 nowPos = prevPos + MoveVec;
-	float polyOffset = PloyPos2.y - PolyPos1.y;
+	Vector3 currentPos = prevPos + MoveVec;
+
+	// プレイヤーの座標
+	Vector3 PolyPos = *position;
+	// PolyPosTopより指定座標分高い位置
+	Vector3 PolyPosTop = *position;
+	PolyPosTop.y += GameConst::PLAYER_HIT_HEIGHT;
+
+	// 縦方向のオフセット
+	float polyOffset = PolyPosTop.y - PolyPos.y;
+	// 水平移動しているかどうか
 	bool moveFlag = (fabs(MoveVec.x) > 0.01f || fabs(MoveVec.z) > 0.01f);
 
 	// コリジョン情報取得
@@ -97,13 +106,13 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 	ClassifyPolygons(*hitDim, prevPos, walls, floors);
 
 	// 壁衝突処理
-	ProcessWallCollision(nowPos, prevPos, polyOffset, MoveVec, walls, moveFlag);
+	ProcessWallCollision(currentPos, prevPos, polyOffset, MoveVec, walls, moveFlag);
 
 	// 床衝突処理
-	ProcessFloorCollision(nowPos, polyOffset, floors);
+	ProcessFloorCollision(currentPos, polyOffset, floors);
 
 	// 結果反映
-	*position = nowPos;
+	*position = currentPos;
 	MV1CollResultPolyDimTerminate(*hitDim);
 
 }
@@ -199,7 +208,7 @@ void Stage::ProcessWallCollision(
 			if (!HitCheck_Capsule_Triangle(
 				ToVECTOR(capsuleStart),
 				ToVECTOR(capsuleEnd),
-				GameConst::PLAYER_HIT_WIDTH,
+				GameConst::PLAYER_HIT_HEIGHT,
 				poly->Position[0],
 				poly->Position[1],
 				poly->Position[2])) continue;
@@ -215,10 +224,11 @@ void Stage::ProcessWallCollision(
 			// 再衝突確認
 			for (auto* polyCheck : walls) {
 				Vector3 capsulePos = nowPos + Vector3(0.0f, polyOffset, 0.0f);
+				// カプセルと三角形の当たり判定
 				if (HitCheck_Capsule_Triangle(
 					ToVECTOR(nowPos),
 					ToVECTOR(capsulePos),
-					GameConst::PLAYER_HIT_WIDTH,
+					GameConst::PLAYER_HIT_HEIGHT,
 					polyCheck->Position[0],
 					polyCheck->Position[1],
 					polyCheck->Position[2])) {
@@ -233,10 +243,11 @@ void Stage::ProcessWallCollision(
 		// 止まっている時
 		for (auto* poly : walls) {
 			Vector3 capsulePos = nowPos + Vector3(0.0f, polyOffset, 0.0f);
+			// カプセルと三角形の当たり判定
 			if (HitCheck_Capsule_Triangle(
 				ToVECTOR(nowPos),
 				ToVECTOR(capsulePos),
-				GameConst::PLAYER_HIT_WIDTH,
+				GameConst::PLAYER_HIT_HEIGHT,
 				poly->Position[0],
 				poly->Position[1],
 				poly->Position[2])) {
@@ -251,10 +262,11 @@ void Stage::ProcessWallCollision(
 		for (int k = 0; k < GameConst::HIT_TRYNUM; k++) {
 			for (auto* poly : walls) {
 				Vector3 capsulePos = nowPos + Vector3(0.0f, polyOffset, 0.0f);
+				// カプセルと三角形の当たり判定
 				if (!HitCheck_Capsule_Triangle(
 					ToVECTOR(nowPos),
 					ToVECTOR(capsulePos),
-					GameConst::PLAYER_HIT_WIDTH,
+					GameConst::PLAYER_HIT_HEIGHT,
 					poly->Position[0],
 					poly->Position[1],
 					poly->Position[2])) continue;
@@ -287,6 +299,7 @@ void Stage::ProcessFloorCollision(
 	for (auto* poly : floors) {
 		Vector3 line1 = nowPos + Vector3(0.0f, polyOffset, 0.0f);
 		Vector3 line2 = nowPos + Vector3(0.0f, -0.3f, 0.0f);
+		// 三角形と線分の当たり判定
 		HITRESULT_LINE res = HitCheck_Line_Triangle(
 			ToVECTOR(line1),
 			ToVECTOR(line2),
