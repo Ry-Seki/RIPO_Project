@@ -1,7 +1,8 @@
 {
   "Player": {
     "StartPos": "Col_StartPos",
-    "GoalPos": "Col_GoalPos"
+    "GoalPos": "Col_GoalPos",
+    "StairsPos": "Col_StairsPos"
   },
   "Enemy": {
     "SpwanPos": [
@@ -15,11 +16,12 @@
       "ItemSpn0",
       "ItemSpn1"
     ]
+  },
+  "PointLight": {
+    "LightPos": [
+      "PointLightPos_0",
+      "PointLightPos_1"
+    ]
   }
-
-
-
-
-
 
 }
