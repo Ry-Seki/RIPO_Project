@@ -33,7 +33,6 @@ void DebugScene::Initialize(Engine& engine) {
 	auto enemy = CharacterManager::GetInstance().GetCharacter(1);
 	enemy->GetOwner()->AddComponent<ModelRenderer>();
 
-	load.LoadResource<LoadJSON>("Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json");
 	load.SetOnComplete(
 		[stageModel, player, playerModel, enemy, enemyModel, stageBoneData]() {
 			StageManager::GetInstance().LoadStage(stageModel->GetHandle());

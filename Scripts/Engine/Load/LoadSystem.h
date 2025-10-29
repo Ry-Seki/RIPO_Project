@@ -67,12 +67,14 @@ public:
         isComplete = false;
     }
 
+public:
     inline bool IsLoading() const { return !isComplete && !loadList.empty(); }
     inline bool IsComplete() const { return isComplete || loadList.empty(); }
     inline float GetProgress() const {
         return loadList.empty() ? 1.0f : float(currentIndex) / float(loadList.size());
     }
     inline void ResetCompleteFlag() { isComplete = false; }
+    inline void CompleteLoading() { isComplete = true; }
 };
 
 #endif // !_LOAD_SYSTEM_H_
