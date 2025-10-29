@@ -71,7 +71,7 @@ int StageManager::GetStageFrame(const std::string& frameName) const {
 
 	// StageBase* から Stage* にキャスト
 	Stage* stage = dynamic_cast<Stage*>(pStage.get());
-	if (!stage) return -1;
+	if (!stage->GetModelHandle()) return -1;
 
 	// ステージのモデルハンドルを取得
 	int modelHandle = stage->GetModelHandle();
@@ -186,6 +186,35 @@ std::vector<Vector3> StageManager::GetTreasureSpwanPos()const {
 
 	// お宝の生成位置の取得
 	auto spawnArray = json["Treasure"]["SpwanPos"];
+
+	// jsonファイルのテキストを配列で取得
+	for (const auto& spawnName : spawnArray) {
+		int frameIndex = MV1SearchFrame(modelHandle, spawnName.get<std::string>().c_str());
+		if (frameIndex == -1)continue;
+
+		VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
+		result.push_back(FromVECTOR(framePos));
+	}
+
+	return result;
+
+}
+
+/*
+ *	ポイントライト生成位置の取得
+ */
+std::vector<Vector3> StageManager::GetPointLightPos()const {
+	std::vector<Vector3> result;
+	if (!pStage)return result;
+
+	Stage* stage = dynamic_cast<Stage*>(pStage.get());
+	if (!stage)return result;
+
+	// ステージのモデルハンドルの取得
+	int modelHandle = stage->GetModelHandle();
+
+	// ポイントライト生成位置の取得
+	auto spawnArray = json["PointLight"]["LightPos"];
 
 	// jsonファイルのテキストを配列で取得
 	for (const auto& spawnName : spawnArray) {

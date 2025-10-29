@@ -29,8 +29,8 @@ private:
 	std::unique_ptr<StageBase> pStage;	// 現在のステージ(自動的に削除される*)
 	JSON json;
 
-	StageManager();
-	~StageManager() = default;
+	StageManager();						// コンストラクタ
+	~StageManager() = default;			// デストラクタ
 
 public:
 
@@ -88,6 +88,11 @@ public:
 	 * お宝の生成位置の取得
 	 */
 	std::vector<Vector3> GetTreasureSpwanPos()const;
+
+	/*
+	 *	ポイントライト生成位置の取得
+	 */
+	std::vector<Vector3> GetPointLightPos()const;
 
 	/*
 	 *	jsonの変更

@@ -16,7 +16,10 @@
   */
 Stage::Stage()
 	: StageBase()
-	, lightDirection(0.2f, -20.0f, 0.3f) {
+	, lightDirection(0.2f, -20.0f, 0.3f)
+	, pointLightColor(1.0f, 0.8f, 0.6f)  // 色
+	, pointLightRange(50.0f)            // ポイントライトの範囲
+{
 	modelHandle = -1;
 }
 
@@ -322,12 +325,32 @@ void Stage::ProcessFloorCollision(
  *	ステージのライトの設定
  */
 void Stage::LightSettings() {
+	// マップ全体のライト設定
+
 	// アンビエントカラーの設定
 	SetLightAmbColor(GetColorF(0.2f, 0.25f, 0.3f, 1));
 	// ライトの方向を設定する
 	SetLightDirection(ToVECTOR(lightDirection));
 	SetLightDifColor(GetColorF(1.5f, 1.5f, 1.3f, 1.0f));
 	SetLightSpcColor(GetColorF(0.2f, 0.2f, 0.2f, 1));
+
+	// ポイントライト設定
+	pointLightPos = StageManager::GetInstance().GetPointLightPos();
+	for (size_t i = 0; i < pointLightPos.size(); ++i) {
+		const Vector3& pos = pointLightPos[i];
+
+		// ライトの位置を設定
+		SetLightPosition(ToVECTOR(pos));
+
+		// ライトの色を設定
+		SetLightDifColor(GetColorF(pointLightColor.x, pointLightColor.y, pointLightColor.z, 1.0f));
+
+		// 距離減衰の設定
+		SetLightRangeAtten(pointLightRange, 1.0f / pointLightRange, 0.001f, 0.0f);
+
+		// ライトを有効化
+		SetLightEnable(TRUE);
+	}
 }
 
 
