@@ -10,12 +10,15 @@
 
 class EnemyComponent : public CharacterBase {
 private:
+	GameObject* enemy;
 	// 移動スピード
 	float moveSpeed;
 	// ウェイポイント
 	Vector3 wayPoint;
 	// 目先のウェイポイント予定地
 	Vector3 nextWayPoint;
+	// ウェイポイント間の距離
+	float wayPointDistance;
 
 public:
 	/*

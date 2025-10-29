@@ -10,32 +10,39 @@
 EnemyComponent::EnemyComponent()
 	: moveSpeed(3.0f)
 	, wayPoint(0.0f, 0.0f, 0.0f)
-	// “G‚Ì•ûŒü‚É•¹‚¹‚Ä’l‚ð•Ï‚¦‚ç‚ê‚é‚æ‚¤‚É‚µ‚½‚¢‚ª¡‚Í‰¼
-	, nextWayPoint(0.0f, 0.0f, 20.0f)
+	, nextWayPoint(0.0f, 0.0f, 0.0f)
+	, wayPointDistance(200.0f)
+	, enemy(nullptr)
 {
 }
 
 void EnemyComponent::Start() {
-	wayPoint = nextWayPoint;
+	enemy = GetOwner();
+	wayPoint = enemy->position;
+	nextWayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z - wayPointDistance);
 }
 
 /*
  *	XVˆ—
  */
 void EnemyComponent::Update(float deltaTime) {
-	GameObject* enemy = GetOwner();
-	if (enemy->position == wayPoint) {
-		wayPoint = enemy->position + nextWayPoint;
+
+	if (enemy->position.z <= wayPoint.z) {
+		wayPoint = enemy->position - nextWayPoint;
+		enemy->rotation.y += 180 * Deg2Rad;
 	}
-	else {
+
 		EnemyMove(enemy, deltaTime);
-	}
 }
 
 /*
  *	ˆÚ“®ˆ—
  */
 void EnemyComponent::EnemyMove(GameObject* enemy, float deltaTime) {
-	enemy->position.z  -= moveSpeed;
+	const float enemyCos = cos(enemy->rotation.y);
+	const float enemySin = sin(enemy->rotation.y);
+
+	enemy->position.x -= moveSpeed * enemySin;
+	enemy->position.z -= moveSpeed * enemyCos;
 
 }
