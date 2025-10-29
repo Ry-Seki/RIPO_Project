@@ -44,11 +44,9 @@ public:
 	/*
 	 * @brief ステージの当たり判定を更新
 	 * @param position     オブジェクト位置
-	 * @param PolyPos1     カプセル当たり判定下端
-	 * @param PolyPos2     カプセル当たり判定上端
 	 * @param MoveVec      移動ベクトル
 	 */
-	void UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PolyPos2, Vector3 MoveVec) override;
+	void UpdateCollision(Vector3* position, Vector3 MoveVec) override;
 
 private:
 

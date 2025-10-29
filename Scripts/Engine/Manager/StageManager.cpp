@@ -30,9 +30,9 @@ void StageManager::LoadStage(const int modelHandleBase) {
 /*
  *	ステージの当たり判定
  */
-void StageManager::StageCollider(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos2, Vector3 MoveVec) {
+void StageManager::StageCollider(Vector3* position, Vector3 MoveVec) {
 	if (!pStage)return;
-	pStage->UpdateCollision(position, PolyPos1, PloyPos2, MoveVec);
+	pStage->UpdateCollision(position, MoveVec);
 }
 /*
  *  更新
@@ -195,7 +195,7 @@ std::vector<Vector3> StageManager::GetTreasureSpwanPos()const {
 		VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
 		result.push_back(FromVECTOR(framePos));
 	}
-	
+
 	return result;
 
 }

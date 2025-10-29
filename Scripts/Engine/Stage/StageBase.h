@@ -48,11 +48,9 @@ public:
 	/*
 	 *	ìñÇΩÇËîªíËÇÃçXêV
 	 *  @param Vector3* position
-	 *  @param Vector3  PloyPos1
-	 *	@param Vector3  PloyPos2
 	 *  @param Vector3  MoveVec
 	 */
-	virtual void UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos2, Vector3 MoveVec) = 0;
+	virtual void UpdateCollision(Vector3* position, Vector3 MoveVec) = 0;
 };
 
 #endif // !_STAGEBASE_H_

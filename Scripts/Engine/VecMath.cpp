@@ -107,6 +107,13 @@ float Vector3::Clamp(float value, float min, float max) {
 }
 
 /*
+ *	äÓèÄì_Ç©ÇÁÇÃÇ∏ÇÁÇµ
+ */
+Vector3 Vector3::Offset(const Vector3& v1, const Vector3& v2) {
+	return (v1 - v2);
+}
+
+/*
  *	ê¸å`ï‚ä‘
  */
 Vector3 Vector3::Lerp(const Vector3& v1, const Vector3& v2, float t) {
@@ -249,6 +256,10 @@ float Distance(const Vector3& v1, const Vector3& v2) {
 
 Vector3 Direction(const Vector3& from, const Vector3& to) {
 	return Vector3::Direction(from, to);
+}
+
+Vector3 Offset(const Vector3& v1, const Vector3& v2) {
+	return Vector3::Offset(v1, v2);
 }
 
 Vector3 Clamp(const Vector3& v1, const Vector3& min, const Vector3& max) {

@@ -56,7 +56,7 @@ public:
 	 */
 	void Execute();
 
-	void StageCollider(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos2, Vector3 MoveVec);
+	void StageCollider(Vector3* position, Vector3 MoveVec);
 
 public:
 	/*

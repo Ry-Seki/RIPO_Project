@@ -55,7 +55,7 @@ struct Vector3 {
 	static Vector3 Direction(const Vector3& from, const Vector3& to);
 	static Vector3 Clamp(const Vector3& v1, const Vector3& min, const Vector3& max);
 	static float Clamp(float value, float min, float max);
-
+	static Vector3 Offset(const Vector3& v1, const Vector3& v2);
 	// ê¸å`ï‚ä‘
 	static Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t);
 
@@ -92,6 +92,7 @@ float   Magnitude(const Vector3& v);
 Vector3 Normalized(const Vector3& v);
 float   Distance(const Vector3& v1, const Vector3& v2);
 Vector3 Direction(const Vector3& from, const Vector3& to);
+Vector3 Offset(const Vector3& v1, const Vector3& v2);
 
 Vector3 Clamp(const Vector3& v, const Vector3& min, const Vector3& max);
 float   Clamp(float value, float min, float max);
