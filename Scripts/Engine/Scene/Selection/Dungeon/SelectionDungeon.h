@@ -28,7 +28,7 @@ private:
 	std::vector<DungeonData> dungeonDataList;											// ダンジョンデータ配列
 	std::shared_ptr<DungeonDataLoader> dungeonDataLoader;								// ダンジョン用読み込みクラス
 	bool inputHandle = false;															// 入力フラグ
-
+	bool isLoad = false;
 	std::function<void(Engine& engine, DungeonStageData setStageData)> ActiveDungeon;	// 行動管理クラスのダンジョン開放関数
 
 public:

@@ -77,11 +77,9 @@ public:
         // registryから取得
         auto cached = loadRegistry.Get(setFilePath);
         if (cached) {
-            lastLoadWasCached = true;
             auto resource = std::dynamic_pointer_cast<T>(cached);  
             return resource;
         }
-        lastLoadWasCached = false;
         auto loader = std::make_shared<T>(setFilePath);
         loadRegistry.Register(setFilePath, loader);
         system->AddLoader(loader);
@@ -96,12 +94,6 @@ public:
 
         // ミューテックスで排他
         std::lock_guard<std::mutex> lock(managerMutex);
-
-        // すでにロードが全完了状態なら、即発火（新しいコールバックのみ）
-        if (lastLoadWasCached) {
-            callback();
-            return;
-        }
 
         // そうでない場合は通常通りキューに積む
         onCompleteQueue.push(callback);
