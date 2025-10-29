@@ -11,9 +11,9 @@
 #include <iostream>
 
 
-/*
- *	全てのロードクラスの基底クラス
- */
+ /*
+  *	全てのロードクラスの基底クラス
+  */
 class LoadBase {
 protected:
 	std::string filePath;		// ファイルパス
@@ -35,7 +35,11 @@ public:
 	 *	データのロード処理
 	 */
 	virtual void Load() = 0;
-	
+	/*
+	 *	アンロード
+	 */
+	inline virtual void Unload() { isLoaded = false; }
+
 public:
 	/*
 	 *	ロード完了フラグ取得

@@ -23,7 +23,13 @@ private:
     mutable std::mutex mtx;                                // スレッド安全用
 
 public:
+    /*
+     *  コンストラクタ
+     */
     LoadRegistry() = default;
+    /*
+     *  デストラクタ
+     */
     ~LoadRegistry() = default;
 
 public:
@@ -39,6 +45,7 @@ public:
     }
     /*
      *  登録済みかを確認
+     *  @return     bool
      */ 
     bool Exists(const std::string& key) const {
         std::lock_guard<std::mutex> lock(mtx);
@@ -46,6 +53,7 @@ public:
     }
     /*
      *  登録済みリソースを取得
+     *  @return     LoadBasePtr
      */
     LoadBasePtr Get(const std::string& key) const {
         std::lock_guard<std::mutex> lock(mtx);
