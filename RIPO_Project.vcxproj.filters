@@ -195,6 +195,9 @@
     <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\RayCast.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -397,6 +400,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h">
       <Filter>ヘッダー ファイル\Engine\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\RayCast.h">
+      <Filter>ヘッダー ファイル\Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -16,8 +16,8 @@ struct AABB {
 	Vector3 max;
 };
 
-// Õ“Ë‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
-bool Intersect(const AABB& a, const AABB b, Vector3& penetration);
+// AABB“¯m‚ÅÕ“Ë‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
+bool BoxIntersect(const AABB& a, const AABB& b, Vector3& penetration);
 
 #endif // !_COLLISION_H_
 

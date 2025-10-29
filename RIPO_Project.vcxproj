@@ -165,6 +165,7 @@
     <ClCompile Include="Scripts\Engine\Manager\CharacterManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
+    <ClCompile Include="Scripts\Engine\RayCast.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarSystem.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\Day.cpp" />
@@ -226,6 +227,7 @@
     <ClInclude Include="Scripts\Engine\Manager\CharacterManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
+    <ClInclude Include="Scripts\Engine\RayCast.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarSystem.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\DateBase.h" />
