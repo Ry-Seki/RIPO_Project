@@ -25,6 +25,7 @@ void StageManager::Initialize(Engine& setEngine) {
 void StageManager::LoadStage(const int modelHandleBase) {
 	pStage = std::make_unique<Stage>();
 	pStage->ModelLoad(modelHandleBase);
+
 }
 
 /*
@@ -71,7 +72,7 @@ int StageManager::GetStageFrame(const std::string& frameName) const {
 
 	// StageBase* から Stage* にキャスト
 	Stage* stage = dynamic_cast<Stage*>(pStage.get());
-	if (!stage) return -1;
+	if (!stage->GetModelHandle()) return -1;
 
 	// ステージのモデルハンドルを取得
 	int modelHandle = stage->GetModelHandle();
@@ -96,9 +97,12 @@ Vector3 StageManager::GetStartPos() const {
 	std::string frameName = json["Player"]["StartPos"];
 	// string型→const char* 型への型変換
 	const char* cstr = frameName.c_str();
-
+	int frameCount = MV1GetFrameNum(modelHandle);
+	printf("Frame count: %d\n", frameCount);
 	// スタート位置のフレーム番号を取得
 	int frameIndex = MV1SearchFrame(modelHandle, cstr);
+
+	if (frameIndex == -1)return Vector3();
 
 	// スタート位置の座標を取得
 	VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
@@ -194,6 +198,38 @@ std::vector<Vector3> StageManager::GetTreasureSpwanPos()const {
 
 		VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
 		result.push_back(FromVECTOR(framePos));
+	}
+
+	return result;
+
+}
+
+/*
+ *	ポイントライト生成位置の取得
+ */
+std::vector<Vector3> StageManager::GetPointLightPos()const {
+	std::vector<Vector3> result;
+	if (!pStage)return result;
+
+	Stage* stage = dynamic_cast<Stage*>(pStage.get());
+	if (!stage)return result;
+
+	// ステージのモデルハンドルの取得
+	int modelHandle = stage->GetModelHandle();
+
+	if (modelHandle < 0) return result;
+
+	// jsonから座標を取得
+	if (json.contains("PointLight") && json["PointLight"].contains("LightPos")) {
+		auto spawnArray = json["PointLight"]["LightPos"];
+		for (const auto& frameNameJson : spawnArray) {
+			std::string frameName = frameNameJson.get<std::string>();
+			int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
+			if (frameIndex == -1) continue;
+
+			VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
+			result.push_back(FromVECTOR(framePos));
+		}
 	}
 
 	return result;

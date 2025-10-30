@@ -45,6 +45,7 @@ public:
 	// I—¹ˆ—
 	virtual void Execute() = 0;
 
+
 	/*
 	 *	“–‚½‚è”»’è‚ÌXV
 	 *  @param Vector3* position

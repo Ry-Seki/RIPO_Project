@@ -12,6 +12,7 @@
 #include "../Load/LoadManager.h"
 #include "../VecMath.h"
 #include "../GameConst.h"
+#include "../Manager/StageManager.h"
  /*
   *  ステージクラス
   */
@@ -19,6 +20,11 @@ class Stage : public StageBase {
 private:
 	std::string modelPath;	// モデルのパス
 	Vector3 lightDirection;
+
+	std::vector<Vector3>pointLightPos;	// 位置
+	Vector3 pointLightColor;// 色
+	float pointLightRange;	// 効果範囲
+
 public:
 	Stage();
 	virtual ~Stage() override;
@@ -40,6 +46,8 @@ public:
 
 	// 終了処理
 	void Execute() override;
+
+
 
 	/*
 	 * @brief ステージの当たり判定を更新
@@ -102,19 +110,29 @@ private:
 		float polyOffset,
 		const std::vector<MV1_COLL_RESULT_POLY*>& floors
 	);
-
+public:
 	/*
 	 * ステージのライトの設定
 	 */
 	void LightSettings();
 
 public:
-	// モデルハンドルの取得
+	/*
+	 *	モデルハンドルの取得
+	 */
 	int GetModelHandle() const { return modelHandle; }
 
-	// モデルのフレームの取得
+	/*
+	 *	モデルフレームの取得
+	 */
 	int GetFrameHandleByName(int modelHandle, const std::string& frameName)const;
 
+	/*
+	 *	ライトの変更
+	 */
+	void SetPointLightPositions(const std::vector<Vector3>& positions) {
+		pointLightPos = positions;
+	}
 
 };
 

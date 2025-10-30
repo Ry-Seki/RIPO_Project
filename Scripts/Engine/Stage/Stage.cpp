@@ -16,7 +16,10 @@
   */
 Stage::Stage()
 	: StageBase()
-	, lightDirection(0.2f, -20.0f, 0.3f) {
+	, lightDirection(0.2f, -20.0f, 0.3f)
+	, pointLightColor(1.0f, 0.8f, 0.6f)  // 色
+	, pointLightRange(10.0f)            // ポイントライトの範囲
+{
 	modelHandle = -1;
 }
 
@@ -42,9 +45,8 @@ void Stage::Load(const std::shared_ptr<LoadModel>& model) {
  *  @pram const int modelHandle
  */
 void Stage::ModelLoad(const int modelHandleBase) {
-	modelHandle = modelHandleBase;
-	// ライトをセット
-	LightSettings();
+	modelHandle = MV1DuplicateModel(modelHandleBase);
+
 }
 
 /*
@@ -52,6 +54,7 @@ void Stage::ModelLoad(const int modelHandleBase) {
  */
 void Stage::Update() {
 	// ステージのオブジェクト更新
+
 }
 
 /*
@@ -61,6 +64,8 @@ void Stage::Render() {
 	if (modelHandle >= 0) {
 		// モデルの描画
 		MV1DrawModel(modelHandle);
+		// ライトをセット
+		LightSettings();
 	}
 }
 
@@ -76,6 +81,7 @@ void Stage::Execute() {
 		modelHandle = -1;
 	}
 }
+
 
 /*
  * @brief ステージの当たり判定を更新
@@ -322,12 +328,48 @@ void Stage::ProcessFloorCollision(
  *	ステージのライトの設定
  */
 void Stage::LightSettings() {
-	// アンビエントカラーの設定
+
+	// // 既存のライトを全て消す
+	// DeleteLightHandleAll();
+	// 
+	// // 太陽光の設定
+	// int dirLight = CreateDirLightHandle(ToVECTOR(lightDirection));
+	// // 環境光設定
+	// SetLightAmbColor(GetColorF(0.2f, 0.25f, 0.3f, 1.0f));
+	// // 太陽光の色など設定
+	// SetLightDifColorHandle(dirLight, GetColorF(1.5f, 1.5f, 1.3f, 1.0f));
+	// SetLightSpcColorHandle(dirLight, GetColorF(0.2f, 0.2f, 0.2f, 1.0f));
+	// SetLightEnableHandle(dirLight, TRUE);
+	// 
+	// // ポイントライトの設定
+	// // ポイントライトの座標の取得
+	// pointLightPos = StageManager::GetInstance().GetPointLightPos();
+	// for (const auto& pos : pointLightPos) {
+	// 	int pLight = CreatePointLightHandle(
+	// 		ToVECTOR(pos),
+	// 		pointLightRange,
+	// 		1.0f / pointLightRange,
+	// 		0.001f,
+	// 		0.01f
+	// 	);
+	// 
+	// 	// ポイントの色など設定
+	// 	SetLightDifColorHandle(pLight, GetColorF(pointLightColor.x, pointLightColor.y, pointLightColor.z, 1.0f));
+	// 	SetLightSpcColorHandle(pLight, GetColorF(0.1f, 0.1f, 0.1f, 1.0f));
+	// 	SetLightEnableHandle(pLight, TRUE);
+	// 
+	// }
+
+
+	 // マップ全体のライト設定
+
+	 // アンビエントカラーの設定
 	SetLightAmbColor(GetColorF(0.2f, 0.25f, 0.3f, 1));
 	// ライトの方向を設定する
 	SetLightDirection(ToVECTOR(lightDirection));
 	SetLightDifColor(GetColorF(1.5f, 1.5f, 1.3f, 1.0f));
 	SetLightSpcColor(GetColorF(0.2f, 0.2f, 0.2f, 1));
+
 }
 
 
