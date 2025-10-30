@@ -100,6 +100,8 @@ Vector3 StageManager::GetStartPos() const {
 	// スタート位置のフレーム番号を取得
 	int frameIndex = MV1SearchFrame(modelHandle, cstr);
 
+	if (frameIndex == -1)return Vector3();
+
 	// スタート位置の座標を取得
 	VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
 
