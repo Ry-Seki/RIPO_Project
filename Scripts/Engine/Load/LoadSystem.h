@@ -40,6 +40,7 @@ public:
 
         if (currentIndex >= loadList.size()) {
             isComplete = true;
+            Clear();
         }
     }
 

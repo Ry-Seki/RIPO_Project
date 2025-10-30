@@ -33,6 +33,8 @@ private:
 
 	bool inputHandle = false;
 
+private:
+	static bool isFirst;
 public:
 	/*
 	 *	コンストラクタ

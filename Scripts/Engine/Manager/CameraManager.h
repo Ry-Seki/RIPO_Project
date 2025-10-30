@@ -15,6 +15,7 @@
 class CameraManager : public Singleton<CameraManager> {
 	// フレンド宣言
 	friend class Singleton<CameraManager>;
+
 private:
 	Engine* engine;
 	GameObjectPtr camera;
@@ -32,6 +33,11 @@ public:
 	inline void SetTarget(GameObjectPtr setTarget) { target = setTarget; }
 	inline GameObjectPtr GetTarget() const { return target; }
 
+	/*
+	 *	カメラのリセット
+	 *	@author	Seki
+	 */
+	void ResetCamera();
 };
 
 #endif // !_CAMERAMANAGER_H_
