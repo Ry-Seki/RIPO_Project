@@ -29,7 +29,7 @@ void DebugScene::Initialize(Engine& engine) {
 	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 0, 0 }, {0, 0, 0}, {-0.5f, -1.0f, -0.5f}, {0.5f,  1.0f,  0.5f});
 	auto player = CharacterManager::GetInstance().GetCharacter(0);
 	player->GetOwner()->AddComponent<ModelRenderer>();
-	CharacterManager::GetInstance().GenerateEnemy("enemy", { 1, 0, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f, 1.0f, 0.5f });
+	CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f, 1.0f, 0.5f });
 	auto enemy = CharacterManager::GetInstance().GetCharacter(1);
 	enemy->GetOwner()->AddComponent<ModelRenderer>();
 
@@ -43,7 +43,9 @@ void DebugScene::Initialize(Engine& engine) {
 			int enemyModelHandle = enemyModel->GetHandle();
 			enemy->GetOwner()->GetComponent<ModelRenderer>()->SetModel(enemyModelHandle);
 			
-			//enemy->GetOwner()->position = StageManager::GetInstance().GetStartPos();
+			enemy->GetOwner()->position = StageManager::GetInstance().GetStartPos();
+            std::shared_ptr<EnemyComponent> component = std::dynamic_pointer_cast<EnemyComponent>(enemy);
+            component->SetWayPoint(enemy->GetOwner()->position);
 		}
 	);
 }
