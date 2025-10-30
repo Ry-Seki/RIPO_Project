@@ -45,7 +45,7 @@ void Stage::Load(const std::shared_ptr<LoadModel>& model) {
  *  @pram const int modelHandle
  */
 void Stage::ModelLoad(const int modelHandleBase) {
-	modelHandle = modelHandleBase;
+	modelHandle = MV1DuplicateModel(modelHandleBase);
 
 }
 
@@ -81,6 +81,7 @@ void Stage::Execute() {
 		modelHandle = -1;
 	}
 }
+
 
 /*
  * @brief ステージの当たり判定を更新

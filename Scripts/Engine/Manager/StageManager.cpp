@@ -25,6 +25,7 @@ void StageManager::Initialize(Engine& setEngine) {
 void StageManager::LoadStage(const int modelHandleBase) {
 	pStage = std::make_unique<Stage>();
 	pStage->ModelLoad(modelHandleBase);
+
 }
 
 /*
@@ -96,7 +97,8 @@ Vector3 StageManager::GetStartPos() const {
 	std::string frameName = json["Player"]["StartPos"];
 	// string型→const char* 型への型変換
 	const char* cstr = frameName.c_str();
-
+	int frameCount = MV1GetFrameNum(modelHandle);
+	printf("Frame count: %d\n", frameCount);
 	// スタート位置のフレーム番号を取得
 	int frameIndex = MV1SearchFrame(modelHandle, cstr);
 

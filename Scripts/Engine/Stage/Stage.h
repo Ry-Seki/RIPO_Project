@@ -47,6 +47,8 @@ public:
 	// 終了処理
 	void Execute() override;
 
+
+
 	/*
 	 * @brief ステージの当たり判定を更新
 	 * @param position     オブジェクト位置
