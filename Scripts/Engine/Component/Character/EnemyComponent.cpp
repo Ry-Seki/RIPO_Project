@@ -18,7 +18,7 @@ EnemyComponent::EnemyComponent()
 
 void EnemyComponent::Start() {
 	enemy = GetOwner();
-	wayPoint = enemy->position;
+	wayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z + wayPointDistance);
 	nextWayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z - wayPointDistance);
 }
 
@@ -41,6 +41,9 @@ void EnemyComponent::Update(float deltaTime) {
 void EnemyComponent::EnemyMove(GameObject* enemy, float deltaTime) {
 	const float enemyCos = cos(enemy->rotation.y);
 	const float enemySin = sin(enemy->rotation.y);
+
+	//Vector3 direction = enemy->position - wayPoint;
+
 
 	enemy->position.x -= moveSpeed * enemySin;
 	enemy->position.z -= moveSpeed * enemyCos;

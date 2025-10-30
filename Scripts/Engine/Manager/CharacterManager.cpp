@@ -89,10 +89,14 @@ void CharacterManager::GenerateEnemy(
 		if (createCharacterList[i] != nullptr) continue;
 		// ƒŠƒXƒg‚Ì‹ó‚«‚É¶¬
 		createCharacterList[i] = CreateCharacter<EnemyComponent>(i, name, position, rotation, AABBMin, AABBMax);
+		std::shared_ptr<EnemyComponent> enemy = std::dynamic_pointer_cast<EnemyComponent>(createCharacterList[i]);
+		enemy->Start();
+
 		return;
 	}
 	// ‹ó‚«‚ª–³‚©‚Á‚½‚çˆê”ÔŒã‚ë‚É¶¬
 	createCharacterList.push_back(CreateCharacter<EnemyComponent>(0, name, position, rotation, AABBMin, AABBMax));
+
 }
 
 /*
