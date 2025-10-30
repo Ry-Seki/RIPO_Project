@@ -56,29 +56,10 @@ void Scene::Finalize(Engine& engine) {
  *  @author Riku
  */
 void Scene::HandleGameObjectCollision() {
-    // ワールド座標系の衝突判定を作成
-    std::vector<WorldColliderList> colliders;
-    colliders.reserve(gameObjects.size());
-
     // 全てのオブジェクトでコライダーの座標を計算
-    for (const auto obj : gameObjects) {
-        continue;
-
-        WorldColliderList list(obj->colliders.size());
-
-        for (int i = 0; i < obj->colliders.size(); i++) {
-            // オリジナルのコライダーをコピー
-            list[i].origin = obj->colliders[i];
-            list[i].world = obj->colliders[i]->aabb;
-
-            list[i].world.min = Vector3::Scale(list[i].world.min, obj->scale);
-            list[i].world.max = Vector3::Scale(list[i].world.max, obj->scale);
-            list[i].world.min += obj->position;
-            list[i].world.max += obj->position;
-        }
-        colliders.push_back(list);
-    }
-    if (colliders.size() >= 2) {
+    std::vector<WorldColliderList> colliders = ChangeGameObjectWorldColliders();
+    
+    if (colliders.size() > 1) {
         // ゲームオブジェクト毎の衝突判定
         for (auto A = colliders.begin(); A != colliders.end() - 1; A++) {
             const GameObject* objA = A->at(0).origin->GetOwner();
@@ -146,4 +127,34 @@ void Scene::RemoveDestroyedObjects() {
     auto it = std::stable_partition(gameObjects.begin(), gameObjects.end(),
                                     [](const auto& obj) { return !obj->IsDestroyed(); });
     gameObjects.erase(it, gameObjects.end());
+}
+/*
+ *  全てのゲームオブジェクトの全てのコライダーをワールド座標に変換
+ *  @return 変換された全オブジェクトの全コライダーのリスト
+ *  @author Riku
+ */
+std::vector<Scene::WorldColliderList> Scene::ChangeGameObjectWorldColliders() {
+    // ワールド座標系の衝突判定を作成
+    std::vector<WorldColliderList> colliders;
+    colliders.reserve(gameObjects.size());
+
+    // 全てのゲームオブジェクトで計算
+    for (const auto obj : gameObjects) {
+        continue;
+
+        WorldColliderList list(obj->colliders.size());
+
+        for (int i = 0; i < obj->colliders.size(); i++) {
+            // オリジナルのコライダーをコピー
+            list[i].origin = obj->colliders[i];
+            list[i].world = obj->colliders[i]->aabb;
+
+            list[i].world.min = Vector3::Scale(list[i].world.min, obj->scale);
+            list[i].world.max = Vector3::Scale(list[i].world.max, obj->scale);
+            list[i].world.min += obj->position;
+            list[i].world.max += obj->position;
+        }
+        colliders.push_back(list);
+    }
+    return colliders;
 }

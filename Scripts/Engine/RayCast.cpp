@@ -4,6 +4,20 @@
  */
 #include "RayCast.h"
 
+
+ /*
+  *  レイキャスト
+  *  @param Engine* engine  
+  *  @param Vector3 startPosition   レイ開始位置
+  *  @param Vector3 direction       レイの方向
+  *  @param float   hitLength       レイが当たるまでの距離
+  */
+bool RayCast(Engine* engine, Vector3 startPosition, Vector3 direction, float& hitLength) {
+    ScenePtr scene = engine->GetCurrentScene();
+    // 全てのオブジェクトでコライダーの座標を計算
+    std::vector<Scene::WorldColliderList> colliders = scene->ChangeGameObjectWorldColliders();
+}
+
  /*
   *  RayとAABBの交差判定
   *  @param Ray  ray   判定対象1
