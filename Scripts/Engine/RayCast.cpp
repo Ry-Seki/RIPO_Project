@@ -14,8 +14,25 @@
   */
 bool RayCast(Engine* engine, Vector3 startPosition, Vector3 direction, float& hitLength) {
     ScenePtr scene = engine->GetCurrentScene();
+    Ray ray = { startPosition, direction };
+    bool hit = false;
     // 全てのオブジェクトでコライダーの座標を計算
     std::vector<Scene::WorldColliderList> colliders = scene->ChangeGameObjectWorldColliders();
+
+    // ゲームオブジェクト毎の衝突判定
+    for (auto box = colliders.begin(); box != colliders.end() - 1; box++) {
+        const GameObject* objBox = box->at(0).origin->GetOwner();
+        // 削除済みは処理しない
+        if (objBox->IsDestroyed())
+            continue;
+
+        // 衝突判定
+        for (const auto& boxCol : *box) {
+            if (RayIntersect(ray, boxCol.world, hitLength))
+                hit = true;
+        }
+    }
+    return hit;
 }
 
  /*
@@ -105,16 +122,20 @@ bool RayIntersect(const Ray& ray, const AABB& box, float& hitLength) {
     }
     
     // 全ての軸で衝突するまでの長さを保存
+    float allHitLength = 0;
     if (length.x > length.y) {
         if (length.x > length.z) {
-            hitLength = length.x;
-            return true;
+            allHitLength = length.x;
         }
     }
     else if (length.y > length.z) {
-        hitLength = length.y;
-        return true;
+        allHitLength = length.y;
     }
-    hitLength = length.z;
+    else allHitLength = length.z;
+
+    // より距離の短い方を保存
+    if (hitLength > allHitLength)
+        hitLength = allHitLength;
+
     return true;
 }
