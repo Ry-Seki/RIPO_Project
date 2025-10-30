@@ -18,7 +18,7 @@ Stage::Stage()
 	: StageBase()
 	, lightDirection(0.2f, -20.0f, 0.3f)
 	, pointLightColor(1.0f, 0.8f, 0.6f)  // 色
-	, pointLightRange(150.0f)            // ポイントライトの範囲
+	, pointLightRange(10.0f)            // ポイントライトの範囲
 {
 	modelHandle = -1;
 }
@@ -327,32 +327,48 @@ void Stage::ProcessFloorCollision(
  *	ステージのライトの設定
  */
 void Stage::LightSettings() {
-	// マップ全体のライト設定
 
-	// アンビエントカラーの設定
+	// // 既存のライトを全て消す
+	// DeleteLightHandleAll();
+	// 
+	// // 太陽光の設定
+	// int dirLight = CreateDirLightHandle(ToVECTOR(lightDirection));
+	// // 環境光設定
+	// SetLightAmbColor(GetColorF(0.2f, 0.25f, 0.3f, 1.0f));
+	// // 太陽光の色など設定
+	// SetLightDifColorHandle(dirLight, GetColorF(1.5f, 1.5f, 1.3f, 1.0f));
+	// SetLightSpcColorHandle(dirLight, GetColorF(0.2f, 0.2f, 0.2f, 1.0f));
+	// SetLightEnableHandle(dirLight, TRUE);
+	// 
+	// // ポイントライトの設定
+	// // ポイントライトの座標の取得
+	// pointLightPos = StageManager::GetInstance().GetPointLightPos();
+	// for (const auto& pos : pointLightPos) {
+	// 	int pLight = CreatePointLightHandle(
+	// 		ToVECTOR(pos),
+	// 		pointLightRange,
+	// 		1.0f / pointLightRange,
+	// 		0.001f,
+	// 		0.01f
+	// 	);
+	// 
+	// 	// ポイントの色など設定
+	// 	SetLightDifColorHandle(pLight, GetColorF(pointLightColor.x, pointLightColor.y, pointLightColor.z, 1.0f));
+	// 	SetLightSpcColorHandle(pLight, GetColorF(0.1f, 0.1f, 0.1f, 1.0f));
+	// 	SetLightEnableHandle(pLight, TRUE);
+	// 
+	// }
+
+
+	 // マップ全体のライト設定
+
+	 // アンビエントカラーの設定
 	SetLightAmbColor(GetColorF(0.2f, 0.25f, 0.3f, 1));
 	// ライトの方向を設定する
 	SetLightDirection(ToVECTOR(lightDirection));
 	SetLightDifColor(GetColorF(1.5f, 1.5f, 1.3f, 1.0f));
 	SetLightSpcColor(GetColorF(0.2f, 0.2f, 0.2f, 1));
 
-	// ポイントライト設定
-	pointLightPos = StageManager::GetInstance().GetPointLightPos();
-	for (size_t i = 0; i < pointLightPos.size(); ++i) {
-		const Vector3& pos = pointLightPos[i];
-
-		// ライトの位置を設定
-		SetLightPosition(ToVECTOR(pos));
-
-		// ライトの色を設定
-		SetLightDifColor(GetColorF(pointLightColor.x, pointLightColor.y, pointLightColor.z, 1.0f));
-
-		// 距離減衰の設定
-		SetLightRangeAtten(pointLightRange, 1.0f / pointLightRange, 0.001f, 0.01f);
-
-		// ライトを有効化
-		SetLightEnable(TRUE);
-	}
 }
 
 
