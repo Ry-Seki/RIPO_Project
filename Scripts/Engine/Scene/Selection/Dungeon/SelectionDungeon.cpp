@@ -31,6 +31,7 @@ void SelectionDungeon::Update(Engine& engine, float deltaTime) {
 
 	if (!inputHandle && CheckHitKey(KEY_INPUT_0)) { 
 		inputHandle = true;
+		isComplete = true;
 		StartStageDataLoad(engine, 0);
 	}
 
@@ -68,5 +69,4 @@ void SelectionDungeon::SetStageData(Engine& engine, std::shared_ptr<LoadJSON> se
 	// JSONデータを再帰的に登録
 	stageData.LoadFromJson(dungeonData);
 	ActiveDungeon(engine, stageData);
-	isComplete = true;
 }

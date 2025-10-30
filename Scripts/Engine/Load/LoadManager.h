@@ -77,7 +77,8 @@ public:
         // registry‚©‚çŽæ“¾
         auto cached = loadRegistry.Get(setFilePath);
         if (cached) {
-            auto resource = std::dynamic_pointer_cast<T>(cached);  
+            auto resource = std::dynamic_pointer_cast<T>(cached);
+            system->CompleteLoading();
             return resource;
         }
         auto loader = std::make_shared<T>(setFilePath);
