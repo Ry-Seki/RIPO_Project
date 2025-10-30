@@ -24,3 +24,11 @@ void CameraManager::CreateCamera(
 	// データのセット
 	camera->SetObjectData(name, position, rotation);
 }
+/*
+ *	カメラのリセット
+ *	@author	Seki
+ */
+void CameraManager::ResetCamera() {
+	GameObjectManager::GetInstance().ResetObject(camera);
+	camera = nullptr;
+}

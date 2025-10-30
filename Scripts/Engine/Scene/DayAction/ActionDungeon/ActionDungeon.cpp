@@ -16,6 +16,9 @@
 #include "../../../Component/ModelRenderer.h"
 #include <iostream>
 
+// 静的メンバ変数の初期化
+bool ActionDungeon::isFirst = true;
+
 /*
  *	初期化処理
  */
@@ -45,7 +48,51 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
  */
 void ActionDungeon::Render() {
     StageManager::GetInstance().Render();
+#if _DEBUG
     DrawFormatString(50, 50, GetColor(0, 0, 0), "2 : AdvanveDay");
+    {
+        VECTOR pos1, pos2;
+
+        //  XZ平面 100.0f毎に1本ライン引き
+        {
+            pos1 = VGet(-5000.0f, 0.0f, -5000.0f);
+            pos2 = VGet(-5000.0f, 0.0f, 5000.0f);
+            for (int i = 0; i <= 100; i++) {
+                DrawLine3D(pos1, pos2, GetColor(255, 255, 255));
+                pos1.x += 100.0f;
+                pos2.x += 100.0f;
+            }
+
+            pos1 = VGet(-5000.0f, 0.0f, -5000.0f);
+            pos2 = VGet(5000.0f, 0.0f, -5000.0f);
+            for (int i = 0; i <= 100; i++) {
+                DrawLine3D(pos1, pos2, GetColor(255, 255, 255));
+                pos1.z += 100.0f;
+                pos2.z += 100.0f;
+            }
+        }
+
+        //  X軸
+        {
+            pos1 = VGet(0, 0, 0);
+            pos2 = VScale(VGet(1, 0, 0), 5000.0f);		//  VGet(5000.0f, 0.0f, 0.0f)
+            DrawLine3D(pos1, pos2, GetColor(255, 255, 255));
+        }
+        //  Y軸
+        {
+            pos1 = VGet(0, 0, 0);
+            pos2 = VScale(VGet(0, 1, 0), 5000.0f);		//  VGet(0.0f, 5000.0f, 0.0f)
+            DrawLine3D(pos1, pos2, GetColor(255, 255, 255));
+        }
+        //  Z軸
+        {
+            pos1 = VGet(0, 0, 0);
+            pos2 = VScale(VGet(0, 0, 1), 5000.0f);	//  VGet(0.0f, 0.0f, 5000.0f)
+            DrawLine3D(pos1, pos2, GetColor(255, 255, 255));
+        }
+
+    }
+#endif
 }
 /*
  *  破棄処理
@@ -53,7 +100,7 @@ void ActionDungeon::Render() {
 void ActionDungeon::Teardown() {
     CharacterManager::GetInstance().RemoveCharacter(0);
     StageManager::GetInstance().Execute();
-
+    CameraManager::GetInstance().ResetCamera();
 }
 
 void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageData) {
@@ -62,11 +109,14 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
     LoadManager& load = LoadManager::GetInstance();
     DungeonResource dungeonResource;
 
-    GameObjectManager::GetInstance().Initialize(engine);
-    CharacterManager::GetInstance().Initialize(engine);
-    CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
+    if (isFirst) {
+        isFirst = false;
+        GameObjectManager::GetInstance().Initialize(engine);
+        CharacterManager::GetInstance().Initialize(engine);
+        StageManager::GetInstance().Initialize(engine);
+    }
     CharacterManager::GetInstance().GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f,  1.0f,  0.5f });
-    StageManager::GetInstance().Initialize(engine);
+    CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
 
     std::string dungeonPath;
     if(!stageData.TryGetByLeafName("StageData", dungeonPath)) return;
@@ -91,7 +141,7 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
     StageManager::GetInstance().LoadStage(modelHandle);
     StageManager::GetInstance().SetStageJSONData(setResource.stageBoneResource->GetData());
     auto player = CharacterManager::GetInstance().GetCharacter(0)->GetOwner();
-    player->AddComponent<ModelRenderer>();
+    if(!player->GetComponent<ModelRenderer>()) player->AddComponent<ModelRenderer>();
     player->GetComponent<ModelRenderer>()->SetModel(playerHandle);
     player->position = StageManager::GetInstance().GetStartPos();
 }
