@@ -32,9 +32,9 @@ public:
 	static constexpr int RIGHT_ANGLE = 90;
 	static constexpr int LEFT_ANGLE = -90;
 	static constexpr int BACK_ANGLE = 180;
-
-
-
+	static constexpr float _MAX_DXLIB_VOLUME = 255.0f;
+	static constexpr float _MIN_VOLUME = 0.0f;
+	static constexpr float _MAX_VOLUME = 100.0f;
 
 	//----------------------------------------------------
 	//				ステージ関連の定数

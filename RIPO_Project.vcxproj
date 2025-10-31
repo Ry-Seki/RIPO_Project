@@ -179,6 +179,8 @@
     <ClCompile Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp" />
+    <ClCompile Include="Scripts\Engine\Sound\BGM\BGMSource.cpp" />
+    <ClCompile Include="Scripts\Engine\Sound\SE\SESource.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\Stage.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\ExitPoint.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.cpp" />
@@ -186,7 +188,6 @@
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
-    <ClCompile Include="ソース.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Data\DungeonData.h" />
@@ -252,6 +253,9 @@
     <ClInclude Include="Scripts\Engine\Scene\TitleScene.h" />
     <ClInclude Include="Scripts\Engine\Manager\GameObjectManager.h" />
     <ClInclude Include="Scripts\Engine\Singleton.h" />
+    <ClInclude Include="Scripts\Engine\Sound\AudioSource.h" />
+    <ClInclude Include="Scripts\Engine\Sound\BGM\BGMSource.h" />
+    <ClInclude Include="Scripts\Engine\Sound\SE\SESource.h" />
     <ClInclude Include="Scripts\Engine\Stage\Stage.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageBase.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\ExitPoint.h" />

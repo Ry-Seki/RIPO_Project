@@ -76,6 +76,12 @@
     <Filter Include="ソース ファイル\Engine\Scene\Selection">
       <UniqueIdentifier>{d4639ea7-e1a9-44e4-8da6-0b22b2204dd4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Audio">
+      <UniqueIdentifier>{8b99aa5f-c92f-410b-8364-5698a7ae6bfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Audio">
+      <UniqueIdentifier>{bef3dd9e-9d20-4c8f-8581-0e0f1902c486}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -197,6 +203,9 @@
     </ClCompile>
     <ClCompile Include="ソース.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Sound\BGM\BGMSource.cpp">
+      <Filter>ソース ファイル\Engine\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -401,8 +410,14 @@
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageState.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scripts\Engine\Sound\AudioSource.h">
+      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Sound\BGM\BGMSource.h">
+      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Sound\SE\SESource.h">
+      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
