@@ -20,9 +20,18 @@
 class BGMManager {
 private:
 	std::unordered_map<std::string, int> bgmHandleMap;	// BGMハンドルの連想配列
-	AudioSourcePtr currentSource;						// 現在のBGM
+	std::unique_ptr<BGMSource> currentSource;			// 現在のBGM (常に持っている想定) 
 	mutable std::mutex mtx;                             // スレッド安全用
 
+public:
+	/*
+	 *	コンストラクタ
+	 */
+	BGMManager() : currentSource(std::make_unique<BGMSource>()) {}
+	/*
+	 *	デストラクタ
+	 */
+	~BGMManager() = default;
 public:
 	/*
 	 *	初期化処理
@@ -65,24 +74,28 @@ public:
 public:
 	/*
 	 *	BGMハンドルの登録
-	 *	@param[in]	std::string	setKeyName	 登録するBGM名
-	 *	@param[in]	int setHandle			 登録する音源ハンドル
+	 *	@param[in]	const std::string&	setKeyName	登録するBGM名
+	 *	@param[in]	const int& setHandle			登録する音源ハンドル
 	 */
-	void RegisterBGMHandle(std::string setKeyName, int setHandle);
+	void RegisterBGMHandle(const std::string& setKeyName, const int& setHandle);
 	/*
 	 *	BGMハンドルが登録済みか判定
-	 *  @param[in]	std::string setKeyName	 調べるBGM名
+	 *  @param[in]	const std::string& setKeyName	調べるBGM名
 	 *  @return		bool
 	 */
-	bool ExistBGMHandle(std::string setKeyName);
-
+	bool ExistBGMHandle(const std::string& setKeyName) const;
+	/*
+	 *	BGMハンドルの取得
+	 *	@param[in]	const std::string& setKeyName	調べるBGM名
+	 *	@return		int
+	 */
+	int GetBGMHandle(const std::string& setKeyName) const;
 public:
 	/*
 	 *	現在のBGMの取得
-	 *	@return		AudioSourcePtr
+	 *	@return		BGMSource& (常に持っている想定)
 	 */
-	inline AudioSourcePtr GetCurrentSource() const { return currentSource; }
-
+	inline BGMSource& GetCurrentSource() const { return *currentSource; }
 };
 
 #endif // !_BGM_MANAGER_H_
