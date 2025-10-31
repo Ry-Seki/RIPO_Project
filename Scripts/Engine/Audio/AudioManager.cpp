@@ -20,7 +20,7 @@ void AudioManager::Setup() {
  */
 void AudioManager::Update() {
 	bgmManager->Update();
-	seManager->Update();
+	//seManager->Update();
 }
 /*
  *	BGM‚ÌÄ¶ˆ—
