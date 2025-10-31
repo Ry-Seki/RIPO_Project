@@ -12,7 +12,7 @@
   *  @param Vector3 direction       ƒŒƒC‚Ì•ûŒü
   *  @param float   hitLength       ƒŒƒC‚ª“–‚½‚é‚Ü‚Å‚Ì‹——£
   */
-bool RayCast(Engine* engine, Vector3 startPosition, Vector3 direction, float& hitLength) {
+bool RayCast(Engine* engine, Vector3 startPosition, Vector3 direction, float& hitLength, GameObject& hitObject) {
     ScenePtr scene = engine->GetCurrentScene();
     Ray ray = { startPosition, direction };
     bool hit = false;
@@ -28,7 +28,7 @@ bool RayCast(Engine* engine, Vector3 startPosition, Vector3 direction, float& hi
 
         // Õ“Ë”»’è
         for (const auto& boxCol : *box) {
-            if (RayIntersect(ray, boxCol.world, hitLength))
+            if (RayIntersect(ray, boxCol.world, hitLength, hitObject, objBox))
                 hit = true;
         }
     }
@@ -41,7 +41,7 @@ bool RayCast(Engine* engine, Vector3 startPosition, Vector3 direction, float& hi
   *  @param AABB box   ”»’è‘ÎÛ2
   *  @param float hitLength “–‚½‚é‚Ü‚Å‚Ì‹——£
   */
-bool RayIntersect(const Ray& ray, const AABB& box, float& hitLength) {
+bool RayIntersect(const Ray& ray, const AABB& box, float& hitLength, GameObject& hitObject, const GameObject* judgeObject) {
     // ray‚Ìdir‚ª0‚È‚ç0‚Ì‚Ü‚Ü
     float dx0 = 0;
     float dx1 = 0;
@@ -134,8 +134,10 @@ bool RayIntersect(const Ray& ray, const AABB& box, float& hitLength) {
     else allHitLength = length.z;
 
     // ‚æ‚è‹——£‚Ì’Z‚¢•û‚ð•Û‘¶
-    if (hitLength > allHitLength)
+    if (hitLength > allHitLength) {
         hitLength = allHitLength;
+        hitObject = *judgeObject;
+    }
 
     return true;
 }

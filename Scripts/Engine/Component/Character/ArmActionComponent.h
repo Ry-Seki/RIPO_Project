@@ -26,6 +26,9 @@ public:
 	}
 
 public:
+	/*
+	 *	使用するウデをセット
+	 */
 	template <class T>
 	void SetCurrentArm() {
 		currentArm = std::make_shared<T>();

@@ -1,3 +1,5 @@
 #include "HandArm.h"
 
-void HandArm::Update(float deltaTime) {}
+void HandArm::Update(float deltaTime) {
+
+}

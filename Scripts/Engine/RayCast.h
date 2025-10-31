@@ -14,9 +14,9 @@ struct Ray {
 	Vector3 dir;	// 方向ベクトル
 };
 // レイキャスト
-bool RayCast(Engine* engine, Vector3 startPosition, Vector3 direction, float& hitLength);
+bool RayCast(Engine* engine, Vector3 startPosition, Vector3 direction, float& hitLength, GameObject& hitObject);
 
 // レイが衝突しているかどうか
-bool RayIntersect(const Ray& ray, const AABB& box, float& hitLength);
+bool RayIntersect(const Ray& ray, const AABB& box, float& hitLength, GameObject& hitObject, const GameObject* judgeObject);
 
 #endif // !_RAYCAST_H_
