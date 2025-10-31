@@ -27,10 +27,12 @@ class StageManager : public Singleton<StageManager> {
 private:
 
 	Engine* engine;						// ゲームエンジン参照
-	// std::unique_ptr<StageBase> pStage;	// 現在のステージ(自動的に削除される*)
-	JSON json;
+	JSON json;							// JSONデータ
 	StageState stageState;				// ステージの状態保持
 
+	std::unique_ptr<StageBase> loadedStage;	// 読み込み済みステージデータ
+
+private:
 	StageManager();						// コンストラクタ
 	~StageManager() = default;			// デストラクタ
 
@@ -54,6 +56,8 @@ public:
 	 *  @param	modelHandleBase		モデルハンドル
 	 */
 	void LoadStage(const int modelHandleBase);
+
+	void ChangeStage();
 
 	/*
 	 *  更新
@@ -122,6 +126,11 @@ public:
 	 *	ポイントライト生成位置の取得
 	 */
 	std::vector<Vector3> GetPointLightPos()const;
+
+	/*
+	 *	階層移動用階段位置の取得
+	 */
+	Vector3 GetStairsPos()const;
 
 	/*
 	 *	jsonの変更

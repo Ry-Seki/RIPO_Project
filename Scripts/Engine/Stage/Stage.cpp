@@ -30,15 +30,6 @@ Stage::~Stage() {
 	Execute();
 }
 
-/*
- *  ステージ読み込み
- *  @param csvPath 読み込み対象CSVパス
- */
-void Stage::Load(const std::shared_ptr<LoadModel>& model) {
-
-	modelHandle = model->GetHandle();
-}
-
 
 /*
  *	ステージデータの読み込み

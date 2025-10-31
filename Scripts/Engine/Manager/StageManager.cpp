@@ -26,10 +26,17 @@ void StageManager::Initialize(Engine& setEngine) {
  */
 void StageManager::LoadStage(const int modelHandleBase) {
 
-	auto newStage = std::make_unique<Stage>();
-	newStage->ModelLoad(modelHandleBase);
-	stageState.SetCurrentStage(std::move(newStage));
+	loadedStage = std::make_unique<Stage>();
+	loadedStage->ModelLoad(modelHandleBase);
+	ChangeStage();
+}
 
+/*
+ *	ステージの切り替え
+ */
+void StageManager::ChangeStage() {
+	if (!loadedStage)return;
+	stageState.SetCurrentStage(std::move(loadedStage));
 }
 
 /*
@@ -251,3 +258,38 @@ std::vector<Vector3> StageManager::GetPointLightPos()const {
 	return result;
 
 }
+
+/*
+ *	階層移動用階段位置の取得
+ */
+Vector3 StageManager::GetStairsPos() const {
+	auto* currentStage = stageState.GetCurrentStage();
+	if (!currentStage)return Vector3();
+
+	Stage* stage = dynamic_cast<Stage*>(currentStage);
+	if (!stage)return Vector3();
+
+	// ステージのモデルハンドルの取得
+	int modelHandle = stage->GetModelHandle();
+
+	// 階段位置の名前の取得
+	std::string frameName = json["Player"]["StairsPos"];
+
+	// string型→const char* 型への型変換
+	const char* cstr = frameName.c_str();
+
+	// 階段位置のフレーム番号を取得
+	int frameIndex = MV1SearchFrame(modelHandle, cstr);
+	if (frameIndex == -1)return Vector3();
+
+	// 階段位置の座標を取得
+	VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
+
+	// VECTOR型をVector3型に変換
+	Vector3 stairsPos = FromVECTOR(framePos);
+
+	// 座標を返す
+	return stairsPos;
+
+}
+
