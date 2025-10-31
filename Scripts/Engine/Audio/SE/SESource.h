@@ -25,12 +25,12 @@ public:
 
 public:
 	/*
-	 *	‰¹Œ¹‚ÌÄ¶
-	 *  @param[in]	int setVolume	‰¹—Ê
+	 *	‰¹Œ¹‚ÌÄ¶ˆ—
+	 *  @param[in]	const int setVolume	‰¹—Ê
 	 */
 	void Play(int setVolume) override;
 	/*
-	 *	‰¹Œ¹‚Ì’â~
+	 *	‰¹Œ¹‚Ì’â~ˆ—
 	 */
 	void Stop() override;
 	/*

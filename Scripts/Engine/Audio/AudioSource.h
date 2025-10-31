@@ -27,12 +27,12 @@ public:
 
 public:
 	/*
-	 *	âπåπÇÃçƒê∂
+	 *	âπåπÇÃçƒê∂èàóù
 	 *  @param[in]	int setVolume	âπó 
 	 */
 	virtual void Play(int setVolume) = 0;
 	/*
-	 *	âπåπÇÃí‚é~
+	 *	âπåπÇÃí‚é~èàóù
 	 */
 	virtual void Stop() = 0;
 	/*
@@ -60,7 +60,7 @@ public:
 	 *	âπó ÇÃê›íË
 	 *  @param[in]	int setVolume	ê›íËÇ∑ÇÈâπó (0Å`100)
 	 */
-	inline void SetAudioVolume(int setVolume) { 
+	inline void ChangeAudioVolume(int setVolume) { 
 		// âπó ÇÃêîílÇÃïœä∑(0Å`100)->(0Å`255)
 		int volume = ChangeVolumeCorrection(setVolume);
 		ChangeVolumeSoundMem(volume, audioHandle);

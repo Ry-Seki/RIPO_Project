@@ -1,3 +1,8 @@
+/*
+ *	@file	ActionShop.cpp
+ *	@author	Seki
+ */
+
 #include "ActionShop.h"
 
 /*
