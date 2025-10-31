@@ -10,11 +10,12 @@
 #include "../Singleton.h"
 #include "../Engine.h"
 #include "../Stage/Stage.h"
-#include <memory>
-#include <string>
 #include "../Load/LoadManager.h"
 #include "../Load/JSON/LoadJSON.h"
 #include "../VecMath.h"
+#include "../Stage/StageState.h"
+#include <memory>
+#include <string>
 
  /*
   *	ステージ全体の管理
@@ -26,11 +27,20 @@ class StageManager : public Singleton<StageManager> {
 private:
 
 	Engine* engine;						// ゲームエンジン参照
-	std::unique_ptr<StageBase> pStage;	// 現在のステージ(自動的に削除される*)
+	// std::unique_ptr<StageBase> pStage;	// 現在のステージ(自動的に削除される*)
 	JSON json;
+	StageState stageState;				// ステージの状態保持
 
 	StageManager();						// コンストラクタ
 	~StageManager() = default;			// デストラクタ
+
+private:
+	template<typename Func>
+	void WithCurrentStage(Func&& func) {
+		if (auto* stage = stageState.GetCurrentStage()) {
+			func(*stage);
+		}
+	};
 
 public:
 
@@ -39,6 +49,10 @@ public:
 	 */
 	void Initialize(Engine& setEngine);
 
+	/*
+	 *	ステージの読み込み
+	 *  @param	modelHandleBase		モデルハンドル
+	 */
 	void LoadStage(const int modelHandleBase);
 
 	/*
@@ -56,13 +70,28 @@ public:
 	 */
 	void Execute();
 
+	/*
+	 *	ステージの当たり判定
+	 *  @param position		対象者の座標
+	 *  @param MoveVec		対象者の移動量
+	 */
 	void StageCollider(Vector3* position, Vector3 MoveVec);
+
+	/*
+	 *	前のステージに戻す
+	 */
+	void RestorePrevStage();
 
 public:
 	/*
 	 *  現在のステージの取得
 	 */
-	StageBase* GetStage() const { return pStage.get(); }
+	StageBase* GetCurrentStage() const { return stageState.GetCurrentStage(); }
+
+	/*
+	 *	ひとつ前のステージの取得
+	 */
+	StageBase* GetPrevStage() const { return stageState.GetPrevStage(); }
 
 	/*
 	 *	ステージのFrameを取得

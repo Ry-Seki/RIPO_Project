@@ -62,10 +62,10 @@ void Stage::Update() {
  */
 void Stage::Render() {
 	if (modelHandle >= 0) {
-		// モデルの描画
-		MV1DrawModel(modelHandle);
 		// ライトをセット
 		LightSettings();
+		// モデルの描画
+		MV1DrawModel(modelHandle);
 	}
 }
 
@@ -73,8 +73,9 @@ void Stage::Render() {
  *	終了処理
  */
 void Stage::Execute() {
-	Clean(modelHandle);
 	if (modelHandle >= 0) {
+		// モデルを非表示
+		Clean(modelHandle);
 		// モデルの片付け
 		MV1DeleteModel(modelHandle);
 		// モデルをnull
