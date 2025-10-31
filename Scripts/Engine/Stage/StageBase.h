@@ -31,8 +31,6 @@ protected:
 	}
 
 public:
-	// ステージ読み込み
-	virtual void Load(const std::shared_ptr<LoadModel>& model) = 0;
 
 	virtual void ModelLoad(const int modelHandleBase) = 0;
 
@@ -44,6 +42,7 @@ public:
 
 	// 終了処理
 	virtual void Execute() = 0;
+
 
 	/*
 	 *	当たり判定の更新

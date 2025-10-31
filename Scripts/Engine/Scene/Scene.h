@@ -17,7 +17,7 @@ class Engine;
  *  シーンの基底クラス
  */
 class Scene {
-private:
+public:
     // ワールド座標系のコライダーを表す構造体
     struct WorldCollider {
         AABBColliderPtr origin;
@@ -82,6 +82,12 @@ public:
      *  ゲームオブジェクトの破棄
      */
     void RemoveDestroyedObjects();
+    /*
+     *  全てのゲームオブジェクトの全てのコライダーをワールド座標に変換
+     *  @return 変換された全オブジェクトの全コライダーのリスト
+     *  @author Riku
+     */
+    std::vector<WorldColliderList> ChangeGameObjectWorldColliders();
 };
 // 別名定義
 using ScenePtr = std::shared_ptr<Scene>;
