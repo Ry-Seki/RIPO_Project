@@ -13,32 +13,46 @@
  *  Dayの管理クラス
  */
 class Week : public DateBase {
+private:
+    std::unique_ptr<Day> day;   // Dayクラス(常に持っている想定)
+    int dayIndex = 0;           // 日付けカウント
+
+private:
+    int DAY_END_COUNT = 6;      // 1週間を構成する日にちの数
+
 public:
-    std::vector<std::shared_ptr<Day>> days;     // Day配列
-    int currentDayIndex = 0;                    // 日にちカウント
+    /*
+     *  コンストラクタ (Dayクラスの作成)
+     */
+    Week() : day(std::make_unique<Day>()){}
 
+public:
+    /*
+     *  進行処理(Day)
+     */
     void Advance() override {
-        auto day = GetCurrentDay();
         if (!day) return;
-
-        // Day が終わっていれば削除
+        // Dayの進行処理
+        day->Advance();
+        // Dayクラスの終了処理
         if (day->IsFinished()) {
-            days.erase(days.begin() + currentDayIndex);
-            // 削除したので currentDayIndex はそのまま
+            // DayCountの更新
+            dayIndex++;
+            if (dayIndex < DAY_END_COUNT) return;
+            // コールバック処理
+            if (onAdvance) onAdvance();
         }
-        // Day が残っていれば何もしない（次フレームで再確認）
-        if (onAdvance) onAdvance();
     }
+
+public:
     /*
      *  一週間の行動終了フラグ
      */
-    bool IsFinished() const override { return days.empty(); }
+    inline bool IsFinished() const override { return dayIndex >= DAY_END_COUNT; }
     /*
-     *  現在稼働しているDayを取得
+     *  Dayクラスの取得
+     *  @return Day&
      */
-    std::shared_ptr<Day> GetCurrentDay() {
-        if (currentDayIndex < days.size()) return days[currentDayIndex];
-        return nullptr;
-    }
+    inline Day& GetDay() { return *day; }
 }; 
 #endif // !_WEEK_H_

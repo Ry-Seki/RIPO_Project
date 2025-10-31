@@ -74,6 +74,32 @@ void CharacterManager::GeneratePlayer(
 }
 
 /*
+ *	エネミー生成
+ */
+void CharacterManager::GenerateEnemy(
+	const std::string& name,
+	const Vector3& position,
+	const Vector3& rotation,
+	const Vector3& AABBMin,
+	const Vector3& AABBMax) {
+	// リストの要素の数
+	size_t characterListCount = createCharacterList.size();
+	// 生成キャラクターリストの空きをチェック
+	for (size_t i = 0; i < characterListCount; i++) {
+		if (createCharacterList[i] != nullptr) continue;
+		// リストの空きに生成
+		createCharacterList[i] = CreateCharacter<EnemyComponent>(i, name, position, rotation, AABBMin, AABBMax);
+		std::shared_ptr<EnemyComponent> enemy = std::dynamic_pointer_cast<EnemyComponent>(createCharacterList[i]);
+		enemy->Start();
+
+		return;
+	}
+	// 空きが無かったら一番後ろに生成
+	createCharacterList.push_back(CreateCharacter<EnemyComponent>(0, name, position, rotation, AABBMin, AABBMax));
+
+}
+
+/*
  *	ID指定のキャラクター削除
  */
 void CharacterManager::RemoveCharacter(int characterID) {

@@ -1,6 +1,7 @@
 /*
  *	@file	VecMath.cpp
  *	@author	Seki
+ *  @author oorui
  */
 
 #include "VecMath.h"
@@ -103,6 +104,13 @@ Vector3 Vector3::Clamp(const Vector3& v1, const Vector3& min, const Vector3& max
 
 float Vector3::Clamp(float value, float min, float max) {
 	return std::fmax(min, std::fmin(max, value));
+}
+
+/*
+ *	äÓèÄì_Ç©ÇÁÇÃÇ∏ÇÁÇµ
+ */
+Vector3 Vector3::Offset(const Vector3& v1, const Vector3& v2) {
+	return (v1 - v2);
 }
 
 /*
@@ -248,6 +256,10 @@ float Distance(const Vector3& v1, const Vector3& v2) {
 
 Vector3 Direction(const Vector3& from, const Vector3& to) {
 	return Vector3::Direction(from, to);
+}
+
+Vector3 Offset(const Vector3& v1, const Vector3& v2) {
+	return Vector3::Offset(v1, v2);
 }
 
 Vector3 Clamp(const Vector3& v1, const Vector3& min, const Vector3& max) {

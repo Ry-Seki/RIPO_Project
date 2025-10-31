@@ -192,10 +192,10 @@
     <ClCompile Include="Scripts\Engine\Collision.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp">
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\RayCast.cpp">
+    <ClCompile Include="ソース.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -299,6 +299,9 @@
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\CameraComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="Scripts\Engine\Manager\CameraManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -316,6 +319,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\Sprite\LoadSprite.h">
       <Filter>ヘッダー ファイル\Engine\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.h">
       <Filter>ヘッダー ファイル\Engine\Load\Animation</Filter>
@@ -389,20 +395,11 @@
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h">
       <Filter>ヘッダー ファイル\Engine\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    <ClInclude Include="Scripts\Engine\Character\CharacterBase.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\CameraComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h">
-      <Filter>ヘッダー ファイル\Engine\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\RayCast.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

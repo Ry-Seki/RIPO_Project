@@ -73,8 +73,9 @@ int Engine::Initialize() {
 	}
 #pragma endregion
 
+	// タイムクラスの初期化
     Time::Init();
-
+	// 初期化フラグの変更
     initialized = true;
     return 0;
 }
@@ -116,7 +117,7 @@ void Engine::Update() {
 	// ロードフラグの取得
 	bool isLoading = LoadManager::GetInstance().IsLoading();
 	// ロード更新処理
-	if (isLoading) LoadManager::GetInstance().Update(Time::unscaledDeltaTime);
+	LoadManager::GetInstance().Update(Time::unscaledDeltaTime);
 
 	// フェードモードを確認
 	bool isFadeStop = FadeManager::GetInstance().GetMode() == FadeMode::Stop;

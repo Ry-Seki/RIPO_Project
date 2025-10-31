@@ -14,36 +14,45 @@
  */
 class Month : public DateBase {
 public:
-    std::vector<std::shared_ptr<Week>> weeks;   // Week配列
-    int currentWeekIndex = 0;                   // 週間カウント
+    std::unique_ptr<Week> week;   // Weekクラス (常に持っている想定)
+    int weekIndex = 0;            // 週間カウント
 
+public:
+    int WEEK_END_COUNT = 5;       // 1ヶ月を構成する週間の数
+
+public:
     /*
-     *  進行処理
+     *  コンストラクタ (Weekクラスの生成)
+     */
+    Month() : week(std::make_unique<Week>()) {}
+
+public:
+    /*
+     *  進行処理(Week)
      */
     void Advance() override {
-        auto week = GetCurrentWeek();
         if (!week) return;
-
-        week->Advance(); // Week 内の Day 削除処理は Week が担当
-
-        // Week が空なら削除
+        // Weekクラスの進行処理
+        week->Advance();
+        // Weekの終了処理
         if (week->IsFinished()) {
-            weeks.erase(weeks.begin() + currentWeekIndex);
-            // currentWeekIndex はそのまま、次の Week が現在のインデックスに来る
+            // WeekCountの更新
+            weekIndex++;
+            if (weekIndex < WEEK_END_COUNT) return;
+            // コールバック処理
+            if (onAdvance) onAdvance();
         }
-        // 進行処理コールバック
-        if (onAdvance) onAdvance();
     }
+
+public:
     /*
      *  一週間の行動終了フラグ
      */
-    bool IsFinished() const override { return weeks.empty(); }
+    inline bool IsFinished() const override { return weekIndex >= WEEK_END_COUNT; }
     /*
-     *  現在稼働しているWeekの取得
+     *  Weekクラスの取得
+     *  @return Week&
      */
-    std::shared_ptr<Week> GetCurrentWeek() {
-        if (currentWeekIndex < weeks.size()) return weeks[currentWeekIndex];
-        return nullptr;
-    }
+    inline Week& GetWeek() const { return *week; }
 };
 #endif // !_MONTH_H_

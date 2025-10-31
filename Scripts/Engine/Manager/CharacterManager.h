@@ -9,6 +9,7 @@
 #include <vector>
 #include "../Singleton.h"
 #include "../Component/Character/PlayerComponent.h"
+#include "../Component/Character/EnemyComponent.h"
 
 
 /*
@@ -63,6 +64,23 @@ public:
 		const Vector3& rotation,
 		const Vector3& AABBMin,
 		const Vector3& AABBMax);
+
+	/*
+	 *	エネミー生成
+	 *  @author	kuu
+	 *	@param	name		エネミーの名前
+	 *	@param	position	生成位置
+	 *  @param	rotation	生成角度
+	 *  @param	AABBMin		AABBの各軸に置ける最小値
+	 *  @param	AABBMax		AABBの各軸に置ける最大値
+	 */
+	void GenerateEnemy(
+		const std::string& name,
+		const Vector3& position,
+		const Vector3& rotation,
+		const Vector3& AABBMin,
+		const Vector3& AABBMax);
+
 	void RemoveCharacter(int characterID);
 	CharacterBasePtr GetCharacter(int characterID);
 	

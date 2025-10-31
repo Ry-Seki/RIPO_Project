@@ -30,3 +30,9 @@ void ActionPartTime::Update(Engine& engine, float deltaTime) {
 void ActionPartTime::Render() {
 
 }
+/*
+ *	”jŠüˆ—
+ */
+void ActionPartTime::Teardown() {
+
+}

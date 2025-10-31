@@ -36,8 +36,8 @@ void CameraComponent::Update(float deltaTime) {
 	// カメラの角度に移動量を加える
 	camera->rotation += moveRotation;
 	// カメラの位置をプレイヤーと合わせる
-	//if (player != nullptr)
-	//	camera->position = player->position;
+	if (player != nullptr)
+		camera->position = player->position;
 
 	// デバッグ用
 	const float cameraCos = cosf(camera->rotation.y);
@@ -74,5 +74,4 @@ void CameraComponent::Update(float deltaTime) {
 		camera->rotation.x,
 		camera->rotation.y,
 		moveRotation.z);
-
 }

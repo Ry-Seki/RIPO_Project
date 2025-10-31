@@ -7,29 +7,34 @@
 #define _ACTION_DUNGEON_H_
 
 #include "../DayActionBase.h"
-#include "../../../../Data/DungeonData.h"
 #include "../../../../Data/DungeonStageData.h"
 #include "../../../Load/Model/LoadModel.h"
-
+#include "../../../Load/JSON/LoadJSON.h"
 #include <vector>
 #include <memory>
 #include <string>
 
-class DungeonDataLoader; // 前方宣言
+/*
+ *	各ロードデータ構造体
+ */
+struct DungeonResource {
+	std::vector<std::shared_ptr<LoadModel>> stageResource;
+	std::shared_ptr<LoadJSON> stageBoneResource;
+	std::shared_ptr<LoadModel> playerResource;
+	std::shared_ptr<LoadModel> enemyResource;
+};
 
 /*
  *	ダンジョンアクションクラス
  */
 class ActionDungeon : public DayActionBase {
 private:
-	std::shared_ptr<DungeonDataLoader> dungeonDataLoader;
-	std::vector<DungeonData> dungeonList;
-	DungeonData currentDungeon;
-	DungeonStageData currentDungeonStage;
+	DungeonStageData stageData;
 
-	std::string debugPath;
 	bool inputHandle = false;
 
+private:
+	static bool isFirst;
 public:
 	/*
 	 *	コンストラクタ
@@ -57,15 +62,18 @@ public:
 	 *	描画処理
 	 */
 	void Render() override;
+	/*
+	 *	破棄処理
+	 */
+	void Teardown() override;
 
-	void DebugInitialize(Engine& engine, std::string setFilePath);
-	void DebugSetup(Engine& engine, std::shared_ptr<LoadModel> setModel);
+	void DebugInitialize(Engine& engine, DungeonStageData& setStageData);
+	void DebugSetup(Engine& engine, const DungeonResource& setResource);
 
 public:
 	/*
 	 *	ダンジョンステージデータの設定
 	 */
-	inline void SetDungeonStageData(DungeonStageData setData) { currentDungeonStage = setData; }
-	inline void SetDungeonStagePath(std::string setFilePath) { debugPath = setFilePath; }
+	inline void SetDungeonStageData(DungeonStageData setData) { stageData = setData; }
 };
 #endif // !_ACTION_DUNGEON_H_

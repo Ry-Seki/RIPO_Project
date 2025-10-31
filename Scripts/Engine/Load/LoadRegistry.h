@@ -6,14 +6,12 @@
 #ifndef _LOAD_REGISTRY_H_
 #define _LOAD_REGISTRY_H_
 
+#include "LoadBase.h"
+
 #include <unordered_map>
 #include <memory>
 #include <string>
 #include <mutex>
-
- // 前方宣言
-class LoadBase;
-using LoadBasePtr = std::shared_ptr<LoadBase>;
 
 /*
  *  同じリソースの二重ロードを防ぐ
@@ -25,7 +23,13 @@ private:
     mutable std::mutex mtx;                                // スレッド安全用
 
 public:
+    /*
+     *  コンストラクタ
+     */
     LoadRegistry() = default;
+    /*
+     *  デストラクタ
+     */
     ~LoadRegistry() = default;
 
 public:
@@ -41,6 +45,7 @@ public:
     }
     /*
      *  登録済みかを確認
+     *  @return     bool
      */ 
     bool Exists(const std::string& key) const {
         std::lock_guard<std::mutex> lock(mtx);
@@ -48,6 +53,7 @@ public:
     }
     /*
      *  登録済みリソースを取得
+     *  @return     LoadBasePtr
      */
     LoadBasePtr Get(const std::string& key) const {
         std::lock_guard<std::mutex> lock(mtx);

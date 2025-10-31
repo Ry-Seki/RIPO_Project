@@ -17,7 +17,7 @@ public:
 	//----------------------------------------------------
 	static constexpr   int PLAYER_MAX_HITCOLL = 1024;		 // 処理するコリジョンポリゴンの最大数
 	static constexpr float PLAYER_ENUM_DEFAULT_SIZE = 5.0f;	 // 周囲のポリゴン検出に使用するサイズ
-	static constexpr float PLAYER_HIT_WIDTH = 0.5f;			 // 当たり判定カプセルの半径 
+	static constexpr float PLAYER_HIT_HEIGHT = 0.5f;			 // 当たり判定カプセルの半径 
 
 	//----------------------------------------------------
 	//					敵関連の定数

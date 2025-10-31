@@ -46,6 +46,10 @@ public:
      *  •`‰æˆ—
      */
     void Render() override;
+    /*
+     *  ”jŠüˆ—
+     */
+    void Teardown() override;
 };
 
 #endif // !_ACTION_TRAINING_H_

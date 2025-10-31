@@ -50,5 +50,9 @@ public:
      *  •`‰æˆ—
      */
     void Render() override;
+    /*
+     *  ”jŠüˆ—
+     */
+    void Teardown() override;
 };
 #endif // !_ACTION_SHOP_H_

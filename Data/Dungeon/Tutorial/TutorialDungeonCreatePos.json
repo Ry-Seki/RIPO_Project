@@ -1,0 +1,27 @@
+{
+  "Player": {
+    "StartPos": "Col_StartPos",
+    "GoalPos": "Col_GoalPos",
+    "StairsPos": "Col_StairsPos"
+  },
+  "Enemy": {
+    "SpwanPos": [
+      "Sponer_0",
+      "Sponer_1",
+      "Sponer_2"
+    ]
+  },
+  "Treasure": {
+    "SpwanPos": [
+      "ItemSpn0",
+      "ItemSpn1"
+    ]
+  },
+  "PointLight": {
+    "LightPos": [
+      "PointLightPos_0",
+      "PointLightPos_1"
+    ]
+  }
+
+}

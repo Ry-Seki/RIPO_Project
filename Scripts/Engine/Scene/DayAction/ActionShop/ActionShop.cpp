@@ -24,3 +24,8 @@ void ActionShop::Update(Engine& engine, float deltaTime) {
 void ActionShop::Render() {
 
 }
+/*
+ *	”jŠüˆ—
+ */
+void ActionShop::Teardown() {
+}

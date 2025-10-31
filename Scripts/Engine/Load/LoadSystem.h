@@ -18,6 +18,9 @@ private:
     int currentIndex = 0;
     bool isComplete = false;
 
+    // フレーム毎に使えるミリ秒（例: 4 ms）
+    int maxMillisecondsPerFrame = 4;
+
 public:
     LoadSystem() = default;
     ~LoadSystem() { Clear(); }
@@ -25,17 +28,19 @@ public:
     void Update(float unscaledDeltaTime) {
         if (isComplete || loadList.empty()) return;
 
+        // ロードアニメーションの更新
+        for (auto& anim : animationList) {
+            if (anim) anim->Update(unscaledDeltaTime);
+        }
         if (currentIndex < loadList.size()) {
             loadList[currentIndex]->Load();
             currentIndex++;
         }
 
-        for (auto& anim : animationList) {
-            if (anim) anim->Update(unscaledDeltaTime);
-        }
 
         if (currentIndex >= loadList.size()) {
             isComplete = true;
+            Clear();
         }
     }
 
@@ -63,12 +68,14 @@ public:
         isComplete = false;
     }
 
+public:
     inline bool IsLoading() const { return !isComplete && !loadList.empty(); }
     inline bool IsComplete() const { return isComplete || loadList.empty(); }
     inline float GetProgress() const {
         return loadList.empty() ? 1.0f : float(currentIndex) / float(loadList.size());
     }
     inline void ResetCompleteFlag() { isComplete = false; }
+    inline void CompleteLoading() { isComplete = true; }
 };
 
 #endif // !_LOAD_SYSTEM_H_

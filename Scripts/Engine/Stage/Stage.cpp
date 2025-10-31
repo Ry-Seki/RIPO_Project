@@ -15,7 +15,11 @@
   *  コンストラクタ
   */
 Stage::Stage()
-	: StageBase() {
+	: StageBase()
+	, lightDirection(0.2f, -20.0f, 0.3f)
+	, pointLightColor(1.0f, 0.8f, 0.6f)  // 色
+	, pointLightRange(10.0f)            // ポイントライトの範囲
+{
 	modelHandle = -1;
 }
 
@@ -41,14 +45,8 @@ void Stage::Load(const std::shared_ptr<LoadModel>& model) {
  *  @pram const int modelHandle
  */
 void Stage::ModelLoad(const int modelHandleBase) {
-	modelHandle = modelHandleBase;
+	modelHandle = MV1DuplicateModel(modelHandleBase);
 
-	SetLightAmbColor(GetColorF(0.2f, 0.25f, 0.3f,1));
-
-	// 方向ライト（上から少し照らす）
-	SetLightDirection(VGet(0.2f, -20.0f, 0.3f));
-	SetLightDifColor(GetColorF(1.5f, 1.5f, 1.3f, 1.0f));
-	SetLightSpcColor(GetColorF(0.2f, 0.2f, 0.2f,1));
 }
 
 /*
@@ -56,6 +54,7 @@ void Stage::ModelLoad(const int modelHandleBase) {
  */
 void Stage::Update() {
 	// ステージのオブジェクト更新
+
 }
 
 /*
@@ -63,7 +62,10 @@ void Stage::Update() {
  */
 void Stage::Render() {
 	if (modelHandle >= 0) {
+		// モデルの描画
 		MV1DrawModel(modelHandle);
+		// ライトをセット
+		LightSettings();
 	}
 }
 
@@ -73,24 +75,33 @@ void Stage::Render() {
 void Stage::Execute() {
 	Clean(modelHandle);
 	if (modelHandle >= 0) {
+		// モデルの片付け
 		MV1DeleteModel(modelHandle);
+		// モデルをnull
 		modelHandle = -1;
 	}
 }
 
+
 /*
  * @brief ステージの当たり判定を更新
- * @param position     おｚぶてｋとお位置
- * @param PolyPos1     カプセル当たり判定下端
- * @param PolyPos2     カプセル当たり判定上端
+ * @param position     オブジェクト位置	参照渡しで座標変更
  * @param MoveVec      移動ベクトル
  */
-void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos2, Vector3 MoveVec) {
-
-
+void Stage::UpdateCollision(Vector3* position, Vector3 MoveVec) {
+	// 移動前の座標
 	Vector3 prevPos = *position;
-	Vector3 nowPos = prevPos + MoveVec;
-	float polyOffset = PloyPos2.y - PolyPos1.y;
+	Vector3 currentPos = prevPos + MoveVec;
+
+	// プレイヤーの座標
+	Vector3 PolyPos = *position;
+	// PolyPosTopより指定座標分高い位置
+	Vector3 PolyPosTop = *position;
+	PolyPosTop.y += GameConst::PLAYER_HIT_HEIGHT;
+
+	// 縦方向のオフセット
+	float polyOffset = PolyPosTop.y - PolyPos.y;
+	// 水平移動しているかどうか
 	bool moveFlag = (fabs(MoveVec.x) > 0.01f || fabs(MoveVec.z) > 0.01f);
 
 	// コリジョン情報取得
@@ -101,13 +112,13 @@ void Stage::UpdateCollision(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos
 	ClassifyPolygons(*hitDim, prevPos, walls, floors);
 
 	// 壁衝突処理
-	ProcessWallCollision(nowPos, prevPos, polyOffset, MoveVec, walls, moveFlag);
+	ProcessWallCollision(currentPos, prevPos, polyOffset, MoveVec, walls, moveFlag);
 
 	// 床衝突処理
-	ProcessFloorCollision(nowPos, polyOffset, floors);
+	ProcessFloorCollision(currentPos, polyOffset, floors);
 
 	// 結果反映
-	*position = nowPos;
+	*position = currentPos;
 	MV1CollResultPolyDimTerminate(*hitDim);
 
 }
@@ -203,7 +214,7 @@ void Stage::ProcessWallCollision(
 			if (!HitCheck_Capsule_Triangle(
 				ToVECTOR(capsuleStart),
 				ToVECTOR(capsuleEnd),
-				GameConst::PLAYER_HIT_WIDTH,
+				GameConst::PLAYER_HIT_HEIGHT,
 				poly->Position[0],
 				poly->Position[1],
 				poly->Position[2])) continue;
@@ -219,10 +230,11 @@ void Stage::ProcessWallCollision(
 			// 再衝突確認
 			for (auto* polyCheck : walls) {
 				Vector3 capsulePos = nowPos + Vector3(0.0f, polyOffset, 0.0f);
+				// カプセルと三角形の当たり判定
 				if (HitCheck_Capsule_Triangle(
 					ToVECTOR(nowPos),
 					ToVECTOR(capsulePos),
-					GameConst::PLAYER_HIT_WIDTH,
+					GameConst::PLAYER_HIT_HEIGHT,
 					polyCheck->Position[0],
 					polyCheck->Position[1],
 					polyCheck->Position[2])) {
@@ -237,10 +249,11 @@ void Stage::ProcessWallCollision(
 		// 止まっている時
 		for (auto* poly : walls) {
 			Vector3 capsulePos = nowPos + Vector3(0.0f, polyOffset, 0.0f);
+			// カプセルと三角形の当たり判定
 			if (HitCheck_Capsule_Triangle(
 				ToVECTOR(nowPos),
 				ToVECTOR(capsulePos),
-				GameConst::PLAYER_HIT_WIDTH,
+				GameConst::PLAYER_HIT_HEIGHT,
 				poly->Position[0],
 				poly->Position[1],
 				poly->Position[2])) {
@@ -255,10 +268,11 @@ void Stage::ProcessWallCollision(
 		for (int k = 0; k < GameConst::HIT_TRYNUM; k++) {
 			for (auto* poly : walls) {
 				Vector3 capsulePos = nowPos + Vector3(0.0f, polyOffset, 0.0f);
+				// カプセルと三角形の当たり判定
 				if (!HitCheck_Capsule_Triangle(
 					ToVECTOR(nowPos),
 					ToVECTOR(capsulePos),
-					GameConst::PLAYER_HIT_WIDTH,
+					GameConst::PLAYER_HIT_HEIGHT,
 					poly->Position[0],
 					poly->Position[1],
 					poly->Position[2])) continue;
@@ -291,6 +305,7 @@ void Stage::ProcessFloorCollision(
 	for (auto* poly : floors) {
 		Vector3 line1 = nowPos + Vector3(0.0f, polyOffset, 0.0f);
 		Vector3 line2 = nowPos + Vector3(0.0f, -0.3f, 0.0f);
+		// 三角形と線分の当たり判定
 		HITRESULT_LINE res = HitCheck_Line_Triangle(
 			ToVECTOR(line1),
 			ToVECTOR(line2),
@@ -306,6 +321,54 @@ void Stage::ProcessFloorCollision(
 	}
 
 	if (hitFlag) nowPos.y = MaxY;
+
+}
+
+/*
+ *	ステージのライトの設定
+ */
+void Stage::LightSettings() {
+
+	// // 既存のライトを全て消す
+	// DeleteLightHandleAll();
+	// 
+	// // 太陽光の設定
+	// int dirLight = CreateDirLightHandle(ToVECTOR(lightDirection));
+	// // 環境光設定
+	// SetLightAmbColor(GetColorF(0.2f, 0.25f, 0.3f, 1.0f));
+	// // 太陽光の色など設定
+	// SetLightDifColorHandle(dirLight, GetColorF(1.5f, 1.5f, 1.3f, 1.0f));
+	// SetLightSpcColorHandle(dirLight, GetColorF(0.2f, 0.2f, 0.2f, 1.0f));
+	// SetLightEnableHandle(dirLight, TRUE);
+	// 
+	// // ポイントライトの設定
+	// // ポイントライトの座標の取得
+	// pointLightPos = StageManager::GetInstance().GetPointLightPos();
+	// for (const auto& pos : pointLightPos) {
+	// 	int pLight = CreatePointLightHandle(
+	// 		ToVECTOR(pos),
+	// 		pointLightRange,
+	// 		1.0f / pointLightRange,
+	// 		0.001f,
+	// 		0.01f
+	// 	);
+	// 
+	// 	// ポイントの色など設定
+	// 	SetLightDifColorHandle(pLight, GetColorF(pointLightColor.x, pointLightColor.y, pointLightColor.z, 1.0f));
+	// 	SetLightSpcColorHandle(pLight, GetColorF(0.1f, 0.1f, 0.1f, 1.0f));
+	// 	SetLightEnableHandle(pLight, TRUE);
+	// 
+	// }
+
+
+	 // マップ全体のライト設定
+
+	 // アンビエントカラーの設定
+	SetLightAmbColor(GetColorF(0.2f, 0.25f, 0.3f, 1));
+	// ライトの方向を設定する
+	SetLightDirection(ToVECTOR(lightDirection));
+	SetLightDifColor(GetColorF(1.5f, 1.5f, 1.3f, 1.0f));
+	SetLightSpcColor(GetColorF(0.2f, 0.2f, 0.2f, 1));
 
 }
 

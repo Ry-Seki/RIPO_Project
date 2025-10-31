@@ -13,6 +13,9 @@
 #include <memory>
 #include <string>
 #include "../Load/LoadManager.h"
+#include "../Load/JSON/LoadJSON.h"
+#include "../VecMath.h"
+
  /*
   *	ステージ全体の管理
   */
@@ -24,10 +27,10 @@ private:
 
 	Engine* engine;						// ゲームエンジン参照
 	std::unique_ptr<StageBase> pStage;	// 現在のステージ(自動的に削除される*)
+	JSON json;
 
-
-	StageManager();
-	~StageManager() = default;
+	StageManager();						// コンストラクタ
+	~StageManager() = default;			// デストラクタ
 
 public:
 
@@ -53,7 +56,7 @@ public:
 	 */
 	void Execute();
 
-	void StageCollider(Vector3* position, Vector3 PolyPos1, Vector3 PloyPos2, Vector3 MoveVec);
+	void StageCollider(Vector3* position, Vector3 MoveVec);
 
 public:
 	/*
@@ -70,6 +73,31 @@ public:
 	 *	スタート位置の取得
 	 */
 	Vector3 GetStartPos()const;
+
+	/*
+	 * ゴール位置の取得
+	 */
+	Vector3 GetGoalPos()const;
+
+	/*
+	 *	敵の初期生成位置の取得
+	 */
+	std::vector<Vector3> GetEnemySpwanPos()const;
+
+	/*
+	 * お宝の生成位置の取得
+	 */
+	std::vector<Vector3> GetTreasureSpwanPos()const;
+
+	/*
+	 *	ポイントライト生成位置の取得
+	 */
+	std::vector<Vector3> GetPointLightPos()const;
+
+	/*
+	 *	jsonの変更
+	 */
+	void SetStageJSONData(JSON setJSON) { json = setJSON; }
 
 };
 

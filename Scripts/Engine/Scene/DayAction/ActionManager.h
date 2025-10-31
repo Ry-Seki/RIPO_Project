@@ -6,7 +6,6 @@
 #ifndef _ACTION_MANAGER_H_
 #define _ACTION_MANAGER_H_
 
-#include "../../Singleton.h"
 #include "DayActionBase.h"
 #include "ActionDungeon/ActionDungeon.h"
 #include "../../../Data/DungeonStageData.h"
@@ -19,17 +18,14 @@
 /*
  *  各アクションの管理クラス 
  */
-class ActionManager : public Singleton<ActionManager>{
-    // フレンド宣言
-    friend class Singleton<ActionManager>;
-
+class ActionManager{
 private:
     DayActionPtr actionBase;                // アクションクラスのオリジナル
     DayActionPtr currentAction;             // 現在のアクション
     std::function<void()> onComplete;       // アクション完了コールバック
     bool isActive = false;                  // 処理有効フラグ
 
-private:
+public:
     /*
      *  コンストラクタ
      */
@@ -54,7 +50,7 @@ public:
      *  ダンジョンアクション開始
      */
     void ActiveDungeon(Engine& engine, DungeonStageData setStageData);
-    void DebugActiveDungeon(Engine& engine, std::string setFilePath);
+    void DebugActiveDungeon(Engine& engine, DungeonStageData setStageData);
     /*
      *  トレーニングアクション開始
      */
