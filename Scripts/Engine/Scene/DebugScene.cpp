@@ -40,12 +40,15 @@ void DebugScene::Initialize(Engine& engine) {
 			int modelHandle = playerModel->GetHandle();
 			player->GetOwner()->GetComponent<ModelRenderer>()->SetModel(modelHandle);
 			player->GetOwner()->position = StageManager::GetInstance().GetStartPos();
+
 			int enemyModelHandle = enemyModel->GetHandle();
-			enemy->GetOwner()->GetComponent<ModelRenderer>()->SetModel(enemyModelHandle);
-			
-			enemy->GetOwner()->position = StageManager::GetInstance().GetStartPos();
-            std::shared_ptr<EnemyComponent> component = std::dynamic_pointer_cast<EnemyComponent>(enemy);
-            component->SetWayPoint(enemy->GetOwner()->position);
+            enemy->GetOwner()->GetComponent<ModelRenderer>()->SetModel(enemyModelHandle);
+
+            std::vector<Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpwanPos();
+            for (const auto& pos : enemySpawnPos) {
+                std::shared_ptr<EnemyComponent> component = std::dynamic_pointer_cast<EnemyComponent>(enemy);
+                component->SetWayPoint(enemy->GetOwner()->position);
+            }
 		}
 	);
 }

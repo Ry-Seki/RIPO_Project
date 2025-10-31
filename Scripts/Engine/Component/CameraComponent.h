@@ -19,10 +19,10 @@ private:
 
 public:
 	CameraComponent();
-	virtual ~CameraComponent() = default;
+	~CameraComponent() = default;
 
 public:
-	virtual void Update(float deltaTime) override;
+	void Update(float deltaTime) override;
 };
 // •Ê–¼’è‹`
 using CameraComponentPtr = std::shared_ptr<CameraComponent>;

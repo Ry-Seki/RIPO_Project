@@ -27,10 +27,10 @@ private:
 
 public:
 	PlayerComponent();
-	virtual ~PlayerComponent() = default;
+	~PlayerComponent() = default;
 
 public:
-	virtual void Update(float deltaTime) override;
+	void Update(float deltaTime) override;
 
 private:
 	/*

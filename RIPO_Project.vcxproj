@@ -147,9 +147,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scripts\Engine\Audio\BGM\BGMManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Audio\BGM\BGMSource.cpp" />
+    <ClCompile Include="Scripts\Engine\Audio\SE\SESource.cpp" />
     <ClCompile Include="Scripts\Engine\Collision.cpp" />
     <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
@@ -165,6 +169,7 @@
     <ClCompile Include="Scripts\Engine\Manager\CharacterManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
+    <ClCompile Include="Scripts\Engine\RayCast.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarSystem.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\Day.cpp" />
@@ -186,17 +191,23 @@
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
-    <ClCompile Include="ソース.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Data\DungeonData.h" />
     <ClInclude Include="Scripts\Data\DungeonStageData.h" />
+    <ClInclude Include="Scripts\Engine\Audio\AudioSource.h" />
+    <ClInclude Include="Scripts\Engine\Audio\BGM\BGMManager.h" />
+    <ClInclude Include="Scripts\Engine\Audio\BGM\BGMSource.h" />
+    <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h" />
+    <ClInclude Include="Scripts\Engine\Audio\SE\SESource.h" />
     <ClInclude Include="Scripts\Engine\Character\CharacterBase.h" />
     <ClInclude Include="Scripts\Engine\Collision.h" />
     <ClInclude Include="Scripts\Engine\Component\AABBCollider.h" />
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Component.h" />
     <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h" />
@@ -227,6 +238,7 @@
     <ClInclude Include="Scripts\Engine\Manager\CharacterManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
+    <ClInclude Include="Scripts\Engine\RayCast.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarSystem.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\DateBase.h" />

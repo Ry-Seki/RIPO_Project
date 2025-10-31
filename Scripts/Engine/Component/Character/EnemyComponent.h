@@ -46,6 +46,11 @@ private:
 	 */
 	void EnemyMove(GameObject* enemy, float deltaTime);
 
+	/* 
+	 *	目標に向かって進む処理
+	 */
+	void ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaTime);
+
 public:
 	/*
 	 *	ウェイポイントの位置変更
