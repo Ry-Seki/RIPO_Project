@@ -76,6 +76,12 @@
     <Filter Include="ソース ファイル\Engine\Scene\Selection">
       <UniqueIdentifier>{d4639ea7-e1a9-44e4-8da6-0b22b2204dd4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Audio">
+      <UniqueIdentifier>{8b99aa5f-c92f-410b-8364-5698a7ae6bfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Audio">
+      <UniqueIdentifier>{bef3dd9e-9d20-4c8f-8581-0e0f1902c486}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -195,8 +201,14 @@
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ソース.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Scripts\Engine\Audio\BGM\BGMSource.cpp">
+      <Filter>ソース ファイル\Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Audio\SE\SESource.cpp">
+      <Filter>ソース ファイル\Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Audio\BGM\BGMManager.cpp">
+      <Filter>ソース ファイル\Engine\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -400,6 +412,30 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\RayCast.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Audio\AudioSource.h">
+      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h">
+      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Audio\SE\SESource.h">
+      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Audio\BGM\BGMManager.h">
+      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Audio\BGM\BGMSource.h">
+      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

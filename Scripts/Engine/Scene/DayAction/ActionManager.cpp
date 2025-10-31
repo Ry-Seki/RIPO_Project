@@ -1,3 +1,8 @@
+/*
+ *	@file	AudioManager.cpp
+ *	@author	Seki
+ */
+
 #include "ActionManager.h"
 #include "ActionDungeon/ActionDungeon.h"
 
