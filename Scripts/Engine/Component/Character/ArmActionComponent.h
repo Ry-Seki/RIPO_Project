@@ -21,7 +21,7 @@ public:
 	virtual ~ArmActionComponent() = default;
 
 public:
-	void Update(float deltaTime) override {
+	virtual void Update(float deltaTime) override {
 		currentArm->Update(deltaTime);
 	}
 
