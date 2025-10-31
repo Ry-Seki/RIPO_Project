@@ -17,7 +17,7 @@
  */
 class AudioSource {
 protected:
-	int audioHandle;
+	int audioHandle = -1;
 	
 public:
 	/*

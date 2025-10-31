@@ -9,13 +9,11 @@
  *	初期化処理
  */
 void BGMManager::Initialize() {
-	currentSource = std::make_shared<BGMSource>();
 }
 /*
  *	ロード済みのデータの設定(コールバック)
  */
 void BGMManager::Setup() {
-
 }
 /*
  *	更新処理
@@ -60,20 +58,31 @@ void BGMManager::ChangeBGM(const std::string setBGMName) {
 }
 /*
  *	BGMハンドルの登録
- *	@param[in]	std::string	setKeyName	// 登録するBGM名
- *	@param[in]	int setHandle			// 登録する音源ハンドル
+ *	@param[in]	const std::string&	setKeyName	登録するBGM名
+ *	@param[in]	const int& setHandle			登録する音源ハンドル
  */
-void BGMManager::RegisterBGMHandle(std::string setKeyName, int setHandle) {
+void BGMManager::RegisterBGMHandle(const std::string& setKeyName, const int& setHandle) {
 	if (!ExistBGMHandle(setKeyName)) return;
 
 	bgmHandleMap[setKeyName] = setHandle;
 }
 /*
  *	BGMハンドルが登録済みか判定
- *  @param[in]	std::string setKeyName	 調べるBGM名
+ *  @param[in]	const std::string& setKeyName	 調べるBGM名
  *  @return		bool
  */
-bool BGMManager::ExistBGMHandle(std::string setKeyName) {
+bool BGMManager::ExistBGMHandle(const std::string& setKeyName) const {
 	std::lock_guard<std::mutex> lock(mtx);
 	return bgmHandleMap.find(setKeyName) != bgmHandleMap.end();
+}
+/*
+ *	BGMハンドルの取得
+ *	@param[in]	const std::string& setKeyName	調べるBGM名
+ *	@return		int
+ */
+int BGMManager::GetBGMHandle(const std::string& setKeyName) const {
+	std::lock_guard<std::mutex> lock(mtx);
+	auto it = bgmHandleMap.find(setKeyName);
+	if (it != bgmHandleMap.end()) return it->second;
+	return -1;
 }
