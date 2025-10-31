@@ -1,12 +1,12 @@
 /*
- *	@file	BGMSource.h
+ *	@file	BGMSource.cpp
  *	@author	Seki
  */
 
 #include "BGMSource.h"
 
 /*
- *	‰¹Œ¹‚ÌÄ¶
+ *	‰¹Œ¹‚ÌÄ¶ˆ—
  *  @param[in]	int setVolume	‰¹—Ê
  */
 void BGMSource::Play(int setVolume) {
@@ -14,7 +14,7 @@ void BGMSource::Play(int setVolume) {
 	PlaySoundMem(audioHandle, DX_PLAYTYPE_LOOP);
 }
 /*
- *	‰¹Œ¹‚Ì’â~
+ *	‰¹Œ¹‚Ì’â~ˆ—
  */
 void BGMSource::Stop() {
 	StopSoundMem(audioHandle);

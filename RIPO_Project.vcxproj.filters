@@ -201,10 +201,13 @@
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="ソース.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Scripts\Engine\Audio\BGM\BGMSource.cpp">
+      <Filter>ソース ファイル\Engine\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Sound\BGM\BGMSource.cpp">
+    <ClCompile Include="Scripts\Engine\Audio\SE\SESource.cpp">
+      <Filter>ソース ファイル\Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Audio\BGM\BGMManager.cpp">
       <Filter>ソース ファイル\Engine\Audio</Filter>
     </ClCompile>
   </ItemGroup>
@@ -410,13 +413,28 @@
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Sound\AudioSource.h">
+    <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\RayCast.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Audio\AudioSource.h">
       <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Sound\BGM\BGMSource.h">
+    <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h">
       <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Sound\SE\SESource.h">
+    <ClInclude Include="Scripts\Engine\Audio\SE\SESource.h">
+      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Audio\BGM\BGMManager.h">
+      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Audio\BGM\BGMSource.h">
       <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
   </ItemGroup>

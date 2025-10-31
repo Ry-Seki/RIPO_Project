@@ -1,12 +1,12 @@
 /*
- *	@file	SESource.h
+ *	@file	SESource.cpp
  *	@author	Seki
  */
 
 #include "SESource.h"
 
 /*
- *	‰¹Œ¹‚ÌÄ¶
+ *	‰¹Œ¹‚ÌÄ¶ˆ—
  *  @param[in]	int setVolume	‰¹—Ê
  */
 void SESource::Play(int setVolume) {
@@ -14,7 +14,7 @@ void SESource::Play(int setVolume) {
 	PlaySoundMem(audioHandle, DX_PLAYTYPE_BACK);
 }
 /*
- *	‰¹Œ¹‚Ì’â~
+ *	‰¹Œ¹‚Ì’â~ˆ—
  */
 void SESource::Stop() {
 }

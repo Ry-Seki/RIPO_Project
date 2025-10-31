@@ -147,6 +147,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scripts\Engine\Audio\BGM\BGMManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Audio\BGM\BGMSource.cpp" />
+    <ClCompile Include="Scripts\Engine\Audio\SE\SESource.cpp" />
     <ClCompile Include="Scripts\Engine\Collision.cpp" />
     <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp" />
@@ -179,8 +182,6 @@
     <ClCompile Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp" />
-    <ClCompile Include="Scripts\Engine\Sound\BGM\BGMSource.cpp" />
-    <ClCompile Include="Scripts\Engine\Sound\SE\SESource.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\Stage.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\ExitPoint.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.cpp" />
@@ -192,6 +193,11 @@
   <ItemGroup>
     <ClInclude Include="Scripts\Data\DungeonData.h" />
     <ClInclude Include="Scripts\Data\DungeonStageData.h" />
+    <ClInclude Include="Scripts\Engine\Audio\AudioSource.h" />
+    <ClInclude Include="Scripts\Engine\Audio\BGM\BGMManager.h" />
+    <ClInclude Include="Scripts\Engine\Audio\BGM\BGMSource.h" />
+    <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h" />
+    <ClInclude Include="Scripts\Engine\Audio\SE\SESource.h" />
     <ClInclude Include="Scripts\Engine\Character\CharacterBase.h" />
     <ClInclude Include="Scripts\Engine\Collision.h" />
     <ClInclude Include="Scripts\Engine\Component\AABBCollider.h" />
@@ -253,15 +259,11 @@
     <ClInclude Include="Scripts\Engine\Scene\TitleScene.h" />
     <ClInclude Include="Scripts\Engine\Manager\GameObjectManager.h" />
     <ClInclude Include="Scripts\Engine\Singleton.h" />
-    <ClInclude Include="Scripts\Engine\Sound\AudioSource.h" />
-    <ClInclude Include="Scripts\Engine\Sound\BGM\BGMSource.h" />
-    <ClInclude Include="Scripts\Engine\Sound\SE\SESource.h" />
     <ClInclude Include="Scripts\Engine\Stage\Stage.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageBase.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\ExitPoint.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h" />
-    <ClInclude Include="Scripts\Engine\Stage\StageState.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
   </ItemGroup>
