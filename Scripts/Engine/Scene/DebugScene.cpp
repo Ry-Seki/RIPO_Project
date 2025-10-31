@@ -44,9 +44,11 @@ void DebugScene::Initialize(Engine& engine) {
 			int enemyModelHandle = enemyModel->GetHandle();
             enemy->GetOwner()->GetComponent<ModelRenderer>()->SetModel(enemyModelHandle);
 
-            enemy->GetOwner()->position = StageManager::GetInstance().GetStartPos();
-            std::shared_ptr<EnemyComponent> component = std::dynamic_pointer_cast<EnemyComponent>(enemy);
-            component->SetWayPoint(enemy->GetOwner()->position);
+            std::vector<Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpwanPos();
+            for (const auto& pos : enemySpawnPos) {
+                std::shared_ptr<EnemyComponent> component = std::dynamic_pointer_cast<EnemyComponent>(enemy);
+                component->SetWayPoint(enemy->GetOwner()->position);
+            }
 		}
 	);
 }
