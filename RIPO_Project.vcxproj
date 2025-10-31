@@ -180,6 +180,7 @@
     <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp" />
     <ClCompile Include="Scripts\Engine\Sound\BGM\BGMSource.cpp" />
+    <ClCompile Include="Scripts\Engine\Sound\SE\SESource.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\Stage.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\ExitPoint.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.cpp" />
@@ -187,7 +188,6 @@
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
-    <ClCompile Include="ソース.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Data\DungeonData.h" />
