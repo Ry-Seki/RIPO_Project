@@ -212,6 +212,7 @@
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\VisionComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Component.h" />
     <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h" />
     <ClInclude Include="Scripts\Engine\Component\RenderComponent.h" />
