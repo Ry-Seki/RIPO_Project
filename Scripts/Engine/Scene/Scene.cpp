@@ -24,6 +24,7 @@ void Scene::Update(Engine& engine, float deltaTime) {
             obj->Update(deltaTime);
         }
     }
+    HandleGameObjectCollision();
     RemoveDestroyedObjects();
 }
 /*
@@ -140,8 +141,10 @@ std::vector<Scene::WorldColliderList> Scene::ChangeGameObjectWorldColliders() {
 
     // 全てのゲームオブジェクトで計算
     for (const auto obj : gameObjects) {
-        continue;
-
+        // コライダーを持っていないオブジェクトは処理しない
+        if (obj->colliders.empty())
+            continue;
+        
         WorldColliderList list(obj->colliders.size());
 
         for (int i = 0; i < obj->colliders.size(); i++) {
