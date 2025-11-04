@@ -197,11 +197,11 @@ std::vector<Vector3> StageManager::GetEnemySpwanPos() const {
 
 	// 敵の生成位置の取得
 	// jsonファイルの文字列がなかった場合のnullCheck
-	if (!json.contains("Enemy") || !json["Enemy"].contains("SpwanPos"))
+	if (!json.contains("Enemy") || !json["Enemy"].contains("SpawnPos"))
 		return result;
 
 	// フレーム名の取得
-	auto spawnArray = json["Enemy"]["SpwanPos"];
+	auto spawnArray = json["Enemy"]["SpawnPos"];
 
 	// jsonファイルのテキストを配列で取得
 	for (const auto& spawnName : spawnArray) {
@@ -233,9 +233,9 @@ std::vector<Vector3> StageManager::GetTreasureSpwanPos()const {
 
 	// お宝の生成位置の取得
 	// jsonファイルの文字列がなかった場合のnullCheck
-	if (!json.contains("Treasure") || !json["Treasure"].contains("SpwanPos"))
+	if (!json.contains("Treasure") || !json["Treasure"].contains("SpawnPos"))
 		return result;
-	auto spawnArray = json["Treasure"]["SpwanPos"];
+	auto spawnArray = json["Treasure"]["SpawnPos"];
 
 	// jsonファイルのテキストを配列で取得
 	for (const auto& spawnName : spawnArray) {

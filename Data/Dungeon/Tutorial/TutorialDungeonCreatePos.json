@@ -5,14 +5,14 @@
     "StairsPos": "Col_StairsPos"
   },
   "Enemy": {
-    "SpwanPos": [
+    "SpawnPos": [
       "Sponer_0",
       "Sponer_1",
       "Sponer_2"
     ]
   },
   "Treasure": {
-    "SpwanPos": [
+    "SpawnPos": [
       "ItemSpn0",
       "ItemSpn1"
     ]
