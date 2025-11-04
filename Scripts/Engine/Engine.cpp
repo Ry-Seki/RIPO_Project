@@ -172,13 +172,13 @@ void Engine::StartSceneFade(const FadeBasePtr& setFade, std::function<void()> on
  */
 void Engine::StartFadeOutIn(float fadeOutTime, float fadeInTime, std::function<void()> onMidPoint) {
 	// フェードアウト開始
-	auto fadeOut = CreateFade(FadeType::Black, fadeOutTime, FadeDirection::Out, FadeMode::Stop);
+	auto fadeOut = FadeFactory::CreateFade(FadeType::Black, fadeOutTime, FadeDirection::Out, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeOut, [this, fadeInTime, onMidPoint]() {
 		// フェードアウト完了 → 中間処理（例：日付更新）
 		if (onMidPoint) onMidPoint();
 
 		// フェードイン開始は必ず新しい Fade または Reset
-		auto fadeIn = CreateFade(FadeType::Black, fadeInTime, FadeDirection::In, FadeMode::NonStop);
+		auto fadeIn = FadeFactory::CreateFade(FadeType::Black, fadeInTime, FadeDirection::In, FadeMode::NonStop);
 		fadeIn->Reset(FadeDirection::In);
 		FadeManager::GetInstance().StartFade(fadeIn, nullptr);
 	});
