@@ -9,6 +9,7 @@
 #include "DayActionBase.h"
 #include "ActionFactory.h"
 #include "../../../Data/DungeonStageData.h"
+#include "../../Load/JSON/LoadJSON.h"
 
 #include <vector>
 #include <memory>
@@ -35,6 +36,11 @@ public:
     ~ActionManager() = default;
 
 public:
+    /*
+     *  初期化処理
+     *  @param[in]  JSON setJSON    セットするJSONデータ
+     */
+    void Initialize(JSON setJSON);
     /*
      *  更新処理
      */
