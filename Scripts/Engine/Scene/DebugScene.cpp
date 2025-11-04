@@ -29,9 +29,14 @@ void DebugScene::Initialize(Engine& engine) {
 	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 0, 0 }, {0, 0, 0}, {-0.5f, -1.0f, -0.5f}, {0.5f,  1.0f,  0.5f});
 	auto player = CharacterManager::GetInstance().GetCharacter(0);
 	player->GetOwner()->AddComponent<ModelRenderer>();
-	CharacterManager::GetInstance().GenerateEnemy("enemy", { 1, 0, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f, 1.0f, 0.5f });
-	auto enemy = CharacterManager::GetInstance().GetCharacter(1);
-	enemy->GetOwner()->AddComponent<ModelRenderer>();
+	CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f, 1.0f, 0.5f });
+	CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f, 1.0f, 0.5f });
+	CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f, 1.0f, 0.5f });
+    std::vector<CharacterBasePtr> enemy(3);
+    for (int i = 0; i < 3; i++) {
+        enemy[i] = CharacterManager::GetInstance().GetCharacter(i + 1);
+        enemy[i]->GetOwner()->AddComponent<ModelRenderer>();
+    }
 
 	load.SetOnComplete(
 		[stageModel, player, playerModel, enemy, enemyModel, stageBoneData]() {
@@ -40,10 +45,17 @@ void DebugScene::Initialize(Engine& engine) {
 			int modelHandle = playerModel->GetHandle();
 			player->GetOwner()->GetComponent<ModelRenderer>()->SetModel(modelHandle);
 			player->GetOwner()->position = StageManager::GetInstance().GetStartPos();
+
+            std::vector<Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpwanPos();
 			int enemyModelHandle = enemyModel->GetHandle();
-			enemy->GetOwner()->GetComponent<ModelRenderer>()->SetModel(enemyModelHandle);
-			
-			//enemy->GetOwner()->position = StageManager::GetInstance().GetStartPos();
+            size_t enemySpawnCount = enemySpawnPos.size();
+            for (int i = 0; i < enemy.size(); i++) {
+                enemy[i]->GetOwner()->GetComponent<ModelRenderer>()->SetModel(enemyModelHandle);
+                std::shared_ptr<EnemyComponent> component = enemy[i]->GetOwner()->GetComponent<EnemyComponent>();
+                if (!component) continue;
+                enemy[i]->GetOwner()->position = enemySpawnPos[i];
+                component->SetWayPoint(enemy[i]->GetOwner()->position);
+            }
 		}
 	);
 }

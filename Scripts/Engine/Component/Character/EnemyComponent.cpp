@@ -8,11 +8,12 @@
  *	コンストラクタ
  */
 EnemyComponent::EnemyComponent()
-	: moveSpeed(3.0f)
+	: moveSpeed(200.0f)
 	, wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(200.0f)
 	, enemy(nullptr)
+	, chaseTargetChangeFrag(false)
 {
 }
 
@@ -26,13 +27,8 @@ void EnemyComponent::Start() {
  *	更新処理
  */
 void EnemyComponent::Update(float deltaTime) {
-
-	if (enemy->position.z <= wayPoint.z) {
-		wayPoint = enemy->position - nextWayPoint;
-		enemy->rotation.y += 180 * Deg2Rad;
-	}
-
-		EnemyMove(enemy, deltaTime);
+	// 移動処理
+	EnemyMove(enemy, deltaTime);
 }
 
 /*
@@ -40,12 +36,38 @@ void EnemyComponent::Update(float deltaTime) {
  */
 void EnemyComponent::EnemyMove(GameObject* enemy, float deltaTime) {
 	const float enemyCos = cos(enemy->rotation.y);
-	const float enemySin = sin(enemy->rotation.y);
+	const float enemySin = sin(enemy->rotation.y); 
 
-	//Vector3 direction = enemy->position - wayPoint;
+	
+	// 目標に向かって移動
+	if (!chaseTargetChangeFrag) {
+		ChaseWayPoint(wayPoint, true, deltaTime);
+	}
+	else if (chaseTargetChangeFrag) {
+		Vector3 direction = nextWayPoint - enemy->position;
+		Vector3 normDirection = Normalized(direction);
+		enemy->position += normDirection * moveSpeed * deltaTime;
+		if (Magnitude(direction) < 0.1f) {
+			chaseTargetChangeFrag = false;
+		}
+	}
 
+	//enemy->position.x -= moveSpeed * enemySin;
+	//enemy->position.z -= moveSpeed * enemyCos;
+}
 
-	enemy->position.x -= moveSpeed * enemySin;
-	enemy->position.z -= moveSpeed * enemyCos;
-
+/*
+ *	目標に向かって進む処理
+ */
+void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaTime) {
+	// 目標と自身のpositionの差
+	const float differenceTarget = 2.0f;
+	// 目標の方向
+	Vector3 direction = wayPoint - enemy->position;
+	// 方向を正規化する
+	Vector3 normDirection = Normalized(direction);
+	enemy->position += normDirection * moveSpeed * deltaTime;
+	if (Magnitude(direction) < differenceTarget) {
+		chaseTargetChangeFrag = targetChange;
+	}
 }
