@@ -222,6 +222,9 @@
     <ClCompile Include="Scripts\Engine\Audio\SE\SEManager.cpp">
       <Filter>ソース ファイル\Engine\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\AABBCollider.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -448,6 +451,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h">
       <Filter>ヘッダー ファイル\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionFactory.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionFactory.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
