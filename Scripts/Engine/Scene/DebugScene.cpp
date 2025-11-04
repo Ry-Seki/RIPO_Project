@@ -26,12 +26,12 @@ void DebugScene::Initialize(Engine& engine) {
 	auto enemyModel = load.LoadResource<LoadModel>("Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1");
 	auto stageBoneData = load.LoadResource<LoadJSON>("Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json");
 	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
-	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 0, 0 }, {0, 0, 0}, {-0.5f, -1.0f, -0.5f}, {0.5f,  1.0f,  0.5f});
+	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 0, 0 }, {0, 0, 0}, {-100, 0, -100}, {100,  300,  100});
 	auto player = CharacterManager::GetInstance().GetCharacter(0);
 	player->GetOwner()->AddComponent<ModelRenderer>();
-	CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f, 1.0f, 0.5f });
-	CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f, 1.0f, 0.5f });
-	CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f, 1.0f, 0.5f });
+	CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
+	CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
+	CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
     std::vector<CharacterBasePtr> enemy(3);
     for (int i = 0; i < 3; i++) {
         enemy[i] = CharacterManager::GetInstance().GetCharacter(i + 1);
