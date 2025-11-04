@@ -26,10 +26,10 @@ void DebugScene::Initialize(Engine& engine) {
 	auto enemyModel = load.LoadResource<LoadModel>("Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1");
 	auto stageBoneData = load.LoadResource<LoadJSON>("Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json");
 	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
-	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 0, 0 }, {0, 0, 0}, {-0.5f, -1.0f, -0.5f}, {0.5f,  1.0f,  0.5f});
+	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 0, 0 }, {0, 0, 0}, {-100, 0, -100}, {100,  300,  100});
 	auto player = CharacterManager::GetInstance().GetCharacter(0);
 	player->GetOwner()->AddComponent<ModelRenderer>();
-	CharacterManager::GetInstance().GenerateEnemy("enemy", { 1, 0, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f, 1.0f, 0.5f });
+	CharacterManager::GetInstance().GenerateEnemy("enemy", { 1, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
 	auto enemy = CharacterManager::GetInstance().GetCharacter(1);
 	enemy->GetOwner()->AddComponent<ModelRenderer>();
 
@@ -100,8 +100,19 @@ void DebugScene::Render() {
         }
 
     }
+    // 全オブジェクトの AABBColliderの描画
+    for (auto& obj : gameObjects) {
+        auto aabb = obj->GetComponent<AABBCollider>();
+        if (aabb == nullptr) continue;
+        aabb->DebugRender();
+    }
 #endif
     Scene::Render();
 	StageManager::GetInstance().Render();
-
+#if _DEBUG
+    // プレイヤーの位置
+    GameObjectPtr player = CameraManager::GetInstance().GetTarget();
+    DrawFormatString(0, 0, GetColor(255, 255, 255), "PlayerPosition(%f,%f,%f)",
+        player->position.x, player->position.y, player->position.z);
+#endif
 }
