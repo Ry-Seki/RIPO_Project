@@ -7,7 +7,7 @@
 #define _ACTION_MANAGER_H_
 
 #include "DayActionBase.h"
-#include "ActionDungeon/ActionDungeon.h"
+#include "ActionFactory.h"
 #include "../../../Data/DungeonStageData.h"
 
 #include <vector>
@@ -20,7 +20,6 @@
  */
 class ActionManager{
 private:
-    DayActionPtr actionBase;                // アクションクラスのオリジナル
     DayActionPtr currentAction;             // 現在のアクション
     std::function<void()> onComplete;       // アクション完了コールバック
     bool isActive = false;                  // 処理有効フラグ
@@ -29,7 +28,7 @@ public:
     /*
      *  コンストラクタ
      */
-    ActionManager() : actionBase(std::make_shared<ActionDungeon>()) {}
+    ActionManager() = default;
     /*
      *  デストラクタ
      */
