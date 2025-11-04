@@ -44,16 +44,12 @@ void EnemyComponent::EnemyMove(GameObject* enemy, float deltaTime) {
 		ChaseWayPoint(wayPoint, true, deltaTime);
 	}
 	else if (chaseTargetChangeFrag) {
-<<<<<<< HEAD
 		Vector3 direction = nextWayPoint - enemy->position;
 		Vector3 normDirection = Normalized(direction);
 		enemy->position += normDirection * moveSpeed * deltaTime;
 		if (Magnitude(direction) < 0.1f) {
 			chaseTargetChangeFrag = false;
 		}
-=======
-		ChaseWayPoint(nextWayPoint, false, deltaTime);
->>>>>>> 02d6441fdaaa0a09c49b44004906b694776d0a31
 	}
 
 	//enemy->position.x -= moveSpeed * enemySin;
