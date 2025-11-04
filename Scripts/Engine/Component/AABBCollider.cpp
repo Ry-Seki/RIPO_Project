@@ -10,6 +10,7 @@
  *	XVˆ—
  */
 void AABBCollider::Update(float deltaTime) {
+	isHit = false;
 }
 
 /*

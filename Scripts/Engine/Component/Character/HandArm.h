@@ -15,8 +15,6 @@
 class HandArm : public ArmActionComponent {
 private:
 	GameObject* liftObject;
-	GameObject* player;
-	Engine* engine;
 
 	const float LEFTABLE_DISTANCE;
 
