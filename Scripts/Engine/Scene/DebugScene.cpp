@@ -112,8 +112,20 @@ void DebugScene::Render() {
         }
 
     }
+    // 全オブジェクトのAABBCollider描画
+    for (auto& obj : gameObjects) {
+        auto aabb = obj->GetComponent<AABBCollider>();
+        if (aabb == nullptr) continue;
+        aabb->DebugRender();
+    }
+
 #endif
     Scene::Render();
 	StageManager::GetInstance().Render();
-
+#if _DEBUG
+    // プレイヤーの位置表示
+    GameObjectPtr player = CameraManager::GetInstance().GetTarget();
+    DrawFormatString(0, 0, GetColor(255, 255, 255), "PlayerPosition(%f,%f,%f)",
+        player->position.x, player->position.y, player->position.z);
+#endif
 }
