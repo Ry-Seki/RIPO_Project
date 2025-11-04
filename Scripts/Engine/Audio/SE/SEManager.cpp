@@ -39,18 +39,19 @@ void SEManager::Update() {
 }
 /*
  *	SE再生処理
- *  @param[in]	const int setHandle		再生する音源ハンドル
- *  @param[in]	const int setVolume		音量
+ *  @param[in]	const std::string& setKeyName	再生するSE名
+ *  @param[in]	const int setVolume				音量
  */
-void SEManager::PlaySE(const int setHandle, const int setVolume) {
+void SEManager::PlaySE(const std::string& setKeyName, const int setVolume) {
 	// 未使用リストの中身が空なら新たに生成
 	if (unuseSEList.empty()) {
 		unuseSEList.push_back(std::make_shared<SESource>());
 	}
 	// 未使用リストから取得
 	std::shared_ptr<SESource> useSE = unuseSEList.front();
+
 	// 音源ハンドルの設定
-	useSE->SetAudioHandle(setHandle);
+	//useSE->SetAudioHandle(setHandle);
 	// 未使用リストの先頭要素削除
 	unuseSEList.pop_front();
 	// 使用リストに追加
@@ -66,4 +67,17 @@ void SEManager::TeardownSE(std::shared_ptr<SESource> destroySE) {
 	if (!destroySE) return;
 	// 破棄処理
 	destroySE->Teardown();
+}
+
+void SEManager::RegisterSEHandle(const std::string& setKeyName, const int& setHandle) {
+	if (!ExistSEHandle(setKeyName)) return;
+
+}
+
+bool SEManager::ExistSEHandle(const std::string& setKeyName) const {
+	return false;
+}
+
+int SEManager::GetSEHandle(const std::string& setKeyName) const {
+	return 0;
 }
