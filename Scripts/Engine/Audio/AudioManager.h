@@ -64,6 +64,13 @@ public:
 
 public:
 	/*
+	 *	SE‚ÌÄ¶ˆ—
+	 */
+	void PlaySE();
+	
+
+public:
+	/*
 	 *	BGM‰¹—Ê‚Ìæ“¾
 	 *  @return		int
 	 */

@@ -213,17 +213,14 @@
     <ClCompile Include="Scripts\Engine\Audio\AudioManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Audio\SE\SEManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\RayCast.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\AABBCollider.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Scripts\Engine\Audio\SE\SEManager.cpp">
+      <Filter>ソース ファイル\Engine\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -437,9 +434,6 @@
     <ClInclude Include="Scripts\Engine\Audio\AudioSource.h">
       <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h">
-      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Audio\SE\SESource.h">
       <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
@@ -451,6 +445,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Audio\AudioManager.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h">
+      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

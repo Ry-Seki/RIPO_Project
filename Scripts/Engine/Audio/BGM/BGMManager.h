@@ -90,6 +90,7 @@ public:
 	 *	@return		int
 	 */
 	int GetBGMHandle(const std::string& setKeyName) const;
+
 public:
 	/*
 	 *	Œ»İ‚ÌBGM‚Ìæ“¾
