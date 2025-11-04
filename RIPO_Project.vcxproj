@@ -153,6 +153,7 @@
     <ClCompile Include="Scripts\Engine\Audio\SE\SEManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\SE\SESource.cpp" />
     <ClCompile Include="Scripts\Engine\Collision.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\AABBCollider.cpp" />
     <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp" />
