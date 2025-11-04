@@ -19,6 +19,8 @@ private:
 	Vector3 nextWayPoint;
 	// ウェイポイント間の距離
 	float wayPointDistance;
+	// ウェイポイント追尾切り替えフラグ
+	bool chaseTargetChangeFrag;
 
 public:
 	/*
@@ -43,6 +45,20 @@ private:
 	 *	移動処理
 	 */
 	void EnemyMove(GameObject* enemy, float deltaTime);
+
+	/* 
+	 *	目標に向かって進む処理
+	 */
+	void ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaTime);
+
+public:
+	/*
+	 *	ウェイポイントの位置変更
+	 */
+	inline void SetWayPoint(Vector3& setValue) {
+		wayPoint = Vector3(setValue.x, setValue.y, setValue.z + wayPointDistance);
+		nextWayPoint = Vector3(setValue.x, setValue.y, setValue.z - wayPointDistance);
+	}
 };
 
 #endif // !_ENEMYCOMPONENT_H_
