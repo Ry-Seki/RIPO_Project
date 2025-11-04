@@ -38,7 +38,7 @@ public:
 	/*
 	 *	‰¹Œ¹‚Ì”jŠüˆ—
 	 */
-	virtual void Teardown() = 0;
+	virtual void Teardown() {};
 
 public:
 	/*
