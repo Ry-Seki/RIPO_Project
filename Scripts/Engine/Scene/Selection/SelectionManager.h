@@ -7,7 +7,7 @@
 #define _SELECTION_MANAGER_H_
 
 #include "SelectionBase.h"
-#include "Dungeon/SelectionDungeon.h"
+#include "SelectionFactory.h"
 #include "../DayAction/ActionManager.h"
 
 #include <memory>
@@ -18,7 +18,6 @@
  */
 class SelectionManager{
 private:
-	SelectionPtr selectionBase;					// 選択クラスのオリジナル
 	SelectionPtr currentSelection;				// 現在の選択肢
 	SelectionPtr prevSelection;					// ひとつ前の選択肢
 	bool inputHandle = false;					// 入力フラグ
@@ -31,7 +30,7 @@ public:
 	/*
 	 *	コンストラクタ
 	 */
-	SelectionManager() : selectionBase(std::make_shared<SelectionDungeon>()) {};
+	SelectionManager() = default;
 	/*
 	 *	デストラクタ
 	 */

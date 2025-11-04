@@ -250,6 +250,7 @@
     <ClInclude Include="Scripts\Engine\Scene\Calendar\Week.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\Year.h" />
     <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionDungeon\ActionDungeon.h" />
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionFactory.h" />
     <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.h" />
     <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.h" />
@@ -260,6 +261,7 @@
     <ClInclude Include="Scripts\Engine\Scene\Scene.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionBase.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionFactory.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\TitleScene.h" />
     <ClInclude Include="Scripts\Engine\Manager\GameObjectManager.h" />

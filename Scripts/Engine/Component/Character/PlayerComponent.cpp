@@ -22,18 +22,15 @@ PlayerComponent::PlayerComponent()
 	, RUN_ACCELERATION_MAX(2.0f)
 	, AVOID_ACCELERATION_MAX(6.0f)
 	, AVOID_MOVE_VALUE_MAX(1000.0f)
-	, AVOID_COOL_TIME_MAX(1.0f)
-{}
+	, AVOID_COOL_TIME_MAX(1.0f) {}
 
 void PlayerComponent::Update(float deltaTime) {
 	GameObject* player = GetOwner();
 
 	// ‰ñ”ğ
 	PlayerAvoid(player, deltaTime);
-
 	// ‰ñ”ğ’†‚Íˆ—‚µ‚È‚¢
 	if (isAvoid) return;
-
 	// ƒ_ƒbƒVƒ…
 	PlayerRun(deltaTime);
 	// ˆÚ“®ˆ—

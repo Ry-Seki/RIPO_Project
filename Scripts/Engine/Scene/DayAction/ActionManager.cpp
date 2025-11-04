@@ -4,7 +4,6 @@
  */
 
 #include "ActionManager.h"
-#include "ActionDungeon/ActionDungeon.h"
 
 /*
  *	更新処理
@@ -31,7 +30,12 @@ void ActionManager::Render() {
  *	ダンジョンアクション開始
  */
 void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData) {
-	auto dungeonAction = std::dynamic_pointer_cast<ActionDungeon>(actionBase);
+	isActive = true;
+	// 現在のアクショの生成
+	currentAction = ActionFactory::CreateAction(ActionFactory::ActionType::Dungeon);
+	if (!currentAction) return;
+	// アクションのダウンキャスト
+	auto dungeonAction = std::dynamic_pointer_cast<ActionDungeon>(currentAction);
 	if (!dungeonAction) return;
 
 	dungeonAction->SetDungeonStageData(setStageData);
@@ -41,24 +45,37 @@ void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData)
 
 void ActionManager::DebugActiveDungeon(Engine& engine, DungeonStageData setStageData) {
 	isActive = true;
-	auto dungeonAction = std::dynamic_pointer_cast<ActionDungeon>(actionBase);
+	// 現在のアクショの生成
+	currentAction = ActionFactory::CreateAction(ActionFactory::ActionType::Dungeon);
+	if (!currentAction) return;
+	// アクションのダウンキャスト
+	auto dungeonAction = std::dynamic_pointer_cast<ActionDungeon>(currentAction);
 	if (!dungeonAction) return;
-	
+
 	dungeonAction->DebugInitialize(engine, setStageData);
 	currentAction = dungeonAction;
 }
 
 void ActionManager::ActiveTraining(Engine& engine) {
-	currentAction = std::dynamic_pointer_cast<ActionDungeon>(actionBase);
+	isActive = true;
+	currentAction = ActionFactory::CreateAction(ActionFactory::ActionType::Training);
+	if (!currentAction) return;
+
 	currentAction->Initialize(engine);
 }
 
 void ActionManager::ActiveShop(Engine& engine) {
-	currentAction = std::dynamic_pointer_cast<ActionDungeon>(actionBase);
-	currentAction->Initialize(engine);
+	isActive = true;
+	currentAction = ActionFactory::CreateAction(ActionFactory::ActionType::Shop);
+	if (!currentAction) return;
+
+	currentAction->Initialize(engine);	currentAction->Initialize(engine);
 }
 
 void ActionManager::ActivePartTime(Engine& engine) {
-	currentAction = std::dynamic_pointer_cast<ActionDungeon>(actionBase);
-	currentAction->Initialize(engine);
+	isActive = true;
+	currentAction = ActionFactory::CreateAction(ActionFactory::ActionType::PartTime);
+	if (!currentAction) return;
+
+	currentAction->Initialize(engine);	currentAction->Initialize(engine);
 }
