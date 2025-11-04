@@ -261,6 +261,7 @@
     <ClInclude Include="Scripts\Engine\Scene\Scene.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionBase.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionFactory.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\TitleScene.h" />
     <ClInclude Include="Scripts\Engine\Manager\GameObjectManager.h" />
