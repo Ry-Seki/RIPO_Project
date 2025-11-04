@@ -147,8 +147,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scripts\Engine\Audio\AudioManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMSource.cpp" />
+    <ClCompile Include="Scripts\Engine\Audio\SE\SEManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\SE\SESource.cpp" />
     <ClCompile Include="Scripts\Engine\Collision.cpp" />
     <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp" />
@@ -195,12 +197,12 @@
   <ItemGroup>
     <ClInclude Include="Scripts\Data\DungeonData.h" />
     <ClInclude Include="Scripts\Data\DungeonStageData.h" />
+    <ClInclude Include="Scripts\Engine\Audio\AudioManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioSource.h" />
     <ClInclude Include="Scripts\Engine\Audio\BGM\BGMManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\BGM\BGMSource.h" />
     <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\SE\SESource.h" />
-    <ClInclude Include="Scripts\Engine\Character\CharacterBase.h" />
     <ClInclude Include="Scripts\Engine\Collision.h" />
     <ClInclude Include="Scripts\Engine\Component\AABBCollider.h" />
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />

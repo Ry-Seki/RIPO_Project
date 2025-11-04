@@ -35,6 +35,7 @@ public:
 	static constexpr float _MAX_DXLIB_VOLUME = 255.0f;
 	static constexpr float _MIN_VOLUME = 0.0f;
 	static constexpr float _MAX_VOLUME = 100.0f;
+	static constexpr int _MAX_SE_INDEX = 16;
 
 	//----------------------------------------------------
 	//				ステージ関連の定数

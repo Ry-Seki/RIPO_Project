@@ -115,11 +115,11 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
         CharacterManager::GetInstance().Initialize(engine);
         StageManager::GetInstance().Initialize(engine);
     }
-    CharacterManager::GetInstance().GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 }, { -0.5f, -1.0f, -0.5f }, { 0.5f,  1.0f,  0.5f });
+    CharacterManager::GetInstance().GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 }, { -50, -100, -50 }, { 50,  100,  50 });
     CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
 
     std::string dungeonPath;
-    if(!stageData.TryGetByLeafName("StageData", dungeonPath)) return;
+    if(!stageData.TryGetByLeafName("StageData1", dungeonPath)) return;
     std::string dungeonBonePath;
     if(!stageData.TryGetByLeafName("StageBoneData", dungeonBonePath)) return;
     std::string playerPath;
