@@ -10,6 +10,7 @@
 #include "Calendar/CalendarManager.h"
 #include "DayAction/ActionManager.h"
 #include "Selection/SelectionManager.h"
+#include "../Load/JSON/LoadJSON.h"
 
 #include <memory>
 #include <DxLib.h>
@@ -28,6 +29,12 @@ public:
      *  初期化処理
      */
     void Initialize(class Engine& engine) override;
+    /*
+     *  ロード済みのデータの設定(コールバック)
+     *  @param[in]  std::shared_ptr<LoadJSON> setSelectionData       選択クラスのデータ
+     *  @param[in]  std::shared_ptr<LoadJSON> setActionData          アクションクラスのデータ
+     */
+    void Setup(class Engine& engine, std::shared_ptr<LoadJSON> setSelectionData, std::shared_ptr<LoadJSON> setActionData);
     /*
      *  更新処理
      */
