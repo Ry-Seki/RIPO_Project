@@ -39,10 +39,6 @@ void Treasure::ModelLoad(const int modelHandleBase) {
  */
 void Treasure::Update(float deltaTime) {
 	if (isCollected) return;
-
-
-	// “–‚½‚è”»’è‚ÌXV
-
 }
 
 

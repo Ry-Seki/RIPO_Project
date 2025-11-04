@@ -13,8 +13,8 @@
   },
   "Treasure": {
     "SpawnPos": [
-      "ItemSpn0",
-      "ItemSpn1"
+      "TreasureSponer_0",
+      "TreasureSponer_1"
     ]
   },
   "PointLight": {
