@@ -32,7 +32,7 @@ void ActionManager::Render() {
 void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData) {
 	isActive = true;
 	// 現在のアクショの生成
-	currentAction = ActionFactory::CreateAction(ActionFactory::ActionType::Dungeon);
+	currentAction = ActionFactory::CreateAction(ActionType::Dungeon);
 	if (!currentAction) return;
 	// アクションのダウンキャスト
 	auto dungeonAction = std::dynamic_pointer_cast<ActionDungeon>(currentAction);
@@ -46,7 +46,7 @@ void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData)
 void ActionManager::DebugActiveDungeon(Engine& engine, DungeonStageData setStageData) {
 	isActive = true;
 	// 現在のアクショの生成
-	currentAction = ActionFactory::CreateAction(ActionFactory::ActionType::Dungeon);
+	currentAction = ActionFactory::CreateAction(ActionType::Dungeon);
 	if (!currentAction) return;
 	// アクションのダウンキャスト
 	auto dungeonAction = std::dynamic_pointer_cast<ActionDungeon>(currentAction);
@@ -58,7 +58,7 @@ void ActionManager::DebugActiveDungeon(Engine& engine, DungeonStageData setStage
 
 void ActionManager::ActiveTraining(Engine& engine) {
 	isActive = true;
-	currentAction = ActionFactory::CreateAction(ActionFactory::ActionType::Training);
+	currentAction = ActionFactory::CreateAction(ActionType::Training);
 	if (!currentAction) return;
 
 	currentAction->Initialize(engine);
@@ -66,7 +66,7 @@ void ActionManager::ActiveTraining(Engine& engine) {
 
 void ActionManager::ActiveShop(Engine& engine) {
 	isActive = true;
-	currentAction = ActionFactory::CreateAction(ActionFactory::ActionType::Shop);
+	currentAction = ActionFactory::CreateAction(ActionType::Shop);
 	if (!currentAction) return;
 
 	currentAction->Initialize(engine);	currentAction->Initialize(engine);
@@ -74,7 +74,7 @@ void ActionManager::ActiveShop(Engine& engine) {
 
 void ActionManager::ActivePartTime(Engine& engine) {
 	isActive = true;
-	currentAction = ActionFactory::CreateAction(ActionFactory::ActionType::PartTime);
+	currentAction = ActionFactory::CreateAction(ActionType::PartTime);
 	if (!currentAction) return;
 
 	currentAction->Initialize(engine);	currentAction->Initialize(engine);
