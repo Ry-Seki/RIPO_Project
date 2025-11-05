@@ -65,6 +65,7 @@ void DebugScene::Initialize(Engine& engine) {
 				if (!component) continue;
 				enemy[i]->GetOwner()->position = enemySpawnPos[i];
 				component->SetWayPoint(enemy[i]->GetOwner()->position);
+				enemy[i]->GetOwner()->scale = { 4.5f,4.5f,4.5f };
 			}
 
 			std::vector<Vector3> treasureSpawnPos = StageManager::GetInstance().GetTreasureSpwanPos();
@@ -74,7 +75,7 @@ void DebugScene::Initialize(Engine& engine) {
 			for (int i = 0; i < treasureSpawnCount; i++) {
 				int modelIndex = i % treasureModels.size();
 				int treasureModelHandle = treasureModels[modelIndex]->GetHandle();
-				
+
 				StageObjectManager::GetInstance().SetModelHandle(treasure[i]->GetOwner(), treasureModelHandle);
 				treasure[i]->GetOwner()->position = treasureSpawnPos[i];
 			}
