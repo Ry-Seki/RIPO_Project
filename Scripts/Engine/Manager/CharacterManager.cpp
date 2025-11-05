@@ -142,11 +142,11 @@ CharacterBasePtr CharacterManager::GetCharacter(int characterID) {
 }
 /*
  *	キャラクターにモデルハンドルをセット
- *	@param[in]	GameObjectPtr gameObject	セットするモデル
+ *	@param[in]	GameObject* gameObject	セットするモデル
  *  @param[in]	const int modelHandle		モデルハンドル
  *  @author		Seki
  */
-void CharacterManager::SetModelHandle(GameObjectPtr gameObject, const int modelHandle) {
+void CharacterManager::SetModelHandle(GameObject* gameObject, const int modelHandle) {
 	if (!gameObject) return;
 	auto modelRenderer = gameObject->GetComponent<ModelRenderer>();
 	if (!modelRenderer) return;

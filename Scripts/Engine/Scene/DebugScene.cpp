@@ -32,14 +32,12 @@ void DebugScene::Initialize(Engine& engine) {
 	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
 	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100,  300,  100 });
 	auto player = CharacterManager::GetInstance().GetCharacter(0);
-	player->GetOwner()->AddComponent<ModelRenderer>();
 	CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
 	CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
 	CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
 	std::vector<CharacterBasePtr> enemy(3);
 	for (int i = 0; i < 3; i++) {
 		enemy[i] = CharacterManager::GetInstance().GetCharacter(i + 1);
-		enemy[i]->GetOwner()->AddComponent<ModelRenderer>();
 	}
 	StageObjectManager::GetInstance().GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
 	StageObjectManager::GetInstance().GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
@@ -54,14 +52,15 @@ void DebugScene::Initialize(Engine& engine) {
 			StageManager::GetInstance().LoadStage(stageModel->GetHandle());
 			StageManager::GetInstance().SetStageJSONData(stageBoneData->GetData());
 			int modelHandle = playerModel->GetHandle();
-			player->GetOwner()->GetComponent<ModelRenderer>()->SetModelHandle(modelHandle);
+			CharacterManager::GetInstance().SetModelHandle(player->GetOwner(), modelHandle);
 			player->GetOwner()->position = StageManager::GetInstance().GetStartPos();
 
 			std::vector<Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpwanPos();
 			int enemyModelHandle = enemyModel->GetHandle();
 			size_t enemySpawnCount = enemySpawnPos.size();
 			for (int i = 0; i < enemy.size(); i++) {
-				enemy[i]->GetOwner()->GetComponent<ModelRenderer>()->SetModelHandle(enemyModelHandle);
+				if (!enemy[i]) continue;
+				CharacterManager::GetInstance().SetModelHandle(enemy[i]->GetOwner(), enemyModelHandle);
 				std::shared_ptr<EnemyComponent> component = enemy[i]->GetOwner()->GetComponent<EnemyComponent>();
 				if (!component) continue;
 				enemy[i]->GetOwner()->position = enemySpawnPos[i];
