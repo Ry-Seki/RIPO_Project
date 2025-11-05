@@ -54,14 +54,14 @@ void DebugScene::Initialize(Engine& engine) {
 			StageManager::GetInstance().LoadStage(stageModel->GetHandle());
 			StageManager::GetInstance().SetStageJSONData(stageBoneData->GetData());
 			int modelHandle = playerModel->GetHandle();
-			player->GetOwner()->GetComponent<ModelRenderer>()->SetModel(modelHandle);
+			player->GetOwner()->GetComponent<ModelRenderer>()->SetModelHandle(modelHandle);
 			player->GetOwner()->position = StageManager::GetInstance().GetStartPos();
 
 			std::vector<Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpwanPos();
 			int enemyModelHandle = enemyModel->GetHandle();
 			size_t enemySpawnCount = enemySpawnPos.size();
 			for (int i = 0; i < enemy.size(); i++) {
-				enemy[i]->GetOwner()->GetComponent<ModelRenderer>()->SetModel(enemyModelHandle);
+				enemy[i]->GetOwner()->GetComponent<ModelRenderer>()->SetModelHandle(enemyModelHandle);
 				std::shared_ptr<EnemyComponent> component = enemy[i]->GetOwner()->GetComponent<EnemyComponent>();
 				if (!component) continue;
 				enemy[i]->GetOwner()->position = enemySpawnPos[i];
@@ -76,7 +76,7 @@ void DebugScene::Initialize(Engine& engine) {
 				int modelIndex = i % treasureModels.size();
 				int treasureModelHandle = treasureModels[modelIndex]->GetHandle();
 
-				treasure[i]->GetOwner()->GetComponent<ModelRenderer>()->SetModel(treasureModelHandle);
+				treasure[i]->GetOwner()->GetComponent<ModelRenderer>()->SetModelHandle(treasureModelHandle);
 				treasure[i]->GetOwner()->position = treasureSpawnPos[i];
 			}
 		}

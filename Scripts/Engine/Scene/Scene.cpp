@@ -115,6 +115,7 @@ void Scene::HandleWorldColliderCollision(
 }
 /*
  *  ゲームオブジェクトの追加
+ *  @param[in]  const GameObjectPtr& gameObject    ゲームオブジェクトのポインタ
  */
 void Scene::AddGameObject(const GameObjectPtr& obj) {
     if (!obj) return;
