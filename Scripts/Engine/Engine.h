@@ -29,9 +29,6 @@ private:
     bool effekseerInitialized = false;      // Effekseerの初期化フラグ
     bool initialized = false;               // 初期化フラグ
 
-    const int WINDOW_WIDTH = 800;           // ウィンドウの幅
-    const int WINDOW_HEIGHT = 600;          // ウィンドウの高さ
-
 public:
     /*
      *  コンストラクタ
