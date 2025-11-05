@@ -21,7 +21,10 @@ struct DungeonResource {
 	std::vector<std::shared_ptr<LoadModel>> stageResource;
 	std::shared_ptr<LoadJSON> stageBoneResource;
 	std::shared_ptr<LoadModel> playerResource;
-	std::shared_ptr<LoadModel> enemyResource;
+	std::vector<std::shared_ptr<LoadModel>> enemyResource;
+	std::shared_ptr<LoadModel> bossResource;
+	std::vector<std::shared_ptr<LoadModel>> treasureResource;
+	std::shared_ptr<LoadModel> eventTreasureResource;
 };
 
 /*
@@ -70,6 +73,13 @@ public:
 	void DebugInitialize(Engine& engine, DungeonStageData& setStageData);
 	void DebugSetup(Engine& engine, const DungeonResource& setResource);
 
+private:
+	/*
+	 *	ステージデータからロードリストに追加
+	 *	@param[in]	DungeonStageData& stageData			ステージデータ
+	 *	@param[in]	DungeonResource&  dungeonResource	セットするリソース
+	 */
+	void LoadResourcesFromStageData(Engine& engine, DungeonStageData& stageData, DungeonResource& dungeonResource);
 public:
 	/*
 	 *	ダンジョンステージデータの設定

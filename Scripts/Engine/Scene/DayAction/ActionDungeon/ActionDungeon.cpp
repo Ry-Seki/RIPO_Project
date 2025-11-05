@@ -112,6 +112,7 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
     if (isFirst) {
         isFirst = false;
         GameObjectManager::GetInstance().Initialize(engine);
+        CameraManager::GetInstance().Initialize(engine);
         CharacterManager::GetInstance().Initialize(engine);
         StageManager::GetInstance().Initialize(engine);
     }
@@ -136,12 +137,57 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 
 void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResource) {
     std::shared_ptr<LoadModel> stageModel = setResource.stageResource[0];
-    int modelHandle = stageModel->GetHandle();
+    int stageHandle = stageModel->GetHandle();
     int playerHandle = setResource.playerResource->GetHandle();
-    StageManager::GetInstance().LoadStage(modelHandle);
+    StageManager::GetInstance().LoadStage(stageHandle);
     StageManager::GetInstance().SetStageJSONData(setResource.stageBoneResource->GetData());
     auto player = CharacterManager::GetInstance().GetCharacter(0)->GetOwner();
-    if(!player->GetComponent<ModelRenderer>()) player->AddComponent<ModelRenderer>();
-    player->GetComponent<ModelRenderer>()->SetModelHandle(playerHandle);
+    CharacterManager::GetInstance().SetModelHandle(player, playerHandle);
     player->position = StageManager::GetInstance().GetStartPos();
+}
+/*
+ *	ステージデータからロードリストに追加
+ *	@param[in]	DungeonStageData& stageData			ステージデータ
+ *	@param[in]	DungeonResource&  dungeonResource	セットするリソース
+ */
+void ActionDungeon::LoadResourcesFromStageData(Engine& engine, DungeonStageData& stageData, DungeonResource& dungeonResource) {
+    LoadManager& load = LoadManager::GetInstance();
+    // Stageカテゴリ
+    auto stageMap = stageData.GetCategory("Stage");
+    for (const auto& [key, path] : stageMap) {
+        if (key.rfind("StageData", 0) == 0) {
+            dungeonResource.stageResource.push_back(load.LoadResource<LoadModel>(path));
+        } else if (key == "StageBoneData") {
+            dungeonResource.stageBoneResource = load.LoadResource<LoadJSON>(path);
+        }
+    }
+    // Characterカテゴリ
+    auto characterMap = stageData.GetCategory("Character");
+    for (const auto& [key, path] : characterMap) {
+        if (key.find("Player") != std::string::npos) {
+            dungeonResource.playerResource = load.LoadResource<LoadModel>(path);
+        } else if (key.rfind("EnemyData") != std::string::npos) {
+            dungeonResource.enemyResource.push_back(load.LoadResource<LoadModel>(path));
+        }
+    }
+    // Treasureカテゴリ
+    auto treasureMap = stageData.GetCategory("Treasure");
+    for (const auto& [key, value] : treasureMap) {
+        // TreasureDataが配列だった場合
+        if (key == "TreasureData") {
+            auto treasureList = stageData.GetArray("Treasure", "TreasureData");
+            for (const auto& treasurePath : treasureList) {
+                if (!treasurePath.empty()) {
+                    dungeonResource.treasureResource.push_back(load.LoadResource<LoadModel>(treasurePath));
+                }
+            }
+        }
+        // 単体データ(EventTreasureData)
+        else if (key == "EventTreasureData" && !value.empty()) {
+            dungeonResource.eventTreasureResource = load.LoadResource<LoadModel>(value);
+        }
+    }    // ロード完了時のコールバック登録
+    load.SetOnComplete([this, &engine, dungeonResource]() {
+        DebugSetup(engine, dungeonResource);
+    });
 }
