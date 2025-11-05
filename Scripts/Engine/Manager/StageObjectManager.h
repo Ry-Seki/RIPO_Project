@@ -91,6 +91,8 @@ public:
 	 */
 	void RemoveStageObject(int stageObjectID);
 
+
+public:
 	/* 
 	 *	ID指定のステージオブジェクト取得
 	 */
@@ -102,15 +104,20 @@ public:
 	inline bool GetExitFlag() const {
 		return exitPoint->GetExitTriger();
 	}
-
-public:
 	/*
-	 *	キャラクターにモデルハンドルをセット
+	 *	お宝にモデルハンドルをセット
 	 *	@param[in]	GameObject* gameObject		セットするモデル
 	 *  @param[in]	const int modelHandle		モデルハンドル
 	 *  @author		Seki
 	 */
 	void SetModelHandle(GameObject* gameObject, const int modelHandle);
+	/*
+	 *	ステージオブジェクトのオーナーオブジェクトの取得
+	 *  @param[in]	const StageObjectBasePtr& setStageObject
+	 *  @return		GameObject*
+	 *  @author		Seki
+	 */
+	GameObject* GetStageObjectOwner(const StageObjectBasePtr& setStageObject) const;
 };
 
 #endif // !_STAGEOBJECTMANAGER_H_

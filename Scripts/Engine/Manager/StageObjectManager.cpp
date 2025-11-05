@@ -128,3 +128,16 @@ void StageObjectManager::SetModelHandle(GameObject* gameObject, const int modelH
 
 	modelRenderer->SetModelHandle(modelHandle);
 }
+/*
+ *	ステージオブジェクトのオーナーオブジェクトの取得
+ *  @param[in]	const StageObjectBasePtr& setStageObject
+ *  @return		GameObject*
+ *  @author		Seki
+ */
+GameObject* StageObjectManager::GetStageObjectOwner(const StageObjectBasePtr& setStageObject) const {
+	if (!setStageObject) return nullptr;
+	GameObject* owner = setStageObject->GetOwner();
+	if (!owner) return nullptr;
+
+	return owner;
+}
