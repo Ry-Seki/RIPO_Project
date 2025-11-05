@@ -80,6 +80,8 @@ void CharacterManager::GeneratePlayer(
 		player->AddComponent<ArmActionComponent>();
 		// カメラのターゲットに追加
 		CameraManager::GetInstance().SetTarget(player);
+		// シーンが持つゲームオブジェクト配列に追加
+		engine->AddGameObject(player);
 		return;
 	}
 	// 空きが無かったら一番後ろに生成
@@ -112,7 +114,8 @@ void CharacterManager::GenerateEnemy(
 		createCharacterList[i]->Start();
 		// オブジェクトリストにも保存
 		createCharacterObjectList[i] = enemy;
-
+		// シーンが持つゲームオブジェクト配列に追加
+		engine->AddGameObject(enemy);
 		return;
 	}
 	// 空きが無かったら一番後ろに生成

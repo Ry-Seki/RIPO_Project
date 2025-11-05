@@ -20,6 +20,7 @@ void DebugScene::Initialize(Engine& engine) {
 	LoadManager& load = LoadManager::GetInstance();
 	SetMouseDispFlag(false);
 	GameObjectManager::GetInstance().Initialize(engine);
+	CameraManager::GetInstance().Initialize(engine);
 	CharacterManager::GetInstance().Initialize(engine);
 	StageManager::GetInstance().Initialize(engine);
 	StageObjectManager::GetInstance().Initialize(engine);
@@ -44,7 +45,6 @@ void DebugScene::Initialize(Engine& engine) {
 	std::vector<StageObjectBasePtr> treasure(2);
 	for (int i = 0; i < 2; i++) {
 		treasure[i] = StageObjectManager::GetInstance().GetStageObject(i);
-		treasure[i]->GetOwner()->AddComponent<ModelRenderer>();
 	}
 
 	load.SetOnComplete(
@@ -74,8 +74,8 @@ void DebugScene::Initialize(Engine& engine) {
 			for (int i = 0; i < treasureSpawnCount; i++) {
 				int modelIndex = i % treasureModels.size();
 				int treasureModelHandle = treasureModels[modelIndex]->GetHandle();
-
-				treasure[i]->GetOwner()->GetComponent<ModelRenderer>()->SetModelHandle(treasureModelHandle);
+				
+				StageObjectManager::GetInstance().SetModelHandle(treasure[i]->GetOwner(), treasureModelHandle);
 				treasure[i]->GetOwner()->position = treasureSpawnPos[i];
 			}
 		}

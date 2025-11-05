@@ -26,6 +26,10 @@ private:
 	~CameraManager() = default;
 
 public:
+	/*
+	 *	‰Šú‰»ˆ—
+	 */
+	void Initialize(Engine& setEngine);
 	void CreateCamera(const std::string& name,
 		const Vector3& position = { 0.0f, 0.0f, 0.0f },
 		const Vector3& rotation = { 0.0f, 0.0f, 0.0f });
