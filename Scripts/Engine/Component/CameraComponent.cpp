@@ -7,14 +7,16 @@
 #include "../Manager/CameraManager.h"
 #include "../GameConst.h"
 #include "DxLib.h"
+#include <algorithm>
 
 CameraComponent::CameraComponent()
 	: mousePosition(Vector3::zero)
 	, mouseMoveValue(Vector3::zero)
 	, sensitivity(0.005f) 
 	
-	, CAMERA_ROTATION_MAX_X(1)
-	, CAMERA_ROTATION_MIN_X(180)
+	, CAMERA_ROTATION_MAX_X(1.5f)
+	, CAMERA_ROTATION_MIN_X(-1.5f)
+	, PLAYER_HEAD_HEIGHT(310)
 {}
 
 void CameraComponent::Update(float deltaTime) {
@@ -42,9 +44,14 @@ void CameraComponent::Update(float deltaTime) {
 	camera->rotation += moveRotation;
 	// x軸の角度は制限を掛ける
 	camera->rotation.x = std::clamp(camera->rotation.x, CAMERA_ROTATION_MIN_X, CAMERA_ROTATION_MAX_X);
-	// カメラの位置をプレイヤーと合わせる
-	if (player != nullptr)
-		camera->position = player->position;
+	// カメラの位置をプレイヤーの頭の位置に合わせる
+	if (player) {
+		Vector3 playerHeadPos = player->position;
+		playerHeadPos.y += PLAYER_HEAD_HEIGHT;
+		camera->position = playerHeadPos;
+	}
+
+
 
 #if _DEBUG
 	// デバッグ用移動

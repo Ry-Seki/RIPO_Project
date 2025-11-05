@@ -30,8 +30,8 @@ void DebugScene::Initialize(Engine& engine) {
 	auto stageBoneData = load.LoadResource<LoadJSON>("Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json");
 	auto treasureModel1 = load.LoadResource<LoadModel>("Res/Model/Treasure/Treasure01.mv1");
 	auto treasureModel2 = load.LoadResource<LoadModel>("Res/Model/Treasure/Treasure02.mv1");
-	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
 	CharacterManager::GetInstance().GeneratePlayer("player", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100,  300,  100 });
+	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
 	auto player = CharacterManager::GetInstance().GetCharacter(0);
 	CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
 	CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
@@ -74,7 +74,7 @@ void DebugScene::Initialize(Engine& engine) {
 			for (int i = 0; i < treasureSpawnCount; i++) {
 				int modelIndex = i % treasureModels.size();
 				int treasureModelHandle = treasureModels[modelIndex]->GetHandle();
-				
+
 				StageObjectManager::GetInstance().SetModelHandle(treasure[i]->GetOwner(), treasureModelHandle);
 				treasure[i]->GetOwner()->position = treasureSpawnPos[i];
 			}
@@ -92,10 +92,10 @@ void DebugScene::Update(Engine& engine, float deltaTime) {
  */
 void DebugScene::Render() {
 #if _DEBUG
+	//  XZ平面 100.0f毎に1本ライン引き
 	{
 		VECTOR pos1, pos2;
 
-		//  XZ平面 100.0f毎に1本ライン引き
 		{
 			pos1 = VGet(-5000.0f, 0.0f, -5000.0f);
 			pos2 = VGet(-5000.0f, 0.0f, 5000.0f);
@@ -145,9 +145,16 @@ void DebugScene::Render() {
 	Scene::Render();
 	StageManager::GetInstance().Render();
 #if _DEBUG
-	// プレイヤーの位置表示
-	GameObjectPtr player = CameraManager::GetInstance().GetTarget();
-	DrawFormatString(0, 0, GetColor(255, 255, 255), "PlayerPosition(%f,%f,%f)",
-		player->position.x, player->position.y, player->position.z);
+	// オブジェクトのTransform表示
+	{
+		// プレイヤーの位置表示
+		GameObjectPtr player = CameraManager::GetInstance().GetTarget();
+		DrawFormatString(0, 0, GetColor(255, 255, 255), "PlayerPosition(%f,%f,%f)",
+			player->position.x, player->position.y, player->position.z);
+		// カメラの角度表示
+		GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
+		DrawFormatString(0, 20, GetColor(255, 255, 255), "CameraRotation(%f,%f,%f)",
+			camera->rotation.x, camera->rotation.y, camera->rotation.z);
+	}
 #endif
 }

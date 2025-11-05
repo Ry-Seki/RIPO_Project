@@ -18,6 +18,7 @@ private:
 
 	const float CAMERA_ROTATION_MAX_X;	// カメラの角度のxの最大
 	const float CAMERA_ROTATION_MIN_X;	// カメラの角度のxの最小
+	const float PLAYER_HEAD_HEIGHT;		// プレイヤーの頭の高さ
 
 public:
 	CameraComponent();
