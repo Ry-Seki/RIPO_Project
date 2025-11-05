@@ -13,13 +13,18 @@
  */
 class VisionComponent : public Component {
 private:
-
+	Engine* engine;
 
 public:
 	/*
 	 *	XVˆ—
 	 */
-	void Update();
+	void Update(float deltaTime);
+
+	/*
+	 *	‹ŠEˆ—
+	 */
+	void Vision();
 
 
 

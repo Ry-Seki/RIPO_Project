@@ -5,7 +5,16 @@
 #include "VisionComponent.h"
 #include "../../RayCast.h"
 
-void VisionComponent::Update(float deltaTime)
-{
-	//RayCast(engine, )
+ /*
+  *	XVˆ—
+  */
+void VisionComponent::Update(float deltaTime) {
+
+}
+
+/*
+ *	‹ŠEˆ—
+ */
+void VisionComponent::Vision() {
+	
 }
