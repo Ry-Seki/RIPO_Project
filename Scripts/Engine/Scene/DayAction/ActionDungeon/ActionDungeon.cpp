@@ -179,10 +179,9 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
     size_t treasureCount = treasureSpawnPos.size();
     // ハンドルの要素数の取得
     size_t treasureTypeCount = setResource.treasureResource.size();
-    std::vector<int> treasureHandleList(treasureTypeCount);
     for (int i = 0; i < treasureTypeCount; i++) {
         // モデルハンドルの取得
-        int treasureHandle = treasureHandleList[i];
+        int treasureHandle = setResource.treasureResource[i]->GetHandle();
         // 宝の取得
         StageObjectBasePtr treasureObject = StageObjectManager::GetInstance().GetStageObject(i);
         if (!treasureObject) continue;
@@ -220,21 +219,18 @@ void ActionDungeon::LoadResourcesFromStageData(Engine& engine, DungeonStageData&
             dungeonResource.enemyResource.push_back(load.LoadResource<LoadModel>(path));
         }
     }
-    // Treasureカテゴリ
-    auto treasureMap = stageData.GetCategory("Treasure");
-    for (const auto& [key, value] : treasureMap) {
-        if (key == "TreasureData") {
-            auto treasureList = stageData.GetArray("Treasure", "TreasureData");
-            for (const auto& treasurePath : treasureList) {
-                if (!treasurePath.empty()) {
-                    dungeonResource.treasureResource.push_back(load.LoadResource<LoadModel>(treasurePath));
-                }
-            }
-        } else if (key == "EventTreasureData") {
-            dungeonResource.eventTreasureResource = load.LoadResource<LoadModel>(value);
+    // TreasureData
+    auto treasureList = stageData.GetArray("Treasure", "TreasureData");
+    for (const auto& treasurePath : treasureList) {
+        if (!treasurePath.empty()) {
+            dungeonResource.treasureResource.push_back(load.LoadResource<LoadModel>(treasurePath));
         }
     }
-    // ロード完了時のコールバック登録
+    // EventTreasureData（後ほどフラグで管理）
+    std::string eventTreasurePath;
+    if (stageData.TryGet("Treasure.EventTreasureData", eventTreasurePath) && !eventTreasurePath.empty()) {
+        dungeonResource.eventTreasureResource = load.LoadResource<LoadModel>(eventTreasurePath);
+    }    // ロード完了時のコールバック登録
     load.SetOnComplete([this, &engine, dungeonResource]() {
         DebugSetup(engine, dungeonResource);
     });
