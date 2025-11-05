@@ -42,11 +42,15 @@ public:
 	//----------------------------------------------------
 	//				ステージ関連の定数
 	//----------------------------------------------------
-	static constexpr int HIT_TRYNUM = 16;							// 壁押し出し処理の最大試行回数
-	static constexpr float HIT_SLIDE_LENGTH = 0.1f;					// 一度の壁押し出し処理でスライドさせる距離
-	static constexpr const char* START_FRAME_NAME = "Col_StartPos";	// スタートの位置のフレーム
-	static constexpr const char* GOAL_FRAME_NAME = "Col_GoalPos";	// ゴールの位置のフレーム
-	static constexpr const float VIEW_RADIUS = 60.0f;				// 取得範囲
+	static constexpr int HIT_TRYNUM = 16;								// 壁押し出し処理の最大試行回数
+	static constexpr float HIT_SLIDE_LENGTH = 0.1f;						// 一度の壁押し出し処理でスライドさせる距離
+	static constexpr const float VIEW_RADIUS = 60.0f;					// 取得範囲
+	static constexpr const char* _CREATE_POSNAME_ENEMY = "Enemy";		// 敵の生成位置の名前
+	static constexpr const char* _CREATE_POSNAME_PLAYER = "Player";		// プレイヤーの生成位置の名前
+	static constexpr const char* _CREATE_POSNAME_TREASURE = "Treasure";	// お宝の生成位置の名前
+	static constexpr const char* _CREATE_POSNAME_LIGHT = "PointLight";	// ポイントライトの生成位置の名前
+	static constexpr const char* _CREATE_POSITION_SPAWN = "SpawnPos";	// スポーンポジションの名前
+
 
 };
 #endif // !_GAMECONST_H_
