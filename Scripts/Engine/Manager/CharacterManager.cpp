@@ -7,6 +7,7 @@
 #include "GameObjectManager.h"
 #include "CameraManager.h"
 #include "../Component/Character/ArmActionComponent.h"
+#include "../Component/ModelRenderer.h"
 
 CharacterManager::CharacterManager() 
 	: engine(nullptr) {
@@ -27,6 +28,8 @@ CharacterBasePtr CharacterManager::CreateCharacter(
 	CharacterBasePtr createCharacter = characterObject->AddComponent<T>();
 	// コライダー生成
 	AABBColliderPtr collider = characterObject->AddComponent<AABBCollider>();
+	// モデルコンポーネントの追加
+	characterObject->AddComponent<ModelRenderer>();
 	collider->aabb = { AABBMin, AABBMax };
 	// ID設定
 	createCharacter->SetID(setID);
@@ -85,6 +88,8 @@ void CharacterManager::GeneratePlayer(
 	createCharacterObjectList.push_back(player);
 	// カメラのターゲットに追加
 	CameraManager::GetInstance().SetTarget(player);
+	// シーンが持つゲームオブジェクト配列に追加
+	engine->AddGameObject(player);
 }
 
 /*
@@ -114,14 +119,17 @@ void CharacterManager::GenerateEnemy(
 	createCharacterList.push_back(CreateCharacter<EnemyComponent>(0, name, position, rotation, AABBMin, AABBMax, enemy));
 	// オブジェクトリストにも保存
 	createCharacterObjectList.push_back(enemy);
+	// シーンが持つゲームオブジェクト配列に追加
+	engine->AddGameObject(enemy);
 }
 
 /*
  *	ID指定のキャラクター削除
  */
 void CharacterManager::RemoveCharacter(int characterID) {
+	GameObjectPtr destoryObject = createCharacterObjectList[characterID];
 	// オブジェクトのリセット
-	GameObjectManager::GetInstance().ResetObject(createCharacterObjectList[characterID]);
+	GameObjectManager::GetInstance().ResetObject(destoryObject);
 	// リストから削除
 	createCharacterList[characterID] = nullptr;
 }
@@ -131,4 +139,17 @@ void CharacterManager::RemoveCharacter(int characterID) {
  */
 CharacterBasePtr CharacterManager::GetCharacter(int characterID) {
 	return createCharacterList[characterID];
+}
+/*
+ *	キャラクターにモデルハンドルをセット
+ *	@param[in]	GameObjectPtr gameObject	セットするモデル
+ *  @param[in]	const int modelHandle		モデルハンドル
+ *  @author		Seki
+ */
+void CharacterManager::SetModelHandle(GameObjectPtr gameObject, const int modelHandle) {
+	if (!gameObject) return;
+	auto modelRenderer = gameObject->GetComponent<ModelRenderer>();
+	if (!modelRenderer) return;
+
+	modelRenderer->SetModelHandle(modelHandle);
 }

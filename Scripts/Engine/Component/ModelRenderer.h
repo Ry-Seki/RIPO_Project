@@ -42,9 +42,9 @@ public:
 public:
     /*
      *  モデルハンドルの設定
-     *  param[in]           int& setHandle   モデルハンドル
+     *  param[in]   const int setHandle   モデルハンドル
      */
-    void SetModel(int& setHandle) { modelHandle = MV1DuplicateModel(setHandle); }
+    void SetModelHandle(const int setHandle) { modelHandle = MV1DuplicateModel(setHandle); }
 };
 #endif // !_MODELRENDERER_H_
 
