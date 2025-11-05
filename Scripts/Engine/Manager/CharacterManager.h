@@ -21,7 +21,7 @@ class CharacterManager : public Singleton<CharacterManager>{
 private:;
 	Engine* engine;
 	CharacterBaseList createCharacterList;
-	GameObjectPtr characterObject;
+	GameObjectList createCharacterObjectList;
 
 	const size_t CREATE_CHARACTER_COUNT = 16;	// éñëOÇ…ê∂ê¨Ç∑ÇÈêî
 
@@ -46,7 +46,8 @@ private:
 		const Vector3& position,
 		const Vector3& rotation,
 		const Vector3& AABBMin,
-		const Vector3& AABBMax);
+		const Vector3& AABBMax,
+		GameObjectPtr& characterObject);
 
 public:
 	void Initialize(Engine& setEngine);
