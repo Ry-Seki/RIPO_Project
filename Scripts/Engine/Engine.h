@@ -100,7 +100,6 @@ public:
         obj->position = position;
         obj->rotation = rotation;
 
-        if (currentScene) currentScene->AddGameObject(obj);
         return obj;
     }
 
@@ -113,7 +112,11 @@ public:
      *  ŽŸ‚ÌƒV[ƒ“‚ÌÝ’è
      */
     inline void SetNextScene(ScenePtr setScene) { nextScene = setScene; }
-    
+    /*
+     *  Scene‚ÌAddGameObject‚ÌŒÄ‚Ño‚µ
+     *  @param[in]  const GameObjectPtr& gameObject
+     */
+    inline void AddGameObject(const GameObjectPtr& gameObject) { if (currentScene) currentScene->AddGameObject(gameObject); }
 };
 #endif // !_ENGINE_H_
 

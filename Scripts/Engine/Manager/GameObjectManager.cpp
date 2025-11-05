@@ -43,6 +43,7 @@ void GameObjectManager::ResetObject(GameObjectPtr resetObject) {
 	// 同時にリストをいじれないようにロック
 	std::lock_guard<std::mutex> lock(unuseMutex);
 	// オブジェクトのリセット
+	resetObject->Destroy();
 	resetObject->OnDestroy();
 	resetObject->ResetGameObject();
 	// 未使用リストに戻る

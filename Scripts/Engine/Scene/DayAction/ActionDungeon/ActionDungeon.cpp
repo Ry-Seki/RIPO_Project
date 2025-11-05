@@ -142,6 +142,6 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
     StageManager::GetInstance().SetStageJSONData(setResource.stageBoneResource->GetData());
     auto player = CharacterManager::GetInstance().GetCharacter(0)->GetOwner();
     if(!player->GetComponent<ModelRenderer>()) player->AddComponent<ModelRenderer>();
-    player->GetComponent<ModelRenderer>()->SetModel(playerHandle);
+    player->GetComponent<ModelRenderer>()->SetModelHandle(playerHandle);
     player->position = StageManager::GetInstance().GetStartPos();
 }

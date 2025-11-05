@@ -75,9 +75,9 @@ private:
 public:
     /*
      *  ゲームオブジェクトの追加
-     *  param[in]           const GameObjectPtr& obj    ゲームオブジェクトのポインタ
+     *  @param[in]  const GameObjectPtr& gameObject    ゲームオブジェクトのポインタ
      */
-    void AddGameObject(const GameObjectPtr& obj);
+    void AddGameObject(const GameObjectPtr& gameObject);
     /*
      *  ゲームオブジェクトの破棄
      */
