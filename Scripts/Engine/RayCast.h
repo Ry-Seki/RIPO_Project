@@ -31,8 +31,9 @@ bool RayCast(Engine* engine, Vector3 startPosition, Vector3 direction, float& hi
  *  @param  float&          hitLength   当たるまでの距離
  *  @param  GameObject*&    hitObject   当たった最も近いオブジェクト
  *  @param  GameObject*     checkObject 判定チェックオブジェクト
+ *  @param  bool            isHit       当たったかどうか
  */
-bool RayIntersect(const Ray& ray, const AABB& box, float& hitLength, GameObject*& hitObject, GameObject* checkObject);
+bool RayIntersect(const Ray& ray, const AABB& box, float& hitLength, GameObject*& hitObject, GameObject* checkObject, bool isHit);
 
 /*
  *  各軸の交差判定

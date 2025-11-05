@@ -30,6 +30,9 @@ public:
 
 	virtual void Update(float deltaTime) override;
 
+private:
+	virtual void ArmUpdate(float deltaTime, GameObject* player, Engine* engine){}
+
 public:
 	/*
 	 *	使用するウデをセット

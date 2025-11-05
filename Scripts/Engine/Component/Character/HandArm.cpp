@@ -13,21 +13,21 @@ HandArm::HandArm()
 	, LEFTABLE_DISTANCE(100)
 {}
 
-void HandArm::Update(float deltaTime) {
+void HandArm::ArmUpdate(float deltaTime, GameObject* player, Engine* engine) {
 	// 左クリックでお宝持ち上げ
 	if (GetMouseInput() & MOUSE_INPUT_LEFT)
-		LiftTreasure();
+		LiftTreasure(player, engine);
 }
 
 /*
  *	お宝持ち上げ処理
  */
-void HandArm::LiftTreasure() {
+void HandArm::LiftTreasure(GameObject* player, Engine* engine) {
 	// 正面にオブジェクトがあるか
 	float hitLength = 0;
 	GameObject* hitObject;
 	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
-	if (RayCast(engine, player->position, camera->rotation, hitLength, hitObject)) {
+	if (RayCast(engine, camera->position, camera->rotation, hitLength, hitObject)) {
 		// 持ち上げ可能距離なら持ち上げ対象を保存
 		if (hitLength < LEFTABLE_DISTANCE) return;
 		liftObject = hitObject;

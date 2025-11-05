@@ -8,5 +8,5 @@ void ArmActionComponent::Start() {
 
 void ArmActionComponent::Update(float deltaTime) {
 	if (currentArm == nullptr) return;
-	currentArm->Update(deltaTime);
+	currentArm->ArmUpdate(deltaTime, player, engine);
 }
