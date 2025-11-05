@@ -6,9 +6,9 @@
 #include "GameObjectManager.h"
 #include "../Stage/StageObject/Treasure/Treasure.h"
 #include "../Stage/StageObject/StageObjectBase.h"
+#include "../Component/ModelRenderer.h"
 
-StageObjectManager::StageObjectManager()
-	: engine(nullptr) {
+StageObjectManager::StageObjectManager(){
 }
 
 /*
@@ -66,10 +66,14 @@ void StageObjectManager::GenerateExit(
 		if (createStageObjectList[i] != nullptr) continue;
 		// リストの空きに生成
 		createStageObjectList[i] = CreateStageObject<ExitPoint>(i, name, position, rotation, AABBMin, AABBMax);
+		// シーンが持つゲームオブジェクト配列に入れる
+		engine->AddGameObject(stageObjectObj);
 		return;
 	}
 	// 空きがなかったら一番後ろに生成
 	createStageObjectList.push_back(CreateStageObject<ExitPoint>(0, name, position, rotation, AABBMin, AABBMax));
+	// シーンが持つゲームオブジェクト配列に入れる
+	engine->AddGameObject(stageObjectObj);
 }
 
 void StageObjectManager::GenerateTreasure(
@@ -85,10 +89,17 @@ void StageObjectManager::GenerateTreasure(
 		if (createStageObjectList[i] != nullptr) continue;
 		// リストの空きに生成
 		createStageObjectList[i] = CreateStageObject<Treasure>(i, name, position, rotation, AABBMin, AABBMax);
+		createStageObjectList[i]->GetOwner()->AddComponent<ModelRenderer>();
+		// シーンが持つゲームオブジェクト配列に入れる
+		engine->AddGameObject(stageObjectObj);
 		return;
 	}
 	// 空きがなかったら一番後ろに生成
-	createStageObjectList.push_back(CreateStageObject<Treasure>(0, name, position, rotation, AABBMin, AABBMax));
+	StageObjectBasePtr stageObject = CreateStageObject<Treasure>(0, name, position, rotation, AABBMin, AABBMax);
+	stageObject->GetOwner()->AddComponent<ModelRenderer>();
+	createStageObjectList.push_back(stageObject);
+	// シーンが持つゲームオブジェクト配列に入れる
+	engine->AddGameObject(stageObjectObj);
 }
 
 
@@ -107,4 +118,13 @@ void StageObjectManager::RemoveStageObject(int stageObjectID) {
  */
 StageObjectBasePtr StageObjectManager::GetStageObject(int stageObjectID) {
 	return createStageObjectList[stageObjectID];
+}
+
+void StageObjectManager::SetModelHandle(GameObject* gameObject, const int modelHandle) {
+	if (!gameObject) return;
+
+	auto modelRenderer = gameObject->GetComponent<ModelRenderer>();
+	if (!modelRenderer) return;
+
+	modelRenderer->SetModelHandle(modelHandle);
 }

@@ -14,6 +14,7 @@ PlayerComponent::PlayerComponent()
 	, acceleration(0.0f)
 	, avoidMoveValue(0.0f)
 	, avoidCoolTime(0.0f)
+	, moveDirectionY(0.0f)
 	, canAvoid(true)
 	, isAvoid(false)
 
@@ -76,18 +77,25 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	}
 	player->position.x += moveX;
 	player->position.z += moveZ;
-	player->rotation.y = atan2f(moveX, moveZ);
+	// 移動方向を保存
+	if (moveX && moveZ)
+		moveDirectionY = atan2f(moveX, moveZ);
+	// プレイヤーの向きはカメラに合わせる
+	player->rotation.y = camera->rotation.y;
 	// 角度を補正
 	player->rotation.y += PLAYER_MODEL_ANGLE_CORRECTION * Deg2Rad;
 
-
+#if _DEBUG
 	// デバッグ用Y軸移動
-	if (CheckHitKey(KEY_INPUT_TAB)) {
-		player->position.y -= moveSpeed * deltaTime;
+	{
+		if (CheckHitKey(KEY_INPUT_TAB)) {
+			player->position.y -= moveSpeed * deltaTime;
+		}
+		if (CheckHitKey(KEY_INPUT_SPACE)) {
+			player->position.y += moveSpeed * deltaTime;
+		}
 	}
-	if (CheckHitKey(KEY_INPUT_SPACE)) {
-		player->position.y += moveSpeed * deltaTime;
-	}
+#endif
 }
 
 /*
@@ -123,11 +131,9 @@ void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 		moveSpeed = DEFAULT_MOVE_SPEED * AVOID_ACCELERATION_MAX;
 	}
 	if (isAvoid) {
-		// 補正抜きの角度
-		float rotationY = player->rotation.y - PLAYER_MODEL_ANGLE_CORRECTION * Deg2Rad;
 		// プレイヤーの角度のsin,cos
-		const float playerSin = sinf(rotationY);
-		const float playerCos = cosf(rotationY);
+		const float playerSin = sinf(moveDirectionY);
+		const float playerCos = cosf(moveDirectionY);
 		// プレイヤーの向いている方向に移動
 		player->position.x += moveSpeed * playerSin * deltaTime;
 		player->position.z += moveSpeed * playerCos * deltaTime;
@@ -139,12 +145,15 @@ void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 			isAvoid = false;
 			avoidCoolTime = AVOID_COOL_TIME_MAX;
 		}
-	}
-	// クールタイム
-	if (avoidCoolTime < 0) {
-		canAvoid = true;
-	}
+	} 
 	else {
-		avoidCoolTime -= deltaTime;
+		// クールタイム
+		if (avoidCoolTime <= 0) {
+			canAvoid = true;
+			avoidCoolTime = 0;
+		}
+		else {
+			avoidCoolTime -= deltaTime;
+		}
 	}
 }

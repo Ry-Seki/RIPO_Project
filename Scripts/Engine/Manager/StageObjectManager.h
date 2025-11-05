@@ -19,9 +19,10 @@ class StageObjectManager : public Singleton<StageObjectManager> {
 	friend class Singleton<StageObjectManager>;
 
 private:
-	Engine* engine;
-	ExitPoint* exitPoint;
+	Engine* engine = nullptr;
+	ExitPoint* exitPoint = nullptr;
 	StageObjectBaseList createStageObjectList;
+	GameObjectList createObjectList;
 	GameObjectPtr stageObjectObj;
 
 	const size_t CREATE_STAGEOBJ_COUNT = 16;	// 事前に生成する数
@@ -102,7 +103,14 @@ public:
 		return exitPoint->GetExitTriger();
 	}
 
-
+public:
+	/*
+	 *	キャラクターにモデルハンドルをセット
+	 *	@param[in]	GameObject* gameObject		セットするモデル
+	 *  @param[in]	const int modelHandle		モデルハンドル
+	 *  @author		Seki
+	 */
+	void SetModelHandle(GameObject* gameObject, const int modelHandle);
 };
 
 #endif // !_STAGEOBJECTMANAGER_H_

@@ -80,6 +80,8 @@ void CharacterManager::GeneratePlayer(
 		player->AddComponent<ArmActionComponent>();
 		// カメラのターゲットに追加
 		CameraManager::GetInstance().SetTarget(player);
+		// シーンが持つゲームオブジェクト配列に追加
+		engine->AddGameObject(player);
 		return;
 	}
 	// 空きが無かったら一番後ろに生成
@@ -112,7 +114,8 @@ void CharacterManager::GenerateEnemy(
 		createCharacterList[i]->Start();
 		// オブジェクトリストにも保存
 		createCharacterObjectList[i] = enemy;
-
+		// シーンが持つゲームオブジェクト配列に追加
+		engine->AddGameObject(enemy);
 		return;
 	}
 	// 空きが無かったら一番後ろに生成
@@ -142,11 +145,11 @@ CharacterBasePtr CharacterManager::GetCharacter(int characterID) {
 }
 /*
  *	キャラクターにモデルハンドルをセット
- *	@param[in]	GameObjectPtr gameObject	セットするモデル
+ *	@param[in]	GameObject* gameObject	セットするモデル
  *  @param[in]	const int modelHandle		モデルハンドル
  *  @author		Seki
  */
-void CharacterManager::SetModelHandle(GameObjectPtr gameObject, const int modelHandle) {
+void CharacterManager::SetModelHandle(GameObject* gameObject, const int modelHandle) {
 	if (!gameObject) return;
 	auto modelRenderer = gameObject->GetComponent<ModelRenderer>();
 	if (!modelRenderer) return;

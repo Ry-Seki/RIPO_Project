@@ -33,6 +33,9 @@ GameObjectPtr GameObjectManager::GetUnuseObject() {
 	GameObjectPtr unuseObject = unuseObjectList.back();
 	// 渡したらリストから削除
 	unuseObjectList.pop_back();
+	// そのオブジェクトがすでに破棄済みなら初期化する
+	if (unuseObject->IsDestroyed()) unuseObject->ResetDestroy();
+
 	return unuseObject;
 }
 

@@ -5,6 +5,7 @@
 
 #include "Engine.h"
 #include "Time.h"
+#include "GameConst.h"
 #include "Scene/TitleScene.h"
 #include "Scene/DebugScene.h"
 #include "Fade/FadeFactory.h"
@@ -25,7 +26,7 @@ int Engine::Initialize() {
 #pragma region DxLibの初期化処理(理解するまでは触らない)
 	SetOutApplicationLogValidFlag(FALSE);
 	//ウィンドウのサイズを変更する
-	SetGraphMode(WINDOW_WIDTH, WINDOW_HEIGHT, 32, 0);
+	SetGraphMode(GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, 32, 0);
 	//起動時のウィンドウのモードの設定
 	ChangeWindowMode(TRUE);		// true : Windowモード, false : FullScreen
 	//背景色の設定

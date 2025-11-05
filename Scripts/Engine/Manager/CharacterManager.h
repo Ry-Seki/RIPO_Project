@@ -86,11 +86,11 @@ public:
 	CharacterBasePtr GetCharacter(int characterID);
 	/*
 	 *	キャラクターにモデルハンドルをセット
-	 *	@param[in]	GameObjectPtr gameObject	セットするモデル
+	 *	@param[in]	GameObject* gameObject		セットするモデル
 	 *  @param[in]	const int modelHandle		モデルハンドル
 	 *  @author		Seki
 	 */
-	void SetModelHandle(GameObjectPtr gameObject, const int modelHandle);
+	void SetModelHandle(GameObject* gameObject, const int modelHandle);
 };
 
 #endif // !_CHARACTERMANAGER_H_

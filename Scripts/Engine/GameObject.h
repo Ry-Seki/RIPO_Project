@@ -127,10 +127,24 @@ public:
     void ResetGameObject();
 
 public:
+    /*
+     *  エンジンの取得
+     *  @return Engine*
+     */
     inline Engine* GetEngine() const { return engine; }
+    /*
+     *  破棄フラグの取得
+     *  @return bool
+     */
     inline bool IsDestroyed() const { return isDestroyed; }
+    /*
+     *  破棄フラグをtrueにする
+     */
     inline void Destroy() { isDestroyed = true; }
-
+    /*
+     *  破棄フラグの初期化
+     */
+    inline void ResetDestroy() { isDestroyed = false; }
 };
 //	別名定義
 using GameObjectPtr = std::shared_ptr<GameObject>;
