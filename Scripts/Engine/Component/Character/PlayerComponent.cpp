@@ -6,6 +6,7 @@
 #include "PlayerComponent.h"
 #include "../../Manager/CameraManager.h"
 #include "../../GameConst.h"
+#include "HandArm.h"
 #include "DxLib.h"
 
 PlayerComponent::PlayerComponent()
@@ -35,6 +36,9 @@ void PlayerComponent::Update(float deltaTime) {
 	PlayerRun(deltaTime);
 	// 移動処理
 	PlayerMove(player, deltaTime);
+	// 右クリックでウデアクションをハンドに設定
+	if (GetMouseInput() & MOUSE_INPUT_RIGHT)
+		player->GetComponent<ArmActionComponent>()->SetCurrentArm<HandArm>();
 }
 
 /*
