@@ -11,6 +11,13 @@ CameraManager::CameraManager()
 }
 
 /*
+ *	初期化処理
+ */
+void CameraManager::Initialize(Engine& setEngine) {
+	engine = &setEngine;
+}
+
+/*
  *	カメラ生成
  */
 void CameraManager::CreateCamera(
@@ -23,6 +30,7 @@ void CameraManager::CreateCamera(
 	CameraComponentPtr cameraComponent = camera->AddComponent<CameraComponent>();
 	// データのセット
 	camera->SetObjectData(name, position, rotation);
+	engine->AddGameObject(camera);
 }
 /*
  *	カメラのリセット
