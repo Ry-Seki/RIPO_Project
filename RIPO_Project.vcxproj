@@ -159,6 +159,7 @@
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\VisionComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Engine\Input\InputManager.cpp" />
