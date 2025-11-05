@@ -155,6 +155,7 @@
     <ClCompile Include="Scripts\Engine\Collision.cpp" />
     <ClCompile Include="Scripts\Engine\Component\AABBCollider.cpp" />
     <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\ArmActionComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
@@ -177,7 +178,6 @@
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarSystem.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\Day.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionDungeon\ActionDungeon.cpp" />
-    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionFactory.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.cpp" />
