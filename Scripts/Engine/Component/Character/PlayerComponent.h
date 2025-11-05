@@ -14,6 +14,7 @@ private:
 	float acceleration;		// 加速度
 	float avoidMoveValue;	// 回避の移動量
 	float avoidCoolTime;	// 回避のクールタイム
+	float moveDirectionY;	// y軸の移動方向
 	bool canAvoid;			// 回避可能か否か
 	bool isAvoid;			// 回避中か否か
 
