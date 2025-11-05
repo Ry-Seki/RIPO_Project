@@ -7,6 +7,7 @@
 #define _ARMACTIONCOMPONENT_H_
 
 #include "../../Component/Component.h"
+#include "../../Engine.h"
 #include <vector>
 
 /*
@@ -14,16 +15,20 @@
  */
 class ArmActionComponent : public Component {
 private:
-	std::shared_ptr<ArmActionComponent> currentArm;
+	std::shared_ptr<ArmActionComponent> currentArm = nullptr;
+
+protected:
+	GameObject* player;
+	Engine* engine;
 
 public:
 	ArmActionComponent() = default;
 	virtual ~ArmActionComponent() = default;
 
 public:
-	virtual void Update(float deltaTime) override {
-		currentArm->Update(deltaTime);
-	}
+	virtual void Start() override;
+
+	virtual void Update(float deltaTime) override;
 
 public:
 	/*
