@@ -20,6 +20,7 @@ public:
 
 public:
 	void Update(float deltaTime) override;
+	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
 };
 
 #endif // !_BULLETCOMPONENT_H_

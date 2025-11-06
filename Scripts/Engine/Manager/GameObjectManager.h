@@ -28,8 +28,22 @@ private:
 	~GameObjectManager() = default;
 
 public:
+	/*
+	 *	初期化
+	 */
 	void Initialize(Engine& setEngine);
+	/*
+	 *	未使用オブジェクト取得
+	 */
 	GameObjectPtr GetUnuseObject();
+	/*
+	 *	ID指定のオブジェクト取得
+	 *	@param	int ID	オブジェクトの識別ID
+	 */
+	GameObjectPtr GetUseObject(int ID);
+	/*
+	 *	オブジェクトのリセット
+	 */
 	void ResetObject(GameObjectPtr resetObject);
 
 };
