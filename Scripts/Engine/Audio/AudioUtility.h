@@ -75,7 +75,7 @@ public:
 	}
 	/*
 	 *	SE‰¹—Ê‚Ìæ“¾
-	 *	return		int (0`100)
+	 *	@return		int (0`100)
 	 */
 	static int GetSEVolume() {
 		return AudioManager::GetInstance().GetSEVolume(); 
