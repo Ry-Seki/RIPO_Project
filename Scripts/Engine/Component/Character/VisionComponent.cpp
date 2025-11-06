@@ -29,6 +29,6 @@ bool VisionComponent::Vision(const Vector3& beholderPos, const Vector3& beholder
 	// 視界距離判定
 	if (distance > viewDistance) return false;
 	// 自身の方向ベクトル
-	//Vector3 direction = 
-	//float angle = 
+	//Vector3 direction = ForwardDir(beholderDir);
+	//float angle = acosf(direction.Dot())
 }
