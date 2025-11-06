@@ -168,6 +168,7 @@ void StageObjectManager::GenerateStair(
 
 /*
  *	ID指定のステージオブジェクト削除
+ *  @param[in]	int stageObject			削除するオブジェクトのID
  */
 void StageObjectManager::RemoveStageObject(int stageObjectID) {
 
@@ -176,6 +177,17 @@ void StageObjectManager::RemoveStageObject(int stageObjectID) {
 	GameObjectManager::GetInstance().ResetObject(destroyObject);
 	// リストから削除
 	createStageList[stageObjectID] = nullptr;
+	// オブジェクトリストからも削除
+	createStageObjectList[stageObjectID] = nullptr;
+}
+/*
+ *	全てのステージオブジェクト削除
+ *  @author		Seki
+ */
+void StageObjectManager::RemoveAllStageObject() {
+	for (int i = 0, max = createStageList.size(); i < max; i++) {
+		RemoveStageObject(i);
+	}
 }
 
 /*
@@ -184,8 +196,12 @@ void StageObjectManager::RemoveStageObject(int stageObjectID) {
 StageObjectBasePtr StageObjectManager::GetStageObject(int stageObjectID) {
 	return createStageList[stageObjectID];
 }
-
-// ステージオブジェクトにモデルハンドルをセット
+/*
+ *	お宝にモデルハンドルをセット
+ *	@param[in]	GameObject* gameObject		セットするモデル
+ *  @param[in]	const int modelHandle		モデルハンドル
+ *  @author		Seki
+ */
 void StageObjectManager::SetModelHandle(GameObject* gameObject, const int modelHandle) {
 	if (!gameObject) return;
 
