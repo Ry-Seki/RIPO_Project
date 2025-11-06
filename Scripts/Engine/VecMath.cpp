@@ -86,13 +86,24 @@ float Vector3::Distance(const Vector3& v1, const Vector3& v2) {
 }
 
 /*
- *	方向ベクトル
+ *	2点間の方向ベクトル
  */
 Vector3 Vector3::Direction(const Vector3& from, const Vector3& to) {
 	Vector3 dir = to - from;
 	return dir.Normalized();
 }
 
+/*
+ *	正面の方向ベクトル
+ *	@outhor Riku
+ */
+Vector3 Vector3::ForwardDir(const Vector3& rotation) {
+	Vector3 dir;
+	dir.x = cos(rotation.x) * sin(rotation.y);
+	dir.y = sin(rotation.x);
+	dir.x = cos(rotation.x) * cos(rotation.y);
+	return dir.Normalized();
+}
 
 Vector3 Vector3::Clamp(const Vector3& v1, const Vector3& min, const Vector3& max) {
 	return {
