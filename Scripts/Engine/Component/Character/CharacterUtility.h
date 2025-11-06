@@ -81,15 +81,6 @@ public:
 		return CharacterManager::GetInstance().GetCharacter(characterID);
 	}
 	/*
-	 *	ポインタ指定のキャラクター取得
-	 *	@param[in]	const CharacterBasePtr& setCharacter
-	 */
-	static CharacterBasePtr GetCharacter(const CharacterBasePtr& setCharacter) {
-		if (!setCharacter) return nullptr;
-		int characterID = setCharacter->GetID();
-		return CharacterManager::GetInstance().GetCharacter(characterID);
-	}
-	/*
 	 *	キャラクターのオーナーオブジェクトの取得
 	 *  @param[in]	const CharacterBasePtr& setCharacter
 	 *  @return		GameObject*

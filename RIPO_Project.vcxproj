@@ -274,6 +274,7 @@
     <ClInclude Include="Scripts\Engine\Stage\StageBase.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\ExitPoint.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectUtility.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Stair.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageUtility.h" />
