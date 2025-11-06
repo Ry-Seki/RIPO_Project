@@ -83,7 +83,14 @@ public:
 		const Vector3& AABBMax);
 
 	void RemoveCharacter(int characterID);
-	CharacterBasePtr GetCharacter(int characterID);
+
+public:
+	/*
+	 *	ID指定のキャラクター取得
+	 *	@return		CharacterBasePtr
+	 *  @author		Seki
+	 */
+	CharacterBasePtr GetCharacter(int characterID) const;
 	/*
 	 *	キャラクターにモデルハンドルをセット
 	 *	@param[in]	GameObject* gameObject		セットするモデル
@@ -91,6 +98,14 @@ public:
 	 *  @author		Seki
 	 */
 	void SetModelHandle(GameObject* gameObject, const int modelHandle);
+	/*
+	 *	キャラクターのオーナーオブジェクトの取得
+	 *  @param[in]	const CharacterBasePtr& setCharacter
+	 *  @return		GameObject*
+	 *  @author		Seki
+	 */
+	GameObject* GetCharacterOwner(const CharacterBasePtr& setCharacter) const;
+
 };
 
 #endif // !_CHARACTERMANAGER_H_

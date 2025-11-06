@@ -140,7 +140,7 @@ void CharacterManager::RemoveCharacter(int characterID) {
 /*
  *	ID指定のキャラクター取得
  */
-CharacterBasePtr CharacterManager::GetCharacter(int characterID) {
+CharacterBasePtr CharacterManager::GetCharacter(int characterID) const{
 	return createCharacterList[characterID];
 }
 /*
@@ -155,4 +155,17 @@ void CharacterManager::SetModelHandle(GameObject* gameObject, const int modelHan
 	if (!modelRenderer) return;
 
 	modelRenderer->SetModelHandle(modelHandle);
+}
+/*
+ *	キャラクターのオーナーオブジェクトの取得
+ *  @param[in]	const CharacterBasePtr setCharacter
+ *  @return		GameObject*
+ *  @author		Seki
+ */
+GameObject* CharacterManager::GetCharacterOwner(const CharacterBasePtr& setCharacter) const {
+	if (!setCharacter) return nullptr;
+	GameObject* owner = setCharacter->GetOwner();
+	if (!owner) return nullptr;
+
+	return owner;
 }
