@@ -71,14 +71,39 @@ public:
 	static void RemoveAllCharacter() {
 		CharacterManager::GetInstance().RemoveAllCharacter();
 	}
+
+public:
+	/*
+	 *	ID指定のキャラクター取得
+	 *	@return		CharacterBasePtr
+	 */
+	static CharacterBasePtr GetCharacter(int characterID) {
+		return CharacterManager::GetInstance().GetCharacter(characterID);
+	}
+	/*
+	 *	ポインタ指定のキャラクター取得
+	 *	@param[in]	const CharacterBasePtr& setCharacter
+	 */
+	static CharacterBasePtr GetCharacter(const CharacterBasePtr& setCharacter) {
+		if (!setCharacter) return nullptr;
+		int characterID = setCharacter->GetID();
+		return CharacterManager::GetInstance().GetCharacter(characterID);
+	}
 	/*
 	 *	キャラクターのオーナーオブジェクトの取得
 	 *  @param[in]	const CharacterBasePtr& setCharacter
 	 *  @return		GameObject*
-	 *  @author		Seki
 	 */
 	static GameObject* GetOwnerObject(const CharacterBasePtr& setCharacter) {
 		return CharacterManager::GetInstance().GetCharacterOwner(setCharacter);
+	}
+	/*
+	 *	キャラクターにモデルハンドルをセット
+	 *	@param[in]	GameObject* gameObject		セットするモデル
+	 *  @param[in]	const int modelHandle		モデルハンドル
+	 */
+	static void SetCharacterModel(GameObject* gameObject, const int modelHandle) {
+		CharacterManager::GetInstance().SetModelHandle(gameObject, modelHandle);
 	}
 };
 #endif // !_CHARACTER_UTILITY_H_

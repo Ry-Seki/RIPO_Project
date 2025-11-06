@@ -211,6 +211,7 @@
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\CharacterUtility.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
@@ -273,6 +274,7 @@
     <ClInclude Include="Scripts\Engine\Stage\StageObject\ExitPoint.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageUtility.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
   </ItemGroup>

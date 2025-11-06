@@ -63,21 +63,29 @@ public:
 	 *	BGM‰¹—Ê‚Ìæ“¾
 	 *  @return		int (0`100)
 	 */
-	static int GetBGMVolume() { return AudioManager::GetInstance().GetBGMVolume(); }
+	static int GetBGMVolume() {
+		return AudioManager::GetInstance().GetBGMVolume(); 
+	}
 	/*
 	 *	BGM‰¹—Ê‚Ìİ’è
 	 *  @param[in]	const int setVolume		‰¹—Ê (0`100)
 	 */
-	static void SetBGMVolume(const int setVolume) { AudioManager::GetInstance().SetBGMVolume(setVolume); }
+	static void SetBGMVolume(const int setVolume) {
+		AudioManager::GetInstance().SetBGMVolume(setVolume); 
+	}
 	/*
 	 *	SE‰¹—Ê‚Ìæ“¾
 	 *	return		int (0`100)
 	 */
-	static int GetSEVolume() { return AudioManager::GetInstance().GetSEVolume(); }
+	static int GetSEVolume() {
+		return AudioManager::GetInstance().GetSEVolume(); 
+	}
 	/*
 	 *	SE‰¹—Ê‚Ìİ’è
 	 *	@param[in]	const int setVolume		‰¹—Ê (0`100)
 	 */
-	inline void SetSEVolume(const int setVolume) { AudioManager::GetInstance().SetSEVolume(setVolume); }
+	inline void SetSEVolume(const int setVolume) { 
+		AudioManager::GetInstance().SetSEVolume(setVolume); 
+	}
 };
 #endif // !_AUDIO_UTILITY_H_

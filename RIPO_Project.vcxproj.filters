@@ -467,5 +467,11 @@
     <ClInclude Include="Scripts\Engine\Audio\AudioManager.h">
       <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\CharacterUtility.h">
+      <Filter>ヘッダー ファイル\Engine\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Stage\StageUtility.h">
+      <Filter>ヘッダー ファイル\Engine\Stage</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
