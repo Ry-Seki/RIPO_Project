@@ -269,6 +269,10 @@ Vector3 Direction(const Vector3& from, const Vector3& to) {
 	return Vector3::Direction(from, to);
 }
 
+Vector3 ForwardDir(const Vector3& rotation) {
+	return Vector3::ForwardDir(rotation);
+}
+
 Vector3 Offset(const Vector3& v1, const Vector3& v2) {
 	return Vector3::Offset(v1, v2);
 }
