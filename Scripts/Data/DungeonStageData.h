@@ -72,6 +72,39 @@ public:
         }
         return false;
     }
+    /*
+     *  カテゴリーの取得
+     *  @param[in] const std::string& categoryName  取得したいカテゴリー名
+     */
+    std::unordered_map<std::string, std::string> GetCategory(const std::string& categoryName) const {
+        std::unordered_map<std::string, std::string> result;
+        for (const auto& [key, value] : dungeonDataList) {
+            if (key.rfind(categoryName + ".", 0) == 0) { // prefix一致
+                result[key.substr(categoryName.size() + 1)] = value;
+            }
+        }
+        return result;
+    }
+    /*
+     *  指定したカテゴリ内の配列キーを取得
+     *  @param[in]  const std::string& categoryName  カテゴリ名
+     *  @param[in]  const std::string& arrayKey      配列のキー名
+     *  @return     std::vector<std::string>         
+     */
+    std::vector<std::string> GetArray(const std::string& categoryName, const std::string& arrayKey) const {
+        std::vector<std::string> result;
+
+        // キーを探す
+        const std::string prefix = categoryName + "." + arrayKey + "[";
+
+        for (const auto& [key, value] : dungeonDataList) {
+            // 配列データを探す
+            if (key.rfind(prefix, 0) == 0) {
+                result.push_back(value);
+            }
+        }
+        return result;
+    }
 private:
     /*
      *  JSONデータを再帰的に辿り、葉の文字列データをキーとして登録する

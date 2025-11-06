@@ -10,6 +10,7 @@
 #include "Scene/DebugScene.h"
 #include "Fade/FadeFactory.h"
 #include "Fade/FadeManager.h"
+#include "Audio/AudioManager.h"
 
 #include <DxLib.h>
 #include <EffekseerForDXLib.h>
@@ -125,6 +126,9 @@ void Engine::Update() {
 
 	// シーンの更新
 	if (currentScene && !isLoading && !isFadeStop) currentScene->Update(*this, Time::deltaTime);
+
+	// 音源の更新
+	AudioManager::GetInstance().Update();
 
 	// シーンの切り替え
 	ChangeScene();

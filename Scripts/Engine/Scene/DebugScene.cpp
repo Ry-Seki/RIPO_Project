@@ -47,8 +47,11 @@ void DebugScene::Initialize(Engine& engine) {
 		treasure[i] = StageObjectManager::GetInstance().GetStageObject(i);
 	}
 
+	StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
+	auto stair = StageObjectManager::GetInstance().GetStageObject(2);
+
 	load.SetOnComplete(
-		[stageModel, player, playerModel, enemy, enemyModel, stageBoneData, treasure, treasureModel1, treasureModel2]() {
+		[stageModel, player, playerModel, enemy, enemyModel, stageBoneData, treasure, treasureModel1, treasureModel2, stair]() {
 			StageManager::GetInstance().LoadStage(stageModel->GetHandle());
 			StageManager::GetInstance().SetStageJSONData(stageBoneData->GetData());
 			int modelHandle = playerModel->GetHandle();
@@ -65,6 +68,7 @@ void DebugScene::Initialize(Engine& engine) {
 				if (!component) continue;
 				enemy[i]->GetOwner()->position = enemySpawnPos[i];
 				component->SetWayPoint(enemy[i]->GetOwner()->position);
+				enemy[i]->GetOwner()->scale = { 4.5f,4.5f,4.5f };
 			}
 
 			std::vector<Vector3> treasureSpawnPos = StageManager::GetInstance().GetTreasureSpwanPos();
@@ -78,6 +82,9 @@ void DebugScene::Initialize(Engine& engine) {
 				StageObjectManager::GetInstance().SetModelHandle(treasure[i]->GetOwner(), treasureModelHandle);
 				treasure[i]->GetOwner()->position = treasureSpawnPos[i];
 			}
+
+			Vector3 stairSpawnPos = StageManager::GetInstance().GetStairsPos();
+			stair->GetOwner()->position = stairSpawnPos;
 		}
 	);
 }
@@ -155,6 +162,13 @@ void DebugScene::Render() {
 		GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
 		DrawFormatString(0, 20, GetColor(255, 255, 255), "CameraRotation(%f,%f,%f)",
 			camera->rotation.x, camera->rotation.y, camera->rotation.z);
+		bool stairFrag = StageObjectManager::GetInstance().GetStairMove();
+		if (stairFrag) {
+			DrawFormatString(0, 40, GetColor(255, 255, 255), "StairFrag_true");
+		}
+		else {
+			DrawFormatString(0, 40, GetColor(255, 255, 255), "StairFrag_false");
+		}
 	}
 #endif
 }

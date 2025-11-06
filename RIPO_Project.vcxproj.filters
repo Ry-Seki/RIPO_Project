@@ -82,8 +82,8 @@
     <Filter Include="ソース ファイル\Engine\Audio">
       <UniqueIdentifier>{bef3dd9e-9d20-4c8f-8581-0e0f1902c486}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Character\Player">
-      <UniqueIdentifier>{3cd7367f-333a-43bc-83d4-2e0e720aeefa}</UniqueIdentifier>
+    <Filter Include="ヘッダー ファイル\Engine\Utility">
+      <UniqueIdentifier>{2711ac87-a2b7-4672-910f-906a1dee5423}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -213,9 +213,6 @@
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMManager.cpp">
       <Filter>ソース ファイル\Engine\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Audio\AudioManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -231,8 +228,8 @@
     <ClCompile Include="Scripts\Engine\Component\Character\ArmActionComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Manager\BulletManager.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Scripts\Engine\Audio\AudioManager.cpp">
+      <Filter>ソース ファイル\Engine\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -335,6 +332,9 @@
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\CameraComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="Scripts\Engine\Manager\CameraManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -352,6 +352,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\Sprite\LoadSprite.h">
       <Filter>ヘッダー ファイル\Engine\Load</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.h">
       <Filter>ヘッダー ファイル\Engine\Load\Animation</Filter>
@@ -419,8 +422,20 @@
     <ClInclude Include="Scripts\Engine\Collision.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\AABBCollider.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h">
       <Filter>ヘッダー ファイル\Engine\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\RayCast.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -437,9 +452,6 @@
     <ClInclude Include="Scripts\Engine\Audio\BGM\BGMSource.h">
       <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Audio\AudioManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h">
       <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
@@ -449,29 +461,17 @@
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionFactory.h">
       <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\AABBCollider.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    <ClInclude Include="Scripts\Engine\Audio\AudioUtility.h">
+      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\CameraComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    <ClInclude Include="Scripts\Engine\Audio\AudioManager.h">
+      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    <ClInclude Include="Scripts\Engine\Component\Character\CharacterUtility.h">
+      <Filter>ヘッダー ファイル\Engine\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h">
-      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Manager\BulletManager.h">
-      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\BulletComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
+    <ClInclude Include="Scripts\Engine\Stage\StageUtility.h">
+      <Filter>ヘッダー ファイル\Engine\Stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

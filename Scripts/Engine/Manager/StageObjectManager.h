@@ -10,10 +10,11 @@
 #include "../Engine.h"
 #include "../Stage/StageObject/StageObjectBase.h"
 #include "../Stage/StageObject/ExitPoint.h"
+#include "../Stage/StageObject/Stair.h"
 
-/*
- *	ステージオブジェクトの管理クラス
- */
+ /*
+  *	ステージオブジェクトの管理クラス
+  */
 class StageObjectManager : public Singleton<StageObjectManager> {
 	// フレンド宣言
 	friend class Singleton<StageObjectManager>;
@@ -21,9 +22,10 @@ class StageObjectManager : public Singleton<StageObjectManager> {
 private:
 	Engine* engine = nullptr;
 	ExitPoint* exitPoint = nullptr;
-	StageObjectBaseList createStageObjectList;
-	GameObjectList createObjectList;
-	GameObjectPtr stageObjectObj;
+	Stair* stair = nullptr;
+
+	StageObjectBaseList createStageList;
+	GameObjectList createStageObjectList;
 
 	const size_t CREATE_STAGEOBJ_COUNT = 16;	// 事前に生成する数
 
@@ -48,7 +50,9 @@ private:
 		const Vector3& position,
 		const Vector3& rotation,
 		const Vector3& AABBMin,
-		const Vector3& AABBMax);
+		const Vector3& AABBMax,
+		GameObjectPtr& stageObject
+	);
 
 public:
 	/*
@@ -87,11 +91,29 @@ public:
 		const Vector3& AABBMax);
 
 	/*
+	 *	階段生成
+	 *  @param	name		階段の名前
+	 *  @param	position	生成位置
+	 *  @param	rotation	生成角度
+	 *  @param	AABBMin		AABBの各軸における最小値
+	 *  @param	AABBMax		AABBの各軸における最大値
+	 */
+	void GenerateStair(
+		const std::string& name,
+		const Vector3& position,
+		const Vector3& rotation,
+		const Vector3& AABBMin,
+		const Vector3& AABBMax
+	);
+
+	/*
 	 *	ID指定のステージオブジェクト削除
 	 */
 	void RemoveStageObject(int stageObjectID);
 
-	/* 
+
+public:
+	/*
 	 *	ID指定のステージオブジェクト取得
 	 */
 	StageObjectBasePtr GetStageObject(int stageObjectID);
@@ -103,14 +125,29 @@ public:
 		return exitPoint->GetExitTriger();
 	}
 
-public:
 	/*
-	 *	キャラクターにモデルハンドルをセット
+	 *	階段オブジェクトに触れていたかどうか
+	 *  @return stair->GetStairMove();
+	 */
+	inline bool GetStairMove() const {
+		if (!stair)return false;
+		return stair->GetStairMove();
+	}
+
+	/*
+	 *	お宝にモデルハンドルをセット
 	 *	@param[in]	GameObject* gameObject		セットするモデル
 	 *  @param[in]	const int modelHandle		モデルハンドル
 	 *  @author		Seki
 	 */
 	void SetModelHandle(GameObject* gameObject, const int modelHandle);
+	/*
+	 *	ステージオブジェクトのオーナーオブジェクトの取得
+	 *  @param[in]	const StageObjectBasePtr& setStageObject
+	 *  @return		GameObject*
+	 *  @author		Seki
+	 */
+	GameObject* GetStageObjectOwner(const StageObjectBasePtr& setStageObject) const;
 };
 
 #endif // !_STAGEOBJECTMANAGER_H_

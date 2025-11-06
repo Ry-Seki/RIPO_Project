@@ -8,7 +8,7 @@
 #include "../Stage/StageObject/StageObjectBase.h"
 #include "../Component/ModelRenderer.h"
 
-StageObjectManager::StageObjectManager(){
+StageObjectManager::StageObjectManager() {
 }
 
 /*
@@ -21,18 +21,20 @@ StageObjectBasePtr StageObjectManager::CreateStageObject(
 	const Vector3& position,
 	const Vector3& rotation,
 	const Vector3& AABBMin,
-	const Vector3& AABBMax) {
+	const Vector3& AABBMax,
+	GameObjectPtr& stageObject
+) {
 	// 未使用のオブジェクト取得
-	stageObjectObj = GameObjectManager::GetInstance().GetUnuseObject();
-	// 出口オブジェクト生成
-	StageObjectBasePtr createStageObj = stageObjectObj->AddComponent<T>();
+	stageObject = GameObjectManager::GetInstance().GetUnuseObject();
+	// ステージオブジェクト生成
+	StageObjectBasePtr createStageObj = stageObject->AddComponent<T>();
 	// コライダー生成
-	AABBColliderPtr collider = stageObjectObj->AddComponent<AABBCollider>();
+	AABBColliderPtr collider = stageObject->AddComponent<AABBCollider>();
 	collider->aabb = { AABBMin, AABBMax };
 	// ID設定
 	createStageObj->SetID(setID);
 	// データのセット
-	stageObjectObj->SetObjectData(name, position, rotation);
+	stageObject->SetObjectData(name, position, rotation);
 	// 出口オブジェクトを返す
 	return createStageObj;
 }
@@ -43,9 +45,10 @@ StageObjectBasePtr StageObjectManager::CreateStageObject(
 void StageObjectManager::Initialize(Engine& setEngine) {
 	engine = &setEngine;
 	// 最初に一定数生成
-	createStageObjectList.reserve(CREATE_STAGEOBJ_COUNT);
+	createStageList.reserve(CREATE_STAGEOBJ_COUNT);
 	for (size_t i = 0; i < CREATE_STAGEOBJ_COUNT; i++) {
 		// 空の要素を生成
+		createStageList.push_back(nullptr);
 		createStageObjectList.push_back(nullptr);
 	}
 }
@@ -59,67 +62,130 @@ void StageObjectManager::GenerateExit(
 	const Vector3& rotation,
 	const Vector3& AABBMin,
 	const Vector3& AABBMax) {
+	GameObjectPtr exitPoint;
 	// リストの要素の数
-	int stageObjectListCount = static_cast<int>(createStageObjectList.size());
+	size_t stageObjectListCount = createStageList.size();
 	// 生成ステージオブジェクトの空きをチェック
-	for (int i = 0; i < stageObjectListCount; i++) {
-		if (createStageObjectList[i] != nullptr) continue;
+	for (size_t i = 0; i < stageObjectListCount; i++) {
+		if (createStageList[i] != nullptr) continue;
 		// リストの空きに生成
-		createStageObjectList[i] = CreateStageObject<ExitPoint>(i, name, position, rotation, AABBMin, AABBMax);
+		createStageList[i] = CreateStageObject<ExitPoint>(i, name, position, rotation, AABBMin, AABBMax, exitPoint);
+
+		// オブジェクトのリストに保存
+		createStageObjectList[i] = exitPoint;
+
 		// シーンが持つゲームオブジェクト配列に入れる
-		engine->AddGameObject(stageObjectObj);
+		engine->AddGameObject(exitPoint);
 		return;
 	}
 	// 空きがなかったら一番後ろに生成
-	createStageObjectList.push_back(CreateStageObject<ExitPoint>(0, name, position, rotation, AABBMin, AABBMax));
-	// シーンが持つゲームオブジェクト配列に入れる
-	engine->AddGameObject(stageObjectObj);
+	StageObjectBasePtr stageObject = CreateStageObject<ExitPoint>(0, name, position, rotation, AABBMin, AABBMax, exitPoint);
+	createStageList.push_back(stageObject);
+	// オブジェクトリストに保存
+	createStageObjectList.push_back(exitPoint);
+	engine->AddGameObject(exitPoint);
 }
 
+/*
+ *	お宝生成
+ *  @param	name		お宝の名前
+ *  @param	position	生成位置
+ *  @param	rotation	生成角度
+ *  @param	AABBMin		AABBの各軸における最小値
+ *  @param	AABBMax		AABBの各軸における最大値
+ */
 void StageObjectManager::GenerateTreasure(
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation,
 	const Vector3& AABBMin,
 	const Vector3& AABBMax) {
+	GameObjectPtr treasure;
 	// リストの要素の数
-	int stageObjectListCount = static_cast<int>(createStageObjectList.size());
+	size_t stageObjectListCount = createStageList.size();
 	// 生成ステージオブジェクトの空きをチェック
-	for (int i = 0; i < stageObjectListCount; i++) {
-		if (createStageObjectList[i] != nullptr) continue;
+	for (size_t i = 0; i < stageObjectListCount; i++) {
+		if (createStageList[i] != nullptr) continue;
 		// リストの空きに生成
-		createStageObjectList[i] = CreateStageObject<Treasure>(i, name, position, rotation, AABBMin, AABBMax);
-		createStageObjectList[i]->GetOwner()->AddComponent<ModelRenderer>();
+		createStageList[i] = CreateStageObject<Treasure>(i, name, position, rotation, AABBMin, AABBMax, treasure);
+		createStageList[i]->GetOwner()->AddComponent<ModelRenderer>();
+
+		// オブジェクトのリストに保存
+		//createStageObjectList[i] = treasure;
+
 		// シーンが持つゲームオブジェクト配列に入れる
-		engine->AddGameObject(stageObjectObj);
+		engine->AddGameObject(treasure);
+
 		return;
 	}
 	// 空きがなかったら一番後ろに生成
-	StageObjectBasePtr stageObject = CreateStageObject<Treasure>(0, name, position, rotation, AABBMin, AABBMax);
+	StageObjectBasePtr stageObject = CreateStageObject<Treasure>(0, name, position, rotation, AABBMin, AABBMax, treasure);
 	stageObject->GetOwner()->AddComponent<ModelRenderer>();
-	createStageObjectList.push_back(stageObject);
-	// シーンが持つゲームオブジェクト配列に入れる
-	engine->AddGameObject(stageObjectObj);
+	createStageList.push_back(stageObject);
+	// オブジェクトリストに保存
+	//createStageObjectList.push_back(treasure);
+	engine->AddGameObject(treasure);
 }
 
+/*
+ *	階段生成
+ *  @param	name		階段の名前
+ *  @param	position	生成位置
+ *  @param	rotation	生成角度
+ *  @param	AABBMin		AABBの各軸における最小値
+ *  @param	AABBMax		AABBの各軸における最大値
+ */
+void StageObjectManager::GenerateStair(
+	const std::string& name,
+	const Vector3& position,
+	const Vector3& rotation,
+	const Vector3& AABBMin,
+	const Vector3& AABBMax) {
+	GameObjectPtr createStair;
+	// リストの要素の数
+	size_t stageObjectListCount = createStageList.size();
+	// 生成ステージオブジェクトの空きをチェック
+	for (size_t i = 0; i < stageObjectListCount; i++) {
+		if (createStageList[i] != nullptr) continue;
+		// リストの空きに生成
+		createStageList[i] = CreateStageObject<Stair>(i, name, position, rotation, AABBMin, AABBMax, createStair);
+		stair = createStageList[i]->GetOwner()->GetComponent<Stair>().get();
+		// オブジェクトのリストに保存
+		createStageObjectList[i] = createStair;
+
+		// シーンが持つゲームオブジェクト配列に入れる
+		engine->AddGameObject(createStair);
+		return;
+	}
+	// 空きがなかったら一番後ろに生成
+	StageObjectBasePtr stageObject = CreateStageObject<Stair>(0, name, position, rotation, AABBMin, AABBMax, createStair);
+	stair = stageObject->GetOwner()->GetComponent<Stair>().get();
+	createStageList.push_back(stageObject);
+	// オブジェクトリストに保存
+	createStageObjectList.push_back(createStair);
+	engine->AddGameObject(createStair);
+}
 
 /*
  *	ID指定のステージオブジェクト削除
  */
 void StageObjectManager::RemoveStageObject(int stageObjectID) {
-	// リストから削除
-	createStageObjectList[stageObjectID] = nullptr;
+
+	GameObjectPtr destroyObject = createStageObjectList[stageObjectID];
 	// オブジェクトのリセット
-	GameObjectManager::GetInstance().ResetObject(stageObjectObj);
+	GameObjectManager::GetInstance().ResetObject(destroyObject);
+	// リストから削除
+	createStageList[stageObjectID] = nullptr;
 }
 
 /*
  *	ID指定のステージオブジェクト取得
  */
 StageObjectBasePtr StageObjectManager::GetStageObject(int stageObjectID) {
-	return createStageObjectList[stageObjectID];
+	return createStageList[stageObjectID];
 }
 
+// ステージオブジェクトにモデルハンドルをセット
 void StageObjectManager::SetModelHandle(GameObject* gameObject, const int modelHandle) {
 	if (!gameObject) return;
 
@@ -127,4 +193,17 @@ void StageObjectManager::SetModelHandle(GameObject* gameObject, const int modelH
 	if (!modelRenderer) return;
 
 	modelRenderer->SetModelHandle(modelHandle);
+}
+/*
+ *	ステージオブジェクトのオーナーオブジェクトの取得
+ *  @param[in]	const StageObjectBasePtr& setStageObject
+ *  @return		GameObject*
+ *  @author		Seki
+ */
+GameObject* StageObjectManager::GetStageObjectOwner(const StageObjectBasePtr& setStageObject) const {
+	if (!setStageObject) return nullptr;
+	GameObject* owner = setStageObject->GetOwner();
+	if (!owner) return nullptr;
+
+	return owner;
 }

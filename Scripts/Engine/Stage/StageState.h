@@ -33,6 +33,7 @@ public:
 
 	/*
 	 *	現在のステージの取得
+	 *  @return StageBase		現在のステージのベースを返す
 	 */
 	StageBase* GetCurrentStage()const { return currentStage.get(); }
 
