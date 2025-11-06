@@ -201,6 +201,7 @@
     <ClInclude Include="Scripts\Data\DungeonStageData.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioSource.h" />
+    <ClInclude Include="Scripts\Engine\Audio\AudioUtility.h" />
     <ClInclude Include="Scripts\Engine\Audio\BGM\BGMManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\BGM\BGMSource.h" />
     <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h" />

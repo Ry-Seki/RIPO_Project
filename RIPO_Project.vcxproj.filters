@@ -82,6 +82,9 @@
     <Filter Include="ソース ファイル\Engine\Audio">
       <UniqueIdentifier>{bef3dd9e-9d20-4c8f-8581-0e0f1902c486}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Utility">
+      <UniqueIdentifier>{2711ac87-a2b7-4672-910f-906a1dee5423}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -210,9 +213,6 @@
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMManager.cpp">
       <Filter>ソース ファイル\Engine\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Audio\AudioManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -225,8 +225,11 @@
     <ClCompile Include="Scripts\Engine\Component\AABBCollider.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionFactory.cpp">
+    <ClCompile Include="Scripts\Engine\Component\Character\ArmActionComponent.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Audio\AudioManager.cpp">
+      <Filter>ソース ファイル\Engine\Audio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -449,9 +452,6 @@
     <ClInclude Include="Scripts\Engine\Audio\BGM\BGMSource.h">
       <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Audio\AudioManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h">
       <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
@@ -460,6 +460,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionFactory.h">
       <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Audio\AudioUtility.h">
+      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Audio\AudioManager.h">
+      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
