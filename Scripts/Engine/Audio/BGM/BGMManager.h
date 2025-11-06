@@ -75,9 +75,9 @@ public:
 	/*
 	 *	BGMƒnƒ“ƒhƒ‹‚Ì“o˜^
 	 *	@param[in]	const std::string&	setKeyName	“o˜^‚·‚éBGM–¼
-	 *	@param[in]	const int& setHandle			“o˜^‚·‚é‰¹Œ¹ƒnƒ“ƒhƒ‹
+	 *	@param[in]	const int setHandle				“o˜^‚·‚é‰¹Œ¹ƒnƒ“ƒhƒ‹
 	 */
-	void RegisterBGMHandle(const std::string& setKeyName, const int& setHandle);
+	void RegisterBGMHandle(const std::string& setKeyName, const int setHandle);
 	/*
 	 *	BGMƒnƒ“ƒhƒ‹‚ª“o˜^Ï‚İ‚©”»’è
 	 *  @param[in]	const std::string& setKeyName	’²‚×‚éBGM–¼

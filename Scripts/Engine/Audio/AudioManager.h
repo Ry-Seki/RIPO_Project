@@ -15,7 +15,9 @@
 /*
  *	‰¹Œ¹ŠÇ—ƒNƒ‰ƒX
  */
-class AudioManager {
+class AudioManager : public Singleton<AudioManager>{
+	friend class Singleton<AudioManager>;
+
 private:
 	std::unique_ptr<BGMManager> bgmManager;	// BGMManager(í‚É‚Á‚Ä‚¢‚é‘z’è)
 	std::unique_ptr<SEManager> seManager;	// SEManager (í‚É‚Á‚Ä‚¢‚é‘z’è)
@@ -23,7 +25,7 @@ private:
 	int bgmVolume = 0;						// BGM‰¹—Ê	 (ƒZ[ƒu€–Ú)
 	int seVolume = 0;						// SE‰¹—Ê	 (ƒZ[ƒu€–Ú)
 
-public:
+private:
 	/*
 	 *	ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 	 */
@@ -61,24 +63,46 @@ public:
 	 *  @param[in]	const std::string& setKeyName	•ÏX‚·‚éBGM–¼
 	 */
 	void ChangeBGM(const std::string& setKeyName);
+	/*
+	 *	BGMƒnƒ“ƒhƒ‹‚Ì“o˜^
+	 *	@param[in]	const std::string&	setKeyName	“o˜^‚·‚éBGM–¼
+	 *	@param[in]	const int setHandle				“o˜^‚·‚é‰¹Œ¹ƒnƒ“ƒhƒ‹
+	 */
+	void RegisterBGMHandle(const std::string& setKeyName, const int setHandle);
 
 public:
 	/*
-	 *	SE‚ÌÄ¶ˆ—
+	 *	SEÄ¶ˆ—
+	 *  @param[in]	const std::string& setKeyName	Ä¶‚·‚éSE–¼
 	 */
-	void PlaySE();
-	
+	void PlaySE(const std::string& setKeyName);
+	/*
+	 *	SEƒnƒ“ƒhƒ‹‚Ì“o˜^
+	 *	@param[in]	const std::string&	setKeyName	“o˜^‚·‚éSE–¼
+	 *	@param[in]	const int setHandle				“o˜^‚·‚é‰¹Œ¹ƒnƒ“ƒhƒ‹
+	 */
+	void RegisterSEHandle(const std::string& setKeyName, const int setHandle);
 
 public:
 	/*
 	 *	BGM‰¹—Ê‚Ìæ“¾
-	 *  @return		int
+	 *  @return		int (0`100)
 	 */
 	inline int GetBGMVolume() const { return bgmVolume; }
 	/*
 	 *	BGM‰¹—Ê‚Ìİ’è
-	 *  @param[in]	const int& setVolume	‰¹—Ê
+	 *  @param[in]	const int setVolume		‰¹—Ê (0`100)
 	 */
-	inline void SetBGMVolume(const int& setVolume) { bgmVolume = setVolume; }
+	inline void SetBGMVolume(const int setVolume) { bgmVolume = setVolume; }
+	/*
+	 *	SE‰¹—Ê‚Ìæ“¾
+	 *	return		int (0`100)
+	 */
+	inline int GetSEVolume() const { return seVolume; }
+	/*
+	 *	SE‰¹—Ê‚Ìİ’è
+	 *	@param[in]	const int setVolume		‰¹—Ê (0`100)
+	 */
+	inline void SetSEVolume(const int setVolume) { seVolume = setVolume; }
 };
 #endif // !_AUDIO_MANAGER_H_

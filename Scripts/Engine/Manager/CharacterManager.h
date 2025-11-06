@@ -81,8 +81,15 @@ public:
 		const Vector3& rotation,
 		const Vector3& AABBMin,
 		const Vector3& AABBMax);
-
+	/*
+	 *	ID指定のキャラクター削除処理
+	 */
 	void RemoveCharacter(int characterID);
+	/*
+	 *	全てのキャラクター削除処理
+	 *  @author	Seki
+	 */
+	void RemoveAllCharacter();
 
 public:
 	/*

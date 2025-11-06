@@ -21,7 +21,7 @@ bool RayCast(Engine* engine, Vector3 startPosition, Vector3 direction, float& hi
     std::vector<Scene::WorldColliderList> colliders = scene->ChangeGameObjectWorldColliders();
 
     // ゲームオブジェクト毎の衝突判定
-    for (auto box = colliders.begin(); box != colliders.end() - 1; box++) {
+    for (auto box = colliders.begin(); box != colliders.end(); box++) {
         GameObject* objBox = box->at(0).origin->GetOwner();
         // 削除済みは処理しない
         if (objBox->IsDestroyed())
@@ -29,7 +29,7 @@ bool RayCast(Engine* engine, Vector3 startPosition, Vector3 direction, float& hi
 
         // 衝突判定
         for (const auto& boxCol : *box) {
-            if (RayIntersect(ray, boxCol.world, hitLength, hitObject, objBox))
+            if (RayIntersect(ray, boxCol.world, hitLength, hitObject, objBox, hit))
                 hit = true;
         }
     }
@@ -43,8 +43,9 @@ bool RayCast(Engine* engine, Vector3 startPosition, Vector3 direction, float& hi
  *  @param  float&          hitLength   当たるまでの距離
  *  @param  GameObject*&    hitObject   当たった最も近いオブジェクト
  *  @param  GameObject*     checkObject 判定チェックオブジェクト
+ *  @param  bool            isHit       当たったかどうか
  */
-bool RayIntersect(const Ray& ray, const AABB& box, float& hitLength, GameObject*& hitObject, GameObject* checkObject) {
+bool RayIntersect(const Ray& ray, const AABB& box, float& hitLength, GameObject*& hitObject, GameObject* checkObject, bool isHit) {
     // rayのdirが0なら0のまま
     float dxMin = 0;
     float dxMax = 0;
@@ -53,11 +54,11 @@ bool RayIntersect(const Ray& ray, const AABB& box, float& hitLength, GameObject*
     float dzMin = 0;
     float dzMax = 0;
     // x軸の交差判定
-    IntersectCheck(box.min.x, box.max.x, ray.start.x, ray.dir.x, dxMin, dxMax);
+    if (!IntersectCheck(box.min.x, box.max.x, ray.start.x, ray.dir.x, dxMin, dxMax)) return false;
     // y軸の交差判定
-    IntersectCheck(box.min.y, box.max.y, ray.start.y, ray.dir.y, dyMin, dyMax);
+    if (!IntersectCheck(box.min.y, box.max.y, ray.start.y, ray.dir.y, dyMin, dyMax)) return false;
     // z軸の交差判定
-    IntersectCheck(box.min.z, box.max.z, ray.start.z, ray.dir.z, dzMin, dzMax);
+    if (!IntersectCheck(box.min.z, box.max.z, ray.start.z, ray.dir.z, dzMin, dzMax)) return false;
 
     // 各軸の当たるまでの距離が最も短い長さを計算
     Vector3 length = { dxMax, dyMax, dzMax };
@@ -89,6 +90,11 @@ bool RayIntersect(const Ray& ray, const AABB& box, float& hitLength, GameObject*
         hitObject = checkObject;
     }
 
+    // 初めてのhitなら当たった距離とオブジェクトを保存
+    if (!isHit) {
+        hitLength = allHitLength;
+        hitObject = checkObject;
+    }
     return true;
 }
 
@@ -103,7 +109,7 @@ bool RayIntersect(const Ray& ray, const AABB& box, float& hitLength, GameObject*
  */
 bool IntersectCheck(float boxMin, float boxMax, float rayPos, float rayDir, float& dMin, float& dMax) {
     // 0除算回避
-    if (rayDir == 0) {
+    if (rayDir != 0) {
         // rayが各軸上でboxに最初に当たるまでの距離が0以下かつ開始位置がboxの内側より外にある場合は当たらない
         dMin = (boxMin - rayPos) / rayDir;
         if (dMin <= 0 && boxMin >= rayPos)

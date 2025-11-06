@@ -33,7 +33,7 @@ void BGMManager::Teardown() {
 }
 /*
  *	BGM‚ÌÄ¶ˆ—
- *	@param[in]	int setVolume	‰¹—Ê
+ *	@param[in]	int setVolume	‰¹—Ê (0`100)
  */
 void BGMManager::PlayBGM(const int setVolume) {
 	currentSource->Play(setVolume);
@@ -49,19 +49,21 @@ void BGMManager::StopBGM() {
  *	@param[in]	const std::string setBGMName	Ý’è‚·‚éBGM–¼
  */
 void BGMManager::ChangeBGM(const std::string setBGMName) {
-	// ‰¹Œ¹‚Ì’âŽ~A”jŠüˆ—
-	currentSource->Stop();
-	currentSource->Teardown();
+	if (!currentSource) {
+		// ‰¹Œ¹‚Ì’âŽ~A”jŠüˆ—
+		currentSource->Stop();
+		currentSource->Teardown();
+	}
 	// ‰¹Œ¹‚ÌÝ’è
-	int setHandle = bgmHandleMap[setBGMName];
+	int setHandle = GetBGMHandle(setBGMName);
 	currentSource->SetAudioHandle(setHandle);
 }
 /*
  *	BGMƒnƒ“ƒhƒ‹‚Ì“o˜^
  *	@param[in]	const std::string&	setKeyName	“o˜^‚·‚éBGM–¼
- *	@param[in]	const int& setHandle			“o˜^‚·‚é‰¹Œ¹ƒnƒ“ƒhƒ‹
+ *	@param[in]	const int setHandle				“o˜^‚·‚é‰¹Œ¹ƒnƒ“ƒhƒ‹
  */
-void BGMManager::RegisterBGMHandle(const std::string& setKeyName, const int& setHandle) {
+void BGMManager::RegisterBGMHandle(const std::string& setKeyName, const int setHandle) {
 	if (!ExistBGMHandle(setKeyName)) return;
 
 	bgmHandleMap[setKeyName] = setHandle;

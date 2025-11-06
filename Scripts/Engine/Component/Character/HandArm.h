@@ -23,13 +23,13 @@ public:
 	~HandArm() = default;
 
 public:
-	void Update(float deltaTime) override;
+	void ArmUpdate(float deltaTime, GameObject* player, Engine* engine) override;
 
 private:
 	/*
 	 *	‚¨•ó‚¿ã‚°ˆ—
 	 */
-	void LiftTreasure();
+	void LiftTreasure(GameObject* player, Engine* engine);
 
 	/*
 	 *	‚¨•ó‰^‚Ñˆ—
