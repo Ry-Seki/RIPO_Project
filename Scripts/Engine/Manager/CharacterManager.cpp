@@ -46,13 +46,10 @@ void CharacterManager::Initialize(Engine& setEngine) {
 	engine = &setEngine;
 	// ‚Í‚¶‚ß‚Éˆê’è”¶¬
 	createCharacterList.reserve(CREATE_CHARACTER_COUNT);
-	for (size_t i = 0; i < CREATE_CHARACTER_COUNT; i++) {
-		// ‹ó‚Ì—v‘f‚ğ¶¬
-		createCharacterList.push_back(nullptr);
-	}
 	createCharacterObjectList.reserve(CREATE_CHARACTER_COUNT);
 	for (size_t i = 0; i < CREATE_CHARACTER_COUNT; i++) {
 		// ‹ó‚Ì—v‘f‚ğ¶¬
+		createCharacterList.push_back(nullptr);
 		createCharacterObjectList.push_back(nullptr);
 	}
 }

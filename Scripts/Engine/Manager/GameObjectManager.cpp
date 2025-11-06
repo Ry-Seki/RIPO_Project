@@ -15,9 +15,12 @@ void GameObjectManager::Initialize(Engine& setEngine) {
 	engine = &setEngine;
 	// はじめに一定数生成
 	unuseObjectList.reserve(CREATE_OBJECT_COUNT);
+	useObjectList.reserve(CREATE_OBJECT_COUNT);
 	for (size_t i = 0; i < CREATE_OBJECT_COUNT; i++) {
 		// 未使用オブジェクト生成
 		unuseObjectList.push_back(engine->Create<GameObject>());
+		// 空の使用オブジェクトリスト生成
+		useObjectList.push_back(nullptr);
 	}
 }
 

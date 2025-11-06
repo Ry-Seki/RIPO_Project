@@ -18,6 +18,7 @@ class GameObjectManager : public Singleton<GameObjectManager> {
 private:
 	Engine* engine;
 	GameObjectList unuseObjectList;
+	GameObjectList useObjectList;
 	std::mutex unuseMutex;
 
 	const size_t CREATE_OBJECT_COUNT= 64;	// éñëOÇ…ê∂ê¨Ç∑ÇÈêî
