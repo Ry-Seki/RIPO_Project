@@ -68,9 +68,9 @@ public:
 	/*
 	 *	SEƒnƒ“ƒhƒ‹‚Ì“o˜^
 	 *	@param[in]	const std::string&	setKeyName	“o˜^‚·‚éSE–¼
-	 *	@param[in]	const int& setHandle			“o˜^‚·‚é‰¹Œ¹ƒnƒ“ƒhƒ‹
+	 *	@param[in]	const int setHandle				“o˜^‚·‚é‰¹Œ¹ƒnƒ“ƒhƒ‹
 	 */
-	void RegisterSEHandle(const std::string& setKeyName, const int& setHandle);
+	void RegisterSEHandle(const std::string& setKeyName, const int setHandle);
 	/*
 	 *	SEƒnƒ“ƒhƒ‹‚ª“o˜^Ï‚İ‚©”»’è
 	 *  @param[in]	const std::string& setKeyName	’²‚×‚éSE–¼
