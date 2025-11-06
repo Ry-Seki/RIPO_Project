@@ -12,6 +12,7 @@
 #include "../../../Manager/CameraManager.h"
 #include "../../../Manager/GameObjectManager.h"
 #include "../../../Manager/CharacterManager.h"
+#include "../../../Manager/StageObjectManager.h"
 #include "../../../Scene/Scene.h"
 #include "../../../Component/ModelRenderer.h"
 #include <iostream>
@@ -112,36 +113,125 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
     if (isFirst) {
         isFirst = false;
         GameObjectManager::GetInstance().Initialize(engine);
+        CameraManager::GetInstance().Initialize(engine);
         CharacterManager::GetInstance().Initialize(engine);
         StageManager::GetInstance().Initialize(engine);
+        StageObjectManager::GetInstance().Initialize(engine);
     }
     CharacterManager::GetInstance().GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 }, { -50, -100, -50 }, { 50,  100,  50 });
     CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
+    CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
+    CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
+    CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
+    StageObjectManager::GetInstance().GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
+    StageObjectManager::GetInstance().GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
 
-    std::string dungeonPath;
-    if(!stageData.TryGetByLeafName("StageData1", dungeonPath)) return;
-    std::string dungeonBonePath;
-    if(!stageData.TryGetByLeafName("StageBoneData", dungeonBonePath)) return;
-    std::string playerPath;
-    if(!stageData.TryGetByLeafName("PlayerData", playerPath)) return;
-
-    dungeonResource.stageResource.push_back(load.LoadResource<LoadModel>(dungeonPath));
-    dungeonResource.stageBoneResource = load.LoadResource<LoadJSON>(dungeonBonePath);
-    dungeonResource.playerResource = load.LoadResource<LoadModel>(playerPath);
-
-    load.SetOnComplete([this, &engine, dungeonResource]() {
-        DebugSetup(engine, dungeonResource); 
-    });
+    LoadResourcesFromStageData(engine, stageData, dungeonResource);
 }
 
 void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResource) {
-    std::shared_ptr<LoadModel> stageModel = setResource.stageResource[0];
-    int modelHandle = stageModel->GetHandle();
-    int playerHandle = setResource.playerResource->GetHandle();
-    StageManager::GetInstance().LoadStage(modelHandle);
+    // ステージの設定
+    // モデルハンドルの取得
+    int stageHandle = setResource.stageResource[0]->GetHandle();
+    // モデルの設定
+    StageManager::GetInstance().LoadStage(stageHandle);
+    // ステージボーンデータの設定
     StageManager::GetInstance().SetStageJSONData(setResource.stageBoneResource->GetData());
+
+    // プレイヤーの設定
+    // モデルの取得
+    int playerHandle = setResource.playerResource->GetHandle();
+    // プレイヤーオブジェクトの取得
     auto player = CharacterManager::GetInstance().GetCharacter(0)->GetOwner();
-    if(!player->GetComponent<ModelRenderer>()) player->AddComponent<ModelRenderer>();
-    player->GetComponent<ModelRenderer>()->SetModelHandle(playerHandle);
+    // 位置の設定
     player->position = StageManager::GetInstance().GetStartPos();
+    // モデルの設定
+    CharacterManager::GetInstance().SetModelHandle(player, playerHandle);
+
+    // 敵の設定
+    // 敵の生成位置の取得
+    std::vector<Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpwanPos();
+    size_t enemyCount = enemySpawnPos.size();
+    // モデルハンドルの取得
+    int enemyHandle = setResource.enemyResource[0]->GetHandle();
+    for (int i = 0; i < enemyCount; i++) {
+        // 敵の取得
+        CharacterBasePtr enemyCharacter = CharacterManager::GetInstance().GetCharacter(i + 1);
+        if (!enemyCharacter) continue;
+        // 敵のオブジェクトの取得
+        GameObject* enemy = CharacterManager::GetInstance().GetCharacterOwner(enemyCharacter);
+        if (!enemy) continue;
+        // 位置の設定
+        enemy->position = enemySpawnPos[i];
+        // モデルの設定
+        CharacterManager::GetInstance().SetModelHandle(enemy, enemyHandle);
+        // コンポーネントの取得
+        std::shared_ptr<EnemyComponent> component = enemy->GetComponent<EnemyComponent>();
+        if (!component) continue;
+        // WayPointの設定
+        component->SetWayPoint(enemy->position);
+    }
+
+    // 宝の設定
+    // お宝の生成位置の取得
+    std::vector<Vector3> treasureSpawnPos = StageManager::GetInstance().GetTreasureSpwanPos();
+    // 生成位置の要素数の取得
+    size_t treasureCount = treasureSpawnPos.size();
+    // ハンドルの要素数の取得
+    size_t treasureTypeCount = setResource.treasureResource.size();
+    for (int i = 0; i < treasureTypeCount; i++) {
+        // モデルハンドルの取得
+        int treasureHandle = setResource.treasureResource[i]->GetHandle();
+        // 宝の取得
+        StageObjectBasePtr treasureObject = StageObjectManager::GetInstance().GetStageObject(i);
+        if (!treasureObject) continue;
+        // 宝オブジェクトの取得
+        GameObject* treasure = StageObjectManager::GetInstance().GetStageObjectOwner(treasureObject);
+        if (!treasure) continue;
+        // 位置の設定
+        treasure->position = treasureSpawnPos[i];
+        // モデルの設定
+        StageObjectManager::GetInstance().SetModelHandle(treasure, treasureHandle);
+    }
+}
+/*
+ *	ステージデータからロードリストに追加
+ *	@param[in]	DungeonStageData& stageData			ステージデータ
+ *	@param[in]	DungeonResource&  dungeonResource	セットするリソース
+ */
+void ActionDungeon::LoadResourcesFromStageData(Engine& engine, DungeonStageData& stageData, DungeonResource& dungeonResource) {
+    LoadManager& load = LoadManager::GetInstance();
+    // Stageカテゴリ
+    auto stageMap = stageData.GetCategory("Stage");
+    for (const auto& [key, path] : stageMap) {
+        if (key.rfind("StageData", 0) == 0) {
+            dungeonResource.stageResource.push_back(load.LoadResource<LoadModel>(path));
+        } else if (key == "StageBoneData") {
+            dungeonResource.stageBoneResource = load.LoadResource<LoadJSON>(path);
+        }
+    }
+    // Characterカテゴリ
+    auto characterMap = stageData.GetCategory("Character");
+    for (const auto& [key, path] : characterMap) {
+        if (key.find("Player") != std::string::npos) {
+            dungeonResource.playerResource = load.LoadResource<LoadModel>(path);
+        } else if (key.rfind("EnemyData") != std::string::npos) {
+            dungeonResource.enemyResource.push_back(load.LoadResource<LoadModel>(path));
+        }
+    }
+    // TreasureData
+    auto treasureList = stageData.GetArray("Treasure", "TreasureData");
+    for (const auto& treasurePath : treasureList) {
+        if (!treasurePath.empty()) {
+            dungeonResource.treasureResource.push_back(load.LoadResource<LoadModel>(treasurePath));
+        }
+    }
+    // EventTreasureData（後ほどフラグで管理）
+    std::string eventTreasurePath;
+    if (stageData.TryGet("Treasure.EventTreasureData", eventTreasurePath) && !eventTreasurePath.empty()) {
+        dungeonResource.eventTreasureResource = load.LoadResource<LoadModel>(eventTreasurePath);
+    }    // ロード完了時のコールバック登録
+    load.SetOnComplete([this, &engine, dungeonResource]() {
+        DebugSetup(engine, dungeonResource);
+    });
 }
