@@ -29,6 +29,14 @@ bool VisionComponent::Vision(const Vector3& beholderPos, const Vector3& beholder
 	// ‹ŠE‹——£”»’è
 	if (distance > viewDistance) return false;
 	// ©g‚Ì•ûŒüƒxƒNƒgƒ‹
-	//Vector3 direction = ForwardDir(beholderDir);
-	//float angle = acosf(direction.Dot())
+	Vector3 direction = ForwardDir(beholderDir);
+	// –Ú•W‚Ì•ûŒü
+	Vector3 toTargetDir = Offset(targetPos, beholderPos).Normalized();
+	// ‹–ìŠp‚ÌŒvZ
+	float angle = acosf(Dot(direction, toTargetDir) * Rad2Deg);
+	if (angle > viewAngle) {
+		return false;
+	}
+	return true;
+
 }
