@@ -202,6 +202,7 @@
     <ClInclude Include="Scripts\Data\DungeonStageData.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioSource.h" />
+    <ClInclude Include="Scripts\Engine\Audio\AudioUtility.h" />
     <ClInclude Include="Scripts\Engine\Audio\BGM\BGMManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\BGM\BGMSource.h" />
     <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h" />
@@ -211,6 +212,7 @@
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\CharacterUtility.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
@@ -274,6 +276,7 @@
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Stair.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageUtility.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
   </ItemGroup>
