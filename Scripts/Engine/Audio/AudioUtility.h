@@ -3,8 +3,8 @@
  *	@author	Seki
  */
 
-#ifndef _AUDIO_UTILITY
-#define _AUDIO_UTILITY
+#ifndef _AUDIO_UTILITY_H_
+#define _AUDIO_UTILITY_H_
 
 #include "AudioManager.h"
 
@@ -80,4 +80,4 @@ public:
 	 */
 	inline void SetSEVolume(const int setVolume) { AudioManager::GetInstance().SetSEVolume(setVolume); }
 };
-#endif // !_AUDIO_UTILITY
+#endif // !_AUDIO_UTILITY_H_

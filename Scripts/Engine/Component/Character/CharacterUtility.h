@@ -3,8 +3,8 @@
  *	@author	Seki
  */
 
-#ifndef _CHARACTER_UTILITY
-#define _CHARACTER_UTILITY
+#ifndef _CHARACTER_UTILITY_H_
+#define _CHARACTER_UTILITY_H_
 
 #include "../../Manager/CharacterManager.h"
 #include "../../VecMath.h"
@@ -81,4 +81,4 @@ public:
 		return CharacterManager::GetInstance().GetCharacterOwner(setCharacter);
 	}
 };
-#endif // !_CHARACTER_UTILITY
+#endif // !_CHARACTER_UTILITY_H_
