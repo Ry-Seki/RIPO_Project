@@ -111,7 +111,6 @@ void CharacterManager::GenerateEnemy(
 		if (createCharacterList[i] != nullptr) continue;
 		// リストの空きに生成
 		createCharacterList[i] = CreateCharacter<EnemyComponent>(i, name, position, rotation, AABBMin, AABBMax, enemy);
-		createCharacterList[i]->Start();
 		// オブジェクトリストにも保存
 		createCharacterObjectList[i] = enemy;
 		// シーンが持つゲームオブジェクト配列に追加
@@ -135,6 +134,17 @@ void CharacterManager::RemoveCharacter(int characterID) {
 	GameObjectManager::GetInstance().ResetObject(destoryObject);
 	// リストから削除
 	createCharacterList[characterID] = nullptr;
+	// オブジェクトリストから削除
+	createCharacterObjectList[characterID] = nullptr;
+}
+/*
+ *	全てのキャラクター削除処理
+ *  @author	Seki
+ */
+void CharacterManager::RemoveAllCharacter() {
+	for (int i = 0, max = createCharacterObjectList.size(); i < max; i++) {
+		RemoveCharacter(i);
+	}
 }
 
 /*
@@ -158,7 +168,7 @@ void CharacterManager::SetModelHandle(GameObject* gameObject, const int modelHan
 }
 /*
  *	キャラクターのオーナーオブジェクトの取得
- *  @param[in]	const CharacterBasePtr setCharacter
+ *  @param[in]	const CharacterBasePtr& setCharacter
  *  @return		GameObject*
  *  @author		Seki
  */
