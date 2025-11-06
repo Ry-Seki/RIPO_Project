@@ -53,6 +53,7 @@ struct Vector3 {
 
 	static float Distance(const Vector3& v1, const Vector3& v2);
 	static Vector3 Direction(const Vector3& from, const Vector3& to);
+	static Vector3 ForwardDir(const Vector3& rotation);
 	static Vector3 Clamp(const Vector3& v1, const Vector3& min, const Vector3& max);
 	static float Clamp(float value, float min, float max);
 	static Vector3 Offset(const Vector3& v1, const Vector3& v2);
