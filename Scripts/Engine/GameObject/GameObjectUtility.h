@@ -12,6 +12,7 @@
  *	ゲームオブジェクト関連実行処理
  */
 class GameObjectUtility {
+public:
 	/*
 	 *	未使用オブジェクト取得
 	 */
@@ -38,7 +39,6 @@ class GameObjectUtility {
 	 *	@param[in]	GameObject* resetObject
 	 */
 	static void ResetObject(GameObject* resetObject) {
-		if (!resetObject) return;
 		GameObjectManager::GetInstance().ResetObject(resetObject);
 	}
 };
