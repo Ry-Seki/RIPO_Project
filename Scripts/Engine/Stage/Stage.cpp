@@ -35,7 +35,7 @@ Stage::~Stage() {
  *	ステージデータの読み込み
  *  @pram const int modelHandle
  */
-void Stage::ModelLoad(const int modelHandleBase) {
+void Stage::SetModelHandle(const int modelHandleBase) {
 	modelHandle = MV1DuplicateModel(modelHandleBase);
 
 }

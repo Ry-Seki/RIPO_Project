@@ -32,7 +32,7 @@ protected:
 
 public:
 
-	virtual void ModelLoad(const int modelHandleBase) = 0;
+	virtual void SetModelHandle(const int modelHandleBase) = 0;
 
 	// çXêV
 	virtual void Update() = 0;
