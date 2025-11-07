@@ -10,7 +10,7 @@
  *	コンストラクタ
  */
 EnemyComponent::EnemyComponent()
-	: moveSpeed(500.0f)
+	: moveSpeed(700.0f)
 	, wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(200.0f)
@@ -42,7 +42,7 @@ void EnemyComponent::EnemyMove(GameObject* enemy, float deltaTime) {
 	const float enemySin = sin(enemy->rotation.y); 
 
 	GameObjectPtr player = CameraManager::GetInstance().GetTarget();
-	if (Vision(enemy->position, enemy->rotation, player->position, 60, 2000)) {
+	if (Vision(enemy->position, enemy->rotation, player->position, 180, 2000)) {
 		ChaseWayPoint(player->position, true, deltaTime);
 	}
 	else {
