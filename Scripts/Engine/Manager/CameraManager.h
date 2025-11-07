@@ -30,12 +30,26 @@ public:
 	 *	初期化処理
 	 */
 	void Initialize(Engine& setEngine);
+	/*
+	 *	カメラ生成
+	 */
 	void CreateCamera(const std::string& name,
 		const Vector3& position = { 0.0f, 0.0f, 0.0f },
 		const Vector3& rotation = { 0.0f, 0.0f, 0.0f });
-	inline GameObjectPtr GetCamera() const { return camera; }
+	
+public:
+	/*
+	 *	追従するターゲットをセット
+	 */
 	inline void SetTarget(GameObjectPtr setTarget) { target = setTarget; }
+	/*
+	 *	追従するターゲットをゲット
+	 */
 	inline GameObjectPtr GetTarget() const { return target; }
+	/*
+	 *	カメラのゲット
+	 */
+	inline GameObjectPtr GetCamera() const { return camera; }
 
 	/*
 	 *	カメラのリセット

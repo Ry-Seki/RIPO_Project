@@ -105,12 +105,16 @@ public:
 		const Vector3& AABBMin,
 		const Vector3& AABBMax
 	);
-
 	/*
 	 *	ID指定のステージオブジェクト削除
+	 *  @param[in]	int stageObjectID		削除するオブジェクトのID
 	 */
 	void RemoveStageObject(int stageObjectID);
-
+	/*
+	 *	全てのステージオブジェクト削除
+	 *  @author		Seki
+	 */
+	void RemoveAllStageObject();
 
 public:
 	/*
@@ -134,6 +138,7 @@ public:
 		return stair->GetStairMove();
 	}
 
+public:
 	/*
 	 *	お宝にモデルハンドルをセット
 	 *	@param[in]	GameObject* gameObject		セットするモデル

@@ -94,6 +94,7 @@ Vector3 Normalized(const Vector3& v);
 float   Distance(const Vector3& v1, const Vector3& v2);
 Vector3 Direction(const Vector3& from, const Vector3& to);
 Vector3 Offset(const Vector3& v1, const Vector3& v2);
+Vector3 ForwardDir(const Vector3& rotation);
 
 Vector3 Clamp(const Vector3& v, const Vector3& min, const Vector3& max);
 float   Clamp(float value, float min, float max);
