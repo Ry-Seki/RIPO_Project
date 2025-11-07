@@ -37,11 +37,11 @@ private:
     std::vector<ComponentPtr> addComponents;    // 追加予定のコンポーネント
 
 public:
-    std::string name;
+    int ID;                                         // 識別ID
+    std::string name;                               // オブジェクト名
     Vector3 position = { 0.0f, 0.0f, 0.0f };		// 平行移動
     Vector3 rotation = { 0.0f, 0.0f, 0.0f };		// 回転角度
     Vector3 scale = { 1.0f, 1.0f, 1.0f };			// 拡大率
-    int ID;                                         // 識別ID
 
 public:
     GameObject() = default;
