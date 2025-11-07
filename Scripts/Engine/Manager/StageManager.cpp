@@ -32,6 +32,15 @@ void StageManager::LoadStage(const int modelHandleBase) {
 	int duplicatedModel = MV1DuplicateModel(modelHandleBase);
 	// ステージのモデルハンドルを追加
 	stageState.AddStageModelHandle(modelHandleBase);
+
+	// もし最初のステージ読み込みなら、現在ステージとして設定
+	if (stageState.GetStageCount() == 1) {
+		int currentHandle = stageState.GetCurrentStageHandle();
+		if (currentHandle != -1 && loadedStage) {
+			// モデルを実体ステージに適用
+			loadedStage->SetModelHandle(currentHandle);
+		}
+	}
 }
 
 /*
@@ -40,6 +49,7 @@ void StageManager::LoadStage(const int modelHandleBase) {
 void StageManager::ChangeStage() {
 	int currentHandle = stageState.GetCurrentStageHandle();
 	if (currentHandle == -1)return;
+
 
 	loadedStage->SetModelHandle(currentHandle);
 }
