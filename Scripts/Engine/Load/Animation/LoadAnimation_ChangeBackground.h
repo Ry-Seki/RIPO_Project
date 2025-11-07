@@ -29,13 +29,19 @@ private:
 
 public:
 	~LoadAnimation_ChangeBackground() override = default;
-	// 画像を読み込む（ファイルパスリスト）
-	void LoadImages(const std::vector<std::string>& paths) {
-		for (auto& p : paths) {
-			int h = LoadGraph(p.c_str());
-			if (h != -1) {
-				backgroundList.push_back({ h, 0.0f });
-			}
+
+public:
+	/*
+	 *	画像の設定
+	 *  @param[in]	const std::vector<int>& handleList
+	 */
+	void SetImages(const std::vector<int>& handleList) {
+		for (int i = 0, max = handleList.size(); i < max; i++) {
+			int handle = handleList[i];
+			if (handle == -1) continue;
+
+			backgroundList.push_back({ handle, 0.0f });
+
 		}
 		if (!backgroundList.empty())
 			backgroundList[0].alpha = 255.0f; // 最初の画像は表示開始

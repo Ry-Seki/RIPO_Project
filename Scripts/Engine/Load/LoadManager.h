@@ -27,7 +27,6 @@ private:
     std::queue<std::function<void()>> onCompleteQueue;      // コールバックキュー
     LoadRegistry loadRegistry;                              // リソースキャッシュ
 
-    bool lastLoadWasCached = false;
     std::mutex managerMutex;
 
 private:
@@ -54,8 +53,8 @@ public:
             onCompleteQueue.pop();
             if (callback) callback();
 
-            // 完了後、新しいロードが入るかもしれないため isComplete を false に戻す
-            system->ResetCompleteFlag();
+            // ロード完了フラグのリセット
+            if(onCompleteQueue.empty()) system->ResetCompleteFlag();
         }
     }
     /*
@@ -105,16 +104,7 @@ public:
     void AddAnimation(const LoadAnimationPtr& animation) {
         system->AddAnimation(animation);
     }
-    /*
-     *  ロード内容をクリア
-     *  （コールバックキューは保持したまま）
-     */
-    void Clear(bool clearCallbacks = false) {
-        system->Clear();
-        if (clearCallbacks) {
-            while (!onCompleteQueue.empty()) onCompleteQueue.pop();
-        }
-    }
+
 public:
     /*
      *  ロード中判定

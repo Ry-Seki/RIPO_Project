@@ -8,6 +8,8 @@
 #include "../../DayAction/ActionManager.h"
 #include "../../Selection/SelectionManager.h"
 #include "../../../Audio/AudioUtility.h"
+#include "../../../Fade/FadeFactory.h"
+#include "../../../Fade/FadeManager.h"
 
 /*
  *	èâä˙âªèàóù
@@ -23,6 +25,8 @@ void SelectionDungeon::Initialize(Engine& engine) {
  */
 void SelectionDungeon::Setup(Engine& engine) {
 	dungeonDataList = dungeonDataLoader->dungeonList;
+	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fade);
 }
 /*
  *	çXêVèàóù
@@ -35,9 +39,11 @@ void SelectionDungeon::Update(Engine& engine, float deltaTime) {
 		AudioUtility::PlaySE("DebugSE");
 		inputHandle = true;
 		isComplete = true;
-		StartStageDataLoad(engine, 0);
+		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+		FadeManager::GetInstance().StartFade(fade, [&engine, this]() {
+			StartStageDataLoad(engine, 0); 
+		});
 	}
-
 	if (CheckHitKey(KEY_INPUT_0) == 0) inputHandle = false;
 }
 /*

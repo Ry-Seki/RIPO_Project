@@ -18,6 +18,8 @@
 #include "../../../Component/Character/CharacterUtility.h"
 #include "../../../Stage/StageObject/StageObjectUtility.h"
 #include "../../../Audio/AudioUtility.h"
+#include "../../../Fade/FadeFactory.h"
+#include "../../../Fade/FadeManager.h"
 
 #include <iostream>
 
@@ -143,17 +145,17 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
     // モデルの設定
     StageManager::GetInstance().LoadStage(stageHandle);
     // ステージボーンデータの設定
-    StageManager::GetInstance().SetStageJSONData(setResource.stageBoneResource->GetData());
+    StageManager::GetInstance().SetStageJSONData(setResource.stageBoneResource[0]->GetData());
 
     // プレイヤーの設定
     // モデルの取得
     int playerHandle = setResource.playerResource->GetHandle();
     // プレイヤーオブジェクトの取得
-    auto player = CharacterManager::GetInstance().GetCharacter(0)->GetOwner();
+    auto player = GameObjectManager::GetInstance().GetUseObject(0);
     // 位置の設定
     player->position = StageManager::GetInstance().GetStartPos();
     // モデルの設定
-    CharacterManager::GetInstance().SetModelHandle(player, playerHandle);
+    CharacterManager::GetInstance().SetModelHandle(player.get(), playerHandle);
 
     // 敵の設定
     // 敵の生成位置の取得
@@ -163,20 +165,17 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
     int enemyHandle = setResource.enemyResource[0]->GetHandle();
     for (int i = 0; i < enemyCount; i++) {
         // 敵の取得
-        CharacterBasePtr enemyCharacter = CharacterManager::GetInstance().GetCharacter(i + 1);
+        auto enemyCharacter = GameObjectManager::GetInstance().GetUseObject(i + 1);
         if (!enemyCharacter) continue;
-        // 敵のオブジェクトの取得
-        GameObject* enemy = CharacterManager::GetInstance().GetCharacterOwner(enemyCharacter);
-        if (!enemy) continue;
         // 位置の設定
-        enemy->position = enemySpawnPos[i];
+        enemyCharacter->position = enemySpawnPos[i];
         // モデルの設定
-        CharacterManager::GetInstance().SetModelHandle(enemy, enemyHandle);
+        CharacterManager::GetInstance().SetModelHandle(enemyCharacter.get(), enemyHandle);
         // コンポーネントの取得
-        std::shared_ptr<EnemyComponent> component = enemy->GetComponent<EnemyComponent>();
+        std::shared_ptr<EnemyComponent> component = enemyCharacter->GetComponent<EnemyComponent>();
         if (!component) continue;
         // WayPointの設定
-        component->SetWayPoint(enemy->position);
+        component->SetWayPoint(enemyCharacter->position);
     }
 
     // 宝の設定
@@ -200,6 +199,8 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
         // モデルの設定
         StageObjectManager::GetInstance().SetModelHandle(treasure, treasureHandle);
     }
+    FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
+    FadeManager::GetInstance().StartFade(fade);
 }
 /*
  *	ステージデータからロードリストに追加
@@ -213,8 +214,8 @@ void ActionDungeon::LoadResourcesFromStageData(Engine& engine, DungeonStageData&
     for (const auto& [key, path] : stageMap) {
         if (key.rfind("StageData", 0) == 0) {
             dungeonResource.stageResource.push_back(load.LoadResource<LoadModel>(path));
-        } else if (key == "StageBoneData") {
-            dungeonResource.stageBoneResource = load.LoadResource<LoadJSON>(path);
+        } else if (key.rfind("StageBoneData", 0) == 0) {
+            dungeonResource.stageBoneResource.push_back(load.LoadResource<LoadJSON>(path));
         }
     }
     // Characterカテゴリ

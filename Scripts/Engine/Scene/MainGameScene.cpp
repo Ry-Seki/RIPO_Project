@@ -41,7 +41,7 @@ void MainGameScene::Update(Engine& engine, float deltaTime) {
     Scene::Update(engine, deltaTime);
     // 日が終わったら Engine 側フェード
     if (calendarManager->IsDayComplete() && !calendarManager->IsEndDayAdvance()) {
-        engine.StartFadeOutIn(0.5f, 0.5f, [this]() {
+        engine.StartFadeOutIn(1.0f, 1.0f, [this]() {
             calendarManager->NextDay(); // 日進行
         });
     }
