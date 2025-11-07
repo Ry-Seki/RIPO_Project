@@ -64,7 +64,7 @@ void BGMManager::ChangeBGM(const std::string setBGMName) {
  *	@param[in]	const int setHandle				“o˜^‚·‚é‰¹Œ¹ƒnƒ“ƒhƒ‹
  */
 void BGMManager::RegisterBGMHandle(const std::string& setKeyName, const int setHandle) {
-	if (!ExistBGMHandle(setKeyName)) return;
+	if (ExistBGMHandle(setKeyName)) return;
 
 	bgmHandleMap[setKeyName] = setHandle;
 }
