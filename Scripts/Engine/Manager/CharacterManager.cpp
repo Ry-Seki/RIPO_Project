@@ -50,11 +50,6 @@ void CharacterManager::Initialize(Engine& setEngine) {
 		// 空の要素を生成
 		createCharacterList.push_back(nullptr);
 	}
-	createCharacterObjectList.reserve(CREATE_CHARACTER_COUNT);
-	for (size_t i = 0; i < CREATE_CHARACTER_COUNT; i++) {
-		// 空の要素を生成
-		createCharacterObjectList.push_back(nullptr);
-	}
 }
 
 /*
@@ -74,8 +69,6 @@ void CharacterManager::GeneratePlayer(
 		if (createCharacterList[i] != nullptr) continue;
 		// リストの空きに生成
 		createCharacterList[i] = CreateCharacter<PlayerComponent>(i, name, position, rotation, AABBMin, AABBMax, player);
-		// オブジェクトのリストも保存
-		createCharacterObjectList[i] = player;
 		// ウデアクションコンポーネント追加
 		player->AddComponent<ArmActionComponent>();
 		// カメラのターゲットに追加
@@ -86,8 +79,6 @@ void CharacterManager::GeneratePlayer(
 	}
 	// 空きが無かったら一番後ろに生成
 	createCharacterList.push_back(CreateCharacter<PlayerComponent>(0, name, position, rotation, AABBMin, AABBMax, player));
-	// オブジェクトのリストも保存
-	createCharacterObjectList.push_back(player);
 	// カメラのターゲットに追加
 	CameraManager::GetInstance().SetTarget(player);
 	// シーンが持つゲームオブジェクト配列に追加
@@ -111,16 +102,12 @@ void CharacterManager::GenerateEnemy(
 		if (createCharacterList[i] != nullptr) continue;
 		// リストの空きに生成
 		createCharacterList[i] = CreateCharacter<EnemyComponent>(i, name, position, rotation, AABBMin, AABBMax, enemy);
-		// オブジェクトリストにも保存
-		createCharacterObjectList[i] = enemy;
 		// シーンが持つゲームオブジェクト配列に追加
 		engine->AddGameObject(enemy);
 		return;
 	}
 	// 空きが無かったら一番後ろに生成
 	createCharacterList.push_back(CreateCharacter<EnemyComponent>(0, name, position, rotation, AABBMin, AABBMax, enemy));
-	// オブジェクトリストにも保存
-	createCharacterObjectList.push_back(enemy);
 	// シーンが持つゲームオブジェクト配列に追加
 	engine->AddGameObject(enemy);
 }
@@ -129,20 +116,19 @@ void CharacterManager::GenerateEnemy(
  *	ID指定のキャラクター削除
  */
 void CharacterManager::RemoveCharacter(int characterID) {
-	GameObjectPtr destoryObject = createCharacterObjectList[characterID];
+	GameObject* owner = createCharacterList[characterID]->GetOwner();
+	GameObjectPtr destroyObject = GameObjectManager::GetInstance().GetUseObject(owner->ID);
 	// オブジェクトのリセット
-	GameObjectManager::GetInstance().ResetObject(destoryObject);
+	GameObjectManager::GetInstance().ResetObject(destroyObject);
 	// リストから削除
 	createCharacterList[characterID] = nullptr;
-	// オブジェクトリストから削除
-	createCharacterObjectList[characterID] = nullptr;
 }
 /*
  *	全てのキャラクター削除処理
  *  @author	Seki
  */
 void CharacterManager::RemoveAllCharacter() {
-	for (int i = 0, max = createCharacterObjectList.size(); i < max; i++) {
+	for (int i = 0, max = createCharacterList.size(); i < max; i++) {
 		RemoveCharacter(i);
 	}
 }
