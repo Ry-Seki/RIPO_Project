@@ -20,33 +20,73 @@ struct Vector3 {
 	float x, y, z;
 
 	// 静的メンバ変数
-	static Vector3 zero;
-	static Vector3 one;
-	static Vector3 up;
-	static Vector3 down;
-	static Vector3 right;
-	static Vector3 left;
-	static Vector3 forward;
-	static Vector3 back;
+	static Vector3 zero;		// {  0.0f, 0.0f, 0.0f }
+	static Vector3 one;			// {  1.0f, 1.0f, 1.0f }
+	static Vector3 up;			// {  0.0f, 1.0f, 0.0f }
+	static Vector3 down;		// {  0.0f,-1.0f, 0.0f }
+	static Vector3 right;		// {  1.0f, 0.0f, 0.0f }
+	static Vector3 left;		// { -1.0f, 0.0f, 0.0f }
+	static Vector3 forward;		// {  0.0f, 0.0f, 1.0f }
+	static Vector3 back;		// {  0.0f, 0.0f,-1.0f }
 
-	// コンストラクタ
+	/*
+	 *	コンストラクタ
+	 */
 	Vector3();
+	/*
+	 *	コンストラクタ
+	 *  @param setX		X成分
+	 *  @param setY		Y成分
+	 *  @param setZ		Z成分
+	 */
 	Vector3(float setX, float setY, float setZ);
+
+	/*
+	 *	デストラクタ
+	 */
 	~Vector3() = default;
 
-	// DxLibのVECTORとの互換関数
+	/*
+	 *	Vector3型からVECTOR型への型変換
+	 *  @param		v	Vector3型
+	 */
 	static VECTOR ToVECTOR(const Vector3& v);
+
+	/*
+	 *	VECTOR型からVector3型への型変換
+	 *  @param		v	VECTOR型
+	 */
 	static Vector3 FromVECTOR(const VECTOR& v);
 
 	// 演算
-	// 各成分の乗算
+	/*
+	 *	各成分毎の乗算
+	 *  @param[in]	v1	1爪のベクトル
+	 *  @param[in]	v2	2つ目のベクトル
+	 *  @return Vector3
+	 */
 	static Vector3 Scale(const Vector3& v1, const Vector3& v2);
-	// 内積
+
+	/*
+	 *	内積
+	 *  @param[in]	v1	1つ目のベクトル
+	 *  @param[in]	v2	2つ目のベクトル
+	 *  @return float
+	 */
 	static float Dot(const Vector3& v1, const Vector3& v2);
-	// 外積
+
+	/*
+	 *	外積
+	 *  @param[in]	v1	1つ目のベクトル
+	 *  @param[in]	v2	2つ目のベクトル
+	 *  @return Vector3
+	 */
 	static Vector3 Cross(const Vector3& v1, const Vector3& v2);
 
-	// 長さ
+	/*
+	 *	ベクトルの長さ
+	 *  @return float
+	 */
 	float Magnitude() const;
 	// 正規化
 	Vector3 Normalized() const;
