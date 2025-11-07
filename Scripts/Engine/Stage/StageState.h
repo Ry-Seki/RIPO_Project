@@ -10,6 +10,7 @@ private:
 	std::unique_ptr<StageBase> currentStage;	// 現在のステージ
 	std::unique_ptr<StageBase> prevStage;		// ひとつ前のステージ
 
+
 public:
 	StageState() = default;	// コンストラクタ
 	~StageState() = default;	// デストラクタ
@@ -24,11 +25,16 @@ public:
 		prevStage = std::move(currentStage);
 		currentStage = std::move(setValue);
 	}
-	// 前ステージを再利用できるように戻す
+
+	/*
+	 *	前ステージを再利用できるようにする
+	 */
 	void RestorePreviousStage() {
 		// 再利用を行う
 		currentStage = std::move(prevStage);
 	}
+
+
 public:
 
 	/*
