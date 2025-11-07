@@ -27,6 +27,7 @@ public:
      */
     void Render() override {
         float alpha = 0.0f;
+
         if (direction == FadeDirection::In)
             alpha = 1.0f - (elapsed / duration); // フェードイン: 透明に
         else

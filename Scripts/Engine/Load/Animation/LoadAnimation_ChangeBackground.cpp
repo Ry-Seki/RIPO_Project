@@ -41,7 +41,7 @@ void LoadAnimation_ChangeBackground::Update(float unscaledDeltaTime) {
 void LoadAnimation_ChangeBackground::Render() {
     if (backgroundList.empty()) return;
 
-    // ”wŒi‚ð•`‰æiƒ¿’l‚Â‚«j
+    // ”wŒi‚Ì•`‰æ
     for (auto& background : backgroundList) {
         if (background.alpha > 0) {
             SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)background.alpha);
