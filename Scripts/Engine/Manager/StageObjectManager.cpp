@@ -1,6 +1,6 @@
 /*
  *	@file	StageObjectManager.cpp
- *	@author kuu
+ *	@author kuu & oorui
  */
 #include "StageObjectManager.h"
 #include "GameObjectManager.h"
