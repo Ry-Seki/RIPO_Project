@@ -57,7 +57,7 @@ public:
 	 *  @param	AABBMin		AABBの各軸に置ける最小値
 	 *  @param	AABBMax		AABBの各軸に置ける最大値
 	 */
-	void GeneratePlayer(
+	GameObjectPtr GeneratePlayer(
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
@@ -73,7 +73,7 @@ public:
 	 *  @param	AABBMax		AABBの各軸に置ける最大値
 	 *  @author	kuu
 	 */
-	void GenerateEnemy(
+	GameObjectPtr GenerateEnemy(
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
