@@ -180,6 +180,15 @@ void DebugScene::Render() {
 		else {
 			DrawFormatString(0, 40, GetColor(255, 255, 255), "StairFrag_false");
 		}
+
+		bool exitFrag = StageObjectManager::GetInstance().GetExitFlag();
+		if (exitFrag) {
+			DrawFormatString(0, 60, GetColor(255, 255, 255), "ExitFrag_true");
+		}
+		else {
+			DrawFormatString(0, 60, GetColor(255, 255, 255), "ExitFrag_false");
+		}
+
 	}
 #endif
 }
