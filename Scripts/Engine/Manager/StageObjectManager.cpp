@@ -62,28 +62,29 @@ void StageObjectManager::GenerateExit(
 	const Vector3& rotation,
 	const Vector3& AABBMin,
 	const Vector3& AABBMax) {
-	GameObjectPtr exitPoint;
+	GameObjectPtr createExitPoint;
 	// リストの要素の数
 	size_t stageObjectListCount = createStageList.size();
 	// 生成ステージオブジェクトの空きをチェック
 	for (size_t i = 0; i < stageObjectListCount; i++) {
 		if (createStageList[i] != nullptr) continue;
 		// リストの空きに生成
-		createStageList[i] = CreateStageObject<ExitPoint>(i, name, position, rotation, AABBMin, AABBMax, exitPoint);
-
+		createStageList[i] = CreateStageObject<ExitPoint>(i, name, position, rotation, AABBMin, AABBMax, createExitPoint);
+		exitPoint = createStageList[i]->GetOwner()->GetComponent<ExitPoint>().get();
 		// オブジェクトのリストに保存
-		createStageObjectList[i] = exitPoint;
+		createStageObjectList[i] = createExitPoint;
 
 		// シーンが持つゲームオブジェクト配列に入れる
-		engine->AddGameObject(exitPoint);
+		engine->AddGameObject(createExitPoint);
 		return;
 	}
 	// 空きがなかったら一番後ろに生成
-	StageObjectBasePtr stageObject = CreateStageObject<ExitPoint>(0, name, position, rotation, AABBMin, AABBMax, exitPoint);
+	StageObjectBasePtr stageObject = CreateStageObject<ExitPoint>(0, name, position, rotation, AABBMin, AABBMax, createExitPoint);
+	exitPoint = stageObject->GetOwner()->GetComponent<ExitPoint>().get();
 	createStageList.push_back(stageObject);
 	// オブジェクトリストに保存
-	createStageObjectList.push_back(exitPoint);
-	engine->AddGameObject(exitPoint);
+	createStageObjectList.push_back(createExitPoint);
+	engine->AddGameObject(createExitPoint);
 }
 
 /*

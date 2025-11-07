@@ -125,9 +125,10 @@ public:
 
 	/*
 	 *	’Eoƒtƒ‰ƒO‚ÌŽæ“¾
-	 *  @author		oorui
+	 *  @retrn bool
 	 */
 	inline bool GetExitFlag() const {
+		if (!exitPoint)return false;
 		return exitPoint->GetExitTriger();
 	}
 
