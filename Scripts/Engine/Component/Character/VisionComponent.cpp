@@ -4,17 +4,6 @@
  */
 #include "VisionComponent.h"
 
-VisionComponent::VisionComponent()
-{
-}
-
-/*
-  *	XVˆ—
-  */
-void VisionComponent::Update(float deltaTime) {
-
-}
-
 /*
  *	Ž‹ŠEˆ—
  *	param[in]	const Vector3& beholderPos	Ž©g‚Ìposition
@@ -37,6 +26,7 @@ bool VisionComponent::Vision(const Vector3& beholderPos, const Vector3& beholder
 	if (angle > viewAngle) {
 		return false;
 	}
+	// “–‚½‚Á‚Ä‚¢‚é
 	return true;
 
 }

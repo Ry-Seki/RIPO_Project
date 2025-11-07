@@ -16,14 +16,10 @@ private:
 	//Engine* engine;
 
 public:
-	VisionComponent();
+	VisionComponent() = default;
 	~VisionComponent() = default;
 
 public:
-	/*
-	 *	XVˆ—
-	 */
-	void Update(float deltaTime);
 
 	/*
 	 *	‹ŠEˆ—
