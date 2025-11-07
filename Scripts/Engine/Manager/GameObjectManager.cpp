@@ -15,14 +15,17 @@ void GameObjectManager::Initialize(Engine& setEngine) {
 	engine = &setEngine;
 	// はじめに一定数生成
 	unuseObjectList.reserve(CREATE_OBJECT_COUNT);
+	useObjectList.reserve(CREATE_OBJECT_COUNT);
 	for (size_t i = 0; i < CREATE_OBJECT_COUNT; i++) {
 		// 未使用オブジェクト生成
 		unuseObjectList.push_back(engine->Create<GameObject>());
+		// 空の使用オブジェクトリスト生成
+		useObjectList.push_back(nullptr);
 	}
 }
 
 /*
- *	未使用オブジェクトを渡す
+ *	未使用オブジェクト取得
  */
 GameObjectPtr GameObjectManager::GetUnuseObject() {
 	// 同時にリストをいじれないようにロック
@@ -35,8 +38,26 @@ GameObjectPtr GameObjectManager::GetUnuseObject() {
 	unuseObjectList.pop_back();
 	// そのオブジェクトがすでに破棄済みなら初期化する
 	if (unuseObject->IsDestroyed()) unuseObject->ResetDestroy();
+	// 使用オブジェクトリストの空きをチェック
+	size_t useObjectListCount = useObjectList.size();
+	for (size_t i = 0; i < useObjectListCount; i++) {
+		if (useObjectList[i] != nullptr) continue;
+		// 使用リストに追加
+		useObjectList[i] = unuseObject;
+		// IDを保存
+		unuseObject->ID = i;
+		continue;
+	}
 
 	return unuseObject;
+}
+
+/*
+ *	ID指定のオブジェクト取得
+ *	@param	int ID	オブジェクトの識別ID
+ */
+GameObjectPtr GameObjectManager::GetUseObject(int ID) {
+	return useObjectList[ID];
 }
 
 /*

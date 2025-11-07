@@ -156,6 +156,7 @@
     <ClCompile Include="Scripts\Engine\Component\AABBCollider.cpp" />
     <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\ArmActionComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\BulletComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="Scripts\Engine\Load\JSON\LoadJSON.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Model\LoadModel.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Sprite\LoadSprite.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\BulletManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\CameraManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\CharacterManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
@@ -211,6 +213,7 @@
     <ClInclude Include="Scripts\Engine\Component\AABBCollider.h" />
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BulletComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterUtility.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h" />
@@ -241,6 +244,7 @@
     <ClInclude Include="Scripts\Engine\Load\LoadSystem.h" />
     <ClInclude Include="Scripts\Engine\Load\Model\LoadModel.h" />
     <ClInclude Include="Scripts\Engine\Load\Sprite\LoadSprite.h" />
+    <ClInclude Include="Scripts\Engine\Manager\BulletManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\CameraManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\CharacterManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageManager.h" />

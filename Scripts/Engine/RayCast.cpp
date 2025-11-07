@@ -15,7 +15,7 @@
  */
 bool RayCast(Engine* engine, Vector3 startPosition, Vector3 direction, float& hitLength, GameObject*& hitObject) {
     ScenePtr scene = engine->GetCurrentScene();
-    Ray ray = { startPosition, direction.Normalized()};
+    Ray ray = { startPosition, ForwardDir(direction) };
     bool hit = false;
     // 全てのオブジェクトでコライダーの座標を計算
     std::vector<Scene::WorldColliderList> colliders = scene->ChangeGameObjectWorldColliders();

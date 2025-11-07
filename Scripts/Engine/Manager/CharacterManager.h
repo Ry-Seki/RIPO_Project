@@ -21,7 +21,6 @@ class CharacterManager : public Singleton<CharacterManager>{
 private:;
 	Engine* engine;
 	CharacterBaseList createCharacterList;
-	GameObjectList createCharacterObjectList;
 
 	const size_t CREATE_CHARACTER_COUNT = 16;	// –‘O‚É¶¬‚·‚é”
 
