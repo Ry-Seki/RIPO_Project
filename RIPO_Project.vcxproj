@@ -160,12 +160,12 @@
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
-    <ClCompile Include="Scripts\Engine\Component\Character\VisionComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Engine\Input\InputManager.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\Audio\LoadAudio.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Binary\LoadBinary.cpp" />
     <ClCompile Include="Scripts\Engine\Load\CSV\LoadCSV.cpp" />
     <ClCompile Include="Scripts\Engine\Load\JSON\LoadJSON.cpp" />
@@ -220,7 +220,6 @@
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
-    <ClInclude Include="Scripts\Engine\Component\Character\VisionComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Component.h" />
     <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h" />
     <ClInclude Include="Scripts\Engine\Component\RenderComponent.h" />
@@ -237,6 +236,7 @@
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimationBase.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.h" />
+    <ClInclude Include="Scripts\Engine\Load\Audio\LoadAudio.h" />
     <ClInclude Include="Scripts\Engine\Load\Binary\LoadBinary.h" />
     <ClInclude Include="Scripts\Engine\Load\CSV\LoadCSV.h" />
     <ClInclude Include="Scripts\Engine\Load\Dungeon\DungeonDataLoader.h" />

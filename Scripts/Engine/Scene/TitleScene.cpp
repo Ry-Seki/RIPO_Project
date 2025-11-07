@@ -4,27 +4,34 @@
  */
 
 #include "TitleScene.h"
-#include "MainGameScene.h"
 #include "../Engine.h"
-#include "../Fade/FadeFactory.h"
-#include "../Fade/FadeManager.h"
+#include "MainGameScene.h"
+#include "../Load/Audio/LoadAudio.h"
+#include "../Load/LoadManager.h"
+#include "../Audio/AudioUtility.h"
+
 #include <DxLib.h>
 #include <memory>
-#include "../Manager/StageManager.h"
 
  /*
   *  初期化処理
   */
 void TitleScene::Initialize(Engine& engine) {
-	engine.StartFadeOutIn(0.5f, 0.5f, [&engine]() {
-		engine.SetNextScene(std::make_shared<MainGameScene>());
-		});
+	AudioUtility::SetBGMVolume(100);
+	AudioUtility::SetSEVolume(100);
+	auto debugSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/ButtonPush_Debug.mp3");
+	LoadManager::GetInstance().SetOnComplete([&engine, this, debugSE]() {
+		AudioUtility::RegisterSEHandle("DebugSE", debugSE->GetHandle());
+		Setup(engine);
+	});
 }
 /*
  *  ロード済みデータの設定 (コールバック)
  */
-void TitleScene::Setup() {
-
+void TitleScene::Setup(Engine& engine) {
+	engine.StartFadeOutIn(0.5f, 0.5f, [&engine]() {
+		engine.SetNextScene(std::make_shared<MainGameScene>());
+	});
 }
 /*
  *  更新処理
