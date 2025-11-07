@@ -33,19 +33,33 @@ public:
 	 */
 	void Initialize(Engine& setEngine);
 	/*
+	 *	ID指定でのオブジェクトリストに戻す処理
+	 *  @param[in]	int ID	オブジェクトの識別ID
+	 *  @author		Seki
+	 */
+	void ReturnGameObjectList(int ID);
+
+public:
+	/*
 	 *	未使用オブジェクト取得
 	 */
 	GameObjectPtr GetUnuseObject();
 	/*
 	 *	ID指定のオブジェクト取得
-	 *	@param	int ID	オブジェクトの識別ID
+	 *	@param[in]	int ID	オブジェクトの識別ID
 	 */
 	GameObjectPtr GetUseObject(int ID);
 	/*
 	 *	オブジェクトのリセット
+	 *  @param[in]	GameObjectPtr resetObject	リセット対象オブジェクト
 	 */
 	void ResetObject(GameObjectPtr resetObject);
-
+	/*
+	 *	オブジェクトのリセット
+	 *	@param[in]	GameObject*	resetObject		リセット対象オブジェクト
+	 *  @author		Seki
+	 */
+	void ResetObject(GameObject* resetObject);
 };
 
 #endif // !_GAMEOBJECTMANAGER_H_

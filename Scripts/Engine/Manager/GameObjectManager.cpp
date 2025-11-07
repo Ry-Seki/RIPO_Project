@@ -23,6 +23,17 @@ void GameObjectManager::Initialize(Engine& setEngine) {
 		useObjectList.push_back(nullptr);
 	}
 }
+/*
+ *	ID指定でのオブジェクトリストに戻す処理
+ *  @param[in]	int ID	オブジェクトの識別ID
+ *  @author		Seki
+ */
+void GameObjectManager::ReturnGameObjectList(int ID) {
+	GameObjectPtr returnObject = GetUseObject(ID);
+	if (!returnObject) return;
+
+	unuseObjectList.push_back(returnObject);
+}
 
 /*
  *	未使用オブジェクト取得
@@ -62,8 +73,10 @@ GameObjectPtr GameObjectManager::GetUseObject(int ID) {
 
 /*
  *	オブジェクトのリセット
+ *  @param[in]	GameObjectPtr resetObject	リセット対象オブジェクト
  */
 void GameObjectManager::ResetObject(GameObjectPtr resetObject) {
+	if (!resetObject) return;
 	// 同時にリストをいじれないようにロック
 	std::lock_guard<std::mutex> lock(unuseMutex);
 	// オブジェクトのリセット
@@ -72,4 +85,22 @@ void GameObjectManager::ResetObject(GameObjectPtr resetObject) {
 	resetObject->ResetGameObject();
 	// 未使用リストに戻る
 	unuseObjectList.push_back(resetObject);
+}
+/*
+ *	オブジェクトのリセット
+ *	@param[in]	GameObject*	resetObject		リセット対象オブジェクト
+ *  @author		Seki
+ */
+void GameObjectManager::ResetObject(GameObject* resetObject) {
+	if (!resetObject) return;
+	// 同時にリストをいじれないようにロック
+	std::lock_guard<std::mutex> lock(unuseMutex);
+	// オブジェクトのIDの取得
+	int resetObjectID = resetObject->ID;
+	// オブジェクトのリセット
+	resetObject->Destroy();
+	resetObject->OnDestroy();
+	resetObject->ResetGameObject();
+	// 未使用リストに戻る
+	ReturnGameObjectList(resetObjectID);
 }

@@ -231,6 +231,9 @@
     <ClCompile Include="Scripts\Engine\Audio\AudioManager.cpp">
       <Filter>ソース ファイル\Engine\Audio</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Stage\StageObject\Stair.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -471,6 +474,12 @@
       <Filter>ヘッダー ファイル\Engine\Character</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Stage\StageUtility.h">
+      <Filter>ヘッダー ファイル\Engine\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Stair.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectUtility.h">
       <Filter>ヘッダー ファイル\Engine\Stage</Filter>
     </ClInclude>
   </ItemGroup>

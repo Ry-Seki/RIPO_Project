@@ -46,12 +46,13 @@ void DebugScene::Initialize(Engine& engine) {
 	for (int i = 0; i < 2; i++) {
 		treasure[i] = StageObjectManager::GetInstance().GetStageObject(i);
 	}
-
 	StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
 	auto stair = StageObjectManager::GetInstance().GetStageObject(2);
+	StageObjectManager::GetInstance().GenerateExit("exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
+	auto exit = StageObjectManager::GetInstance().GetStageObject(3);
 
 	load.SetOnComplete(
-		[stageModel, player, playerModel, enemy, enemyModel, stageBoneData, treasure, treasureModel1, treasureModel2, stair]() {
+		[stageModel, player, playerModel, enemy, enemyModel, stageBoneData, treasure, treasureModel1, treasureModel2, stair, exit]() {
 			StageManager::GetInstance().LoadStage(stageModel->GetHandle());
 			StageManager::GetInstance().SetStageJSONData(stageBoneData->GetData());
 			int modelHandle = playerModel->GetHandle();
@@ -85,6 +86,10 @@ void DebugScene::Initialize(Engine& engine) {
 
 			Vector3 stairSpawnPos = StageManager::GetInstance().GetStairsPos();
 			stair->GetOwner()->position = stairSpawnPos;
+
+			Vector3 exitSpawnPos = StageManager::GetInstance().GetGoalPos();
+			exit->GetOwner()->position = exitSpawnPos;
+
 		}
 	);
 }
@@ -96,7 +101,7 @@ void DebugScene::Update(Engine& engine, float deltaTime) {
 
 	bool stairFrag = StageObjectManager::GetInstance().GetStairMove();
 	if (stairFrag) {
-		
+
 	}
 
 }

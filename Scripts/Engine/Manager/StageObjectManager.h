@@ -1,6 +1,6 @@
 /*
  *	@file	StageObjectManager.h
- *	@author kuu
+ *	@author kuu & oorui
  */
 
 #ifndef _STAGEOBJECTMANAGER_H_
@@ -42,6 +42,7 @@ private:
 	 *  @param	rotation	生成角度
 	 *  @param	AABBMin		AABBの各軸における最小値
 	 *  @param	AABBMax		AABBの各軸における最大値
+	 *  @param  stageObject
 	 */
 	template <typename T>
 	StageObjectBasePtr CreateStageObject(
@@ -124,6 +125,7 @@ public:
 
 	/*
 	 *	脱出フラグの取得
+	 *  @author		oorui
 	 */
 	inline bool GetExitFlag() const {
 		return exitPoint->GetExitTriger();
@@ -131,7 +133,8 @@ public:
 
 	/*
 	 *	階段オブジェクトに触れていたかどうか
-	 *  @return stair->GetStairMove();
+	 *  @return boool
+	 *  @author oorui
 	 */
 	inline bool GetStairMove() const {
 		if (!stair)return false;
