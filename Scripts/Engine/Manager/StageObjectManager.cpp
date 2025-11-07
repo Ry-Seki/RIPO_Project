@@ -186,6 +186,7 @@ void StageObjectManager::RemoveStageObject(int stageObjectID) {
  */
 void StageObjectManager::RemoveAllStageObject() {
 	for (int i = 0, max = createStageList.size(); i < max; i++) {
+		if (!createStageList[i]) continue;
 		RemoveStageObject(i);
 	}
 }
