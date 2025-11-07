@@ -47,7 +47,7 @@ void CharacterManager::Initialize(Engine& setEngine) {
 /*
  *	プレイヤー生成
  */
-void CharacterManager::GeneratePlayer(
+GameObjectPtr CharacterManager::GeneratePlayer(
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation,
@@ -63,12 +63,13 @@ void CharacterManager::GeneratePlayer(
 	engine->AddGameObject(player);
 	// 生成キャラクターリストに追加
 	createCharacterList.push_back(player);
+	return player;
 }
 
 /*
  *	エネミー生成
  */
-void CharacterManager::GenerateEnemy(
+GameObjectPtr CharacterManager::GenerateEnemy(
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation,
@@ -80,6 +81,7 @@ void CharacterManager::GenerateEnemy(
 	engine->AddGameObject(enemy);
 	// 生成キャラクターリストに追加
 	createCharacterList.push_back(enemy);
+	return enemy;
 }
 
 /*
