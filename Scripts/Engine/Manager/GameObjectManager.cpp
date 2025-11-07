@@ -57,10 +57,9 @@ GameObjectPtr GameObjectManager::GetUnuseObject() {
 		useObjectList[i] = unuseObject;
 		// ID‚ð•Û‘¶
 		unuseObject->ID = i;
-		continue;
+		return unuseObject;
 	}
-
-	return unuseObject;
+	return nullptr;
 }
 
 /*
