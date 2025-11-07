@@ -41,6 +41,7 @@ public:
     Vector3 position = { 0.0f, 0.0f, 0.0f };		// •½sˆÚ“®
     Vector3 rotation = { 0.0f, 0.0f, 0.0f };		// ‰ñ“]Šp“x
     Vector3 scale = { 1.0f, 1.0f, 1.0f };			// Šg‘å—¦
+    int ID;                                         // ¯•ÊID
 
 public:
     GameObject() = default;
