@@ -1,8 +1,8 @@
 /*
- *	@file	VisionComponent.cpp
+ *	@file	Vision.cpp
  *  @author kuu
  */
-#include "VisionComponent.h"
+#include "Vision.h"
 
 /*
  *	‹ŠEˆ—
@@ -12,7 +12,7 @@
  *	param[in]	float viewAngle				‹–ìŠp‚Ì”¼Šp
  *	param[in]	float viewDistance			‹ŠE‚Ì‹——£
  */
-bool VisionComponent::Vision(const Vector3& beholderPos, const Vector3& beholderDir, const Vector3& targetPos, float viewAngle, float viewDistance) {
+bool Vision(const Vector3& beholderPos, const Vector3& beholderDir, const Vector3& targetPos, float viewAngle, float viewDistance) {
 	// ©g‚Æ–Ú•W‚Ì‹——£
 	float distance = Distance(targetPos, beholderPos);
 	// ‹ŠE‹——£”»’è
@@ -28,5 +28,4 @@ bool VisionComponent::Vision(const Vector3& beholderPos, const Vector3& beholder
 	}
 	// “–‚½‚Á‚Ä‚¢‚é
 	return true;
-
 }
