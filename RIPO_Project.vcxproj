@@ -198,6 +198,7 @@
     <ClCompile Include="Scripts\Engine\Time.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
+    <ClCompile Include="Scripts\Engine\Vision.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -288,6 +289,7 @@
     <ClInclude Include="Scripts\Engine\Stage\StageUtility.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
+    <ClInclude Include="Scripts\Engine\Vision.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

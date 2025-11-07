@@ -125,7 +125,7 @@ Vector3 Vector3::ForwardDir(const Vector3& rotation) {
 	Vector3 dir;
 	dir.x = cos(rotation.x) * sin(rotation.y);
 	dir.y = sin(rotation.x);
-	dir.x = cos(rotation.x) * cos(rotation.y);
+	dir.z = cos(rotation.x) * cos(rotation.y);
 	return dir.Normalized();
 }
 

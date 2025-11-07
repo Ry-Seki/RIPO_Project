@@ -17,6 +17,7 @@
 #include "../../../Component/ModelRenderer.h"
 #include "../../../Component/Character/CharacterUtility.h"
 #include "../../../Stage/StageObject/StageObjectUtility.h"
+#include "../../../Audio/AudioUtility.h"
 
 #include <iostream>
 
@@ -40,6 +41,8 @@ void ActionDungeon::Setup(Engine& engine) {
  */
 void ActionDungeon::Update(Engine& engine, float deltaTime) {
     if (!isComplete && !inputHandle && CheckHitKey(KEY_INPUT_2)) {
+        // SEÇÃçƒê∂
+        AudioUtility::PlaySE("DebugSE");
         inputHandle = true;
         isComplete = true;
         Teardown();

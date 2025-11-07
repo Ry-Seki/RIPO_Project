@@ -20,7 +20,7 @@ class CharacterManager : public Singleton<CharacterManager>{
 	friend class Singleton<CharacterManager>;
 private:;
 	Engine* engine;
-	CharacterBaseList createCharacterList;
+	GameObjectList createCharacterList;
 
 	const size_t CREATE_CHARACTER_COUNT = 16;	// 事前に生成する数
 
@@ -39,14 +39,12 @@ private:
 	 *  @param	AABBMax		AABBの各軸に置ける最大値
 	 */
 	template <typename T>
-	CharacterBasePtr CreateCharacter(
-		const int setID,
+	GameObjectPtr CreateCharacter(
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
 		const Vector3& AABBMin,
-		const Vector3& AABBMax,
-		GameObjectPtr& characterObject);
+		const Vector3& AABBMax);
 
 public:
 	void Initialize(Engine& setEngine);
@@ -58,7 +56,7 @@ public:
 	 *  @param	AABBMin		AABBの各軸に置ける最小値
 	 *  @param	AABBMax		AABBの各軸に置ける最大値
 	 */
-	void GeneratePlayer(
+	GameObjectPtr GeneratePlayer(
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
@@ -74,7 +72,7 @@ public:
 	 *  @param	AABBMax		AABBの各軸に置ける最大値
 	 *  @author	kuu
 	 */
-	void GenerateEnemy(
+	GameObjectPtr GenerateEnemy(
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
@@ -91,12 +89,6 @@ public:
 	void RemoveAllCharacter();
 
 public:
-	/*
-	 *	ID指定のキャラクター取得
-	 *	@return		CharacterBasePtr
-	 *  @author		Seki
-	 */
-	CharacterBasePtr GetCharacter(int characterID) const;
 	/*
 	 *	キャラクターにモデルハンドルをセット
 	 *	@param[in]	GameObject* gameObject		セットするモデル

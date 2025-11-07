@@ -20,7 +20,7 @@ bool Vision(const Vector3& beholderPos, const Vector3& beholderDir, const Vector
 	// 自身の方向ベクトル
 	Vector3 direction = ForwardDir(beholderDir);
 	// 目標の方向
-	Vector3 toTargetDir = Offset(targetPos, beholderPos).Normalized();
+	Vector3 toTargetDir = Direction(beholderPos, targetPos);
 	// 視野角の計算
 	float angle = acosf(Dot(direction, toTargetDir) * Rad2Deg);
 	if (angle > viewAngle) {

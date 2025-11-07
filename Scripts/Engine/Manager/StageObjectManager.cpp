@@ -112,7 +112,7 @@ void StageObjectManager::GenerateTreasure(
 		createStageList[i]->GetOwner()->AddComponent<ModelRenderer>();
 
 		// オブジェクトのリストに保存
-		//createStageObjectList[i] = treasure;
+		createStageObjectList[i] = treasure;
 
 		// シーンが持つゲームオブジェクト配列に入れる
 		engine->AddGameObject(treasure);
@@ -124,7 +124,7 @@ void StageObjectManager::GenerateTreasure(
 	stageObject->GetOwner()->AddComponent<ModelRenderer>();
 	createStageList.push_back(stageObject);
 	// オブジェクトリストに保存
-	//createStageObjectList.push_back(treasure);
+	createStageObjectList.push_back(treasure);
 	engine->AddGameObject(treasure);
 }
 
@@ -172,7 +172,6 @@ void StageObjectManager::GenerateStair(
  *  @param[in]	int stageObject			削除するオブジェクトのID
  */
 void StageObjectManager::RemoveStageObject(int stageObjectID) {
-
 	GameObjectPtr destroyObject = createStageObjectList[stageObjectID];
 	// オブジェクトのリセット
 	GameObjectManager::GetInstance().ResetObject(destroyObject);

@@ -17,14 +17,14 @@ public:
 	 *	未使用オブジェクト取得
 	 */
 	static GameObjectPtr GetUnuseObject() {
-		GameObjectManager::GetInstance().GetUnuseObject();
+		return GameObjectManager::GetInstance().GetUnuseObject();
 	}
 	/*
 	 *	ID指定のオブジェクト取得
 	 *	@param[in]	int ID	オブジェクトの識別ID
 	 */
 	static GameObjectPtr GetUseObject(int ID) {
-		GameObjectManager::GetInstance().GetUseObject(ID);
+		return GameObjectManager::GetInstance().GetUseObject(ID);
 	}
 	/*
 	 *	オブジェクトのリセット

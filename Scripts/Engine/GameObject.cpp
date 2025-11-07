@@ -102,6 +102,7 @@ void GameObject::RemoveComponent() {
  *  オブジェクトの情報を初期化する
  */
 void GameObject::ResetGameObject() {
+    isStarted = false;
     ID = -1;
     name = "";
     position = Vector3::zero;
