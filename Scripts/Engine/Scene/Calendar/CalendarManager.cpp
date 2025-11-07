@@ -6,6 +6,7 @@
 #include "CalendarManager.h"
 #include "../DayAction/ActionManager.h"
 #include "../Selection/SelectionManager.h"
+#include "../../Audio/AudioUtility.h"
 
 /*
  *  ‰Šú‰»ˆ—
@@ -23,6 +24,8 @@ void CalendarManager::Update(Engine& engine) {
 
     if (!inputHandle && !IsEndDayAdvance()) {
         if (CheckHitKey(KEY_INPUT_1)) { 
+            // SE‚ÌÄ¶
+            AudioUtility::PlaySE("DebugSE");
             inputHandle = true; 
             isActive = false;
             day.ActionDungeon(engine); 

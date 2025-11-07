@@ -46,7 +46,7 @@ public:
 	 *	SEÄ¶ˆ—
 	 *  @param[in]	const std::string& setKeyName	Ä¶‚·‚éSE–¼
 	 */
-	static void PlaySE(const std::string& setKeyName, const int setVolume) {
+	static void PlaySE(const std::string& setKeyName) {
 		AudioManager::GetInstance().PlaySE(setKeyName);
 	}
 	/*
@@ -54,7 +54,7 @@ public:
 	 *	@param[in]	const std::string&	setKeyName	“o˜^‚·‚éSE–¼
 	 *	@param[in]	const int setHandle				“o˜^‚·‚é‰¹Œ¹ƒnƒ“ƒhƒ‹
 	 */
-	static void RegisterSE(const std::string& setKeyName, const int setHandle) {
+	static void RegisterSEHandle(const std::string& setKeyName, const int setHandle) {
 		AudioManager::GetInstance().RegisterSEHandle(setKeyName, setHandle);
 	}
 
@@ -84,7 +84,7 @@ public:
 	 *	SE‰¹—Ê‚Ìİ’è
 	 *	@param[in]	const int setVolume		‰¹—Ê (0`100)
 	 */
-	inline void SetSEVolume(const int setVolume) { 
+	static void SetSEVolume(const int setVolume) { 
 		AudioManager::GetInstance().SetSEVolume(setVolume); 
 	}
 };
