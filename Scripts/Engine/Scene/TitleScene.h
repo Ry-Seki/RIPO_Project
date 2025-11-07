@@ -20,7 +20,7 @@ public:
     /*
      *  ロード済みデータの設定 (コールバック)
      */
-    void Setup();
+    void Setup(Engine& engine);
     /*
      *  更新処理
      */
