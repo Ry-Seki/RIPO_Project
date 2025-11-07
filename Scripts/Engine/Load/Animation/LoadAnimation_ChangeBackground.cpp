@@ -11,17 +11,16 @@
 void LoadAnimation_ChangeBackground::Update(float unscaledDeltaTime) {
     if (backgroundList.empty()) return;
 
-    elapsedTime += unscaledDeltaTime;
-
-    // ˆê’èŠÔŒo‰ß‚µ‚½‚çŸ‚Ì”wŒi‚Ö
-    if (elapsedTime >= switchInterval) {
-        elapsedTime = 0.0f;
-        currentIndex = (currentIndex + 1) % backgroundList.size();
-
-        // Œ»İ‚Ì”wŒi‚¾‚¯‚ğ•\¦i‘¼‚Í”ñ•\¦j
-        for (auto& bg : backgroundList) {
-            bg.alpha = 0.0f;
+    frameCounter++;
+    if (frameCounter >= switchFrame) {
+        frameCounter = 0;
+        currentIndex++;
+        if (currentIndex >= (int)backgroundList.size()) {
+            currentIndex = 0;
         }
+
+        // Œ»İ‚Ì”wŒi‚¾‚¯•\¦
+        for (auto& bg : backgroundList) bg.alpha = 0.0f;
         backgroundList[currentIndex].alpha = 255.0f;
     }
 }
