@@ -19,6 +19,7 @@ EnemyComponent::EnemyComponent()
 
 void EnemyComponent::Start() {
 	enemy = GetOwner();
+	//if (enemy == nullptr)
 	wayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z + wayPointDistance);
 	nextWayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z - wayPointDistance);
 }
