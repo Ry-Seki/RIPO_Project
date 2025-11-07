@@ -33,7 +33,7 @@ public:
 	 *	ステージデータの読み込み
 	 *  @pram const int modelHandle
 	 */
-	void ModelLoad(const int modelHandleBase)override;
+	void SetModelHandle(const int modelHandleBase)override;
 
 	// 更新
 	void Update() override;

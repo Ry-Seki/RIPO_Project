@@ -93,6 +93,12 @@ void DebugScene::Initialize(Engine& engine) {
  */
 void DebugScene::Update(Engine& engine, float deltaTime) {
 	Scene::Update(engine, deltaTime);
+
+	bool stairFrag = StageObjectManager::GetInstance().GetStairMove();
+	if (stairFrag) {
+		
+	}
+
 }
 /*
  *	•`‰æˆ—

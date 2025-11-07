@@ -28,7 +28,7 @@ void StageManager::Initialize(Engine& setEngine) {
 void StageManager::LoadStage(const int modelHandleBase) {
 
 	loadedStage = std::make_unique<Stage>();
-	loadedStage->ModelLoad(modelHandleBase);
+	loadedStage->SetModelHandle(modelHandleBase);
 	ChangeStage();
 }
 
