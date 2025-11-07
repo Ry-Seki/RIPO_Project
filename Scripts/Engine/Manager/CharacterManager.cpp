@@ -106,7 +106,7 @@ void CharacterManager::RemoveCharacter(int ID) {
  */
 void CharacterManager::RemoveAllCharacter() {
 	// ƒŠƒXƒg‚ÌŒã‚ë‚©‚çíœ
-	for (int i = createCharacterList.size(); i > 0; --i) {
+	for (int i = createCharacterList.size() - 1; i >= 0; --i) {
 		if (!createCharacterList[i]) continue;
 		RemoveCharacter(createCharacterList[i]->ID);
 	}
