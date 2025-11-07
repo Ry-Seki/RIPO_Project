@@ -232,6 +232,7 @@
     <ClInclude Include="Scripts\Engine\Fade\FadeManager.h" />
     <ClInclude Include="Scripts\Engine\GameConst.h" />
     <ClInclude Include="Scripts\Engine\GameObject.h" />
+    <ClInclude Include="Scripts\Engine\GameObject\GameObjectUtility.h" />
     <ClInclude Include="Scripts\Engine\Input\InputManager.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimationBase.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.h" />
@@ -280,6 +281,7 @@
     <ClInclude Include="Scripts\Engine\Stage\StageBase.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\ExitPoint.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectUtility.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Stair.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageUtility.h" />
