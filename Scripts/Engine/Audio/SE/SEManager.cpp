@@ -76,7 +76,7 @@ void SEManager::TeardownSE(std::shared_ptr<SESource> destroySE) {
  *	@param[in]	const int setHandle				“o˜^‚·‚é‰¹Œ¹ƒnƒ“ƒhƒ‹
  */
 void SEManager::RegisterSEHandle(const std::string& setKeyName, const int setHandle) {
-	if (!ExistSEHandle(setKeyName)) return;
+	if (ExistSEHandle(setKeyName)) return;
 
 	seHandleMap[setKeyName] = setHandle;
 }
