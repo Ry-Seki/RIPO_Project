@@ -3,12 +3,14 @@
  *  @author kuu
  */
 #include "EnemyComponent.h"
+#include "../../Vision.h"
+#include "../../Manager/CameraManager.h"
 
 /*
  *	コンストラクタ
  */
 EnemyComponent::EnemyComponent()
-	: moveSpeed(200.0f)
+	: moveSpeed(500.0f)
 	, wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(200.0f)
@@ -19,7 +21,7 @@ EnemyComponent::EnemyComponent()
 
 void EnemyComponent::Start() {
 	enemy = GetOwner();
-	//if (enemy == nullptr)
+	if (enemy == nullptr) return;
 	wayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z + wayPointDistance);
 	nextWayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z - wayPointDistance);
 }
@@ -39,19 +41,20 @@ void EnemyComponent::EnemyMove(GameObject* enemy, float deltaTime) {
 	const float enemyCos = cos(enemy->rotation.y);
 	const float enemySin = sin(enemy->rotation.y); 
 
-	
-	// 目標に向かって移動
-	if (!chaseTargetChangeFrag) {
-		ChaseWayPoint(wayPoint, true, deltaTime);
+	GameObjectPtr player = CameraManager::GetInstance().GetTarget();
+	if (Vision(enemy->position, enemy->rotation, player->position, 60, 2000)) {
+		ChaseWayPoint(player->position, true, deltaTime);
 	}
-	else if (chaseTargetChangeFrag) {
-		Vector3 direction = nextWayPoint - enemy->position;
-		Vector3 normDirection = Normalized(direction);
-		enemy->position += normDirection * moveSpeed * deltaTime;
-		if (Magnitude(direction) < 0.1f) {
-			chaseTargetChangeFrag = false;
+	else {
+		// 目標に向かって移動
+		if (!chaseTargetChangeFrag) {
+			ChaseWayPoint(wayPoint, true, deltaTime);
+		}
+		else if (chaseTargetChangeFrag) {
+			ChaseWayPoint(nextWayPoint, false, deltaTime);
 		}
 	}
+	
 
 	//enemy->position.x -= moveSpeed * enemySin;
 	//enemy->position.z -= moveSpeed * enemyCos;
@@ -67,8 +70,10 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 	Vector3 direction = wayPoint - enemy->position;
 	// 方向を正規化する
 	Vector3 normDirection = Normalized(direction);
+	// 目標の方向に進む
 	enemy->position += normDirection * moveSpeed * deltaTime;
-	if (Magnitude(direction) < differenceTarget) {
+	// 目標地点についたらターゲットを変える
+	if (direction.Magnitude() < differenceTarget) {
 		chaseTargetChangeFrag = targetChange;
 	}
 }
