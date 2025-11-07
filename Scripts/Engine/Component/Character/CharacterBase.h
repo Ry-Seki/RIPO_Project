@@ -14,7 +14,6 @@
  */
 class CharacterBase : public Component {
 private:
-	int ID = -1;
 	int masterID = -1;
 
 	int nameID = -1;
@@ -31,20 +30,6 @@ public:
 		return HP <= 0;
 	}
 public:
-	/*
-	 *	ID‚ÌŽæ“¾ 
-	 *	@return		int
-	 */
-	inline int GetID() const {
-		return ID;
-	}
-	/*
-	 *	ID‚Ì•ÏX
-	 *	@param[in]	int& setValue;
-	 */
-	inline void SetID(int& setValue) {
-		ID = setValue;
-	}
 	/*
 	 *	–¼‘OID‚ÌŽæ“¾
 	 *	@return		int

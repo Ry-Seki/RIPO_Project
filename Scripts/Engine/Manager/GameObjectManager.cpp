@@ -71,6 +71,8 @@ GameObjectPtr GameObjectManager::GetUnuseObject() {
  *	@param	int ID	オブジェクトの識別ID
  */
 GameObjectPtr GameObjectManager::GetUseObject(int ID) {
+	auto objectID = useObjectList.begin() + ID;
+	if (useObjectList.end() <= objectID) return nullptr;
 	return useObjectList[ID];
 }
 
