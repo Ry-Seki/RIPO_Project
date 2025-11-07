@@ -18,10 +18,9 @@ GameObjectPtr CharacterManager::CreateCharacter(
 	const Vector3& position,
 	const Vector3& rotation,
 	const Vector3& AABBMin,
-	const Vector3& AABBMax,
-	GameObjectPtr& characterObject) {
+	const Vector3& AABBMax) {
 	// 未使用状態のオブジェクト取得
-	characterObject = GameObjectManager::GetInstance().GetUnuseObject();
+	GameObjectPtr characterObject = GameObjectManager::GetInstance().GetUnuseObject();
 	// キャラクターコンポーネント追加
 	characterObject->AddComponent<T>();
 	// コライダーコンポーネント追加
@@ -54,7 +53,7 @@ GameObjectPtr CharacterManager::GeneratePlayer(
 	const Vector3& AABBMin,
 	const Vector3& AABBMax) {
 	// プレイヤーのベース作成
-	GameObjectPtr player = CreateCharacter<PlayerComponent>(name, position, rotation, AABBMin, AABBMax, player);
+	GameObjectPtr player = CreateCharacter<PlayerComponent>(name, position, rotation, AABBMin, AABBMax);
 	// ウデアクションコンポーネント追加
 	player->AddComponent<ArmActionComponent>();
 	// カメラのターゲットに追加
@@ -76,7 +75,7 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 	const Vector3& AABBMin,
 	const Vector3& AABBMax) {
 	// 敵のベース作成
-	GameObjectPtr enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax, enemy);
+	GameObjectPtr enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax);
 	// シーンが持つゲームオブジェクト配列に追加
 	engine->AddGameObject(enemy);
 	// 生成キャラクターリストに追加

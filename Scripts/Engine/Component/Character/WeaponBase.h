@@ -15,6 +15,8 @@ class WeaponBase : public Component {
 protected:
 	int ammoCount;		// c’e”
 	int ammoCountMax;	// ’e‚ÌÅ‘å”
+
+
 };
 
 #endif // !_WEAPONBASE_H_

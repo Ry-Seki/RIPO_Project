@@ -44,8 +44,7 @@ private:
 		const Vector3& position,
 		const Vector3& rotation,
 		const Vector3& AABBMin,
-		const Vector3& AABBMax,
-		GameObjectPtr& characterObject);
+		const Vector3& AABBMax);
 
 public:
 	void Initialize(Engine& setEngine);
