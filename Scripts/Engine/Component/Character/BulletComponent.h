@@ -10,6 +10,7 @@
 
 class BulletComponent : public Component {
 private:
+	GameObject* bullet;
 	float destroyTimeCount;		// ’e‚ª”jŠü‚³‚ê‚éŽžŠÔ
 
 	const float SHOT_SPEED;		// ’e‚Ì‘¬‚³
@@ -19,6 +20,7 @@ public:
 	~BulletComponent() = default;
 
 public:
+	void Start() override;
 	void Update(float deltaTime) override;
 	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
 };
