@@ -31,7 +31,6 @@ public:
 	 *  @param[in]	GameObjectPtr resetObject
 	 */
 	static void ResetObject(GameObjectPtr resetObject) {
-		if (!resetObject) return;
 		GameObjectManager::GetInstance().ResetObject(resetObject);
 	}
 	/*

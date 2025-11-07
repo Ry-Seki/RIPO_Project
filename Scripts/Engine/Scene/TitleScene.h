@@ -18,6 +18,10 @@ public:
      */
     virtual void Initialize(Engine& engine) override;
     /*
+     *  ロード済みデータの設定 (コールバック)
+     */
+    void Setup();
+    /*
      *  更新処理
      */
     virtual void Update(Engine& engine, float deltaTime) override;

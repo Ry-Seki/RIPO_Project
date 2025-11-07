@@ -21,6 +21,12 @@ void TitleScene::Initialize(Engine& engine) {
 		});
 }
 /*
+ *  ロード済みデータの設定 (コールバック)
+ */
+void TitleScene::Setup() {
+
+}
+/*
  *  更新処理
  */
 void TitleScene::Update(Engine& engine, float deltaTime) {
