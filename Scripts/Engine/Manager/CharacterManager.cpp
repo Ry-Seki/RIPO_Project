@@ -105,7 +105,8 @@ void CharacterManager::RemoveCharacter(int ID) {
  *  @author	Seki
  */
 void CharacterManager::RemoveAllCharacter() {
-	for (int i = 0, max = createCharacterList.size(); i < max; i++) {
+	// ƒŠƒXƒg‚ÌŒã‚ë‚©‚çíœ
+	for (int i = createCharacterList.size(); i > 0; --i) {
 		if (!createCharacterList[i]) continue;
 		RemoveCharacter(createCharacterList[i]->ID);
 	}
