@@ -15,6 +15,10 @@
 #include "../../../Manager/StageObjectManager.h"
 #include "../../../Scene/Scene.h"
 #include "../../../Component/ModelRenderer.h"
+#include "../../../Component/Character/CharacterUtility.h"
+#include "../../../Stage/StageObject/StageObjectUtility.h"
+#include "../../../Audio/AudioUtility.h"
+
 #include <iostream>
 
 // Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰»
@@ -37,6 +41,8 @@ void ActionDungeon::Setup(Engine& engine) {
  */
 void ActionDungeon::Update(Engine& engine, float deltaTime) {
     if (!isComplete && !inputHandle && CheckHitKey(KEY_INPUT_2)) {
+        // SE‚ÌÄ¶
+        AudioUtility::PlaySE("DebugSE");
         inputHandle = true;
         isComplete = true;
         Teardown();
@@ -99,8 +105,9 @@ void ActionDungeon::Render() {
  *  ”jŠüˆ—
  */
 void ActionDungeon::Teardown() {
-    CharacterManager::GetInstance().RemoveCharacter(0);
+    CharacterUtility::RemoveAllCharacter();
     StageManager::GetInstance().Execute();
+    StageObjectUtility::RemoveAllStageObject();
     CameraManager::GetInstance().ResetCamera();
 }
 

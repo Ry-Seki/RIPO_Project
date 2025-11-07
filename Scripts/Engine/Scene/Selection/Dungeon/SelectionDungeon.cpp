@@ -7,6 +7,7 @@
 #include "../../../Load/LoadManager.h"
 #include "../../DayAction/ActionManager.h"
 #include "../../Selection/SelectionManager.h"
+#include "../../../Audio/AudioUtility.h"
 
 /*
  *	‰Šú‰»ˆ—
@@ -30,6 +31,8 @@ void SelectionDungeon::Update(Engine& engine, float deltaTime) {
 	if (dungeonDataList.empty() || isComplete) return;
 
 	if (!inputHandle && CheckHitKey(KEY_INPUT_0)) { 
+		// SE‚ÌÄ¶
+		AudioUtility::PlaySE("DebugSE");
 		inputHandle = true;
 		isComplete = true;
 		StartStageDataLoad(engine, 0);

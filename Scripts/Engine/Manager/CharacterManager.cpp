@@ -117,6 +117,7 @@ void CharacterManager::GenerateEnemy(
  */
 void CharacterManager::RemoveCharacter(int characterID) {
 	GameObject* owner = createCharacterList[characterID]->GetOwner();
+	if (!owner) return;
 	GameObjectPtr destroyObject = GameObjectManager::GetInstance().GetUseObject(owner->ID);
 	// オブジェクトのリセット
 	GameObjectManager::GetInstance().ResetObject(destroyObject);
@@ -129,6 +130,7 @@ void CharacterManager::RemoveCharacter(int characterID) {
  */
 void CharacterManager::RemoveAllCharacter() {
 	for (int i = 0, max = createCharacterList.size(); i < max; i++) {
+		if (!createCharacterList[i]) continue;
 		RemoveCharacter(i);
 	}
 }

@@ -57,9 +57,12 @@ GameObjectPtr GameObjectManager::GetUnuseObject() {
 		useObjectList[i] = unuseObject;
 		// IDを保存
 		unuseObject->ID = i;
-		continue;
+		return unuseObject;
 	}
-
+	// 空きが無ければ末尾に追加
+	useObjectList.push_back(unuseObject);
+	// IDを保存
+	unuseObject->ID = static_cast<int>(useObjectList.size()) - 1;
 	return unuseObject;
 }
 
@@ -83,6 +86,8 @@ void GameObjectManager::ResetObject(GameObjectPtr resetObject) {
 	resetObject->Destroy();
 	resetObject->OnDestroy();
 	resetObject->ResetGameObject();
+	// 使用リストから削除
+	useObjectList[resetObject->ID] = nullptr;
 	// 未使用リストに戻る
 	unuseObjectList.push_back(resetObject);
 }

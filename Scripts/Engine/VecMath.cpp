@@ -26,28 +26,37 @@ Vector3::Vector3() : x(0.0f), y(0.0f), z(0.0f) {}
 Vector3::Vector3(float setX, float setY, float setZ) : x(setX), y(setY), z(setZ) {}
 
 
-// DxLibのVECTORとの互換関数
+/*
+ *	Vector3型からVECTOR型への型変換
+ *  @param		v	Vector3型
+ */
 VECTOR Vector3::ToVECTOR(const Vector3& v) {
 	return VGet(v.x, v.y, v.z);
 }
+/*
+ *	VECTOR型からVector3型への型変換
+ *  @param		v	VECTOR型
+ */
 Vector3 Vector3::FromVECTOR(const VECTOR& v) {
 	return { v.x, v.y, v.z };
 }
 
 
 /*
- *	演算
+ *	各成分毎の乗算
+ *  @param[in]	v1	1つ目のベクトル
+ *  @param[in]	v2	2つ目のベクトル
+ *  @return Vector3
  */
-
- /*
-  *	各成分毎の乗算
-  */
 Vector3 Vector3::Scale(const Vector3& v1, const Vector3& v2) {
 	return { v1.x * v2.x, v1.y * v2.y, v1.z * v2.z };
 }
 
 /*
  *	内積
+ *  @param[in]	v1	1つ目のベクトル
+ *  @param[in]	v2	2つ目のベクトル
+ *  @return float
  */
 float Vector3::Dot(const Vector3& v1, const Vector3& v2) {
 	return v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
@@ -55,6 +64,9 @@ float Vector3::Dot(const Vector3& v1, const Vector3& v2) {
 
 /*
  *	外積
+ *  @param[in]	v1	1つ目のベクトル
+ *  @param[in]	v2	2つ目のベクトル
+ *  @return Vector3
  */
 Vector3 Vector3::Cross(const Vector3& v1, const Vector3& v2) {
 	return {
@@ -63,14 +75,18 @@ Vector3 Vector3::Cross(const Vector3& v1, const Vector3& v2) {
 		v1.x * v2.y - v1.y * v2.x
 	};
 }
+
 /*
- *	長さ
+ *	ベクトルの長さ
+ *  @return float
  */
 float Vector3::Magnitude() const {
 	return std::sqrt(x * x + y * y + z * z);
 }
+
 /*
  *	正規化
+ *  @return Vector3
  */
 Vector3 Vector3::Normalized() const {
 	float magnitude = Magnitude();
@@ -79,14 +95,20 @@ Vector3 Vector3::Normalized() const {
 }
 
 /*
- *	2点間の長さ
+ *	2点間( v1 , v2 )の距離
+ *  @param[in]	v1	1つ目のベクトル
+ *  @param[in]	v2	2つ目のベクトル
+ *  @return float
  */
 float Vector3::Distance(const Vector3& v1, const Vector3& v2) {
 	return (v1 - v2).Magnitude();
 }
 
 /*
- *	2点間の方向ベクトル
+ *	2点間の方向を表す単位ベクトル
+ *  @param[in]	from	1つ目のベクトル
+ *  @param[in]	to		2つ目のベクトル
+ *  @return Vector3
  */
 Vector3 Vector3::Direction(const Vector3& from, const Vector3& to) {
 	Vector3 dir = to - from;
@@ -94,8 +116,10 @@ Vector3 Vector3::Direction(const Vector3& from, const Vector3& to) {
 }
 
 /*
- *	正面の方向ベクトル
- *	@outhor Riku
+ *	正面方向のベクトル
+ *  @param[in]	rotation	回転
+ *  @return Vector3
+ *  @author Riku
  */
 Vector3 Vector3::ForwardDir(const Vector3& rotation) {
 	Vector3 dir;
@@ -105,6 +129,13 @@ Vector3 Vector3::ForwardDir(const Vector3& rotation) {
 	return dir.Normalized();
 }
 
+/*
+ *	各成分を指定範囲内に制限する
+ *	@param[in]  v1   対象のベクトル
+ *	@param[in]  min  下限値ベクトル
+ *	@param[in]  max  上限値ベクトル
+ *  @return Vector3
+ */
 Vector3 Vector3::Clamp(const Vector3& v1, const Vector3& min, const Vector3& max) {
 	return {
 	std::fmax(min.x, std::fmin(max.x, v1.x)),
@@ -113,12 +144,22 @@ Vector3 Vector3::Clamp(const Vector3& v1, const Vector3& min, const Vector3& max
 	};
 }
 
+/*
+ *  値を指定範囲内に制限する
+ *  @param[in]  value 対象の値
+ *  @param[in]  min   下限値
+ *  @param[in]  max   上限値
+ *  @return	float
+ */
 float Vector3::Clamp(float value, float min, float max) {
 	return std::fmax(min, std::fmin(max, value));
 }
 
 /*
- *	基準点からのずらし
+ *	2つのベクトル間の差分を求める
+ *	@param[in]  v1  基準となるベクトル
+ *	@param[in]  v2  引かれるベクトル
+ *	@return	Vector3
  */
 Vector3 Vector3::Offset(const Vector3& v1, const Vector3& v2) {
 	return (v1 - v2);
@@ -126,6 +167,10 @@ Vector3 Vector3::Offset(const Vector3& v1, const Vector3& v2) {
 
 /*
  *	線形補間
+ *  @param[in]	v1	始点のベクトル
+ *  @param[in]	v2	終点のベクトル
+ *  @param[in]	t	補間係数（0.0f~1.0f）
+ *  @return Vector3
  */
 Vector3 Vector3::Lerp(const Vector3& v1, const Vector3& v2, float t) {
 	return v1 + (v2 - v1) * t;
@@ -133,6 +178,10 @@ Vector3 Vector3::Lerp(const Vector3& v1, const Vector3& v2, float t) {
 
 /*
  *	球面線形補間
+ *  @param[in] v1		  始点のベクトル
+ *  @param[in] v2		  終点のベクトル
+ *  @param[in] t		  補間係数（0.0f~1.0f）
+ *  @return Vector3
  */
 Vector3 Vector3::Slerp(const Vector3& a, const Vector3& b, float t) {
 	// tを[ 0 , 1 ]にする

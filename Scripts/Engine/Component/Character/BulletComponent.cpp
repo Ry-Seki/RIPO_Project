@@ -5,11 +5,12 @@
 
 #include "BulletComponent.h"
 #include "../../GameObject.h"
-#include "../../Manager/GameObjectManager.h"
+#include "../../GameObject/GameObjectUtility.h"
 #include "../../Manager/CameraManager.h"
 
 BulletComponent::BulletComponent() 
 	: destroyTimeCount(3)
+	, bullet(nullptr)
 
 	, SHOT_SPEED(10000)
 {}
@@ -26,8 +27,7 @@ void BulletComponent::Update(float deltaTime) {
 	// 破棄カウントダウン
 	destroyTimeCount -= deltaTime;
 	if (destroyTimeCount < 0) {
-		GameObjectPtr destroyBullet = GameObjectManager::GetInstance().GetUseObject(bullet->ID);
-		GameObjectManager::GetInstance().ResetObject(destroyBullet);
+		GameObjectUtility::ResetObject(bullet);
 	}
 }
 
@@ -35,6 +35,5 @@ void BulletComponent::OnCollision(const std::shared_ptr<Component>& self, const 
 	// プレイヤー以外の衝突で破棄
 	GameObjectPtr player = CameraManager::GetInstance().GetTarget();
 	if (other->GetOwner() == player.get())return;
-	GameObjectPtr destroyBullet = GameObjectManager::GetInstance().GetUseObject(bullet->ID);
-	GameObjectManager::GetInstance().ResetObject(destroyBullet);
+	GameObjectUtility::ResetObject(bullet);
 }
