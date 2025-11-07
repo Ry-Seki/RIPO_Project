@@ -58,12 +58,11 @@ public:
 	}
 	/*
 	 *	ポインタ指定のキャラクター削除
-	 *  @param[in]	const CharacterBasePtr& destroyCharacter
+	 *  @param[in]	const GameObjectPtr& destroyCharacter
 	 */
-	static void RemoveCharacter(const CharacterBasePtr& destroyCharacter) {
+	static void RemoveCharacter(const GameObjectPtr& destroyCharacter) {
 		if (!destroyCharacter) return;
-		int characterID = destroyCharacter->GetID();
-		CharacterManager::GetInstance().RemoveCharacter(characterID);
+		CharacterManager::GetInstance().RemoveCharacter(destroyCharacter->ID);
 	}
 	/*
 	 *	全てのキャラクター削除
@@ -73,13 +72,6 @@ public:
 	}
 
 public:
-	/*
-	 *	ID指定のキャラクター取得
-	 *	@return		CharacterBasePtr
-	 */
-	static CharacterBasePtr GetCharacter(int characterID) {
-		return CharacterManager::GetInstance().GetCharacter(characterID);
-	}
 	/*
 	 *	キャラクターのオーナーオブジェクトの取得
 	 *  @param[in]	const CharacterBasePtr& setCharacter
