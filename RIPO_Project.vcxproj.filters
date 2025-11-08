@@ -234,6 +234,24 @@
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Stair.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\BulletComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\WeaponBase.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\Audio\LoadAudio.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Manager\BulletManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Vision.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\RevolverArm.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -481,6 +499,27 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectUtility.h">
       <Filter>ヘッダー ファイル\Engine\Stage</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\BulletComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\RevolverArm.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\WeaponBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\GameObject\GameObjectUtility.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\Audio\LoadAudio.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Manager\BulletManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Vision.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
