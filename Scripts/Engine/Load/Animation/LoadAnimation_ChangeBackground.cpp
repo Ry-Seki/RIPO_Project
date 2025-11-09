@@ -13,26 +13,16 @@ void LoadAnimation_ChangeBackground::Update(float unscaledDeltaTime) {
 
     elapsedTime += unscaledDeltaTime;
 
-    BGImage& currentImage = backgroundList[currentIndex];
-    BGImage& nextImage = backgroundList[(currentIndex + 1) % backgroundList.size()];
-
-    // 一定時間経過でフェード開始
-    if (elapsedTime > switchInterval) {
-        fadingOut = true;
+    // 一定時間経過したら次の背景へ
+    if (elapsedTime >= switchInterval) {
         elapsedTime = 0.0f;
-    }
+        currentIndex = (currentIndex + 1) % backgroundList.size();
 
-    // フェード処理
-    if (fadingOut) {
-        currentImage.alpha -= (255.0f / fadeTime) * unscaledDeltaTime;
-        nextImage.alpha += (255.0f / fadeTime) * unscaledDeltaTime;
-
-        if (currentImage.alpha <= 0.0f) {
-            currentImage.alpha = 0.0f;
-            nextImage.alpha = 255.0f;
-            currentIndex = (currentIndex + 1) % backgroundList.size();
-            fadingOut = false;
+        // 現在の背景だけを表示（他は非表示）
+        for (auto& bg : backgroundList) {
+            bg.alpha = 0.0f;
         }
+        backgroundList[currentIndex].alpha = 255.0f;
     }
 }
 /*
@@ -41,14 +31,16 @@ void LoadAnimation_ChangeBackground::Update(float unscaledDeltaTime) {
 void LoadAnimation_ChangeBackground::Render() {
     if (backgroundList.empty()) return;
 
-    // 背景の描画
-    for (auto& background : backgroundList) {
-        if (background.alpha > 0) {
-            SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)background.alpha);
-            DrawGraph(0, 0, background.spriteHandle, FALSE);
-        }
-    }
+    // 現在の背景のみ描画
+    BGImage& currentBG = backgroundList[currentIndex];
+    SetDrawBlendMode(DX_BLENDMODE_ALPHA, (int)currentBG.alpha);
+    DrawGraph(0, 0, currentBG.spriteHandle, FALSE);
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+    // デバッグ表示
+    DrawFormatString(255, 255, GetColor(255, 255, 255), "Load中");
+    DrawFormatString(255, 300, GetColor(255, 255, 255), "LoadIndex : %d", currentIndex);
+    DrawFormatString(255, 330, GetColor(255, 255, 0), "elapsedTime : %.2f / %.2f", elapsedTime, switchInterval);
 }
 /*
  *  解放処理
