@@ -4,6 +4,7 @@
  */
 #include <memory>
 #include "StageBase.h"
+#include "../Manager/StageObjectManager.h"
 
 class StageState {
 private:
@@ -53,6 +54,8 @@ public:
 		}
 		stageModelHandle.clear();
 		currentStageIndex = -1;
+		// ステージオブジェクトのフラグをfalseに
+		StageObjectManager::GetInstance().ResetFlag();
 	}
 
 public:

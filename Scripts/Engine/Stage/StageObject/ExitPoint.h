@@ -15,21 +15,36 @@ private:
 	bool exitTriger = false;
 
 public:
-	// コンストラクタ
+	/*
+	 *	コンストラクタ
+	 */
 	ExitPoint() = default;
 	~ExitPoint() override {};
 
 public:
-	// 出口の衝突イベント
+
+	/*
+	 *	出口の衝突イベント
+	 */
 	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
 
-	// モデルの読み込み
+	/*
+	 *	モデルの読み込み
+	 */
 	void ModelLoad(const int modelHandleBase) override;
 
-	// 脱出フラグの取得
-	inline bool GetExitTriger() const{
+	/*
+	 *	脱出フラグの取得
+	 */
+	inline bool GetExitTriger() const {
 		return exitTriger;
 	}
+
+	/*
+	 *	脱出フラグの指定
+	 */
+	void SetExitTrigger(bool setValue) { exitTriger = setValue; }
+
 };
 
 #endif // !_EXITPOINT_H_
