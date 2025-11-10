@@ -100,6 +100,9 @@ void DebugScene::Update(Engine& engine, float deltaTime) {
 	bool stairFrag = StageObjectManager::GetInstance().GetStairMove();
 	if (stairFrag) {
 		StageManager::GetInstance().NextStage();
+
+		StageManager::GetInstance().GetPrevStageHandle();
+
 	}
 
 }
