@@ -65,7 +65,7 @@ void EnemyComponent::EnemyMove(GameObject* enemy, float deltaTime) {
  */
 void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaTime) {
 	// 目標と自身のpositionの差
-	const float differenceTarget = 2.0f;
+	const float differenceTarget = 100.0f;
 	// 目標の方向
 	Vector3 direction = wayPoint - enemy->position;
 	// 方向を正規化する
@@ -73,9 +73,7 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 	// 目標の方向に進む
 	enemy->position += normDirection * moveSpeed * deltaTime;
 	// 目標の方向を向く
-	//enemy->rotation.x = direction.x;
-	//enemy->rotation.y = tan(wayPoint.y);
-	//enemy->rotation.z -= direction.z;
+	enemy->rotation.y = -atan2(normDirection.x, -normDirection.z);
 	// 目標地点についたらターゲットを変える
 	if (direction.Magnitude() < differenceTarget) {
 		chaseTargetChangeFrag = targetChange;
