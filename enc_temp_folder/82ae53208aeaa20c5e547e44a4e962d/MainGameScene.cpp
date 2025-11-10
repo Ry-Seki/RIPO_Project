@@ -54,13 +54,10 @@ void MainGameScene::Render() {
     selectionManager->Render();
     actionManager->Render();
     Scene::Render();
-
-#if _DEBUG
     // 全オブジェクトのAABBCollider描画
     for (auto& obj : gameObjects) {
         auto aabb = obj->GetComponent<AABBCollider>();
         if (aabb == nullptr) continue;
         aabb->DebugRender();
     }
-#endif
 }
