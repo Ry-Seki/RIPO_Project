@@ -23,19 +23,27 @@ private:
 	std::vector<BGImage> backgroundList;	// 背景画像リスト
 	int currentIndex = 0;					// 現在のインデクス
 	float elapsedTime = 0.0f;				// 経過時間
-	float switchInterval = 3.0f;			// 画像切り替え時間(秒)
-	float fadeTime = 1.0f;					// フェード時間
+	float fadeTime = 1.0f;					// 2秒かけてフェード
+	float switchInterval = 0.2f;			// 4秒ごとに切り替え
 	bool fadingOut = false;					// フェードフラグ
+	int frameCounter = 0;					// フレームカウンタ
+	int switchFrame = 3;					// ← 何フレームごとに切り替えるか（例：3）
 
 public:
 	~LoadAnimation_ChangeBackground() override = default;
-	// 画像を読み込む（ファイルパスリスト）
-	void LoadImages(const std::vector<std::string>& paths) {
-		for (auto& p : paths) {
-			int h = LoadGraph(p.c_str());
-			if (h != -1) {
-				backgroundList.push_back({ h, 0.0f });
-			}
+
+public:
+	/*
+	 *	画像の設定
+	 *  @param[in]	const std::vector<int>& handleList
+	 */
+	void SetImages(const std::vector<int>& handleList) {
+		for (int i = 0, max = handleList.size(); i < max; i++) {
+			int handle = handleList[i];
+			if (handle == -1) continue;
+
+			backgroundList.push_back({ handle, 0.0f });
+
 		}
 		if (!backgroundList.empty())
 			backgroundList[0].alpha = 255.0f; // 最初の画像は表示開始

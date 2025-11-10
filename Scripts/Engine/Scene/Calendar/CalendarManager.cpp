@@ -7,6 +7,8 @@
 #include "../DayAction/ActionManager.h"
 #include "../Selection/SelectionManager.h"
 #include "../../Audio/AudioUtility.h"
+#include "../../Fade/FadeManager.h"
+#include "../../Fade/FadeFactory.h"
 
 /*
  *  ‰Šú‰»ˆ—
@@ -21,7 +23,6 @@ void CalendarManager::Initialize() {
 void CalendarManager::Update(Engine& engine) {
     Day& day = calendarSystem->GetDay();
     if (!isActive) return;
-
     if (!inputHandle && !IsEndDayAdvance()) {
         if (CheckHitKey(KEY_INPUT_1)) { 
             // SE‚ÌÄ¶
@@ -29,7 +30,10 @@ void CalendarManager::Update(Engine& engine) {
             inputHandle = true; 
             isActive = false;
             day.ActionDungeon(engine); 
-            selection->DungeonSelection(engine);
+            FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+            FadeManager::GetInstance().StartFade(fade, [&engine, this](){ 
+                selection->DungeonSelection(engine);
+            });
             action->SetOnComplete([this, &day]() { day.AdvanceDay(); });
         }
         //else if (CheckHitKey(KEY_INPUT_2)) { 

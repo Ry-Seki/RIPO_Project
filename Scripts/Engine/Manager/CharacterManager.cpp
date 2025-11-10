@@ -4,39 +4,34 @@
  */
 
 #include "CharacterManager.h"
-#include "GameObjectManager.h"
 #include "CameraManager.h"
+#include "../GameObject/GameObjectUtility.h"
 #include "../Component/Character/ArmActionComponent.h"
 #include "../Component/ModelRenderer.h"
 
-CharacterManager::CharacterManager() 
-	: engine(nullptr) {
-}
+CharacterManager::CharacterManager()
+	: engine(nullptr) {}
 
 template <typename T>
-CharacterBasePtr CharacterManager::CreateCharacter(
-	int setID,
+GameObjectPtr CharacterManager::CreateCharacter(
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation,
 	const Vector3& AABBMin,
-	const Vector3& AABBMax,
-	GameObjectPtr& characterObject) {
+	const Vector3& AABBMax) {
 	// 未使用状態のオブジェクト取得
-	characterObject = GameObjectManager::GetInstance().GetUnuseObject();
-	// キャラクター生成
-	CharacterBasePtr createCharacter = characterObject->AddComponent<T>();
-	// コライダー生成
+	GameObjectPtr characterObject = GameObjectManager::GetInstance().GetUnuseObject();
+	// キャラクターコンポーネント追加
+	characterObject->AddComponent<T>();
+	// コライダーコンポーネント追加
 	AABBColliderPtr collider = characterObject->AddComponent<AABBCollider>();
-	// モデルコンポーネントの追加
-	characterObject->AddComponent<ModelRenderer>();
 	collider->aabb = { AABBMin, AABBMax };
-	// ID設定
-	createCharacter->SetID(setID);
+	// モデルコンポーネント追加
+	characterObject->AddComponent<ModelRenderer>();
 	// データのセット
 	characterObject->SetObjectData(name, position, rotation);
 	// キャラクターを返す
-	return createCharacter;
+	return characterObject;
 }
 
 /*
@@ -46,101 +41,77 @@ void CharacterManager::Initialize(Engine& setEngine) {
 	engine = &setEngine;
 	// はじめに一定数生成
 	createCharacterList.reserve(CREATE_CHARACTER_COUNT);
-	for (size_t i = 0; i < CREATE_CHARACTER_COUNT; i++) {
-		// 空の要素を生成
-		createCharacterList.push_back(nullptr);
-	}
 }
 
 /*
  *	プレイヤー生成
  */
-void CharacterManager::GeneratePlayer(
+GameObjectPtr CharacterManager::GeneratePlayer(
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation,
 	const Vector3& AABBMin,
 	const Vector3& AABBMax) {
-	GameObjectPtr player;
-	// リストの要素の数
-	size_t characterListCount = createCharacterList.size();
-	// 生成キャラクターリストの空きをチェック
-	for (size_t i = 0; i < characterListCount; i++) {
-		if (createCharacterList[i] != nullptr) continue;
-		// リストの空きに生成
-		createCharacterList[i] = CreateCharacter<PlayerComponent>(i, name, position, rotation, AABBMin, AABBMax, player);
-		// ウデアクションコンポーネント追加
-		player->AddComponent<ArmActionComponent>();
-		// カメラのターゲットに追加
-		CameraManager::GetInstance().SetTarget(player);
-		// シーンが持つゲームオブジェクト配列に追加
-		engine->AddGameObject(player);
-		return;
-	}
-	// 空きが無かったら一番後ろに生成
-	createCharacterList.push_back(CreateCharacter<PlayerComponent>(0, name, position, rotation, AABBMin, AABBMax, player));
+	// プレイヤーのベース作成
+	GameObjectPtr player = CreateCharacter<PlayerComponent>(name, position, rotation, AABBMin, AABBMax);
+	// ウデアクションコンポーネント追加
+	player->AddComponent<ArmActionComponent>();
 	// カメラのターゲットに追加
 	CameraManager::GetInstance().SetTarget(player);
 	// シーンが持つゲームオブジェクト配列に追加
 	engine->AddGameObject(player);
+	// 生成キャラクターリストに追加
+	createCharacterList.push_back(player);
+	return player;
 }
 
 /*
  *	エネミー生成
  */
-void CharacterManager::GenerateEnemy(
+GameObjectPtr CharacterManager::GenerateEnemy(
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation,
 	const Vector3& AABBMin,
 	const Vector3& AABBMax) {
-	GameObjectPtr enemy;
-	// リストの要素の数
-	size_t characterListCount = createCharacterList.size();
-	// 生成キャラクターリストの空きをチェック
-	for (size_t i = 0; i < characterListCount; i++) {
-		if (createCharacterList[i] != nullptr) continue;
-		// リストの空きに生成
-		createCharacterList[i] = CreateCharacter<EnemyComponent>(i, name, position, rotation, AABBMin, AABBMax, enemy);
-		// シーンが持つゲームオブジェクト配列に追加
-		engine->AddGameObject(enemy);
-		return;
-	}
-	// 空きが無かったら一番後ろに生成
-	createCharacterList.push_back(CreateCharacter<EnemyComponent>(0, name, position, rotation, AABBMin, AABBMax, enemy));
+	// 敵のベース作成
+	GameObjectPtr enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax);
 	// シーンが持つゲームオブジェクト配列に追加
 	engine->AddGameObject(enemy);
+	// 生成キャラクターリストに追加
+	createCharacterList.push_back(enemy);
+	return enemy;
 }
 
 /*
  *	ID指定のキャラクター削除
  */
-void CharacterManager::RemoveCharacter(int characterID) {
-	GameObject* owner = createCharacterList[characterID]->GetOwner();
-	if (!owner) return;
-	GameObjectPtr destroyObject = GameObjectManager::GetInstance().GetUseObject(owner->ID);
+void CharacterManager::RemoveCharacter(int ID) {
+	// 削除キャラクターの取得
+	GameObjectPtr destroyObject = GameObjectUtility::GetUseObject(ID);
 	// オブジェクトのリセット
-	GameObjectManager::GetInstance().ResetObject(destroyObject);
+	GameObjectUtility::ResetObject(destroyObject);
+	// リスト内の削除オブジェクトを探す
+	auto listBegin = createCharacterList.begin();
+	auto listEnd = createCharacterList.end();
+	auto destroyNumber = std::find(listBegin, listEnd, destroyObject);
+	
+	if (destroyNumber == listEnd) return;
 	// リストから削除
-	createCharacterList[characterID] = nullptr;
+	createCharacterList.erase(destroyNumber);
 }
 /*
  *	全てのキャラクター削除処理
  *  @author	Seki
  */
 void CharacterManager::RemoveAllCharacter() {
-	for (int i = 0, max = createCharacterList.size(); i < max; i++) {
+	// リストの後ろから削除
+	for (int i = createCharacterList.size() - 1; i >= 0; --i) {
 		if (!createCharacterList[i]) continue;
-		RemoveCharacter(i);
+		RemoveCharacter(createCharacterList[i]->ID);
 	}
 }
 
-/*
- *	ID指定のキャラクター取得
- */
-CharacterBasePtr CharacterManager::GetCharacter(int characterID) const{
-	return createCharacterList[characterID];
-}
 /*
  *	キャラクターにモデルハンドルをセット
  *	@param[in]	GameObject* gameObject	セットするモデル

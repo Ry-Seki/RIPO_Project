@@ -7,8 +7,9 @@
 
 class StageState {
 private:
-	std::unique_ptr<StageBase> currentStage;	// 現在のステージ
-	std::unique_ptr<StageBase> prevStage;		// ひとつ前のステージ
+	std::vector<int> stageModelHandle;	// 読み込んだステージ全てを保持
+
+	int currentStageIndex = -1;
 
 
 public:
@@ -16,36 +17,72 @@ public:
 	~StageState() = default;	// デストラクタ
 
 public:
+
 	/*
-	 *	現在のステージをひとつ前のステージに設定
-	 *  @param setValue		// 現在のステージ
+	 *	ステージのモデルハンドル追加
 	 */
-	void SetCurrentStage(std::unique_ptr<StageBase> setValue) {
-		// 現在のステージを前のステージとして保存
-		prevStage = std::move(currentStage);
-		currentStage = std::move(setValue);
+	void AddStageModelHandle(int modelHandle) {
+		if (modelHandle == -1)return;
+		// モデルハンドルを追加
+		stageModelHandle.push_back(modelHandle);
+		currentStageIndex = static_cast<int>(stageModelHandle.size()) - 1;
 	}
 
 	/*
-	 *	前ステージを再利用できるようにする
+	 *	次のステージへ移行
 	 */
-	void RestorePreviousStage() {
-		// 再利用を行う
-		currentStage = std::move(prevStage);
+	void NextStage() {
+		if (currentStageIndex + 1 < (int)stageModelHandle.size())
+			currentStageIndex++;
 	}
 
+	/*
+	 *	ひとつ前のステージへ戻る
+	 */
+	void PrevStage() {
+		if (currentStageIndex < 0)return;
+		currentStageIndex--;
+	}
+
+	/*
+	 *	全ステージ削除
+	 */
+	void ResetStageModelHandle() {
+		for (int handle : stageModelHandle) {
+			if (handle != -1) MV1DeleteModel(handle);
+		}
+		stageModelHandle.clear();
+		currentStageIndex = -1;
+	}
 
 public:
+	/*
+	 * @brief 現在のステージインデックスを取得
+	 */
+	int GetCurrentStageIndex() const { return currentStageIndex; }
 
 	/*
-	 *	現在のステージの取得
-	 *  @return StageBase		現在のステージのベースを返す
+	 * @brief ステージ数を取得
 	 */
-	StageBase* GetCurrentStage()const { return currentStage.get(); }
+	int GetStageCount() const { return static_cast<int>(stageModelHandle.size()); }
 
 	/*
-	 *	ひとつ前のステージの取得
+	 * @brief 現在のハンドルを取得
 	 */
-	StageBase* GetPrevStage() const { return prevStage.get(); }
+	int GetCurrentStageHandle() const {
+		if (currentStageIndex >= 0 && currentStageIndex < (int)stageModelHandle.size())
+			return stageModelHandle[currentStageIndex];
+		return -1;
+	}
+
+	/*
+	 * @brief ひとつ前のステージハンドルを取得
+	 */
+	int GetPrevStageHandle() const {
+		int prev = currentStageIndex - 1;
+		if (prev >= 0 && prev < (int)stageModelHandle.size())
+			return stageModelHandle[prev];
+		return -1;
+	}
 
 };

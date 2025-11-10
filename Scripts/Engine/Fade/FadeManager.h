@@ -64,14 +64,18 @@ public:
     void Render() {
         if (currentFade) currentFade->Render();
     }
+
+public:
     /*
      *  フェードモード取得
+     *  @return     FadeMode
      */
     FadeMode GetMode() const {
         return currentFade ? currentFade->GetMode() : FadeMode::NonStop;
     }
     /*
      *  フェード中かどうか
+     *  @return     bool
      */
     bool IsFading() const {
         return currentFade != nullptr;

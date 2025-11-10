@@ -7,7 +7,9 @@
 #include "../Engine.h"
 #include "MainGameScene.h"
 #include "../Load/Audio/LoadAudio.h"
+#include "../Load/Sprite/LoadSprite.h"
 #include "../Load/LoadManager.h"
+#include "../Load/Animation/LoadAnimation_ChangeBackground.h"
 #include "../Audio/AudioUtility.h"
 
 #include <DxLib.h>
@@ -20,8 +22,20 @@ void TitleScene::Initialize(Engine& engine) {
 	AudioUtility::SetBGMVolume(100);
 	AudioUtility::SetSEVolume(100);
 	auto debugSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/ButtonPush_Debug.mp3");
-	LoadManager::GetInstance().SetOnComplete([&engine, this, debugSE]() {
+	std::vector<std::shared_ptr<LoadSprite>> loadBGList;
+	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black1.jpg"));
+	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black2.jpg"));
+	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black3.jpg"));
+	LoadManager::GetInstance().SetOnComplete([&engine, this, debugSE, loadBGList]() {
 		AudioUtility::RegisterSEHandle("DebugSE", debugSE->GetHandle());
+		auto loadBG = std::make_shared<LoadAnimation_ChangeBackground>();
+		std::vector<int> BGHandleList;
+		for (int i = 0, max = loadBGList.size(); i < max; i++) {
+			int handle = loadBGList[i]->GetHandle();
+			BGHandleList.push_back(handle);
+		}
+		loadBG->SetImages(BGHandleList);
+		LoadManager::GetInstance().AddAnimation(loadBG);
 		Setup(engine);
 	});
 }

@@ -19,7 +19,7 @@
  */
 struct DungeonResource {
 	std::vector<std::shared_ptr<LoadModel>> stageResource;
-	std::shared_ptr<LoadJSON> stageBoneResource;
+	std::vector<std::shared_ptr<LoadJSON>> stageBoneResource;
 	std::shared_ptr<LoadModel> playerResource;
 	std::vector<std::shared_ptr<LoadModel>> enemyResource;
 	std::shared_ptr<LoadModel> bossResource;

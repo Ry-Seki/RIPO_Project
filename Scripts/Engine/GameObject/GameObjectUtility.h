@@ -10,34 +10,34 @@
 
 /*
  *	ゲームオブジェクト関連実行処理
+ *  @note	名前空間での省略可能	using namespace GameObjectUtility
  */
-class GameObjectUtility {
-public:
+namespace GameObjectUtility {
 	/*
 	 *	未使用オブジェクト取得
 	 */
-	static GameObjectPtr GetUnuseObject() {
-		GameObjectManager::GetInstance().GetUnuseObject();
+	inline GameObjectPtr GetUnuseObject() {
+		return GameObjectManager::GetInstance().GetUnuseObject();
 	}
 	/*
 	 *	ID指定のオブジェクト取得
 	 *	@param[in]	int ID	オブジェクトの識別ID
 	 */
-	static GameObjectPtr GetUseObject(int ID) {
-		GameObjectManager::GetInstance().GetUseObject(ID);
+	inline GameObjectPtr GetUseObject(int ID) {
+		return GameObjectManager::GetInstance().GetUseObject(ID);
 	}
 	/*
 	 *	オブジェクトのリセット
 	 *  @param[in]	GameObjectPtr resetObject
 	 */
-	static void ResetObject(GameObjectPtr resetObject) {
+	inline void ResetObject(GameObjectPtr resetObject) {
 		GameObjectManager::GetInstance().ResetObject(resetObject);
 	}
 	/*
 	 *	オブジェクトのリセット
 	 *	@param[in]	GameObject* resetObject
 	 */
-	static void ResetObject(GameObject* resetObject) {
+	inline void ResetObject(GameObject* resetObject) {
 		GameObjectManager::GetInstance().ResetObject(resetObject);
 	}
 };
