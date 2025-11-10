@@ -142,6 +142,15 @@ public:
 		return stair->GetStairMove();
 	}
 
+	/*
+	 *	当たり判定フラグをすべて初期化する
+	 */
+	void ResetFlag()const {
+		if (!stair && !exitPoint) return;
+		stair->SetStairMove(false);
+		exitPoint->SetExitTrigger(false);
+	}
+
 public:
 	/*
 	 *	お宝にモデルハンドルをセット

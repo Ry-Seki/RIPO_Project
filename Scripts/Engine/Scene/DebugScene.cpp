@@ -102,8 +102,11 @@ void DebugScene::Update(Engine& engine, float deltaTime) {
 	bool stairFrag = StageObjectManager::GetInstance().GetStairMove();
 	if (stairFrag) {
 		StageManager::GetInstance().NextStage();
-
 		StageManager::GetInstance().GetPrevStageHandle();
+		StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
+		auto stair = StageObjectManager::GetInstance().GetStageObject(2);
+		Vector3 stairSpawnPos = StageManager::GetInstance().GetStairsPos();
+		stair->GetOwner()->position = stairSpawnPos;
 
 	}
 

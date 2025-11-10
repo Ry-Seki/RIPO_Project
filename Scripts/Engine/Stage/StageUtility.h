@@ -14,6 +14,14 @@
  */
 namespace StageUtility {
 	/*
+	 *	ステージの読み込み
+	 *  @param[in]	int modelHandleBase		モデルハンドル
+	 */
+	inline void LoadStage(const int stageHandle) {
+		StageManager::GetInstance().LoadStage(stageHandle);
+	}
+
+	/*
 	 *  現在のステージの取得
 	 *  @return		StageBase*
 	 */
