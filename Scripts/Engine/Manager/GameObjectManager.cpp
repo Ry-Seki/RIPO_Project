@@ -77,6 +77,38 @@ GameObjectPtr GameObjectManager::GetUseObject(int ID) {
 }
 
 /*
+ *	名前指定のオブジェクト取得
+ *	@param[in]	const std::string& searchName	検索する名前
+ *  @author		Seki
+ */
+std::vector<GameObjectPtr> GameObjectManager::GetObjectByName(const std::string& searchName) {
+	std::vector<GameObjectPtr> result;
+	for (auto& object : useObjectList) {
+		if (!object) continue;
+		const std::string& objectTag = object->name;
+		// 先頭でのname検索
+		if (objectTag.rfind(searchName, 0) == 0) {
+			result.push_back(object);
+		}
+	}
+	return result;
+}
+/*
+ *	使用オブジェクトリストの当たり判定の設定
+ *	@param[in]	bool setColliderFlag
+ *	@author		Seki
+ */
+void GameObjectManager::SetObjectColliderFlag(bool setColliderFlag) {
+	for (auto object : useObjectList) {
+		if (!object) continue;
+		// 当たり判定の取得
+		auto collider = object->GetComponent<AABBCollider>();
+		if (!collider) continue;
+		collider->isDeployment = setColliderFlag;
+	}
+}
+
+/*
  *	オブジェクトのリセット
  *  @param[in]	GameObjectPtr resetObject	リセット対象オブジェクト
  */

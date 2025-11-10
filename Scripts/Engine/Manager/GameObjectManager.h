@@ -50,6 +50,18 @@ public:
 	 */
 	GameObjectPtr GetUseObject(int ID);
 	/*
+	 *	名前指定のオブジェクト取得
+	 *	@param[in]	const std::string& searchName	検索する名前
+	 *  @author		Seki
+	 */
+	std::vector<GameObjectPtr> GetObjectByName(const std::string& searchName);
+	/*
+	 *	使用オブジェクトリストの当たり判定の設定
+	 *	@param[in]	bool setColliderFlag
+	 *	@author		Seki
+	 */
+	void SetObjectColliderFlag(bool setColliderFlag);
+	/*
 	 *	オブジェクトのリセット
 	 *  @param[in]	GameObjectPtr resetObject	リセット対象オブジェクト
 	 */

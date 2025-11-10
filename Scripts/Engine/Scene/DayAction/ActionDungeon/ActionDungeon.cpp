@@ -58,10 +58,17 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
     // 出口に触れたとき
     if (exitFrag) {
         // SEの再生
-        PlaySE("DebugSE");
+        PlaySE("GoalSE");
         inputHandle = true;
         isComplete = true;
         Teardown();
+    } else if (stairFrag) {
+        StageManager::GetInstance().NextStage();
+        StageManager::GetInstance().GetPrevStageHandle();
+        StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
+        auto stair = StageObjectManager::GetInstance().GetStageObject(2);
+        Vector3 stairSpawnPos = StageManager::GetInstance().GetStairsPos();
+        stair->GetOwner()->position = stairSpawnPos;
     }
     if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
         // SEの再生
@@ -158,6 +165,8 @@ void ActionDungeon::Render() {
  *  破棄処理
  */
 void ActionDungeon::Teardown() {
+    // 当たり判定の無効化
+    SetUseObjectColliderFlag(false);
     RemoveAllCharacter();
     StageManager::GetInstance().Execute();
     RemoveAllStageObject();
@@ -217,8 +226,9 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
     // モデルハンドルの取得
     int enemyHandle = setResource.enemyResource[0]->GetHandle();
     for (int i = 0; i < enemyCount; i++) {
+        std::vector<GameObjectPtr> enemyList = GetObjectByName("enemy");
         // 敵の取得
-        auto enemyCharacter = GetUseObject(i + 2);
+        auto enemyCharacter = enemyList[i];
         if (!enemyCharacter) continue;
         // 位置の設定
         enemyCharacter->position = enemySpawnPos[i];
@@ -264,8 +274,11 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
     Vector3 exitSpawnPos = GetGoalPos();
     exit->GetOwner()->position = exitSpawnPos;
 
+    // フェードイン
     FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fade);
+    // 当たり判定の有効化
+    SetUseObjectColliderFlag(true);
 }
 /*
  *	ステージデータからロードリストに追加
