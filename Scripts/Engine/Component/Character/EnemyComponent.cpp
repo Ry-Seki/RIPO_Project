@@ -42,7 +42,7 @@ void EnemyComponent::EnemyMove(GameObject* enemy, float deltaTime) {
 	const float enemySin = sin(enemy->rotation.y); 
 
 	GameObjectPtr player = CameraManager::GetInstance().GetTarget();
-	if (Vision(enemy->position, enemy->rotation, player->position, 180, 2000)) {
+	if (Vision(enemy->position, enemy->rotation, player->position, 60, 2000)) {
 		ChaseWayPoint(player->position, true, deltaTime);
 	}
 	else {
