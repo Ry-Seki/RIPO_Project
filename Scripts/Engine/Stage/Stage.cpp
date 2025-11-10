@@ -57,6 +57,7 @@ void Stage::Render() {
 		LightSettings();
 		// モデルの描画
 		MV1DrawModel(modelHandle);
+
 	}
 }
 
@@ -353,7 +354,7 @@ void Stage::LightSettings() {
 	// }
 
 
-	 // マップ全	体のライト設定
+	 // マップ全体のライト設定
 
 	 // アンビエントカラーの設定
 	SetLightAmbColor(GetColorF(0.2f, 0.25f, 0.3f, 1));
