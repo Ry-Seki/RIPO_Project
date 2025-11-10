@@ -9,6 +9,7 @@
 #include "../Manager/CharacterManager.h"
 #include "../Manager/StageManager.h"
 #include "../Manager/StageObjectManager.h"
+#include "../Manager/BulletManager.h"
 #include "../Load/LoadManager.h"
 #include "../Load/Model/LoadModel.h"
 #include "../Component/ModelRenderer.h"
@@ -24,6 +25,7 @@ void DebugScene::Initialize(Engine& engine) {
 	CharacterManager::GetInstance().Initialize(engine);
 	StageManager::GetInstance().Initialize(engine);
 	StageObjectManager::GetInstance().Initialize(engine);
+	BulletManager::GetInstance().Initialize(engine);
 	auto stageModel = load.LoadResource<LoadModel>("Res/Model/Stage/StageModel_1.mv1");
 	auto stageModel2 = load.LoadResource<LoadModel>("Res/Model/Stage/StageModel_1_TwoLayer.mv1");
 	auto playerModel = load.LoadResource<LoadModel>("Res/Model/Player/RIPO_Model.mv1");

@@ -9,9 +9,13 @@
 #include "../Component/AABBCollider.h"
 #include "../Component/ModelRenderer.h"
 
-BulletManager::BulletManager() 
+BulletManager::BulletManager()
 	: engine(nullptr)
 {}
+
+void BulletManager::Initialize(Engine & setEngine) {
+	engine = &setEngine;
+}
 
 /*
  *	弾生成
@@ -29,6 +33,7 @@ void BulletManager::GenerateBullet(
 	const Vector3& AABBMax) {
 	// 未使用状態のオブジェクト取得
 	GameObjectPtr createBullet = GameObjectManager::GetInstance().GetUnuseObject();
+	if (createBullet == nullptr) return;
 	// 弾生成
 	createBullet->AddComponent<BulletComponent>();
 	// コライダー生成

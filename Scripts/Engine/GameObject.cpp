@@ -28,7 +28,10 @@ void GameObject::Start() {
  */
 void GameObject::Update(float deltaTime) {
     // 既存コンポーネントの更新（破棄済みはスキップ）
-    for (auto& component : components) {
+    int componentsSize = components.size();
+    auto componentsList = components;
+    for (int i = 0; i < componentsSize; i++) {
+        auto component = componentsList[i];
         if (component && !component->IsDestroyed()) {
             component->Update(deltaTime);
         }
@@ -42,7 +45,9 @@ void GameObject::Update(float deltaTime) {
  *  衝突判定
  */
 void GameObject::OnCollision(const ComponentPtr& self, const ComponentPtr& other) {
-    for (auto& component : components) {
+    int componentsSize = components.size();
+    for (int i = 0; i < componentsSize; i++) {
+        auto component = components[i];
         if (component) component->OnCollision(self, other);
     }
 }

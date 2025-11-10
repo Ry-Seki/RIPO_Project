@@ -19,7 +19,9 @@ void Scene::Initialize(Engine& engine) {
  *  XVˆ—
  */
 void Scene::Update(Engine& engine, float deltaTime) {
-    for (auto& obj : gameObjects) {
+    int objectsSize = gameObjects.size();
+    for (int i = 0; i < objectsSize; i++) {
+        auto obj = gameObjects[i];
         if (!obj->IsDestroyed()) {
             obj->Update(deltaTime);
         }
