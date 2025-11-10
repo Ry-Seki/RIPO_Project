@@ -32,7 +32,6 @@ protected:
 
 public:
 
-	virtual void SetModelHandle(const int modelHandleBase) = 0;
 
 	// 更新
 	virtual void Update() = 0;
@@ -50,6 +49,14 @@ public:
 	 *  @param Vector3  MoveVec
 	 */
 	virtual void UpdateCollision(Vector3* position, Vector3 MoveVec) = 0;
+
+	/*
+	 *	ステージハンドルセット
+	 */
+	virtual void SetModelHandle(const int modelHandleBase) = 0;
+
+	virtual int GetStageModelHandle()const { return modelHandle; }
+
 };
 
 #endif // !_STAGEBASE_H_

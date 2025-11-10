@@ -23,9 +23,11 @@ private:
 	std::vector<BGImage> backgroundList;	// 背景画像リスト
 	int currentIndex = 0;					// 現在のインデクス
 	float elapsedTime = 0.0f;				// 経過時間
-	float switchInterval = 3.0f;			// 画像切り替え時間(秒)
-	float fadeTime = 1.0f;					// フェード時間
+	float fadeTime = 1.0f;					// 2秒かけてフェード
+	float switchInterval = 0.2f;			// 4秒ごとに切り替え
 	bool fadingOut = false;					// フェードフラグ
+	int frameCounter = 0;					// フレームカウンタ
+	int switchFrame = 3;					// ← 何フレームごとに切り替えるか（例：3）
 
 public:
 	~LoadAnimation_ChangeBackground() override = default;

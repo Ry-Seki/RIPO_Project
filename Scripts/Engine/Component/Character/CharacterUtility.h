@@ -12,9 +12,9 @@
 
 /*
  *	キャラクター関連実行処理
+ *  @note	名前空間での省略可能	using namespace CharacterUtility
  */
-class CharacterUtility {
-public:
+namespace CharacterUtility {
 	/*
 	 *	プレイヤー生成
 	 *	@param	name		プレイヤーの名前
@@ -23,7 +23,7 @@ public:
 	 *  @param	AABBMin		AABBの各軸に置ける最小値
 	 *  @param	AABBMax		AABBの各軸に置ける最大値
 	 */
-	static void GeneratePlayer(
+	inline void GeneratePlayer(
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
@@ -31,7 +31,6 @@ public:
 		const Vector3& AABBMax) {
 		CharacterManager::GetInstance().GeneratePlayer(name, position, rotation, AABBMin, AABBMax);
 	}
-
 	/*
 	 *	エネミー生成
 	 *	@param	name		エネミーの名前
@@ -41,7 +40,7 @@ public:
 	 *  @param	AABBMax		AABBの各軸に置ける最大値
 	 *  @author	kuu
 	 */
-	static void GenerateEnemy(
+	inline void GenerateEnemy(
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
@@ -53,31 +52,31 @@ public:
 	 *	ID指定のキャラクター削除
 	 *  @param[in]	int characterID
 	 */
-	static void RemoveCharacter(int characterID) {
+	inline void RemoveCharacter(int characterID) {
 		CharacterManager::GetInstance().RemoveCharacter(characterID);
 	}
 	/*
 	 *	ポインタ指定のキャラクター削除
 	 *  @param[in]	const GameObjectPtr& destroyCharacter
 	 */
-	static void RemoveCharacter(const GameObjectPtr& destroyCharacter) {
+	inline void RemoveCharacter(const GameObjectPtr& destroyCharacter) {
 		if (!destroyCharacter) return;
 		CharacterManager::GetInstance().RemoveCharacter(destroyCharacter->ID);
 	}
 	/*
 	 *	全てのキャラクター削除
 	 */
-	static void RemoveAllCharacter() {
+	inline void RemoveAllCharacter() {
 		CharacterManager::GetInstance().RemoveAllCharacter();
 	}
 
-public:
+
 	/*
 	 *	キャラクターのオーナーオブジェクトの取得
 	 *  @param[in]	const CharacterBasePtr& setCharacter
 	 *  @return		GameObject*
 	 */
-	static GameObject* GetOwnerObject(const CharacterBasePtr& setCharacter) {
+	inline GameObject* GetOwnerObject(const CharacterBasePtr& setCharacter) {
 		return CharacterManager::GetInstance().GetCharacterOwner(setCharacter);
 	}
 	/*
@@ -85,7 +84,7 @@ public:
 	 *	@param[in]	GameObject* gameObject		セットするモデル
 	 *  @param[in]	const int modelHandle		モデルハンドル
 	 */
-	static void SetCharacterModel(GameObject* gameObject, const int modelHandle) {
+	inline void SetCharacterModel(GameObject* gameObject, const int modelHandle) {
 		CharacterManager::GetInstance().SetModelHandle(gameObject, modelHandle);
 	}
 };

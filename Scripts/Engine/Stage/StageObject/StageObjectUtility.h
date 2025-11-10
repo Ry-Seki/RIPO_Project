@@ -10,9 +10,9 @@
 
 /*
  *	ステージオブジェクト関連実行処理
+ *  @note	名前空間での省略可能	using namespace StageObjectUtility
  */
-class StageObjectUtility {
-public:
+namespace StageObjectUtility {
 	/*
 	 *	出口生成
 	 *  @param	name		出口の名前
@@ -21,7 +21,7 @@ public:
 	 *  @param	AABBMin		AABBの各軸における最小値
 	 *  @param	AABBMax		AABBの各軸における最大値
 	 */
-	static void GenerateExit(
+	inline void GenerateExit(
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
@@ -37,7 +37,7 @@ public:
 	 *  @param	AABBMin		AABBの各軸における最小値
 	 *  @param	AABBMax		AABBの各軸における最大値
 	 */
-	static void GenerateTreasure(
+	inline void GenerateTreasure(
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
@@ -53,7 +53,7 @@ public:
 	 *  @param	AABBMin		AABBの各軸における最小値
 	 *  @param	AABBMax		AABBの各軸における最大値
 	 */
-	static void GenerateStair(
+	inline void GenerateStair(
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
@@ -65,14 +65,14 @@ public:
 	 *	ID指定のステージオブジェクト削除
 	 *  @param[in]	int stageObjectID		削除するオブジェクトのID
 	 */
-	static void RemoveStageObject(int stageObjectID) {
+	inline void RemoveStageObject(int stageObjectID) {
 		StageObjectManager::GetInstance().RemoveStageObject(stageObjectID);
 	}
 	/*
 	 *	ポインタ指定のステージオブジェクト削除
 	 *	@param[in]	const StageObjectBasePtr& destroyObject		削除するオブジェクトのID
 	 */
-	static void RemoveStageObject(const StageObjectBasePtr& destroyObject) {
+	inline void RemoveStageObject(const StageObjectBasePtr& destroyObject) {
 		if (!destroyObject) return;
 		int stageObjectID = destroyObject->GetID();
 		StageObjectManager::GetInstance().RemoveStageObject(stageObjectID);
@@ -80,30 +80,29 @@ public:
 	/*
 	 *	全てのステージオブジェクト削除
 	 */
-	static void RemoveAllStageObject() {
+	inline void RemoveAllStageObject() {
 		StageObjectManager::GetInstance().RemoveAllStageObject();
 	}
 
-public:
 	/*
 	 *	ID指定のステージオブジェクト取得
 	 *  @return		StageObjectBasePtr
 	 */
-	static StageObjectBasePtr GetStageObject(int stageObjectID) {
+	inline StageObjectBasePtr GetStageObject(int stageObjectID) {
 		return StageObjectManager::GetInstance().GetStageObject(stageObjectID);
 	}
 	/*
 	 *	脱出フラグの取得
 	 *  @return		bool
 	 */
-	static bool GetExitFlag() {
+	inline bool GetExitFlag() {
 		return StageObjectManager::GetInstance().GetExitFlag();
 	}
 	/*
 	 *	階段オブジェクトに触れていたかどうか
 	 *  @return		bool
 	 */
-	static bool GetStairMove() {
+	inline bool GetStairMove() {
 		return StageObjectManager::GetInstance().GetStairMove();
 	}
 	/*
@@ -111,7 +110,7 @@ public:
 	 *	@param[in]	GameObject* gameObject		セットするモデル
 	 *  @param[in]	const int modelHandle		モデルハンドル
 	 */
-	static void SetModelHandle(GameObject* gameObject, const int modelHandle) {
+	inline void SetModelHandle(GameObject* gameObject, const int modelHandle) {
 		StageObjectManager::GetInstance().SetModelHandle(gameObject, modelHandle);
 	}
 	/*
@@ -119,7 +118,7 @@ public:
 	 *  @param[in]	const StageObjectBasePtr& setStageObject
 	 *  @return		GameObject*
 	 */
-	GameObject* GetStageObjectOwner(const StageObjectBasePtr& setStageObject) {
+	inline GameObject* GetStageObjectOwner(const StageObjectBasePtr& setStageObject) {
 		return StageObjectManager::GetInstance().GetStageObjectOwner(setStageObject);
 	}
 };

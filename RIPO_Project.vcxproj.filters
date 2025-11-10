@@ -237,9 +237,6 @@
     <ClCompile Include="Scripts\Engine\Component\Character\BulletComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\WeaponBase.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Load\Audio\LoadAudio.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -247,9 +244,6 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Vision.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\RevolverArm.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -503,9 +497,6 @@
     <ClInclude Include="Scripts\Engine\Component\Character\BulletComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\RevolverArm.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Component\Character\WeaponBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -520,6 +511,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Vision.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Stage\StageState.h">
+      <Filter>ヘッダー ファイル\Engine\Stage</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

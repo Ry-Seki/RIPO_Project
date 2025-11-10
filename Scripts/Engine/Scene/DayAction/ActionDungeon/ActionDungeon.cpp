@@ -26,6 +26,9 @@
 // 静的メンバ変数の初期化
 bool ActionDungeon::isFirst = true;
 
+// 名前空間の宣言
+using namespace AudioUtility;
+
 /*
  *	初期化処理
  */
@@ -42,13 +45,24 @@ void ActionDungeon::Setup(Engine& engine) {
  *	更新処理
  */
 void ActionDungeon::Update(Engine& engine, float deltaTime) {
-    if (!isComplete && !inputHandle && CheckHitKey(KEY_INPUT_2)) {
+    if (isComplete) return;
+    bool exitFrag = StageObjectUtility::GetExitFlag();
+    bool stairFrag = StageObjectUtility::GetStairMove();
+    if (exitFrag) {
         // SEの再生
-        AudioUtility::PlaySE("DebugSE");
+        PlaySE("DebugSE");
         inputHandle = true;
         isComplete = true;
         Teardown();
     }
+    if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
+        // SEの再生
+        PlaySE("DebugSE");
+        inputHandle = true;
+        isComplete = true;
+        Teardown();
+    }
+
 
     if (CheckHitKey(KEY_INPUT_0) == 0) inputHandle = false;
 }
@@ -102,6 +116,36 @@ void ActionDungeon::Render() {
 
     }
 #endif
+
+#if _DEBUG
+    // オブジェクトのTransform表示
+    {
+        // プレイヤーの位置表示
+        GameObjectPtr player = CameraManager::GetInstance().GetTarget();
+        DrawFormatString(0, 0, GetColor(255, 255, 255), "PlayerPosition(%f,%f,%f)",
+                         player->position.x, player->position.y, player->position.z);
+        // カメラの角度表示
+        GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
+        DrawFormatString(0, 20, GetColor(255, 255, 255), "CameraRotation(%f,%f,%f)",
+                         camera->rotation.x, camera->rotation.y, camera->rotation.z);
+        bool stairFrag = StageObjectManager::GetInstance().GetStairMove();
+        if (stairFrag) {
+            DrawFormatString(0, 40, GetColor(255, 255, 255), "StairFrag_true");
+        }
+        else {
+            DrawFormatString(0, 40, GetColor(255, 255, 255), "StairFrag_false");
+        }
+
+        bool exitFrag = StageObjectManager::GetInstance().GetExitFlag();
+        if (exitFrag) {
+            DrawFormatString(0, 60, GetColor(255, 255, 255), "ExitFrag_true");
+        }
+        else {
+            DrawFormatString(0, 60, GetColor(255, 255, 255), "ExitFrag_false");
+        }
+
+    }
+#endif
 }
 /*
  *  破棄処理
@@ -134,6 +178,8 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
     CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
     StageObjectManager::GetInstance().GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
     StageObjectManager::GetInstance().GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
+    StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
+    StageObjectManager::GetInstance().GenerateExit("exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
 
     LoadResourcesFromStageData(engine, stageData, dungeonResource);
 }
@@ -165,7 +211,7 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
     int enemyHandle = setResource.enemyResource[0]->GetHandle();
     for (int i = 0; i < enemyCount; i++) {
         // 敵の取得
-        auto enemyCharacter = GameObjectManager::GetInstance().GetUseObject(i + 1);
+        auto enemyCharacter = GameObjectManager::GetInstance().GetUseObject(i + 2);
         if (!enemyCharacter) continue;
         // 位置の設定
         enemyCharacter->position = enemySpawnPos[i];
@@ -199,6 +245,18 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
         // モデルの設定
         StageObjectManager::GetInstance().SetModelHandle(treasure, treasureHandle);
     }
+    // 階段の設定
+    int stairCount = treasureCount;
+    auto stair = StageObjectManager::GetInstance().GetStageObject(stairCount);
+    Vector3 stairSpawnPos = StageManager::GetInstance().GetStairsPos();
+    stair->GetOwner()->position = stairSpawnPos;
+
+    // 出口の設定
+    int exitCount = stairCount + 1;
+    auto exit = StageObjectManager::GetInstance().GetStageObject(exitCount);
+    Vector3 exitSpawnPos = StageManager::GetInstance().GetGoalPos();
+    exit->GetOwner()->position = exitSpawnPos;
+
     FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fade);
 }

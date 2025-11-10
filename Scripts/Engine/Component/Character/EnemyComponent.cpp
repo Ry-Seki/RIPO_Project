@@ -10,7 +10,7 @@
  *	コンストラクタ
  */
 EnemyComponent::EnemyComponent()
-	: moveSpeed(500.0f)
+	: moveSpeed(700.0f)
 	, wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(200.0f)
@@ -72,6 +72,10 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 	Vector3 normDirection = Normalized(direction);
 	// 目標の方向に進む
 	enemy->position += normDirection * moveSpeed * deltaTime;
+	// 目標の方向を向く
+	//enemy->rotation.x = direction.x;
+	//enemy->rotation.y = tan(wayPoint.y);
+	//enemy->rotation.z -= direction.z;
 	// 目標地点についたらターゲットを変える
 	if (direction.Magnitude() < differenceTarget) {
 		chaseTargetChangeFrag = targetChange;
