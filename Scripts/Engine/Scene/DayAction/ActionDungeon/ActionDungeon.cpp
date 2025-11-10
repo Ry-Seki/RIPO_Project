@@ -26,6 +26,9 @@
 // Ã“Iƒƒ“ƒo•Ï”‚Ì‰Šú‰»
 bool ActionDungeon::isFirst = true;
 
+// –¼‘O‹óŠÔ‚ÌéŒ¾
+using namespace AudioUtility;
+
 /*
  *	‰Šú‰»ˆ—
  */
@@ -47,14 +50,14 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
     bool stairFrag = StageObjectUtility::GetStairMove();
     if (exitFrag) {
         // SE‚ÌÄ¶
-        AudioUtility::PlaySE("DebugSE");
+        PlaySE("DebugSE");
         inputHandle = true;
         isComplete = true;
         Teardown();
     }
     if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
         // SE‚ÌÄ¶
-        AudioUtility::PlaySE("DebugSE");
+        PlaySE("DebugSE");
         inputHandle = true;
         isComplete = true;
         Teardown();
