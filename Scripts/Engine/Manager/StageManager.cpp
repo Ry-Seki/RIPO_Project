@@ -31,7 +31,7 @@ void StageManager::LoadStage(const int modelHandleBase) {
 	// モデルハンドルを複製
 	int duplicatedModel = MV1DuplicateModel(modelHandleBase);
 	// ステージのモデルハンドルを追加
-	stageState.AddStageModelHandle(modelHandleBase);
+	stageState.AddStageModelHandle(duplicatedModel);
 
 	// もし最初のステージ読み込みなら、現在ステージとして設定
 	if (stageState.GetStageCount() == 1) {

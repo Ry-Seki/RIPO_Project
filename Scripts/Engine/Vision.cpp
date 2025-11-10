@@ -22,7 +22,9 @@ bool Vision(const Vector3& beholderPos, const Vector3& beholderDir, const Vector
 	// –Ú•W‚Ì•ûŒü
 	Vector3 toTargetDir = Direction(beholderPos, targetPos);
 	// Ž‹–ìŠp‚ÌŒvŽZ
-	float angle = acosf(Dot(direction, toTargetDir) * Rad2Deg);
+	float dot = Clamp(Dot(direction, toTargetDir), -1.0f, 1.0f);
+	float angle = acosf(dot);
+	viewAngle = viewAngle * Deg2Rad;
 	if (angle > viewAngle) {
 		return false;
 	}
