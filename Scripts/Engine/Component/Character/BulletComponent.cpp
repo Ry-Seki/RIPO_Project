@@ -20,9 +20,10 @@ void BulletComponent::Start() {
 }
 
 void BulletComponent::Update(float deltaTime) {
+	if (!bullet) return;
 	// 前に進む
 	Vector3 forward = ForwardDir(bullet->rotation);
-	bullet->position = forward * SHOT_SPEED * deltaTime;
+	bullet->position += forward * SHOT_SPEED * deltaTime;
 	
 	// 破棄カウントダウン
 	destroyTimeCount -= deltaTime;
@@ -32,8 +33,10 @@ void BulletComponent::Update(float deltaTime) {
 }
 
 void BulletComponent::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
-	// プレイヤー以外の衝突で破棄
-	GameObjectPtr player = CameraManager::GetInstance().GetTarget();
-	if (other->GetOwner() == player.get())return;
+	// プレイヤーと弾以外の衝突で破棄
+	GameObject* playerOwner = CameraManager::GetInstance().GetTarget().get();
+	GameObject* otherOwner = other->GetOwner();
+	auto isBullet = otherOwner->GetComponent<BulletComponent>();
+	if (otherOwner == playerOwner || isBullet)return;
 	GameObjectUtility::ResetObject(bullet);
 }

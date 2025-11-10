@@ -12,8 +12,14 @@
  *	リボルバーのウデクラス
  */
 class RevolverArm : public WeaponBase {
+private:
+	bool isShot;						// 射撃可能か否か
+	float shotCoolTime;					// 射撃のクールタイム
+
+	float const SHOT_COOL_TIME_MAX;		// 射撃のクールタイムの最大
+
 public:
-	RevolverArm() = default;
+	RevolverArm();
 	~RevolverArm() = default;
 
 public:
