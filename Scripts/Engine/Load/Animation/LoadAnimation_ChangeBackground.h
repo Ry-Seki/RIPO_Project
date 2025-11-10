@@ -26,6 +26,8 @@ private:
 	float fadeTime = 1.0f;					// 2秒かけてフェード
 	float switchInterval = 0.2f;			// 4秒ごとに切り替え
 	bool fadingOut = false;					// フェードフラグ
+	int frameCounter = 0;					// フレームカウンタ
+	int switchFrame = 3;					// ← 何フレームごとに切り替えるか（例：3）
 
 public:
 	~LoadAnimation_ChangeBackground() override = default;
