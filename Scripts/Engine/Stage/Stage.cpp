@@ -36,7 +36,7 @@ Stage::~Stage() {
  *  @pram const int modelHandle
  */
 void Stage::SetModelHandle(const int modelHandleBase) {
-	modelHandle = MV1DuplicateModel(modelHandleBase);
+	modelHandle = modelHandleBase;
 
 }
 
@@ -353,7 +353,7 @@ void Stage::LightSettings() {
 	// }
 
 
-	 // マップ全体のライト設定
+	 // マップ全	体のライト設定
 
 	 // アンビエントカラーの設定
 	SetLightAmbColor(GetColorF(0.2f, 0.25f, 0.3f, 1));
@@ -362,15 +362,4 @@ void Stage::LightSettings() {
 	SetLightDifColor(GetColorF(1.5f, 1.5f, 1.3f, 1.0f));
 	SetLightSpcColor(GetColorF(0.2f, 0.2f, 0.2f, 1));
 
-}
-
-
-/*
- *	モデルのフレームの取得
- */
-int Stage::GetFrameHandleByName(int modelHandle, const std::string& frameName) const {
-	if (modelHandle == -1) return -1;
-	// StageHandleの特定のFrameを取得
-	int frameHandle = MV1SearchFrame(modelHandle, frameName.c_str());
-	return frameHandle;
 }

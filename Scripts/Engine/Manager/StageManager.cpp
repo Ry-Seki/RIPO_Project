@@ -20,31 +20,54 @@ StageManager::StageManager()
  */
 void StageManager::Initialize(Engine& setEngine) {
 	this->engine = &setEngine;
+	// ステージの実態を生成
+	loadedStage = std::make_unique<Stage>();
 }
 
 /*
  *	ステージの読み込み
  */
 void StageManager::LoadStage(const int modelHandleBase) {
+	// モデルハンドルを複製
+	int duplicatedModel = MV1DuplicateModel(modelHandleBase);
+	// ステージのモデルハンドルを追加
+	stageState.AddStageModelHandle(modelHandleBase);
 
-	loadedStage = std::make_unique<Stage>();
-	loadedStage->SetModelHandle(modelHandleBase);
+	// もし最初のステージ読み込みなら、現在ステージとして設定
+	if (stageState.GetStageCount() == 1) {
+		int currentHandle = stageState.GetCurrentStageHandle();
+		if (currentHandle != -1 && loadedStage) {
+			// モデルを実体ステージに適用
+			loadedStage->SetModelHandle(currentHandle);
+		}
+	}
+}
+
+/*
+ *	現在のインデックスのステージに切り替える
+ */
+void StageManager::ChangeStage() {
+	int currentHandle = stageState.GetCurrentStageHandle();
+	if (currentHandle == -1)return;
+
+
+	loadedStage->SetModelHandle(currentHandle);
+}
+
+/*
+ * @brief 次のステージへ進む
+ */
+void StageManager::NextStage() {
+	stageState.NextStage();
 	ChangeStage();
 }
 
 /*
- *	ステージの切り替え
+ * @brief 前のステージに戻る
  */
-void StageManager::ChangeStage() {
-	if (!loadedStage)return;
-	stageState.SetCurrentStage(std::move(loadedStage));
-}
-
-/*
- *	前のステージに戻す
- */
-void StageManager::RestorePrevStage() {
-	stageState.RestorePreviousStage();
+void StageManager::PrevStage() {
+	stageState.PrevStage();
+	ChangeStage();
 }
 
 /*
@@ -72,48 +95,17 @@ void StageManager::Render() {
  *  終了
  */
 void StageManager::Execute() {
-	auto* currentStage = stageState.GetCurrentStage();
-	auto* prevStage = stageState.GetPrevStage();
-
-	if (currentStage) currentStage->Execute();
-	if (prevStage) prevStage->Execute();
+	stageState.ResetStageModelHandle();
 }
-
-
-/*
- *	ステージのFrameを取得
- */
-int StageManager::GetStageFrame(const std::string& frameName) const {
-	auto* currentStage = stageState.GetCurrentStage();
-	if (!currentStage) return -1;
-
-	// StageBase* から Stage* にキャスト
-	Stage* stage = dynamic_cast<Stage*>(currentStage);
-	if (!stage) return -1;
-	if (stage->GetModelHandle() < 0) return -1;
-
-	// ステージのモデルハンドルを取得
-	int modelHandle = stage->GetModelHandle();
-	if (modelHandle == -1)return -1;
-
-	// ステージモデルのフレームを返す
-	return stage->GetFrameHandleByName(modelHandle, frameName);
-}
-
-
 
 /*
  *	スタート位置の取得
  */
 Vector3 StageManager::GetStartPos() const {
-	auto* currentStage = stageState.GetCurrentStage();
-	if (!currentStage) return Vector3();
-
-	Stage* stage = dynamic_cast<Stage*>(currentStage);
-	if (!stage) return Vector3();
+	if (!loadedStage)return Vector3();
 
 	// ステージのモデルハンドルの取得
-	int modelHandle = stage->GetModelHandle();
+	int modelHandle = loadedStage->GetStageModelHandle();
 	if (modelHandle == -1) return Vector3();
 
 	// 開始位置の名前の取得
@@ -147,15 +139,10 @@ Vector3 StageManager::GetStartPos() const {
  *	ゴール位置の取得
  */
 Vector3 StageManager::GetGoalPos() const {
-	// 現在のステージを取得
-	auto* currentStage = stageState.GetCurrentStage();
-	if (!currentStage) return Vector3();
-
-	Stage* stage = dynamic_cast<Stage*>(currentStage);
-	if (!stage)return Vector3();
+	if (!loadedStage)return Vector3();
 
 	// ステージのモデルハンドルの取得
-	int modelHandle = stage->GetModelHandle();
+	int modelHandle = loadedStage->GetStageModelHandle();
 	if (modelHandle == -1) return Vector3();
 
 	// 終了位置の名前の取得
@@ -192,15 +179,11 @@ Vector3 StageManager::GetGoalPos() const {
  */
 std::vector<Vector3> StageManager::GetEnemySpwanPos() const {
 	std::vector<Vector3> result;
-	auto* currentStage = stageState.GetCurrentStage();
-	if (!currentStage) return result;
 
-
-	Stage* stage = dynamic_cast<Stage*>(currentStage);
-	if (!stage)return result;
+	if (!loadedStage)return result;
 
 	// ステージのモデルハンドルの取得
-	int modelHandle = stage->GetModelHandle();
+	int modelHandle = loadedStage->GetStageModelHandle();
 	if (modelHandle == -1) return result;
 
 	// 敵の生成位置の取得
@@ -233,16 +216,11 @@ std::vector<Vector3> StageManager::GetEnemySpwanPos() const {
 std::vector<Vector3> StageManager::GetTreasureSpwanPos()const {
 	// 空の配列を作成
 	std::vector<Vector3> result;
-	// 現在のステージの取得
-	auto* currentStage = stageState.GetCurrentStage();
-	// 現在のステージが取得できなければ、空の配列を返す
-	if (!currentStage) return result;
 
-	Stage* stage = dynamic_cast<Stage*>(currentStage);
-	if (!stage)return result;
+	if (!loadedStage)return result;
 
 	// ステージのモデルハンドルの取得
-	int modelHandle = stage->GetModelHandle();
+	int modelHandle = loadedStage->GetStageModelHandle();
 	// モデルハンドルが空だったら、空の配列を返す
 	if (modelHandle == -1) return result;
 
@@ -270,15 +248,11 @@ std::vector<Vector3> StageManager::GetTreasureSpwanPos()const {
  */
 std::vector<Vector3> StageManager::GetPointLightPos()const {
 	std::vector<Vector3> result;
-	auto* currentStage = stageState.GetCurrentStage();
-	if (!currentStage) return result;
 
-
-	Stage* stage = dynamic_cast<Stage*>(currentStage);
-	if (!stage)return result;
+	if (!loadedStage)return result;
 
 	// ステージのモデルハンドルの取得
-	int modelHandle = stage->GetModelHandle();
+	int modelHandle = loadedStage->GetStageModelHandle();
 	if (modelHandle == -1) return result;
 
 	// jsonから座標を取得
@@ -302,15 +276,11 @@ std::vector<Vector3> StageManager::GetPointLightPos()const {
  *	階層移動用階段位置の取得
  */
 Vector3 StageManager::GetStairsPos() const {
-	auto* currentStage = stageState.GetCurrentStage();
-	if (!currentStage)return Vector3();
-
-	Stage* stage = dynamic_cast<Stage*>(currentStage);
-	if (!stage)return Vector3();
+	if (!loadedStage)return Vector3();
 
 	// ステージのモデルハンドルの取得
-	int modelHandle = stage->GetModelHandle();
-	if (modelHandle == -1)return Vector3();
+	int modelHandle = loadedStage->GetStageModelHandle();
+	if (modelHandle == -1) return Vector3();
 
 	// 階段位置の名前の取得
 	// jsonファイルの文字列がなかった場合のnullCheck

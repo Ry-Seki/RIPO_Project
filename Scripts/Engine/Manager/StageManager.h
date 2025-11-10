@@ -37,12 +37,16 @@ private:
 	~StageManager() = default;			// デストラクタ
 
 private:
+
+	/*
+	 *	簡易的に現在のステージにアクセス
+	 */
 	template<typename Func>
 	void WithCurrentStage(Func&& func) {
-		if (auto* stage = stageState.GetCurrentStage()) {
-			func(*stage);
+		if (loadedStage) {
+			func(*loadedStage);
 		}
-	};
+	}
 
 public:
 
@@ -58,6 +62,17 @@ public:
 	void LoadStage(const int modelHandleBase);
 
 	void ChangeStage();
+
+
+	/*
+	 * @brief 次のステージへ進む
+	 */
+	void NextStage();
+
+	/*
+	 * @brief 前のステージに戻る
+	 */
+	void PrevStage();
 
 	/*
 	 *  更新
@@ -81,26 +96,23 @@ public:
 	 */
 	void StageCollider(Vector3* position, Vector3 MoveVec);
 
-	/*
-	 *	前のステージに戻す
-	 */
-	void RestorePrevStage();
 
 public:
-	/*
-	 *  現在のステージの取得
-	 */
-	StageBase* GetCurrentStage() const { return stageState.GetCurrentStage(); }
 
 	/*
-	 *	ひとつ前のステージの取得
+	 *	現在ステージハンドルの取得
 	 */
-	StageBase* GetPrevStage() const { return stageState.GetPrevStage(); }
+	int GetCurrentStageHandle() const { return stageState.GetCurrentStageHandle(); }
 
 	/*
-	 *	ステージのFrameを取得
+	 *	ひとつ前のステージハンドルの取得
 	 */
-	int GetStageFrame(const std::string& frameName) const;
+	int GetPrevStageHandle() const { return stageState.GetPrevStageHandle(); }
+
+	/*
+	 *  現在のステージの実態の取得
+	 */
+	StageBase* GetCurrentStage() const { return loadedStage.get(); }
 
 	/*
 	 *	スタート位置の取得
