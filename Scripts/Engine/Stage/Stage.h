@@ -120,11 +120,6 @@ public:
 	int GetModelHandle() const { return modelHandle; }
 
 	/*
-	 *	モデルフレームの取得
-	 */
-	int GetFrameHandleByName(int modelHandle, const std::string& frameName)const;
-
-	/*
 	 *	ライトの変更
 	 */
 	void SetPointLightPositions(const std::vector<Vector3>& positions) {
