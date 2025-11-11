@@ -64,11 +64,11 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
         Teardown();
     } else if (stairFrag) {
         StageManager::GetInstance().NextStage();
-        StageManager::GetInstance().GetPrevStageHandle();
-        StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
-        auto stair = StageObjectManager::GetInstance().GetStageObject(2);
-        Vector3 stairSpawnPos = StageManager::GetInstance().GetStairsPos();
-        stair->GetOwner()->position = stairSpawnPos;
+        //StageManager::GetInstance().GetPrevStageHandle();
+        //StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
+        //auto stair = StageObjectManager::GetInstance().GetStageObject(2);
+        //Vector3 stairSpawnPos = StageManager::GetInstance().GetStairsPos();
+        //stair->GetOwner()->position = stairSpawnPos;
     }
     if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
         // SEの再生
@@ -203,9 +203,13 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResource) {
     // ステージの設定
     // モデルハンドルの取得
-    int stageHandle = setResource.stageResource[0]->GetHandle();
+    int stageHandleCount = setResource.stageResource.size();
+    std::vector<int> stageHandleList(stageHandleCount);
+    for (int i = 0; i < stageHandleCount; i++) {
+        stageHandleList[i] = setResource.stageResource[i]->GetHandle();
+    }
     // モデルの設定
-    LoadStage(stageHandle);
+    // LoadStage(stageHandle);
     // ステージボーンデータの設定
     SetStageJSONData(setResource.stageBoneResource[0]->GetData());
 
