@@ -57,6 +57,11 @@ void Stage::Render() {
 		LightSettings();
 		// モデルの描画
 		MV1DrawModel(modelHandle);
+#if _DEBUG
+		// ステージの当たり判定の描画
+		StageColliderRenderer();
+#endif // _DEBUG
+
 
 	}
 }
@@ -155,7 +160,7 @@ void Stage::ClassifyPolygons(
 	for (int i = 0; i < hitDim.HitNum; i++) {
 		const auto& poly = hitDim.Dim[i];
 		// 壁か床かの判断を行う
-		bool isWall = (poly.Normal.y < 0.7f && poly.Normal.y > -0.7f);
+		bool isWall = (poly.Normal.y < 0.9f && poly.Normal.y > -0.9f);
 
 		if (isWall) {
 			// 壁の高さチェック（プレイヤーより上）
@@ -363,4 +368,50 @@ void Stage::LightSettings() {
 	SetLightDifColor(GetColorF(1.5f, 1.5f, 1.3f, 1.0f));
 	SetLightSpcColor(GetColorF(0.2f, 0.2f, 0.2f, 1));
 
+}
+
+
+/*
+ *	ステージの当たり判定の描画
+ */
+void Stage::StageColliderRenderer() {
+	// モデルハンドルが無効な場合は処理を中止
+	if (modelHandle < 0) return;
+
+	// 当たり判定の中心位置
+	VECTOR checkCenter = VGet(0.0f, 0.0f, 0.0f);
+
+	// 判定に使用する球の半径
+	float  radius = 20000.0f;
+
+	// モデル全体の当たり判定ポリゴン情報を格納する構造体を動的確保
+	auto hitDim = std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
+
+	// 球とモデルの衝突判定を行い、結果を取得
+	*hitDim = MV1CollCheck_Sphere(modelHandle, -1, checkCenter, radius);
+
+	// 壁と床を区別するための色情報を設定
+	unsigned int wallColor = GetColor(255, 100, 100);
+	unsigned int floorColor = GetColor(100, 255, 100);
+	unsigned int lineColor = GetColor(255, 255, 255);
+
+	// 当たった全てのポリゴンに対して描画処理を実行
+	for (int i = 0; i < hitDim->HitNum; i++) {
+		const auto& poly = hitDim->Dim[i];
+
+		// 壁／床を判定
+		bool isWall = (poly.Normal.y < 0.9f && poly.Normal.y > -0.9f);
+		unsigned int drawColor = isWall ? wallColor : floorColor;
+
+		// ポリゴンを半透明で描画
+		DrawTriangle3D(poly.Position[0], poly.Position[1], poly.Position[2], drawColor, TRUE);
+
+		// ポリゴンを白線で描画
+		DrawLine3D(poly.Position[0], poly.Position[1], lineColor);
+		DrawLine3D(poly.Position[1], poly.Position[2], lineColor);
+		DrawLine3D(poly.Position[2], poly.Position[0], lineColor);
+	}
+
+	// 使用した衝突判定データを解放
+	MV1CollResultPolyDimTerminate(*hitDim);
 }

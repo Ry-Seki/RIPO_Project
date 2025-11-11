@@ -39,6 +39,9 @@ public:
 	// 描画
 	virtual void Render() = 0;
 
+	// ステージの当たり判定の描画
+	virtual void StageColliderRenderer() = 0;
+
 	// 終了処理
 	virtual void Execute() = 0;
 
@@ -55,6 +58,10 @@ public:
 	 */
 	virtual void SetModelHandle(const int modelHandleBase) = 0;
 
+	/*
+	 *	ステージモデルの取得
+	 *  @return modelHandle
+	 */
 	virtual int GetStageModelHandle()const { return modelHandle; }
 
 };
