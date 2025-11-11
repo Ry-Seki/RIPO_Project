@@ -34,7 +34,8 @@ public:
         float progress = (direction == FadeDirection::In) ? (1.0f - t) : t;
         int screenW = GameConst::WINDOW_WIDTH;
         int screenH = GameConst::WINDOW_HEIGHT;
-        int cx = screenW / 2, cy = screenH / 2;
+        int cx = screenW / 2;
+        int cy = screenH / 2;
 
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(progress * 255));
 
@@ -43,19 +44,31 @@ public:
 
         for (int i = 0; i < circleCount; ++i) {
             float rate = (float)i / circleCount;
+
+            // rate を少しずらして中心に円が残らないように
+            rate = 0.01f + 0.99f * rate;
+
+            // 進行に応じた半径（拡散／収束）
             float radius = maxRadius * std::pow(rate, 0.5f) * progress;
+
+            // 回転角度（中心付近は早く、外側は遅く）
             float angle = rate * 20.0f * 3.1415926f + progress * 8.0f * (1.0f - rate);
+
             int x = static_cast<int>(cx + std::cos(angle) * radius);
             int y = static_cast<int>(cy + std::sin(angle) * radius);
+
+            // 円サイズは外側ほど小さく
             int circleRadius = static_cast<int>((30 * (1.0f - rate) + 5));
+
             DrawCircle(x, y, circleRadius, color, TRUE);
         }
 
-        // 全画面覆いで補強
+        // 全画面覆いでアルファ補強
         SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(progress * 255));
         DrawBox(0, 0, screenW, screenH, color, TRUE);
 
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
     }
 };
 
