@@ -6,6 +6,7 @@
 #include "HandArm.h"
 #include "../../RayCast.h"
 #include "../../Manager/CameraManager.h"
+#include "../../VecMath.h"
 
 HandArm::HandArm()
 	: liftObject(nullptr)
@@ -13,10 +14,15 @@ HandArm::HandArm()
 	, LEFTABLE_DISTANCE(100)
 {}
 
+void HandArm::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
+	liftObject = other->GetOwner();
+}
+
 void HandArm::ArmUpdate(float deltaTime, GameObject* player, Engine* engine) {
 	// 右クリックでお宝持ち上げ
 	if (GetMouseInput() & MOUSE_INPUT_RIGHT)
 		LiftTreasure(player, engine);
+	CarryTreasur(player);
 }
 
 /*
@@ -37,8 +43,11 @@ void HandArm::LiftTreasure(GameObject* player, Engine* engine) {
 /*
  *	お宝運び処理
  */
-void HandArm::CarryTreasur() {
+void HandArm::CarryTreasur(GameObject* player) {
 	if (liftObject == nullptr) return;
 
-	liftObject->position = player->position;
+	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
+	auto cameraRot = camera->rotation;
+	cameraRot.x = 0;
+	liftObject->position = player->position + (ForwardDir(cameraRot) * 500);
 }

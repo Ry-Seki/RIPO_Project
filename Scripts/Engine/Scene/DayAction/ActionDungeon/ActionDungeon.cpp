@@ -189,11 +189,11 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
         StageObjectManager::GetInstance().Initialize(engine);
         BulletManager::GetInstance().Initialize(engine);
     }
-    GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 }, { -50, -100, -50 }, { 50,  100,  50 });
+    GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100,  300,  100 });
     CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
-    GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-    GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-    GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
+    GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
+    GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
+    GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
     GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
     GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
     GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
@@ -233,7 +233,7 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
     // ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹‚ÌŽæ“¾
     int enemyHandle = setResource.enemyResource[0]->GetHandle();
     for (int i = 0; i < enemyCount; i++) {
-        std::vector<GameObjectPtr> enemyList = GetObjectByName("enemy");
+        std::vector<GameObjectPtr> enemyList = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
         // “G‚ÌŽæ“¾
         auto enemyCharacter = enemyList[i];
         if (!enemyCharacter) continue;
