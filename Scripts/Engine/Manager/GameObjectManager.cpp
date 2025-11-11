@@ -104,31 +104,13 @@ void GameObjectManager::SetObjectColliderFlag(bool setColliderFlag) {
 		// 当たり判定の取得
 		auto collider = object->GetComponent<AABBCollider>();
 		if (!collider) continue;
-		collider->isDeployment = setColliderFlag;
+		collider->isCollider = setColliderFlag;
 	}
 }
 
 /*
  *	オブジェクトのリセット
- *  @param[in]	GameObjectPtr resetObject	リセット対象オブジェクト
- */
-void GameObjectManager::ResetObject(GameObjectPtr resetObject) {
-	if (!resetObject) return;
-	// 同時にリストをいじれないようにロック
-	std::lock_guard<std::mutex> lock(unuseMutex);
-	// 使用リストから削除
-	useObjectList[resetObject->ID] = nullptr;
-	// オブジェクトのリセット
-	resetObject->Destroy();
-	resetObject->OnDestroy();
-	resetObject->ResetGameObject();
-	// 未使用リストに戻る
-	unuseObjectList.push_back(resetObject);
-}
-/*
- *	オブジェクトのリセット
  *	@param[in]	GameObject*	resetObject		リセット対象オブジェクト
- *  @author		Seki
  */
 void GameObjectManager::ResetObject(GameObject* resetObject) {
 	if (!resetObject) return;
@@ -136,9 +118,10 @@ void GameObjectManager::ResetObject(GameObject* resetObject) {
 	std::lock_guard<std::mutex> lock(unuseMutex);
 	// オブジェクトのIDの取得
 	int resetObjectID = resetObject->ID;
+	// 使用リストから削除
+	useObjectList[resetObjectID] = nullptr;
 	// オブジェクトのリセット
 	resetObject->Destroy();
-	resetObject->OnDestroy();
 	resetObject->ResetGameObject();
 	// 未使用リストに戻る
 	ReturnGameObjectList(resetObjectID);

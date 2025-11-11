@@ -4,7 +4,9 @@
  */
 
 #include "CameraManager.h"
-#include "GameObjectManager.h"
+#include "../GameObject/GameObjectUtility.h"
+
+using namespace GameObjectUtility;
 
 CameraManager::CameraManager() 
 	: engine(nullptr){
@@ -37,6 +39,6 @@ void CameraManager::CreateCamera(
  *	@author	Seki
  */
 void CameraManager::ResetCamera() {
-	GameObjectManager::GetInstance().ResetObject(camera);
+	ResetObject(camera);
 	camera = nullptr;
 }

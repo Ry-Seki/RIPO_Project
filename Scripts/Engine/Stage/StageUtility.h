@@ -17,7 +17,7 @@ namespace StageUtility {
 	 *	ステージの読み込み
 	 *  @param[in]	int modelHandleBase		モデルハンドル
 	 */
-	inline void LoadStage(const int stageHandle) {
+	inline void LoadStage(const std::vector<int> stageHandle) {
 		StageManager::GetInstance().LoadStage(stageHandle);
 	}
 

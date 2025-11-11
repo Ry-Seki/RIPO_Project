@@ -4,6 +4,7 @@
  */
 
 #include "DebugScene.h"
+#include "../GameConst.h"
 #include "../Manager/CameraManager.h"
 #include "../Manager/GameObjectManager.h"
 #include "../Manager/CharacterManager.h"
@@ -33,14 +34,14 @@ void DebugScene::Initialize(Engine& engine) {
 	auto stageBoneData = load.LoadResource<LoadJSON>("Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json");
 	auto treasureModel1 = load.LoadResource<LoadModel>("Res/Model/Treasure/Treasure01.mv1");
 	auto treasureModel2 = load.LoadResource<LoadModel>("Res/Model/Treasure/Treasure02.mv1");
-	auto player = CharacterManager::GetInstance().GeneratePlayer("player", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100,  300,  100 });
+	auto player = CharacterManager::GetInstance().GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100,  300,  100 });
 	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
 	std::vector<GameObjectPtr> enemy(3);
-	enemy[0] = CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-	enemy[1] = CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-	enemy[2] = CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-	StageObjectManager::GetInstance().GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
-	StageObjectManager::GetInstance().GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
+	enemy[0] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
+	enemy[1] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
+	enemy[2] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
+	StageObjectManager::GetInstance().GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
+	StageObjectManager::GetInstance().GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
 	std::vector<StageObjectBasePtr> treasure(2);
 	for (int i = 0; i < 2; i++) {
 		treasure[i] = StageObjectManager::GetInstance().GetStageObject(i);
@@ -52,8 +53,12 @@ void DebugScene::Initialize(Engine& engine) {
 
 	load.SetOnComplete(
 		[stageModel, stageModel2, player, playerModel, enemy, enemyModel, stageBoneData, treasure, treasureModel1, treasureModel2, stair, exit]() {
-			StageManager::GetInstance().LoadStage(stageModel->GetHandle());
-			StageManager::GetInstance().LoadStage(stageModel2->GetHandle());
+
+			std::vector<int> stageHandles = {
+				stageModel->GetHandle(),
+				stageModel2->GetHandle()
+			};
+			StageManager::GetInstance().LoadStage(stageHandles);
 			StageManager::GetInstance().SetStageJSONData(stageBoneData->GetData());
 			int modelHandle = playerModel->GetHandle();
 			CharacterManager::GetInstance().SetModelHandle(player.get(), modelHandle);
@@ -89,7 +94,7 @@ void DebugScene::Initialize(Engine& engine) {
 
 			Vector3 exitSpawnPos = StageManager::GetInstance().GetGoalPos();
 			exit->GetOwner()->position = exitSpawnPos;
-
+			GameObjectManager::GetInstance().SetObjectColliderFlag(true);
 		}
 	);
 }
@@ -102,11 +107,7 @@ void DebugScene::Update(Engine& engine, float deltaTime) {
 	bool stairFrag = StageObjectManager::GetInstance().GetStairMove();
 	if (stairFrag) {
 		StageManager::GetInstance().NextStage();
-		StageManager::GetInstance().GetPrevStageHandle();
-		StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
-		auto stair = StageObjectManager::GetInstance().GetStageObject(2);
-		Vector3 stairSpawnPos = StageManager::GetInstance().GetStairsPos();
-		stair->GetOwner()->position = stairSpawnPos;
+
 
 	}
 

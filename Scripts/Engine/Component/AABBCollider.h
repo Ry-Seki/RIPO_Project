@@ -15,8 +15,8 @@
   */
 class AABBCollider : public Component {
 public:
+	bool isCollider = false;	// ”»’è‚ğæ‚é‚©‚Ç‚¤‚©
 	bool isTrigger = false;		// d•¡‚·‚é‚©‚Ç‚¤‚©
-	bool isDeployment = false;	// ”z’u‚ªŠ®—¹‚µ‚½‚©‚Ç‚¤‚©
 	bool isStatic = false;		// “®‚­‚©‚Ç‚¤‚©
 	bool isHit = false;			// “–‚½‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©
 	AABB aabb;					// Õ“Ë”»’è

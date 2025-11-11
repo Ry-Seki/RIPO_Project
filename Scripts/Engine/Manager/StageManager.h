@@ -57,9 +57,9 @@ public:
 
 	/*
 	 *	ステージの読み込み
-	 *  @param	modelHandleBase		モデルハンドル
+	 *  @param	modelHandleBase		モデルハンドルの配列
 	 */
-	void LoadStage(const int modelHandleBase);
+	void LoadStage(const std::vector<int> modelHandleBase);
 
 	void ChangeStage();
 

@@ -16,13 +16,13 @@
 #include <EffekseerForDXLib.h>
 #include <iostream>
 
-/*
- *	初期化処理
- */
+ /*
+  *	初期化処理
+  */
 int Engine::Initialize() {
-    dxlibInitialized = false;
-    effekseerInitialized = false;
-    initialized = false;
+	dxlibInitialized = false;
+	effekseerInitialized = false;
+	initialized = false;
 
 #pragma region DxLibの初期化処理(理解するまでは触らない)
 	SetOutApplicationLogValidFlag(FALSE);
@@ -76,10 +76,10 @@ int Engine::Initialize() {
 #pragma endregion
 
 	// タイムクラスの初期化
-    Time::Init();
+	Time::Init();
 	// 初期化フラグの変更
-    initialized = true;
-    return 0;
+	initialized = true;
+	return 0;
 }
 /*
  *	破棄処理
@@ -95,7 +95,7 @@ void Engine::Teardown() {
 int Engine::Run() {
 	if (Initialize() != 0) { Teardown(); return 1; }
 
-	SetNextScene(std::make_shared<TitleScene>());
+	SetNextScene(std::make_shared<DebugScene>());
 	ChangeScene();
 
 	while (ProcessMessage() != -1) {
@@ -170,7 +170,7 @@ void Engine::StartSceneFade(const FadeBasePtr& setFade, std::function<void()> on
 	FadeManager::GetInstance().StartFade(setFade, [this, onComplete]() {
 		ChangeScene();
 		if (onComplete) onComplete();
-	});
+		});
 }
 /*
  *	フェードアウト・インコールバック付き同時呼び出し
@@ -186,5 +186,5 @@ void Engine::StartFadeOutIn(float fadeOutTime, float fadeInTime, std::function<v
 		auto fadeIn = FadeFactory::CreateFade(FadeType::Black, fadeInTime, FadeDirection::In, FadeMode::NonStop);
 		fadeIn->Reset(FadeDirection::In);
 		FadeManager::GetInstance().StartFade(fadeIn, nullptr);
-	});
+		});
 }
