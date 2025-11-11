@@ -30,62 +30,45 @@ public:
      *  描画処理
      */
     void Render() override {
-        // 進行率を正規化
         float t = std::clamp(elapsed / duration, 0.0f, 1.0f);
-
-        // direction に応じて進行を反転
         float progress = (direction == FadeDirection::In) ? (1.0f - t) : t;
+        int screenW = GameConst::WINDOW_WIDTH;
+        int screenH = GameConst::WINDOW_HEIGHT;
+        int cx = screenW / 2;
+        int cy = screenH / 2;
 
-        // アルファ計算
-        int alpha = static_cast<int>(progress * 255);
-        SetDrawBlendMode(DX_BLENDMODE_ALPHA, alpha);
+        SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(progress * 255));
 
-        // 画面中央
-        const int cx = GameConst::WINDOW_WIDTH / 2;
-        const int cy = GameConst::WINDOW_HEIGHT / 2;
-
-        // 渦巻きパラメータ
-        constexpr int circleCount = 300;     // 円の数
-        constexpr float spiralSpeed = 0.3f;  // 渦の回転スピード
+        constexpr int circleCount = 300;
         const float maxRadius = std::hypotf((float)cx, (float)cy) * 1.2f;
 
-        // --------------------------------------
-        // フェードアウト → 渦が外へ広がる
-        // フェードイン → 渦が中心に巻き込まれる
-        // --------------------------------------
         for (int i = 0; i < circleCount; ++i) {
             float rate = (float)i / circleCount;
-            float angle = rate * 10.0f * 3.1415926f + (progress * 6.2831f * spiralSpeed);
-            float radius = rate * maxRadius * progress;
+
+            // rate を少しずらして中心に円が残らないように
+            rate = 0.01f + 0.99f * rate;
+
+            // 進行に応じた半径（拡散／収束）
+            float radius = maxRadius * std::pow(rate, 0.5f) * progress;
+
+            // 回転角度（中心付近は早く、外側は遅く）
+            float angle = rate * 20.0f * 3.1415926f + progress * 8.0f * (1.0f - rate);
 
             int x = static_cast<int>(cx + std::cos(angle) * radius);
             int y = static_cast<int>(cy + std::sin(angle) * radius);
 
-            // 小さい円を多数描画して渦を表現
-            DrawCircle(x, y, 40, color, TRUE);
+            // 円サイズは外側ほど小さく
+            int circleRadius = static_cast<int>((30 * (1.0f - rate) + 5));
+
+            DrawCircle(x, y, circleRadius, color, TRUE);
         }
 
-        // -----------------------------------------------------
-        // 追加：フェード方向に応じて「覆う」または「消す」効果を補強
-        // -----------------------------------------------------
-        if (direction == FadeDirection::Out) {
-            // フェードアウト：最終的に完全に覆う
-            int fullAlpha = static_cast<int>(t * 255);
-            if (fullAlpha > 0) {
-                SetDrawBlendMode(DX_BLENDMODE_ALPHA, fullAlpha);
-                DrawBox(0, 0, GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, color, TRUE);
-            }
-        }
-        else {
-            // フェードイン：最初に全画面覆って、中央に渦で穴をあけるように
-            int remainAlpha = static_cast<int>((1.0f - t) * 255);
-            if (remainAlpha > 0) {
-                SetDrawBlendMode(DX_BLENDMODE_ALPHA, remainAlpha);
-                DrawBox(0, 0, GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, color, TRUE);
-            }
-        }
+        // 全画面覆いでアルファ補強
+        SetDrawBlendMode(DX_BLENDMODE_ALPHA, static_cast<int>(progress * 255));
+        DrawBox(0, 0, screenW, screenH, color, TRUE);
 
         SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
     }
 };
 

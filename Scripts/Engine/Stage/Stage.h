@@ -41,6 +41,9 @@ public:
 	// 描画
 	void Render() override;
 
+	// ステージの当たり判定の描画
+	void StageColliderRenderer() override;
+
 	// 終了処理
 	void Execute() override;
 

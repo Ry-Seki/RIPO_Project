@@ -5,6 +5,7 @@
 
 #include "Stair.h"
 #include "../../GameObject.h"
+#include "../../GameConst.h"
  /*
   *	階層移動フラグに変更を加える
   *  @param	self
@@ -14,7 +15,7 @@ void Stair::OnCollision(const std::shared_ptr<Component>& self, const std::share
 	Component* aself = self.get();
 	Component* aother = other.get();
 	// フラグの変更
-	if (aother->GetOwner()->name == "player") {
+	if (aother->GetOwner()->name == GameConst::_CREATE_POSNAME_PLAYER) {
 		SetStairMove(true);
 	}
 }
