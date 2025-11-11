@@ -98,7 +98,7 @@ void Scene::HandleWorldColliderCollision(
 			if (colA.origin->isStatic && colB.origin->isStatic)
 				continue;
 			// ‚Ç‚¿‚ç‚©‚ª”z’uŠ®—¹‚µ‚Ä‚¢‚È‚¯‚ê‚Î”»’è‚µ‚È‚¢
-			if (!colA.origin->isDeployment || !colB.origin->isDeployment)
+			if (!colA.origin->isCollider || !colB.origin->isCollider)
 				continue;
 
 			// Õ“Ë”»’è

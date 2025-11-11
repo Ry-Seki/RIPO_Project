@@ -39,6 +39,7 @@ void BulletManager::GenerateBullet(
 	// コライダー生成
 	AABBColliderPtr collider = createBullet->AddComponent<AABBCollider>();
 	collider->aabb = { AABBMin, AABBMax };
+	collider->isCollider = true;
 	// モデルコンポーネントの追加
 	createBullet->AddComponent<ModelRenderer>();
 	// データのセット

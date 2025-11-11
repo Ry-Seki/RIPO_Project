@@ -11,9 +11,9 @@
 class BulletComponent : public Component {
 private:
 	GameObject* bullet;
-	float destroyTimeCount;		// ’e‚ª”jŠü‚³‚ê‚éŽžŠÔ
+	float destroyTimeCount;			// ’e‚ª”jŠü‚³‚ê‚éŽžŠÔ
 
-	const float SHOT_SPEED;		// ’e‚Ì‘¬‚³
+	const float SHOT_SPEED;			// ’e‚Ì‘¬‚³
 
 public:
 	BulletComponent();

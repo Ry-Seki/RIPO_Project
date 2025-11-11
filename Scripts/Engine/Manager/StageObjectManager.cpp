@@ -3,10 +3,12 @@
  *	@author kuu & oorui
  */
 #include "StageObjectManager.h"
-#include "GameObjectManager.h"
+#include "../GameObject/GameObjectUtility.h"
 #include "../Stage/StageObject/Treasure/Treasure.h"
 #include "../Stage/StageObject/StageObjectBase.h"
 #include "../Component/ModelRenderer.h"
+
+using namespace GameObjectUtility;
 
 StageObjectManager::StageObjectManager() {
 }
@@ -25,7 +27,7 @@ StageObjectBasePtr StageObjectManager::CreateStageObject(
 	GameObjectPtr& stageObject
 ) {
 	// 未使用のオブジェクト取得
-	stageObject = GameObjectManager::GetInstance().GetUnuseObject();
+	stageObject = GetUnuseObject();
 	// ステージオブジェクト生成
 	StageObjectBasePtr createStageObj = stageObject->AddComponent<T>();
 	// コライダー生成
@@ -174,7 +176,7 @@ void StageObjectManager::GenerateStair(
 void StageObjectManager::RemoveStageObject(int stageObjectID) {
 	GameObjectPtr destroyObject = createStageObjectList[stageObjectID];
 	// オブジェクトのリセット
-	GameObjectManager::GetInstance().ResetObject(destroyObject);
+	ResetObject(destroyObject);
 	// リストから削除
 	createStageList[stageObjectID] = nullptr;
 	// オブジェクトリストからも削除
