@@ -21,6 +21,8 @@ EnemyComponent::EnemyComponent()
 
 void EnemyComponent::Start() {
 	enemy = GetOwner();
+	// モデルの方向が反対なので直す
+	enemy->rotation = -enemy->rotation;
 	if (enemy == nullptr) return;
 	wayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z + wayPointDistance);
 	nextWayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z - wayPointDistance);
@@ -28,6 +30,7 @@ void EnemyComponent::Start() {
 
 /*
  *	更新処理
+ *  param[in]	float	deltaTime
  */
 void EnemyComponent::Update(float deltaTime) {
 	// 移動処理
@@ -36,13 +39,12 @@ void EnemyComponent::Update(float deltaTime) {
 
 /*
  *	移動処理
+ *  param[in]	GameObject*		enemy
+ *  param[in]	float			deltaTime
  */
 void EnemyComponent::EnemyMove(GameObject* enemy, float deltaTime) {
-	const float enemyCos = cos(enemy->rotation.y);
-	const float enemySin = sin(enemy->rotation.y); 
-
 	GameObjectPtr player = CameraManager::GetInstance().GetTarget();
-	if (Vision(enemy->position, enemy->rotation, player->position, 60, 2000)) {
+	if (Vision(enemy->position, enemy->rotation, player->position, 30, 2000)) {
 		ChaseWayPoint(player->position, true, deltaTime);
 	}
 	else {
@@ -54,18 +56,17 @@ void EnemyComponent::EnemyMove(GameObject* enemy, float deltaTime) {
 			ChaseWayPoint(nextWayPoint, false, deltaTime);
 		}
 	}
-	
-
-	//enemy->position.x -= moveSpeed * enemySin;
-	//enemy->position.z -= moveSpeed * enemyCos;
 }
 
 /*
  *	目標に向かって進む処理
+ *  param[in]	Vector3		wayPoint		目標の座標
+ *  param[in]	bool		targetChange	chaseTargetChangeFragの切り替え
+ *  param[in]	float		deltaTime
  */
 void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaTime) {
 	// 目標と自身のpositionの差
-	const float differenceTarget = 2.0f;
+	const float differenceTarget = 100.0f;
 	// 目標の方向
 	Vector3 direction = wayPoint - enemy->position;
 	// 方向を正規化する
@@ -73,9 +74,7 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 	// 目標の方向に進む
 	enemy->position += normDirection * moveSpeed * deltaTime;
 	// 目標の方向を向く
-	//enemy->rotation.x = direction.x;
-	//enemy->rotation.y = tan(wayPoint.y);
-	//enemy->rotation.z -= direction.z;
+	enemy->rotation.y = atan2(normDirection.x, normDirection.z);
 	// 目標地点についたらターゲットを変える
 	if (direction.Magnitude() < differenceTarget) {
 		chaseTargetChangeFrag = targetChange;
