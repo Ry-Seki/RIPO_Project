@@ -239,6 +239,7 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
         if (!enemyCharacter) continue;
         // 位置の設定
         enemyCharacter->position = enemySpawnPos[i];
+        enemyCharacter->scale = { 4.5f, 4.5f, 4.5f };
         // モデルの設定
         SetModelHandle(enemyCharacter.get(), enemyHandle);
         // コンポーネントの取得
