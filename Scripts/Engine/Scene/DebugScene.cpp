@@ -194,7 +194,15 @@ void DebugScene::Render() {
 		else {
 			DrawFormatString(0, 60, GetColor(255, 255, 255), "ExitFrag_false");
 		}
-
+		Vector3 test = { 0,0,0 };
+		Vector3 testDir = ForwardDir(test);
+		DrawFormatString(0, 80, GetColor(255, 255, 255), "DirTest(%f,%f,%f)", testDir.x, testDir.y, testDir.z);
+		test.y = Pi / 2;
+		testDir = ForwardDir(test);
+		DrawFormatString(0, 100, GetColor(255, 255, 255), "DirTest(%f,%f,%f)", testDir.x, testDir.y, testDir.z);
+		test.x = Pi / 4;
+		testDir = ForwardDir(test);
+		DrawFormatString(0, 120, GetColor(255, 255, 255), "DirTest(%f,%f,%f)", testDir.x, testDir.y, testDir.z);
 	}
 #endif
 }

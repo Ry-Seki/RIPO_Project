@@ -123,9 +123,11 @@ Vector3 Vector3::Direction(const Vector3& from, const Vector3& to) {
  */
 Vector3 Vector3::ForwardDir(const Vector3& rotation) {
 	Vector3 dir;
-	dir.x = cos(rotation.x) * sin(rotation.y);
-	dir.y = sin(rotation.x);
-	dir.z = -cos(rotation.x) * cos(rotation.y);
+	float rotX = rotation.x;
+	float rotY = rotation.y;
+	dir.x = cos(rotX) * sin(rotY);
+	dir.y = -sin(rotX);
+	dir.z = cos(rotX) * cos(rotY);
 	return dir.Normalized();
 }
 
