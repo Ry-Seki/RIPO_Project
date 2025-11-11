@@ -10,12 +10,14 @@
 #include "BlackFade.h"
 #include "SpiralFade.h"
 #include "TileFade.h"
-
+#include "InkSpreadFade.h"
 
 enum class FadeType {
     Black,
     Spiral,
     Tile,
+    InkSpread,
+
 };
 
 /*
@@ -35,6 +37,8 @@ public:
                 return std::make_shared<SpiralFade>(duration, dir, mode);
             case FadeType::Tile:
                 return std::make_shared<TileFade>(duration, dir, mode);
+            case FadeType::InkSpread:
+                return std::make_shared<InkSpreadFade>(duration, dir, mode);
         }
         return nullptr;
     }

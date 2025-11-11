@@ -234,6 +234,7 @@
     <ClInclude Include="Scripts\Engine\Fade\FadeBase.h" />
     <ClInclude Include="Scripts\Engine\Fade\FadeFactory.h" />
     <ClInclude Include="Scripts\Engine\Fade\FadeManager.h" />
+    <ClInclude Include="Scripts\Engine\Fade\InkSpreadFade.h" />
     <ClInclude Include="Scripts\Engine\Fade\SpiralFade.h" />
     <ClInclude Include="Scripts\Engine\Fade\TileFade.h" />
     <ClInclude Include="Scripts\Engine\GameConst.h" />
