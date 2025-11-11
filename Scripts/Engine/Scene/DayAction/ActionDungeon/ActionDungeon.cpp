@@ -207,6 +207,7 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
     std::vector<int> stageHandleList(stageHandleCount);
     for (int i = 0; i < stageHandleCount; i++) {
         stageHandleList[i] = setResource.stageResource[i]->GetHandle();
+        LoadStage(stageHandleList);
     }
     // ƒ‚ƒfƒ‹‚Ìİ’è
     // LoadStage(stageHandle);
