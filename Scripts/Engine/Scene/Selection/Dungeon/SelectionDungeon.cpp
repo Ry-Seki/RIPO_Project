@@ -25,7 +25,7 @@ void SelectionDungeon::Initialize(Engine& engine) {
  */
 void SelectionDungeon::Setup(Engine& engine) {
 	dungeonDataList = dungeonDataLoader->dungeonList;
-	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
+	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.0f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fade);
 }
 /*
@@ -39,7 +39,7 @@ void SelectionDungeon::Update(Engine& engine, float deltaTime) {
 		AudioUtility::PlaySE("DebugSE");
 		inputHandle = true;
 		isComplete = true;
-		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Spiral, 1.2f, FadeDirection::Out, FadeMode::Stop);
 		FadeManager::GetInstance().StartFade(fade, [&engine, this]() {
 			StartStageDataLoad(engine, 0); 
 		});

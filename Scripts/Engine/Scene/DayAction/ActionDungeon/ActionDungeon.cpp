@@ -13,6 +13,7 @@
 #include "../../../Manager/GameObjectManager.h"
 #include "../../../Manager/CharacterManager.h"
 #include "../../../Manager/StageObjectManager.h"
+#include "../../../Manager/BulletManager.h"
 #include "../../../Scene/Scene.h"
 #include "../../../Component/ModelRenderer.h"
 #include "../../../Component/Character/CharacterUtility.h"
@@ -186,6 +187,7 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
         CharacterManager::GetInstance().Initialize(engine);
         StageManager::GetInstance().Initialize(engine);
         StageObjectManager::GetInstance().Initialize(engine);
+        BulletManager::GetInstance().Initialize(engine);
     }
     GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 }, { -50, -100, -50 }, { 50,  100,  50 });
     CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });

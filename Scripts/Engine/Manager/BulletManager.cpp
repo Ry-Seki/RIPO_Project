@@ -9,12 +9,15 @@
 #include "../Component/AABBCollider.h"
 #include "../Component/ModelRenderer.h"
 
+#include <DxLib.h>
+
 BulletManager::BulletManager()
 	: engine(nullptr)
 {}
 
 void BulletManager::Initialize(Engine & setEngine) {
 	engine = &setEngine;
+	bulletHandle = MV1LoadModel("Res/Model/Player/RIPO_BulletModel.mv1");
 }
 
 /*
@@ -41,7 +44,8 @@ void BulletManager::GenerateBullet(
 	collider->aabb = { AABBMin, AABBMax };
 	collider->isCollider = true;
 	// モデルコンポーネントの追加
-	createBullet->AddComponent<ModelRenderer>();
+	auto component = createBullet->AddComponent<ModelRenderer>();
+	component->SetModelHandle(bulletHandle);
 	// データのセット
 	createBullet->SetObjectData(name, position, rotation);
 	// シーンが持つゲームオブジェクト配列に追加

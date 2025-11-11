@@ -2,11 +2,13 @@
   "Stage": {
     "StageData1": "Res/Model/Stage/StageModel_1.mv1",
     "StageData2": "Res/Model/Stage/StageModel_1_TwoLayer.mv1",
-    "StageBoneData": "Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json"
+    "StageBoneData": "Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json",
+    "StageStairData": ""
   },
   "Character": {
     "PlayerData": "Res/Model/Player/RIPO_Model.mv1",
-    "EnemyData": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1"
+    "EnemyData": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1",
+    "BossData": ""
   },
   "Treasure": {
     "TreasureData": [
@@ -14,5 +16,13 @@
       "Res/Model/Treasure/Treasure02.mv1"
     ],
     "EventTreasureData": ""
+  },
+  "Audio": {
+    "BGM": [
+
+    ],
+    "SE": [
+
+    ]
   }
 }

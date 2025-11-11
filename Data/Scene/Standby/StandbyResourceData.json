@@ -1,0 +1,11 @@
+{
+  "LoadAnimation": {
+    "LoadBackGround": [
+
+    ],
+    "LoadCircle": ""
+  },
+  "SaveData": [
+  ],
+  "TitleData": "Data/Scene/Title/TItleResourceData.json"
+}

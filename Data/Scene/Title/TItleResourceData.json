@@ -1,0 +1,22 @@
+{
+  "TitleImage": {
+    "Title": "",
+    "BackGround": [
+
+    ],
+    "SelectMenu": {
+      "NewGame": "",
+      "LoadGame": "",
+      "System": ""
+    }
+  },
+  "Audio": {
+    "BGM": [
+
+    ],
+    "SE": [
+
+    ]
+  },
+  "MainGameData": "Data/Scene/MainGame/MainGameResourceData.json"
+}

@@ -18,6 +18,7 @@ class BulletManager : public Singleton<BulletManager> {
 
 private:
 	Engine* engine;
+	int bulletHandle = -1;
 
 private:
 	BulletManager();
