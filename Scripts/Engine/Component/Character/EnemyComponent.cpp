@@ -13,7 +13,7 @@ EnemyComponent::EnemyComponent()
 	: moveSpeed(700.0f)
 	, wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
-	, wayPointDistance(200.0f)
+	, wayPointDistance(300.0f)
 	, enemy(nullptr)
 	, chaseTargetChangeFrag(false)
 {
@@ -22,7 +22,7 @@ EnemyComponent::EnemyComponent()
 void EnemyComponent::Start() {
 	enemy = GetOwner();
 	// ƒ‚ƒfƒ‹‚Ì•ûŒü‚ª”½‘Î‚È‚Ì‚Å’¼‚·
-	enemy->rotation = -enemy->rotation;
+	enemy->rotation = -(enemy->rotation);
 	if (enemy == nullptr) return;
 	wayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z + wayPointDistance);
 	nextWayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z - wayPointDistance);
