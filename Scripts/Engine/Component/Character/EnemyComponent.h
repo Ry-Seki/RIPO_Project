@@ -37,23 +37,30 @@ public:
 
 	/*
 	 *	更新処理
+	 *  param[in]	float	deltaTime
 	 */
 	virtual void Update(float deltaTime) override;
 
 private:
 	/*
 	 *	移動処理
+	 *  param[in]	GameObject*		enemy
+	 *  param[in]	float			deltaTime
 	 */
 	void EnemyMove(GameObject* enemy, float deltaTime);
 
-	/* 
+	/*
 	 *	目標に向かって進む処理
+	 *  param[in]	Vector3		wayPoint		目標の座標
+	 *  param[in]	bool		targetChange	chaseTargetChangeFragの切り替え
+	 *  param[in]	float		deltaTime
 	 */
 	void ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaTime);
 
 public:
 	/*
 	 *	ウェイポイントの位置変更
+	 *  param[in]	Vector3&	setValue	敵の座標
 	 */
 	inline void SetWayPoint(Vector3& setValue) {
 		wayPoint = Vector3(setValue.x, setValue.y, setValue.z + wayPointDistance);
