@@ -64,6 +64,7 @@ void CalendarManager::Render() {
     if (!isActive)  return;
 
     auto day = calendarSystem->GetDay();
+#if _DEBUG
     DrawFormatString(50, 20, GetColor(255, 255, 255), "elapsedDay : %d", elapsedDay);
     DrawFormatString(50, 50, GetColor(255, 255, 255), "=== Calendar Sample ===");
     DrawFormatString(50, 70, GetColor(255, 255, 0), "Morning Done: %s", day.morningDone ? "Yes" : "No");
@@ -72,6 +73,7 @@ void CalendarManager::Render() {
     DrawFormatString(50, 150, GetColor(0, 255, 0), "2: Training (half day)");
     DrawFormatString(50, 170, GetColor(0, 255, 0), "3: Shop (half day)");
     DrawFormatString(50, 190, GetColor(0, 255, 0), "4: Part-time (half day)");
+#endif
 }
 /*
  *  éüÇÃì˙Ç…êiçsèàóù
