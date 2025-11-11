@@ -26,7 +26,7 @@ public:
 		if (modelHandle == -1)return;
 		// モデルハンドルを追加
 		stageModelHandle.push_back(modelHandle);
-		currentStageIndex = static_cast<int>(stageModelHandle.size()) - 1;
+		// currentStageIndex = static_cast<int>(stageModelHandle.size()) - 1;
 	}
 
 	/*
@@ -86,6 +86,24 @@ public:
 		if (prev >= 0 && prev < (int)stageModelHandle.size())
 			return stageModelHandle[prev];
 		return -1;
+	}
+
+	/*
+	 *	指定インデックスのモデルハンドルを取得
+	 *  @param	setValue
+	 */
+	int GetStageModelHandleAt(int setValue)const {
+		if (setValue < 0 || setValue >= (int)stageModelHandle.size())return -1;
+		return stageModelHandle[setValue];
+	}
+
+	/*
+	 *	現在のステージインデックスを設定
+	 *  @param	index
+	 */
+	void SetCurrentStageIndex(int index) {
+		if (index >= 0 && index < (int)stageModelHandle.size())
+			currentStageIndex = index;
 	}
 
 };
