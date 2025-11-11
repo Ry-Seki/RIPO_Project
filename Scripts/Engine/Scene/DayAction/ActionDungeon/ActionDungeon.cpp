@@ -189,7 +189,7 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
         StageObjectManager::GetInstance().Initialize(engine);
         BulletManager::GetInstance().Initialize(engine);
     }
-    GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100,  300,  100 });
+    GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, { 0, 100, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100,  300,  100 });
     CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
     GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
     GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
