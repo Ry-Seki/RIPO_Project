@@ -1,6 +1,6 @@
 /*
  *	@file	ExitPoint.h
- *  @author kuu
+ *  @author kuu & oorui
  */
 
 #include "ExitPoint.h"
