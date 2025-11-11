@@ -23,6 +23,7 @@ public:
 	~HandArm() = default;
 
 public:
+	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other);
 	void ArmUpdate(float deltaTime, GameObject* player, Engine* engine) override;
 
 private:
@@ -34,7 +35,7 @@ private:
 	/*
 	 *	‚¨•ó‰^‚Ñˆ—
 	 */
-	void CarryTreasur();
+	void CarryTreasur(GameObject* player);
 };
 
 #endif // !_HANDARM_H_

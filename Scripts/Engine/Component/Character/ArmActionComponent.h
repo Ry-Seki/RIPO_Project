@@ -27,8 +27,8 @@ public:
 
 public:
 	virtual void Start() override;
-
 	virtual void Update(float deltaTime) override;
+	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
 
 private:
 	virtual void ArmUpdate(float deltaTime, GameObject* player, Engine* engine){}
