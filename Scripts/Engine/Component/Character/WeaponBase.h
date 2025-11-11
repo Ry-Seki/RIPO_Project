@@ -6,17 +6,32 @@
 #ifndef _WEAPONBASE_H_
 #define _WEAPONBASE_H_
 
-#include "../Component.h"
+#include "ArmActionComponent.h"
 
 /*
  *	銃のウデの基底クラス
  */
-class WeaponBase : public Component {
+class WeaponBase : public ArmActionComponent {
 protected:
-	int ammoCount;		// 残弾数
-	int ammoCountMax;	// 弾の最大数
+	int ammoCount;					// 残弾数
+	int ammoCountMax;				// 弾の最大数
+	float reloadingTime;			// リロードの残り時間
 
+	const std::string BULLET_NAME;	// 弾の名前
+	const float RELOADING_TIME_MAX;	// リロードに掛かる時間
+	const Vector3 BULLET_AABB_MIN;	// 弾のAABBMin
+	const Vector3 BULLET_AABB_MAX;	// 弾のAABBMax
 
+public:
+	WeaponBase();
+	virtual ~WeaponBase() = default;
+
+public:
+	/*
+	 *	銃を撃つ処理
+	 */
+	void ShotBullet(Vector3 position, Vector3 rotation);
+	
 };
 
 #endif // !_WEAPONBASE_H_

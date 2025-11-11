@@ -7,6 +7,7 @@
 #include "../../Manager/CameraManager.h"
 #include "../../GameConst.h"
 #include "HandArm.h"
+#include "RevolverArm.h"
 #include "DxLib.h"
 
 PlayerComponent::PlayerComponent()
@@ -38,8 +39,12 @@ void PlayerComponent::Update(float deltaTime) {
 	// 移動処理
 	PlayerMove(player, deltaTime);
 	// 右クリックでウデアクションをハンドに設定
+	auto playerArm = player->GetComponent<ArmActionComponent>();
 	if (GetMouseInput() & MOUSE_INPUT_RIGHT)
-		player->GetComponent<ArmActionComponent>()->SetCurrentArm<HandArm>();
+		playerArm->SetCurrentArm<HandArm>();
+	// 左クリックでウデアクションを銃に設定
+	if (GetMouseInput() & MOUSE_INPUT_LEFT)
+		playerArm->SetCurrentArm<RevolverArm>();
 }
 
 /*

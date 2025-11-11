@@ -27,6 +27,21 @@ namespace GameObjectUtility {
 		return GameObjectManager::GetInstance().GetUseObject(ID);
 	}
 	/*
+	 *	名前指定のオブジェクト取得
+	 *	@param[in]	const std::string& searchName	検索する名前
+	 */
+	inline std::vector<GameObjectPtr> GetObjectByName(const std::string& searchName) {
+		return GameObjectManager::GetInstance().GetObjectByName(searchName);
+	}
+	/*
+	 *	使用オブジェクトリストの当たり判定の設定
+	 *	@param[in]	bool setColliderFlag
+	 *	@author		Seki
+	 */
+	inline void SetUseObjectColliderFlag(bool setColliderFlag) {
+		GameObjectManager::GetInstance().SetObjectColliderFlag(setColliderFlag);
+	}
+	/*
 	 *	オブジェクトのリセット
 	 *  @param[in]	GameObjectPtr resetObject
 	 */

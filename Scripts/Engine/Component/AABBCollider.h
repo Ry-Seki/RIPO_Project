@@ -10,12 +10,13 @@
 #include "../Collision.h"
 #include <vector>
 
-/*
- *	AABBコライダー
- */
+ /*
+  *	AABBコライダー
+  */
 class AABBCollider : public Component {
 public:
 	bool isTrigger = false;		// 重複するかどうか
+	bool isDeployment = false;	// 配置が完了したかどうか
 	bool isStatic = false;		// 動くかどうか
 	bool isHit = false;			// 当たっているかどうか
 	AABB aabb;					// 衝突判定

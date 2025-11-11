@@ -15,19 +15,23 @@
 #include <DxLib.h>
 #include <memory>
 
+using namespace AudioUtility;
+
  /*
   *  èâä˙âªèàóù
   */
 void TitleScene::Initialize(Engine& engine) {
-	AudioUtility::SetBGMVolume(100);
-	AudioUtility::SetSEVolume(100);
+	SetBGMVolume(100);
+	SetSEVolume(100);
 	auto debugSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/ButtonPush_Debug.mp3");
+	auto goalSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/GoalSE.mp3");
 	std::vector<std::shared_ptr<LoadSprite>> loadBGList;
 	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black1.jpg"));
 	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black2.jpg"));
 	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black3.jpg"));
-	LoadManager::GetInstance().SetOnComplete([&engine, this, debugSE, loadBGList]() {
-		AudioUtility::RegisterSEHandle("DebugSE", debugSE->GetHandle());
+	LoadManager::GetInstance().SetOnComplete([&engine, this, debugSE, goalSE, loadBGList]() {
+		RegisterSEHandle("DebugSE", debugSE->GetHandle());
+		RegisterSEHandle("GoalSE", goalSE->GetHandle());
 		auto loadBG = std::make_shared<LoadAnimation_ChangeBackground>();
 		std::vector<int> BGHandleList;
 		for (int i = 0, max = loadBGList.size(); i < max; i++) {

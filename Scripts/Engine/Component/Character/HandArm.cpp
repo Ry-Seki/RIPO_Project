@@ -14,8 +14,8 @@ HandArm::HandArm()
 {}
 
 void HandArm::ArmUpdate(float deltaTime, GameObject* player, Engine* engine) {
-	// 左クリックでお宝持ち上げ
-	if (GetMouseInput() & MOUSE_INPUT_LEFT)
+	// 右クリックでお宝持ち上げ
+	if (GetMouseInput() & MOUSE_INPUT_RIGHT)
 		LiftTreasure(player, engine);
 }
 

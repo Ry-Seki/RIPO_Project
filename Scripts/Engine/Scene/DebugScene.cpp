@@ -9,6 +9,7 @@
 #include "../Manager/CharacterManager.h"
 #include "../Manager/StageManager.h"
 #include "../Manager/StageObjectManager.h"
+#include "../Manager/BulletManager.h"
 #include "../Load/LoadManager.h"
 #include "../Load/Model/LoadModel.h"
 #include "../Component/ModelRenderer.h"
@@ -24,6 +25,7 @@ void DebugScene::Initialize(Engine& engine) {
 	CharacterManager::GetInstance().Initialize(engine);
 	StageManager::GetInstance().Initialize(engine);
 	StageObjectManager::GetInstance().Initialize(engine);
+	BulletManager::GetInstance().Initialize(engine);
 	auto stageModel = load.LoadResource<LoadModel>("Res/Model/Stage/StageModel_1.mv1");
 	auto stageModel2 = load.LoadResource<LoadModel>("Res/Model/Stage/StageModel_1_TwoLayer.mv1");
 	auto playerModel = load.LoadResource<LoadModel>("Res/Model/Player/RIPO_Model.mv1");
@@ -100,8 +102,11 @@ void DebugScene::Update(Engine& engine, float deltaTime) {
 	bool stairFrag = StageObjectManager::GetInstance().GetStairMove();
 	if (stairFrag) {
 		StageManager::GetInstance().NextStage();
-
 		StageManager::GetInstance().GetPrevStageHandle();
+		StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
+		auto stair = StageObjectManager::GetInstance().GetStageObject(2);
+		Vector3 stairSpawnPos = StageManager::GetInstance().GetStairsPos();
+		stair->GetOwner()->position = stairSpawnPos;
 
 	}
 
@@ -189,7 +194,15 @@ void DebugScene::Render() {
 		else {
 			DrawFormatString(0, 60, GetColor(255, 255, 255), "ExitFrag_false");
 		}
-
+		Vector3 test = { 0,0,0 };
+		Vector3 testDir = ForwardDir(test);
+		DrawFormatString(0, 80, GetColor(255, 255, 255), "DirTest(%f,%f,%f)", testDir.x, testDir.y, testDir.z);
+		test.y = Pi / 2;
+		testDir = ForwardDir(test);
+		DrawFormatString(0, 100, GetColor(255, 255, 255), "DirTest(%f,%f,%f)", testDir.x, testDir.y, testDir.z);
+		test.x = Pi / 4;
+		testDir = ForwardDir(test);
+		DrawFormatString(0, 120, GetColor(255, 255, 255), "DirTest(%f,%f,%f)", testDir.x, testDir.y, testDir.z);
 	}
 #endif
 }

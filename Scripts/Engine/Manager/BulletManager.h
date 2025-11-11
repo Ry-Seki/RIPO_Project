@@ -24,6 +24,7 @@ private:
 	~BulletManager() = default;
 
 public:
+	void Initialize(Engine& setEngine);
 	/*
 	 *	’e¶¬
 	 *	@param	name		’e‚Ì–¼‘O

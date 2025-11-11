@@ -160,6 +160,8 @@
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\RevolverArm.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\WeaponBase.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Engine\Input\InputManager.cpp" />
@@ -221,6 +223,7 @@
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\RevolverArm.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\WeaponBase.h" />
     <ClInclude Include="Scripts\Engine\Component\Component.h" />
     <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h" />

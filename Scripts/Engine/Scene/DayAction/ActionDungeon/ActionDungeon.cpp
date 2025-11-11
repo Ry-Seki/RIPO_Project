@@ -20,6 +20,8 @@
 #include "../../../Audio/AudioUtility.h"
 #include "../../../Fade/FadeFactory.h"
 #include "../../../Fade/FadeManager.h"
+#include "../../../Stage/StageUtility.h"
+#include "../../../GameObject/GameObjectUtility.h"
 
 #include <iostream>
 
@@ -28,6 +30,10 @@ bool ActionDungeon::isFirst = true;
 
 // 名前空間の宣言
 using namespace AudioUtility;
+using namespace CharacterUtility;
+using namespace StageUtility;
+using namespace StageObjectUtility;
+using namespace GameObjectUtility;
 
 /*
  *	初期化処理
@@ -46,14 +52,23 @@ void ActionDungeon::Setup(Engine& engine) {
  */
 void ActionDungeon::Update(Engine& engine, float deltaTime) {
     if (isComplete) return;
-    bool exitFrag = StageObjectUtility::GetExitFlag();
-    bool stairFrag = StageObjectUtility::GetStairMove();
+    // 階段、ゴールフラグの取得
+    bool exitFrag = GetExitFlag();
+    bool stairFrag = GetStairMove();
+    // 出口に触れたとき
     if (exitFrag) {
         // SEの再生
-        PlaySE("DebugSE");
+        PlaySE("GoalSE");
         inputHandle = true;
         isComplete = true;
         Teardown();
+    } else if (stairFrag) {
+        StageManager::GetInstance().NextStage();
+        StageManager::GetInstance().GetPrevStageHandle();
+        StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
+        auto stair = StageObjectManager::GetInstance().GetStageObject(2);
+        Vector3 stairSpawnPos = StageManager::GetInstance().GetStairsPos();
+        stair->GetOwner()->position = stairSpawnPos;
     }
     if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
         // SEの再生
@@ -62,7 +77,6 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
         isComplete = true;
         Teardown();
     }
-
 
     if (CheckHitKey(KEY_INPUT_0) == 0) inputHandle = false;
 }
@@ -151,9 +165,11 @@ void ActionDungeon::Render() {
  *  破棄処理
  */
 void ActionDungeon::Teardown() {
-    CharacterUtility::RemoveAllCharacter();
+    // 当たり判定の無効化
+    SetUseObjectColliderFlag(false);
+    RemoveAllCharacter();
     StageManager::GetInstance().Execute();
-    StageObjectUtility::RemoveAllStageObject();
+    RemoveAllStageObject();
     CameraManager::GetInstance().ResetCamera();
 }
 
@@ -171,15 +187,15 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
         StageManager::GetInstance().Initialize(engine);
         StageObjectManager::GetInstance().Initialize(engine);
     }
-    CharacterManager::GetInstance().GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 }, { -50, -100, -50 }, { 50,  100,  50 });
+    GeneratePlayer("player", { 0, 100, 0 }, { 0, 0, 0 }, { -50, -100, -50 }, { 50,  100,  50 });
     CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
-    CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-    CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-    CharacterManager::GetInstance().GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-    StageObjectManager::GetInstance().GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
-    StageObjectManager::GetInstance().GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
-    StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
-    StageObjectManager::GetInstance().GenerateExit("exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
+    GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
+    GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
+    GenerateEnemy("enemy", { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
+    GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
+    GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
+    GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
+    GenerateExit("exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
 
     LoadResourcesFromStageData(engine, stageData, dungeonResource);
 }
@@ -189,34 +205,35 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
     // モデルハンドルの取得
     int stageHandle = setResource.stageResource[0]->GetHandle();
     // モデルの設定
-    StageManager::GetInstance().LoadStage(stageHandle);
+    LoadStage(stageHandle);
     // ステージボーンデータの設定
-    StageManager::GetInstance().SetStageJSONData(setResource.stageBoneResource[0]->GetData());
+    SetStageJSONData(setResource.stageBoneResource[0]->GetData());
 
     // プレイヤーの設定
     // モデルの取得
     int playerHandle = setResource.playerResource->GetHandle();
     // プレイヤーオブジェクトの取得
-    auto player = GameObjectManager::GetInstance().GetUseObject(0);
+    auto player = GetUseObject(0);
     // 位置の設定
-    player->position = StageManager::GetInstance().GetStartPos();
+    player->position = GetStartPos();
     // モデルの設定
-    CharacterManager::GetInstance().SetModelHandle(player.get(), playerHandle);
+    SetModelHandle(player.get(), playerHandle);
 
     // 敵の設定
     // 敵の生成位置の取得
-    std::vector<Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpwanPos();
+    std::vector<Vector3> enemySpawnPos = GetEnemySpwanPos();
     size_t enemyCount = enemySpawnPos.size();
     // モデルハンドルの取得
     int enemyHandle = setResource.enemyResource[0]->GetHandle();
     for (int i = 0; i < enemyCount; i++) {
+        std::vector<GameObjectPtr> enemyList = GetObjectByName("enemy");
         // 敵の取得
-        auto enemyCharacter = GameObjectManager::GetInstance().GetUseObject(i + 2);
+        auto enemyCharacter = enemyList[i];
         if (!enemyCharacter) continue;
         // 位置の設定
         enemyCharacter->position = enemySpawnPos[i];
         // モデルの設定
-        CharacterManager::GetInstance().SetModelHandle(enemyCharacter.get(), enemyHandle);
+        SetModelHandle(enemyCharacter.get(), enemyHandle);
         // コンポーネントの取得
         std::shared_ptr<EnemyComponent> component = enemyCharacter->GetComponent<EnemyComponent>();
         if (!component) continue;
@@ -226,7 +243,7 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
 
     // 宝の設定
     // お宝の生成位置の取得
-    std::vector<Vector3> treasureSpawnPos = StageManager::GetInstance().GetTreasureSpwanPos();
+    std::vector<Vector3> treasureSpawnPos = GetTreasureSpwanPos();
     // 生成位置の要素数の取得
     size_t treasureCount = treasureSpawnPos.size();
     // ハンドルの要素数の取得
@@ -235,30 +252,33 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
         // モデルハンドルの取得
         int treasureHandle = setResource.treasureResource[i]->GetHandle();
         // 宝の取得
-        StageObjectBasePtr treasureObject = StageObjectManager::GetInstance().GetStageObject(i);
+        StageObjectBasePtr treasureObject = GetStageObject(i);
         if (!treasureObject) continue;
         // 宝オブジェクトの取得
-        GameObject* treasure = StageObjectManager::GetInstance().GetStageObjectOwner(treasureObject);
+        GameObject* treasure = GetStageObjectOwner(treasureObject);
         if (!treasure) continue;
         // 位置の設定
         treasure->position = treasureSpawnPos[i];
         // モデルの設定
-        StageObjectManager::GetInstance().SetModelHandle(treasure, treasureHandle);
+        SetModelHandle(treasure, treasureHandle);
     }
     // 階段の設定
     int stairCount = treasureCount;
-    auto stair = StageObjectManager::GetInstance().GetStageObject(stairCount);
-    Vector3 stairSpawnPos = StageManager::GetInstance().GetStairsPos();
+    auto stair = GetStageObject(stairCount);
+    Vector3 stairSpawnPos = GetStairsPos();
     stair->GetOwner()->position = stairSpawnPos;
 
     // 出口の設定
     int exitCount = stairCount + 1;
-    auto exit = StageObjectManager::GetInstance().GetStageObject(exitCount);
-    Vector3 exitSpawnPos = StageManager::GetInstance().GetGoalPos();
+    auto exit = GetStageObject(exitCount);
+    Vector3 exitSpawnPos = GetGoalPos();
     exit->GetOwner()->position = exitSpawnPos;
 
+    // フェードイン
     FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fade);
+    // 当たり判定の有効化
+    SetUseObjectColliderFlag(true);
 }
 /*
  *	ステージデータからロードリストに追加
