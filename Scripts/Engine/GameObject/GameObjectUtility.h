@@ -46,7 +46,7 @@ namespace GameObjectUtility {
 	 *  @param[in]	GameObjectPtr resetObject
 	 */
 	inline void ResetObject(GameObjectPtr resetObject) {
-		GameObjectManager::GetInstance().ResetObject(resetObject);
+		GameObjectManager::GetInstance().ResetObject(resetObject.get());
 	}
 	/*
 	 *	オブジェクトのリセット

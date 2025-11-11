@@ -5,14 +5,17 @@
 
 #include "BulletComponent.h"
 #include "../../GameObject.h"
+#include "../../GameConst.h"
 #include "../../GameObject/GameObjectUtility.h"
 #include "../../Manager/CameraManager.h"
 
-BulletComponent::BulletComponent() 
+using namespace GameObjectUtility;
+
+BulletComponent::BulletComponent()
 	: destroyTimeCount(3)
 	, bullet(nullptr)
 
-	, SHOT_SPEED(10000)
+	, SHOT_SPEED(10000) 
 {}
 
 void BulletComponent::Start() {
@@ -24,11 +27,11 @@ void BulletComponent::Update(float deltaTime) {
 	// 前に進む
 	Vector3 forward = ForwardDir(bullet->rotation);
 	bullet->position += forward * SHOT_SPEED * deltaTime;
-	
+
 	// 破棄カウントダウン
 	destroyTimeCount -= deltaTime;
 	if (destroyTimeCount < 0) {
-		GameObjectUtility::ResetObject(bullet);
+		ResetObject(bullet);
 	}
 }
 
@@ -38,5 +41,9 @@ void BulletComponent::OnCollision(const std::shared_ptr<Component>& self, const 
 	GameObject* otherOwner = other->GetOwner();
 	auto isBullet = otherOwner->GetComponent<BulletComponent>();
 	if (otherOwner == playerOwner || isBullet)return;
-	GameObjectUtility::ResetObject(bullet);
+	ResetObject(bullet);
+	// 敵に当たったら敵も破棄
+	if (otherOwner->name == GameConst::_CREATE_POSNAME_ENEMY) {
+		ResetObject(otherOwner);
+	}
 }
