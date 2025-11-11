@@ -27,11 +27,14 @@ void StageManager::Initialize(Engine& setEngine) {
 /*
  *	ステージの読み込み
  */
-void StageManager::LoadStage(const int modelHandleBase) {
-	// モデルハンドルを複製
-	int duplicatedModel = MV1DuplicateModel(modelHandleBase);
-	// ステージのモデルハンドルを追加
-	stageState.AddStageModelHandle(duplicatedModel);
+void StageManager::LoadStage(const std::vector<int> modelHandleBase) {
+	// モデルハンドルの追加、複製
+	for (auto model : modelHandleBase) {
+		int duplicatedModel = MV1DuplicateModel(model);
+		// モデルハンドルを複製
+		// ステージのモデルハンドルを追加
+		stageState.AddStageModelHandle(duplicatedModel);
+	}
 
 	// もし最初のステージ読み込みなら、現在ステージとして設定
 	if (stageState.GetStageCount() == 1) {

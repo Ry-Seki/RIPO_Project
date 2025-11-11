@@ -52,8 +52,12 @@ void DebugScene::Initialize(Engine& engine) {
 
 	load.SetOnComplete(
 		[stageModel, stageModel2, player, playerModel, enemy, enemyModel, stageBoneData, treasure, treasureModel1, treasureModel2, stair, exit]() {
-			StageManager::GetInstance().LoadStage(stageModel->GetHandle());
-			StageManager::GetInstance().LoadStage(stageModel2->GetHandle());
+
+			std::vector<int> stageHandles = {
+				stageModel->GetHandle(),
+				stageModel2->GetHandle()
+			};
+			StageManager::GetInstance().LoadStage(stageHandles);
 			StageManager::GetInstance().SetStageJSONData(stageBoneData->GetData());
 			int modelHandle = playerModel->GetHandle();
 			CharacterManager::GetInstance().SetModelHandle(player.get(), modelHandle);
@@ -89,7 +93,7 @@ void DebugScene::Initialize(Engine& engine) {
 
 			Vector3 exitSpawnPos = StageManager::GetInstance().GetGoalPos();
 			exit->GetOwner()->position = exitSpawnPos;
-
+			GameObjectManager::GetInstance().SetObjectColliderFlag(true);
 		}
 	);
 }
@@ -102,11 +106,7 @@ void DebugScene::Update(Engine& engine, float deltaTime) {
 	bool stairFrag = StageObjectManager::GetInstance().GetStairMove();
 	if (stairFrag) {
 		StageManager::GetInstance().NextStage();
-		StageManager::GetInstance().GetPrevStageHandle();
-		StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
-		auto stair = StageObjectManager::GetInstance().GetStageObject(2);
-		Vector3 stairSpawnPos = StageManager::GetInstance().GetStairsPos();
-		stair->GetOwner()->position = stairSpawnPos;
+
 
 	}
 
