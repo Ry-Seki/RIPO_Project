@@ -18,7 +18,7 @@ Stage::Stage()
 	: StageBase()
 	, lightDirection(0.2f, -20.0f, 0.3f)
 	, pointLightColor(1.0f, 0.8f, 0.6f)  // 色
-	, pointLightRange(10.0f)            // ポイントライトの範囲
+	, pointLightRange(0.001f)            // ポイントライトの範囲
 {
 	modelHandle = -1;
 }
@@ -327,41 +327,41 @@ void Stage::ProcessFloorCollision(
  */
 void Stage::LightSettings() {
 
-	// // 既存のライトを全て消す
-	// DeleteLightHandleAll();
-	// 
-	// // 太陽光の設定
-	// int dirLight = CreateDirLightHandle(ToVECTOR(lightDirection));
-	// // 環境光設定
-	// SetLightAmbColor(GetColorF(0.2f, 0.25f, 0.3f, 1.0f));
-	// // 太陽光の色など設定
-	// SetLightDifColorHandle(dirLight, GetColorF(1.5f, 1.5f, 1.3f, 1.0f));
-	// SetLightSpcColorHandle(dirLight, GetColorF(0.2f, 0.2f, 0.2f, 1.0f));
-	// SetLightEnableHandle(dirLight, TRUE);
-	// 
-	// // ポイントライトの設定
-	// // ポイントライトの座標の取得
-	// pointLightPos = StageManager::GetInstance().GetPointLightPos();
-	// for (const auto& pos : pointLightPos) {
-	// 	int pLight = CreatePointLightHandle(
-	// 		ToVECTOR(pos),
-	// 		pointLightRange,
-	// 		1.0f / pointLightRange,
-	// 		0.001f,
-	// 		0.01f
-	// 	);
-	// 
-	// 	// ポイントの色など設定
-	// 	SetLightDifColorHandle(pLight, GetColorF(pointLightColor.x, pointLightColor.y, pointLightColor.z, 1.0f));
-	// 	SetLightSpcColorHandle(pLight, GetColorF(0.1f, 0.1f, 0.1f, 1.0f));
-	// 	SetLightEnableHandle(pLight, TRUE);
-	// 
-	// }
+	//// 既存のライトを全て消す
+	//DeleteLightHandleAll();
+	//
+	//// 太陽光の設定
+	//int dirLight = CreateDirLightHandle(ToVECTOR(lightDirection));
+	//// 環境光設定
+	//SetLightAmbColor(GetColorF(0.2f, 0.25f, 0.3f, 1.0f));
+	//// 太陽光の色など設定
+	//SetLightDifColorHandle(dirLight, GetColorF(1.5f, 1.5f, 1.3f, 1.0f));
+	//SetLightSpcColorHandle(dirLight, GetColorF(0.2f, 0.2f, 0.2f, 1.0f));
+	//SetLightEnableHandle(dirLight, TRUE);
+	//
+	//// ポイントライトの設定
+	//// ポイントライトの座標の取得
+	//pointLightPos = StageManager::GetInstance().GetPointLightPos();
+	//for (const auto& pos : pointLightPos) {
+	//	int pLight = CreatePointLightHandle(
+	//		ToVECTOR(pos),
+	//		pointLightRange,
+	//		60000.0f,
+	//		0.01f,
+	//		0.01f
+	//	);
+	//
+	//	// ポイントの色など設定
+	//	SetLightDifColorHandle(pLight, GetColorF(pointLightColor.x, pointLightColor.y, pointLightColor.z, 1.0f));
+	//	SetLightSpcColorHandle(pLight, GetColorF(0.1f, 0.1f, 0.1f, 1.0f));
+	//	SetLightEnableHandle(pLight, TRUE);
+	//
+	//}
 
 
-	 // マップ全体のライト設定
+	// マップ全体のライト設定
 
-	 // アンビエントカラーの設定
+	// アンビエントカラーの設定
 	SetLightAmbColor(GetColorF(0.2f, 0.25f, 0.3f, 1));
 	// ライトの方向を設定する
 	SetLightDirection(ToVECTOR(lightDirection));
@@ -404,7 +404,7 @@ void Stage::StageColliderRenderer() {
 		unsigned int drawColor = isWall ? wallColor : floorColor;
 
 		// ポリゴンを半透明で描画
-		DrawTriangle3D(poly.Position[0], poly.Position[1], poly.Position[2], drawColor, TRUE);
+		//DrawTriangle3D(poly.Position[0], poly.Position[1], poly.Position[2], drawColor, TRUE);
 
 		// ポリゴンを白線で描画
 		DrawLine3D(poly.Position[0], poly.Position[1], lineColor);
