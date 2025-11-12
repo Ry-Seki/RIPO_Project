@@ -24,7 +24,6 @@ private:
 	std::vector<Vector3>pointLightPos;	// ˆÊ’u
 	Vector3 pointLightColor;// F
 	float pointLightRange;	// Œø‰Ê”ÍˆÍ
-
 public:
 	Stage();
 	virtual ~Stage() override;
