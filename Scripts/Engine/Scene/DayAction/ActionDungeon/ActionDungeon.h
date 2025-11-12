@@ -73,7 +73,7 @@ public:
 
 	void DebugInitialize(Engine& engine, DungeonStageData& setStageData);
 	void DebugSetup(Engine& engine, const DungeonResource& setResource);
-
+	void EndDungeon();
 private:
 	/*
 	 *	ステージデータからロードリストに追加
