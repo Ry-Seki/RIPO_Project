@@ -64,6 +64,14 @@ namespace CharacterUtility {
 		CharacterManager::GetInstance().RemoveCharacter(destroyCharacter->ID);
 	}
 	/*
+	 *	ポインタ指定のキャラクター削除
+	 *  @param[in]	const GameObjectPtr& destroyCharacter
+	 */
+	inline void RemoveCharacter(const GameObject* destroyCharacter) {
+		if (!destroyCharacter) return;
+		CharacterManager::GetInstance().RemoveCharacter(destroyCharacter->ID);
+	}
+	/*
 	 *	全てのキャラクター削除
 	 */
 	inline void RemoveAllCharacter() {

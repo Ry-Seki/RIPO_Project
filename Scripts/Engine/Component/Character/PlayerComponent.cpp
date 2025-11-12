@@ -90,7 +90,6 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	// 角度を補正
 	player->rotation.y += PLAYER_MODEL_ANGLE_CORRECTION * Deg2Rad;
 
-#if _DEBUG
 	// デバッグ用Y軸移動
 	{
 		if (CheckHitKey(KEY_INPUT_TAB)) {
@@ -100,7 +99,6 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 			player->position.y += moveSpeed * deltaTime;
 		}
 	}
-#endif
 }
 
 /*
