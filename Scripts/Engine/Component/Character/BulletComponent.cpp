@@ -4,12 +4,14 @@
  */
 
 #include "BulletComponent.h"
+#include "CharacterUtility.h"
 #include "../../GameObject.h"
 #include "../../GameConst.h"
 #include "../../GameObject/GameObjectUtility.h"
 #include "../../Manager/CameraManager.h"
 
 using namespace GameObjectUtility;
+using namespace CharacterUtility;
 
 BulletComponent::BulletComponent()
 	: destroyTimeCount(3)
@@ -44,6 +46,6 @@ void BulletComponent::OnCollision(const std::shared_ptr<Component>& self, const 
 	ResetObject(bullet);
 	// “G‚É“–‚½‚Á‚½‚ç“G‚à”jŠü
 	if (otherOwner->name == GameConst::_CREATE_POSNAME_ENEMY) {
-		ResetObject(otherOwner);
+		RemoveCharacter(otherOwner);
 	}
 }
