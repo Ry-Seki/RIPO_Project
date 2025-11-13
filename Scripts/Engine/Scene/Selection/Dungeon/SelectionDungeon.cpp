@@ -18,12 +18,12 @@ void SelectionDungeon::Initialize(Engine& engine) {
 	LoadManager& load = LoadManager::GetInstance();
 	isComplete = false;
 	dungeonDataLoader = load.LoadResource<DungeonDataLoader>("Data/Dungeon/DungeonList.csv");
-	load.SetOnComplete( [this, &engine]() { Setup(engine); } );
+	load.SetOnComplete( [this, &engine]() { SetupData(engine); } );
 }
 /*
- *	ロード済みデータのコールバック処理
+ *	ロード済みデータのセット (コールバック処理)
  */
-void SelectionDungeon::Setup(Engine& engine) {
+void SelectionDungeon::SetupData(Engine& engine) {
 	dungeonDataList = dungeonDataLoader->dungeonList;
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.0f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fade);

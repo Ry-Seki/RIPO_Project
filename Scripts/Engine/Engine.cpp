@@ -6,7 +6,7 @@
 #include "Engine.h"
 #include "Time.h"
 #include "GameConst.h"
-#include "Scene/TitleScene.h"
+#include "Scene/StandbyScene.h"
 #include "Scene/DebugScene.h"
 #include "Fade/FadeFactory.h"
 #include "Fade/FadeManager.h"
@@ -111,7 +111,7 @@ void Engine::Teardown() {
 int Engine::Run() {
 	if (Initialize() != 0) { Teardown(); return 1; }
 
-	SetNextScene(std::make_shared<TitleScene>());
+	SetNextScene(std::make_shared<StandbyScene>());
 	ChangeScene();
 
 	while (ProcessMessage() != -1) {
