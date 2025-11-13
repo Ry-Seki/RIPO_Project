@@ -26,7 +26,13 @@ public:
 	void Update(float deltaTime) override;
 
 public:
-
+	/*
+	 *	落下速度に指定した値を加える
+	 *  @param	float	addValue	増加値
+	 */
+	void AddFallSpeed(float addValue) {
+		fallSpeed += addValue;
+	}
 
 };
 
