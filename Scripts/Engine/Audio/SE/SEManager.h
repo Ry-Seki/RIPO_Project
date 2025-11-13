@@ -35,7 +35,7 @@ public:
 	/*
 	 *	デストラクタ
 	 */
-	~SEManager() = default;
+	~SEManager();
 
 public:
 	/*

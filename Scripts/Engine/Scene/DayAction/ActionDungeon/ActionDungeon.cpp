@@ -62,7 +62,7 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
         PlaySE("GoalSE");
         inputHandle = true;
         isComplete = true;
-        Teardown();
+        EndDungeon();
     } else if (stairFrag) {
         StageManager::GetInstance().NextStage();
         //StageManager::GetInstance().GetPrevStageHandle();
@@ -76,7 +76,7 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
         PlaySE("DebugSE");
         inputHandle = true;
         isComplete = true;
-        Teardown();
+        EndDungeon();
     }
 
     if (CheckHitKey(KEY_INPUT_0) == 0) inputHandle = false;
@@ -166,12 +166,7 @@ void ActionDungeon::Render() {
  *  破棄処理
  */
 void ActionDungeon::Teardown() {
-    // 当たり判定の無効化
-    SetUseObjectColliderFlag(false);
-    RemoveAllCharacter();
-    StageManager::GetInstance().Execute();
-    RemoveAllStageObject();
-    CameraManager::GetInstance().ResetCamera();
+
 }
 
 void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageData) {
@@ -287,6 +282,15 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
     FadeManager::GetInstance().StartFade(fade);
     // 当たり判定の有効化
     SetUseObjectColliderFlag(true);
+}
+
+void ActionDungeon::EndDungeon() {
+    // 当たり判定の無効化
+    SetUseObjectColliderFlag(false);
+    RemoveAllCharacter();
+    StageManager::GetInstance().Execute();
+    RemoveAllStageObject();
+    CameraManager::GetInstance().ResetCamera();
 }
 /*
  *	ステージデータからロードリストに追加

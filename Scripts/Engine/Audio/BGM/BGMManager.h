@@ -31,7 +31,7 @@ public:
 	/*
 	 *	デストラクタ
 	 */
-	~BGMManager() = default;
+	~BGMManager();
 public:
 	/*
 	 *	初期化処理
