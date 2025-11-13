@@ -22,7 +22,7 @@ private:
 
 private:
 	BulletManager();
-	~BulletManager() = default;
+	~BulletManager() { MV1DeleteModel(bulletHandle); };
 
 public:
 	void Initialize(Engine& setEngine);

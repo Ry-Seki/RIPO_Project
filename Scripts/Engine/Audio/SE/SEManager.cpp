@@ -5,6 +5,16 @@
 
 #include "SEManager.h"
 
+ /*
+  *	デストラクタ
+  */
+SEManager::~SEManager() {
+	for (auto itr : seHandleMap) {
+		DeleteSoundMem(itr.second);
+	}
+	seHandleMap.clear();
+}
+
 /*
  *	初期化処理
  */
