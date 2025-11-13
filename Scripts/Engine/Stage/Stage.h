@@ -24,6 +24,20 @@ private:
 	std::vector<Vector3>pointLightPos;	// 位置
 	Vector3 pointLightColor;// 色
 	float pointLightRange;	// 効果範囲
+
+	static constexpr DxLib::COLOR_F _MAP_DIF_COLOR = { 1.5f, 1.5f, 1.3f, 1.0f };	// マップ全体のライト ディフューズカラー
+	static constexpr DxLib::COLOR_F _MAP_AMB_COLOR = { 0.2f, 0.25f, 0.3f, 1 };		// マップ全体のライト アンビエントカラー
+	static constexpr DxLib::COLOR_F _MAP_SPC_COLOR = { 0.2f, 0.2f, 0.2f, 1 };		// マップ全体のライト スペキュラーカラー
+
+	struct Attenuation {
+		float Atten0;
+		float Atten1;
+		float Atten2;
+	};
+	static constexpr Attenuation _POINT_ATTAN = { 0.0f, 0.0005f, 0.0f };
+	static constexpr DxLib::COLOR_F _POINT_SPC_COLOR = { 0.1f, 0.1f, 0.1f, 1.0f };	// ポイントライト スペキュラーカラー
+
+
 public:
 	Stage();
 	virtual ~Stage() override;

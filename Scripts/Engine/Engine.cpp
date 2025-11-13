@@ -6,11 +6,17 @@
 #include "Engine.h"
 #include "Time.h"
 #include "GameConst.h"
-#include "Scene/TitleScene.h"
+#include "Scene/StandbyScene.h"
 #include "Scene/DebugScene.h"
 #include "Fade/FadeFactory.h"
 #include "Fade/FadeManager.h"
 #include "Audio/AudioManager.h"
+#include "Load/LoadManager.h"
+#include "Manager/StageObjectManager.h"
+#include "Manager/StageManager.h"
+#include "Manager/GameObjectManager.h"
+#include "Manager/BulletManager.h"
+#include "Manager/CharacterManager.h"
 
 #include <DxLib.h>
 #include <EffekseerForDXLib.h>
@@ -85,9 +91,19 @@ int Engine::Initialize() {
  *	îjä¸èàóù
  */
 void Engine::Teardown() {
+	if (initialized) {
+		initialized = false;
+		BulletManager::GetInstance().DestroyInstance();
+		AudioManager::GetInstance().DestroyInstance();
+		StageObjectManager::GetInstance().DestroyInstance();
+		StageManager::GetInstance().DestroyInstance();
+		LoadManager::GetInstance().DestroyInstance();
+		GameObjectManager::GetInstance().DestroyInstance();
+		CharacterManager::GetInstance().DestroyInstance();
+		currentScene->Finalize(*this);
+	}
 	if (effekseerInitialized) { Effkseer_End(); effekseerInitialized = false; }
 	if (dxlibInitialized) { DxLib_End(); dxlibInitialized = false; }
-	initialized = false;
 }
 /*
  *	ÉÅÉCÉìÉãÅ[Év
@@ -95,7 +111,7 @@ void Engine::Teardown() {
 int Engine::Run() {
 	if (Initialize() != 0) { Teardown(); return 1; }
 
-	SetNextScene(std::make_shared<TitleScene>());
+	SetNextScene(std::make_shared<StandbyScene>());
 	ChangeScene();
 
 	while (ProcessMessage() != -1) {
