@@ -88,6 +88,9 @@
     <Filter Include="ヘッダー ファイル\Engine\Menu">
       <UniqueIdentifier>{fa4e7175-a830-4183-bca5-efe2091cd4e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Character\Player">
+      <UniqueIdentifier>{e2efb761-41fb-4b18-919c-42685fde43be}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -264,6 +267,9 @@
     <ClCompile Include="Scripts\Engine\Scene\ResultScene.cpp">
       <Filter>ソース ファイル\Engine\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -365,9 +371,6 @@
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\CameraComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Manager\CameraManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -385,9 +388,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\Sprite\LoadSprite.h">
       <Filter>ヘッダー ファイル\Engine\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.h">
       <Filter>ヘッダー ファイル\Engine\Load\Animation</Filter>
@@ -434,12 +434,6 @@
     <ClInclude Include="Scripts\Engine\Load\LoadRegistry.h">
       <Filter>ヘッダー ファイル\Engine\Load</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\ExitPoint.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionBase.h">
       <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
     </ClInclude>
@@ -455,20 +449,8 @@
     <ClInclude Include="Scripts\Engine\Collision.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\AABBCollider.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h">
       <Filter>ヘッダー ファイル\Engine\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\RayCast.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -506,17 +488,8 @@
     <ClInclude Include="Scripts\Engine\Stage\StageUtility.h">
       <Filter>ヘッダー ファイル\Engine\Stage</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\Stair.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectUtility.h">
       <Filter>ヘッダー ファイル\Engine\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\BulletComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\WeaponBase.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\GameObject\GameObjectUtility.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -524,17 +497,11 @@
     <ClInclude Include="Scripts\Engine\Load\Audio\LoadAudio.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Manager\BulletManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Vision.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Stage\StageState.h">
       <Filter>ヘッダー ファイル\Engine\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\RevolverArm.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Fade\SpiralFade.h">
       <Filter>ヘッダー ファイル\Engine\Fade</Filter>
@@ -556,6 +523,48 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\MenuBase.h">
       <Filter>ヘッダー ファイル\Engine\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\AABBCollider.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\BulletComponent.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\CameraComponent.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\ExitPoint.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\GravityComponent.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Stair.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Manager\BulletManager.h">
+      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h">
+      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\RevolverArm.h">
+      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\WeaponBase.h">
+      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
