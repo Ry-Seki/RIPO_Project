@@ -6,7 +6,6 @@
 #include "GravityComponent.h"
 #include "../GameObject.h"
 
-
 GravityComponent::GravityComponent() 
 	: fallSpeed(0.0f)
 	
