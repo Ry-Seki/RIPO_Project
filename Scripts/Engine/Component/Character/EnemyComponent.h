@@ -21,6 +21,10 @@ private:
 	float wayPointDistance;
 	// ウェイポイント追尾切り替えフラグ
 	bool chaseTargetChangeFrag;
+	// 方向転換時のディレイ
+	float turnDelay;
+
+	const float TOP_VALUE;
 
 public:
 	/*
