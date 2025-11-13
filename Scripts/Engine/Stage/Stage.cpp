@@ -330,13 +330,12 @@ void Stage::LightSettings() {
 	// 古いライトを全て削除
 	DeleteLightHandleAll();
 
-
 	// マップ全体のライト設定
 	// アンビエントカラーの設定
 	SetLightAmbColor(GetColorF(0.2f, 0.25f, 0.3f, 1));
 	// ライトの方向を設定する
 	SetLightDirection(ToVECTOR(lightDirection));
-	SetLightDifColor(GetColorF(1.5f, 1.5f, 1.3f, 1.0f));
+	SetLightDifColor(GameConst::_MAP_DIF_LIGHTCOLOR);
 	SetLightSpcColor(GetColorF(0.2f, 0.2f, 0.2f, 1));
 
 	// ポイントライト設定
