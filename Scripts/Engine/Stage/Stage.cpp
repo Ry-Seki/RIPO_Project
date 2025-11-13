@@ -332,19 +332,21 @@ void Stage::LightSettings() {
 
 	// マップ全体のライト設定
 	// アンビエントカラーの設定
-	SetLightAmbColor(GetColorF(0.2f, 0.25f, 0.3f, 1));
+	SetLightAmbColor(_MAP_AMB_COLOR);
 	// ライトの方向を設定する
 	SetLightDirection(ToVECTOR(lightDirection));
-	SetLightDifColor(GameConst::_MAP_DIF_LIGHTCOLOR);
-	SetLightSpcColor(GetColorF(0.2f, 0.2f, 0.2f, 1));
+	SetLightDifColor(_MAP_DIF_COLOR);
+	SetLightSpcColor(_MAP_SPC_COLOR);
 
 	// ポイントライト設定
 	pointLightPos = StageManager::GetInstance().GetPointLightPos();
+	// ポイントライトがおける場所がある分、ポイントライトを配置する
 	for (const auto& pos : pointLightPos) {
 		// ポイントライトのハンドルを作成
-		int pLight = CreatePointLightHandle(ToVECTOR(pos), pointLightRange, 0.0f, 0.0005f, 0.0f);
-		SetLightDifColorHandle(pLight, GetColorF(pointLightColor.x, pointLightColor.y, pointLightColor.z, 1.0f));
-		SetLightSpcColorHandle(pLight, GetColorF(0.1f, 0.1f, 0.1f, 1.0f));
+		int pLight = CreatePointLightHandle(ToVECTOR(pos), pointLightRange, _POINT_ATTAN.Atten0, _POINT_ATTAN.Atten1, _POINT_ATTAN.Atten2);
+		// ポイントライトの色を指定する
+		SetLightDifColorHandle(pLight, GetColorF(pointLightColor.x, pointLightColor.y, pointLightColor.z, Vector3::one.x));
+		SetLightSpcColorHandle(pLight, _POINT_SPC_COLOR);
 		SetLightEnableHandle(pLight, TRUE);
 	}
 
@@ -359,7 +361,7 @@ void Stage::StageColliderRenderer() {
 	if (modelHandle < 0) return;
 
 	// 当たり判定の中心位置
-	VECTOR checkCenter = VGet(0.0f, 0.0f, 0.0f);
+	VECTOR checkCenter = ToVECTOR(Vector3::zero);
 
 	// 判定に使用する球の半径
 	float  radius = 20000.0f;

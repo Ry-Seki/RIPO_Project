@@ -45,7 +45,6 @@ public:
 	static constexpr int HIT_TRYNUM = 16;								// 壁押し出し処理の最大試行回数
 	static constexpr float HIT_SLIDE_LENGTH = 0.1f;						// 一度の壁押し出し処理でスライドさせる距離
 	static constexpr const float VIEW_RADIUS = 60.0f;					// 取得範囲
-	static constexpr DxLib::COLOR_F _MAP_DIF_LIGHTCOLOR = { 1.5f, 1.5f, 1.3f, 1.0f };	// マップ全体のライト ディフューズカラー
 
 
 
