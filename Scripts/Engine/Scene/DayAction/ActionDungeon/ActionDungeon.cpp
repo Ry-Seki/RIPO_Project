@@ -45,7 +45,7 @@ void ActionDungeon::Initialize(Engine& engine) {
 /*
  *  ロード済みのデータをセット(コールバック)
  */
-void ActionDungeon::Setup(Engine& engine) {
+void ActionDungeon::SetupData(Engine& engine) {
 
 }
 /*
@@ -62,7 +62,7 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
         PlaySE("GoalSE");
         inputHandle = true;
         isComplete = true;
-        Teardown();
+        EndDungeon();
     } else if (stairFrag) {
         StageManager::GetInstance().NextStage();
         //StageManager::GetInstance().GetPrevStageHandle();
@@ -76,7 +76,7 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
         PlaySE("DebugSE");
         inputHandle = true;
         isComplete = true;
-        Teardown();
+        EndDungeon();
     }
 
     if (CheckHitKey(KEY_INPUT_0) == 0) inputHandle = false;
@@ -166,12 +166,7 @@ void ActionDungeon::Render() {
  *  破棄処理
  */
 void ActionDungeon::Teardown() {
-    // 当たり判定の無効化
-    SetUseObjectColliderFlag(false);
-    RemoveAllCharacter();
-    StageManager::GetInstance().Execute();
-    RemoveAllStageObject();
-    CameraManager::GetInstance().ResetCamera();
+
 }
 
 void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageData) {
@@ -211,8 +206,6 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
         stageHandleList[i] = setResource.stageResource[i]->GetHandle();
         LoadStage(stageHandleList);
     }
-    // モデルの設定
-    // LoadStage(stageHandle);
     // ステージボーンデータの設定
     SetStageJSONData(setResource.stageBoneResource[0]->GetData());
 
@@ -221,6 +214,7 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
     int playerHandle = setResource.playerResource->GetHandle();
     // プレイヤーオブジェクトの取得
     auto player = GetUseObject(0);
+	if (!player) return;
     // 位置の設定
     player->position = GetStartPos();
     // モデルの設定
@@ -232,9 +226,10 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
     size_t enemyCount = enemySpawnPos.size();
     // モデルハンドルの取得
     int enemyHandle = setResource.enemyResource[0]->GetHandle();
+    // 敵の取得
+    std::vector<GameObjectPtr> enemyList = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
     for (int i = 0; i < enemyCount; i++) {
-        std::vector<GameObjectPtr> enemyList = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
-        // 敵の取得
+        if (enemyList.size() <= 0) break;
         auto enemyCharacter = enemyList[i];
         if (!enemyCharacter) continue;
         // 位置の設定
@@ -273,12 +268,14 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
     // 階段の設定
     int stairCount = treasureCount;
     auto stair = GetStageObject(stairCount);
+	if (!stair) return;
     Vector3 stairSpawnPos = GetStairsPos();
     stair->GetOwner()->position = stairSpawnPos;
 
     // 出口の設定
     int exitCount = stairCount + 1;
     auto exit = GetStageObject(exitCount);
+	if (!exit) return;
     Vector3 exitSpawnPos = GetGoalPos();
     exit->GetOwner()->position = exitSpawnPos;
 
@@ -287,6 +284,15 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
     FadeManager::GetInstance().StartFade(fade);
     // 当たり判定の有効化
     SetUseObjectColliderFlag(true);
+}
+
+void ActionDungeon::EndDungeon() {
+    // 当たり判定の無効化
+    SetUseObjectColliderFlag(false);
+    RemoveAllCharacter();
+    StageManager::GetInstance().Execute();
+    RemoveAllStageObject();
+    CameraManager::GetInstance().ResetCamera();
 }
 /*
  *	ステージデータからロードリストに追加

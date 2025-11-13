@@ -14,7 +14,7 @@ void ActionTraining::Initialize(Engine& engine) {
 /*
  *  ロード済みのデータをセット(コールバック)
  */
-void ActionTraining::Setup(Engine& engine) {
+void ActionTraining::SetupData(Engine& engine) {
 
 }
 /*

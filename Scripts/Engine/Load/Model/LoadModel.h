@@ -23,6 +23,10 @@ public:
 	 *	param[in]	const std::string& setFilePath		ファイルパス
 	 */
 	explicit LoadModel(const std::string& setFilePath) : LoadBase(setFilePath) {}
+	/*
+	 *	デストラクタ
+	 */
+	~LoadModel() override { MV1DeleteModel(modelHandle); }
 
 public:
 	/*

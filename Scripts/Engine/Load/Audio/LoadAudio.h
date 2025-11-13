@@ -22,6 +22,10 @@ public:
 	 *	param[in]	const std::string& setFilePath		ファイルパス
 	 */
 	explicit LoadAudio(const std::string& setFilePath) : LoadBase(setFilePath) {}
+	/*
+	 *	デストラクタ
+	 */
+	~LoadAudio() override { DeleteSoundMem(audioHandle); }
 
 public:
 	/*

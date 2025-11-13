@@ -6,6 +6,16 @@
 #include "BGMManager.h"
 
 /*
+ *	デストラクタ
+ */
+BGMManager::~BGMManager() {
+	for (auto itr : bgmHandleMap) {
+		DeleteSoundMem(itr.second);
+	}
+	bgmHandleMap.clear();
+}
+
+/*
  *	初期化処理
  */
 void BGMManager::Initialize() {
@@ -13,7 +23,7 @@ void BGMManager::Initialize() {
 /*
  *	ロード済みのデータの設定(コールバック)
  */
-void BGMManager::Setup() {
+void BGMManager::SetupData() {
 }
 /*
  *	更新処理

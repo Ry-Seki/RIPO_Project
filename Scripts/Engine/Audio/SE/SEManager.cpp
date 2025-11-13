@@ -5,6 +5,16 @@
 
 #include "SEManager.h"
 
+ /*
+  *	デストラクタ
+  */
+SEManager::~SEManager() {
+	for (auto itr : seHandleMap) {
+		DeleteSoundMem(itr.second);
+	}
+	seHandleMap.clear();
+}
+
 /*
  *	初期化処理
  */
@@ -15,9 +25,9 @@ void SEManager::Initialize() {
 	}
 }
 /*
- *	ロード済みのデータの設定(コールバック)
+ *	ロード済みのデータの設定 (コールバック)
  */
-void SEManager::Setup() {
+void SEManager::SetupData() {
 }
 /*
  *	更新処理
