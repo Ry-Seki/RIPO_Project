@@ -35,7 +35,7 @@ public:
 	/*
 	 *	デストラクタ
 	 */
-	~SEManager();
+	~SEManager() = default;
 
 public:
 	/*
@@ -43,9 +43,9 @@ public:
 	 */
 	void Initialize();
 	/*
-	 *	ロード済みのデータの設定 (コールバック)
+	 *	ロード済みのデータの設定(コールバック)
 	 */
-	void SetupData();
+	void Setup();
 	/*
 	 *	更新処理
 	 */

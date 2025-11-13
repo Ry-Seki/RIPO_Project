@@ -18,9 +18,9 @@ public:
      */
     virtual void Initialize(Engine& engine) override;
     /*
-     *  ロード済みデータのセット (コールバック)
+     *  ロード済みデータの設定 (コールバック)
      */
-    void SetupData(Engine& engine);
+    void Setup(Engine& engine);
     /*
      *  更新処理
      */

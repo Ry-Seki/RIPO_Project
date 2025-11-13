@@ -41,16 +41,12 @@ void GameObjectManager::ReturnGameObjectList(int ID) {
 GameObjectPtr GameObjectManager::GetUnuseObject() {
 	// 同時にリストをいじれないようにロック
 	std::lock_guard<std::mutex> lock(unuseMutex);
-	GameObjectPtr unuseObject;
 	// リストが空なら生成して返す
-	if (unuseObjectList.empty()) {
-		unuseObject = engine->Create<GameObject>();
-	} else {
-		// リストの一番後ろを渡す
-		unuseObject = unuseObjectList.back();
-		// 渡したらリストから削除
-		unuseObjectList.pop_back();
-	}
+	if (unuseObjectList.empty()) return engine->Create<GameObject>();
+	// リストの一番後ろを渡す
+	GameObjectPtr unuseObject = unuseObjectList.back();
+	// 渡したらリストから削除
+	unuseObjectList.pop_back();
 	// そのオブジェクトがすでに破棄済みなら初期化する
 	if (unuseObject->IsDestroyed()) unuseObject->ResetDestroy();
 	// 使用オブジェクトリストの空きをチェック
@@ -122,11 +118,11 @@ void GameObjectManager::ResetObject(GameObject* resetObject) {
 	std::lock_guard<std::mutex> lock(unuseMutex);
 	// オブジェクトのIDの取得
 	int resetObjectID = resetObject->ID;
+	// 使用リストから削除
+	useObjectList[resetObjectID] = nullptr;
 	// オブジェクトのリセット
 	resetObject->Destroy();
 	resetObject->ResetGameObject();
 	// 未使用リストに戻る
 	ReturnGameObjectList(resetObjectID);
-	// 使用リストから削除
-	useObjectList[resetObjectID] = nullptr;
 }

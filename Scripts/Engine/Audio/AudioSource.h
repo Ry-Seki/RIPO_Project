@@ -38,7 +38,7 @@ public:
 	/*
 	 *	‰¹Œ¹‚Ì”jŠüˆ—
 	 */
-	virtual void Teardown() { if(audioHandle != -1) DeleteSoundMem(audioHandle); };
+	virtual void Teardown() {};
 
 public:
 	/*

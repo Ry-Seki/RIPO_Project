@@ -30,9 +30,7 @@ public:
     /*
      *  デストラクタ
      */
-    ~LoadRegistry() {
-		registry.clear();
-    }
+    ~LoadRegistry() = default;
 
 public:
     /*

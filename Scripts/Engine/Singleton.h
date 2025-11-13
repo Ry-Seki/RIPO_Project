@@ -12,11 +12,8 @@
 template <typename T>
 class Singleton {
 protected:
-	inline static T* instance = nullptr;
-
-protected:
 	Singleton() = default;
-	virtual ~Singleton() = default;
+	~Singleton() = default;
 	
 public:		
 	// コピー、譲渡の禁止
@@ -27,15 +24,8 @@ public:
 
 	// インスタンスの取得
 	static T& GetInstance() {
-		if (!instance) instance = new T();
-		return *instance;
-	}
-	// インスタンスの破棄
-	static void DestroyInstance() {
-		if (instance) {
-			delete instance;
-			instance = nullptr;
-		}
+		static T instance;
+		return instance;
 	}
 };
 

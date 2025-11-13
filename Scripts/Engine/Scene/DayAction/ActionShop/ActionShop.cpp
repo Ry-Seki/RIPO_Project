@@ -14,7 +14,7 @@ void ActionShop::Initialize(Engine& engine) {
 /*
  *  ロード済みのデータをセット(コールバック)
  */
-void ActionShop::SetupData(Engine& engine) {
+void ActionShop::Setup(Engine& engine) {
 
 }
 /*

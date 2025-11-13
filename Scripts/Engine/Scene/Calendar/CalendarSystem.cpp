@@ -21,7 +21,7 @@ void CalendarSystem::Initialize() {
 /*
  *  ロード済みのデータをセット(コールバック)
  */
-void CalendarSystem::SetupData() {
+void CalendarSystem::Setup() {
 
 }
 /*
@@ -29,6 +29,8 @@ void CalendarSystem::SetupData() {
  */
 void CalendarSystem::AdvanceDay() {
     if (GetMonth().IsFinished()) return;
+    // 1年が終了したら処理しない
+    //if (GetYear().IsFinished()) return;
 
     // 1日の消費
     GetDay().AdvanceDay();

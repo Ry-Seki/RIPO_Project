@@ -30,11 +30,11 @@ public:
      */
     void Initialize(class Engine& engine) override;
     /*
-     *  ロード済みのデータのセット(コールバック)
+     *  ロード済みのデータの設定(コールバック)
      *  @param[in]  std::shared_ptr<LoadJSON> setSelectionData       選択クラスのデータ
      *  @param[in]  std::shared_ptr<LoadJSON> setActionData          アクションクラスのデータ
      */
-    void SetupData(class Engine& engine, std::shared_ptr<LoadJSON> setSelectionData, std::shared_ptr<LoadJSON> setActionData);
+    void Setup(class Engine& engine, std::shared_ptr<LoadJSON> setSelectionData, std::shared_ptr<LoadJSON> setActionData);
     /*
      *  更新処理
      */
@@ -43,12 +43,6 @@ public:
      *  描画処理
      */
     void Render() override;
-
-public:
-    /*
-     *  日にち更新処理
-     */
-    void AdvanceDay(Engine& engine);
 };
 #endif // !_MAINGAMESCENE_H_
 

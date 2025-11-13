@@ -13,7 +13,7 @@ void AudioManager::Initialize() {
 /*
  *	ロード済みのデータの設定(コールバック)
  */
-void AudioManager::SetupData() {
+void AudioManager::Setup() {
 }
 /*
  *	更新処理

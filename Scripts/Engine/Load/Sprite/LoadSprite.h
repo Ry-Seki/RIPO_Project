@@ -22,10 +22,6 @@ public:
      *	param[in]	const std::string& setFilePath		ファイルパス
      */
     explicit LoadSprite(const std::string& setFilePath) : LoadBase(setFilePath) {}
-    /*
-     *  デストラクタ
-     */
-    ~LoadSprite() override { DeleteGraph(graphHandle); }
 
 public:
     /*

@@ -31,7 +31,7 @@ public:
 	/*
 	 *	デストラクタ
 	 */
-	~BGMManager();
+	~BGMManager() = default;
 public:
 	/*
 	 *	初期化処理
@@ -41,7 +41,7 @@ public:
 	 *	ロード済みのデータの設定(コールバック)
 	 *  @param[in]	
 	 */
-	void SetupData();
+	void Setup();
 	/*
 	 *	更新処理
 	 */

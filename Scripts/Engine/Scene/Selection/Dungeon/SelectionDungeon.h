@@ -45,7 +45,7 @@ public:
 	/*
 	 *	ロード済みデータのセット（コールバック）
 	 */
-	void SetupData(Engine& engine) override;
+	void Setup(Engine& engine) override;
 	/*
 	 *	更新処理
 	 */

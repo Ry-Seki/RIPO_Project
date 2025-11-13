@@ -38,7 +38,7 @@ public:
     /*
      *  ロード済みのデータをセット(コールバック)
      */
-    void SetupData();
+    void Setup();
     /*
      *  Dayを進める
      */

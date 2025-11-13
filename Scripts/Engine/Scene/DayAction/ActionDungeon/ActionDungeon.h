@@ -57,7 +57,7 @@ public:
 	/*
 	 *  ロード済みのデータをセット(コールバック)
 	 */
-	void SetupData(Engine& engine) override;
+	void Setup(Engine& engine) override;
 	/*
 	 *	更新処理
 	 */
@@ -73,7 +73,7 @@ public:
 
 	void DebugInitialize(Engine& engine, DungeonStageData& setStageData);
 	void DebugSetup(Engine& engine, const DungeonResource& setResource);
-	void EndDungeon();
+
 private:
 	/*
 	 *	ステージデータからロードリストに追加
