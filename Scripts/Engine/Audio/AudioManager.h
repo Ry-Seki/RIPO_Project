@@ -43,7 +43,7 @@ public:
 	/*
 	 *	ロード済みのデータの設定
 	 */
-	void Setup();
+	void SetupData();
 	/*
 	 *	更新処理
 	 */

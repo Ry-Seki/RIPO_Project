@@ -14,7 +14,7 @@ void ActionPartTime::Initialize(Engine& engine) {
 /*
  *  ロード済みのデータをセット(コールバック)
  */
-void ActionPartTime::Setup(Engine& engine) {
+void ActionPartTime::SetupData(Engine& engine) {
 
 }
 /*

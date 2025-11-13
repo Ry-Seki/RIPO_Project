@@ -25,9 +25,9 @@ void SEManager::Initialize() {
 	}
 }
 /*
- *	ロード済みのデータの設定(コールバック)
+ *	ロード済みのデータの設定 (コールバック)
  */
-void SEManager::Setup() {
+void SEManager::SetupData() {
 }
 /*
  *	更新処理

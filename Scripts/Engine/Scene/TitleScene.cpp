@@ -11,6 +11,8 @@
 #include "../Load/LoadManager.h"
 #include "../Load/Animation/LoadAnimation_ChangeBackground.h"
 #include "../Audio/AudioUtility.h"
+#include "../Fade/FadeManager.h"
+#include "../Fade/FadeFactory.h"
 
 #include <DxLib.h>
 #include <memory>
@@ -21,6 +23,8 @@ using namespace AudioUtility;
   *  初期化処理
   */
 void TitleScene::Initialize(Engine& engine) {
+	auto fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fadeIn);
 	SetBGMVolume(100);
 	SetSEVolume(100);
 	auto debugSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/ButtonPush_Debug.mp3");
@@ -40,13 +44,13 @@ void TitleScene::Initialize(Engine& engine) {
 		}
 		loadBG->SetImages(BGHandleList);
 		LoadManager::GetInstance().AddAnimation(loadBG);
-		Setup(engine);
+		SetupData(engine);
 	});
 }
 /*
  *  ロード済みデータの設定 (コールバック)
  */
-void TitleScene::Setup(Engine& engine) {
+void TitleScene::SetupData(Engine& engine) {
 	engine.StartFadeOutIn(0.5f, 0.5f, [&engine]() {
 		engine.SetNextScene(std::make_shared<MainGameScene>());
 	});

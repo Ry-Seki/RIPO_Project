@@ -23,7 +23,7 @@ void BGMManager::Initialize() {
 /*
  *	ロード済みのデータの設定(コールバック)
  */
-void BGMManager::Setup() {
+void BGMManager::SetupData() {
 }
 /*
  *	更新処理

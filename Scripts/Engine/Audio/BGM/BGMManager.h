@@ -41,7 +41,7 @@ public:
 	 *	ロード済みのデータの設定(コールバック)
 	 *  @param[in]	
 	 */
-	void Setup();
+	void SetupData();
 	/*
 	 *	更新処理
 	 */
