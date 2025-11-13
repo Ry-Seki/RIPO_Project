@@ -23,7 +23,7 @@ void CalendarManager::Initialize() {
 void CalendarManager::Update(Engine& engine) {
     Day& day = calendarSystem->GetDay();
     if (!isActive) return;
-    if (!inputHandle && !IsEndDayAdvance()) {
+    if (!inputHandle) {
         if (CheckHitKey(KEY_INPUT_1)) { 
             // SEÇÃçƒê∂
             AudioUtility::PlaySE("DebugSE");

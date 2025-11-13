@@ -85,6 +85,9 @@
     <Filter Include="ヘッダー ファイル\Engine\Utility">
       <UniqueIdentifier>{2711ac87-a2b7-4672-910f-906a1dee5423}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Menu">
+      <UniqueIdentifier>{fa4e7175-a830-4183-bca5-efe2091cd4e9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -550,6 +553,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\ResultScene.h">
       <Filter>ヘッダー ファイル\Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\MenuBase.h">
+      <Filter>ヘッダー ファイル\Engine\Menu</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
