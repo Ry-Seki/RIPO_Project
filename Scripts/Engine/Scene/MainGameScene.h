@@ -43,6 +43,12 @@ public:
      *  •`‰æˆ—
      */
     void Render() override;
+
+public:
+    /*
+     *  “ú‚É‚¿XVˆ—
+     */
+    void AdvanceDay(Engine& engine);
 };
 #endif // !_MAINGAMESCENE_H_
 

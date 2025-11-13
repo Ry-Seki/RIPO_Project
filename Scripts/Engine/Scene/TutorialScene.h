@@ -32,6 +32,10 @@ public:
 	 */
 	void Initialize(Engine& engine) override;
 	/*
+	 *	ロード済みデータのセット (コールバック)
+	 */
+	void SetupData(Engine& engine);
+	/*
 	 *	更新処理
 	 */
 	void Update(Engine& engine, float deltaTime) override;

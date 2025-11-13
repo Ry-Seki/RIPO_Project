@@ -6,6 +6,8 @@
 #include "StandbyScene.h"
 #include "TitleScene.h"
 #include "../Engine.h"
+#include "../Fade/FadeManager.h"
+#include "../Fade/FadeFactory.h"
 
 /*
  *	コンストラクタ
@@ -21,13 +23,17 @@ StandbyScene::~StandbyScene() {
  *	初期化処理
  */
 void StandbyScene::Initialize(Engine& engine) {
+	auto fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fadeOut, [&engine]() {
+		engine.SetNextScene(std::make_shared<TitleScene>());
+	});
 }
 /*
  *	ロード済みデータのセット
  */
 void StandbyScene::SetupData(Engine& engine) {
-
-	engine.StartFadeOutIn(0.5f, 0.5f, [&engine]() {
+	auto fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fadeOut, [&engine]() {
 		engine.SetNextScene(std::make_shared<TitleScene>());
 	});
 }

@@ -4,6 +4,7 @@
  */
 
 #include "MainGameScene.h"
+#include "ResultScene.h"
 #include "../Engine.h"
 #include "../Fade/FadeFactory.h"
 #include "../Fade/FadeManager.h"
@@ -46,8 +47,8 @@ void MainGameScene::Update(Engine& engine, float deltaTime) {
     Scene::Update(engine, deltaTime);
     // 日が終わったら Engine 側フェード
     if (calendarManager->IsDayComplete() && !calendarManager->IsEndDayAdvance()) {
-        engine.StartFadeOutIn(1.0f, 1.0f, [this]() {
-            calendarManager->NextDay(); // 日進行
+        engine.StartFadeOutIn(1.0f, 1.0f, [&engine, this]() {
+            AdvanceDay(engine); // 日進行
         });
     }
 }
@@ -68,4 +69,17 @@ void MainGameScene::Render() {
         aabb->DebugRender();
     }
 #endif
+}
+/*
+ *  日にち更新処理
+ */
+void MainGameScene::AdvanceDay(Engine& engine) {
+    if (calendarManager->IsEndDayAdvance()) {
+		auto fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [&engine]() {
+			engine.SetNextScene(std::make_shared<ResultScene>());
+		});
+    }else {
+		calendarManager->NextDay();
+    }
 }

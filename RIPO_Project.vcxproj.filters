@@ -252,6 +252,15 @@
     <ClCompile Include="Scripts\Engine\Component\Character\WeaponBase.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\StandbyScene.cpp">
+      <Filter>ソース ファイル\Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\TutorialScene.cpp">
+      <Filter>ソース ファイル\Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\ResultScene.cpp">
+      <Filter>ソース ファイル\Engine\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -529,6 +538,18 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Fade\TileFade.h">
       <Filter>ヘッダー ファイル\Engine\Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Fade\InkSpreadFade.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\StandbyScene.h">
+      <Filter>ヘッダー ファイル\Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\TutorialScene.h">
+      <Filter>ヘッダー ファイル\Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\ResultScene.h">
+      <Filter>ヘッダー ファイル\Engine\Scene</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
