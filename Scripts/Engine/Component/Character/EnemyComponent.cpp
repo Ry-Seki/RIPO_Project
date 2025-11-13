@@ -88,4 +88,6 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 	// –Ú•W‚Ì•ûŒü‚Éi‚Þ
 		enemy->position += normDirection * moveSpeed * deltaTime;
 	}
+
+
 }
