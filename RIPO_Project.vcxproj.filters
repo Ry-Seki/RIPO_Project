@@ -264,6 +264,12 @@
     <ClCompile Include="Scripts\Engine\Scene\ResultScene.cpp">
       <Filter>ソース ファイル\Engine\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\AnimatorComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -559,6 +565,15 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h">
       <Filter>ヘッダー ファイル\Engine\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\AnimatorComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\GravityComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Status\PlayerStatusManager.h">
+      <Filter>ヘッダー ファイル\Engine\Character</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
