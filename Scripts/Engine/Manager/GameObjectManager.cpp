@@ -122,11 +122,11 @@ void GameObjectManager::ResetObject(GameObject* resetObject) {
 	std::lock_guard<std::mutex> lock(unuseMutex);
 	// オブジェクトのIDの取得
 	int resetObjectID = resetObject->ID;
+	// 使用リストから削除
+	useObjectList[resetObjectID] = nullptr;
+	// 未使用リストに戻る
+	ReturnGameObjectList(resetObjectID);
 	// オブジェクトのリセット
 	resetObject->Destroy();
 	resetObject->ResetGameObject();
-	// 未使用リストに戻る
-	ReturnGameObjectList(resetObjectID);
-	// 使用リストから削除
-	useObjectList[resetObjectID] = nullptr;
 }
