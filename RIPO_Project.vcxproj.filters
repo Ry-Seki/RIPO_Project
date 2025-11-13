@@ -557,5 +557,8 @@
     <ClInclude Include="Scripts\Engine\Menu\MenuBase.h">
       <Filter>ヘッダー ファイル\Engine\Menu</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\MenuManager.h">
+      <Filter>ヘッダー ファイル\Engine\Menu</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
