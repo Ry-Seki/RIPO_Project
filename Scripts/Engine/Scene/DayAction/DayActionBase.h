@@ -34,7 +34,7 @@ public:
     /*
      *  ロード済みのデータをセット(コールバック)
      */
-    virtual void Setup(Engine& engine) = 0;
+    virtual void SetupData(Engine& engine) = 0;
     /*
      *  更新処理
      */

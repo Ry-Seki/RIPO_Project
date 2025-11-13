@@ -154,6 +154,7 @@
     <ClCompile Include="Scripts\Engine\Audio\SE\SESource.cpp" />
     <ClCompile Include="Scripts\Engine\Collision.cpp" />
     <ClCompile Include="Scripts\Engine\Component\AABBCollider.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\AnimatorComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\ArmActionComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BulletComponent.cpp" />
@@ -162,6 +163,7 @@
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\RevolverArm.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\WeaponBase.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Engine\Input\InputManager.cpp" />
@@ -189,10 +191,13 @@
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionTraining\ActionTraining.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DebugScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\MainGameScene.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\ResultScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Scene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\StandbyScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\TutorialScene.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\Stage.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\ExitPoint.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Stair.cpp" />
@@ -215,6 +220,7 @@
     <ClInclude Include="Scripts\Engine\Audio\SE\SESource.h" />
     <ClInclude Include="Scripts\Engine\Collision.h" />
     <ClInclude Include="Scripts\Engine\Component\AABBCollider.h" />
+    <ClInclude Include="Scripts\Engine\Component\AnimatorComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BulletComponent.h" />
@@ -226,6 +232,7 @@
     <ClInclude Include="Scripts\Engine\Component\Character\RevolverArm.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\WeaponBase.h" />
     <ClInclude Include="Scripts\Engine\Component\Component.h" />
+    <ClInclude Include="Scripts\Engine\Component\GravityComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h" />
     <ClInclude Include="Scripts\Engine\Component\RenderComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\SpriteRenderer.h" />
@@ -260,6 +267,7 @@
     <ClInclude Include="Scripts\Engine\Manager\CharacterManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MenuBase.h" />
     <ClInclude Include="Scripts\Engine\RayCast.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarSystem.h" />
@@ -277,13 +285,16 @@
     <ClInclude Include="Scripts\Engine\Scene\DayAction\DayActionBase.h" />
     <ClInclude Include="Scripts\Engine\Scene\DebugScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\MainGameScene.h" />
+    <ClInclude Include="Scripts\Engine\Scene\ResultScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\Scene.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionBase.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionFactory.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionManager.h" />
+    <ClInclude Include="Scripts\Engine\Scene\StandbyScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\TitleScene.h" />
     <ClInclude Include="Scripts\Engine\Manager\GameObjectManager.h" />
+    <ClInclude Include="Scripts\Engine\Scene\TutorialScene.h" />
     <ClInclude Include="Scripts\Engine\Singleton.h" />
     <ClInclude Include="Scripts\Engine\Stage\Stage.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageBase.h" />

@@ -6,6 +6,7 @@
 #ifndef _GAMECONST_H_
 #define _GAMECONST_H_
 
+#include <DxLib.h>
  /*
   *	’è”
   */
