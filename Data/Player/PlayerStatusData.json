@@ -1,5 +1,14 @@
 {
   "Status": {
-
+    "HP": 100,
+    "Stamina": 40,
+    "Strength": 0,
+    "ResistTime": 180
+  },
+  "RiseValue": {
+    "HP": 20,
+    "Stamina": 10,
+    "Strength": 1,
+    "ResistTime": 30
   }
 }

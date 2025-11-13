@@ -11,23 +11,18 @@
 
 #include <vector>
 #include <memory>
+#include <type_traits>
 
-/*
- *	メニューの管理クラス
- */
-class MenuManager : public Singleton<MenuManager>{
+ /*
+  *	メニューの管理クラス
+  */
+class MenuManager : public Singleton<MenuManager> {
 	friend class Singleton<MenuManager>;
 private:
 	std::vector<MenuBasePtr> menuList;
 
 private:
-	/*
-	 *	コンストラクタ
-	 */
 	MenuManager() = default;
-	/*
-	 *	デストラクタ
-	 */
 	~MenuManager() = default;
 
 private:
@@ -36,27 +31,25 @@ private:
 	 */
 	template <class T, typename = std::enable_if_t<std::is_base_of_v<MenuBase, T>>>
 	std::shared_ptr<T> CreateMenu() {
-		auto createMenu = std::shared_ptr<T>();
-		if (!createMenu) return nullptr;
-
+		auto createMenu = std::make_shared<T>();
 		menuList.push_back(createMenu);
 		return createMenu;
 	}
 
 public:
 	/*
-	 *	メニューのゲット
-	 *	@return	std::shred_ptr<T>
+	 *	メニューの取得
 	 */
 	template <class T, typename = std::enable_if_t<std::is_base_of_v<MenuBase, T>>>
 	std::shared_ptr<T> GetMenu() {
-		for (int i = 0, max = menuList.size(); i < max; i++) {
-			std::shared_ptr<T> menu = std::dynamic_pointer_cast(menuList[i]);
-			if (!menu) continue;
+		for (auto& menu : menuList) {
+			auto cast = std::dynamic_pointer_cast<T>(menu);
+			if (!cast) continue;
 
-			return menu;
+			return cast;
 		}
-		return CreateMenu();
+		return CreateMenu<T>();
 	}
 };
+
 #endif // !_MENU_MANAGER_H_
