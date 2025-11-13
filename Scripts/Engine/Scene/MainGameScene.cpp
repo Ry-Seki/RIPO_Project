@@ -26,6 +26,11 @@ void MainGameScene::Initialize(Engine& engine) {
     selectionManager->SetActionManager(actionManager.get());
 }
 /*
+ *  ロード済みのデータの設定(コールバック)
+ */
+void MainGameScene::SetupData(Engine& engine, std::shared_ptr<LoadJSON> setSelectionData, std::shared_ptr<LoadJSON> setActionData) {
+}
+/*
  *  更新処理
  */
 void MainGameScene::Update(Engine& engine, float deltaTime) {

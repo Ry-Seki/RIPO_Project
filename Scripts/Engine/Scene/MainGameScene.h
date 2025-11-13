@@ -30,11 +30,11 @@ public:
      */
     void Initialize(class Engine& engine) override;
     /*
-     *  ロード済みのデータの設定(コールバック)
+     *  ロード済みのデータのセット(コールバック)
      *  @param[in]  std::shared_ptr<LoadJSON> setSelectionData       選択クラスのデータ
      *  @param[in]  std::shared_ptr<LoadJSON> setActionData          アクションクラスのデータ
      */
-    void Setup(class Engine& engine, std::shared_ptr<LoadJSON> setSelectionData, std::shared_ptr<LoadJSON> setActionData);
+    void SetupData(class Engine& engine, std::shared_ptr<LoadJSON> setSelectionData, std::shared_ptr<LoadJSON> setActionData);
     /*
      *  更新処理
      */
