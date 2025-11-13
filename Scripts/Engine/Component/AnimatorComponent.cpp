@@ -22,7 +22,20 @@ void AnimatorComponent::Update(float deltaTime) {
 		isPlaying = false;
 		// 再生時間をリセットする
 		pCurrentAnim->playAnimTime = 0.0f;
+
+		// 再生していたアニメーションがループ再生するかどうか
+		if (pCurrentAnim->isAnimLoop) {
+			isPlaying = true;
+		}
+		else {
+			// 終了後のアニメーションがループ再生するかどうか
+			Play(pCurrentAnim->animTransitionNum);
+		}
+
 	}
+
+	// アニメーションを再生
+	MV1SetAttachAnimTime(animModelHandle, attachIndex, pCurrentAnim->playAnimTime);
 
 }
 

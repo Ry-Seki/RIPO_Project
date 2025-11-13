@@ -13,7 +13,7 @@
   *	アニメーションクリップ構造体
   */
 struct AnimatorClip {
-	int animationHandle;		// アニメーション番号
+	int animationHandle;	// アニメーション番号
 
 	float playAnimTime;		// アニメーション再生時間
 	float exitAnimTime;		// アニメーションの終了時間
@@ -76,7 +76,7 @@ public:
 	 *  @param		isLoop		// ループするかどうか
 	 *  @param		transition	// 終了後の番号
 	 */
-	void LoadIndex( bool isLoop = false, int transition = 0);
+	void LoadIndex(bool isLoop = false, int transition = 0);
 
 	/*
 	 *	アニメーションの再生
