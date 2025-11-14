@@ -23,8 +23,6 @@ private:
 	bool chaseTargetChangeFrag;
 	// •ûŒü“]Š·‚ÌƒfƒBƒŒƒC
 	float turnDelay;
-	// ”½“]Y²rotation
-	float reverseRotationY;
 
 	const float TOP_VALUE;
 

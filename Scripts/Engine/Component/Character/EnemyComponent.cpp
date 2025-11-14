@@ -18,7 +18,6 @@ EnemyComponent::EnemyComponent()
 	, chaseTargetChangeFrag(false)
 	, turnDelay(0)
 	, TOP_VALUE(5000)
-	, reverseRotationY(0)
 {
 }
 
@@ -34,12 +33,11 @@ void EnemyComponent::Start() {
  *  param[in]	float	deltaTime
  */
 void EnemyComponent::Update(float deltaTime) {
-	reverseRotationY = enemy->rotation.y + (180 * Deg2Rad);
+	// モデルが反対なので逆にする
+	enemy->rotation.y += 180 * Deg2Rad;
 	// 移動処理
 	EnemyMove(deltaTime);
 	turnDelay += GetRand(100);
-	// モデルの方向が反対なので直す
-	enemy->rotation.y = reverseRotationY;
 }
 
 /*
@@ -48,8 +46,7 @@ void EnemyComponent::Update(float deltaTime) {
  */
 void EnemyComponent::EnemyMove(float deltaTime) {
 	GameObjectPtr player = CameraManager::GetInstance().GetTarget();
-	Vector3 enemyRotation = { enemy->rotation.x, reverseRotationY, enemy->rotation.z };
-	if (Vision(enemy->position, enemyRotation, player->position, 30, 2000)) {
+	if (Vision(enemy->position, enemy->rotation, player->position, 30, 2000)) {
 		ChaseWayPoint(player->position, true, deltaTime);
 	}
 	else {
@@ -77,7 +74,7 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 	Vector3 normDirection = Normalized(direction);
 	// 目標の方向を向く
 	enemy->rotation.y = atan2(normDirection.x, normDirection.z);
-	reverseRotationY = enemy->rotation.y + (180 * Deg2Rad);
+	enemy->rotation.y += 180 * Deg2Rad;
 	// 目標地点についたらターゲットを変える
 	if (direction.Magnitude() < differenceTarget) {
 		// ランダムに待つ
