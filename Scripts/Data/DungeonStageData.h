@@ -30,6 +30,7 @@ public:
 public:
     /*
      *  JSONデータの読み込み、mapに自動で登録する
+     *  @param[in]  const JSON& setJSON     読み込むJSONデータ
      */
     void LoadFromJson(const JSON& setJSON) {
         // 自動登録クラス
