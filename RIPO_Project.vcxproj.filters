@@ -88,6 +88,9 @@
     <Filter Include="ヘッダー ファイル\Engine\Menu">
       <UniqueIdentifier>{fa4e7175-a830-4183-bca5-efe2091cd4e9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Data">
+      <UniqueIdentifier>{891cb159-afb4-4a67-ae0d-15a8e9912cf3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -270,6 +273,9 @@
     <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Status\PlayerStatusManager.cpp">
+      <Filter>ソース ファイル\Engine\Character</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -425,16 +431,7 @@
     <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionManager.h">
       <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Data\DungeonData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\DungeonStageData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\GameConst.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\Dungeon\DungeonDataLoader.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\LoadRegistry.h">
@@ -574,6 +571,15 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Status\PlayerStatusManager.h">
       <Filter>ヘッダー ファイル\Engine\Character</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\DungeonData.h">
+      <Filter>ヘッダー ファイル\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\Dungeon\DungeonDataLoader.h">
+      <Filter>ヘッダー ファイル\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\DungeonStageData.h">
+      <Filter>ヘッダー ファイル\Data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
