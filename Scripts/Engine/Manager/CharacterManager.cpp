@@ -8,6 +8,7 @@
 #include "../GameObject/GameObjectUtility.h"
 #include "../Component/Character/ArmActionComponent.h"
 #include "../Component/ModelRenderer.h"
+#include "../Component/GravityComponent.h"
 
 CharacterManager::CharacterManager()
 	: engine(nullptr) {}
@@ -28,6 +29,8 @@ GameObjectPtr CharacterManager::CreateCharacter(
 	collider->aabb = { AABBMin, AABBMax };
 	// モデルコンポーネント追加
 	characterObject->AddComponent<ModelRenderer>();
+	// 重力コンポーネント追加
+	//characterObject->AddComponent<GravityComponent>();
 	// データのセット
 	characterObject->SetObjectData(name, position, rotation);
 	// キャラクターを返す

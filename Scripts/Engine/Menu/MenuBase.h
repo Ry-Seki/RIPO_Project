@@ -4,7 +4,9 @@
  */
 
 #ifndef _MENU_BASE_H_
-#define _MENU_BASE_H
+#define _MENU_BASE_H_
+
+#include <memory>
 
 /*
  *	メニューの基底クラス
@@ -28,5 +30,7 @@ public:
 	 */
 	virtual void Render() = 0;
 };
+// 別名定義
+using MenuBasePtr = std::shared_ptr<MenuBase>;
 
 #endif // !_MENU_BASE_H_
