@@ -23,6 +23,8 @@ private:
 	bool chaseTargetChangeFrag;
 	// 方向転換時のディレイ
 	float turnDelay;
+	// 反転Y軸rotation
+	float reverseRotationY;
 
 	const float TOP_VALUE;
 
@@ -48,10 +50,9 @@ public:
 private:
 	/*
 	 *	移動処理
-	 *  param[in]	GameObject*		enemy
 	 *  param[in]	float			deltaTime
 	 */
-	void EnemyMove(GameObject* enemy, float deltaTime);
+	void EnemyMove(float deltaTime);
 
 	/*
 	 *	目標に向かって進む処理
