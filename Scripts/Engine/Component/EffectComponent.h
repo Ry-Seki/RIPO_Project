@@ -15,6 +15,7 @@ class EffectComponent : public Component {
 private:
 	int resourceHandle;		// エフェクト本体のハンドル
 	int playingHandle;		// 再生中のエフェクトハンドル
+	bool isLoop;			// ループするか否か
 
 public:
 	/*

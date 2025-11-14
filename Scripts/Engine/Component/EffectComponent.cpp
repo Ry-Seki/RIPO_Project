@@ -5,16 +5,18 @@
 
 #include "EffectComponent.h"
 #include <EffekseerForDxLib.h>
-/*
- * コンストラクタ
- */
+ /*
+  * コンストラクタ
+  */
 EffectComponent::EffectComponent(int& _resourceHandle)
 	:resourceHandle(_resourceHandle)
-	, playingHandle(-1) {
+	, playingHandle(-1)
+	, isLoop(false) {
 }
 
 /*
  *	エフェクト再生
+ *  @tips	ループの場合でも使用可能
  */
 void EffectComponent::EffectRenderer() {
 	if (!resourceHandle)return;
