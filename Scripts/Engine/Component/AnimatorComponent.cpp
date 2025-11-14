@@ -1,3 +1,8 @@
+
+/*
+ *	@file	AnimatorComponent.cpp
+ *  @author oorui
+ */
 #include "AnimatorComponent.h"
 
 
