@@ -18,6 +18,7 @@ EnemyComponent::EnemyComponent()
 	, chaseTargetChangeFrag(false)
 	, turnDelay(0)
 	, TOP_VALUE(5000)
+	, RANDOM_RANGE(100)
 {
 }
 
@@ -37,7 +38,7 @@ void EnemyComponent::Update(float deltaTime) {
 	enemy->rotation.y += 180 * Deg2Rad;
 	// 移動処理
 	EnemyMove(deltaTime);
-	turnDelay += GetRand(100);
+	turnDelay += GetRand(RANDOM_RANGE);
 }
 
 /*
@@ -74,6 +75,9 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 	Vector3 normDirection = Normalized(direction);
 	// 目標の方向を向く
 	enemy->rotation.y = atan2(normDirection.x, normDirection.z);
+	/*if (enemy->rotation.y < atan2(normDirection.x, normDirection.z)) {
+		enemy->rotation.y += 1 * Deg2Rad;
+	}*/
 	enemy->rotation.y += 180 * Deg2Rad;
 	// 目標地点についたらターゲットを変える
 	if (direction.Magnitude() < differenceTarget) {
