@@ -11,6 +11,7 @@
 
 #include <unordered_map>
 #include <string>
+
 /*
  *	お宝の価値データクラス
  */
@@ -26,7 +27,9 @@ public:
 public:
     /*
      *  JSONデータの読み込み、mapに自動で登録する
-     */
+	 *  @param[in]  std::unordered_map<std::string, T>& map     登録対象のmap
+	 *  @param[in]  const JSON& setJSON                         読み込むJSONデータ
+	 */
     void LoadFromJson(const JSON& setJSON) {
         // 自動登録クラス
         AutoJSONRegistry registry;
