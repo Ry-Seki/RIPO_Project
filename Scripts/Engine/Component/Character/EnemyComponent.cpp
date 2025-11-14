@@ -16,6 +16,8 @@ EnemyComponent::EnemyComponent()
 	, wayPointDistance(300.0f)
 	, enemy(nullptr)
 	, chaseTargetChangeFrag(false)
+	, turnDelay(0)
+	, TOP_VALUE(5000)
 {
 }
 
@@ -35,6 +37,7 @@ void EnemyComponent::Start() {
 void EnemyComponent::Update(float deltaTime) {
 	// 移動処理
 	EnemyMove(enemy, deltaTime);
+	turnDelay += GetRand(100);
 }
 
 /*
@@ -69,14 +72,22 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 	const float differenceTarget = 100.0f;
 	// 目標の方向
 	Vector3 direction = wayPoint - enemy->position;
-	// 方向を正規化する
 	Vector3 normDirection = Normalized(direction);
-	// 目標の方向に進む
-	enemy->position += normDirection * moveSpeed * deltaTime;
 	// 目標の方向を向く
 	enemy->rotation.y = atan2(normDirection.x, normDirection.z);
 	// 目標地点についたらターゲットを変える
 	if (direction.Magnitude() < differenceTarget) {
-		chaseTargetChangeFrag = targetChange;
+		// ランダムに待つ
+		if (turnDelay > TOP_VALUE) {
+			chaseTargetChangeFrag = targetChange;
+			turnDelay = 0;
+		}
 	}
+	else {
+	// 目標の方向に進む
+		enemy->position.x += normDirection.x * moveSpeed * deltaTime;
+		enemy->position.z += normDirection.z * moveSpeed * deltaTime;
+	}
+
+
 }

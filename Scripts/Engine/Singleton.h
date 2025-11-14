@@ -25,17 +25,21 @@ public:
 	Singleton& operator = (const Singleton&) = delete;
 	Singleton& operator = (Singleton&&) = delete;
 
-	// インスタンスの取得
+	/*
+	 *	インスタンスの取得
+	 */
 	static T& GetInstance() {
 		if (!instance) instance = new T();
 		return *instance;
 	}
-	// インスタンスの破棄
+	/*
+	 *	インスタンスの破棄
+	 */
 	static void DestroyInstance() {
-		if (instance) {
-			delete instance;
-			instance = nullptr;
-		}
+		if (!instance) return;
+
+		delete instance;
+		instance = nullptr;
 	}
 };
 
