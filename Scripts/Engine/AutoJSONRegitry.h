@@ -6,11 +6,15 @@
 #ifndef _AUTO_JSON_REGISTRY_H_
 #define _AUTO_JSON_REGISTRY_H_
 #include "../Engine/JSON.h"
+
 #include <unordered_map>
 #include <string>
 #include <type_traits>
 #include <json.hpp>
 
+/*
+ *  JSON->map‚ÖŽ©“®“o˜^‚·‚éƒNƒ‰ƒX
+ */
 class AutoJSONRegistry {
 public:
     AutoJSONRegistry() = default;

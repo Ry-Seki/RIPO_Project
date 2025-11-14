@@ -1,0 +1,11 @@
+{
+  "Status": {
+    "HPUp": 10,
+    "StaminaUp": 10,
+    "StrengthUp": 15,
+    "ResistTimeUp": 15
+  },
+  "Weapon": {
+    "SimpleGun": 30
+  }
+}
