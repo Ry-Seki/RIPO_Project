@@ -203,6 +203,7 @@
     <ClCompile Include="Scripts\Engine\Stage\StageObject\ExitPoint.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Stair.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.cpp" />
+    <ClCompile Include="Scripts\Engine\Status\PlayerStatusManager.cpp" />
     <ClCompile Include="Scripts\Engine\Time.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
@@ -270,6 +271,7 @@
     <ClInclude Include="Scripts\Engine\Manager\StageManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuBase.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MenuManager.h" />
     <ClInclude Include="Scripts\Engine\RayCast.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarSystem.h" />
@@ -307,6 +309,7 @@
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageState.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageUtility.h" />
+    <ClInclude Include="Scripts\Engine\Status\PlayerStatusManager.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
     <ClInclude Include="Scripts\Engine\Vision.h" />

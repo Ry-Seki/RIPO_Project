@@ -4,6 +4,8 @@
  */
 
 #include "ResultScene.h"
+#include "TitleScene.h"
+#include "../Engine.h"
 
  /*
   *	コンストラクタ
@@ -19,6 +21,7 @@ ResultScene::~ResultScene() {
  *	初期化処理
  */
 void ResultScene::Initialize(Engine& engine) {
+	engine.SetNextScene(std::make_shared<TitleScene>());
 }
 /*
  *	ロード済みデータのセット (コールバック)
