@@ -59,6 +59,12 @@ public:
 	static constexpr const char* _CREATE_POSITION_SPAWN = "SpawnPos";	// スポーンポジションの名前
 
 
+	//----------------------------------------------------
+	//					お宝の名前
+	//----------------------------------------------------
+	static constexpr const char* _TREASURE_JAR = "jar";				// お宝の名前 : 壺
+	static constexpr const char* _TREASURE_LION = "LionStatue";		// お宝の名前 : ライオンの像
+
 };
 #endif // !_GAMECONST_H_
 

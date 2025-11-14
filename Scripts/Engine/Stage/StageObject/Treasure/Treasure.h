@@ -17,9 +17,8 @@ private:
 	bool isCollected;			// 取得済みかどうか
 	int modelHandle;			// モデルのハンドル
 	float viewRadius;			// 取得範囲
-	Vector3 ofssetFromePlayer;	// プレイヤーからの相対座標
-	bool isHeld;				// プレイヤーの持たれているかどうか
 
+	int treasureID;				// お宝のID
 public:
 	Treasure();
 	virtual ~Treasure();
@@ -44,36 +43,24 @@ public:
 	 */
 	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
 
-	/*
-	 *	@function	IsInView
-	 *  @brief		プレイヤーが範囲内か判定
-	 *  @param		const Vector3& playerPos
-	 */
-	bool IsInView(const Vector3& playerPos) const;
-
-	/*
-	 *	取得されたとき
-	 */
-	void Collect();
-
-
-
 public:
 
 	/*
 	 *	取得済み判定
+	 *  @return bool
 	 */
 	bool GetCollected() const { return isCollected; }
 
 	/*
-	 *	持たれたかどうかの設定
+	 *	IDの取得
 	 */
-	void SetHeld(bool setValue) {};
+	int GetId() const { return treasureID; }
 
 	/*
-	 *	持たれているかどうかの取得
+	 *	IDの変更
+	 *  @param	int
 	 */
-	bool GetHeld()const { return isHeld; }
+	int SetID(int setValue) { treasureID = setValue; }
 
 };
 
