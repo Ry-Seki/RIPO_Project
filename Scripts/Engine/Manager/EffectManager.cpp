@@ -41,6 +41,52 @@ void EffectManager::Load(std::string filePath, std::string name, float magnifica
 #endif
 }
 
+/*
+ *	エフェクトの発生
+ */
+EffectComponent* EffectManager::Instantiate(std::string name, Vector3 _pos) {
+	EffectComponent* pEffect = new EffectComponent(effectResourceMap[name]);
+	// 座標を指定
+	pEffect->SetPosition(_pos);
+	// 一元配列に追加
+	pEffectList.push_back(pEffect);
+
+	return pEffect;
+}
+
+/*
+ *	エフェクトの更新
+ */
+void EffectManager::Update() {
+	for (auto pEffe : pEffectList) {
+		if (pEffe == nullptr || !pEffe->IsVisile())continue;
+		// エフェクト再生
+		pEffe->EffectRenderer();
+	}
+
+	// STLの要素を削除
+	std::erase_if(
+		pEffectList,
+		[](EffectComponent* _pE) {return !_pE->IsVisile(); }
+	);
+
+
+	UpdateEffekseer3D();
+}
+
+/*
+ *	描画処理
+ */
+void EffectManager::Render() {
+	for (auto pEffe : pEffectList) {
+		if (pEffe == nullptr || !pEffe->IsVisile())continue;
+
+
+	}
+
+	DrawEffekseer3D();
+}
+
 
 /*
  *	エフェクトを一括で読み込む

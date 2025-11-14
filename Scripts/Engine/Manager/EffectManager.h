@@ -17,7 +17,7 @@ class EffectManager : public Singleton<EffectManager> {
 private:
 	Engine* engine;										// ゲームエンジン参照
 	std::map<std::string, int>effectResourceMap;		// リソースの連想配列
-	std::list<class Effect*> pEffectList;				// エフェクトの一元配列
+	std::list<class EffectComponent*> pEffectList;		// エフェクトの一元配列
 
 	JSON json;		// jsonデータ
 
@@ -39,6 +39,26 @@ public:
 	 */
 	void LoadEffects();
 
+
+public:
+
+	/*
+	 *	エフェクトの発生
+	 *  @param	name	エフェクトの名前
+	 *  @param	pos		エフェクトの位置
+	 *  @return Effect*
+	 */
+	class EffectComponent* Instantiate(std::string _name, Vector3 _pos);
+
+	/*
+	 *	エフェクトの更新
+	 */
+	void Update();
+
+	/*
+	 *	描画処理
+	 */
+	void Render();
 
 public:
 	/*

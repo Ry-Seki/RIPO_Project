@@ -179,6 +179,7 @@
     <ClCompile Include="Scripts\Engine\Manager\BulletManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\CameraManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\CharacterManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\EffectManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\RayCast.cpp" />
