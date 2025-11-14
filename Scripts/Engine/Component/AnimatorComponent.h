@@ -61,15 +61,15 @@ private:
 	bool isPlaying;							// 再生中かどうか
 
 public:
-	AnimatorComponent() = default;
-	virtual ~AnimatorComponent() = default;
+	AnimatorComponent();
+	~AnimatorComponent() = default;
 
 public:
 	/*
 	 *	@function	Update
 	 *	@brief		更新処理
 	 */
-	virtual void Update(float deltaTime) override;
+	void Update(float deltaTime) override;
 
 	/*
 	 *	アニメーションの名前で番号を読み込む

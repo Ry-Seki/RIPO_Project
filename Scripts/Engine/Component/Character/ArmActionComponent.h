@@ -8,6 +8,7 @@
 
 #include "../../Component/Component.h"
 #include "../../Engine.h"
+#include "HandArm.h"
 #include <vector>
 
 /*
@@ -40,6 +41,16 @@ public:
 	template <class T>
 	void SetCurrentArm() {
 		currentArm = std::make_shared<T>();
+	}
+
+	/*
+	 *	運んでいるオブジェクトを取得
+	 */
+	GameObject* GetLiftObject() { 
+		// currentArmがHandArm型でないならnullptrが代入される(dynamic_pointer_castの仕様)
+		if (auto arm = std::dynamic_pointer_cast<HandArm>(currentArm))
+			return arm->GetLiftObject();
+		return nullptr;
 	}
 };
 // 別名定義

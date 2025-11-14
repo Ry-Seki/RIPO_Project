@@ -163,6 +163,7 @@
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\RevolverArm.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\WeaponBase.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\EffectComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
@@ -202,6 +203,7 @@
     <ClCompile Include="Scripts\Engine\Stage\StageObject\ExitPoint.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Stair.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.cpp" />
+    <ClCompile Include="Scripts\Engine\Status\PlayerStatusManager.cpp" />
     <ClCompile Include="Scripts\Engine\Time.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
@@ -211,6 +213,7 @@
   <ItemGroup>
     <ClInclude Include="Scripts\Data\DungeonData.h" />
     <ClInclude Include="Scripts\Data\DungeonStageData.h" />
+    <ClInclude Include="Scripts\Data\TreasureDataList.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioSource.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioUtility.h" />
@@ -232,6 +235,7 @@
     <ClInclude Include="Scripts\Engine\Component\Character\RevolverArm.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\WeaponBase.h" />
     <ClInclude Include="Scripts\Engine\Component\Component.h" />
+    <ClInclude Include="Scripts\Engine\Component\EffectComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\GravityComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h" />
     <ClInclude Include="Scripts\Engine\Component\RenderComponent.h" />
@@ -248,6 +252,7 @@
     <ClInclude Include="Scripts\Engine\GameObject.h" />
     <ClInclude Include="Scripts\Engine\GameObject\GameObjectUtility.h" />
     <ClInclude Include="Scripts\Engine\Input\InputManager.h" />
+    <ClInclude Include="Scripts\Engine\JSON.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimationBase.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.h" />

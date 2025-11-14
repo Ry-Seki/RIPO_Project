@@ -6,35 +6,36 @@
 #ifndef _DUNGEON_STAGE_DATA_H_
 #define _DUNGEON_STAGE_DATA_H_
 
+#include "../Engine/JSON.h"
+#include "../Engine/AutoJSONRegitry.h"
+
 #include <string>
 #include <vector>
 #include <unordered_map>
 #include <json.hpp>
 
-using JSON = nlohmann::json;
 /* 
  *  ダンジョンステージデータ
  */
 class DungeonStageData {
 private:
     std::unordered_map<std::string, std::string> dungeonDataList;        // ステージデータのマップ
-
     
 public:
+    /*
+     *  コンストラクタ
+     */
     DungeonStageData() = default;
 
 public:
     /*
-     *  JSONデータの読み込みをし、新しく登録された要素数を返す
-     *  @return size_t
+     *  JSONデータの読み込み、mapに自動で登録する
      */
-    size_t LoadFromJson(const JSON& setJSON) {
-        // 登録前の要素数
-        size_t before = dungeonDataList.size();
+    void LoadFromJson(const JSON& setJSON) {
+        // 自動登録クラス
+        AutoJSONRegistry registry;
         // データの登録
-        parseRecursive(setJSON, "");
-        // 新規で登録された数を返す
-        return dungeonDataList.size() - before;
+        registry.LoadFromJson<std::string>(dungeonDataList, setJSON);
     }
     /*
      *  指定したキーに対してパスを返す
@@ -105,46 +106,6 @@ public:
         }
         return result;
     }
-private:
-    /*
-     *  JSONデータを再帰的に辿り、葉の文字列データをキーとして登録する
-     *  @param[in]  const JSON& node            現在処理中のJSONデータ
-     *  @param[in]  const std::string& prefix   ドット区切りで記憶するための文字列
-     */
-    void parseRecursive(const JSON& node, const std::string& prefix) {
-        // JSONがオブジェクトの場合
-        if (node.is_object()) {
-            for (auto& entry : node.items()) {
-                // 現在のキー名
-                std::string key = entry.key();
-                // 現在の値
-                const JSON& value = entry.value();
-                // 階層付きキー
-                std::string newKey = prefix.empty() ? key : prefix + "." + key;
-                // 値が文字列なら登録、そうでなければ再帰的に検索
-                if (value.is_string()) {
-                    dungeonDataList[newKey] = value.get<std::string>();
-                }else {
-                    parseRecursive(value, newKey);
-                }
-            }
-        }
-        // JSONが配列の場合
-        else if (node.is_array()) {
-            for (size_t i = 0; i < node.size(); ++i) {
-                // 配列の要素
-                const JSON& element = node[i];
-                // 配列用キー
-                std::string newKey = prefix + "[" + std::to_string(i) + "]";
-                // 要素が文字列なら登録、そうでなければ再帰的に検索
-                if (element.is_string()) {
-                    dungeonDataList[newKey] = element.get<std::string>();
-                }else {
-                    parseRecursive(element, newKey);
-                }
-            }
-        }
-        // 数値や bool 等は無視（必要なら拡張）
-    }
 };
+
 #endif // !_DUNGEON_STAGE_DATA_H_

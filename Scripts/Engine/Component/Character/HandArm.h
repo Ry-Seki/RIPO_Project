@@ -14,7 +14,7 @@
  */
 class HandArm : public ArmActionComponent {
 private:
-	GameObject* liftObject;
+	GameObject* liftObject;			// 運ぶオブジェクト
 
 	const float LEFTABLE_DISTANCE;
 
@@ -36,6 +36,9 @@ private:
 	 *	お宝運び処理
 	 */
 	void CarryTreasur(GameObject* player);
+
+public:
+	inline GameObject* GetLiftObject() const { return liftObject; }
 };
 
 #endif // !_HANDARM_H_

@@ -1,8 +1,4 @@
 /*
- *	MIT License | https://github.com/nlohmann/json/releases
- */
-
-/*
  *	@file	LoadJSON.h
  *	@author	Seki
  */
@@ -11,6 +7,7 @@
 #define _LOAD_JSON_H_
 
 #include "../LoadBase.h"
+#include "../../JSON.h"
 
 #include <fstream>
 #include <json.hpp>
@@ -20,7 +17,7 @@
  */
 class LoadJSON : public LoadBase {
 private:
-	nlohmann::json jsonData;	// JSONデータ
+	JSON jsonData;	// JSONデータ
 
 public:
 	/*
@@ -40,9 +37,7 @@ public:
 	 *	JSONデータの取得
 	 *  return JSON
 	 */
-	const nlohmann::json& GetData() const { return jsonData; }
+	const JSON& GetData() const { return jsonData; }
 };
-// 別名定義
-using JSON = nlohmann::json;
 
 #endif // !_LOAD_JSON_H_
