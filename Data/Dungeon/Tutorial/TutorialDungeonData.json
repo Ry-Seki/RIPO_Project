@@ -11,10 +11,8 @@
     "BossData": ""
   },
   "Treasure": {
-    "TreasureData": [
-      "Res/Model/Treasure/Treasure01.mv1",
-      "Res/Model/Treasure/Treasure02.mv1"
-    ],
+    "jar": "Res/Model/Treasure/Treasure01.mv1",
+    "LionStatue": "Res/Model/Treasure/Treasure02.mv1",
     "EventTreasureData": ""
   },
   "Audio": {
