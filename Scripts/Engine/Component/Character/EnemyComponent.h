@@ -48,10 +48,9 @@ public:
 private:
 	/*
 	 *	ˆÚ“®ˆ—
-	 *  param[in]	GameObject*		enemy
 	 *  param[in]	float			deltaTime
 	 */
-	void EnemyMove(GameObject* enemy, float deltaTime);
+	void EnemyMove(float deltaTime);
 
 	/*
 	 *	–Ú•W‚ÉŒü‚©‚Á‚Äi‚Şˆ—

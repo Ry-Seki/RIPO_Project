@@ -91,6 +91,15 @@
     <Filter Include="ヘッダー ファイル\Data">
       <UniqueIdentifier>{891cb159-afb4-4a67-ae0d-15a8e9912cf3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\System">
+      <UniqueIdentifier>{64f747a7-ddd1-4bfc-8c39-8cbb5c510563}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\System\Money">
+      <UniqueIdentifier>{f2e7d909-1afd-44df-9645-61a68ddc5bf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\System\Status">
+      <UniqueIdentifier>{020243a0-36cf-4eec-8ff4-8079e168b880}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -243,9 +252,6 @@
     <ClCompile Include="Scripts\Engine\Component\Character\BulletComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Load\Audio\LoadAudio.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Manager\BulletManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -273,8 +279,11 @@
     <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Status\PlayerStatusManager.cpp">
-      <Filter>ソース ファイル\Engine\Character</Filter>
+    <ClCompile Include="Scripts\Engine\Component\EffectComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\Audio\LoadAudio.cpp">
+      <Filter>ソース ファイル\Engine\Load</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -524,9 +533,6 @@
     <ClInclude Include="Scripts\Engine\GameObject\GameObjectUtility.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\Audio\LoadAudio.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Manager\BulletManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -544,9 +550,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Fade\TileFade.h">
       <Filter>ヘッダー ファイル\Engine\Fade</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Fade\InkSpreadFade.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\StandbyScene.h">
       <Filter>ヘッダー ファイル\Engine\Scene</Filter>
@@ -569,9 +572,6 @@
     <ClInclude Include="Scripts\Engine\Component\GravityComponent.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Status\PlayerStatusManager.h">
-      <Filter>ヘッダー ファイル\Engine\Character</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Data\DungeonData.h">
       <Filter>ヘッダー ファイル\Data</Filter>
     </ClInclude>
@@ -586,6 +586,18 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\JSON.h">
       <Filter>ヘッダー ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\EffectComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\System\Money\MoneyManager.h">
+      <Filter>ヘッダー ファイル\Engine\System\Money</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Fade\InkSpreadFade.h">
+      <Filter>ヘッダー ファイル\Engine\Fade</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\Audio\LoadAudio.h">
+      <Filter>ヘッダー ファイル\Engine\Load</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
