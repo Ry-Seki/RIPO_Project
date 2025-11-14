@@ -16,8 +16,17 @@ struct AABB {
 	Vector3 max;
 };
 
-// AABB“¯m‚ÅÕ“Ë‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
-bool BoxIntersect(const AABB& a, const AABB& b, Vector3& penetration);
+/*
+ *	ƒJƒvƒZƒ‹
+ */
+struct Capsule {
+	Vector3 startPoint;
+	Vector3 endPoint;
+	float radius;
+};
+
+// Õ“Ë‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
+bool Intersect(const AABB& a, const AABB& b, Vector3& penetration);
 
 #endif // !_COLLISION_H_
 

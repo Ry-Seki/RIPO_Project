@@ -103,7 +103,7 @@ void Scene::HandleWorldColliderCollision(
 
 			// Õ“Ë”»’è
 			Vector3 penetration;
-			if (BoxIntersect(colA.world, colB.world, penetration)) {
+			if (Intersect(colA.world, colB.world, penetration)) {
 				GameObject* objA = colA.origin->GetOwner();
 				GameObject* objB = colB.origin->GetOwner();
 
