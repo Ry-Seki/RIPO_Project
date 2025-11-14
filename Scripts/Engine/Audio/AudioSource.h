@@ -74,7 +74,7 @@ public:
 		// 最大値、最小値を固定
 		int volume = Clamp(static_cast<float>(setVolume), GameConst::_MIN_VOLUME, GameConst::_MAX_DXLIB_VOLUME);
 		// 音量の数値の変換(0～100)->(0～255)
-		volume *= GameConst::_MAX_DXLIB_VOLUME / GameConst::_MAX_VOLUME;
+		volume *= static_cast<int>(GameConst::_MAX_DXLIB_VOLUME) / static_cast<int>(GameConst::_MAX_VOLUME);
 		return volume;
 	}
 };

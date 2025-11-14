@@ -51,18 +51,18 @@ private:
                 ParseRecursive(map, setJSON[i], newKey);
             }
         } else {
-            // ノードがリーフの場合、Tに応じて型チェックして登録
-            if constexpr (std::is_same_v<T, std::string> && setJSON.is_string()) {
-                map[prefix] = setJSON.get<std::string>();
+            // ノードがリーフの場合、型によってコンパイル時に分岐
+            if constexpr (std::is_same_v<T, std::string>) {
+                if (setJSON.is_string()) map[prefix] = setJSON.get<std::string>();
             }
-            else if constexpr (std::is_same_v<T, int> && setJSON.is_number_integer()) {
-                map[prefix] = setJSON.get<int>();
+            else if constexpr (std::is_same_v<T, int>) {
+                if (setJSON.is_number_integer()) map[prefix] = setJSON.get<int>();
             }
-            else if constexpr (std::is_same_v<T, float> && setJSON.is_number_float()) {
-                map[prefix] = setJSON.get<float>();
+            else if constexpr (std::is_same_v<T, float>) {
+                if (setJSON.is_number_float()) map[prefix] = setJSON.get<float>();
             }
-            else if constexpr (std::is_same_v<T, bool> && setJSON.is_boolean()) {
-                map[prefix] = setJSON.get<bool>();
+            else if constexpr (std::is_same_v<T, bool>) {
+                if (setJSON.is_boolean()) map[prefix] = setJSON.get<bool>();
             }
             // 他の型は無視
         }
