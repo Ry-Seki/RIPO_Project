@@ -581,5 +581,11 @@
     <ClInclude Include="Scripts\Data\DungeonStageData.h">
       <Filter>ヘッダー ファイル\Data</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Data\TreasureDataList.h">
+      <Filter>ヘッダー ファイル\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\JSON.h">
+      <Filter>ヘッダー ファイル\Engine</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

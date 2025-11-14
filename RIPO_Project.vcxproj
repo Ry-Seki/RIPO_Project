@@ -212,6 +212,7 @@
   <ItemGroup>
     <ClInclude Include="Scripts\Data\DungeonData.h" />
     <ClInclude Include="Scripts\Data\DungeonStageData.h" />
+    <ClInclude Include="Scripts\Data\TreasureDataList.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioSource.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioUtility.h" />
@@ -249,6 +250,7 @@
     <ClInclude Include="Scripts\Engine\GameObject.h" />
     <ClInclude Include="Scripts\Engine\GameObject\GameObjectUtility.h" />
     <ClInclude Include="Scripts\Engine\Input\InputManager.h" />
+    <ClInclude Include="Scripts\Engine\JSON.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimationBase.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.h" />
