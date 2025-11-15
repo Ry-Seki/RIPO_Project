@@ -58,7 +58,7 @@ public:
 	 *	@param[out]	std::string& treasureName
 	 *  @return		bool
 	 */
-	bool TryGetName(int ID, std::string& treasureName) {
+	bool TryGetName(const int ID, std::string& treasureName) {
 		auto itr = IDToName.find(ID);
 		if (itr == IDToName.end()) return false;
 
@@ -88,6 +88,25 @@ public:
 		if (itr == nameToData.end()) return false;
 
 		value = itr->second.value;
+		return true;
+	}
+	/*
+	 *  指定したIDからvalueを取得
+	 *  @param[in]  const std::string& treasureName 検索するお宝名
+	 *  @param[out] int& value						お宝の価値
+	 *  @return bool
+	 */
+	bool TryGetValue(const int ID, int& value) const {
+		// まず ID から名前を取得
+		auto itrName = IDToName.find(ID);
+		if (itrName == IDToName.end()) return false;
+
+		// 次に名前から TreasureData を取得
+		auto itrData = nameToData.find(itrName->second);
+		if (itrData == nameToData.end()) return false;
+
+		// value を返す
+		value = itrData->second.value;
 		return true;
 	}
 };

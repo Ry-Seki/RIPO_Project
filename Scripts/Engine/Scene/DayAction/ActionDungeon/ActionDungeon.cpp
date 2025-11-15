@@ -174,6 +174,15 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
     stageData = setStageData;
     LoadManager& load = LoadManager::GetInstance();
     DungeonResource dungeonResource;
+    //auto treasureMap = stageData.GetCategory("Treasure");
+    //std::string leafKey;
+    //std::vector<int> IDList;
+    //for (const auto& [key, path] : treasureMap) {
+    //    // 最後の階層だけを取得
+    //    if (stageData.TryGetLeafKey(key, leafKey)) {
+    //        IDList.push_back(std::stoi(leafKey));
+    //    }
+    //}
 
     if (isFirst) {
         isFirst = false;
@@ -320,10 +329,11 @@ void ActionDungeon::LoadResourcesFromStageData(Engine& engine, DungeonStageData&
         }
     }
     // TreasureData
-    auto treasureList = stageData.GetArray("Treasure", "TreasureData");
-    for (const auto& treasurePath : treasureList) {
-        if (!treasurePath.empty()) {
-            dungeonResource.treasureResource.push_back(load.LoadResource<LoadModel>(treasurePath));
+    auto treasureMap = stageData.GetCategory("Treasure");
+    for (const auto& [key, path] : treasureMap) {
+        // 数字キーだけを対象にする
+        if (!path.empty() && std::all_of(key.begin(), key.end(), ::isdigit)) {
+            dungeonResource.treasureResource.push_back(load.LoadResource<LoadModel>(path));
         }
     }
     // EventTreasureData（後ほどフラグで管理）

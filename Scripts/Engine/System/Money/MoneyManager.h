@@ -57,11 +57,11 @@ public:
 	}
 	/*
 	 *	ŠŽ‹à‚É‚¨‹à‚ð‘«‚·
-	 *	@param[in]	std::string	treasureName	‚¨•ó‚Ì–¼‘O
+	 *	@param[in]	const int ID	‚¨•ó‚ÌID
 	 */
-	inline void AddMoney(const std::string& treasureName) {
+	inline void AddMoney(const int ID) {
 		int addMoney;
-		if (!treasureDataList->TryGetValue(treasureName, addMoney)) return;
+		if (!treasureDataList->TryGetValue(ID, addMoney)) return;
 		SetCurrentMoney(currentMoney + addMoney);
 	}
 	/*
