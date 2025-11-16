@@ -18,7 +18,7 @@ private:
 	int modelHandle;			// ƒ‚ƒfƒ‹‚Ìƒnƒ“ƒhƒ‹
 	float viewRadius;			// Žæ“¾”ÍˆÍ
 
-	int treasureID;				// ‚¨•ó‚ÌID
+	int treasureID = -1;		// ‚¨•ó‚ÌID
 public:
 	Treasure();
 	virtual ~Treasure();
