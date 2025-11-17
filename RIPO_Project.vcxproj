@@ -215,6 +215,7 @@
     <ClInclude Include="Scripts\Data\DungeonData.h" />
     <ClInclude Include="Scripts\Data\DungeonStageData.h" />
     <ClInclude Include="Scripts\Data\ItemCatalogData.h" />
+    <ClInclude Include="Scripts\Data\PlayerStatusData.h" />
     <ClInclude Include="Scripts\Data\TreasureDataList.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioSource.h" />
@@ -316,6 +317,7 @@
     <ClInclude Include="Scripts\Engine\Stage\StageState.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageUtility.h" />
     <ClInclude Include="Scripts\Engine\System\Money\MoneyManager.h" />
+    <ClInclude Include="Scripts\Engine\System\Status\PlayerStatusManager.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
     <ClInclude Include="Scripts\Engine\Vision.h" />

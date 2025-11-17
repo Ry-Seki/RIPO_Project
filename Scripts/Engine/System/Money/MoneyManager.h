@@ -20,14 +20,14 @@ class MoneyManager : public Singleton<MoneyManager>{
 	friend class Singleton<MoneyManager>;
 
 private:
-	std::unique_ptr<TreasureDataList> treasureDataList;		// お宝の価値データクラス
+	TreasureDataList treasureDataList;		// お宝の価値データクラス
 	int currentMoney = 0;									// 現在の所持金
 
 private:
 	/*
 	 *	コンストラクタ
 	 */
-	MoneyManager() : treasureDataList(std::make_unique<TreasureDataList>()) {};
+	MoneyManager() = default;
 	/*
 	 *	デストラクタ
 	 */
@@ -39,7 +39,7 @@ public:
 	 *  @param[in]  std::unordered_map<std::string, T>& map     登録対象のmap
 	 */
 	void LoadFromJSON(const JSON& setJSON) {
-		treasureDataList->LoadFromJson(setJSON);
+		treasureDataList.LoadFromJson(setJSON);
 	}
 public:
 	/*
@@ -61,7 +61,7 @@ public:
 	 */
 	inline void AddMoney(const int ID) {
 		int addMoney;
-		if (!treasureDataList->TryGetValue(ID, addMoney)) return;
+		if (!treasureDataList.TryGetValue(ID, addMoney)) return;
 		SetCurrentMoney(currentMoney + addMoney);
 	}
 	/*
