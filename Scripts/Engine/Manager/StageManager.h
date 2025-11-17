@@ -40,12 +40,15 @@ private:
 
 	/*
 	 *	簡易的に現在のステージにアクセス
+	 *  @tips	Update,Render,StageCollider,を引数に持たせる
 	 */
 	template<typename Func>
 	void WithCurrentStage(Func&& func) {
-		if (loadedStage) {
-			func(*loadedStage);
-		}
+		// ステージがあるか見る
+		if (!loadedStage)return;
+
+		// 渡された関数を実行
+		func(*loadedStage);
 	}
 
 public:

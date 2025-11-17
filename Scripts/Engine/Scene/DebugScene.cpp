@@ -40,8 +40,8 @@ void DebugScene::Initialize(Engine& engine) {
 	enemy[0] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
 	enemy[1] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
 	enemy[2] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-	StageObjectManager::GetInstance().GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
-	StageObjectManager::GetInstance().GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 });
+	StageObjectManager::GetInstance().GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 }, 0);
+	StageObjectManager::GetInstance().GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 }, 1);
 	std::vector<StageObjectBasePtr> treasure(2);
 	for (int i = 0; i < 2; i++) {
 		treasure[i] = StageObjectManager::GetInstance().GetStageObject(i);

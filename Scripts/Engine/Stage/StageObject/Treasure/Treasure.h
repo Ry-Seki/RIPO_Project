@@ -18,7 +18,6 @@ private:
 	int modelHandle;			// モデルのハンドル
 	float viewRadius;			// 取得範囲
 
-	int treasureID;				// お宝のID
 public:
 	Treasure();
 	virtual ~Treasure();
@@ -50,17 +49,6 @@ public:
 	 *  @return bool
 	 */
 	bool GetCollected() const { return isCollected; }
-
-	/*
-	 *	IDの取得
-	 */
-	int GetId() const { return treasureID; }
-
-	/*
-	 *	IDの変更
-	 *  @param	int
-	 */
-	int SetID(int setValue) { treasureID = setValue; }
 
 };
 

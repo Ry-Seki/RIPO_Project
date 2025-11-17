@@ -9,6 +9,8 @@
 #include "../Fade/FadeFactory.h"
 #include "../Fade/FadeManager.h"
 #include "../Manager/StageManager.h"
+#include "../Load/JSON/LoadJSON.h"
+#include "../System/Money/MoneyManager.h"
 
 /*
  *  初期化処理
@@ -25,11 +27,16 @@ void MainGameScene::Initialize(Engine& engine) {
     calendarManager->SetSelectionManager(selectionManager.get());
     calendarManager->SetActionManager(actionManager.get());
     selectionManager->SetActionManager(actionManager.get());
+    auto treasureData = LoadManager::GetInstance().LoadResource<LoadJSON>("Data/Treasure/TreasureDataList.json");
+    LoadManager::GetInstance().SetOnComplete([treasureData]() {
+        MoneyManager::GetInstance().LoadFromJSON(treasureData->GetData());
+    });
 }
 /*
  *  ロード済みのデータの設定(コールバック)
  */
 void MainGameScene::SetupData(Engine& engine, std::shared_ptr<LoadJSON> setSelectionData, std::shared_ptr<LoadJSON> setActionData) {
+
 }
 /*
  *  更新処理
@@ -60,6 +67,7 @@ void MainGameScene::Render() {
     selectionManager->Render();
     actionManager->Render();
     Scene::Render();
+    DrawFormatString(50, 400, GetColor(255, 255, 255), "Money : %d", MoneyManager::GetInstance().GetCurrentMoney());
 
 #if _DEBUG
     // 全オブジェクトのAABBCollider描画
