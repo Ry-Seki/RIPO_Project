@@ -200,8 +200,8 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
 	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
 	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-	for (auto id : IDList) {
-		GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 }, id);
+	for (int i = 0; i < IDList.size() - 1; i++) {
+		GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 }, IDList[i]);
 	}
 	GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
 	GenerateExit("exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
