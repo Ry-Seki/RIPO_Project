@@ -1,3 +1,10 @@
 {
-  "DebugTreasure": 1000
+  "Jar": {
+    "ID": 0,
+    "Value": 1000
+  },
+  "LionStatue": {
+    "ID": 1,
+    "Value": 1500
+  }
 }

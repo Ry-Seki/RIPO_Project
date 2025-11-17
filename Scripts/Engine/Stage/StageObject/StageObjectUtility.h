@@ -8,10 +8,10 @@
 
 #include "../../Manager/StageObjectManager.h"
 
-/*
- *	ステージオブジェクト関連実行処理
- *  @note	名前空間での省略可能	using namespace StageObjectUtility
- */
+ /*
+  *	ステージオブジェクト関連実行処理
+  *  @note	名前空間での省略可能	using namespace StageObjectUtility
+  */
 namespace StageObjectUtility {
 	/*
 	 *	出口生成
@@ -42,8 +42,10 @@ namespace StageObjectUtility {
 		const Vector3& position,
 		const Vector3& rotation,
 		const Vector3& AABBMin,
-		const Vector3& AABBMax) {
-		StageObjectManager::GetInstance().GenerateTreasure(name, position, rotation, AABBMin, AABBMax);
+		const Vector3& AABBMax,
+		const int setTreasureID
+	) {
+		StageObjectManager::GetInstance().GenerateTreasure(name, position, rotation, AABBMin, AABBMax, setTreasureID);
 	}
 	/*
 	 *	階段生成

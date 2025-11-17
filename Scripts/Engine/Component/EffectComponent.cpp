@@ -19,7 +19,7 @@ EffectComponent::EffectComponent(int& _resourceHandle)
  *  @tips	ループの場合でも使用可能
  */
 void EffectComponent::EffectRenderer() {
-	if (!resourceHandle)return;
+	if (!isVisible)return;
 
 	// エフェクト再生
 	if (playingHandle == -1)
@@ -27,5 +27,15 @@ void EffectComponent::EffectRenderer() {
 
 	// 再生が終わったら
 	if (!IsEffekseer3DEffectPlaying(playingHandle))
-		return;
+		isVisible = false;
+
+	// エフェクトの座標を更新
+	SetPosPlayingEffekseer3DEffect(playingHandle, position.x, position.y, position.z);
+}
+
+/*
+ *	描画処理
+ */
+void EffectComponent::Render() {
+	if (!isVisible)return;
 }

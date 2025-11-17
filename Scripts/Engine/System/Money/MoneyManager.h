@@ -7,7 +7,11 @@
 #define _MONEY_MANAGER_H_
 
 #include "../../Singleton.h"
+#include "../../../Data/TreasureDataList.h"
 #include "../../VecMath.h"
+
+#include <memory>
+#include <string>
 
 /*
  *	お金の管理クラス
@@ -16,7 +20,8 @@ class MoneyManager : public Singleton<MoneyManager>{
 	friend class Singleton<MoneyManager>;
 
 private:
-	int currentMoney = 0;	// 現在の所持金
+	TreasureDataList treasureDataList;		// お宝の価値データクラス
+	int currentMoney = 0;									// 現在の所持金
 
 private:
 	/*
@@ -28,6 +33,14 @@ private:
 	 */
 	~MoneyManager() = default;
 
+public:
+	/*
+	 *  JSONデータの読み込み、mapに自動で登録する
+	 *  @param[in]  std::unordered_map<std::string, T>& map     登録対象のmap
+	 */
+	void LoadFromJSON(const JSON& setJSON) {
+		treasureDataList.LoadFromJson(setJSON);
+	}
 public:
 	/*
 	 *	所持金の取得
@@ -44,10 +57,12 @@ public:
 	}
 	/*
 	 *	所持金にお金を足す
-	 *	@param[in]	int setValue	お金の値
+	 *	@param[in]	const int ID	お宝のID
 	 */
-	inline void AddMoney(int setValue) {
-		SetCurrentMoney(currentMoney + setValue);
+	inline void AddMoney(const int ID) {
+		int addMoney;
+		if (!treasureDataList.TryGetValue(ID, addMoney)) return;
+		SetCurrentMoney(currentMoney + addMoney);
 	}
 	/*
 	 *	所持金からお金を引く

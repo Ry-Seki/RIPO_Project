@@ -33,11 +33,11 @@ void HandArm::LiftTreasure(GameObject* player, Engine* engine) {
 	float hitLength = 0;
 	GameObject* hitObject;
 	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
-	if (RayCast(engine, camera->position, camera->rotation, hitLength, hitObject)) {
-		// ‚¿ã‚°‰Â”\‹——£‚È‚ç‚¿ã‚°‘ÎÛ‚ğ•Û‘¶
-		if (hitLength < LEFTABLE_DISTANCE) return;
-		liftObject = hitObject;
-	}
+	//if (RayCast(engine, camera->position, camera->rotation, hitLength, hitObject)) {
+	//	// ‚¿ã‚°‰Â”\‹——£‚È‚ç‚¿ã‚°‘ÎÛ‚ğ•Û‘¶
+	//	if (hitLength < LEFTABLE_DISTANCE) return;
+	//	liftObject = hitObject;
+	//}
 }
 
 /*

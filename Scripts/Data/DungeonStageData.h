@@ -38,6 +38,8 @@ public:
         // データの登録
         registry.LoadFromJson<std::string>(dungeonDataList, setJSON);
     }
+
+public:
     /*
      *  指定したキーに対してパスを返す
      *  @param[in]  const std::string& fullKey  検索するキー
@@ -73,6 +75,25 @@ public:
             }
         }
         return false;
+    }
+    /*
+     *  キー文字列から最後の階層だけを返す
+     *  @param[in]  const std::string& fullKey  検索するキー
+     *  @param[out] std::string& leafName       返す最後の階層キー
+     *  @return     bool
+     */
+    bool TryGetLeafKey(const std::string& fullKey, std::string& leafName) {
+        if (fullKey.empty()) return false;  
+
+        size_t pos = fullKey.rfind('.');
+        if (pos == std::string::npos) {
+            // ドットがなければキー全体が葉
+            leafName = fullKey;
+        }
+        else {
+            leafName = fullKey.substr(pos + 1);
+        }
+        return true;
     }
     /*
      *  カテゴリーの取得

@@ -52,7 +52,8 @@ private:
 		const Vector3& rotation,
 		const Vector3& AABBMin,
 		const Vector3& AABBMax,
-		GameObjectPtr& stageObject
+		GameObjectPtr& stageObject,
+		int setTreasureID = -1
 	);
 
 public:
@@ -83,13 +84,16 @@ public:
 	 *  @param	rotation	生成角度
 	 *  @param	AABBMin		AABBの各軸における最小値
 	 *  @param	AABBMax		AABBの各軸における最大値
+	 *  @param	setID		お方らの識別ID
 	 */
 	void GenerateTreasure(
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
 		const Vector3& AABBMin,
-		const Vector3& AABBMax);
+		const Vector3& AABBMax,
+		const int setTreasureID
+	);
 
 	/*
 	 *	階段生成

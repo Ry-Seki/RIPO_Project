@@ -11,11 +11,9 @@
     "BossData": ""
   },
   "Treasure": {
-    "TreasureData": [
-      "Res/Model/Treasure/Treasure01.mv1",
-      "Res/Model/Treasure/Treasure02.mv1"
-    ],
-    "EventTreasureData": ""
+    "0": "Res/Model/Treasure/Treasure01.mv1",
+    "1": "Res/Model/Treasure/Treasure02.mv1",
+    "2": ""
   },
   "Audio": {
     "BGM": [

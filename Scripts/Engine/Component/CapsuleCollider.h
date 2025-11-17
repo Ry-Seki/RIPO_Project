@@ -1,23 +1,23 @@
 /*
- *	@file	AABBCollider.h
+ *	@file	CapsuleCollider.h
  *  @author Riku
  */
 
-#ifndef _AABBCOLLIDER_H_
-#define _AABBCOLLIDER_H_
+#ifndef _CAPSULECOLLIDER_H_
+#define _CAPSULECOLLIDER_H_
 
 #include "../Collision/ColliderBase.h"
 
- /*
-  *	AABBコライダー
-  */
-class AABBCollider : public ColliderBase {
+/*
+ *	カプセルコライダー
+ */
+class CapsuleCollider : public ColliderBase {
 public:
-	AABB aabb;	// 衝突判定
+	Capsule capsule;	// 衝突判定
 
 public:
-	AABBCollider() = default;
-	virtual ~AABBCollider() = default;
+	CapsuleCollider() = default;
+	virtual ~CapsuleCollider() = default;
 
 public:
 	/*
@@ -32,13 +32,13 @@ public:
 	void OnCollision(
 		const std::shared_ptr<Component>& self,
 		const std::shared_ptr<Component>& other) override;
+
 public:
 	/*
-	 *	デバッグ用の描画関数
+	 *	デバッグ描画関数
 	 */
 	void DebugRender() override;
-};
-// 別名定義
-using AABBColliderPtr = std::shared_ptr<AABBCollider>;
 
-#endif // !_AABBCOLLIDER_H_
+};
+
+#endif // !_CAPSULECOLLIDER_H_
