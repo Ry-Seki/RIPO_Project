@@ -205,6 +205,7 @@
     <ClCompile Include="Scripts\Engine\Stage\StageObject\ExitPoint.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Stair.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.cpp" />
+    <ClCompile Include="Scripts\Engine\System\Status\PlayerStatusManager.cpp" />
     <ClCompile Include="Scripts\Engine\Time.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />

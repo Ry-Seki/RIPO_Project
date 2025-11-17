@@ -6,14 +6,19 @@
 #ifndef _PLAYER_STATUS_MANAGER_H_
 #define _PLAYER_STATUS_MANAGER_H_
 
-#include "../Singleton.h"
-#include "../../Data/PlayerStatusData.h"
+#include "../../Singleton.h"
+#include "../../../Data/PlayerStatusData.h"
+#include "../../JSON.h"
 
 class PlayerStatusManager : public Singleton<PlayerStatusManager> {
 	friend class Singleton<PlayerStatusManager>;
 
 private:
-	PlayerStatusData playerStatus;
+	PlayerStatusData playerStatus;		// プレイヤーステータスデータ
+	int HPLv;
+	int staminaLv;
+	int strengthLv;
+	int resistTimeLv;
 
 private:
 	/*
@@ -32,8 +37,9 @@ public:
 	void Initialize();
 	/*
 	 *	ロード済みデータのセット (コールバック)
+	 *  @param[in]	const JSON setJSON	設定するJSONデータ
 	 */
-	void SetupData();
+	void SetupData(const JSON setJSON);
 	
 public:
 

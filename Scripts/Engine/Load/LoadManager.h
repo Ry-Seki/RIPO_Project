@@ -44,24 +44,16 @@ public:
      *  更新処理
      */
     void Update(float unscaledDeltaTime) {
-        if (!system->IsComplete()) {
-            system->Update(unscaledDeltaTime);
-        }
-        // ロード完了判定
-        if (system->IsComplete() && !onCompleteQueue.empty()) {
-            auto callback = onCompleteQueue.front();
-            onCompleteQueue.pop();
-            if (callback) callback();
-
-            // ロード完了フラグのリセット
-            if(onCompleteQueue.empty()) system->ResetCompleteFlag();
-        }
+        // ロードシステムの更新
+        system->Update(unscaledDeltaTime);
+        // コールバックの使用
+        ActiveCallback();
     }
     /*
      *  描画処理
      */
     void Render() {
-        if (system) system->Render();
+        system->Render();
     }
 
 public:
@@ -77,12 +69,12 @@ public:
         auto cached = loadRegistry.Get(setFilePath);
         if (cached) {
             auto resource = std::dynamic_pointer_cast<T>(cached);
-            system->CompleteLoading();
             return resource;
         }
         auto loader = std::make_shared<T>(setFilePath);
         loadRegistry.Register(setFilePath, loader);
         system->AddLoader(loader);
+        system->ResetCompleteFlag();
 
         return loader;
     }
@@ -97,6 +89,26 @@ public:
 
         // そうでない場合は通常通りキューに積む
         onCompleteQueue.push(callback);
+    }
+    /*
+     *  @brief  コールバックの実行
+     */
+    void ActiveCallback() {
+        while (!onCompleteQueue.empty() && system->IsComplete()) {
+            std::function<void()> callback;
+            {
+                std::lock_guard<std::mutex> lock(managerMutex);
+                if (onCompleteQueue.empty()) break;
+                callback = onCompleteQueue.front();
+                onCompleteQueue.pop();
+            }
+            if (callback) callback();
+        }
+
+        // キューが空なら自動でロードシステムをリセット
+        if (onCompleteQueue.empty() && system->IsComplete()) {
+            system->Clear();
+        }
     }
     /*
      *  ロードアニメーションに追加
@@ -118,6 +130,10 @@ public:
     inline float GetProgress() const {
         return system ? system->GetProgress() : 1.0f;
     }
+    /*
+     *  @brief  ロードシステムのロード状況をリセット
+     */
+    inline void ClearLoadSystem() { system->Clear(); }
 };
 
 #endif // !_LOAD_MANAGER_H_

@@ -348,5 +348,5 @@ void ActionDungeon::LoadResourcesFromStageData(Engine& engine, DungeonStageData&
 	}    // ロード完了時のコールバック登録
 	load.SetOnComplete([this, &engine, dungeonResource]() {
 		DebugSetup(engine, dungeonResource);
-		});
+	});
 }

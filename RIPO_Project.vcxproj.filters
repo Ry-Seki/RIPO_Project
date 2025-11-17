@@ -106,6 +106,9 @@
     <Filter Include="ヘッダー ファイル\Engine\Collision">
       <UniqueIdentifier>{a14b27b8-e5d5-4065-9407-d4a3085a4c4e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\System">
+      <UniqueIdentifier>{5c2a2461-e2cf-4d1a-9f3f-66f8ac6afd29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -296,6 +299,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Component\CapsuleCollider.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\System\Status\PlayerStatusManager.cpp">
+      <Filter>ソース ファイル\Engine\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

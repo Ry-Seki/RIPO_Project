@@ -11,6 +11,8 @@
 #include "../../../Fade/FadeFactory.h"
 #include "../../../Fade/FadeManager.h"
 
+using namespace AudioUtility;
+
 /*
  *	‰Šú‰»ˆ—
  */
@@ -36,7 +38,7 @@ void SelectionDungeon::Update(Engine& engine, float deltaTime) {
 
 	if (!inputHandle && CheckHitKey(KEY_INPUT_0)) { 
 		// SE‚ÌÄ¶
-		AudioUtility::PlaySE("DebugSE");
+		PlaySE("DebugSE");
 		inputHandle = true;
 		isComplete = true;
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);

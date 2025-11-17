@@ -10,9 +10,9 @@
  *	プレイヤーのステータスデータ
  */
 struct PlayerStatusData {
-	int HPLv;			// HPレベル
-	int staminaLv;		// スタミナレベル
-	int strengthLv;		// 力レベル
-	int resistTimeLv;	// ダンジョンに潜れる時間レベル
+	int HP;				// HP
+	int stamina;		// スタミナ
+	int strength;		// 力
+	int resistTime;		// ダンジョンに潜れる時間
 };
 #endif // !_PLAYER_STATUS_DATA_H_
