@@ -27,7 +27,7 @@ private:
 	/*
 	 *	コンストラクタ
 	 */
-	MoneyManager() = default;
+	MoneyManager() : treasureDataList(std::make_unique<TreasureDataList>()) {};
 	/*
 	 *	デストラクタ
 	 */
