@@ -75,7 +75,7 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 	Vector3 normDirection = Normalized(direction);
 	// 目標の方向を向く
 	//enemy->rotation.y = atan2(normDirection.x, normDirection.z);
-	enemy->rotation.y = Slerp(enemy->rotation, normDirection, 0.1f).y;
+	enemy->rotation = Slerp(enemy->rotation, normDirection, 0.1f);
 	enemy->rotation.y += 180 * Deg2Rad;
 	// 目標地点についたらターゲットを変える
 	if (direction.Magnitude() < differenceTarget) {
@@ -90,6 +90,4 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 		enemy->position.x += normDirection.x * moveSpeed * deltaTime;
 		enemy->position.z += normDirection.z * moveSpeed * deltaTime;
 	}
-
-
 }
