@@ -23,6 +23,7 @@
 #include "../../../Fade/FadeManager.h"
 #include "../../../Stage/StageUtility.h"
 #include "../../../GameObject/GameObjectUtility.h"
+#include "../../../System/Money/MoneyManager.h"
 
 #include <iostream>
 
@@ -174,15 +175,15 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
     stageData = setStageData;
     LoadManager& load = LoadManager::GetInstance();
     DungeonResource dungeonResource;
-    //auto treasureMap = stageData.GetCategory("Treasure");
-    //std::string leafKey;
-    //std::vector<int> IDList;
-    //for (const auto& [key, path] : treasureMap) {
-    //    // ÅŒã‚ÌŠK‘w‚¾‚¯‚ğæ“¾
-    //    if (stageData.TryGetLeafKey(key, leafKey)) {
-    //        IDList.push_back(std::stoi(leafKey));
-    //    }
-    //}
+    auto treasureMap = stageData.GetCategory("Treasure");
+    std::string leafKey;
+    std::vector<int> IDList;
+    for (const auto& [key, path] : treasureMap) {
+        // ÅŒã‚ÌŠK‘w‚¾‚¯‚ğæ“¾
+        if (stageData.TryGetLeafKey(key, leafKey)) {
+            IDList.push_back(std::stoi(leafKey));
+        }
+    }
 
     if (isFirst) {
         isFirst = false;
