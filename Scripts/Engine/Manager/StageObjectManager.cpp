@@ -24,7 +24,8 @@ StageObjectBasePtr StageObjectManager::CreateStageObject(
 	const Vector3& rotation,
 	const Vector3& AABBMin,
 	const Vector3& AABBMax,
-	GameObjectPtr& stageObject
+	GameObjectPtr& stageObject,
+	int setTreasreID
 ) {
 	// 未使用のオブジェクト取得
 	stageObject = GetUnuseObject();
@@ -35,6 +36,7 @@ StageObjectBasePtr StageObjectManager::CreateStageObject(
 	collider->aabb = { AABBMin, AABBMax };
 	// ID設定
 	createStageObj->SetID(setID);
+	createStageObj->SetTreasureID(setTreasreID);
 	// データのセット
 	stageObject->SetObjectData(name, position, rotation);
 	// 出口オブジェクトを返す
@@ -102,7 +104,8 @@ void StageObjectManager::GenerateTreasure(
 	const Vector3& position,
 	const Vector3& rotation,
 	const Vector3& AABBMin,
-	const Vector3& AABBMax) {
+	const Vector3& AABBMax,
+	int setTreasureID) {
 	GameObjectPtr treasure;
 	// リストの要素の数
 	size_t stageObjectListCount = createStageList.size();
@@ -110,19 +113,17 @@ void StageObjectManager::GenerateTreasure(
 	for (size_t i = 0; i < stageObjectListCount; i++) {
 		if (createStageList[i] != nullptr) continue;
 		// リストの空きに生成
-		createStageList[i] = CreateStageObject<Treasure>(i, name, position, rotation, AABBMin, AABBMax, treasure);
+		createStageList[i] = CreateStageObject<Treasure>(i, name, position, rotation, AABBMin, AABBMax, treasure, setTreasureID);
 		createStageList[i]->GetOwner()->AddComponent<ModelRenderer>();
-
 		// オブジェクトのリストに保存
 		createStageObjectList[i] = treasure;
-
 		// シーンが持つゲームオブジェクト配列に入れる
 		engine->AddGameObject(treasure);
 
 		return;
 	}
 	// 空きがなかったら一番後ろに生成
-	StageObjectBasePtr stageObject = CreateStageObject<Treasure>(0, name, position, rotation, AABBMin, AABBMax, treasure);
+	StageObjectBasePtr stageObject = CreateStageObject<Treasure>(0, name, position, rotation, AABBMin, AABBMax, treasure, setTreasureID);
 	stageObject->GetOwner()->AddComponent<ModelRenderer>();
 	createStageList.push_back(stageObject);
 	// オブジェクトリストに保存

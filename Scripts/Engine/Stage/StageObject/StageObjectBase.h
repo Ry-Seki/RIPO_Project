@@ -11,9 +11,9 @@
 #include <vector>
 
 class StageObjectBase : public Component {
-private:
+protected:
 	int ID = -1;
-	int masterID = -1;
+	int treasureID = -1;
 	int nameID = -1;
 
 	Vector3 position;
@@ -49,6 +49,26 @@ public:
 	inline void SetID(int& setValue) {
 		ID = setValue;
 	}
+
+	/*
+	 *	@function	GetTreasureID
+	 *	@brief		treasureID‚Ìæ“¾
+	 *	@return		int
+	 *  @author		oorui
+	 */
+	inline int GetTreasureID() const {
+		return treasureID;
+	}
+	/*
+	 *	@function	SetTreasureID
+	 *	@brief		treasureID‚Ì•ÏX
+	 *	@param[in]	int& setValue;
+	 *  @author		oorui
+	 */
+	inline void SetTreasureID(int& setValue) {
+		treasureID = setValue;
+	}
+
 	/*
 	 *	@function	GetNameID
 	 *	@brief		–¼‘OID‚Ìæ“¾
