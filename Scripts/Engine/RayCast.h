@@ -6,7 +6,7 @@
 #ifndef _RAYCAST_H_
 #define _RAYCAST_H_
 
-#include "Collision.h"
+#include "Collision/Collision.h"
 #include "Engine.h"
 
 struct Ray {

@@ -6,7 +6,7 @@
 #ifndef _COLLISION_H_
 #define _COLLISION_H_
 
-#include "VecMath.h"
+#include "../VecMath.h"
 
 /*
  *	軸並行境界ボックス

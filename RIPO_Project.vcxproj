@@ -152,10 +152,11 @@
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMSource.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\SE\SEManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\SE\SESource.cpp" />
-    <ClCompile Include="Scripts\Engine\Collision.cpp" />
+    <ClCompile Include="Scripts\Engine\Collision\Collision.cpp" />
     <ClCompile Include="Scripts\Engine\Component\AABBCollider.cpp" />
     <ClCompile Include="Scripts\Engine\Component\AnimatorComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\CapsuleCollider.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\ArmActionComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BulletComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp" />
@@ -222,10 +223,12 @@
     <ClInclude Include="Scripts\Engine\Audio\BGM\BGMSource.h" />
     <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\SE\SESource.h" />
-    <ClInclude Include="Scripts\Engine\Collision.h" />
+    <ClInclude Include="Scripts\Engine\Collision\ColliderBase.h" />
+    <ClInclude Include="Scripts\Engine\Collision\Collision.h" />
     <ClInclude Include="Scripts\Engine\Component\AABBCollider.h" />
     <ClInclude Include="Scripts\Engine\Component\AnimatorComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\CapsuleCollider.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BulletComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h" />
