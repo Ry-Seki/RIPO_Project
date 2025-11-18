@@ -46,6 +46,8 @@ public:
 	static constexpr float _MIN_VOLUME = 0.0f;
 	static constexpr float _MAX_VOLUME = 100.0f;
 	static constexpr int _MAX_SE_INDEX = 16;
+	static constexpr float FPS = 60.0f;
+	static constexpr float frameTime = 1.0f / FPS;
 
 	//----------------------------------------------------
 	//				ステージ関連の定数
