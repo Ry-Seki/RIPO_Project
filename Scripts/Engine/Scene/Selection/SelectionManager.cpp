@@ -5,6 +5,8 @@
 
 #include "SelectionManager.h"
 #include "Dungeon/SelectionDungeon.h"
+#include "Training/SelectionTraining.h"
+
 #include "../../Engine.h"
 
 /*
@@ -47,17 +49,22 @@ void SelectionManager::DungeonSelection(Engine& engine) {
 /*
  *	トレーニング選択
  */
-void SelectionManager::TrainingSelection() {
+void SelectionManager::TrainingSelection(Engine& engine) {
 	currentSelection = SelectionFactory::CreateSelection(SelectionType::Training);
-	//auto dungeonSelection = 
+	auto trainingSelection = std::dynamic_pointer_cast<SelectionTraining>(currentSelection);
+	if (!trainingSelection) return;
+
+	currentSelection = trainingSelection;
+	currentSelection->Initialize(engine);
+	isActive = true;
 }
 /*
  *	ショップ選択
  */
-void SelectionManager::ShopSelection() {
+void SelectionManager::ShopSelection(Engine& engine) {
 }
 /*
  *	アルバイト選択
  */
-void SelectionManager::PartTimeSelection() {
+void SelectionManager::PartTimeSelection(Engine& engine) {
 }
