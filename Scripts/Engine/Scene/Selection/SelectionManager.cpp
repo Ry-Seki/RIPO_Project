@@ -48,6 +48,8 @@ void SelectionManager::DungeonSelection(Engine& engine) {
  *	トレーニング選択
  */
 void SelectionManager::TrainingSelection() {
+	currentSelection = SelectionFactory::CreateSelection(SelectionType::Training);
+	//auto dungeonSelection = 
 }
 /*
  *	ショップ選択

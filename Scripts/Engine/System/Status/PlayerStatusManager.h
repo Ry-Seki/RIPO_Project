@@ -10,21 +10,22 @@
 #include "../../../Data/PlayerStatusData.h"
 #include "../../JSON.h"
 
+#include <memory>
+
+/*
+ *	プレイヤーのステータス管理クラス
+ */
 class PlayerStatusManager : public Singleton<PlayerStatusManager> {
 	friend class Singleton<PlayerStatusManager>;
 
 private:
-	PlayerStatusData playerStatus;		// プレイヤーステータスデータ
-	int HPLv;
-	int staminaLv;
-	int strengthLv;
-	int resistTimeLv;
+	std::shared_ptr<PlayerStatusData> playerStatus;		// プレイヤーステータスデータ
 
 private:
 	/*
 	 *	コンストラクタ
 	 */
-	PlayerStatusManager() = default;
+	PlayerStatusManager() : playerStatus(std::make_shared<PlayerStatusData>()){};
 	/*
 	 *	デストラクタ
 	 */
@@ -36,12 +37,23 @@ public:
 	 */
 	void Initialize();
 	/*
-	 *	ロード済みデータのセット (コールバック)
+	 *	@param[in]	ロード済みデータのセット (コールバック)
 	 *  @param[in]	const JSON setJSON	設定するJSONデータ
 	 */
 	void SetupData(const JSON setJSON);
-	
+	/*
+	 *	@brief		プレイヤーのステータス上昇
+	 *  @param[in]	const int statusPart	上昇するステータス
+	 *  @param[in]	int setValue = 1		上がった回数
+	 */
+	void AddPlayerStatus(const int statusPart, int setValue = 1);
+
 public:
+	/*
+	 *	@brief	プレイヤーのステータスデータの取得
+	 *	@return	PlayerStatusData*
+	 */
+	inline const PlayerStatusData* GetPlayerStatusData() const { return playerStatus.get(); }
 
 };
 

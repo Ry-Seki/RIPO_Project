@@ -225,6 +225,7 @@
     <ClInclude Include="Scripts\Engine\Audio\BGM\BGMSource.h" />
     <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\SE\SESource.h" />
+    <ClInclude Include="Scripts\Engine\AutoJSONRegitry.h" />
     <ClInclude Include="Scripts\Engine\Collision\ColliderBase.h" />
     <ClInclude Include="Scripts\Engine\Collision\Collision.h" />
     <ClInclude Include="Scripts\Engine\Component\AABBCollider.h" />

@@ -29,10 +29,10 @@ public:
 	 */
 	static SelectionPtr CreateSelection(SelectionType selection) {
 		switch (selection) {
-			case SelectionType::Dungeon: return std::make_shared<SelectionDungeon>();
-
+			case SelectionType::Dungeon: 
+				return std::make_shared<SelectionDungeon>();
 			case SelectionType::Training:
-				break;
+				//return std::make_shared<SelectionTraining>();
 			case SelectionType::Shop:
 				break;
 			case SelectionType::PartTime:

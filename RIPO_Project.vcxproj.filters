@@ -626,11 +626,14 @@
     <ClInclude Include="Scripts\Engine\Collision\Collision.h">
       <Filter>ヘッダー ファイル\Engine\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Data\PlayerStatusData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\System\Status\PlayerStatusManager.h">
       <Filter>ヘッダー ファイル\Engine\System\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\AutoJSONRegitry.h">
+      <Filter>ヘッダー ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\PlayerStatusData.h">
+      <Filter>ヘッダー ファイル\Data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
