@@ -115,11 +115,21 @@ int Engine::Run() {
 	ChangeScene();
 
 	while (ProcessMessage() != -1) {
+		// 現在の時間の取得
+		auto frameStart = std::chrono::high_resolution_clock::now();
+
 		Effekseer_Sync3DSetting();
 		Update();
 		Render();
-	}
+		// 経過時間に応じて待機
+		auto frameEnd = std::chrono::high_resolution_clock::now();
+		std::chrono::duration<float> elapsed = frameEnd - frameStart;
 
+		float waitTime = GameConst::frameTime - elapsed.count();
+		if (waitTime > 0) {
+			WaitTimer(static_cast<int>(waitTime * 1000));
+		}
+	}
 	Teardown();
 	return 0;
 }
@@ -165,6 +175,11 @@ void Engine::Render() {
 
 	// フェード描画
 	FadeManager::GetInstance().Render();
+
+	// ここで FPS 表示
+#if _DEBUG
+	DrawFormatString(10, 10, GetColor(255, 255, 255), "FPS: %.1f", Time::fps);
+#endif
 	ScreenFlip();
 }
 /*

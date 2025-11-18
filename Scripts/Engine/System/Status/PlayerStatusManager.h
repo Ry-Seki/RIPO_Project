@@ -53,7 +53,7 @@ public:
 	 *	@brief	プレイヤーのステータスデータの取得
 	 *	@return	PlayerStatusData*
 	 */
-	inline const PlayerStatusData* GetPlayerStatusData() const { return playerStatus.get(); }
+	inline PlayerStatusData* GetPlayerStatusData() const { return playerStatus.get(); }
 
 };
 

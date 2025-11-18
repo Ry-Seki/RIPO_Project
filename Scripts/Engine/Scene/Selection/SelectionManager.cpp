@@ -36,6 +36,7 @@ void SelectionManager::Render() {
  */
 void SelectionManager::DungeonSelection(Engine& engine) {
 	currentSelection = SelectionFactory::CreateSelection(SelectionType::Dungeon);
+	if (!currentSelection) return;
 	auto dungeonSelection = std::dynamic_pointer_cast<SelectionDungeon>(currentSelection);
 	if (!dungeonSelection) return;
 
@@ -51,9 +52,13 @@ void SelectionManager::DungeonSelection(Engine& engine) {
  */
 void SelectionManager::TrainingSelection(Engine& engine) {
 	currentSelection = SelectionFactory::CreateSelection(SelectionType::Training);
+	if (!currentSelection) return;
 	auto trainingSelection = std::dynamic_pointer_cast<SelectionTraining>(currentSelection);
 	if (!trainingSelection) return;
 
+	trainingSelection->SetActiveTraining([this](Engine& engine, int setActionNum) {
+		actionManager->ActiveTraining(engine, setActionNum);
+	});
 	currentSelection = trainingSelection;
 	currentSelection->Initialize(engine);
 	isActive = true;

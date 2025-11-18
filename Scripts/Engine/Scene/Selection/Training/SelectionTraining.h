@@ -16,7 +16,7 @@ private:
 	bool inputHandle = false;							// 入力フラグ
 	bool isLoad = false;								// ロードフラグ
 	
-	std::function<void(Engine& engine)> ActiveTraining;	// 行動管理クラスのダンジョン開放関数
+	std::function<void(Engine& engine, int)> ActiveTraining;	// 行動管理クラスのダンジョン開放関数
 
 public:
 	/*
@@ -48,6 +48,8 @@ public:
 	 *	ActionManagerのトレーニング管理関数の設定
 	 *	@param[in]	std::function<void()> setActiveDungeon	行動管理クラスのトレーニング解放関数
 	 */
-	inline void SetActiveTraining(std::function<void(Engine& engine)> setActiveDungeon) { ActiveTraining = setActiveDungeon; }
+	inline void SetActiveTraining(std::function<void(Engine& engine, int)> setActiveDungeon) {
+		ActiveTraining = setActiveDungeon; 
+	}
 };
 #endif // !_SELECTION_TRAINING_H_

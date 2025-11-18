@@ -58,8 +58,9 @@ public:
     void DebugActiveDungeon(Engine& engine, DungeonStageData setStageData);
     /*
      *  トレーニングアクション開始
+     *  @param[in]  int setActionNum    アクション番号
      */
-    void ActiveTraining(Engine& engine);
+    void ActiveTraining(Engine& engine, int setActionNum = -1);
     /*
      *  ショップアクション開始
      */

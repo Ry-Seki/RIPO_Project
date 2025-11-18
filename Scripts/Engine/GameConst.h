@@ -17,9 +17,9 @@ public:
 	//				プレイヤー関連の定数
 	//----------------------------------------------------
 	static constexpr   int PLAYER_MAX_HITCOLL = 1024;		 // 処理するコリジョンポリゴンの最大数
-	static constexpr float PLAYER_ENUM_DEFAULT_SIZE = 20000.0f;	 // 周囲のポリゴン検出に使用するサイズ
-	static constexpr float PLAYER_HIT_HEIGHT = 100.0f;		 // 当たり判定カプセルの半径 
-	static constexpr const char* _STATUS_KEY = "Status";	 // プレイヤーのステータスキー
+	static constexpr float PLAYER_ENUM_DEFAULT_SIZE = 5.0f;	 // 周囲のポリゴン検出に使用するサイズ
+	static constexpr float PLAYER_HIT_HEIGHT = 0.5f;		 // 当たり判定カプセルの半径 
+	static constexpr const char* _STATUS_KEY = "InitStatus";	 // プレイヤーのステータスキー
 	static constexpr const char* _RASE_KEY = "RiseValue";	 // プレイヤーのステータス上昇値のキー
 
 	static constexpr const char* STATUS_PART[4] = {			 // プレイヤーの各ステータスキー
@@ -46,12 +46,14 @@ public:
 	static constexpr float _MIN_VOLUME = 0.0f;
 	static constexpr float _MAX_VOLUME = 100.0f;
 	static constexpr int _MAX_SE_INDEX = 16;
+	static constexpr float FPS = 60.0f;
+	static constexpr float frameTime = 1.0f / FPS;
 
 	//----------------------------------------------------
 	//				ステージ関連の定数
 	//----------------------------------------------------
 	static constexpr int HIT_TRYNUM = 16;								// 壁押し出し処理の最大試行回数
-	static constexpr float HIT_SLIDE_LENGTH = 50.0f;					// 一度の壁押し出し処理でスライドさせる距離
+	static constexpr float HIT_SLIDE_LENGTH = 0.1f;						// 一度の壁押し出し処理でスライドさせる距離
 	static constexpr const float VIEW_RADIUS = 60.0f;					// 取得範囲
 
 

@@ -37,8 +37,11 @@ struct PlayerStatusValue {
 			case 3: return resistTime;
 		}
 	}
-
-	static constexpr int Length() { return 4; }
+	/*
+	 *	@brief	構造体のサイズの取得
+	 *	@return	int
+	 */
+	 int Length() { return 4; }
 };
 /*
  *	プレイヤーのステータスデータ
