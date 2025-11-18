@@ -18,6 +18,11 @@
 class ActionTraining : public DayActionBase {
 private:
     std::shared_ptr<LoadCSV> trainingDialogue;      // セリフデータ
+    int actionNum = -1;                             // アクション番号
+
+private:
+    float timer = 0.0f;
+    float limitTime = 3.0f;
 
 public:
     /*
@@ -50,6 +55,13 @@ public:
      *  破棄処理
      */
     void Teardown() override;
+
+public:
+    /*
+     *  @brief      アクション番号の設定
+     *  @param[in]  int setValue            アクション番号
+     */
+    inline void SetActionNum(int setValue) { actionNum = setValue; }
 };
 
 #endif // !_ACTION_TRAINING_H_

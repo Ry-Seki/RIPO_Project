@@ -66,11 +66,15 @@ void ActionManager::DebugActiveDungeon(Engine& engine, DungeonStageData setStage
 /*
  *	トレーニングアクション開始
  */
-void ActionManager::ActiveTraining(Engine& engine) {
+void ActionManager::ActiveTraining(Engine& engine, int setActionNum) {
 	isActive = true;
 	currentAction = ActionFactory::CreateAction(ActionType::Training);
 	if (!currentAction) return;
+	auto trainingAction = std::dynamic_pointer_cast<ActionTraining>(currentAction);
+	if (!trainingAction) return;
 
+	trainingAction->SetActionNum(setActionNum);
+	currentAction = trainingAction;
 	currentAction->Initialize(engine);
 }
 /*

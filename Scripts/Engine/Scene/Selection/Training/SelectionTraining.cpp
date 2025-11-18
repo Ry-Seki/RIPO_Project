@@ -24,20 +24,53 @@ void SelectionTraining::SetupData(Engine& engine) {
  *	çXêVèàóù
  */
 void SelectionTraining::Update(Engine& engine, float deltaTime) {
-	if (!inputHandle && CheckHitKey(KEY_INPUT_0)) {
+	if (!inputHandle && CheckHitKey(KEY_INPUT_1)) {
 		// SEÇÃçƒê∂
 		PlaySE("DebugSE");
 		inputHandle = true;
 		isComplete = true;
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
 		FadeManager::GetInstance().StartFade(fade, [&engine, this]() {
-			
+			ActiveTraining(engine, 0);
+		});
+	} else if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
+		// SEÇÃçƒê∂
+		PlaySE("DebugSE");
+		inputHandle = true;
+		isComplete = true;
+		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
+		FadeManager::GetInstance().StartFade(fade, [&engine, this]() {
+			ActiveTraining(engine, 1);
+		});
+	} else if (!inputHandle && CheckHitKey(KEY_INPUT_3)) {
+		// SEÇÃçƒê∂
+		PlaySE("DebugSE");
+		inputHandle = true;
+		isComplete = true;
+		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
+		FadeManager::GetInstance().StartFade(fade, [&engine, this]() {
+			ActiveTraining(engine, 2);
+		});
+	} else if (!inputHandle && CheckHitKey(KEY_INPUT_4)) {
+		// SEÇÃçƒê∂
+		PlaySE("DebugSE");
+		inputHandle = true;
+		isComplete = true;
+		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
+		FadeManager::GetInstance().StartFade(fade, [&engine, this]() {
+			ActiveTraining(engine, 3);
 		});
 	}
-	if (CheckHitKey(KEY_INPUT_0) == 0) inputHandle = false;
+
+	if (CheckHitKey(KEY_INPUT_1) && CheckHitKey(KEY_INPUT_2) && CheckHitKey(KEY_INPUT_3) && CheckHitKey(KEY_INPUT_4)== 0) inputHandle = false;
 }
 /*
  *	ï`âÊèàóù
  */
 void SelectionTraining::Render() {
+	DrawFormatString(50, 50, GetColor(255, 255, 255), "=== Selection Sample ===");
+	DrawFormatString(50, 130, GetColor(0, 255, 0), "1: HP");
+	DrawFormatString(50, 150, GetColor(0, 255, 0), "2: Stamina");
+	DrawFormatString(50, 170, GetColor(0, 255, 0), "3: Strength");
+	DrawFormatString(50, 190, GetColor(0, 255, 0), "4: ResistTime");
 }
