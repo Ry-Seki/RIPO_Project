@@ -69,11 +69,16 @@ bool Intersect(const AABB& a, const AABB& b, Vector3& penetration) {
 }
 
 /*
- *  AABB同士の交差判定
- *  @param AABB a   判定対象1
- *  @param AABB b   判定対象2
+ *  カプセル同士の交差判定
+ *  @param Capsule a   判定対象1
+ *  @param Capsule b   判定対象2
  *  @param Vector3 penetration 貫通ベクトル
  */
 bool Intersect(const Capsule& a, const Capsule& b, Vector3& penetration) {
+    
+
+
+
+
     return false;
 }
