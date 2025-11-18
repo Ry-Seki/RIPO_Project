@@ -5,12 +5,12 @@
 
 #include "Collision.h"
 
- /*
-  *  AABB同士の交差判定
-  *  @param AABB a   判定対象1
-  *  @param AABB b   判定対象2
-  *  @param Vector3 penetration 貫通ベクトル
-  */
+/*
+ *  AABB同士の交差判定
+ *  @param AABB a   判定対象1
+ *  @param AABB b   判定対象2
+ *  @param Vector3 penetration 貫通ベクトル
+ */
 bool Intersect(const AABB& a, const AABB& b, Vector3& penetration) {
     // aの左側面がbの右側面より右にある場合は交差していない
     const float dx0 = b.max.x - a.min.x;
@@ -66,4 +66,14 @@ bool Intersect(const AABB& a, const AABB& b, Vector3& penetration) {
     }
     penetration = { 0, 0, signedLength.z };
     return true;
+}
+
+/*
+ *  AABB同士の交差判定
+ *  @param AABB a   判定対象1
+ *  @param AABB b   判定対象2
+ *  @param Vector3 penetration 貫通ベクトル
+ */
+bool Intersect(const Capsule& a, const Capsule& b, Vector3& penetration) {
+    return false;
 }
