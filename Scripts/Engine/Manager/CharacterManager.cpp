@@ -9,6 +9,7 @@
 #include "../Component/Character/ArmActionComponent.h"
 #include "../Component/ModelRenderer.h"
 #include "../Component/GravityComponent.h"
+#include "../Component/CapsuleCollider.h"
 
 CharacterManager::CharacterManager()
 	: engine(nullptr) {}
@@ -27,6 +28,25 @@ GameObjectPtr CharacterManager::CreateCharacter(
 	// コライダーコンポーネント追加
 	AABBColliderPtr collider = characterObject->AddComponent<AABBCollider>();
 	collider->aabb = { AABBMin, AABBMax };
+	// モデルコンポーネント追加
+	characterObject->AddComponent<ModelRenderer>();
+	// 重力コンポーネント追加
+	//characterObject->AddComponent<GravityComponent>();
+	// データのセット
+	characterObject->SetObjectData(name, position, rotation);
+	// キャラクターを返す
+	return characterObject;
+}
+
+template<typename T>
+GameObjectPtr CharacterManager::CreateCharacter(const std::string& name, const Vector3& position, const Vector3& rotation, const Vector3& capsuleStart, const Vector3& capsuleEnd, const float& capsuleRadius) {
+	// 未使用状態のオブジェクト取得
+	GameObjectPtr characterObject = GameObjectManager::GetInstance().GetUnuseObject();
+	// キャラクターコンポーネント追加
+	characterObject->AddComponent<T>();
+	// コライダーコンポーネント追加
+	CapsuleColliderPtr collider = characterObject->AddComponent<CapsuleCollider>();
+	collider->capsule = { capsuleStart, capsuleEnd, capsuleRadius };
 	// モデルコンポーネント追加
 	characterObject->AddComponent<ModelRenderer>();
 	// 重力コンポーネント追加
@@ -57,6 +77,20 @@ GameObjectPtr CharacterManager::GeneratePlayer(
 	const Vector3& AABBMax) {
 	// プレイヤーのベース作成
 	GameObjectPtr player = CreateCharacter<PlayerComponent>(name, position, rotation, AABBMin, AABBMax);
+	// ウデアクションコンポーネント追加
+	player->AddComponent<ArmActionComponent>();
+	// カメラのターゲットに追加
+	CameraManager::GetInstance().SetTarget(player);
+	// シーンが持つゲームオブジェクト配列に追加
+	engine->AddGameObject(player);
+	// 生成キャラクターリストに追加
+	createCharacterList.push_back(player);
+	return player;
+}
+
+GameObjectPtr CharacterManager::GeneratePlayer(const std::string& name, const Vector3& position, const Vector3& rotation, const Vector3& capsuleStart, const Vector3& capsuleEnd, const float& capsuleRadius) {
+	// プレイヤーのベース作成
+	GameObjectPtr player = CreateCharacter<PlayerComponent>(name, position, rotation, capsuleStart, capsuleEnd, capsuleRadius);
 	// ウデアクションコンポーネント追加
 	player->AddComponent<ArmActionComponent>();
 	// カメラのターゲットに追加

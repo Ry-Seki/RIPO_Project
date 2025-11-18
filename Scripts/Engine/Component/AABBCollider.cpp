@@ -28,7 +28,8 @@ void AABBCollider::OnCollision(
  *	デバッグ用の描画関数
  */
 void AABBCollider::DebugRender() {
-	GameObject* owner = GetOwner();
+	auto owner = GetOwner();
+	// ワールド座標のAABB
 	VECTOR aabbMin = ToVECTOR(aabb.min + owner->position);
 	VECTOR aabbMax = ToVECTOR(aabb.max + owner->position);
 	std::vector<VECTOR> aabbPoits = {
@@ -42,25 +43,27 @@ void AABBCollider::DebugRender() {
 		{ aabbMin.x, aabbMax.y, aabbMin.z }
 	};
 
-	VECTOR color;
+	// hit判定によるカラー変更
+	unsigned int color;
 	if (isHit) {
-		color = { 0, 128, 0 };
+		color = GetColor( 0, 128, 0 );
 	}
 	else {
-		color = { 255, 255, 255 };
+		color = GetColor( 255, 255, 255 );
 	}
 
-	DrawLine3D(aabbPoits[0], aabbPoits[1], GetColor(color.x, color.y, color.z));
-	DrawLine3D(aabbPoits[0], aabbPoits[2], GetColor(color.x, color.y, color.z));
-	DrawLine3D(aabbPoits[3], aabbPoits[1], GetColor(color.x, color.y, color.z));
-	DrawLine3D(aabbPoits[3], aabbPoits[2], GetColor(color.x, color.y, color.z));
-	DrawLine3D(aabbPoits[0], aabbPoits[7], GetColor(color.x, color.y, color.z));
-	DrawLine3D(aabbPoits[1], aabbPoits[4], GetColor(color.x, color.y, color.z));
-	DrawLine3D(aabbPoits[2], aabbPoits[6], GetColor(color.x, color.y, color.z));
-	DrawLine3D(aabbPoits[3], aabbPoits[5], GetColor(color.x, color.y, color.z));
-	DrawLine3D(aabbPoits[7], aabbPoits[4], GetColor(color.x, color.y, color.z));
-	DrawLine3D(aabbPoits[7], aabbPoits[6], GetColor(color.x, color.y, color.z));
-	DrawLine3D(aabbPoits[5], aabbPoits[4], GetColor(color.x, color.y, color.z));
-	DrawLine3D(aabbPoits[5], aabbPoits[6], GetColor(color.x, color.y, color.z));
+	// 描画
+	DrawLine3D(aabbPoits[0], aabbPoits[1], color);
+	DrawLine3D(aabbPoits[0], aabbPoits[2], color);
+	DrawLine3D(aabbPoits[3], aabbPoits[1], color);
+	DrawLine3D(aabbPoits[3], aabbPoits[2], color);
+	DrawLine3D(aabbPoits[0], aabbPoits[7], color);
+	DrawLine3D(aabbPoits[1], aabbPoits[4], color);
+	DrawLine3D(aabbPoits[2], aabbPoits[6], color);
+	DrawLine3D(aabbPoits[3], aabbPoits[5], color);
+	DrawLine3D(aabbPoits[7], aabbPoits[4], color);
+	DrawLine3D(aabbPoits[7], aabbPoits[6], color);
+	DrawLine3D(aabbPoits[5], aabbPoits[4], color);
+	DrawLine3D(aabbPoits[5], aabbPoits[6], color);
 
 }
