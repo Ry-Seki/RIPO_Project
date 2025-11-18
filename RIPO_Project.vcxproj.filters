@@ -303,6 +303,9 @@
     <ClCompile Include="Scripts\Engine\System\Status\PlayerStatusManager.cpp">
       <Filter>ソース ファイル\Engine\System</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\Selection\Training\SelectionTraining.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Selection</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -634,6 +637,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Data\PlayerStatusData.h">
       <Filter>ヘッダー ファイル\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Selection\Training\SelectionTraining.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -198,6 +198,7 @@
     <ClCompile Include="Scripts\Engine\Scene\Scene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\Selection\Training\SelectionTraining.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\StandbyScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TutorialScene.cpp" />
@@ -304,6 +305,7 @@
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionBase.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionFactory.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionManager.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Selection\Training\SelectionTraining.h" />
     <ClInclude Include="Scripts\Engine\Scene\StandbyScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\TitleScene.h" />
     <ClInclude Include="Scripts\Engine\Manager\GameObjectManager.h" />
