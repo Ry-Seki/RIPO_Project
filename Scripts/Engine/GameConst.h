@@ -51,7 +51,7 @@ public:
 	//				ステージ関連の定数
 	//----------------------------------------------------
 	static constexpr int HIT_TRYNUM = 16;								// 壁押し出し処理の最大試行回数
-	static constexpr float HIT_SLIDE_LENGTH = 0.1f;						// 一度の壁押し出し処理でスライドさせる距離
+	static constexpr float HIT_SLIDE_LENGTH = 50.0f;					// 一度の壁押し出し処理でスライドさせる距離
 	static constexpr const float VIEW_RADIUS = 60.0f;					// 取得範囲
 
 

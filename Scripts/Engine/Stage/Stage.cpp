@@ -10,7 +10,7 @@
 #include <iostream>
 #include "../Load/Model/LoadModel.h"
 #include "../GameConst.h"
-
+#include "../Component/CapsuleCollider.h"
  /*
   *  コンストラクタ
   */
