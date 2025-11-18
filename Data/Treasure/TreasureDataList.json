@@ -6,9 +6,5 @@
   "LionStatue": {
     "ID": 1,
     "Value": 1500
-  },
-  "TV": {
-    "ID": 2,
-    "Value": 2000
   }
 }
