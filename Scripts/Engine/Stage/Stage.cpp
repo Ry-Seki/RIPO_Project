@@ -59,7 +59,7 @@ void Stage::Render() {
 		MV1DrawModel(modelHandle);
 #if _DEBUG
 		// ステージの当たり判定の描画
-		//StageColliderRenderer();
+		StageColliderRenderer();
 #endif // _DEBUG
 
 
