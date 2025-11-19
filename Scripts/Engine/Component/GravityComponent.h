@@ -18,6 +18,9 @@ private:
 
 	const float FALL_SPEED_MAX;			// 最大落下速度
 	const float GRAVITY_ACCELERATION;	// 重力加速度
+
+public:
+	bool hitGroundingFrag = false;		// 接地判定
 public:
 	GravityComponent();
 	~GravityComponent() = default;
@@ -33,6 +36,21 @@ public:
 	void AddFallSpeed(float addValue) {
 		fallSpeed += addValue;
 	}
+
+public:
+	/*
+	 *	接地判定の変更
+	 *  @param	bool _setValue
+	 *  @author oorui
+	 */
+	void SetGroundingFrag(bool _setValue) { hitGroundingFrag = _setValue; }
+
+
+	/*
+	 *	接地判定の取得
+	 *  @author oorui
+	 */
+	bool GetGroundingFrag()const { return hitGroundingFrag; }
 
 };
 

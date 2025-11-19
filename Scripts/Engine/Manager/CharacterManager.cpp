@@ -31,7 +31,7 @@ GameObjectPtr CharacterManager::CreateCharacter(
 	// モデルコンポーネント追加
 	characterObject->AddComponent<ModelRenderer>();
 	// 重力コンポーネント追加
-	characterObject->AddComponent<GravityComponent>();
+	//characterObject->AddComponent<GravityComponent>();
 	// データのセット
 	characterObject->SetObjectData(name, position, rotation);
 	// キャラクターを返す
@@ -50,7 +50,7 @@ GameObjectPtr CharacterManager::CreateCharacter(const std::string& name, const V
 	// モデルコンポーネント追加
 	characterObject->AddComponent<ModelRenderer>();
 	// 重力コンポーネント追加
-	characterObject->AddComponent<GravityComponent>();
+	//characterObject->AddComponent<GravityComponent>();
 	// データのセット
 	characterObject->SetObjectData(name, position, rotation);
 	// キャラクターを返す
