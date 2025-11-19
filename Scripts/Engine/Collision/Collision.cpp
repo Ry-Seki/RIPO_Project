@@ -82,3 +82,14 @@ bool Intersect(const Capsule& a, const Capsule& b, Vector3& penetration) {
 
     return false;
 }
+
+float CapsuleBetweenMinLength(const Capsule& a, const Capsule& b) {
+    Vector3 startA = a.startPoint;
+    Vector3 endA = a.endPoint;
+    Vector3 startB = b.startPoint;
+    Vector3 endB = b.endPoint;
+
+
+
+    return 0;
+}
