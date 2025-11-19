@@ -14,6 +14,8 @@ using namespace AudioUtility;
  *	@brief	初期化処理
  */
 void SelectionTraining::Initialize(Engine& engine) {
+	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fade);
 }
 /*
  *	@brief	ロード済みデータのセット

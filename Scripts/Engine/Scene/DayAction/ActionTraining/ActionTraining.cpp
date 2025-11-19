@@ -5,13 +5,19 @@
 
 #include "ActionTraining.h"
 #include "../../../System/Status/PlayerStatusManager.h"
+#include "../../../Fade/FadeFactory.h"
+#include "../../../Fade/FadeManager.h"
+
 #include <DxLib.h>
 
 /*
  *	初期化処理
  */
 void ActionTraining::Initialize(Engine& engine) {
-	PlayerStatusManager::GetInstance().AddPlayerStatus(actionNum);
+	auto fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
+		PlayerStatusManager::GetInstance().AddPlayerStatus(actionNum);
+	});
 }
 /*
  *  ロード済みのデータをセット(コールバック)
