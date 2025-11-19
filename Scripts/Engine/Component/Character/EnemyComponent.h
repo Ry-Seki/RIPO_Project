@@ -28,6 +28,8 @@ private:
 	const float TOP_VALUE;
 	// ランダムで加算される値の範囲
 	const int RANDOM_RANGE;
+	// 回転スピード
+	const float ROTATE_SPEED;
 
 public:
 	/*

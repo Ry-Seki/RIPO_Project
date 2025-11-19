@@ -19,6 +19,7 @@ EnemyComponent::EnemyComponent()
 	, turnDelay(0)
 	, TOP_VALUE(5000)
 	, RANDOM_RANGE(100)
+	, ROTATE_SPEED(3.0f)
 {
 }
 
@@ -81,23 +82,39 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 	//Vector3 eRot = Lerp(currentForward, normDirection, 3.0f * deltaTime);
 	//enemy->rotation.y = atan2(eRot.x, eRot.z);
 	////enemy->rotation.y = Slerp(enemy->rotation, normDirection, 1.0f).y;
+	
 	// 目標方向の水平角度（Yaw）
-	Vector3 direction = wayPoint - enemy->position;
-	Vector3 normDirection = Normalized(direction);
-	float targetYaw = atan2(direction.x, direction.z);
-	// 今の角度
-	float currentYaw = enemy->rotation.y;
-	// 回転スピード
-	const float rotateSpeed = 3.0f;   // 好みで調整
-	// ゆっくり補間して回転
-	float newYaw = currentYaw + (targetYaw - currentYaw) * rotateSpeed * deltaTime;
-	// 適用
-	enemy->rotation.y = newYaw;
+	//Vector3 direction = Direction(enemy->position, wayPoint);
+	//float targetYaw = atan2(direction.x, direction.z);
+	//// 今の角度
+	//float currentYaw = enemy->rotation.y;
+	//// ゆっくり補間して回転
+	//float newYaw = currentYaw + (targetYaw - currentYaw) * rotateSpeed * deltaTime;
+	//// 適用
+	//enemy->rotation.y = newYaw;
 
-	//enemy->rotation.y = atan2(normDirection.x, normDirection.y);
-	//enemy->rotation.y += 180 * Deg2Rad;
+	Vector3 direction = Direction(enemy->position, wayPoint);
+	float goalAngle = atan2(direction.x, direction.z);
+	goalAngle += 180 * Deg2Rad;
+	float angleDirection = fmod(goalAngle - enemy->rotation.y, 360);
+	
+	Vector3 enemyForward = ForwardDir(enemy->rotation);
+	// 目標の方向に補正
+	if (angleDirection > 180)
+		angleDirection -= 360;
+	if (angleDirection < -180)
+		angleDirection += 360;
+	if (angleDirection < 0) {
+		enemy->rotation.y += ROTATE_SPEED * deltaTime;
+	}
+	else if (angleDirection > 0) {
+		enemy->rotation.y -= ROTATE_SPEED * deltaTime;
+	}
+
+	//enemy->rotation.y = goalAngle;
 	// 目標地点についたらターゲットを変える
-	if (Distance(wayPoint, enemy->position) < differenceTarget) {
+	auto distance = Distance(wayPoint, enemy->position);
+	if (distance < differenceTarget) {
 		// ランダムに待つ
 		if (turnDelay > TOP_VALUE) {
 			chaseTargetChangeFrag = targetChange;
@@ -106,7 +123,7 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 	}
 	else {
 		// 目標の方向に進む
-		enemy->position.x += normDirection.x * moveSpeed * deltaTime;
-		enemy->position.z += normDirection.z * moveSpeed * deltaTime;
+		enemy->position.x += direction.x * moveSpeed * deltaTime;
+		enemy->position.z += direction.z * moveSpeed * deltaTime;
 	}
 }
