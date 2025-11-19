@@ -110,7 +110,8 @@ private:
 		float polyOffset,
 		const Vector3& MoveVec,
 		const std::vector<MV1_COLL_RESULT_POLY*>& walls,
-		bool moveFlag
+		bool moveFlag,
+		GameObject* other
 	);
 
 	/**

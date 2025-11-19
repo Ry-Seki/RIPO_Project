@@ -42,7 +42,7 @@ void PlayerComponent::Update(float deltaTime) {
 	// 移動処理
 	PlayerMove(player, deltaTime);
 	// ステージとの当たり判定
-	//StageManager::GetInstance().StageCollider(player, moveVec);
+	StageManager::GetInstance().StageCollider(player, moveVec);
 
 	// 右クリックでウデアクションをハンドに設定
 	auto playerArm = player->GetComponent<ArmActionComponent>();

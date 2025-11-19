@@ -61,7 +61,7 @@ void Stage::Render() {
 		MV1DrawModel(modelHandle);
 #if _DEBUG
 		// ステージの当たり判定の描画
-		//StageColliderRenderer();
+		StageColliderRenderer();
 #endif // _DEBUG
 
 
@@ -113,7 +113,7 @@ void Stage::UpdateCollision(GameObject* other, Vector3 MoveVec) {
 	ClassifyPolygons(*hitDim, prevPos, walls, floors);
 
 	// 壁衝突処理
-	ProcessWallCollision(currentPos, prevPos, polyOffset, MoveVec, walls, moveFlag);
+	ProcessWallCollision(currentPos, prevPos, polyOffset, MoveVec, walls, moveFlag, other);
 
 	// 床衝突処理
 	ProcessFloorCollision(currentPos, polyOffset, floors, other, MoveVec.y);
@@ -199,18 +199,21 @@ void Stage::ProcessWallCollision(
 	float polyOffset,
 	const Vector3& MoveVec,
 	const std::vector<MV1_COLL_RESULT_POLY*>& walls,
-	bool moveFlag) {
-
+	bool moveFlag,
+	GameObject* other
+) {
 	// 壁が存在しなければ抜ける
 	if (walls.empty()) return;
 
-	// カプセル設定
-	const float capsuleRadius = GameConst::PLAYER_HIT_HEIGHT;
+	// カプセルコンポーネントの取得
+	auto capsule = other->GetComponent<CapsuleCollider>();
+	// カプセルの半径を取得
+	float capsuleRadius = capsule->capsule.radius;
 
-	// カプセルの下端
-	Vector3 capLower = nowPos;
-	// カプセルの上端
-	Vector3 capTop = nowPos + Vector3(0, polyOffset, 0);
+	// ワールド座標に変換したカプセルの下端
+	Vector3 capLower = nowPos + capsule->capsule.startPoint;
+	// ワールド座標に変換したカプセルの上端
+	Vector3 capTop = nowPos + capsule->capsule.endPoint;
 
 	for (auto* poly : walls) {
 		// 三角形の 3 頂点
@@ -266,8 +269,6 @@ void Stage::ProcessWallCollision(
 		// 壁に沿った移動に変更
 		Vector3 slideVec = moveVec - avgNormal * dot;
 
-		// 対象者の位置を更新
-		//nowPos = prevPos + slideVec;
 	}
 }
 
@@ -288,18 +289,22 @@ void Stage::ProcessFloorCollision(
 
 	if (floors.empty()) return;
 
-	float MaxY = 0.5f;
+	float MaxY = 0.1f;
 	bool isGrounded = false;
+	// 重力コンポーネントの取得
 	auto hitGrounding = other->GetComponent<GravityComponent>();
-
+	// カプセルコンポーネントの取得
+	auto capsule = other->GetComponent<CapsuleCollider>();
+	// 下端
+	Vector3 capStart = nowPos + capsule->capsule.startPoint;
+	// 上端
+	Vector3 capEnd = nowPos + capsule->capsule.endPoint;
 
 	for (auto* poly : floors) {
-		Vector3 line1 = nowPos + Vector3(0.0f, polyOffset, 0.0f);
-		Vector3 line2 = nowPos + Vector3(0.0f, -0.3f, 0.0f);
 		// 三角形と線分の当たり判定
 		HITRESULT_LINE res = HitCheck_Line_Triangle(
-			ToVECTOR(line1),
-			ToVECTOR(line2),
+			ToVECTOR(capStart),
+			ToVECTOR(capEnd),
 			poly->Position[0],
 			poly->Position[1],
 			poly->Position[2]);
@@ -318,7 +323,7 @@ void Stage::ProcessFloorCollision(
 	}
 	// 判定する
 	hitGrounding->SetGroundingFrag(isGrounded);
-	if (hitGrounding->GetGroundingFrag()) nowPos.y = MaxY;
+	if (hitGrounding->GetGroundingFrag()) nowPos.y = MaxY - capsule->capsule.startPoint.y;
 
 }
 

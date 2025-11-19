@@ -10,10 +10,10 @@
 #include "../../VecMath.h"
 #include <string>
 
-/*
- *	キャラクター関連実行処理
- *  @note	名前空間での省略可能	using namespace CharacterUtility
- */
+ /*
+  *	キャラクター関連実行処理
+  *  @note	名前空間での省略可能	using namespace CharacterUtility
+  */
 namespace CharacterUtility {
 	/*
 	 *	プレイヤー生成
@@ -31,6 +31,17 @@ namespace CharacterUtility {
 		const Vector3& AABBMax) {
 		CharacterManager::GetInstance().GeneratePlayer(name, position, rotation, AABBMin, AABBMax);
 	}
+
+	inline void  GeneratePlayer(
+		const std::string& name,
+		const Vector3& position,
+		const Vector3& rotation,
+		const Vector3& capsuleStart,
+		const Vector3& capsuleEnd,
+		const float& capsuleRadius) {
+		CharacterManager::GetInstance().GeneratePlayer(name, position, rotation, capsuleStart, capsuleEnd, capsuleRadius);
+	}
+
 	/*
 	 *	エネミー生成
 	 *	@param	name		エネミーの名前
