@@ -47,6 +47,19 @@ public:
 		treasureDataList.LoadFromJson(setTreasureJSON);
 		itemCatalogData.LoadFromJson(setItemJSON);
 	}
+	/*
+	 *	@brief		アイテムデータのポインタを貸し出す
+	 *	@param[out]	std::vector<ItemData>& itemDataList
+	 */
+	void SetItemDataList(std::vector<ItemData*>& itemDataList) {
+		itemCatalogData.TryGetAllItemsData(itemDataList);
+	}
+	/*
+	 *	@brief		アイテムカタログデータの取得
+	 *	@return		ItemCatalogData
+	 */
+	ItemCatalogData GetItemCatalogData() const { return itemCatalogData; }
+
 public:
 	/*
 	 *	@brief		所持金の取得

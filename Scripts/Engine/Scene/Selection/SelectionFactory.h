@@ -9,6 +9,7 @@
 #include "SelectionBase.h"
 #include "Dungeon/SelectionDungeon.h"
 #include "Training/SelectionTraining.h"
+#include "Shop/SelectionShop.h"
 
 #include <memory>
 #include <string>
@@ -35,7 +36,7 @@ public:
 			case SelectionType::Training:
 				return std::make_shared<SelectionTraining>();
 			case SelectionType::Shop:
-				break;
+				return std::make_shared<SelectionShop>();
 			case SelectionType::PartTime:
 				break;
 		}

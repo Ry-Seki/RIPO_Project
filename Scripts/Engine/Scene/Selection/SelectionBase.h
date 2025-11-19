@@ -42,6 +42,10 @@ public:
      *  •`‰æˆ—
      */
     virtual void Render() = 0;
+    /*
+     *  •Ğ•t‚¯ˆ—
+     */
+    virtual void Teardown() {}
 
 public:
     /*

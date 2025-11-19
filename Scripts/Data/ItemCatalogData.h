@@ -15,9 +15,11 @@
  *	@brief	ItemData構造体
  */
 struct ItemData {
+	int category = -1;		// アイテムのカテゴリー
 	std::string name = "";	// アイテムの名前
 	int price = 0;			// アイテムの値段
 	int openDay = 0;		// アイテムの開放日
+	int buyCount = 0;		// アイテムの可能購入数
 };
 
 /*
@@ -42,16 +44,21 @@ public:
 	 *  @param[in]  const JSON& setJSON                         読み込むJSONデータ
 	 */
 	void LoadFromJson(const JSON& setJSON) {
-		for (auto& entry : setJSON.items()) {
+		for (auto& categoryEntry : setJSON.items()) {
+			int categoryID = std::stoi(categoryEntry.key());
 
-			auto data = std::make_shared<ItemData>();
+			for (auto& itemEntry : categoryEntry.value().items()) {
+				auto data = std::make_shared<ItemData>();
+				int itemID = std::stoi(itemEntry.key());
 
-			int ID = std::stoi(entry.key());
-			data->name = entry.value()["Name"].get<std::string>();
-			data->price = entry.value()["Price"].get<int>();
-			data->openDay = entry.value()["OpenDay"].get<int>();
+				data->category = categoryID;
+				data->name = itemEntry.value()["Name"].get<std::string>();
+				data->price = itemEntry.value()["Price"].get<int>();
+				data->openDay = itemEntry.value()["OpenDay"].get<int>();
+				data->buyCount = itemEntry.value()["BuyCount"].get<int>();
 
-			itemDataMap[ID] = data;
+				itemDataMap[itemID] = data;
+			}
 		}
 	}
 
@@ -74,7 +81,7 @@ public:
 	 *  @param[out]	std::vector<ItemData>& itemDataList		アイテムデータ配列
 	 *  @return		bool
 	 */
-	bool TryGetItemData(std::vector<ItemData*>& itemDataList) const {
+	bool TryGetAllItemsData(std::vector<ItemData*>& itemDataList) const {
 		for (auto& itr : itemDataMap) {
 			ItemData* item = itr.second.get();
 			itemDataList.push_back(item);

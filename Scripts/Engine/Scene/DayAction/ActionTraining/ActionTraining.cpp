@@ -39,10 +39,10 @@ void ActionTraining::Update(Engine& engine, float deltaTime) {
  */
 void ActionTraining::Render() {
 	PlayerStatusData* status = PlayerStatusManager::GetInstance().GetPlayerStatusData();
-	DrawFormatString(50, 130, GetColor(0, 255, 0), "HP : %d", status->base.HP);
-	DrawFormatString(50, 150, GetColor(0, 255, 0), "Stamina : %d", status->base.stamina);
-	DrawFormatString(50, 170, GetColor(0, 255, 0), "Strength : %d", status->base.strength);
-	DrawFormatString(50, 190, GetColor(0, 255, 0), "ResistTime : %d", status->base.resistTime);
+	DrawFormatString(50, 100, GetColor(0, 255, 0), "HP : %d", status->base.HP);
+	DrawFormatString(50, 120, GetColor(0, 255, 0), "Stamina : %d", status->base.stamina);
+	DrawFormatString(50, 140, GetColor(0, 255, 0), "Strength : %d", status->base.strength);
+	DrawFormatString(50, 160, GetColor(0, 255, 0), "ResistTime : %d", status->base.resistTime);
 }
 /*
  *	”jŠüˆ—
