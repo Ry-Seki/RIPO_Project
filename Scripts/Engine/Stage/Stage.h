@@ -38,6 +38,7 @@ private:
 	static constexpr DxLib::COLOR_F _POINT_SPC_COLOR = { 0.1f, 0.1f, 0.1f, 1.0f };	// ポイントライト スペキュラーカラー
 
 
+
 public:
 	Stage();
 	virtual ~Stage() override;
@@ -67,7 +68,7 @@ public:
 	 * @param position     オブジェクト位置
 	 * @param MoveVec      移動ベクトル
 	 */
-	void UpdateCollision(Vector3* position, Vector3 MoveVec) override;
+	void UpdateCollision(GameObject* other, Vector3 MoveVec) override;
 
 private:
 
@@ -77,7 +78,7 @@ private:
 	 * @param MoveVec   移動ベクトル
 	 * @return std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> コリジョン結果構造体
 	 */
-	std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> SetupCollision(Vector3* position, Vector3 MoveVec);
+	std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> SetupCollision(Vector3 position, Vector3 MoveVec);
 
 
 	/**
@@ -121,7 +122,9 @@ private:
 	void ProcessFloorCollision(
 		Vector3& nowPos,
 		float polyOffset,
-		const std::vector<MV1_COLL_RESULT_POLY*>& floors
+		const std::vector<MV1_COLL_RESULT_POLY*>& floors,
+		GameObject* other,
+		float moveVec
 	);
 public:
 	/*

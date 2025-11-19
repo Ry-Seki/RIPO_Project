@@ -78,8 +78,8 @@ void StageManager::PrevStage() {
 /*
  *	ステージの当たり判定
  */
-void StageManager::StageCollider(Vector3* position, Vector3 MoveVec) {
-	WithCurrentStage([&](StageBase& stage) { stage.UpdateCollision(position, MoveVec); });
+void StageManager::StageCollider(GameObject* other, Vector3 MoveVec) {
+	WithCurrentStage([&](StageBase& stage) { stage.UpdateCollision(other, MoveVec); });
 }
 /*
  *  更新
