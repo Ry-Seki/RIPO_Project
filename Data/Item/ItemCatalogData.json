@@ -1,0 +1,22 @@
+{
+  "0": {
+    "name": "HPUPツール",
+    "Price": 10,
+    "OpenDay": 0
+  },
+  "1": {
+    "ID": "StaminaUPツール",
+    "Price": 10,
+    "OpenDay": 0
+  },
+  "2": {
+    "ID": "StrengthUPツール",
+    "Price": 15,
+    "OpenDay": 0
+  },
+  "3": {
+    "ID": "ResistTimeUPツール",
+    "Price": 15,
+    "OpenDay": 0
+  }
+}

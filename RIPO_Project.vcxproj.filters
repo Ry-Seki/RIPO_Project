@@ -109,6 +109,27 @@
     <Filter Include="ソース ファイル\Engine\System">
       <UniqueIdentifier>{5c2a2461-e2cf-4d1a-9f3f-66f8ac6afd29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\System\Item">
+      <UniqueIdentifier>{4de5ccba-ab5d-44b6-9b3e-93d3ce175d96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Data\Dungeon">
+      <UniqueIdentifier>{a2c6122f-53ba-45be-9960-7b5e94880d6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Data\Player">
+      <UniqueIdentifier>{767e1437-2210-4e2a-bc5a-1eb73c967cf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Data\Treasure">
+      <UniqueIdentifier>{f668c90f-e0f0-45ac-a115-3ed19572f904}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Data\Item">
+      <UniqueIdentifier>{01716cc6-c1af-4fde-914b-0c77c11406ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\System\Status">
+      <UniqueIdentifier>{5fafadf1-6e9c-44fc-a046-1ece6676d4b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\System\Item">
+      <UniqueIdentifier>{6b29716e-b408-47b3-b866-337b4201290e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -300,10 +321,16 @@
     <ClCompile Include="Scripts\Engine\Component\CapsuleCollider.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\System\Status\PlayerStatusManager.cpp">
-      <Filter>ソース ファイル\Engine\System</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Scene\Selection\Training\SelectionTraining.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Selection</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\System\Status\PlayerStatusManager.cpp">
+      <Filter>ソース ファイル\Engine\System\Status</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\System\Item\ItemManager.cpp">
+      <Filter>ソース ファイル\Engine\System\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\Selection\Shop\SelectionShop.cpp">
       <Filter>ソース ファイル\Engine\Scene\Selection</Filter>
     </ClCompile>
   </ItemGroup>
@@ -545,18 +572,6 @@
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h">
       <Filter>ヘッダー ファイル\Engine\Menu</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Data\DungeonData.h">
-      <Filter>ヘッダー ファイル\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\Dungeon\DungeonDataLoader.h">
-      <Filter>ヘッダー ファイル\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\DungeonStageData.h">
-      <Filter>ヘッダー ファイル\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\TreasureDataList.h">
-      <Filter>ヘッダー ファイル\Data</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\JSON.h">
       <Filter>ヘッダー ファイル\Engine</Filter>
     </ClInclude>
@@ -632,14 +647,32 @@
     <ClInclude Include="Scripts\Engine\AutoJSONRegitry.h">
       <Filter>ヘッダー ファイル\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Data\PlayerStatusData.h">
-      <Filter>ヘッダー ファイル\Data</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\Selection\Training\SelectionTraining.h">
       <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Engine\System\Item\ItemManager.h">
+      <Filter>ヘッダー ファイル\Engine\System\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\DungeonData.h">
+      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\DungeonStageData.h">
+      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\Dungeon\DungeonDataLoader.h">
+      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\PlayerStatusData.h">
+      <Filter>ヘッダー ファイル\Data\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\TreasureDataList.h">
+      <Filter>ヘッダー ファイル\Data\Treasure</Filter>
+    </ClInclude>
     <ClInclude Include="Scripts\Data\ItemCatalogData.h">
-      <Filter>ヘッダー ファイル\Data</Filter>
+      <Filter>ヘッダー ファイル\Data\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Selection\Shop\SelectionShop.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

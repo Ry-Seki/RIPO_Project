@@ -27,7 +27,7 @@ void ExitPoint::OnCollision(const std::shared_ptr<Component>& self, const std::s
 	auto treasureID = treasure->GetComponent<StageObjectBase>();
 	if (!treasureID)return;
 
-	MoneyManager::GetInstance().AddMoney(treasureID->GetTreasureID());
+	MoneyManager::GetInstance().AddTreasureMoney(treasureID->GetTreasureID());
 }
 
 // ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
