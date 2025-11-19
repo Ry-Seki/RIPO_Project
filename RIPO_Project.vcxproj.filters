@@ -569,9 +569,6 @@
     <ClInclude Include="Scripts\Engine\Load\Audio\LoadAudio.h">
       <Filter>ヘッダー ファイル\Engine\Load</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Data\ItemCatalogData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Component\AABBCollider.h">
       <Filter>ヘッダー ファイル\Engine\Component</Filter>
     </ClInclude>
@@ -640,6 +637,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\Selection\Training\SelectionTraining.h">
       <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\ItemCatalogData.h">
+      <Filter>ヘッダー ファイル\Data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

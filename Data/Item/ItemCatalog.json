@@ -1,11 +1,20 @@
 {
   "Status": {
-    "HPUp": 10,
-    "StaminaUp": 10,
-    "StrengthUp": 15,
-    "ResistTimeUp": 15
-  },
-  "Weapon": {
-    "SimpleGun": 30
+    "HPUP": {
+      "ID": 0,
+      "Price": 10
+    },
+    "StaminaUP": {
+      "ID": 1,
+      "Price": 10
+    },
+    "StrengthUP": {
+      "ID": 2,
+      "Price": 15
+    },
+    "ResistTimeUP": {
+      "ID": 3,
+      "Price": 15
+    }
   }
 }
