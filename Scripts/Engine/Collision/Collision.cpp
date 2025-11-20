@@ -83,7 +83,7 @@ bool Intersect(const Capsule& a, const Capsule& b, Vector3& penetration) {
     return false;
 }
 
-float CapsuleBetweenMinLength(const Capsule& a, const Capsule& b) {
+float SegmentBetweenMinLength(const Capsule& a, const Capsule& b) {
     Vector3 startA = a.startPoint;
     Vector3 endA = a.endPoint;
     Vector3 startB = b.startPoint;
@@ -92,4 +92,19 @@ float CapsuleBetweenMinLength(const Capsule& a, const Capsule& b) {
 
 
     return 0;
+}
+
+/*
+ *  点から線分への最近接点
+ *  @param  Vector3 startPos    最近接点を調べる線文の開始点
+ *  @param  Vector3 endPos      最近接点を調べる線分の終了点
+ *  @param  Vecror3 point       最近接点を調べる点
+ *  @param  float   minPoint    線分内の最近接点(0～1)
+ *  @return Vector3             最近接点の座標
+ */
+Vector3 PointToSegmentMinLength(const Vector3& startPos, const Vector3& endPos, const Vector3& point, float& minPoint) {
+    // 線分の方向ベクトル
+    Vector3 segDir = Direction(startPos, endPos);
+    // ベクトルの距離の2乗
+    float length
 }
