@@ -99,16 +99,22 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 	float angleDirection = fmod(goalAngle - enemy->rotation.y, 360);
 	
 	Vector3 enemyForward = ForwardDir(enemy->rotation);
+	
 	// –Ú•W‚Ì•ûŒü‚É•â³
-	if (angleDirection > 180)
-		angleDirection -= 360;
-	if (angleDirection < -180)
-		angleDirection += 360;
-	if (angleDirection < 0) {
-		enemy->rotation.y += ROTATE_SPEED * deltaTime;
+	if (enemy->rotation.y < 3 && enemy->rotation.y > -3) {
+		if (angleDirection > 180)
+			angleDirection -= 360;
+		if (angleDirection < -180)
+			angleDirection += 360;
+		if (angleDirection < 0) {
+			enemy->rotation.y += ROTATE_SPEED * deltaTime;
+		}
+		else if (angleDirection > 0) {
+			enemy->rotation.y -= ROTATE_SPEED * deltaTime;
+		}
 	}
-	else if (angleDirection > 0) {
-		enemy->rotation.y -= ROTATE_SPEED * deltaTime;
+	else {
+		enemy->rotation.y = goalAngle;
 	}
 
 	//enemy->rotation.y = goalAngle;
