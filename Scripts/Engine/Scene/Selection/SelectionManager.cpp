@@ -6,6 +6,7 @@
 #include "SelectionManager.h"
 #include "Dungeon/SelectionDungeon.h"
 #include "Training/SelectionTraining.h"
+#include "Shop/SelectionShop.h"
 
 #include "../../Engine.h"
 
@@ -67,6 +68,17 @@ void SelectionManager::TrainingSelection(Engine& engine) {
  *	ショップ選択
  */
 void SelectionManager::ShopSelection(Engine& engine) {
+	currentSelection = SelectionFactory::CreateSelection(SelectionType::Shop);
+	if (!currentSelection) return;
+	auto shopSelection = std::dynamic_pointer_cast<SelectionShop>(currentSelection);
+	if (!shopSelection) return;
+
+	shopSelection->SetActiveShop([this](Engine& engine, std::vector<int> itemIDList) {
+		actionManager->ActiveShop(engine, itemIDList);
+	});
+	currentSelection = shopSelection;
+	currentSelection->Initialize(engine);
+	isActive = true;
 }
 /*
  *	アルバイト選択

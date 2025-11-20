@@ -48,8 +48,8 @@ public:
 	 *	ActionManagerのトレーニング管理関数の設定
 	 *	@param[in]	std::function<void()> setActiveDungeon	行動管理クラスのトレーニング解放関数
 	 */
-	inline void SetActiveTraining(std::function<void(Engine& engine, int)> setActiveDungeon) {
-		ActiveTraining = setActiveDungeon; 
+	inline void SetActiveTraining(std::function<void(Engine& engine, int)> setActiveTraining) {
+		ActiveTraining = setActiveTraining;
 	}
 };
 #endif // !_SELECTION_TRAINING_H_

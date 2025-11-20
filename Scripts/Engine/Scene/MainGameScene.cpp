@@ -29,8 +29,9 @@ void MainGameScene::Initialize(Engine& engine) {
     calendarManager->SetActionManager(actionManager.get());
     selectionManager->SetActionManager(actionManager.get());
     auto treasureData = LoadManager::GetInstance().LoadResource<LoadJSON>("Data/Treasure/TreasureDataList.json");
-    LoadManager::GetInstance().SetOnComplete([treasureData]() {
-        MoneyManager::GetInstance().LoadFromJSON(treasureData->GetData());
+    auto itemData = LoadManager::GetInstance().LoadResource<LoadJSON>("Data/Item/ItemCatalogData.json");
+    LoadManager::GetInstance().SetOnComplete([treasureData, itemData]() {
+        MoneyManager::GetInstance().LoadFromJSON(treasureData->GetData(), itemData->GetData());
     });
     PlayerStatusManager::GetInstance().Initialize();
 }

@@ -58,13 +58,14 @@ public:
     void DebugActiveDungeon(Engine& engine, DungeonStageData setStageData);
     /*
      *  トレーニングアクション開始
-     *  @param[in]  int setActionNum    アクション番号
+     *  @param[in]  const int setActionNum    アクション番号
      */
-    void ActiveTraining(Engine& engine, int setActionNum = -1);
+    void ActiveTraining(Engine& engine, const int setActionNum = -1);
     /*
      *  ショップアクション開始
+     *  @param[in]  const std::vector<int>& itemIDList     アイテムIDリスト
      */
-    void ActiveShop(Engine& engine);
+    void ActiveShop(Engine& engine, const std::vector<int>& itemIDList);
     /*
      *  アルバイトアクション開始
      */

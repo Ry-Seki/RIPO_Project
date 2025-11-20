@@ -20,6 +20,7 @@ void ActionManager::Update(Engine& engine, float deltaTime) {
 
 	if (currentAction->IsComplete()) {
 		onComplete();
+		currentAction->Teardown();
 		currentAction = nullptr;
 		isActive = false;
 	}
@@ -64,9 +65,10 @@ void ActionManager::DebugActiveDungeon(Engine& engine, DungeonStageData setStage
 	currentAction = dungeonAction;
 }
 /*
- *	トレーニングアクション開始
+ *  トレーニングアクション開始
+ *  @param[in]  const int setActionNum    アクション番号
  */
-void ActionManager::ActiveTraining(Engine& engine, int setActionNum) {
+void ActionManager::ActiveTraining(Engine& engine, const int setActionNum) {
 	isActive = true;
 	currentAction = ActionFactory::CreateAction(ActionType::Training);
 	if (!currentAction) return;
@@ -78,14 +80,19 @@ void ActionManager::ActiveTraining(Engine& engine, int setActionNum) {
 	currentAction->Initialize(engine);
 }
 /*
- *	ショップアクション開始
+ *  ショップアクション開始
+ *  @param[in]  const std::vector<int>& itemIDList     アイテムIDリスト
  */
-void ActionManager::ActiveShop(Engine& engine) {
+void ActionManager::ActiveShop(Engine& engine, const std::vector<int>& itemIDList) {
 	isActive = true;
 	currentAction = ActionFactory::CreateAction(ActionType::Shop);
 	if (!currentAction) return;
+	auto shopAction = std::dynamic_pointer_cast<ActionShop>(currentAction);
+	if (!shopAction) return;
 
-	currentAction->Initialize(engine);	currentAction->Initialize(engine);
+	shopAction->SetItemIDList(itemIDList);
+	currentAction = shopAction;
+	currentAction->Initialize(engine);
 }
 /*
  *	アルバイトアクション開始

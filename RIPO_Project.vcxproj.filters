@@ -109,6 +109,75 @@
     <Filter Include="ソース ファイル\Engine\System">
       <UniqueIdentifier>{5c2a2461-e2cf-4d1a-9f3f-66f8ac6afd29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\System\Item">
+      <UniqueIdentifier>{4de5ccba-ab5d-44b6-9b3e-93d3ce175d96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Data\Dungeon">
+      <UniqueIdentifier>{a2c6122f-53ba-45be-9960-7b5e94880d6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Data\Player">
+      <UniqueIdentifier>{767e1437-2210-4e2a-bc5a-1eb73c967cf8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Data\Treasure">
+      <UniqueIdentifier>{f668c90f-e0f0-45ac-a115-3ed19572f904}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Data\Item">
+      <UniqueIdentifier>{01716cc6-c1af-4fde-914b-0c77c11406ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\System\Status">
+      <UniqueIdentifier>{5fafadf1-6e9c-44fc-a046-1ece6676d4b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\System\Item">
+      <UniqueIdentifier>{6b29716e-b408-47b3-b866-337b4201290e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\Selection\Dungeon">
+      <UniqueIdentifier>{b9612847-a4dd-4196-9f33-3655bde1b92b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\Selection\Training">
+      <UniqueIdentifier>{432deab6-beb2-429d-9bee-f75e4f7474a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\Selection\Shop">
+      <UniqueIdentifier>{30a94be8-6028-4995-8600-a736a275cd9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\Selection\PartTime">
+      <UniqueIdentifier>{b2fe3af3-fc89-4985-a829-4c5a80e321a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\Selection\Dungeon">
+      <UniqueIdentifier>{62c0fbae-a3f7-4aca-ba6b-e6152cf79488}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\Selection\Training">
+      <UniqueIdentifier>{1a2a3b26-9705-4d6f-be9c-dedd41192bec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\Selection\Shop">
+      <UniqueIdentifier>{59c9497f-54b1-44d0-92d1-801cbb470b07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\Selection\PartTime">
+      <UniqueIdentifier>{d5345967-675f-406d-ba52-584aa2c0ec1e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\Action\Dungeon">
+      <UniqueIdentifier>{2bbbfa07-c019-44f4-bcc0-f61231ef14d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\Action\Training">
+      <UniqueIdentifier>{5c3c4921-294a-4791-b3b6-21c168fbe61c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\Action\Shop">
+      <UniqueIdentifier>{de15867c-b804-40c8-99c6-d78af5090127}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\Action\PartTime">
+      <UniqueIdentifier>{ca6419ec-4aff-44f7-a5a0-9eed38e70ea5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\Action\Dungeon">
+      <UniqueIdentifier>{b7c430bb-57c3-4cc1-9695-6c1f558f0013}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\Action\Training">
+      <UniqueIdentifier>{9ed785ad-3081-4ebd-b646-06f16cba6058}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\Action\Shop">
+      <UniqueIdentifier>{c5d9b93d-fa37-4571-a1e2-0453a06bcba3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\Action\PartTime">
+      <UniqueIdentifier>{7a5b51ab-232b-4178-a224-a47273ee6a7d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -189,18 +258,6 @@
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionDungeon\ActionDungeon.cpp">
-      <Filter>ソース ファイル\Engine\Scene\Action</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionTraining\ActionTraining.cpp">
-      <Filter>ソース ファイル\Engine\Scene\Action</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.cpp">
-      <Filter>ソース ファイル\Engine\Scene\Action</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.cpp">
-      <Filter>ソース ファイル\Engine\Scene\Action</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Input\InputManager.cpp">
       <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
@@ -217,9 +274,6 @@
       <Filter>ソース ファイル\Engine\Scene\Action</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionManager.cpp">
-      <Filter>ソース ファイル\Engine\Scene\Selection</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.cpp">
       <Filter>ソース ファイル\Engine\Scene\Selection</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp">
@@ -301,10 +355,34 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\System\Status\PlayerStatusManager.cpp">
-      <Filter>ソース ファイル\Engine\System</Filter>
+      <Filter>ソース ファイル\Engine\System\Status</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\System\Item\ItemManager.cpp">
+      <Filter>ソース ファイル\Engine\System\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Selection\Dungeon</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Scene\Selection\Training\SelectionTraining.cpp">
-      <Filter>ソース ファイル\Engine\Scene\Selection</Filter>
+      <Filter>ソース ファイル\Engine\Scene\Selection\Training</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\Selection\Shop\SelectionShop.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Selection\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\SelectionPartTime.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Selection\PartTime</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionDungeon\ActionDungeon.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Action\Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionTraining\ActionTraining.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Action\Training</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Action\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Action\PartTime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -440,18 +518,6 @@
     <ClInclude Include="Scripts\Engine\Scene\DebugScene.h">
       <Filter>ヘッダー ファイル\Engine\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionDungeon\ActionDungeon.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionTraining\ActionTraining.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionManager.h">
       <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
     </ClInclude>
@@ -469,9 +535,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\DayAction\DayActionBase.h">
       <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h">
       <Filter>ヘッダー ファイル\Engine\Character</Filter>
@@ -545,18 +608,6 @@
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h">
       <Filter>ヘッダー ファイル\Engine\Menu</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Data\DungeonData.h">
-      <Filter>ヘッダー ファイル\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\Dungeon\DungeonDataLoader.h">
-      <Filter>ヘッダー ファイル\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\DungeonStageData.h">
-      <Filter>ヘッダー ファイル\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\TreasureDataList.h">
-      <Filter>ヘッダー ファイル\Data</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\JSON.h">
       <Filter>ヘッダー ファイル\Engine</Filter>
     </ClInclude>
@@ -568,9 +619,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\Audio\LoadAudio.h">
       <Filter>ヘッダー ファイル\Engine\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\ItemCatalogData.h">
-      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Component\AABBCollider.h">
       <Filter>ヘッダー ファイル\Engine\Component</Filter>
@@ -635,11 +683,50 @@
     <ClInclude Include="Scripts\Engine\AutoJSONRegitry.h">
       <Filter>ヘッダー ファイル\Engine</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Engine\System\Item\ItemManager.h">
+      <Filter>ヘッダー ファイル\Engine\System\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\DungeonData.h">
+      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\DungeonStageData.h">
+      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\Dungeon\DungeonDataLoader.h">
+      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
+    </ClInclude>
     <ClInclude Include="Scripts\Data\PlayerStatusData.h">
-      <Filter>ヘッダー ファイル\Data</Filter>
+      <Filter>ヘッダー ファイル\Data\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\TreasureDataList.h">
+      <Filter>ヘッダー ファイル\Data\Treasure</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\ItemCatalogData.h">
+      <Filter>ヘッダー ファイル\Data\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Selection\Dungeon</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\Selection\Training\SelectionTraining.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
+      <Filter>ヘッダー ファイル\Engine\Scene\Selection\Training</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Selection\Shop\SelectionShop.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Selection\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\SelectionPartTime.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Selection\PartTime</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionDungeon\ActionDungeon.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Action\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionTraining\ActionTraining.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Action\Training</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Action\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Action\PartTime</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

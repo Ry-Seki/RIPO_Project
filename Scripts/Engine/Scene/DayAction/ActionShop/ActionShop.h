@@ -7,10 +7,8 @@
 #define _ACTION_SHOP_H_
 
 #include "../DayActionBase.h"
-#include "../../../Load/CSV/LoadCSV.h"
-#include "../../../Load/Sprite/LoadSprite.h"
-#include "../../../Load/LoadManager.h"
 
+#include <vector>
 #include <memory>
 
 /*
@@ -18,10 +16,9 @@
  */
 class ActionShop : public DayActionBase {
 private:
-    std::shared_ptr<LoadCSV> itemData;          // アイテムデータ
-    std::shared_ptr<LoadSprite> itemImages;     // アイテム画像
-    std::shared_ptr<LoadCSV> itemDescriptions;  // アイテム説明
-    std::shared_ptr<LoadCSV> shopDialogue;      // セリフ
+    std::vector<int> itemIDList;    // 購入したアイテムIDリスト
+    float timer = 0.0f;
+    float limitTime = 7.0f;
 
 public:
     /*
@@ -54,5 +51,15 @@ public:
      *  破棄処理
      */
     void Teardown() override;
+
+public:
+    /*
+     *  @brief      購入したアイテムIDリストの設定
+     *  @param[in]  const std::vector<int>& setItemIDList
+     */
+    inline void SetItemIDList(const std::vector<int>& setItemIDList){
+        itemIDList = setItemIDList;
+    }
+
 };
 #endif // !_ACTION_SHOP_H_

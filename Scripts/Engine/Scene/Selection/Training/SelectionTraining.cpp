@@ -70,9 +70,9 @@ void SelectionTraining::Update(Engine& engine, float deltaTime) {
  *	ï`âÊèàóù
  */
 void SelectionTraining::Render() {
-	DrawFormatString(50, 50, GetColor(255, 255, 255), "=== Selection Sample ===");
-	DrawFormatString(50, 130, GetColor(0, 255, 0), "1: HP");
-	DrawFormatString(50, 150, GetColor(0, 255, 0), "2: Stamina");
-	DrawFormatString(50, 170, GetColor(0, 255, 0), "3: Strength");
-	DrawFormatString(50, 190, GetColor(0, 255, 0), "4: ResistTime");
+	DrawFormatString(50, 50, GetColor(255, 255, 255), "=== Selection Training Sample ===");
+	DrawFormatString(50, 80, GetColor(0, 255, 0), "1: HP");
+	DrawFormatString(50, 100, GetColor(0, 255, 0), "2: Stamina");
+	DrawFormatString(50, 120, GetColor(0, 255, 0), "3: Strength");
+	DrawFormatString(50, 140, GetColor(0, 255, 0), "4: ResistTime");
 }

@@ -19,9 +19,9 @@ void PlayerStatusManager::Initialize() {
 }
 /*
  *	ロード済みデータのセット (コールバック)
- *  @param[in]	const JSON setJSON	設定するJSONデータ
+ *  @param[in]	const JSON& setJSON	設定するJSONデータ
  */
-void PlayerStatusManager::SetupData(const JSON setJSON) {
+void PlayerStatusManager::SetupData(const JSON& setJSON) {
 	for (int i = 0, max = playerStatus->base.Length(); i < max; i++) {
 		playerStatus->base[i] = setJSON[GameConst::_STATUS_KEY][GameConst::STATUS_PART[i]];
 	}
