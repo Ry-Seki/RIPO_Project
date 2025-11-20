@@ -17,6 +17,9 @@ void ExitPoint::OnCollision(const std::shared_ptr<Component>& self, const std::s
 	if (exitTriger || other->GetOwner()->name != GameConst::_CREATE_POSNAME_PLAYER)
 		return;
 
+	// Õ“ËÏ‚İ‚É‚·‚é
+	exitTriger = true;
+
 	auto player = other->GetOwner()->GetComponent<PlayerComponent>();
 	if (!player)return;
 	auto treasure = player->GetOwner()->GetComponent<ArmActionComponent>()->GetLiftObject();
@@ -24,11 +27,7 @@ void ExitPoint::OnCollision(const std::shared_ptr<Component>& self, const std::s
 	auto treasureID = treasure->GetComponent<StageObjectBase>();
 	if (!treasureID)return;
 
-	MoneyManager::GetInstance().AddMoney(treasureID->GetTreasureID());
-
-	// Õ“ËÏ‚İ‚É‚·‚é
-	exitTriger = true;
-
+	MoneyManager::GetInstance().AddTreasureMoney(treasureID->GetTreasureID());
 }
 
 // ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ

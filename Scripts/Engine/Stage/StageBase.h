@@ -10,6 +10,9 @@
 #include <string>
 #include "../Load/Model/LoadModel.h"
 #include "../VecMath.h"
+
+class GameObject;
+
 class StageBase {
 protected:
 	// モデルハンドル
@@ -51,7 +54,7 @@ public:
 	 *  @param Vector3* position
 	 *  @param Vector3  MoveVec
 	 */
-	virtual void UpdateCollision(Vector3* position, Vector3 MoveVec) = 0;
+	virtual void UpdateCollision(GameObject* other, Vector3 MoveVec) = 0;
 
 	/*
 	 *	ステージハンドルセット

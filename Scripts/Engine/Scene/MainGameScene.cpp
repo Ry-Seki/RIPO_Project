@@ -11,6 +11,7 @@
 #include "../Manager/StageManager.h"
 #include "../Load/JSON/LoadJSON.h"
 #include "../System/Money/MoneyManager.h"
+#include "../System/Status/PlayerStatusManager.h"
 
 /*
  *  初期化処理
@@ -28,9 +29,11 @@ void MainGameScene::Initialize(Engine& engine) {
     calendarManager->SetActionManager(actionManager.get());
     selectionManager->SetActionManager(actionManager.get());
     auto treasureData = LoadManager::GetInstance().LoadResource<LoadJSON>("Data/Treasure/TreasureDataList.json");
-    LoadManager::GetInstance().SetOnComplete([treasureData]() {
-        MoneyManager::GetInstance().LoadFromJSON(treasureData->GetData());
+    auto itemData = LoadManager::GetInstance().LoadResource<LoadJSON>("Data/Item/ItemCatalogData.json");
+    LoadManager::GetInstance().SetOnComplete([treasureData, itemData]() {
+        MoneyManager::GetInstance().LoadFromJSON(treasureData->GetData(), itemData->GetData());
     });
+    PlayerStatusManager::GetInstance().Initialize();
 }
 /*
  *  ロード済みのデータの設定(コールバック)

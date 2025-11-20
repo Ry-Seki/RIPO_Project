@@ -4,12 +4,20 @@
  */
 
 #include "ActionShop.h"
+#include "../../../System/Status/PlayerStatusManager.h"
+#include "../../../Fade/FadeFactory.h"
+#include "../../../Fade/FadeManager.h"
 
 /*
  *	初期化処理
  */
 void ActionShop::Initialize(Engine& engine) {
-
+	auto fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
+		for (int i = 0, max = itemIDList.size(); i < max; i++) {
+			PlayerStatusManager::GetInstance().AddPlayerStatus(itemIDList[i]);
+		}
+	});
 }
 /*
  *  ロード済みのデータをセット(コールバック)
@@ -21,16 +29,25 @@ void ActionShop::SetupData(Engine& engine) {
  *	更新処理
  */
 void ActionShop::Update(Engine& engine, float deltaTime) {
-
+	timer += deltaTime;
+	timer += deltaTime;
+	if (timer >= limitTime) {
+		isComplete = true;
+	}
 }
 /*
  *	描画処理
  */
 void ActionShop::Render() {
-
+	PlayerStatusData* status = PlayerStatusManager::GetInstance().GetPlayerStatusData();
+	DrawFormatString(50, 100, GetColor(0, 255, 0), "HP : %d", status->base.HP);
+	DrawFormatString(50, 120, GetColor(0, 255, 0), "Stamina : %d", status->base.stamina);
+	DrawFormatString(50, 140, GetColor(0, 255, 0), "Strength : %d", status->base.strength);
+	DrawFormatString(50, 160, GetColor(0, 255, 0), "ResistTime : %d", status->base.resistTime);
 }
 /*
  *	破棄処理
  */
 void ActionShop::Teardown() {
+	itemIDList.clear();
 }

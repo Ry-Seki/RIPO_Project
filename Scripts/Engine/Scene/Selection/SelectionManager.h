@@ -54,15 +54,15 @@ public:
 	/*
 	 *	トレーニング選択
 	 */
-	void TrainingSelection();
+	void TrainingSelection(Engine& engine);
 	/*
 	 *	ショップ選択
 	 */
-	void ShopSelection();
+	void ShopSelection(Engine& engine);
 	/*
 	 *	アルバイト選択
 	 */
-	void PartTimeSelection();
+	void PartTimeSelection(Engine& engine);
 
 public:
 	/*

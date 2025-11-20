@@ -38,9 +38,9 @@ public:
 	void Initialize();
 	/*
 	 *	@param[in]	ロード済みデータのセット (コールバック)
-	 *  @param[in]	const JSON setJSON	設定するJSONデータ
+	 *  @param[in]	const JSON& setJSON	設定するJSONデータ
 	 */
-	void SetupData(const JSON setJSON);
+	void SetupData(const JSON& setJSON);
 	/*
 	 *	@brief		プレイヤーのステータス上昇
 	 *  @param[in]	const int statusPart	上昇するステータス
@@ -53,7 +53,7 @@ public:
 	 *	@brief	プレイヤーのステータスデータの取得
 	 *	@return	PlayerStatusData*
 	 */
-	inline const PlayerStatusData* GetPlayerStatusData() const { return playerStatus.get(); }
+	inline PlayerStatusData* GetPlayerStatusData() const { return playerStatus.get(); }
 
 };
 

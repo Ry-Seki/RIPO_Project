@@ -19,13 +19,13 @@ void PlayerStatusManager::Initialize() {
 }
 /*
  *	ロード済みデータのセット (コールバック)
- *  @param[in]	const JSON setJSON	設定するJSONデータ
+ *  @param[in]	const JSON& setJSON	設定するJSONデータ
  */
-void PlayerStatusManager::SetupData(const JSON setJSON) {
-	for (int i = 0; i < playerStatus->base.Length(); i++) {
+void PlayerStatusManager::SetupData(const JSON& setJSON) {
+	for (int i = 0, max = playerStatus->base.Length(); i < max; i++) {
 		playerStatus->base[i] = setJSON[GameConst::_STATUS_KEY][GameConst::STATUS_PART[i]];
 	}
-	for (int i = 0; i < playerStatus->rise.Length(); i++) {
+	for (int i = 0, max = playerStatus->rise.Length(); i < max; i++) {
 		playerStatus->rise[i] = setJSON[GameConst::_RASE_KEY][GameConst::STATUS_PART[i]];
 	}
 }
@@ -35,5 +35,5 @@ void PlayerStatusManager::SetupData(const JSON setJSON) {
  *  @param[in]	int setValue = 1		上がった回数
  */
 void PlayerStatusManager::AddPlayerStatus(const int statusPart, int setValue) {
-	playerStatus->base[statusPart] = playerStatus->rise[statusPart] * setValue;
+	playerStatus->base[statusPart] += playerStatus->rise[statusPart] * setValue;
 }

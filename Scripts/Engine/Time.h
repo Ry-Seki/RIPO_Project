@@ -17,6 +17,7 @@ public:
     static float unscaledDeltaTime; // スケールなし
     static float timeScale;        // ゲーム全体の時間倍率
     static float totalTime;        // 累計起動時間（スケール考慮）
+    static float fps;
 
 private:
     static std::chrono::high_resolution_clock::time_point previousTime;
@@ -28,6 +29,7 @@ public:
         unscaledDeltaTime = 0.0f;
         totalTime = 0.0f;
         timeScale = 1.0f;
+        fps = 0.0f;
     }
 
     static void Update() {
@@ -41,6 +43,8 @@ public:
         deltaTime = unscaledDeltaTime * timeScale;
         // 累計時間の加算
         totalTime += deltaTime;
+        // FPS計算
+        if (unscaledDeltaTime > 0.0f) fps = 1.0f / unscaledDeltaTime;
         // 現在時間を前フレーム時間に代入
         previousTime = currentTime;
     }

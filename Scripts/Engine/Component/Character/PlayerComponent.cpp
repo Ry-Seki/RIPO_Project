@@ -8,6 +8,7 @@
 #include "../../GameConst.h"
 #include "HandArm.h"
 #include "RevolverArm.h"
+#include "../../Manager/StageManager.h"
 #include "DxLib.h"
 
 PlayerComponent::PlayerComponent()
@@ -25,11 +26,13 @@ PlayerComponent::PlayerComponent()
 	, RUN_ACCELERATION_MAX(2.0f)
 	, AVOID_ACCELERATION_MAX(6.0f)
 	, AVOID_MOVE_VALUE_MAX(1000.0f)
-	, AVOID_COOL_TIME_MAX(1.0f) {}
+	, AVOID_COOL_TIME_MAX(1.0f) {
+}
 
 void PlayerComponent::Update(float deltaTime) {
 	GameObject* player = GetOwner();
-
+	moveVec = Vector3::zero;
+	
 	// 回避
 	PlayerAvoid(player, deltaTime);
 	// 回避中は処理しない
@@ -38,6 +41,9 @@ void PlayerComponent::Update(float deltaTime) {
 	PlayerRun(deltaTime);
 	// 移動処理
 	PlayerMove(player, deltaTime);
+	// ステージとの当たり判定
+	//StageManager::GetInstance().StageCollider(player, moveVec);
+
 	// 右クリックでウデアクションをハンドに設定
 	auto playerArm = player->GetComponent<ArmActionComponent>();
 	if (GetMouseInput() & MOUSE_INPUT_RIGHT)
@@ -82,6 +88,7 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	}
 	player->position.x += moveX;
 	player->position.z += moveZ;
+	moveVec = { moveX, 0.0f, moveZ };
 	// 移動方向を保存
 	if (moveX && moveZ)
 		moveDirectionY = atan2f(moveX, moveZ);
@@ -148,7 +155,7 @@ void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 			isAvoid = false;
 			avoidCoolTime = AVOID_COOL_TIME_MAX;
 		}
-	} 
+	}
 	else {
 		// クールタイム
 		if (avoidCoolTime <= 0) {
