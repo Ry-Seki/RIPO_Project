@@ -84,13 +84,11 @@ private:
 	/**
 	 * @brief 壁ポリゴン／床ポリゴンの振り分け
 	 * @param hitDim   コリジョン結果構造体
-	 * @param prevPos  移動前の座標
 	 * @param walls    壁ポリゴン格納先
 	 * @param floors   床ポリゴン格納先
 	 */
 	void ClassifyPolygons(
 		const MV1_COLL_RESULT_POLY_DIM& hitDim,
-		const Vector3& prevPos,
 		std::vector<MV1_COLL_RESULT_POLY*>& walls,
 		std::vector<MV1_COLL_RESULT_POLY*>& floors
 	);
@@ -127,6 +125,7 @@ private:
 		GameObject* other,
 		float moveVec
 	);
+
 public:
 	/*
 	 * ステージのライトの設定
@@ -145,6 +144,8 @@ public:
 	void SetPointLightPositions(const std::vector<Vector3>& positions) {
 		pointLightPos = positions;
 	}
+
+
 
 };
 
