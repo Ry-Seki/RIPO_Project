@@ -18,8 +18,6 @@ private:
     int currentIndex = 0;                           // 現在の要素数
     bool isComplete = false;                        // ロード完了フラグ
 
-    int maxMillisecondsPerFrame = 4;                // フレーム毎に使えるミリ秒（例: 4 ms）
-
 public:
     /*
      *  コンストラクタ
@@ -41,21 +39,22 @@ public:
      *  更新処理
      */
     void Update(float unscaledDeltaTime) {
-        if (isComplete || loadList.empty()) return;
-
+        if (loadList.empty()) {
+            isComplete = true;
+            return;
+        }
         // ロードアニメーションの更新
         for (auto& anim : animationList) {
             if (anim) anim->Update(unscaledDeltaTime);
         }
+        // ロード処理
         if (currentIndex < loadList.size()) {
             loadList[currentIndex]->Load();
             currentIndex++;
         }
 
-
         if (currentIndex >= loadList.size()) {
             isComplete = true;
-            Clear();
         }
     }
     /*
@@ -82,9 +81,9 @@ public:
      *  メンバ変数のリセット
      */
     void Clear() {
+        isComplete = false;
         loadList.clear();
         currentIndex = 0;
-        isComplete = false;
     }
 
 public:

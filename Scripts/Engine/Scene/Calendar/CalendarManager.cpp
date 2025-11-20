@@ -36,16 +36,26 @@ void CalendarManager::Update(Engine& engine) {
             });
             action->SetOnComplete([this, &day]() { day.AdvanceDay(); });
         }
-        //else if (CheckHitKey(KEY_INPUT_2)) { 
-        //    inputHandle = true; 
-        //    isActive = false;
-        //    day.ActionTraining();
-        //}
-        //else if (CheckHitKey(KEY_INPUT_3)) { 
-        //    inputHandle = true;
-        //    isActive = false;
-        //    day.ActionShop();
-        //}
+        else if (CheckHitKey(KEY_INPUT_2)) { 
+            inputHandle = true; 
+            isActive = false;
+            day.ActionTraining();
+            FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+            FadeManager::GetInstance().StartFade(fade, [&engine, this]() {
+                selection->TrainingSelection(engine);
+            });
+            action->SetOnComplete([this, &day]() { day.ActionTraining(); });
+        }
+        else if (CheckHitKey(KEY_INPUT_3)) { 
+            inputHandle = true;
+            isActive = false;
+            day.ActionShop();
+            FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+            FadeManager::GetInstance().StartFade(fade, [&engine, this]() {
+                selection->ShopSelection(engine);
+            });
+            action->SetOnComplete([this, &day]() { day.ActionShop(); });
+        }
         //else if (CheckHitKey(KEY_INPUT_4)) {
         //    inputHandle = true;
         //    isActive = false;

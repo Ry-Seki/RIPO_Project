@@ -1,4 +1,10 @@
+/*
+ *	@file	CapsuleCollider.cpp
+ *  @author Riku
+ */
+
 #include "CapsuleCollider.h"
+#include "../GameObject.h"
 
 /*
  *	更新処理
@@ -22,5 +28,22 @@ void CapsuleCollider::OnCollision(
  *	デバッグ描画関数
  */
 void CapsuleCollider::DebugRender() {
+	auto owner = GetOwner();
+	// ワールド座標のカプセル
+	VECTOR capsuleStart = ToVECTOR(capsule.startPoint + owner->position);
+	VECTOR capsuleEnd = ToVECTOR(capsule.endPoint + owner->position);
 
+	// hit判定によるカラー変更
+	unsigned int color;
+	if (isHit) {
+		color = GetColor(0, 128, 0);
+	}
+	else {
+		color = GetColor(255, 255, 255);
+	}
+
+	// 描画の瞬間でライティングを消す
+	SetUseLighting(false);
+	DrawCapsule3D(capsuleStart, capsuleEnd, capsule.radius, 16, color, color, FALSE);
+	SetUseLighting(true);
 }

@@ -200,8 +200,8 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
 	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
 	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-	for (auto id : IDList) {
-		GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 }, id);
+	for (int i = 0; i < IDList.size(); i++) {
+		GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 }, IDList[i]);
 	}
 	GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
 	GenerateExit("exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
@@ -263,7 +263,7 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
 	size_t treasureCount = treasureSpawnPos.size();
 	// ハンドルの要素数の取得
 	size_t treasureTypeCount = setResource.treasureResource.size();
-	for (int i = 0; i < treasureTypeCount; i++) {
+	for (int i = 0; i < treasureCount; i++) {
 		// モデルハンドルの取得
 		int treasureHandle = setResource.treasureResource[i]->GetHandle();
 		// 宝の取得
@@ -348,5 +348,5 @@ void ActionDungeon::LoadResourcesFromStageData(Engine& engine, DungeonStageData&
 	}    // ロード完了時のコールバック登録
 	load.SetOnComplete([this, &engine, dungeonResource]() {
 		DebugSetup(engine, dungeonResource);
-		});
+	});
 }

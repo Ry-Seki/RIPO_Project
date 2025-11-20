@@ -46,6 +46,15 @@ private:
 		const Vector3& AABBMin,
 		const Vector3& AABBMax);
 
+	template <typename T>
+	GameObjectPtr CreateCharacter(
+		const std::string& name,
+		const Vector3& position,
+		const Vector3& rotation,
+		const Vector3& capsuleStart,
+		const Vector3& capsuleEnd,
+		const float& capsuleRadius);
+
 public:
 	void Initialize(Engine& setEngine);
 	/*
@@ -62,6 +71,14 @@ public:
 		const Vector3& rotation,
 		const Vector3& AABBMin,
 		const Vector3& AABBMax);
+
+	GameObjectPtr GeneratePlayer(
+		const std::string& name,
+		const Vector3& position,
+		const Vector3& rotation,
+		const Vector3& capsuleStart,
+		const Vector3& capsuleEnd,
+		const float& capsuleRadius);
 
 	/*
 	 *	エネミー生成

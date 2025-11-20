@@ -228,6 +228,88 @@ Vector3 Vector3::Slerp(const Vector3& a, const Vector3& b, float t) {
 	return dir * len;
 }
 
+/*
+ *	最近接点を求める
+ *  @param[in]	v1			球の中心点
+ *  @param[in]  v2,v3,v4	三角形の3頂点
+ */
+Vector3 Vector3::Nearest(const Vector3& senterPos, const Vector3& v1, const Vector3& v2, const Vector3& v3) {
+	// 各頂点の要素1 -> 要素2の辺を求める
+	Vector3 ab = v2 - v1;
+	Vector3 ac = v3 - v1;
+	Vector3 ap = senterPos - v1;
+
+	// 頂点v1の判定
+	// 中心点と辺の位置関係
+	float d1 = Dot(ab, ap);
+	float d2 = Dot(ac, ap);
+
+	// 中心点が三角形の外だったら
+	if (d1 <= 0.0f && d2 <= 0.0f) {
+		// 頂点 v1 が最近接点
+		return v1;
+	}
+
+	// 頂点v2の判定
+	Vector3 bp = senterPos - v2;
+	// 中心点と辺の位置関係
+	float d3 = Dot(ab, bp);
+	float d4 = Dot(ac, bp);
+	// 中心点が三角形の外だったら
+	if (d3 >= 0.0f && d4 <= d3) {
+		// 頂点 v2 が最近接点
+		return v2;
+	}
+
+	// ab辺の最近接点を求める
+	float vc = d1 * d4 - d3 * d2;
+	if (vc <= 0.0f && d1 >= 0.0f && d3 <= 0.0f) {
+		// a->b方向の補間係数
+		float t = d1 / (d1 - d3);
+		// 辺ab上の最近接点
+		return v1 + ab * t;
+	}
+
+	// 頂点v3の判定
+	Vector3 cp = senterPos - v3;
+	// 中心点と辺の位置関係
+	float d5 = Dot(ab, cp);
+	float d6 = Dot(ac, cp);
+	// 中心点が三角形の外だったら
+	if (d6 >= 0.0f && d5 <= d6) {
+		// 頂点v3が最近接点
+		return v3;
+	}
+
+	// ac辺の最近接点を求める
+	float vb = d5 * d2 - d1 * d6;
+	if (vb <= 0.0f && d2 >= 0.0f && d6 <= 0.0f) {
+		// acの補間係数
+		float t = d2 / (d2 - d6);
+		// 辺acの最近接点
+		return v1 + ac * t;
+	}
+
+	// bcの最近接点を求める
+	Vector3 bc = v3 - v2;
+	float va = d3 * d6 - d5 * d4;
+	if (va <= 0.0f && (d4 - d3) >= 0.0f && (d5 - d6) >= 0.0f) {
+		// bcの補間係数
+		float t = (d4 - d3) / ((d4 - d3) + (d5 - d6));
+		// 辺bcの最近接点
+		return v2 + bc * t;
+	}
+
+	// それ以外だったら
+	float denom = 1.0f / (va + vb + vc);
+	float v = vb * denom;
+	float w = vc * denom;
+
+	// 三角形に存在する最近接点
+	return v1 + ab * v + ac * w;
+
+}
+
 
 // 比較
 bool operator==(const Vector3& a, const Vector3& b) {
@@ -344,6 +426,9 @@ Vector3 Slerp(const Vector3& a, const Vector3& b, float t) {
 	return Vector3::Slerp(a, b, t);
 }
 
+Vector3 Nearest(const Vector3& senterPos, const Vector3& v1, const Vector3& v2, const Vector3& v3) {
+	return Vector3::Nearest(senterPos, v1, v2, v3);
+}
 
 const Vector3 V_ZERO = Vector3::zero;
 const Vector3 V_ONE = Vector3::one;

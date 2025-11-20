@@ -27,6 +27,6 @@ struct Capsule {
 
 // è’ìÀÇµÇƒÇ¢ÇÈÇ©Ç«Ç§Ç©
 bool Intersect(const AABB& a, const AABB& b, Vector3& penetration);
-
+bool Intersect(const Capsule& a, const Capsule& b, Vector3& penetration);
 #endif // !_COLLISION_H_
 

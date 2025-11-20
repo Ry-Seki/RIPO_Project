@@ -14,6 +14,7 @@
 #include "../Load/LoadManager.h"
 #include "../Load/Model/LoadModel.h"
 #include "../Component/ModelRenderer.h"
+#include "../Component/CapsuleCollider.h"
 
  /*
   *	初期化処理
@@ -29,19 +30,19 @@ void DebugScene::Initialize(Engine& engine) {
 	BulletManager::GetInstance().Initialize(engine);
 	auto stageModel = load.LoadResource<LoadModel>("Res/Model/Stage/StageModel_1.mv1");
 	auto stageModel2 = load.LoadResource<LoadModel>("Res/Model/Stage/StageModel_1_TwoLayer.mv1");
-	auto playerModel = load.LoadResource<LoadModel>("Res/Model/Player/RIPO_Model.mv1");
+	auto playerModel = load.LoadResource<LoadModel>("Res/Model/Player/RIPO_Model.mv1");	
 	auto enemyModel = load.LoadResource<LoadModel>("Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1");
 	auto stageBoneData = load.LoadResource<LoadJSON>("Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json");
 	auto treasureModel1 = load.LoadResource<LoadModel>("Res/Model/Treasure/Treasure01.mv1");
 	auto treasureModel2 = load.LoadResource<LoadModel>("Res/Model/Treasure/Treasure02.mv1");
-	auto player = CharacterManager::GetInstance().GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100,  300,  100 });
-	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
+	auto player = CharacterManager::GetInstance().GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, { 0, 100, 0 }, { 0,  200,  0 }, 100);
+	CameraManager::GetInstance().CreateCamera("camera", V_ZERO, V_ZERO);
 	std::vector<GameObjectPtr> enemy(3);
-	enemy[0] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-	enemy[1] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-	enemy[2] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-	StageObjectManager::GetInstance().GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 }, 0);
-	StageObjectManager::GetInstance().GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 }, 1);
+	enemy[0] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 });
+	enemy[1] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 });
+	enemy[2] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 });
+	StageObjectManager::GetInstance().GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO, { -100,0,-100 }, { 100,300,100 }, 0);
+	StageObjectManager::GetInstance().GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO, { -100,0,-100 }, { 100,300,100 }, 1);
 	std::vector<StageObjectBasePtr> treasure(2);
 	for (int i = 0; i < 2; i++) {
 		treasure[i] = StageObjectManager::GetInstance().GetStageObject(i);
@@ -107,8 +108,6 @@ void DebugScene::Update(Engine& engine, float deltaTime) {
 	bool stairFrag = StageObjectManager::GetInstance().GetStairMove();
 	if (stairFrag) {
 		StageManager::GetInstance().NextStage();
-
-
 	}
 
 }
@@ -164,6 +163,12 @@ void DebugScene::Render() {
 		auto aabb = obj->GetComponent<AABBCollider>();
 		if (aabb == nullptr) continue;
 		aabb->DebugRender();
+	}
+	// 全オブジェクトのCapsuleCollider描画
+	for (auto& obj : gameObjects) {
+		auto capsule = obj->GetComponent<CapsuleCollider>();
+		if (capsule == nullptr) continue;
+		capsule->DebugRender();
 	}
 
 #endif

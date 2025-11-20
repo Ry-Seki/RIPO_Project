@@ -197,7 +197,10 @@
     <ClCompile Include="Scripts\Engine\Scene\ResultScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Scene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\SelectionPartTime.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\Selection\Shop\SelectionShop.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\Selection\Training\SelectionTraining.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\StandbyScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TutorialScene.cpp" />
@@ -205,6 +208,8 @@
     <ClCompile Include="Scripts\Engine\Stage\StageObject\ExitPoint.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Stair.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.cpp" />
+    <ClCompile Include="Scripts\Engine\System\Item\ItemManager.cpp" />
+    <ClCompile Include="Scripts\Engine\System\Status\PlayerStatusManager.cpp" />
     <ClCompile Include="Scripts\Engine\Time.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
@@ -224,6 +229,7 @@
     <ClInclude Include="Scripts\Engine\Audio\BGM\BGMSource.h" />
     <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\SE\SESource.h" />
+    <ClInclude Include="Scripts\Engine\AutoJSONRegitry.h" />
     <ClInclude Include="Scripts\Engine\Collision\ColliderBase.h" />
     <ClInclude Include="Scripts\Engine\Collision\Collision.h" />
     <ClInclude Include="Scripts\Engine\Component\AABBCollider.h" />
@@ -299,9 +305,12 @@
     <ClInclude Include="Scripts\Engine\Scene\ResultScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\Scene.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\SelectionPartTime.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionBase.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionFactory.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionManager.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Selection\Shop\SelectionShop.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Selection\Training\SelectionTraining.h" />
     <ClInclude Include="Scripts\Engine\Scene\StandbyScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\TitleScene.h" />
     <ClInclude Include="Scripts\Engine\Manager\GameObjectManager.h" />
@@ -316,6 +325,7 @@
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageState.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageUtility.h" />
+    <ClInclude Include="Scripts\Engine\System\Item\ItemManager.h" />
     <ClInclude Include="Scripts\Engine\System\Money\MoneyManager.h" />
     <ClInclude Include="Scripts\Engine\System\Status\PlayerStatusManager.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />

@@ -1,0 +1,28 @@
+{
+  "0": {
+    "0": {
+      "Name": "HPUPツール",
+      "Price": 10,
+      "OpenDay": 0,
+      "BuyCount": 50
+    },
+    "1": {
+      "Name": "StaminaUPツール",
+      "Price": 10,
+      "OpenDay": 0,
+      "BuyCount": 50
+    },
+    "2": {
+      "Name": "StrengthUPツール",
+      "Price": 15,
+      "OpenDay": 0,
+      "BuyCount": 10
+    },
+    "3": {
+      "Name": "ResistTimeUPツール",
+      "Price": 15,
+      "OpenDay": 0,
+      "BuyCount": 20
+    }
+  }
+}

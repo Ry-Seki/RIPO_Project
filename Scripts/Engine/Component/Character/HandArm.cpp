@@ -14,8 +14,12 @@ HandArm::HandArm()
 	, LEFTABLE_DISTANCE(100)
 {}
 
-void HandArm::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
-	liftObject = other->GetOwner();
+void HandArm::OnCollision(
+	const std::shared_ptr<Component>& self,
+	const std::shared_ptr<Component>& other) {
+	auto otherObject = other->GetOwner();
+	if (otherObject->name == "treasure")
+		liftObject = other->GetOwner();
 }
 
 void HandArm::ArmUpdate(float deltaTime, GameObject* player, Engine* engine) {

@@ -40,5 +40,7 @@ public:
 	void DebugRender() override;
 
 };
+// •Ê–¼’è‹`
+using CapsuleColliderPtr = std::shared_ptr<CapsuleCollider>;
 
 #endif // !_CAPSULECOLLIDER_H_

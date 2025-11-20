@@ -5,6 +5,9 @@
 
 #include "SelectionManager.h"
 #include "Dungeon/SelectionDungeon.h"
+#include "Training/SelectionTraining.h"
+#include "Shop/SelectionShop.h"
+
 #include "../../Engine.h"
 
 /*
@@ -34,6 +37,7 @@ void SelectionManager::Render() {
  */
 void SelectionManager::DungeonSelection(Engine& engine) {
 	currentSelection = SelectionFactory::CreateSelection(SelectionType::Dungeon);
+	if (!currentSelection) return;
 	auto dungeonSelection = std::dynamic_pointer_cast<SelectionDungeon>(currentSelection);
 	if (!dungeonSelection) return;
 
@@ -47,15 +51,37 @@ void SelectionManager::DungeonSelection(Engine& engine) {
 /*
  *	トレーニング選択
  */
-void SelectionManager::TrainingSelection() {
+void SelectionManager::TrainingSelection(Engine& engine) {
+	currentSelection = SelectionFactory::CreateSelection(SelectionType::Training);
+	if (!currentSelection) return;
+	auto trainingSelection = std::dynamic_pointer_cast<SelectionTraining>(currentSelection);
+	if (!trainingSelection) return;
+
+	trainingSelection->SetActiveTraining([this](Engine& engine, int setActionNum) {
+		actionManager->ActiveTraining(engine, setActionNum);
+	});
+	currentSelection = trainingSelection;
+	currentSelection->Initialize(engine);
+	isActive = true;
 }
 /*
  *	ショップ選択
  */
-void SelectionManager::ShopSelection() {
+void SelectionManager::ShopSelection(Engine& engine) {
+	currentSelection = SelectionFactory::CreateSelection(SelectionType::Shop);
+	if (!currentSelection) return;
+	auto shopSelection = std::dynamic_pointer_cast<SelectionShop>(currentSelection);
+	if (!shopSelection) return;
+
+	shopSelection->SetActiveShop([this](Engine& engine, std::vector<int> itemIDList) {
+		actionManager->ActiveShop(engine, itemIDList);
+	});
+	currentSelection = shopSelection;
+	currentSelection->Initialize(engine);
+	isActive = true;
 }
 /*
  *	アルバイト選択
  */
-void SelectionManager::PartTimeSelection() {
+void SelectionManager::PartTimeSelection(Engine& engine) {
 }

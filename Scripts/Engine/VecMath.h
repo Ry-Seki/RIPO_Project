@@ -161,6 +161,13 @@ struct Vector3 {
 	 *  @return Vector3
 	 */
 	static Vector3 Slerp(const Vector3& v1, const Vector3& v2, float t);
+
+	/*
+	 *	最近接点を求める
+	 *  @param[in]	v1			球の中心点
+	 *  @param[in]  v2,v3,v4	三角形の3頂点
+	 */
+	static Vector3 Nearest(const Vector3& senterPos, const Vector3& v1, const Vector3& v2, const Vector3& v3);
 };
 
 /*
@@ -289,6 +296,13 @@ Vector3 Lerp(const Vector3& v1, const Vector3& v2, float t);
  *  @return Vector3
  */
 Vector3 Slerp(const Vector3& a, const Vector3& b, float t);
+
+/*
+ *	最近接点を求める
+ *  @param[in]	v1			球の中心点
+ *  @param[in]  v2,v3,v4	三角形の3頂点
+ */
+Vector3 Nearest(const Vector3& senterPos, const Vector3& v1, const Vector3& v2, const Vector3& v3);
 
 /*
  *	定数ベクトル

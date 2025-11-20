@@ -97,7 +97,7 @@ public:
 	 *  @param position		‘ÎÛÒ‚ÌÀ•W
 	 *  @param MoveVec		‘ÎÛÒ‚ÌˆÚ“®—Ê
 	 */
-	void StageCollider(Vector3* position, Vector3 MoveVec);
+	void StageCollider(GameObject* other, Vector3 MoveVec);
 
 
 public:
