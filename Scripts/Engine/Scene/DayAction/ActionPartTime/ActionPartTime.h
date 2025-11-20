@@ -7,8 +7,6 @@
 #define _ACTION_PART_TIME_H_
 
 #include "../DayActionBase.h"
-#include "../../../Load/CSV/LoadCSV.h"
-#include "../../../Load/LoadManager.h"
 
 #include <memory>
 
@@ -17,11 +15,13 @@
  */
 class ActionPartTime : public DayActionBase {
 private:
-	std::shared_ptr<LoadCSV> partTimeDialogue;      // セリフ
+    int incomeValue = 0;        // 収入
+    float timer = 0.0f; 
+    float limitTime = 3.0f;
 
 public:
 	/*
-	 *	コンストラクタ
+	 *	@brief  コンストラクタ
 	 */
 	ActionPartTime() : DayActionBase("アルバイト") {}
 	/*
@@ -50,5 +50,12 @@ public:
      *  破棄処理
      */
     void Teardown() override;
+
+public:
+    /*
+     *  @brief      収入の設定
+     *  @param[in]  const int setIncomeValue   収入
+     */
+    inline void SetIncomeValue(const int setIncomeValue) { incomeValue = setIncomeValue; }
 };
 #endif // !_ACTION_PART_TIME_H_

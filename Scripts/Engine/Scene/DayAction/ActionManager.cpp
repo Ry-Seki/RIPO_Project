@@ -38,10 +38,9 @@ void ActionManager::Render() {
  */
 void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData) {
 	isActive = true;
-	// 現在のアクショの生成
 	currentAction = ActionFactory::CreateAction(ActionType::Dungeon);
 	if (!currentAction) return;
-	// アクションのダウンキャスト
+
 	auto dungeonAction = std::dynamic_pointer_cast<ActionDungeon>(currentAction);
 	if (!dungeonAction) return;
 
@@ -54,10 +53,9 @@ void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData)
  */
 void ActionManager::DebugActiveDungeon(Engine& engine, DungeonStageData setStageData) {
 	isActive = true;
-	// 現在のアクショの生成
 	currentAction = ActionFactory::CreateAction(ActionType::Dungeon);
 	if (!currentAction) return;
-	// アクションのダウンキャスト
+
 	auto dungeonAction = std::dynamic_pointer_cast<ActionDungeon>(currentAction);
 	if (!dungeonAction) return;
 
@@ -72,6 +70,7 @@ void ActionManager::ActiveTraining(Engine& engine, const int setActionNum) {
 	isActive = true;
 	currentAction = ActionFactory::CreateAction(ActionType::Training);
 	if (!currentAction) return;
+
 	auto trainingAction = std::dynamic_pointer_cast<ActionTraining>(currentAction);
 	if (!trainingAction) return;
 
@@ -87,6 +86,7 @@ void ActionManager::ActiveShop(Engine& engine, const std::vector<int>& itemIDLis
 	isActive = true;
 	currentAction = ActionFactory::CreateAction(ActionType::Shop);
 	if (!currentAction) return;
+
 	auto shopAction = std::dynamic_pointer_cast<ActionShop>(currentAction);
 	if (!shopAction) return;
 
@@ -96,11 +96,17 @@ void ActionManager::ActiveShop(Engine& engine, const std::vector<int>& itemIDLis
 }
 /*
  *	アルバイトアクション開始
+ *  @param[in]	const int incomeValue		アルバイトの収入
  */
-void ActionManager::ActivePartTime(Engine& engine) {
+void ActionManager::ActivePartTime(Engine& engine, const int incomeValue) {
 	isActive = true;
 	currentAction = ActionFactory::CreateAction(ActionType::PartTime);
 	if (!currentAction) return;
 
-	currentAction->Initialize(engine);	currentAction->Initialize(engine);
+	auto partTimeAction = std::dynamic_pointer_cast<ActionPartTime>(currentAction);
+	if (!partTimeAction) return;
+
+	partTimeAction->SetIncomeValue(incomeValue);
+	currentAction = partTimeAction;
+	currentAction->Initialize(engine);
 }

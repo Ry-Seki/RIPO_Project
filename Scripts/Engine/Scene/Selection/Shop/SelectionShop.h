@@ -18,7 +18,7 @@ private:
 	bool inputHandle = false;				// 入力フラグ
 	bool isLoad = false;					// ロードフラグ
 
-	std::function<void(Engine& engine, std::vector<int>)> ActiveShop;	// 行動管理クラスのダンジョン開放関数
+	std::function<void(Engine& engine, std::vector<int>)> ActiveShop;	// 行動管理クラスのショップ開放関数
 
 public:
 	/*
@@ -55,7 +55,7 @@ public:
 public:
 	/*
 	 *	@brief		ActionManagerのショップ管理関数の設定
-	 *	@param[in]	std::function<void()> setActiveDungeon	行動管理クラスのショップ解放関数
+	 *	@param[in]	std::function<void(Engine& engine, std::vector<int>)> setActiveDungeon	行動管理クラスのショップ解放関数
 	 */
 	inline void SetActiveShop(std::function<void(Engine& engine, std::vector<int>)> setActiveShop) {
 		ActiveShop = setActiveShop;

@@ -10,9 +10,10 @@
 
 class SelectionPartTime : public SelectionBase {
 private:
+	int partTimeScore = 0;		// アルバイトの値段
+	bool inputHandle = false;	// 入力フラグ
+	bool isLoad = false;		// ロードフラグ
 
-	bool inputHandle = false;				// 入力フラグ
-	bool isLoad = false;					// ロードフラグ
 
 	std::function<void(Engine& engine, int)> ActivePartTime;	// 行動管理クラスのアルバイト開放関数
 
