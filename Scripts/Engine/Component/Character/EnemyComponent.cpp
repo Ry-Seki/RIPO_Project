@@ -36,7 +36,6 @@ void EnemyComponent::Start() {
  */
 void EnemyComponent::Update(float deltaTime) {
 	// モデルが反対なので逆にする
-	enemy->rotation.y += 180 * Deg2Rad;
 	// 移動処理
 	EnemyMove(deltaTime);
 	turnDelay += GetRand(RANDOM_RANGE);
@@ -95,27 +94,46 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 
 	Vector3 direction = Direction(enemy->position, wayPoint);
 	float goalAngle = atan2(direction.x, direction.z);
-	goalAngle += 180 * Deg2Rad;
-	float angleDirection = fmod(goalAngle - enemy->rotation.y, 360);
+	//goalAngle += 180 * Deg2Rad;
+	// 正規化した角度の移動量
+	float angleDirection = fmod((goalAngle - enemy->rotation.y) * Rad2Deg, 360);
+	//if (angleDirection > 180)
+	//	angleDirection -= 360;
+	//if (angleDirection < -180)
+	//	angleDirection += 360;
+	angleDirection = angleDirection * Deg2Rad;
+
+	// 正規化したエネミーの角度
+	float enemyDirection = fmod(enemy->rotation.y * Rad2Deg, 360);
+	//if (enemyDirection > 180)
+	//	enemyDirection -= 360;
+	//if (enemyDirection < -180)
+	//	enemyDirection += 360;
+	enemyDirection = enemyDirection * Deg2Rad;
 	
 	Vector3 enemyForward = ForwardDir(enemy->rotation);
 	
-	// 目標の方向に補正
-	if (enemy->rotation.y < 3 && enemy->rotation.y > -3) {
-		if (angleDirection > 180)
-			angleDirection -= 360;
-		if (angleDirection < -180)
-			angleDirection += 360;
-		if (angleDirection < 0) {
-			enemy->rotation.y += ROTATE_SPEED * deltaTime;
-		}
-		else if (angleDirection > 0) {
+	// -の状態
+	if (angleDirection < 0) {
+		// 目標の方向に補正
+		if (enemyDirection > goalAngle) {
 			enemy->rotation.y -= ROTATE_SPEED * deltaTime;
 		}
+		else {
+			enemy->rotation.y = goalAngle + (180 * Deg2Rad);
+		}
 	}
-	else {
-		enemy->rotation.y = goalAngle;
+	// +の状態
+	else if (angleDirection > 0) {
+		if (enemyDirection < goalAngle) {
+			enemy->rotation.y += ROTATE_SPEED * deltaTime;
+		}
+		else {
+			enemy->rotation.y = goalAngle + (180 * Deg2Rad);
+		}
 	}
+
+	//enemy->rotation.y += 180 * Deg2Rad;
 
 	//enemy->rotation.y = goalAngle;
 	// 目標地点についたらターゲットを変える
