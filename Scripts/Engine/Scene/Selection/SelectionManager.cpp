@@ -37,7 +37,6 @@ void SelectionManager::Render() {
  *	ダンジョン選択
  */
 void SelectionManager::DungeonSelection(Engine& engine) {
-	isActive = true;
 	currentSelection = SelectionFactory::CreateSelection(SelectionType::Dungeon);
 	if (!currentSelection) return;
 
@@ -49,12 +48,12 @@ void SelectionManager::DungeonSelection(Engine& engine) {
 	});
 	currentSelection = dungeonSelection;
 	currentSelection->Initialize(engine);
+	isActive = true;
 }
 /*
  *	トレーニング選択
  */
 void SelectionManager::TrainingSelection(Engine& engine) {
-	isActive = true;
 	currentSelection = SelectionFactory::CreateSelection(SelectionType::Training);
 	if (!currentSelection) return;
 
@@ -66,12 +65,12 @@ void SelectionManager::TrainingSelection(Engine& engine) {
 	});
 	currentSelection = trainingSelection;
 	currentSelection->Initialize(engine);
+	isActive = true;
 }
 /*
  *	ショップ選択
  */
 void SelectionManager::ShopSelection(Engine& engine) {
-	isActive = true;
 	currentSelection = SelectionFactory::CreateSelection(SelectionType::Shop);
 	if (!currentSelection) return;
 
@@ -83,12 +82,12 @@ void SelectionManager::ShopSelection(Engine& engine) {
 	});
 	currentSelection = shopSelection;
 	currentSelection->Initialize(engine);
+	isActive = true;
 }
 /*
  *	アルバイト選択
  */
 void SelectionManager::PartTimeSelection(Engine& engine) {
-	isActive = true;
 	currentSelection = SelectionFactory::CreateSelection(SelectionType::PartTime);
 	if (!currentSelection) return;
 
@@ -100,4 +99,5 @@ void SelectionManager::PartTimeSelection(Engine& engine) {
 	});
 	currentSelection = partTimeSelection;
 	currentSelection->Initialize(engine);
+	isActive = true;
 }

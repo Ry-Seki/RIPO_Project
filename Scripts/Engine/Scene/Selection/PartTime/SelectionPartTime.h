@@ -7,12 +7,18 @@
 #define _SELECTION_PART_TIME_H_
 
 #include "../SelectionBase.h"
+#include "MiniGame/MiniGameBase.h"
+
+#include <memory>
+#include <vector>
 
 class SelectionPartTime : public SelectionBase {
 private:
-	int partTimeScore = 0;		// アルバイトの値段
-	bool inputHandle = false;	// 入力フラグ
-	bool isLoad = false;		// ロードフラグ
+	std::vector<MiniGameBasePtr> miniGameList;	// ミニゲーム配列
+	MiniGameBasePtr currentMiniGame = nullptr;	// 現在のミニゲーム			
+	int partTimeScore = 0;						// アルバイトの値段
+	bool inputHandle = false;					// 入力フラグ
+	bool isLoad = false;						// ロードフラグ
 
 
 	std::function<void(Engine& engine, int)> ActivePartTime;	// 行動管理クラスのアルバイト開放関数

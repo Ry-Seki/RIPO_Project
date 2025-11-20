@@ -37,7 +37,6 @@ void ActionManager::Render() {
  *	ダンジョンアクション開始
  */
 void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData) {
-	isActive = true;
 	currentAction = ActionFactory::CreateAction(ActionType::Dungeon);
 	if (!currentAction) return;
 
@@ -47,12 +46,12 @@ void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData)
 	dungeonAction->SetDungeonStageData(setStageData);
 	currentAction = dungeonAction;
 	currentAction->Initialize(engine);
+	isActive = true;
 }
 /*
  *	デバッグ用ダンジョンアクション開始
  */
 void ActionManager::DebugActiveDungeon(Engine& engine, DungeonStageData setStageData) {
-	isActive = true;
 	currentAction = ActionFactory::CreateAction(ActionType::Dungeon);
 	if (!currentAction) return;
 
@@ -61,13 +60,13 @@ void ActionManager::DebugActiveDungeon(Engine& engine, DungeonStageData setStage
 
 	dungeonAction->DebugInitialize(engine, setStageData);
 	currentAction = dungeonAction;
+	isActive = true;
 }
 /*
  *  トレーニングアクション開始
  *  @param[in]  const int setActionNum    アクション番号
  */
 void ActionManager::ActiveTraining(Engine& engine, const int setActionNum) {
-	isActive = true;
 	currentAction = ActionFactory::CreateAction(ActionType::Training);
 	if (!currentAction) return;
 
@@ -77,13 +76,13 @@ void ActionManager::ActiveTraining(Engine& engine, const int setActionNum) {
 	trainingAction->SetActionNum(setActionNum);
 	currentAction = trainingAction;
 	currentAction->Initialize(engine);
+	isActive = true;
 }
 /*
  *  ショップアクション開始
  *  @param[in]  const std::vector<int>& itemIDList     アイテムIDリスト
  */
 void ActionManager::ActiveShop(Engine& engine, const std::vector<int>& itemIDList) {
-	isActive = true;
 	currentAction = ActionFactory::CreateAction(ActionType::Shop);
 	if (!currentAction) return;
 
@@ -93,13 +92,13 @@ void ActionManager::ActiveShop(Engine& engine, const std::vector<int>& itemIDLis
 	shopAction->SetItemIDList(itemIDList);
 	currentAction = shopAction;
 	currentAction->Initialize(engine);
+	isActive = true;
 }
 /*
  *	アルバイトアクション開始
  *  @param[in]	const int incomeValue		アルバイトの収入
  */
 void ActionManager::ActivePartTime(Engine& engine, const int incomeValue) {
-	isActive = true;
 	currentAction = ActionFactory::CreateAction(ActionType::PartTime);
 	if (!currentAction) return;
 
@@ -109,4 +108,5 @@ void ActionManager::ActivePartTime(Engine& engine, const int incomeValue) {
 	partTimeAction->SetIncomeValue(incomeValue);
 	currentAction = partTimeAction;
 	currentAction->Initialize(engine);
+	isActive = true;
 }

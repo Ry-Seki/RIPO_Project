@@ -25,29 +25,29 @@ public:
 	 */
 	ActionPartTime() : DayActionBase("アルバイト") {}
 	/*
-	 *	デストラクタ
+	 *	@brief  デストラクタ
 	 */
 	~ActionPartTime() override {}
 
 public:
     /*
-     *  初期化処理
+     *  @brief  初期化処理
      */
     void Initialize(Engine& engine) override;
     /*
-     *  ロード済みのデータをセット(コールバック)
+     *  @brief  ロード済みのデータをセット(コールバック)
      */
     void SetupData(Engine& engine) override;
     /*
-     *  更新処理
+     *  @brief  更新処理
      */
     void Update(Engine& engine, float deltaTime) override;
     /*
-     *  描画処理
+     *  @brief  描画処理
      */
     void Render() override;
     /*
-     *  破棄処理
+     *  @brief  破棄処理
      */
     void Teardown() override;
 
