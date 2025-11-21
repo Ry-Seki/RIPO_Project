@@ -25,6 +25,8 @@ private:
 	Vector3 pointLightColor;// 色
 	float pointLightRange;	// 効果範囲
 
+	GameObject* player;
+
 	static constexpr DxLib::COLOR_F _MAP_DIF_COLOR = { 1.5f, 1.5f, 1.3f, 1.0f };	// マップ全体のライト ディフューズカラー
 	static constexpr DxLib::COLOR_F _MAP_AMB_COLOR = { 0.2f, 0.25f, 0.3f, 1 };		// マップ全体のライト アンビエントカラー
 	static constexpr DxLib::COLOR_F _MAP_SPC_COLOR = { 0.2f, 0.2f, 0.2f, 1 };		// マップ全体のライト スペキュラーカラー
@@ -56,7 +58,7 @@ public:
 	void Render() override;
 
 	// ステージの当たり判定の描画
-	void StageColliderRenderer() override;
+	void StageColliderRenderer(GameObject* other, Vector3 MoveVec) override;
 
 	// 終了処理
 	void Execute() override;
@@ -145,8 +147,7 @@ public:
 		pointLightPos = positions;
 	}
 
-
-
+	
 };
 
 

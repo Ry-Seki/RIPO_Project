@@ -33,7 +33,6 @@ PlayerComponent::PlayerComponent()
 void PlayerComponent::Update(float deltaTime) {
 	GameObject* player = GetOwner();
 	moveVec = Vector3::zero;
-
 	// 回避
 	PlayerAvoid(player, deltaTime);
 	// 回避中は処理しない
@@ -42,6 +41,8 @@ void PlayerComponent::Update(float deltaTime) {
 	PlayerRun(deltaTime);
 	// 移動処理
 	PlayerMove(player, deltaTime);
+	StageManager::GetInstance().SetGameObject(player);
+	StageManager::GetInstance().SetGameObjectVec(moveVec);
 	// ステージとの当たり判定
 	StageManager::GetInstance().StageCollider(player, moveVec);
 
