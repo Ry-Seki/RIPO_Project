@@ -178,6 +178,18 @@
     <Filter Include="ヘッダー ファイル\Engine\Scene\Action\PartTime">
       <UniqueIdentifier>{7a5b51ab-232b-4178-a224-a47273ee6a7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\Menu">
+      <UniqueIdentifier>{fb237d36-d490-4882-8646-60554dedd981}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\Selection\PartTime\MiniGame">
+      <UniqueIdentifier>{bc140970-753f-40f2-a34d-b71d5907d37c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\Selection\PartTime\MiniGame\Sokoban">
+      <UniqueIdentifier>{f258451b-d117-4687-a9b4-98b8fe729802}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\Selection\PartTime\Sokoban">
+      <UniqueIdentifier>{00b75555-559c-4807-b810-f8e1f49e23cc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -383,6 +395,15 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.cpp">
       <Filter>ソース ファイル\Engine\Scene\Action\PartTime</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp">
+      <Filter>ソース ファイル\Engine\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\MiniGameSokoban.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Selection\PartTime\Sokoban</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapManager.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Selection\PartTime\Sokoban</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -727,6 +748,18 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.h">
       <Filter>ヘッダー ファイル\Engine\Scene\Action\PartTime</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\MiniGameBase.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Selection\PartTime\MiniGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\MiniGameSokoban.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Selection\PartTime\MiniGame\Sokoban</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapCreater.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Selection\PartTime\MiniGame\Sokoban</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapManager.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Selection\PartTime\MiniGame\Sokoban</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -18,7 +18,7 @@ class ActionShop : public DayActionBase {
 private:
     std::vector<int> itemIDList;    // 購入したアイテムIDリスト
     float timer = 0.0f;
-    float limitTime = 7.0f;
+    float limitTime = 3.0f;
 
 public:
     /*

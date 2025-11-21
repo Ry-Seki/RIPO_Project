@@ -52,24 +52,25 @@ public:
 
 public:
     /*
-     *  ダンジョンアクション開始
+     *  @brief      ダンジョンアクション開始
      */
     void ActiveDungeon(Engine& engine, DungeonStageData setStageData);
     void DebugActiveDungeon(Engine& engine, DungeonStageData setStageData);
     /*
-     *  トレーニングアクション開始
+     *  @brief      トレーニングアクション開始
      *  @param[in]  const int setActionNum    アクション番号
      */
     void ActiveTraining(Engine& engine, const int setActionNum = -1);
     /*
-     *  ショップアクション開始
+     *  @brief      ショップアクション開始
      *  @param[in]  const std::vector<int>& itemIDList     アイテムIDリスト
      */
     void ActiveShop(Engine& engine, const std::vector<int>& itemIDList);
     /*
-     *  アルバイトアクション開始
+     *	@brief      アルバイトアクション開始
+     *  @param[in]	const int incomeValue		アルバイトの収入
      */
-    void ActivePartTime(Engine& engine);
+    void ActivePartTime(Engine& engine, const int incomeValue);
 
 public:
     /*
