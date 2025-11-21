@@ -61,7 +61,7 @@ void Stage::Render() {
 		MV1DrawModel(modelHandle);
 #if _DEBUG
 		// ステージの当たり判定の描画
-		StageColliderRenderer();
+		//StageColliderRenderer();
 #endif // _DEBUG
 
 
@@ -295,8 +295,8 @@ void Stage::ProcessWallCollision(
 		// 壁に沿った移動に変更
 		Vector3 slideVec = moveVec - avgNormal * dot;
 		slideVec.y = 0.0f;
-		// スライド処理
-		//nowPos += slideVec;
+
+		moveVec = slideVec;
 	}
 }
 

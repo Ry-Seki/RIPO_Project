@@ -105,7 +105,7 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 			player->position.y -= moveSpeed * deltaTime;
 		}
 		if (CheckHitKey(KEY_INPUT_SPACE) && gravity->GetGroundingFrag()) {
-			gravity->AddFallSpeed(-1000);
+			gravity->AddFallSpeed(-1400);
 		}
 	}
 }
