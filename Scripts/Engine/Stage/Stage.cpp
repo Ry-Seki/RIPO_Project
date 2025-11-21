@@ -103,11 +103,11 @@ void Stage::UpdateCollision(GameObject* other, Vector3 MoveVec) {
 
 	// 縦方向のオフセット
 	float polyOffset = PolyPosTop.y - PolyPos.y;
-	// 水平移動しているかどうか
+	// キャラクターが水平移動しているかどうか
 	bool moveFlag = (fabs(MoveVec.x) > 0.01f || fabs(MoveVec.z) > 0.01f);
 
-	// コリジョン情報取得
-	auto hitDim = SetupCollision(other->position, MoveVec);
+	// ステージのコリジョン情報取得
+	auto hitDim = SetupCollision(other, MoveVec);
 
 	// 壁床ポリゴン分類
 	std::vector<MV1_COLL_RESULT_POLY*> walls, floors;
@@ -132,18 +132,45 @@ void Stage::UpdateCollision(GameObject* other, Vector3 MoveVec) {
  * @param MoveVec   移動ベクトル
  * @return std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> コリジョン結果構造体
  */
-std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(Vector3 position, Vector3 MoveVec) {
-	// Vector3からVECOTR型へ変換
-	VECTOR posV = ToVECTOR(position);
+std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(GameObject* other, Vector3 MoveVec) {
+	// 対象がいない場合は抜ける
+	if (!other)return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
 
-	// 弾の半径
-	float radius = GameConst::PLAYER_ENUM_DEFAULT_SIZE;
+	Vector3 effectiveMove = MoveVec;
+	if (Magnitude(effectiveMove) < 0.0001f) {
+		// 移動していない場合は小さめの球を用意して静止判定用
+		effectiveMove = Vector3::zero;
+	}
+	// カプセルの取得
+	auto capsule = other->GetComponent<CapsuleCollider>();
+	if (!capsule)return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
 
-	// ポリゴン配列を格納する構造体を生成
+	// 下端
+	Vector3 capLower = other->position + capsule->capsule.startPoint;
+	// 上端
+	Vector3 capTop = other->position + capsule->capsule.endPoint;
+	// 中心点
+	Vector3 capCenter = (capLower + capTop) * 0.5f;
+	// 半径
+	float radius = capsule->capsule.radius;
+
+	// 移動方向ベクトルを正規化
+	Vector3 forward = Normalized(MoveVec);
+
+	float forwardLength = 2000.0f;		 // 前方判定距離
+	float backwardLength = 500.0f;		 // 後退判定距離
+	float boxHalfSize = radius + 500.0f;  // 左右/上下余裕
+
+
+	// 前方限定の球判定用中心
+	Vector3 sphereCenter = capCenter + forward * MoveVec.Magnitude() * 0.5f;
+
+	// 球の半径
+	float sphereRadius = radius + MoveVec.Magnitude() * 0.5f;
+
 	auto hitDim = std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
+	*hitDim = MV1CollCheck_Sphere(modelHandle, -1, ToVECTOR(sphereCenter), sphereRadius);
 
-	// モデルに対して球との当たり判定を追加
-	*hitDim = MV1CollCheck_Sphere(modelHandle, -1, posV, radius);
 	return hitDim;
 }
 
@@ -269,7 +296,7 @@ void Stage::ProcessWallCollision(
 		Vector3 slideVec = moveVec - avgNormal * dot;
 		slideVec.y = 0.0f;
 		// スライド処理
-		nowPos += slideVec;
+		//nowPos += slideVec;
 	}
 }
 
@@ -338,7 +365,7 @@ void Stage::ProcessFloorCollision(
 	}
 
 	// 地面から離れていた場合は接地判定を行わない
-	if (moveVec > 0.1f) {
+	if (hitGrounding->GetFallSpeed() < 0) {
 		hitGrounding->SetGroundingFrag(false);
 		return;
 	}

@@ -78,7 +78,7 @@ private:
 	 * @param MoveVec   移動ベクトル
 	 * @return std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> コリジョン結果構造体
 	 */
-	std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> SetupCollision(Vector3 position, Vector3 MoveVec);
+	std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> SetupCollision(GameObject* other, Vector3 MoveVec);
 
 
 	/**
