@@ -17,6 +17,7 @@
 #include "Manager/GameObjectManager.h"
 #include "Manager/BulletManager.h"
 #include "Manager/CharacterManager.h"
+#include "Menu/MenuManager.h"
 
 #include <DxLib.h>
 #include <EffekseerForDXLib.h>
@@ -150,8 +151,11 @@ void Engine::Update() {
 	// フェードモードを確認
 	bool isFadeStop = FadeManager::GetInstance().GetMode() == FadeMode::Stop;
 
-	// シーンの更新
+	// シーンの更新処理
 	if (currentScene && !isLoading && !isFadeStop) currentScene->Update(*this, Time::deltaTime);
+
+	// メニューの更新処理
+	MenuManager::GetInstance().Update(*this, Time::unscaledDeltaTime);
 
 	// 音源の更新
 	AudioManager::GetInstance().Update();
@@ -170,8 +174,11 @@ void Engine::Render() {
 
 	// ロードフラグの取得
 	bool isLoading = LoadManager::GetInstance().IsLoading();
-	// ロード更新処理
+	// ロード描画処理
 	if (isLoading) LoadManager::GetInstance().Render();
+
+	// メニュー描画処理
+	MenuManager::GetInstance().Render();
 
 	// フェード描画
 	FadeManager::GetInstance().Render();

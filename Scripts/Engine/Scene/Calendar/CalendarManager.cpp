@@ -56,11 +56,16 @@ void CalendarManager::Update(Engine& engine) {
             });
             action->SetOnComplete([this, &day]() { day.ActionShop(); });
         }
-        //else if (CheckHitKey(KEY_INPUT_4)) {
-        //    inputHandle = true;
-        //    isActive = false;
-        //    day.ActionPartTime();
-        //}
+        else if (CheckHitKey(KEY_INPUT_4)) {
+            inputHandle = true;
+            isActive = false;
+            day.ActionPartTime();
+            FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+            FadeManager::GetInstance().StartFade(fade, [&engine, this]() {
+                selection->PartTimeSelection(engine);
+            });
+            action->SetOnComplete([this, &day]() { day.ActionShop(); });
+        }
     }
     // キー離しで再度入力受付
     if (CheckHitKey(KEY_INPUT_1) == 0 && CheckHitKey(KEY_INPUT_2) == 0 && CheckHitKey(KEY_INPUT_3) == 0 && CheckHitKey(KEY_INPUT_4) == 0) {

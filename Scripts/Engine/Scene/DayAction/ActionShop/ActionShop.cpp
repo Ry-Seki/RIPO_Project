@@ -30,7 +30,6 @@ void ActionShop::SetupData(Engine& engine) {
  */
 void ActionShop::Update(Engine& engine, float deltaTime) {
 	timer += deltaTime;
-	timer += deltaTime;
 	if (timer >= limitTime) {
 		isComplete = true;
 	}

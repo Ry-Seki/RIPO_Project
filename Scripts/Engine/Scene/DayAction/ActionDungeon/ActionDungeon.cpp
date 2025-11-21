@@ -292,7 +292,7 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
 	exit->GetOwner()->position = exitSpawnPos;
 
 	// フェードイン
-	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
+	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop);
 	FadeManager::GetInstance().StartFade(fade);
 	// 当たり判定の有効化
 	SetUseObjectColliderFlag(true);

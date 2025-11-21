@@ -1,10 +1,10 @@
 {
   "Jar": {
     "ID": 0,
-    "Value": 1000
+    "Value": 100
   },
   "LionStatue": {
     "ID": 1,
-    "Value": 1500
+    "Value": 150
   }
 }
