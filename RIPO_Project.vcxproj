@@ -199,6 +199,7 @@
     <ClCompile Include="Scripts\Engine\Scene\Scene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\MiniGameSokoban.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\SelectionPartTime.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\Shop\SelectionShop.cpp" />
@@ -310,6 +311,7 @@
     <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\MiniGameBase.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\MiniGameSokoban.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapCreater.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\SelectionPartTime.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionBase.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionFactory.h" />
