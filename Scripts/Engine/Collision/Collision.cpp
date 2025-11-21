@@ -83,13 +83,21 @@ bool Intersect(const Capsule& a, const Capsule& b, Vector3& penetration) {
     return false;
 }
 
+/*
+ *  線分から線分への最近接点
+ */
 float SegmentBetweenMinLength(const Capsule& a, const Capsule& b) {
-    Vector3 startA = a.startPoint;
-    Vector3 endA = a.endPoint;
-    Vector3 startB = b.startPoint;
-    Vector3 endB = b.endPoint;
+    // 各線分の方向ベクトル
+    Vector3 aDir = a.endPoint - a.startPoint;
+    Vector3 bDir = b.endPoint - b.startPoint;
+    // 線分aの開始から点線分bの開始点への方向ベクトル
+    Vector3 startDir = a.startPoint - b.startPoint;
 
-
+    float aLengthSq = Dot(aDir, aDir);
+    float b = Dot(aDir, bDir);
+    float bLengthSq = Dot(bDir, bDir);
+    float d = Dot(aDir, startDir);
+    float e = Dot(bDir, startDir);
 
     return 0;
 }
@@ -103,8 +111,21 @@ float SegmentBetweenMinLength(const Capsule& a, const Capsule& b) {
  *  @return Vector3             最近接点の座標
  */
 Vector3 PointToSegmentMinLength(const Vector3& startPos, const Vector3& endPos, const Vector3& point, float& minPoint) {
-    // 線分の方向ベクトル
-    Vector3 segDir = Direction(startPos, endPos);
-    // ベクトルの距離の2乗
-    float length
+    // 線分の方向ベクトル(非正規化)
+    Vector3 segDir = endPos - startPos;
+    // ベクトルの長さの2乗
+    float lengthSquare = Dot(segDir, segDir);
+    // 長さの2乗が限りなく0に近いならそれを線分ではなく点とする
+    if (lengthSquare <= EPSILON_SEGMENT) {
+        minPoint = 0.0f;
+        return startPos;
+    }
+    // 点が線分方向にどれだけ進んだか(点を線分に投影)
+    float projection = Dot(point - startPos, segDir);
+    // 線分上の割合に変換
+    float segmentRatio = projection / lengthSquare;
+    // 線分上に制限
+    segmentRatio = Clamp(segmentRatio, 0, 1);
+    minPoint = segmentRatio;
+    return Lerp(startPos, endPos, segmentRatio);
 }
