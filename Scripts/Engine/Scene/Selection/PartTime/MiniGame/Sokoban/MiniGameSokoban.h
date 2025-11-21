@@ -10,6 +10,7 @@
 #include "SokobanMapCreater.h"
 
 #include <vector>
+#include <DxLib.h>
 
 /*
  *	@brief	倉庫番ミニゲーム

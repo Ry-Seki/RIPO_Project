@@ -4,7 +4,6 @@
  */
 
 #include "MiniGameSokoban.h"
-#include <DxLib.h>
 
 /*
  *	@brief	ミニゲーム開始時処理
