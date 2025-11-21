@@ -11,7 +11,9 @@
 
 #include <vector>
 #include <memory>
-#include <type_traits>
+
+// 前方宣言
+class Engine;
 
  /*
   *	メニューの管理クラス
@@ -19,36 +21,81 @@
 class MenuManager : public Singleton<MenuManager> {
 	friend class Singleton<MenuManager>;
 private:
-	std::vector<MenuBasePtr> menuList;
+	std::vector<MenuBasePtr> unuseMenuList;		// 未使用メニューリスト
+	std::vector<MenuBasePtr> useMenuList;		// 使用中メニューリスト
 
 private:
 	MenuManager() = default;
 	~MenuManager() = default;
 
+public:
+	/*
+	 *	@brief	更新処理
+	 */
+	void Update(Engine& engine, float unscaledDeltaTime);
+	/*
+	 *	@brief	描画処理
+	 */
+	void Render();
+	/*
+	 *	@brief		使用リストから一番後ろの要素を削除する
+	 */
+	void RemoveBack();
+
 private:
 	/*
-	 *	メニューの生成
+	 *	@brief		メニューの生成
+	 *  @return		std::shared_ptr<T>(MenuBaseの派生クラス)
 	 */
 	template <class T, typename = std::enable_if_t<std::is_base_of_v<MenuBase, T>>>
 	std::shared_ptr<T> CreateMenu() {
 		auto createMenu = std::make_shared<T>();
-		menuList.push_back(createMenu);
+		createMenu->Initialize();
+		unuseMenuList.push_back(createMenu);
 		return createMenu;
 	}
 
 public:
 	/*
-	 *	メニューの取得
+	 *	@brief		メニューの取得
+	 *  @param[in]	bool isUsedMenu = false		使用中メニューフラグ
+	 *  @param[in]	bool isCreate = true		メニューがない場合生成するフラグ
+	 *  @return		std::shared_ptr<T>(MenuBaseの派生クラス)
 	 */
 	template <class T, typename = std::enable_if_t<std::is_base_of_v<MenuBase, T>>>
-	std::shared_ptr<T> GetMenu() {
-		for (auto& menu : menuList) {
-			auto cast = std::dynamic_pointer_cast<T>(menu);
-			if (!cast) continue;
+	std::shared_ptr<T> GetMenu(bool isUsedMenu = false, bool isCreate = true) {
+		if (isUsedMenu) {
+			for (auto& menu : useMenuList) {
+				auto cast = std::dynamic_pointer_cast<T>(menu);
+				if (!cast) continue;
 
-			return cast;
+				return cast;
+			}
+			return nullptr;
+		}else {
+			for (auto& menu : unuseMenuList) {
+				auto cast = std::dynamic_pointer_cast<T>(menu);
+				if (!cast) continue;
+
+				return cast;
+			}
+			if(isCreate) return CreateMenu<T>();
 		}
-		return CreateMenu<T>();
+		return nullptr;
+	}
+	/*
+	 *	@brief		未使用リストから使用リストへ変更する
+	 */
+	template <class T, typename = std::enable_if_t<std::is_base_of_v<MenuBase, T>>>
+	void ActiveMenu() {
+		auto menu = GetMenu<T>();
+		if (!menu) return;
+
+		unuseMenuList.erase(
+			std::remove(unuseMenuList.begin(), unuseMenuList.end(), menu),
+			unuseMenuList.end());
+		menu->Open();
+		useMenuList.push_back(menu);
 	}
 };
 

@@ -32,11 +32,14 @@ public:
      */
     static DayActionPtr CreateAction(ActionType type) {
         switch (type) {
-            case ActionType::Dungeon:   return std::make_shared<ActionDungeon>();
-            case ActionType::Training:  return std::make_shared<ActionTraining>();
-            case ActionType::Shop:      return std::make_shared<ActionShop>();
-            case ActionType::PartTime:  return std::make_shared<ActionPartTime>();
-            default:                    return nullptr;
+            case ActionType::Dungeon: 
+                return std::make_shared<ActionDungeon>();
+            case ActionType::Training: 
+                return std::make_shared<ActionTraining>();
+            case ActionType::Shop: 
+                return std::make_shared<ActionShop>();
+            case ActionType::PartTime: 
+                return std::make_shared<ActionPartTime>();
         }
     }
 };

@@ -70,8 +70,12 @@ private:
 public:
 	/*
 	 *	ActionManagerのダンジョン管理関数の設定
-	 *	@param[in]	std::function<void()> setActiveDungeon	行動管理クラスのダンジョン解放関数
+	 *	@param[in]	std::function<void(Engine& engine, DungeonStageData setStageData)> 
+	 *				setActiveDungeon	行動管理クラスのダンジョン解放関数
 	 */
-	inline void SetActiveDungeon(std::function<void(Engine& engine, DungeonStageData setStageData)> setActiveDungeon) { ActiveDungeon = setActiveDungeon; }
+	inline void SetActiveDungeon(std::function<void(Engine& engine, DungeonStageData setStageData)> setActiveDungeon) {
+		ActiveDungeon = setActiveDungeon;
+	}
 };
+
 #endif // !_SELECTION_DUNGEON_H_
