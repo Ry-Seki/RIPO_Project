@@ -17,7 +17,6 @@ class StageBase {
 protected:
 	// モデルハンドル
 	int modelHandle;
-
 public:
 	// コンストラクタ
 	StageBase() : modelHandle(-1) {}
@@ -43,7 +42,7 @@ public:
 	virtual void Render() = 0;
 
 	// ステージの当たり判定の描画
-	virtual void StageColliderRenderer() = 0;
+	virtual void StageColliderRenderer(GameObject* other,Vector3 MoveVec) = 0;
 
 	// 終了処理
 	virtual void Execute() = 0;

@@ -11,31 +11,28 @@
 class EnemyComponent : public CharacterBase {
 private:
 	GameObject* enemy;
-	GameObjectPtr player;
+	// 移動スピード
+	float moveSpeed;
 	// ウェイポイント
 	Vector3 wayPoint;
 	// 目先のウェイポイント予定地
 	Vector3 nextWayPoint;
 	// ウェイポイント間の距離
 	float wayPointDistance;
-	// 方向転換時のディレイ
-	float turnDelay;
 	// ウェイポイント追尾切り替えフラグ
 	bool chaseTargetChangeFrag;
+	// 方向転換時のディレイ
+	float turnDelay;
 
-private:
-	// 回転スピード
-	const float ROTATE_SPEED;
-	// 移動スピード
-	const float MOVE_SPEED;
 	// ランダムで加算されるカウントの天井値
 	const float TOP_VALUE;
-	// 目標と自身のpositionの差
-	const float DIFFERENCE_TARGET;
-	// プレイヤーとエネミーのpositionの差
-	const float DIFFERENCE_PLAYER;
 	// ランダムで加算される値の範囲
 	const int RANDOM_RANGE;
+	// 回転スピード
+	const float ROTATE_SPEED;
+	// 移動量
+	Vector3 moveVec;
+
 
 public:
 	/*

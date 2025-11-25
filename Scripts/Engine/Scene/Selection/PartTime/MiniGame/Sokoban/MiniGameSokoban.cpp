@@ -5,24 +5,36 @@
 
 #include "MiniGameSokoban.h"
 #include "SokobanMapManager.h"
+
 /*
  *  @brief ミニゲーム開始時処理
  */
 void MiniGameSokoban::Open() {
     MiniGameBase::Open();
-
     // マップ読み込み
     SokobanMapManager mapManager;
     if(!mapManager.LoadMapList("Data/MiniGame/Sokoban")) return;
-
+    // マップをランダムに取得する
     std::string mapFile = mapManager.GetRandomMap();
-    createMap.LoadMapFromFile(mapFile);
+    if(!createMap.LoadMapFromFile(mapFile)) return;
+
+    // マップを設定
     initMap = createMap.GetMap();
     map = createMap.GetMap();
 
     // goalMap を初期化
     goalMap.assign(map.size(), std::vector<bool>(map[0].size(), false));
 
+    //マップの初期化処理
+    InitializeMap();
+    // 箱のリスト化
+    ParseBoxesFromMap();
+}
+/*
+ *	@brief		マップの初期化処理
+ */
+void MiniGameSokoban::InitializeMap() {
+    if (map.empty()) return;
     // マップの初期化
     for (int y = 0; y < map.size(); ++y) {
         for (int x = 0; x < map[y].size(); ++x) {
@@ -31,17 +43,14 @@ void MiniGameSokoban::Open() {
                 map[y][x] = TileType::Empty;
             }
             if (map[y][x] == TileType::Player) {
-                playerX = x;
-                playerY = y;
-                playerDrawX = x * TILE_SIZE;
-                playerDrawY = y * TILE_SIZE;
+                player.x = x;
+                player.y = y;
+                player.drawX = x * _TILE_SIZE;
+                player.drawY = y * _TILE_SIZE;
             }
         }
     }
-    // 箱のリスト化
-    ParseBoxesFromMap();
 }
-
 /*
  *  @brief  箱リストをマップから抽出
  */
@@ -53,8 +62,8 @@ void MiniGameSokoban::ParseBoxesFromMap() {
                 SokobanBox box;
                 box.x = x;
                 box.y = y;
-                box.drawX = x * TILE_SIZE;
-                box.drawY = y * TILE_SIZE;
+                box.drawX = x * _TILE_SIZE;
+                box.drawY = y * _TILE_SIZE;
                 box.moveTimer = 1.0f;
                 boxList.push_back(box);
             }
@@ -62,19 +71,9 @@ void MiniGameSokoban::ParseBoxesFromMap() {
     }
 }
 /*
- *  @brief      座標指定の箱の取得
- *  @return     SokobanBox*
+ *  @brief      更新処理
  */
-SokobanBox* MiniGameSokoban::GetBox(int x, int y) {
-    for (auto& b : boxList) {
-        if (b.x == x && b.y == y) return &b;
-    }
-    return nullptr;
-}
-/*
- * @brief 入力受付と補間更新
- */
-void MiniGameSokoban::Update(Engine& engine, float dt) {
+void MiniGameSokoban::Update(Engine& engine, float deltaTime) {
     // R でリセット（補間中でもリセット可能）
     if (CheckHitKey(KEY_INPUT_R)) {
         Reset();
@@ -95,7 +94,7 @@ void MiniGameSokoban::Update(Engine& engine, float dt) {
     }
 
     // 補間更新
-    UpdateInterp(dt);
+    UpdateInterp(deltaTime);
 
     // 補間が完全終了してからクリア判定
     if (!IsMoving() && IsClear()) {
@@ -103,70 +102,65 @@ void MiniGameSokoban::Update(Engine& engine, float dt) {
     }
 }
 /*
- * @brief 補間中判定
- */
-bool MiniGameSokoban::IsMoving() const {
-    if (moveTimer < 1.0f) return true;
-    for (const auto& b : boxList) {
-        if (b.moveTimer < 1.0f) return true;
-    }
-    return false;
-}
-/*
- *  @brief  プレイヤー移動開始（即時適応）
+ *  @brief      プレイヤー移動開始（即時適応）
+ *  @param[in]  int dx, dy  移動方向
  */
 void MiniGameSokoban::StartPlayerMove(int dx, int dy) {
-    int nx = playerX + dx;
-    int ny = playerY + dy;
+    int nextPosX = player.x + dx;
+    int nextPosY = player.y + dy;
 
     // 範囲外
-    if (ny < 0 || ny >= (int)map.size()) return;
-    if (nx < 0 || nx >= (int)map[0].size()) return;
+    if (nextPosY < 0 || nextPosY >= (int)map.size()) return;
+    if (nextPosX < 0 || nextPosX >= (int)map[0].size()) return;
 
-    TileType dest = map[ny][nx];
+    TileType dest = map[nextPosY][nextPosX];
 
     // 壁は無理
     if (dest == TileType::Wall) return;
 
     // 箱なら押す必要あり
     if (dest == TileType::Box) {
-        if (!TryPushBox(nx, ny, dx, dy)) return;
+        if (!TryPushBox(nextPosX, nextPosY, dx, dy)) return;
     }
 
-    // プレイヤーロジック更新
-    map[playerY][playerX] = TileType::Empty;
-    map[ny][nx] = TileType::Player;
+    // プレイヤー座標更新
+    map[player.y][player.x] = TileType::Empty;
+    map[nextPosY][nextPosX] = TileType::Player;
 
-    playerX = nx;
-    playerY = ny;
+    player.x = nextPosX;
+    player.y = nextPosY;
 
     // 補間開始
-    moveDX = dx;
-    moveDY = dy;
-    moveTimer = 0.0f;
+    player.moveDX = dx;
+    player.moveDY = dy;
+    player.moveTimer = 0.0f;
 }
 /*
- *  @brief  箱を押す + 補間準備
+ *  @brief      箱を押し、補間準備処理
+ *  @param[in]  int bx, by　箱の座標
+ *  @param[in]  int dx, dy  移動方向
+ *  @return     bool
  */
 bool MiniGameSokoban::TryPushBox(int bx, int by, int dx, int dy) {
-    int nbx = bx + dx;
-    int nby = by + dy;
+    // 移動先の座標
+    int nextboxX = bx + dx;
+    int nextboxY = by + dy;
 
     // 範囲外
-    if (nby < 0 || nby >= (int)map.size()) return false;
-    if (nbx < 0 || nbx >= (int)map[0].size()) return false;
+    if (nextboxY < 0 || nextboxY >= (int)map.size()) return false;
+    if (nextboxX < 0 || nextboxX >= (int)map[0].size()) return false;
 
-    if (map[nby][nbx] == TileType::Wall) return false;
-    if (map[nby][nbx] == TileType::Box) return false;
+    if (map[nextboxY][nextboxX] == TileType::Wall) return false;
+    if (map[nextboxY][nextboxX] == TileType::Box) return false;
 
     // ロジック移動
     map[by][bx] = TileType::Empty;
-    map[nby][nbx] = TileType::Box;
+    map[nextboxY][nextboxX] = TileType::Box;
 
     // 該当箱を補間開始
     if (auto box = GetBox(bx, by)) {
-        box->x = nbx;
-        box->y = nby;
+        box->x = nextboxX;
+        box->y = nextboxY;
         box->moveDX = dx;
         box->moveDY = dy;
         box->moveTimer = 0.0f;
@@ -176,130 +170,132 @@ bool MiniGameSokoban::TryPushBox(int bx, int by, int dx, int dy) {
     return true;
 }
 /*
- *  @brief  補間更新
+ *  @brief      補間移動更新処理
  */
-void MiniGameSokoban::UpdateInterp(float dt) {
+void MiniGameSokoban::UpdateInterp(float deltaTime) {
     // プレイヤー補間
-    if (moveTimer < 1.0f) {
-        moveTimer += dt / MOVE_DURATION;
-        if (moveTimer > 1.0f) moveTimer = 1.0f;
+    if (player.moveTimer < 1.0f) {
+        player.moveTimer += deltaTime / _MOVE_DURATION;
 
-        // 滑らかな移動
-        float e = EaseInOut(moveTimer);
+        // 上限処理
+        if (player.moveTimer > 1.0f) player.moveTimer = 1.0f;
 
-        playerDrawX = (playerX - moveDX) * TILE_SIZE * (1 - e)
-            + playerX * TILE_SIZE * e;
-        playerDrawY = (playerY - moveDY) * TILE_SIZE * (1 - e)
-            + playerY * TILE_SIZE * e;
+        // イージング移動
+        float easeMove = EaseInOut(player.moveTimer);
+
+        player.drawX = (player.x - player.moveDX) * _TILE_SIZE * (1 - easeMove) + player.x * _TILE_SIZE * easeMove;
+        player.drawY = (player.y - player.moveDY) * _TILE_SIZE * (1 - easeMove) + player.y * _TILE_SIZE * easeMove;
     }
 
     // 箱補間
-    for (auto& b : boxList) {
-        if (b.moveTimer < 1.0f) {
-            b.moveTimer += dt / MOVE_DURATION;
-            if (b.moveTimer > 1.0f) b.moveTimer = 1.0f;
+    for (auto& box : boxList) {
+        if (box.moveTimer < 1.0f) {
+            box.moveTimer += deltaTime / _MOVE_DURATION;
+            if (box.moveTimer > 1.0f) box.moveTimer = 1.0f;
 
-            float e = EaseInOut(b.moveTimer);
+            // イージング移動
+            float easeMove = EaseInOut(box.moveTimer);
 
-            b.drawX = (b.x - b.moveDX) * TILE_SIZE * (1 - e)
-                + b.x * TILE_SIZE * e;
-            b.drawY = (b.y - b.moveDY) * TILE_SIZE * (1 - e)
-                + b.y * TILE_SIZE * e;
+            box.drawX = (box.x - box.moveDX) * _TILE_SIZE * (1 - easeMove) + box.x * _TILE_SIZE * easeMove;
+            box.drawY = (box.y - box.moveDY) * _TILE_SIZE * (1 - easeMove) + box.y * _TILE_SIZE * easeMove;
         }
     }
 }
 /*
- *  @brief  リセット処理
+ *  @brief      マップリセット処理
  */
 void MiniGameSokoban::Reset() {
+    // 初期時点のマップに設定
     map = initMap;
-
-    // goalMap 再構築
+    // goalMap再構築
     goalMap.assign(map.size(), std::vector<bool>(map[0].size(), false));
-
-    for (int y = 0; y < map.size(); ++y) {
-        for (int x = 0; x < map[y].size(); ++x) {
-            if (map[y][x] == TileType::Goal) {
-                goalMap[y][x] = true;
-                map[y][x] = TileType::Empty;
-            }
-            if (map[y][x] == TileType::Player) {
-                playerX = x;
-                playerY = y;
-                playerDrawX = x * TILE_SIZE;
-                playerDrawY = y * TILE_SIZE;
-            }
-        }
-    }
-
+    // マップの再構築
+    InitializeMap();
     // 箱リスト再構築
     ParseBoxesFromMap();
-
     // 補間停止
-    moveTimer = 1.0f;
-    moveDX = moveDY = 0;
+    player.moveTimer = 1.0f;
+    player.moveDX = player.moveDY = 0;
 }
 /*
- *  @brief   描画処理
+ *  @brief      描画処理
  */
 void MiniGameSokoban::Render() {
-    // タイル描画（床・壁）
+    // タイル描画
     for (int y = 0; y < (int)map.size(); ++y) {
         for (int x = 0; x < (int)map[y].size(); ++x) {
-            int l = x * TILE_SIZE;
-            int t = y * TILE_SIZE;
-            int r = l + TILE_SIZE;
-            int b = t + TILE_SIZE;
+            int left = x * _TILE_SIZE;
+            int top = y * _TILE_SIZE;
+            int right = left + _TILE_SIZE;
+            int bottom = top + _TILE_SIZE;
 
             auto type = map[y][x];
 
-            int col = GetColor(200, 200, 200); // 床
-            if (type == TileType::Wall)
-                col = GetColor(80, 80, 80);    // 壁
+            int color = GetColor(200, 200, 200); // 床
+            if (type == TileType::Wall) color = GetColor(80, 80, 80);    // 壁
 
-            DrawBox(l, t, r, b, col, TRUE);
+            DrawBox(left, top, right, bottom, color, TRUE);
 
-            // ★ Goal を描く（map ではなく goalMap を参照！）
-            if (goalMap[y][x]) {
-                DrawBox(l + 4, t + 4, r - 4, b - 4, GetColor(0, 180, 0), TRUE);
-            }
+            // Goalの描画(分かりやすいように少し小さく描画)
+            if (goalMap[y][x]) DrawBox(left + 4, top + 4, right - 4, bottom - 4, GetColor(0, 180, 0), TRUE);
         }
     }
 
-    // 箱描画（ゴール上なら色を変える）
+    // 箱描画
     for (const auto& box : boxList) {
-        int col = GetColor(160, 120, 40);
+        // 色の設定
+        int color = GetColor(160, 120, 40);
 
         // ゴールと重なっている場合、色を変更
-        if (goalMap[box.y][box.x]) {
-            col = GetColor(255, 200, 0);
-        }
+        if (goalMap[box.y][box.x]) color = GetColor(255, 200, 0);
 
         DrawBox(
             (int)box.drawX,
             (int)box.drawY,
-            (int)box.drawX + TILE_SIZE,
-            (int)box.drawY + TILE_SIZE,
-            col, TRUE
+            (int)box.drawX + _TILE_SIZE,
+            (int)box.drawY + _TILE_SIZE,
+            color, TRUE
         );
     }
 
     // プレイヤー描画
     DrawBox(
-        (int)playerDrawX,
-        (int)playerDrawY,
-        (int)playerDrawX + TILE_SIZE,
-        (int)playerDrawY + TILE_SIZE,
+        (int)player.drawX,
+        (int)player.drawY,
+        (int)player.drawX + _TILE_SIZE,
+        (int)player.drawY + _TILE_SIZE,
         GetColor(0, 0, 255),
         TRUE
     );
 }
 /*
- *  @brief  ミニゲーム終了処理
+ *  @brief      ミニゲーム終了処理
  */
 void MiniGameSokoban::Close() {
     MiniGameBase::Close();
     score = 25;
+}
+/*
+ *  @brief      座標指定の箱の取得
+ *  @param[in]	int x, y		    箱の座標
+ *  @return     SokobanBox*
+ */
+MiniGameSokoban::SokobanBox* MiniGameSokoban::GetBox(int x, int y) {
+    for (auto& box : boxList) {
+        if (box.x == x && box.y == y) return &box;
+    }
+    return nullptr;
+}
+/*
+ *  @brief      補間移動中か判定
+ *  @return     bool
+ */
+bool MiniGameSokoban::IsMoving() const {
+    if (player.moveTimer < 1.0f) return true;
+    for (const auto& box : boxList) {
+        if (box.moveTimer < 1.0f) return true;
+    }
+    return false;
 }
 /*
  *	@brief		クリア判定
@@ -308,13 +304,10 @@ void MiniGameSokoban::Close() {
 bool MiniGameSokoban::IsClear() {
     for (int y = 0; y < map.size(); ++y) {
         for (int x = 0; x < map[y].size(); ++x) {
-
+            // Goal上にBoxがあるか確認
             if (goalMap[y][x]) {
-                // Goal 上に Box がなければ未達成
-                if (map[y][x] != TileType::Box)
-                    return false;
+                if (map[y][x] != TileType::Box) return false;
             }
-
         }
     }
     return true;

@@ -9,6 +9,7 @@
 #include "HandArm.h"
 #include "RevolverArm.h"
 #include "../../Manager/StageManager.h"
+#include "../GravityComponent.h"
 #include "DxLib.h"
 
 PlayerComponent::PlayerComponent()
@@ -32,7 +33,6 @@ PlayerComponent::PlayerComponent()
 void PlayerComponent::Update(float deltaTime) {
 	GameObject* player = GetOwner();
 	moveVec = Vector3::zero;
-	
 	// 回避
 	PlayerAvoid(player, deltaTime);
 	// 回避中は処理しない
@@ -42,7 +42,7 @@ void PlayerComponent::Update(float deltaTime) {
 	// 移動処理
 	PlayerMove(player, deltaTime);
 	// ステージとの当たり判定
-	//StageManager::GetInstance().StageCollider(player, moveVec);
+	StageManager::GetInstance().StageCollider(player, moveVec);
 
 	// 右クリックでウデアクションをハンドに設定
 	auto playerArm = player->GetComponent<ArmActionComponent>();
@@ -58,7 +58,8 @@ void PlayerComponent::Update(float deltaTime) {
  */
 void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
-
+	// 重力コンポーネントの取得by oorui
+	auto gravity = player->GetComponent<GravityComponent>();
 	// カメラの角度のsin,cos
 	const float cameraSin = sinf(camera->rotation.y);
 	const float cameraCos = cosf(camera->rotation.y);
@@ -102,8 +103,8 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 		if (CheckHitKey(KEY_INPUT_TAB)) {
 			player->position.y -= moveSpeed * deltaTime;
 		}
-		if (CheckHitKey(KEY_INPUT_SPACE)) {
-			player->position.y += moveSpeed * deltaTime;
+		if (CheckHitKey(KEY_INPUT_SPACE) && gravity->GetGroundingFrag()) {
+			gravity->AddFallSpeed(-1400);
 		}
 	}
 }

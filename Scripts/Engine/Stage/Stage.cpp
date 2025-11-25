@@ -13,9 +13,13 @@
 #include "../Component/CapsuleCollider.h"
 #include "../Component/GravityComponent.h"
 #include "../GameObject.h"
- /*
-  *  コンストラクタ
-  */
+#include "../Component/Character/CharacterUtility.h"
+
+using namespace CharacterUtility;
+
+/*
+ *  コンストラクタ
+ */
 Stage::Stage()
 	: StageBase()
 	, lightDirection(0.2f, -20.0f, 0.3f)
@@ -60,8 +64,13 @@ void Stage::Render() {
 		// モデルの描画
 		MV1DrawModel(modelHandle);
 #if _DEBUG
-		// ステージの当たり判定の描画
-		//StageColliderRenderer();
+		// プレイヤーの取得
+		player = GetPlayer();
+		if (player != nullptr) {
+			// ステージの当たり判定の描画
+			StageColliderRenderer(player.get(), player->GetComponent<PlayerComponent>()->GetMoveVec());
+
+		}
 #endif // _DEBUG
 
 
@@ -90,9 +99,10 @@ void Stage::Execute() {
  */
 void Stage::UpdateCollision(GameObject* other, Vector3 MoveVec) {
 
+	// 移動後の位置
+	Vector3 nowPos = other->position;
 	// 移動前の座標
-	Vector3 prevPos = other->position;
-	Vector3 currentPos = prevPos + MoveVec;
+	Vector3 prevPos = nowPos - MoveVec;
 
 	// プレイヤーの座標
 	Vector3 PolyPos = other->position;
@@ -102,24 +112,25 @@ void Stage::UpdateCollision(GameObject* other, Vector3 MoveVec) {
 
 	// 縦方向のオフセット
 	float polyOffset = PolyPosTop.y - PolyPos.y;
-	// 水平移動しているかどうか
+	// キャラクターが水平移動しているかどうか
 	bool moveFlag = (fabs(MoveVec.x) > 0.01f || fabs(MoveVec.z) > 0.01f);
 
-	// コリジョン情報取得
-	auto hitDim = SetupCollision(other->position, MoveVec);
+	// ステージのコリジョン情報取得
+	auto hitDim = SetupCollision(other, MoveVec);
 
 	// 壁床ポリゴン分類
 	std::vector<MV1_COLL_RESULT_POLY*> walls, floors;
-	ClassifyPolygons(*hitDim, prevPos, walls, floors);
+	// 壁か床か振り分ける
+	ClassifyPolygons(*hitDim, walls, floors);
 
 	// 壁衝突処理
-	ProcessWallCollision(currentPos, prevPos, polyOffset, MoveVec, walls, moveFlag);
+	ProcessWallCollision(nowPos, prevPos, polyOffset, MoveVec, walls, moveFlag, other);
 
 	// 床衝突処理
-	ProcessFloorCollision(currentPos, polyOffset, floors, other, MoveVec.y);
+	ProcessFloorCollision(nowPos, polyOffset, floors, other, MoveVec.y);
 
 	// 結果反映
-	other->position = currentPos;
+	other->position = nowPos;
 	MV1CollResultPolyDimTerminate(*hitDim);
 
 }
@@ -130,18 +141,45 @@ void Stage::UpdateCollision(GameObject* other, Vector3 MoveVec) {
  * @param MoveVec   移動ベクトル
  * @return std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> コリジョン結果構造体
  */
-std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(Vector3 position, Vector3 MoveVec) {
-	// Vector3からVECOTR型へ変換
-	VECTOR posV = ToVECTOR(position);
+std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(GameObject* other, Vector3 MoveVec) {
+	// 対象がいない場合は抜ける
+	if (!other)return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
 
-	// 球の半径を求める
-	float radius = GameConst::PLAYER_ENUM_DEFAULT_SIZE + MoveVec.Magnitude();
+	Vector3 effectiveMove = MoveVec;
+	if (Magnitude(effectiveMove) < 0.0001f) {
+		// 移動していない場合は小さめの球を用意して静止判定用
+		effectiveMove = Vector3::zero;
+	}
+	// カプセルの取得
+	auto capsule = other->GetComponent<CapsuleCollider>();
+	if (!capsule)return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
 
-	// ポリゴン配列を格納する構造体を生成
+	// 下端
+	Vector3 capLower = other->position + capsule->capsule.startPoint;
+	// 上端
+	Vector3 capTop = other->position + capsule->capsule.endPoint;
+	// 中心点
+	Vector3 capCenter = (capLower + capTop) * 0.5f;
+	// 半径
+	float radius = capsule->capsule.radius;
+
+	// 移動方向ベクトルを正規化
+	Vector3 forward = Normalized(MoveVec);
+
+	float forwardLength = 2000.0f;		 // 前方判定距離
+	float backwardLength = 500.0f;		 // 後退判定距離
+	float boxHalfSize = radius + 500.0f;  // 左右/上下余裕
+
+
+	// 前方限定の球判定用中心
+	Vector3 sphereCenter = capCenter + forward * MoveVec.Magnitude() * 0.5f;
+
+	// 球の半径
+	float sphereRadius = radius + MoveVec.Magnitude() * 0.5f;
+
 	auto hitDim = std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
+	*hitDim = MV1CollCheck_Sphere(modelHandle, -1, ToVECTOR(sphereCenter), sphereRadius);
 
-	// モデルに対して球との当たり判定を追加
-	*hitDim = MV1CollCheck_Sphere(modelHandle, -1, posV, radius);
 	return hitDim;
 }
 
@@ -149,13 +187,11 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(Vector3 position
 /*
  * @brief 壁ポリゴン／床ポリゴンの振り分け
  * @param hitDim   コリジョン結果構造体
- * @param prevPos  移動前の座標
  * @param walls    壁ポリゴン格納先
  * @param floors   床ポリゴン格納先
  */
 void Stage::ClassifyPolygons(
 	const MV1_COLL_RESULT_POLY_DIM& hitDim,
-	const Vector3& prevPos,
 	std::vector<MV1_COLL_RESULT_POLY*>& walls,
 	std::vector<MV1_COLL_RESULT_POLY*>& floors) {
 
@@ -165,18 +201,13 @@ void Stage::ClassifyPolygons(
 		// 壁か床かの判断を行う
 		bool isWall = (poly.Normal.y < 0.9f && poly.Normal.y > -0.9f);
 
+		// 壁かどうか
 		if (isWall) {
-			// 壁の高さチェック（プレイヤーより上）
-			if (poly.Position[0].y > prevPos.y + 0.3f ||
-				poly.Position[1].y > prevPos.y + 0.3f ||
-				poly.Position[2].y > prevPos.y + 0.3f) {
-
-				// 壁ポリゴンのポインタを配列に追加
-				walls.push_back(const_cast<MV1_COLL_RESULT_POLY*>(&poly));
-			}
+			// 壁ポリゴン配列に追加する
+			walls.push_back(const_cast<MV1_COLL_RESULT_POLY*>(&poly));
 		}
 		else {
-			// 床ポリゴンをポインタ配列に追加
+			// 床ポリゴン配列に追加する
 			floors.push_back(const_cast<MV1_COLL_RESULT_POLY*>(&poly));
 		}
 	}
@@ -186,7 +217,7 @@ void Stage::ClassifyPolygons(
 
 /*
  * @brief 壁ポリゴンとの衝突・スライド・押し出し処理
- * @param nowPos      現在座標（処理結果として更新）
+ * @param nowPos      現在座標
  * @param prevPos     移動前座標
  * @param polyOffset  カプセル縦方向のオフセット
  * @param MoveVec     移動ベクトル
@@ -199,19 +230,26 @@ void Stage::ProcessWallCollision(
 	float polyOffset,
 	const Vector3& MoveVec,
 	const std::vector<MV1_COLL_RESULT_POLY*>& walls,
-	bool moveFlag) {
-
+	bool moveFlag,
+	GameObject* other
+) {
 	// 壁が存在しなければ抜ける
 	if (walls.empty()) return;
 
-	// カプセル設定
-	const float capsuleRadius = GameConst::PLAYER_HIT_HEIGHT;
+	// カプセルコンポーネントの取得
+	auto capsule = other->GetComponent<CapsuleCollider>();
+	// カプセルを取得できなければ抜ける
+	if (!capsule)return;
 
-	// カプセルの下端
-	Vector3 capLower = nowPos;
-	// カプセルの上端
-	Vector3 capTop = nowPos + Vector3(0, polyOffset, 0);
+	// カプセルの半径を取得
+	float capsuleRadius = capsule->capsule.radius;
 
+	// ワールド座標に変換したカプセルの下端
+	Vector3 capLower = nowPos + capsule->capsule.startPoint;
+	// ワールド座標に変換したカプセルの上端
+	Vector3 capTop = nowPos + capsule->capsule.endPoint;
+
+	// 壁ポリゴンの配列分回す
 	for (auto* poly : walls) {
 		// 三角形の 3 頂点
 		Vector3 p0 = FromVECTOR(poly->Position[0]);
@@ -229,18 +267,18 @@ void Stage::ProcessWallCollision(
 		float dist = Magnitude(diff);
 
 		// カプセルが触れていないなら処理しない
-		float penetration = capsuleRadius - dist;
-		if (penetration <= 0.0f) continue;
+		float penetrate = capsuleRadius - dist;
+		if (penetrate <= 0.0f) continue;
 
 
 		Vector3 pushDir = Normalized(diff);
 
 		// 貫通した分戻す
-		nowPos += pushDir * penetration;
+		nowPos += pushDir * penetrate;
 
 		// 新しいカプセル位置
-		capLower = nowPos;
-		capTop = nowPos + Vector3(0, polyOffset, 0);
+		capLower = nowPos + capsule->capsule.startPoint;
+		capTop = nowPos + capsule->capsule.endPoint;
 	}
 
 	if (moveFlag) {
@@ -263,11 +301,6 @@ void Stage::ProcessWallCollision(
 		// 移動ベクトルと壁の向きの内積
 		float dot = Vector3::Dot(moveVec, avgNormal);
 
-		// 壁に沿った移動に変更
-		Vector3 slideVec = moveVec - avgNormal * dot;
-
-		// 対象者の位置を更新
-		//nowPos = prevPos + slideVec;
 	}
 }
 
@@ -285,41 +318,79 @@ void Stage::ProcessFloorCollision(
 	GameObject* other,
 	float moveVec
 ) {
+	// 床がなければ落下
+	if (floors.empty())return;
 
-	if (floors.empty()) return;
+	// 接地点の最大値
+	float MaxY = 0.1f;
+	// 接地しているかどうか
+	bool isGround = false;
 
-	float MaxY = 0.5f;
-	bool isGrounded = false;
+	// 重力コンポーネントの取得
 	auto hitGrounding = other->GetComponent<GravityComponent>();
+	if (!hitGrounding) return;
 
+	// カプセルコンポーネント取得
+	auto capsule = other->GetComponent<CapsuleCollider>();
+	if (!capsule) return;
 
+	// ワールド座標での下端
+	Vector3 capStart = nowPos + capsule->capsule.startPoint;
+	// ワールド座標での上端
+	Vector3 capEnd = nowPos + capsule->capsule.endPoint;
+	// カプセル中心点
+	Vector3 capCenter = (capStart + capEnd) * 0.5f;
+	// カプセルの半径
+	float capsuleRadius = capsule->capsule.radius;
+
+	// 貫通しているかどうかを見る
 	for (auto* poly : floors) {
-		Vector3 line1 = nowPos + Vector3(0.0f, polyOffset, 0.0f);
-		Vector3 line2 = nowPos + Vector3(0.0f, -0.3f, 0.0f);
-		// 三角形と線分の当たり判定
-		HITRESULT_LINE res = HitCheck_Line_Triangle(
-			ToVECTOR(line1),
-			ToVECTOR(line2),
-			poly->Position[0],
-			poly->Position[1],
-			poly->Position[2]);
+		// 三角形の 3 頂点
+		Vector3 p0 = FromVECTOR(poly->Position[0]);
+		Vector3 p1 = FromVECTOR(poly->Position[1]);
+		Vector3 p2 = FromVECTOR(poly->Position[2]);
 
-		if (!res.HitFlag) continue;
-		if (!isGrounded || MaxY < res.Position.y) {
-			isGrounded = true;
-			MaxY = res.Position.y;
+		// 中心点と三角形の最近接点を求める
+		Vector3 nearest = Nearest(capCenter, p0, p1, p2);
+
+		// 最近接点との差分と距離
+		Vector3 diff = capCenter - nearest;
+		float dist = Magnitude(diff);
+
+		// カプセルの半径以下なら接地
+		const float EPS = 0.5f;
+		if (dist <= capsuleRadius + EPS) {
+			// 接地判定
+			if (!isGround || MaxY < nearest.y) {
+				isGround = true;
+				MaxY = nearest.y;
+			}
 		}
 	}
 
-	// ジャンプ中は判定しない
-	if (moveVec > 0.1f) {
+	// 地面から離れていた場合は接地判定を行わない
+	if (hitGrounding->GetFallSpeed() < 0) {
 		hitGrounding->SetGroundingFrag(false);
 		return;
 	}
-	// 判定する
-	hitGrounding->SetGroundingFrag(isGrounded);
-	if (hitGrounding->GetGroundingFrag()) nowPos.y = MaxY;
 
+	// 接地していたら
+	if (isGround) {
+		// 対象がいなければいけない位置
+		float desiredY = MaxY - capsule->capsule.startPoint.y;
+
+		// 壁から押し出されたとき対策
+		// 床よりもしたに押し出された場合、押し戻す
+		if (nowPos.y < desiredY) {
+			nowPos.y = desiredY;
+		}
+		// 接地している
+		hitGrounding->SetGroundingFrag(true);
+	}
+	else {
+		// 接地していない
+		hitGrounding->SetGroundingFrag(false);
+	}
 }
 
 /*
@@ -356,21 +427,11 @@ void Stage::LightSettings() {
 /*
  *	ステージの当たり判定の描画
  */
-void Stage::StageColliderRenderer() {
+void Stage::StageColliderRenderer(GameObject* other, Vector3 MoveVec) {
 	// モデルハンドルが無効な場合は処理を中止
 	if (modelHandle < 0) return;
 
-	// 当たり判定の中心位置
-	VECTOR checkCenter = ToVECTOR(Vector3::zero);
-
-	// 判定に使用する球の半径
-	float  radius = 20000.0f;
-
-	// モデル全体の当たり判定ポリゴン情報を格納する構造体を動的確保
-	auto hitDim = std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
-
-	// 球とモデルの衝突判定を行い、結果を取得
-	*hitDim = MV1CollCheck_Sphere(modelHandle, -1, checkCenter, radius);
+	auto hitDim = SetupCollision(other, MoveVec);
 
 	// 壁と床を区別するための色情報を設定
 	unsigned int wallColor = GetColor(255, 100, 100);
@@ -386,7 +447,7 @@ void Stage::StageColliderRenderer() {
 		unsigned int drawColor = isWall ? wallColor : floorColor;
 
 		// ポリゴンを半透明で描画
-		DrawTriangle3D(poly.Position[0], poly.Position[1], poly.Position[2], drawColor, TRUE);
+		DrawTriangle3D(poly.Position[0], poly.Position[1], poly.Position[2], drawColor, FALSE);
 
 		// ポリゴンを白線で描画
 		DrawLine3D(poly.Position[0], poly.Position[1], lineColor);

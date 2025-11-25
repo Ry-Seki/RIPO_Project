@@ -25,6 +25,8 @@ private:
 	Vector3 pointLightColor;// 色
 	float pointLightRange;	// 効果範囲
 
+	GameObjectPtr player;
+
 	static constexpr DxLib::COLOR_F _MAP_DIF_COLOR = { 1.5f, 1.5f, 1.3f, 1.0f };	// マップ全体のライト ディフューズカラー
 	static constexpr DxLib::COLOR_F _MAP_AMB_COLOR = { 0.2f, 0.25f, 0.3f, 1 };		// マップ全体のライト アンビエントカラー
 	static constexpr DxLib::COLOR_F _MAP_SPC_COLOR = { 0.2f, 0.2f, 0.2f, 1 };		// マップ全体のライト スペキュラーカラー
@@ -56,7 +58,7 @@ public:
 	void Render() override;
 
 	// ステージの当たり判定の描画
-	void StageColliderRenderer() override;
+	void StageColliderRenderer(GameObject* other, Vector3 MoveVec) override;
 
 	// 終了処理
 	void Execute() override;
@@ -78,19 +80,17 @@ private:
 	 * @param MoveVec   移動ベクトル
 	 * @return std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> コリジョン結果構造体
 	 */
-	std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> SetupCollision(Vector3 position, Vector3 MoveVec);
+	std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> SetupCollision(GameObject* other, Vector3 MoveVec);
 
 
 	/**
 	 * @brief 壁ポリゴン／床ポリゴンの振り分け
 	 * @param hitDim   コリジョン結果構造体
-	 * @param prevPos  移動前の座標
 	 * @param walls    壁ポリゴン格納先
 	 * @param floors   床ポリゴン格納先
 	 */
 	void ClassifyPolygons(
 		const MV1_COLL_RESULT_POLY_DIM& hitDim,
-		const Vector3& prevPos,
 		std::vector<MV1_COLL_RESULT_POLY*>& walls,
 		std::vector<MV1_COLL_RESULT_POLY*>& floors
 	);
@@ -110,7 +110,8 @@ private:
 		float polyOffset,
 		const Vector3& MoveVec,
 		const std::vector<MV1_COLL_RESULT_POLY*>& walls,
-		bool moveFlag
+		bool moveFlag,
+		GameObject* other
 	);
 
 	/**
@@ -126,6 +127,7 @@ private:
 		GameObject* other,
 		float moveVec
 	);
+
 public:
 	/*
 	 * ステージのライトの設定
@@ -144,6 +146,7 @@ public:
 	void SetPointLightPositions(const std::vector<Vector3>& positions) {
 		pointLightPos = positions;
 	}
+
 
 };
 
