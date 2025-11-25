@@ -55,6 +55,7 @@ void MainGameScene::Update(Engine& engine, float deltaTime) {
 
     // 基底クラスの更新処理
     Scene::Update(engine, deltaTime);
+
     // 日が終わったら Engine 側フェード
     if (calendarManager->IsDayComplete() && !calendarManager->IsEndDayAdvance()) {
         engine.StartFadeOutIn(1.0f, 1.0f, [&engine, this]() {

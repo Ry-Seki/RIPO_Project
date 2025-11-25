@@ -22,23 +22,42 @@ struct DungeonResource {
 	std::vector<std::shared_ptr<LoadJSON>> stageBoneResource;
 	std::shared_ptr<LoadModel> playerResource;
 	std::vector<std::shared_ptr<LoadModel>> enemyResource;
-	std::shared_ptr<LoadModel> bulletResource;
 	std::shared_ptr<LoadModel> bossResource;
 	std::vector<std::shared_ptr<LoadModel>> treasureResource;
 	std::shared_ptr<LoadModel> eventTreasureResource;
 };
 
 /*
- *	ダンジョンアクションクラス
+ *	@brief	各階層のフロアデータ
+ */
+struct DungeonFloorData {
+	bool isFirst = true;
+	int stageHandle = -1;
+	JSON stageBornData;
+	std::vector<int> enemyHandleList;
+	std::vector<int> treasureHandleList;
+};
+
+// 前方宣言
+class GameObject;
+
+/*
+ *	@brief	ダンジョンアクションクラス
  */
 class ActionDungeon : public DayActionBase {
 private:
-	DungeonStageData stageData;
+	DungeonStageData stageData;													// ステージデータ
+	std::vector<DungeonFloorData> dungeonFloorList;								// ダンジョンフロアデータリスト
+	std::vector<std::vector<std::shared_ptr<GameObject>>> enemyFloorList;		// 階層ごとの敵のリスト
+	std::vector<std::vector<std::shared_ptr<GameObject>>> treasureFloorList;	// 階層ごとのお宝のリスト
 
-	bool inputHandle = false;
+	int currentFloor = -1;								// 現在の階層
+	bool inputHandle = false;							// 入力フラグ
+	bool isChangeFloor = false;							// 階層変更フラグ
 
 private:
 	static bool isFirst;
+
 public:
 	/*
 	 *	コンストラクタ
@@ -71,19 +90,35 @@ public:
 	 */
 	void Teardown() override;
 
+private:
+	/*
+	 *	@brief		階層の変更処理
+	 */
+	void ChangeFloor();
+	/*
+	 *	@brief		現在の階層の片付け処理
+	 */
+	void TeardownCurrentFloor();
+	/*
+	 *	@brief		次の階層の準備
+	 */
+	void SetupNextFloor();
+
+public:
+
 	void DebugInitialize(Engine& engine, DungeonStageData& setStageData);
 	void DebugSetup(Engine& engine, const DungeonResource& setResource);
 	void EndDungeon();
 private:
 	/*
-	 *	ステージデータからロードリストに追加
+	 *	@brief		ステージデータからロードリストに追加
 	 *	@param[in]	DungeonStageData& stageData			ステージデータ
 	 *	@param[in]	DungeonResource&  dungeonResource	セットするリソース
 	 */
 	void LoadResourcesFromStageData(Engine& engine, DungeonStageData& stageData, DungeonResource& dungeonResource);
 public:
 	/*
-	 *	ダンジョンステージデータの設定
+	 *	@brief		ダンジョンステージデータの設定
 	 */
 	inline void SetDungeonStageData(DungeonStageData setData) { stageData = setData; }
 };

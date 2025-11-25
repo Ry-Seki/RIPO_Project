@@ -1,0 +1,34 @@
+{
+  "0": {
+    "PlayerData": "Res/Model/Player/RIPO_Model.mv1",
+    "BossData": "",
+    "Audio": {
+      "BGM": {
+        "0": ""
+      },
+      "SE": {
+        "0": ""
+      }
+    }
+  },
+  "1": {
+    "StageData": "Res/Model/Stage/StageModel_1.mv1",
+    "StageBoneData": "Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json",
+    "EnemyData": {
+      "0": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1"
+    },
+    "TreasureData": {
+      "0": "Res/Model/Treasure/Treasure02.mv1"
+    }
+  },
+  "2": {
+    "StageData": "Res/Model/Stage/StageModel_1_TwoLayer.mv1",
+    "StageBoneData": "Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json",
+    "EnemyData": {
+      "0": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1"
+    },
+    "TreasureData": {
+      "0": "Res/Model/Treasure/Treasure03.mv1"
+    }
+  }
+}

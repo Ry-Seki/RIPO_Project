@@ -67,11 +67,6 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
 	}
 	else if (stairFrag) {
 		StageManager::GetInstance().NextStage();
-		//StageManager::GetInstance().GetPrevStageHandle();
-		//StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
-		//auto stair = StageObjectManager::GetInstance().GetStageObject(2);
-		//Vector3 stairSpawnPos = StageManager::GetInstance().GetStairsPos();
-		//stair->GetOwner()->position = stairSpawnPos;
 	}
 	if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
 		// SEの再生
@@ -170,7 +165,100 @@ void ActionDungeon::Render() {
 void ActionDungeon::Teardown() {
 
 }
+/*
+ *	@brief		階層変更
+ */
+void ActionDungeon::ChangeFloor() {
+	// 現在の階層の片付け処理
 
+	// 階層の変更
+	
+	// 次の階層の準備処理
+
+}
+/*
+ *	@brief		現在の階層の片付け処理
+ */
+void ActionDungeon::TeardownCurrentFloor() {
+	// 現在のフロアの敵のデータを設定
+	enemyFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
+	
+	// ステージの片付け処理
+	SetUseObjectColliderFlag(false);
+	// RemoveAllCharacter();
+	StageManager::GetInstance().Execute();
+	RemoveAllStageObject();
+}
+/*
+ *	@brief		次の階層の準備
+ */
+void ActionDungeon::SetupNextFloor() {
+	// 敵の設定
+	// 敵の生成位置の取得
+	std::vector<Vector3> enemySpawnPos = GetEnemySpwanPos();
+	size_t enemyCount = enemySpawnPos.size();
+
+	// その階層が最初かどうか
+	if (dungeonFloorList[currentFloor].isFirst) {
+		dungeonFloorList[currentFloor].isFirst = false;
+		// 敵を生成する
+		for (int i = 0; i < enemyCount; i++) {
+			GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, 
+						  { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+		}
+		// 敵を取得する
+		enemyFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
+	} 
+	// プレイヤーの再配置
+	auto player = GetUseObject(0);
+	if (!player) return;
+	// 位置の設定
+	player->position = GetStartPos();
+
+	// 敵の再配置
+	size_t enemyFloorCount = enemyFloorList[currentFloor].size();
+	for (int i = 0; i < enemyFloorCount; i++) {
+		if (enemyFloorList[currentFloor].size() <= 0) break;
+		auto enemyCharacter = enemyFloorList[currentFloor][i];
+		if (!enemyCharacter) continue;
+		// モデルの設定
+		SetModelHandle(enemyCharacter.get(), dungeonFloorList[currentFloor].enemyHandleList[currentFloor]);
+		// コンポーネントの取得
+		std::shared_ptr<EnemyComponent> component = enemyCharacter->GetComponent<EnemyComponent>();
+		if (!component) continue;
+		// 位置の設定
+		// int enemySpawnID = component->GetSpawnID();
+		enemyCharacter->position = enemySpawnPos[i];
+		enemyCharacter->scale = { 4.5f, 4.5f, 4.5f };
+		// WayPointの設定
+		component->SetWayPoint(enemyCharacter->position);
+	}
+
+	// お宝の再配置
+	// お宝の生成位置の取得
+	std::vector<Vector3> treasureSpawnPos = GetTreasureSpwanPos();
+	// 生成位置の要素数の取得
+	size_t treasureCount = treasureSpawnPos.size();
+	for (int i = 0; i < treasureCount; i++) {
+		// 宝の取得
+		StageObjectBasePtr treasureObject = GetStageObject(i);
+		if (!treasureObject) continue;
+		// 宝オブジェクトの取得
+		GameObject* treasure = GetStageObjectOwner(treasureObject);
+		if (!treasure) continue;
+		// 位置の設定
+		treasure->position = treasureSpawnPos[i];
+		// モデルの設定
+		//SetModelHandle(treasure, treasureHandle);
+	}
+
+
+	// フェードイン
+	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop);
+	FadeManager::GetInstance().StartFade(fade);
+	// 当たり判定の有効化
+	SetUseObjectColliderFlag(true);
+}
 void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageData) {
 	isComplete = false;
 	stageData = setStageData;
@@ -210,6 +298,7 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 }
 
 void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResource) {
+	currentFloor = 0;
 	// ステージの設定
 	// モデルハンドルの取得
 	int stageHandleCount = setResource.stageResource.size();
@@ -239,10 +328,10 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
 	// モデルハンドルの取得
 	int enemyHandle = setResource.enemyResource[0]->GetHandle();
 	// 敵の取得
-	std::vector<GameObjectPtr> enemyList = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
+	enemyFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
 	for (int i = 0; i < enemyCount; i++) {
-		if (enemyList.size() <= 0) break;
-		auto enemyCharacter = enemyList[i];
+		if (enemyFloorList[currentFloor].size() <= 0) break;
+		auto enemyCharacter = enemyFloorList[currentFloor][i];
 		if (!enemyCharacter) continue;
 		// 位置の設定
 		enemyCharacter->position = enemySpawnPos[i];
