@@ -41,8 +41,6 @@ void PlayerComponent::Update(float deltaTime) {
 	PlayerRun(deltaTime);
 	// 移動処理
 	PlayerMove(player, deltaTime);
-	StageManager::GetInstance().SetGameObject(player);
-	StageManager::GetInstance().SetGameObjectVec(moveVec);
 	// ステージとの当たり判定
 	StageManager::GetInstance().StageCollider(player, moveVec);
 

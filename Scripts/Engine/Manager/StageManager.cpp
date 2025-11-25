@@ -75,13 +75,6 @@ void StageManager::PrevStage() {
 	ChangeStage();
 }
 
-void StageManager::SetGameObject(GameObject* other) {
-	WithCurrentStage([&](StageBase& stage) { stage.SetGameObject(other); });
-}
-void StageManager::SetGameObjectVec(Vector3 vec) {
-	WithCurrentStage([&](StageBase& stage) { stage.SetGameObjectVec(vec); });
-}
-
 /*
  *	ステージの当たり判定
  */

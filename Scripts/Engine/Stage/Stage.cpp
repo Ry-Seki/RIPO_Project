@@ -13,9 +13,13 @@
 #include "../Component/CapsuleCollider.h"
 #include "../Component/GravityComponent.h"
 #include "../GameObject.h"
- /*
-  *  コンストラクタ
-  */
+#include "../Component/Character/CharacterUtility.h"
+
+using namespace CharacterUtility;
+
+/*
+ *  コンストラクタ
+ */
 Stage::Stage()
 	: StageBase()
 	, lightDirection(0.2f, -20.0f, 0.3f)
@@ -60,9 +64,13 @@ void Stage::Render() {
 		// モデルの描画
 		MV1DrawModel(modelHandle);
 #if _DEBUG
-		// ステージの当たり判定の描画
+		// プレイヤーの取得
+		player = GetPlayer();
+		if (player != nullptr) {
+			// ステージの当たり判定の描画
+			StageColliderRenderer(player.get(), player->GetComponent<PlayerComponent>()->GetMoveVec());
 
-		StageColliderRenderer(player, playerMove);
+		}
 #endif // _DEBUG
 
 

@@ -28,19 +28,13 @@ namespace CharacterUtility {
 		const Vector3& position,
 		const Vector3& rotation,
 		const Vector3& AABBMin,
-		const Vector3& AABBMax) {
-		CharacterManager::GetInstance().GeneratePlayer(name, position, rotation, AABBMin, AABBMax);
-	}
-
-	inline void  GeneratePlayer(
-		const std::string& name,
-		const Vector3& position,
-		const Vector3& rotation,
+		const Vector3& AABBMax,
 		const Vector3& capsuleStart,
 		const Vector3& capsuleEnd,
 		const float& capsuleRadius) {
-		CharacterManager::GetInstance().GeneratePlayer(name, position, rotation, capsuleStart, capsuleEnd, capsuleRadius);
+		CharacterManager::GetInstance().GeneratePlayer(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	}
+
 
 	/*
 	 *	エネミー生成
@@ -56,8 +50,11 @@ namespace CharacterUtility {
 		const Vector3& position,
 		const Vector3& rotation,
 		const Vector3& AABBMin,
-		const Vector3& AABBMax) {
-		CharacterManager::GetInstance().GenerateEnemy(name, position, rotation, AABBMin, AABBMax);
+		const Vector3& AABBMax,
+		const Vector3& capsuleStart,
+		const Vector3& capsuleEnd,
+		const float& capsuleRadius) {
+		CharacterManager::GetInstance().GenerateEnemy(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	}
 	/*
 	 *	ID指定のキャラクター削除
@@ -105,6 +102,14 @@ namespace CharacterUtility {
 	 */
 	inline void SetCharacterModel(GameObject* gameObject, const int modelHandle) {
 		CharacterManager::GetInstance().SetModelHandle(gameObject, modelHandle);
+	}
+
+	/*
+	 *	プレイヤーの取得
+	 *  @author oorui
+	 */
+	inline GameObjectPtr GetPlayer() {
+		return CharacterManager::GetInstance().GetPlayer();
 	}
 };
 #endif // !_CHARACTER_UTILITY_H_

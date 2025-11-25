@@ -12,7 +12,8 @@
 #include "../Component/CapsuleCollider.h"
 
 CharacterManager::CharacterManager()
-	: engine(nullptr) {}
+	: engine(nullptr) {
+}
 
 template <typename T>
 GameObjectPtr CharacterManager::CreateCharacter(
@@ -20,14 +21,22 @@ GameObjectPtr CharacterManager::CreateCharacter(
 	const Vector3& position,
 	const Vector3& rotation,
 	const Vector3& AABBMin,
-	const Vector3& AABBMax) {
+	const Vector3& AABBMax,
+	const Vector3& capsuleStart,
+	const Vector3& capsuleEnd,
+	const float& capsuleRadius) {
 	// 未使用状態のオブジェクト取得
 	GameObjectPtr characterObject = GameObjectManager::GetInstance().GetUnuseObject();
 	// キャラクターコンポーネント追加
 	characterObject->AddComponent<T>();
 	// コライダーコンポーネント追加
-	AABBColliderPtr collider = characterObject->AddComponent<AABBCollider>();
-	collider->aabb = { AABBMin, AABBMax };
+	// AABB
+	AABBColliderPtr aabbCollider = characterObject->AddComponent<AABBCollider>();
+	aabbCollider->aabb = { AABBMin, AABBMax };
+	// Capsule
+	CapsuleColliderPtr capsuleCollider = characterObject->AddComponent<CapsuleCollider>();
+	capsuleCollider->capsule = { capsuleStart, capsuleEnd, capsuleRadius };
+
 	// モデルコンポーネント追加
 	characterObject->AddComponent<ModelRenderer>();
 	// 重力コンポーネント追加
@@ -38,24 +47,6 @@ GameObjectPtr CharacterManager::CreateCharacter(
 	return characterObject;
 }
 
-template<typename T>
-GameObjectPtr CharacterManager::CreateCharacter(const std::string& name, const Vector3& position, const Vector3& rotation, const Vector3& capsuleStart, const Vector3& capsuleEnd, const float& capsuleRadius) {
-	// 未使用状態のオブジェクト取得
-	GameObjectPtr characterObject = GameObjectManager::GetInstance().GetUnuseObject();
-	// キャラクターコンポーネント追加
-	characterObject->AddComponent<T>();
-	// コライダーコンポーネント追加
-	CapsuleColliderPtr collider = characterObject->AddComponent<CapsuleCollider>();
-	collider->capsule = { capsuleStart, capsuleEnd, capsuleRadius };
-	// モデルコンポーネント追加
-	characterObject->AddComponent<ModelRenderer>();
-	// 重力コンポーネント追加
-	characterObject->AddComponent<GravityComponent>();
-	// データのセット
-	characterObject->SetObjectData(name, position, rotation);
-	// キャラクターを返す
-	return characterObject;
-}
 
 /*
  *	初期化処理
@@ -74,23 +65,12 @@ GameObjectPtr CharacterManager::GeneratePlayer(
 	const Vector3& position,
 	const Vector3& rotation,
 	const Vector3& AABBMin,
-	const Vector3& AABBMax) {
+	const Vector3& AABBMax,
+	const Vector3& capsuleStart,
+	const Vector3& capsuleEnd,
+	const float& capsuleRadius) {
 	// プレイヤーのベース作成
-	GameObjectPtr player = CreateCharacter<PlayerComponent>(name, position, rotation, AABBMin, AABBMax);
-	// ウデアクションコンポーネント追加
-	player->AddComponent<ArmActionComponent>();
-	// カメラのターゲットに追加
-	CameraManager::GetInstance().SetTarget(player);
-	// シーンが持つゲームオブジェクト配列に追加
-	engine->AddGameObject(player);
-	// 生成キャラクターリストに追加
-	createCharacterList.push_back(player);
-	return player;
-}
-
-GameObjectPtr CharacterManager::GeneratePlayer(const std::string& name, const Vector3& position, const Vector3& rotation, const Vector3& capsuleStart, const Vector3& capsuleEnd, const float& capsuleRadius) {
-	// プレイヤーのベース作成
-	GameObjectPtr player = CreateCharacter<PlayerComponent>(name, position, rotation, capsuleStart, capsuleEnd, capsuleRadius);
+	player = CreateCharacter<PlayerComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	// ウデアクションコンポーネント追加
 	player->AddComponent<ArmActionComponent>();
 	// カメラのターゲットに追加
@@ -110,9 +90,12 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 	const Vector3& position,
 	const Vector3& rotation,
 	const Vector3& AABBMin,
-	const Vector3& AABBMax) {
+	const Vector3& AABBMax,
+	const Vector3& capsuleStart,
+	const Vector3& capsuleEnd,
+	const float& capsuleRadius) {
 	// 敵のベース作成
-	GameObjectPtr enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax);
+	GameObjectPtr enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	// シーンが持つゲームオブジェクト配列に追加
 	engine->AddGameObject(enemy);
 	// 生成キャラクターリストに追加
@@ -132,7 +115,7 @@ void CharacterManager::RemoveCharacter(int ID) {
 	auto listBegin = createCharacterList.begin();
 	auto listEnd = createCharacterList.end();
 	auto destroyNumber = std::find(listBegin, listEnd, destroyObject);
-	
+
 	if (destroyNumber == listEnd) return;
 	// リストから削除
 	createCharacterList.erase(destroyNumber);

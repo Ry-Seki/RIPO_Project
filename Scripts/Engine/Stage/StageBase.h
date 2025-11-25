@@ -17,8 +17,6 @@ class StageBase {
 protected:
 	// モデルハンドル
 	int modelHandle;
-	GameObject* player;
-	Vector3 playerMove;
 public:
 	// コンストラクタ
 	StageBase() : modelHandle(-1) {}
@@ -67,9 +65,6 @@ public:
 	 *  @return modelHandle
 	 */
 	virtual int GetStageModelHandle()const { return modelHandle; }
-
-	virtual void SetGameObject(GameObject* other) { player = other; }
-	virtual void SetGameObjectVec(Vector3 vec) { playerMove = vec; }
 
 };
 

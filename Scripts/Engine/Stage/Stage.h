@@ -25,7 +25,7 @@ private:
 	Vector3 pointLightColor;// 色
 	float pointLightRange;	// 効果範囲
 
-	GameObject* player;
+	GameObjectPtr player;
 
 	static constexpr DxLib::COLOR_F _MAP_DIF_COLOR = { 1.5f, 1.5f, 1.3f, 1.0f };	// マップ全体のライト ディフューズカラー
 	static constexpr DxLib::COLOR_F _MAP_AMB_COLOR = { 0.2f, 0.25f, 0.3f, 1 };		// マップ全体のライト アンビエントカラー
@@ -147,7 +147,7 @@ public:
 		pointLightPos = positions;
 	}
 
-	
+
 };
 
 

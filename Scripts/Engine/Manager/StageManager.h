@@ -118,15 +118,6 @@ public:
 	StageBase* GetCurrentStage() const { return loadedStage.get(); }
 
 	/*
-	 *	GameObjectの取得
-	 */
-	void SetGameObject(GameObject* other);
-	/*
-	 *	GameObjectの取得
-	 */
-	void SetGameObjectVec(Vector3 vec);
-
-	/*
 	 *	スタート位置の取得
 	 */
 	Vector3 GetStartPos()const;
