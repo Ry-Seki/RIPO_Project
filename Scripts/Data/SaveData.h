@@ -11,7 +11,7 @@
  */
 struct SaveData {
 	int elapsedDay;		// 経過日数
-	bool isHalf;		// 半日フラグ
+	bool isHalf;			// 半日フラグ
 	int playTime;		// 累計プレイ時間
 	int currentMoney;	// 現在の所持金
 	int dungeonFlags;	// イベントお宝回収、ボス突破フラグ(ビットで管理)
