@@ -761,5 +761,8 @@
     <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapManager.h">
       <Filter>ヘッダー ファイル\Engine\Scene\Selection\PartTime\MiniGame\Sokoban</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyAttack.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
