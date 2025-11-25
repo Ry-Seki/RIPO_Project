@@ -87,19 +87,86 @@ bool Intersect(const Capsule& a, const Capsule& b, Vector3& penetration) {
  *  線分から線分への最近接点
  */
 float SegmentBetweenMinLength(const Capsule& a, const Capsule& b) {
-    // 各線分の方向ベクトル
+    // 各線分の方向ベクトル(非正規化)
     Vector3 aDir = a.endPoint - a.startPoint;
     Vector3 bDir = b.endPoint - b.startPoint;
-    // 線分aの開始から点線分bの開始点への方向ベクトル
-    Vector3 startDir = a.startPoint - b.startPoint;
+    // 開始点の差ベクトル
+    Vector3 startDiff = a.startPoint - b.startPoint;
 
+    // 各ベクトルの長さの2乗
     float aLengthSq = Dot(aDir, aDir);
-    float b = Dot(aDir, bDir);
     float bLengthSq = Dot(bDir, bDir);
-    float d = Dot(aDir, startDir);
-    float e = Dot(bDir, startDir);
+    // 2線分のベクトルの内積
+    float segDirDot = Dot(aDir, bDir);
+    // 差ベクトルが各線分方向へどれだけ進んだか(差ベクトルを線分に投影)
+    float aProjection = Dot(aDir, startDiff);
+    float bProjection = Dot(bDir, startDiff);
+    
+    // 2つの線分が平行か調べる
+    // 2つのベクトルの外積の長さ2乗(0に近いほど平行)
+    float crossLengthSq = aLengthSq * bLengthSq - segDirDot * segDirDot;
+    // 各線分上の最近接点(割合)
+    float aSegRatio = 0.0f;
+    float bSegRatio = 0.0f;
+    // 平行ではないなら
+    if (crossLengthSq > EPSILON_SEGMENT) {
+        // 最近接点の無制約解(無限の直線として扱った場合の解)
+        aSegRatio = (segDirDot * bProjection - bLengthSq * aProjection) / crossLengthSq;
+        bSegRatio = (aLengthSq * bProjection - segDirDot * aProjection) / crossLengthSq;
+        // 線分上に制限
+        aSegRatio = Clamp(aSegRatio, 0, 1);
+        bSegRatio = Clamp(bSegRatio, 0, 1);
+    }
+    // 限りなく平行に近いなら
+    else {
+        // 線分aの最近接点を開始点とする
+        aSegRatio = 0.0f;
+        // 線分bが点じゃないなら線分aの開始点を線分bに投影
+        if (bLengthSq > EPSILON_SEGMENT) {
+            bSegRatio = bProjection / bLengthSq;
+        }
+        // 線分bが限りなく点に近いなら
+        else {
+            bSegRatio = 0.0f;
+        }
+        // 線分上に制限
+        bSegRatio = Clamp(bSegRatio, 0, 1);
+    }
+
+    // 無制限解を評価
+    Vector3 bestPointA = Lerp(a.startPoint, a.endPoint, aSegRatio);
+    Vector3 bestPointB = Lerp(b.startPoint, b.endPoint, bSegRatio);
+
+    // 端点チェック
+    CheckEndpointClosest(a.startPoint, b.startPoint, b.endPoint, bestPointA, bestPointB, aSegRatio, bSegRatio);
+    CheckEndpointClosest(a.endPoint, b.startPoint, b.endPoint, bestPointA, bestPointB, aSegRatio, bSegRatio);
+    CheckEndpointClosest(b.startPoint, a.startPoint, a.endPoint, bestPointA, bestPointB, aSegRatio, bSegRatio);
+    CheckEndpointClosest(b.endPoint, a.startPoint, a.endPoint, bestPointA, bestPointB, aSegRatio, bSegRatio);
 
     return 0;
+}
+
+void CheckEndpointClosest(
+    const Vector3& endpoint,
+    const Vector3& segStart,
+    const Vector3& segEnd,
+    Vector3& bestPointA,
+    Vector3& bestPointB,
+    float& aSegRatio,
+    float& bSegRatio) {
+    float t;
+    Vector3 closest = PointToSegmentMinLength(segStart, segEnd, endpoint, t);
+    Vector3 dist = endpoint - closest;
+    float dist2 = Dot(dist, dist);
+
+    Vector3 bestPoint = bestPointA - bestPointB;
+    if (dist2 < Dot(bestPoint, bestPoint)) {
+        bestPointA = endpoint;
+        bestPointB = closest;
+        aSegRatio = 0.0f;
+        bSegRatio = t;
+    }
+
 }
 
 /*
@@ -126,6 +193,7 @@ Vector3 PointToSegmentMinLength(const Vector3& startPos, const Vector3& endPos, 
     float segmentRatio = projection / lengthSquare;
     // 線分上に制限
     segmentRatio = Clamp(segmentRatio, 0, 1);
+
     minPoint = segmentRatio;
     return Lerp(startPos, endPos, segmentRatio);
 }
