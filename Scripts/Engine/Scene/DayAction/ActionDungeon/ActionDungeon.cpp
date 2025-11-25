@@ -282,6 +282,9 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 		StageManager::GetInstance().Initialize(engine);
 		StageObjectManager::GetInstance().Initialize(engine);
 		BulletManager::GetInstance().Initialize(engine);
+		currentFloor = 0;
+		enemyFloorList.resize(16);
+		enemyFloorList[currentFloor].resize(1);
 	}
 	GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100,  300,  100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
@@ -299,6 +302,9 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 
 void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResource) {
 	currentFloor = 0;
+	enemyFloorList.resize(16);
+	enemyFloorList[currentFloor].resize(1);
+
 	// ステージの設定
 	// モデルハンドルの取得
 	int stageHandleCount = setResource.stageResource.size();
