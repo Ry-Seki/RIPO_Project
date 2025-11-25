@@ -11,8 +11,7 @@
 class EnemyComponent : public CharacterBase {
 private:
 	GameObject* enemy;
-	// 移動スピード
-	float moveSpeed;
+	GameObjectPtr player;
 	// ウェイポイント
 	Vector3 wayPoint;
 	// 目先のウェイポイント予定地
@@ -21,6 +20,8 @@ private:
 	float wayPointDistance;
 	// ウェイポイント追尾切り替えフラグ
 	bool chaseTargetChangeFrag;
+	// プレイヤーの距離判定フラグ
+	bool closePlayer;
 	// 方向転換時のディレイ
 	float turnDelay;
 
@@ -30,6 +31,10 @@ private:
 	const int RANDOM_RANGE;
 	// 回転スピード
 	const float ROTATE_SPEED;
+	// 移動スピード
+	const float MOVE_SPEED;
+	// プレイヤーの距離
+	const float DIFFERENCE_PLAYER;
 	// 移動量
 	Vector3 moveVec;
 
@@ -77,6 +82,11 @@ public:
 		wayPoint = Vector3(setValue.x, setValue.y, setValue.z + wayPointDistance);
 		nextWayPoint = Vector3(setValue.x, setValue.y, setValue.z - wayPointDistance);
 	}
+
+	/*
+	 *	プレイヤーの距離判定の取得
+	 */
+	inline bool GetClosePlayer() const { return closePlayer; }
 };
 
 #endif // !_ENEMYCOMPONENT_H_
