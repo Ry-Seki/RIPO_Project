@@ -10,8 +10,8 @@ class StageState {
 private:
 	std::vector<int> stageModelHandle;	// 読み込んだステージ全てを保持
 
-	int currentStageIndex = -1;
-
+	int currentStageID = -1;  // 現在の階層のID
+	int previousStageID = -1; // 直前の階層のID
 
 public:
 	StageState() = default;	// コンストラクタ
@@ -26,23 +26,31 @@ public:
 		if (modelHandle == -1)return;
 		// モデルハンドルを追加
 		stageModelHandle.push_back(modelHandle);
-		// currentStageIndex = static_cast<int>(stageModelHandle.size()) - 1;
 	}
 
 	/*
 	 *	次のステージへ移行
 	 */
-	void NextStage() {
-		if (currentStageIndex + 1 < (int)stageModelHandle.size())
-			currentStageIndex++;
+	void NextStage(int setID) {
+		// 現在の階層IDをひとつ前の階層IDに保存
+		previousStageID = currentStageID;
+
+		// 次の階層に移動
+		currentStageID = setID;
 	}
 
 	/*
 	 *	ひとつ前のステージへ戻る
 	 */
 	void PrevStage() {
-		if (currentStageIndex < 0)return;
-		currentStageIndex--;
+		if (previousStageID < 0) return;
+
+		// 現在を previous に戻す
+		int tmp = currentStageID;
+		currentStageID = previousStageID;
+
+		// ひとつ前の階層にする
+		previousStageID = tmp;
 	}
 
 	/*
@@ -53,7 +61,7 @@ public:
 			if (handle != -1) MV1DeleteModel(handle);
 		}
 		stageModelHandle.clear();
-		currentStageIndex = -1;
+		currentStageID = -1;
 		// ステージオブジェクトのフラグをfalseに
 		StageObjectManager::GetInstance().ResetFlag();
 	}
@@ -62,7 +70,7 @@ public:
 	/*
 	 * @brief 現在のステージインデックスを取得
 	 */
-	int GetCurrentStageIndex() const { return currentStageIndex; }
+	int GetCurrentStageIndex() const { return currentStageID; }
 
 	/*
 	 * @brief ステージ数を取得
@@ -73,8 +81,8 @@ public:
 	 * @brief 現在のハンドルを取得
 	 */
 	int GetCurrentStageHandle() const {
-		if (currentStageIndex >= 0 && currentStageIndex < (int)stageModelHandle.size())
-			return stageModelHandle[currentStageIndex];
+		if (currentStageID >= 0 && currentStageID < (int)stageModelHandle.size())
+			return stageModelHandle[currentStageID];
 		return -1;
 	}
 
@@ -82,7 +90,7 @@ public:
 	 * @brief ひとつ前のステージハンドルを取得
 	 */
 	int GetPrevStageHandle() const {
-		int prev = currentStageIndex - 1;
+		int prev = currentStageID - 1;
 		if (prev >= 0 && prev < (int)stageModelHandle.size())
 			return stageModelHandle[prev];
 		return -1;
@@ -103,7 +111,7 @@ public:
 	 */
 	void SetCurrentStageIndex(int index) {
 		if (index >= 0 && index < (int)stageModelHandle.size())
-			currentStageIndex = index;
+			currentStageID = index;
 	}
 
 };

@@ -70,7 +70,7 @@ public:
 	/*
 	 * @brief 次のステージへ進む
 	 */
-	void NextStage();
+	void NextStage(int setID);
 
 	/*
 	 * @brief 前のステージに戻る
