@@ -195,11 +195,11 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 		StageObjectManager::GetInstance().Initialize(engine);
 		BulletManager::GetInstance().Initialize(engine);
 	}
-	GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, { 0, 100, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100,  300,  100 });
+	GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100,  300,  100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
-	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
+	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	for (int i = 0; i < IDList.size(); i++) {
 		GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 }, IDList[i]);
 	}

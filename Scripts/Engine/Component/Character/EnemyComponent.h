@@ -30,6 +30,9 @@ private:
 	const int RANDOM_RANGE;
 	// 回転スピード
 	const float ROTATE_SPEED;
+	// 移動量
+	Vector3 moveVec;
+
 
 public:
 	/*

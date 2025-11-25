@@ -48,6 +48,9 @@ private:
 	 */
 	void PlayerAvoid(GameObject* player, float deltaTime);
 
+public:
+	inline Vector3 GetMoveVec()const { return moveVec; }
+
 };
 
 #endif // !_PLAYERCOMPONENT_H_

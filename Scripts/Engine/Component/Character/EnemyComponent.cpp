@@ -5,7 +5,7 @@
 #include "EnemyComponent.h"
 #include "../../Vision.h"
 #include "../../Manager/CameraManager.h"
-
+#include "../../Manager/StageManager.h"
  /*
   *	コンストラクタ
   */
@@ -19,8 +19,7 @@ EnemyComponent::EnemyComponent()
 	, turnDelay(0)
 	, TOP_VALUE(5000)
 	, RANDOM_RANGE(100)
-	, ROTATE_SPEED(3.0f)
-{
+	, ROTATE_SPEED(3.0f) {
 }
 
 void EnemyComponent::Start() {
@@ -35,9 +34,14 @@ void EnemyComponent::Start() {
  *  param[in]	float	deltaTime
  */
 void EnemyComponent::Update(float deltaTime) {
+	// 移動量を初期化
+	moveVec = Vector3::zero;
+
 	// モデルが反対なので逆にする
 	// 移動処理
 	EnemyMove(deltaTime);
+	// ステージとの当たり判定
+	StageManager::GetInstance().StageCollider(enemy, moveVec);
 }
 
 /*
@@ -80,16 +84,16 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 	// 正規化したエネミーの角度
 	float enemyDirection = fmod(enemy->rotation.y * Rad2Deg, 360);
 	enemyDirection = enemyDirection * Deg2Rad;
-	
+
 	Vector3 enemyForward = ForwardDir(enemy->rotation);
-	
+
 	// -の状態
 	if (angleDirection < 0) {
 		if (enemyDirection > goalAngle) {
 			enemy->rotation.y -= ROTATE_SPEED * deltaTime;
 		}
 		else {
-		// 目標の方向に補正
+			// 目標の方向に補正
 			enemy->rotation.y = goalAngle;
 		}
 	}
@@ -117,5 +121,10 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 		// 目標の方向に進む
 		enemy->position.x += direction.x * moveSpeed * deltaTime;
 		enemy->position.z += direction.z * moveSpeed * deltaTime;
+
+		float moveX = enemy->position.x;
+		float moveY = enemy->position.y;
+		// 移動量を更新
+		moveVec = { moveX,0.0f,moveY };
 	}
 }
