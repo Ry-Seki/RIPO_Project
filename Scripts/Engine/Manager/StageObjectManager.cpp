@@ -144,7 +144,8 @@ void StageObjectManager::GenerateStair(
 	const Vector3& position,
 	const Vector3& rotation,
 	const Vector3& AABBMin,
-	const Vector3& AABBMax) {
+	const Vector3& AABBMax
+) {
 	GameObjectPtr createStair;
 	// リストの要素の数
 	size_t stageObjectListCount = createStageList.size();
@@ -156,7 +157,6 @@ void StageObjectManager::GenerateStair(
 		stair = createStageList[i]->GetOwner()->GetComponent<Stair>().get();
 		// オブジェクトのリストに保存
 		createStageObjectList[i] = createStair;
-
 		// シーンが持つゲームオブジェクト配列に入れる
 		engine->AddGameObject(createStair);
 		return;

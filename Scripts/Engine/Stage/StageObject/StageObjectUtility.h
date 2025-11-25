@@ -60,7 +60,8 @@ namespace StageObjectUtility {
 		const Vector3& position,
 		const Vector3& rotation,
 		const Vector3& AABBMin,
-		const Vector3& AABBMax) {
+		const Vector3& AABBMax
+	) {
 		StageObjectManager::GetInstance().GenerateStair(name, position, rotation, AABBMin, AABBMax);
 	}
 	/*
