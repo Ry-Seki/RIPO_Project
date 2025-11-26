@@ -66,7 +66,7 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
 		EndDungeon();
 	}
 	else if (stairFrag) {
-		StageManager::GetInstance().NextStage();
+		StageManager::GetInstance().NextStage(0);
 	}
 	if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
 		// SE‚ÌÄ¶

@@ -13,7 +13,6 @@ private:
 	bool isStairMoved = false;		// ŠK‘wˆÚ“®ƒtƒ‰ƒO
 	int	stairID = -1;				// ŠK’i‚ÌID
 	int nextID = -1;				// Ÿ‚ÌŠK‘w‚ÌID
-	int prevID = -1;				// ‚Ğ‚Æ‚Â‘O‚ÌŠK‘w‚ÌID
 
 public:
 	Stair() :isStairMoved(false) {};		// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
@@ -69,17 +68,6 @@ public:
 	 *  @oaram	setValue	ID”Ô
 	 */
 	inline void SetNextID(int setValue) { nextID = setValue; }
-
-	/*
-	 *	‚Ğ‚Æ‚Â‘O‚ÌŠK‘wID‚Ìæ“¾
-	 */
-	inline int GetPrevID()const { return prevID; }
-
-	/*
-	 *	‚Ğ‚Æ‚Â‘O‚ÌŠK‘wID‚Ì•ÏX
-	 *  @oaram	setValue	ID”Ô
-	 */
-	inline void SetPrevID(int setValue) { prevID = setValue; }
 
 };
 #endif // !_STAIR_H_
