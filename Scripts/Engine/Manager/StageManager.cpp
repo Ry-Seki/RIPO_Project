@@ -182,7 +182,7 @@ Vector3 StageManager::GetGoalPos() const {
 /*
  *	“G‚Ì‰Šú¶¬ˆÊ’u‚Ìæ“¾
  */
-std::vector<Vector3> StageManager::GetEnemySpwanPos() const {
+std::vector<Vector3> StageManager::GetEnemySpwanPos(std::vector<int>& id) const {
 	std::vector<Vector3> result;
 
 	if (!loadedStage)return result;
@@ -219,8 +219,8 @@ std::vector<Vector3> StageManager::GetEnemySpwanPos() const {
 		VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
 		eSpawnPos.pos = FromVECTOR(framePos);
 		result.push_back(FromVECTOR(framePos));
+		id.push_back(eSpawnPos.id);
 	}
-
 
 
 	return result;
