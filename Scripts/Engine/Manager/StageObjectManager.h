@@ -127,7 +127,12 @@ public:
 	 *	ID指定のステージオブジェクト取得
 	 */
 	StageObjectBasePtr GetStageObject(int stageObjectID);
-
+	/*
+	 *	@brief		ステージオブジェクト配列の取得
+	 *	@return		GameObjectList&
+	 *  @author		Seki
+	 */
+	inline GameObjectList& GetCreateObjectList() { return createStageObjectList; }
 	/*
 	 *	脱出フラグの取得
 	 *  @retrn bool

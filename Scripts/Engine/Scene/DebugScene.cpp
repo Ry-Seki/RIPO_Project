@@ -64,8 +64,8 @@ void DebugScene::Initialize(Engine& engine) {
 			int modelHandle = playerModel->GetHandle();
 			CharacterManager::GetInstance().SetModelHandle(player.get(), modelHandle);
 			player->position = StageManager::GetInstance().GetStartPos();
-
-			std::vector<Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpwanPos();
+			std::vector<int> enemySpawnIDList;
+			std::vector<Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpwanPos(enemySpawnIDList);
 			int enemyModelHandle = enemyModel->GetHandle();
 			size_t enemySpawnCount = enemySpawnPos.size();
 			for (int i = 0; i < enemy.size(); i++) {

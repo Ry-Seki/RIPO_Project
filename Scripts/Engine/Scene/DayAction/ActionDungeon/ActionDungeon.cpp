@@ -170,7 +170,7 @@ void ActionDungeon::Teardown() {
  */
 void ActionDungeon::ChangeFloor() {
 	// 現在の階層の片付け処理
-
+	TeardownCurrentFloor();
 	// 階層の変更
 
 	// 次の階層の準備処理
@@ -184,7 +184,6 @@ void ActionDungeon::TeardownCurrentFloor() {
 	SetUseObjectColliderFlag(false);
 	// 現在のフロアの敵のデータを設定
 	enemyFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
-
 	// ステージの片付け処理
 	SetUseObjectColliderFlag(false);
 	// RemoveAllCharacter();
@@ -198,22 +197,15 @@ void ActionDungeon::TeardownCurrentFloor() {
  *	@brief		次の階層の準備
  */
 void ActionDungeon::SetupNextFloor() {
+	// もろもろの生成処理
+	
+	
 	// 敵の設定
 	// 敵の生成位置の取得
-	std::vector<Vector3> enemySpawnPos = GetEnemySpwanPos();
+	std::vector<int> enemySpawnIDList;
+	std::vector<Vector3> enemySpawnPos = GetEnemySpwanPos(enemySpawnIDList);
 	size_t enemyCount = enemySpawnPos.size();
 
-	// その階層が最初かどうか
-	if (dungeonFloorList[currentFloor].isFirst) {
-		dungeonFloorList[currentFloor].isFirst = false;
-		// 敵を生成する
-		for (int i = 0; i < enemyCount; i++) {
-			GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY,
-				{ 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
-		}
-		// 敵を取得する
-		enemyFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
-	}
 	// プレイヤーの再配置
 	auto player = GetUseObject(0);
 	if (!player) return;
@@ -226,8 +218,6 @@ void ActionDungeon::SetupNextFloor() {
 		if (enemyFloorList[currentFloor].size() <= 0) break;
 		auto enemyCharacter = enemyFloorList[currentFloor][i];
 		if (!enemyCharacter) continue;
-		// モデルの設定
-		SetModelHandle(enemyCharacter.get(), dungeonFloorList[currentFloor].enemyHandleList[currentFloor]);
 		// コンポーネントの取得
 		std::shared_ptr<EnemyComponent> component = enemyCharacter->GetComponent<EnemyComponent>();
 		if (!component) continue;
@@ -253,8 +243,6 @@ void ActionDungeon::SetupNextFloor() {
 		if (!treasure) continue;
 		// 位置の設定
 		treasure->position = treasureSpawnPos[i];
-		// モデルの設定
-		//SetModelHandle(treasure, treasureHandle);
 	}
 
 
@@ -280,17 +268,23 @@ void ActionDungeon::TeardownEnemy() {
  *	@brief		ステージオブジェクトの片付け処理
  */
 void ActionDungeon::TeardownStageObject() {
-	GameObject* haveTreasure = StageManager::GetInstance().GetLiftObject();
-	for (auto& treasure : stageObjectFloorList[currentFloor]) {
-		if (!treasure) continue;
-		int treasureID = treasure->ID;
-		if (treasure->ID == haveTreasure->ID) continue;
-		RemoveStageObject(treasureID);
+	haveTreasure = StageManager::GetInstance().GetLiftObject();
+	GameObjectList stageObjectList = GetCreateObjectList();
+	// プレイヤーが所持しているお宝以外を削除する
+	for (int i = stageObjectList.size() - 1; i >= 0; i--) {
+		GameObject* stageObject = stageObjectList[i].get();
+		if (!stageObject) continue;
+
+		int ID = stageObject->ID;
+		if (ID == haveTreasure->ID) continue;
+
+		RemoveStageObject(i);
 	}
 }
-void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageData) {
+void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageData, DungeonFloorData& setFloorData) {
 	isComplete = false;
 	stageData = setStageData;
+	floorData = setFloorData;
 	LoadManager& load = LoadManager::GetInstance();
 	DungeonResource dungeonResource;
 	auto treasureMap = stageData.GetCategory("Treasure");
@@ -311,9 +305,6 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 		StageManager::GetInstance().Initialize(engine);
 		StageObjectManager::GetInstance().Initialize(engine);
 		BulletManager::GetInstance().Initialize(engine);
-		currentFloor = 0;
-		enemyFloorList.resize(16);
-		enemyFloorList[currentFloor].resize(1);
 	}
 	GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100,  300,  100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
@@ -329,12 +320,10 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 	LoadResourcesFromStageData(engine, stageData, dungeonResource);
 }
 
-void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResource) {
+void ActionDungeon::DebugSetupData(Engine& engine, const DungeonResource& setResource) {
 	currentFloor = 0;
 	enemyFloorList.resize(16);
 	enemyFloorList[currentFloor].resize(1);
-	stageObjectFloorList.resize(16);
-	stageObjectFloorList[currentFloor].resize(1);
 
 	// ステージの設定
 	// モデルハンドルの取得
@@ -360,7 +349,8 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
 
 	// 敵の設定
 	// 敵の生成位置の取得
-	std::vector<Vector3> enemySpawnPos = GetEnemySpwanPos();
+	std::vector<int> enemySpawnIDList;
+	std::vector<Vector3> enemySpawnPos = GetEnemySpwanPos(enemySpawnIDList);
 	size_t enemyCount = enemySpawnPos.size();
 	// モデルハンドルの取得
 	int enemyHandle = setResource.enemyResource[0]->GetHandle();
@@ -390,7 +380,6 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
 	// ハンドルの要素数の取得
 	size_t treasureTypeCount = setResource.treasureResource.size();
 	// お宝の取得
-	stageObjectFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_TREASURE);
 	for (int i = 0; i < treasureCount; i++) {
 		// モデルハンドルの取得
 		int treasureHandle = setResource.treasureResource[i]->GetHandle();
@@ -474,8 +463,9 @@ void ActionDungeon::LoadResourcesFromStageData(Engine& engine, DungeonStageData&
 	std::string eventTreasurePath;
 	if (stageData.TryGet("Treasure.EventTreasureData", eventTreasurePath) && !eventTreasurePath.empty()) {
 		dungeonResource.eventTreasureResource = load.LoadResource<LoadModel>(eventTreasurePath);
-	}    // ロード完了時のコールバック登録
+	}
+	// ロード完了時のコールバック登録
 	load.SetOnComplete([this, &engine, dungeonResource]() {
-		DebugSetup(engine, dungeonResource);
-		});
+		DebugSetupData(engine, dungeonResource);
+	});
 }

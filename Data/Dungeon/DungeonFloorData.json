@@ -1,0 +1,34 @@
+{
+  "0": {
+    "Floors": [
+      {
+        "FloorID": 0,
+        "EnemySpawnCount": 0,
+        "BossSpawnCount": 0,
+        "TreasureSpawnCount": 1,
+        "StairSpawnCount": 0,
+        "GoalSpawnCount": 1
+      }
+    ]
+  },
+  "1": {
+    "Floors": [
+      {
+        "FloorID": 0,
+        "EnemySpawnCount": 3,
+        "BossSpawnCount": 0,
+        "TreasureSpawnCount": 1,
+        "StairSpawnCount": 1,
+        "GoalSpawnCount": 1
+      },
+      {
+        "FloorID": 1,
+        "EnemySpawnCount": 0,
+        "BossSpawnCount": 1,
+        "TreasureSpawnCount": 1,
+        "StairSpawnCount": 1,
+        "GoalSpawnCount": 0
+      }
+    ]
+  }
+}

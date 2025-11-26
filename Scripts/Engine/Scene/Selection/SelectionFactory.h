@@ -41,6 +41,7 @@ public:
 			case SelectionType::PartTime:
 				return std::make_shared<SelectionPartTime>();
 		}
+		return nullptr;
 	}
 };
 

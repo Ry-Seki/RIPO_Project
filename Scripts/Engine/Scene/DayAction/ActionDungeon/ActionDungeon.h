@@ -8,6 +8,7 @@
 
 #include "../DayActionBase.h"
 #include "../../../../Data/DungeonStageData.h"
+#include "../../../../Data/DungeonFloorData.h"
 #include "../../../Load/Model/LoadModel.h"
 #include "../../../Load/JSON/LoadJSON.h"
 #include <vector>
@@ -27,17 +28,6 @@ struct DungeonResource {
 	std::shared_ptr<LoadModel> eventTreasureResource;
 };
 
-/*
- *	@brief	各階層のフロアデータ
- */
-struct DungeonFloorData {
-	bool isFirst = true;
-	int stageHandle = -1;
-	JSON stageBornData;
-	std::vector<int> enemyHandleList;
-	std::vector<int> treasureHandleList;
-};
-
 // 前方宣言
 class GameObject;
 
@@ -46,10 +36,10 @@ class GameObject;
  */
 class ActionDungeon : public DayActionBase {
 private:
-	DungeonStageData stageData;														// ステージデータ
-	std::vector<DungeonFloorData> dungeonFloorList;									// ダンジョンフロアデータリスト
-	std::vector<std::vector<std::shared_ptr<GameObject>>> enemyFloorList;			// 階層ごとの敵のリスト
-	std::vector<std::vector<std::shared_ptr<GameObject>>> stageObjectFloorList;		// 階層ごとのステージオブジェクト
+	DungeonStageData stageData;												// ステージデータ
+	DungeonFloorData floorData;												// フロアデータ
+	std::vector<std::vector<std::shared_ptr<GameObject>>> enemyFloorList;	// 階層ごとの敵のリスト
+	GameObject* haveTreasure = nullptr;										// プレイヤーが所持しているお宝
 
 	int currentFloor = -1;								// 現在の階層
 	bool inputHandle = false;							// 入力フラグ
@@ -114,8 +104,8 @@ private:
 
 public:
 
-	void DebugInitialize(Engine& engine, DungeonStageData& setStageData);
-	void DebugSetup(Engine& engine, const DungeonResource& setResource);
+	void DebugInitialize(Engine& engine, DungeonStageData& setStageData, DungeonFloorData& setFloorData);
+	void DebugSetupData(Engine& engine, const DungeonResource& setResource);
 	void EndDungeon();
 private:
 	/*
