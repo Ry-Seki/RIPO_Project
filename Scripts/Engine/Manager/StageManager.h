@@ -146,7 +146,7 @@ public:
 	/*
 	 *	“G‚Ì‰Šú¶¬ˆÊ’u‚Ìæ“¾
 	 */
-	std::vector<Vector3> GetEnemySpwanPos()const;
+	std::vector<Vector3> GetEnemySpwanPos(std::vector<int>& id)const;
 
 	/*
 	 * ‚¨•ó‚Ì¶¬ˆÊ’u‚Ìæ“¾

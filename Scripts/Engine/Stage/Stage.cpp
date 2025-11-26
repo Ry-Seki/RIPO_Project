@@ -374,10 +374,10 @@ void Stage::ProcessFloorCollision(
 		return;
 	}
 
-	// 接地していたら
+	// 接地しているかどうかの判定を重力コンポーネントに渡す
 	if (isGround) {
 		// 対象がいなければいけない位置
-		float desiredY = MaxY - capsule->capsule.startPoint.y;
+		float desiredY = capsule->capsule.startPoint.y;
 
 		// 壁から押し出されたとき対策
 		// 床よりもしたに押し出された場合、押し戻す
