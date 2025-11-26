@@ -102,6 +102,7 @@ public:
 	 *  @param	rotation	生成角度
 	 *  @param	AABBMin		AABBの各軸における最小値
 	 *  @param	AABBMax		AABBの各軸における最大値
+	 *  @param	ID			階段固有のID
 	 */
 	void GenerateStair(
 		const std::string& name,

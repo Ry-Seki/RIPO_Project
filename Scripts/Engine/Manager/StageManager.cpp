@@ -62,8 +62,8 @@ void StageManager::ChangeStage() {
 /*
  * @brief 次のステージへ進む
  */
-void StageManager::NextStage() {
-	stageState.NextStage();
+void StageManager::NextStage(int setID) {
+	stageState.NextStage(setID);
 	ChangeStage();
 }
 

@@ -14,6 +14,8 @@
 #include "../Load/JSON/LoadJSON.h"
 #include "../VecMath.h"
 #include "../Stage/StageState.h"
+#include "../Component/Character/ArmActionComponent.h"
+#include "../Component/Character/CharacterUtility.h"
 #include <memory>
 #include <string>
 
@@ -70,7 +72,7 @@ public:
 	/*
 	 * @brief 次のステージへ進む
 	 */
-	void NextStage();
+	void NextStage(int setID);
 
 	/*
 	 * @brief 前のステージに戻る
@@ -151,6 +153,23 @@ public:
 	 *	jsonの変更
 	 */
 	void SetStageJSONData(JSON setJSON) { json = setJSON; }
+
+	/*
+	 *	プレイヤーが保持しているお宝を取得する関数を呼ぶ
+	 */
+	GameObject* GetLiftObject() {
+		// プレイヤーを取得
+		auto player = CharacterUtility::GetPlayer();
+		if (!player)return;
+
+		// お宝を取得
+		auto treasure = player->GetComponent<ArmActionComponent>()->GetLiftObject();
+		if (!treasure)return;
+
+		// 取得したお宝を返す
+		return treasure;
+
+	}
 
 };
 
