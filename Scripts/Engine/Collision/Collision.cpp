@@ -7,9 +7,9 @@
 
 /*
  *  AABB同士の交差判定
- *  @param AABB a   判定対象1
- *  @param AABB b   判定対象2
- *  @param Vector3 penetration 貫通ベクトル
+ *  @param[in]  AABB a   判定対象1
+ *  @param[in]  AABB b   判定対象2
+ *  @param[out] Vector3 penetration 貫通ベクトル
  */
 bool Intersect(const AABB& a, const AABB& b, Vector3& penetration) {
     // aの左側面がbの右側面より右にある場合は交差していない
@@ -69,29 +69,82 @@ bool Intersect(const AABB& a, const AABB& b, Vector3& penetration) {
 }
 
 /*
- *  カプセル同士の交差判定
- *  @param Capsule a   判定対象1
- *  @param Capsule b   判定対象2
- *  @param Vector3 penetration 貫通ベクトル
+ *  点から線分への最近接点
+ *  @param[in]  Vector3 startPos    最近接点を調べる線文の開始点
+ *  @param[in]  Vector3 endPos      最近接点を調べる線分の終了点
+ *  @param[in]  Vecror3 point       最近接点を調べる点
+ *  @param[out] float   minRatio    線分内の最近接点(0～1)
+ *  @return     Vector3             最近接点の座標
  */
-bool Intersect(const Capsule& a, const Capsule& b, Vector3& penetration) {
-    
+Vector3 PointToSegmentMinLength(const Vector3& startPos, const Vector3& endPos, const Vector3& point, float& minRatio) {
+    // 線分の方向ベクトル(非正規化)
+    Vector3 segDir = endPos - startPos;
+    // ベクトルの長さの2乗
+    float lengthSquare = Dot(segDir, segDir);
+    // 長さの2乗が限りなく0に近いならそれを線分ではなく点とする
+    if (lengthSquare <= EPSILON_SEGMENT) {
+        minRatio = 0.0f;
+        return startPos;
+    }
+    // 点が線分方向にどれだけ進んだか(点を線分に投影)
+    float projection = Dot(point - startPos, segDir);
+    // 線分上の割合に変換
+    float segmentRatio = projection / lengthSquare;
+    // 線分上に制限
+    segmentRatio = Clamp(segmentRatio, 0, 1);
 
-
-
-
-    return false;
+    minRatio = segmentRatio;
+    return Lerp(startPos, endPos, segmentRatio);
 }
 
 /*
- *  線分から線分への最近接点
+ *  計算結果が最適解の場合に値を更新する
+ *  @param[in]  const Vector3 pointA    線分aの最近接点候補(座標)
+ *  @param[in]  const Vector3 pointB    線分bの最近接点候補(座標)
+ *  @param[in]  float   aMinRatio       線分aの最近接点候補(0～1)
+ *  @param[in]  float   bMinRatio       線分bの最近接点候補(0～1)
+ *  @param[out] float   bestLengthSq    現状の最短距離の2乗
+ *  @param[out] Vector3 bestPointA      線分aの現状の最近接点(座標)
+ *  @param[out] Vector3 bestPointB      線分bの現状の最近接点(座標)
+ *  @param[out] float   aSegRatio       線分aの現状の最近接点(0～1)
+ *  @param[out] float   bSegRatio       線分bの現状の最近接点(0～1)
  */
-float SegmentBetweenMinLength(const Capsule& a, const Capsule& b) {
+void TryUpdateBest(
+    const Vector3& aPointCand,
+    const Vector3& bPointCand,
+    float aMinRatioCand,
+    float bMinRatioCand,
+    Vector3& bestPointA,
+    Vector3& bestPointB,
+    float& bestLengthSq,
+    float& aSegRatio,
+    float& bSegRatio) {
+    // 端点から線分への最近接点が現状の最近接点の長さより小さいなら値を更新
+    float lengthSquare = Dot(aPointCand - bPointCand, aPointCand - bPointCand);
+    if (lengthSquare < bestLengthSq) {
+        bestLengthSq = lengthSquare;
+        bestPointA = aPointCand;
+        bestPointB = bPointCand;
+        aSegRatio = aMinRatioCand;
+        bSegRatio = bMinRatioCand;
+    }
+}
+
+/*
+ *  線分から線分への最近接点 
+ *  @param[in] Segment a   判定対象1
+ *  @param[in] Segment b   判定対象2
+ */
+void SegmentBetweenMinLength(const Segment& a, const Segment& b, Vector3& aMinPoint, Vector3& bMinPoint, float& aMinRatio, float& bMinRatio) {
+    Vector3 aStart = a.startPoint;
+    Vector3 aEnd = a.endPoint;
+    Vector3 bStart = b.startPoint;
+    Vector3 bEnd = b.endPoint;
     // 各線分の方向ベクトル(非正規化)
-    Vector3 aDir = a.endPoint - a.startPoint;
-    Vector3 bDir = b.endPoint - b.startPoint;
+    Vector3 aDir = aEnd - aStart;
+    Vector3 bDir = bEnd - bStart;
     // 開始点の差ベクトル
-    Vector3 startDiff = a.startPoint - b.startPoint;
+    Vector3 startDiff = aStart - bStart;
 
     // 各ベクトルの長さの2乗
     float aLengthSq = Dot(aDir, aDir);
@@ -133,67 +186,59 @@ float SegmentBetweenMinLength(const Capsule& a, const Capsule& b) {
         bSegRatio = Clamp(bSegRatio, 0, 1);
     }
 
-    // 無制限解を評価
-    Vector3 bestPointA = Lerp(a.startPoint, a.endPoint, aSegRatio);
-    Vector3 bestPointB = Lerp(b.startPoint, b.endPoint, bSegRatio);
-
-    // 端点チェック
-    CheckEndpointClosest(a.startPoint, b.startPoint, b.endPoint, bestPointA, bestPointB, aSegRatio, bSegRatio);
-    CheckEndpointClosest(a.endPoint, b.startPoint, b.endPoint, bestPointA, bestPointB, aSegRatio, bSegRatio);
-    CheckEndpointClosest(b.startPoint, a.startPoint, a.endPoint, bestPointA, bestPointB, aSegRatio, bSegRatio);
-    CheckEndpointClosest(b.endPoint, a.startPoint, a.endPoint, bestPointA, bestPointB, aSegRatio, bSegRatio);
-
-    return 0;
-}
-
-void CheckEndpointClosest(
-    const Vector3& endpoint,
-    const Vector3& segStart,
-    const Vector3& segEnd,
-    Vector3& bestPointA,
-    Vector3& bestPointB,
-    float& aSegRatio,
-    float& bSegRatio) {
-    float t;
-    Vector3 closest = PointToSegmentMinLength(segStart, segEnd, endpoint, t);
-    Vector3 dist = endpoint - closest;
-    float dist2 = Dot(dist, dist);
-
-    Vector3 bestPoint = bestPointA - bestPointB;
-    if (dist2 < Dot(bestPoint, bestPoint)) {
-        bestPointA = endpoint;
-        bestPointB = closest;
-        aSegRatio = 0.0f;
-        bSegRatio = t;
-    }
-
+    // 無制約解で得られた最近接点を座標に変換
+    Vector3 bestPointA = Lerp(aStart, aEnd, aSegRatio);
+    Vector3 bestPointB = Lerp(bStart, bEnd, bSegRatio);
+    
+    // 各線分の端点から相手線分上への最近接点を求め、最小となるものを採用する
+  
+    // 最近接点間の長さの2乗
+    float bestLengthSq = Dot(bestPointA - bestPointB, bestPointA - bestPointB);
+    // 各線分上の最近接点候補
+    float aMinRatioCand;
+    float bMinRatioCand;
+    // 各線分の最近接点座標候補
+    Vector3 aPointCand;
+    Vector3 bPointCand;
+    
+    // aの開始点からbの線分
+    aMinRatioCand = 0.0f;
+    aPointCand = aStart;
+    bPointCand = PointToSegmentMinLength(bStart, bEnd, aStart, bMinRatioCand);
+    TryUpdateBest(aPointCand, bPointCand, aMinRatioCand, bMinRatioCand, bestPointA, bestPointB, bestLengthSq, aSegRatio, bSegRatio);
+    
+    // aの終了点からbの線分
+    aMinRatioCand = 1.0f;
+    aPointCand = aEnd;
+    bPointCand = PointToSegmentMinLength(bStart, bEnd, aEnd, bMinRatioCand);
+    TryUpdateBest(aPointCand, bPointCand, aMinRatioCand, bMinRatioCand, bestPointA, bestPointB, bestLengthSq, aSegRatio, bSegRatio);
+    
+    // bの開始点からaの線分
+    bMinRatioCand = 0.0f;
+    bPointCand = bStart;
+    aPointCand = PointToSegmentMinLength(aStart, aEnd, bStart, aMinRatioCand);
+    TryUpdateBest(aPointCand, bPointCand, aMinRatioCand, bMinRatioCand, bestPointA, bestPointB, bestLengthSq, aSegRatio, bSegRatio);
+    
+    // bの終了点からaの線分
+    bMinRatioCand = 1.0f;
+    bPointCand = bEnd;
+    aPointCand = PointToSegmentMinLength(aStart, aEnd, bEnd, aMinRatioCand);
+    TryUpdateBest(aPointCand, bPointCand, aMinRatioCand, bMinRatioCand, bestPointA, bestPointB, bestLengthSq, aSegRatio, bSegRatio);
+    
+    // 最終的な最近接点を返す
+    aMinPoint = bestPointA; 
+    bMinPoint = bestPointB; 
+    aMinRatio = aSegRatio; 
+    bMinRatio = bSegRatio;
 }
 
 /*
- *  点から線分への最近接点
- *  @param  Vector3 startPos    最近接点を調べる線文の開始点
- *  @param  Vector3 endPos      最近接点を調べる線分の終了点
- *  @param  Vecror3 point       最近接点を調べる点
- *  @param  float   minPoint    線分内の最近接点(0～1)
- *  @return Vector3             最近接点の座標
+ *  カプセル同士の交差判定
+ *  @param[in]  Capsule a   判定対象1
+ *  @param[in]  Capsule b   判定対象2
+ *  @param[out] Vector3 penetration 貫通ベクトル
  */
-Vector3 PointToSegmentMinLength(const Vector3& startPos, const Vector3& endPos, const Vector3& point, float& minPoint) {
-    // 線分の方向ベクトル(非正規化)
-    Vector3 segDir = endPos - startPos;
-    // ベクトルの長さの2乗
-    float lengthSquare = Dot(segDir, segDir);
-    // 長さの2乗が限りなく0に近いならそれを線分ではなく点とする
-    if (lengthSquare <= EPSILON_SEGMENT) {
-        minPoint = 0.0f;
-        return startPos;
-    }
-    // 点が線分方向にどれだけ進んだか(点を線分に投影)
-    float projection = Dot(point - startPos, segDir);
-    // 線分上の割合に変換
-    float segmentRatio = projection / lengthSquare;
-    // 線分上に制限
-    segmentRatio = Clamp(segmentRatio, 0, 1);
+bool Intersect(const Capsule& a, const Capsule& b, Vector3& penetration) {
 
-    minPoint = segmentRatio;
-    return Lerp(startPos, endPos, segmentRatio);
+    return false;
 }

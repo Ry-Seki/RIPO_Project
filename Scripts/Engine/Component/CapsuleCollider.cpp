@@ -30,8 +30,8 @@ void CapsuleCollider::OnCollision(
 void CapsuleCollider::DebugRender() {
 	auto owner = GetOwner();
 	// ワールド座標のカプセル
-	VECTOR capsuleStart = ToVECTOR(capsule.startPoint + owner->position);
-	VECTOR capsuleEnd = ToVECTOR(capsule.endPoint + owner->position);
+	VECTOR capsuleStart = ToVECTOR(capsule.segment.startPoint + owner->position);
+	VECTOR capsuleEnd = ToVECTOR(capsule.segment.endPoint + owner->position);
 
 	// hit判定によるカラー変更
 	unsigned int color;
