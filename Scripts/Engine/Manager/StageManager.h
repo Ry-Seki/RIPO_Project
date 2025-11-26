@@ -161,11 +161,11 @@ public:
 	GameObject* GetLiftObject() {
 		// ƒvƒŒƒCƒ„[‚ðŽæ“¾
 		auto player = GetPlayer();
-		if (!player)return;
+		if (!player) return;
 
 		// ‚¨•ó‚ðŽæ“¾
 		auto treasure = player->GetComponent<ArmActionComponent>()->GetLiftObject();
-		if (!treasure)return;
+		if (!treasure) return;
 
 		// Žæ“¾‚µ‚½‚¨•ó‚ð•Ô‚·
 		return treasure;

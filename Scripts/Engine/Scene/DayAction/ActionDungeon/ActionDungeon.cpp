@@ -180,6 +180,8 @@ void ActionDungeon::ChangeFloor() {
  *	@brief		現在の階層の片付け処理
  */
 void ActionDungeon::TeardownCurrentFloor() {
+	// 当たり判定の解除
+	SetUseObjectColliderFlag(false);
 	// 現在のフロアの敵のデータを設定
 	enemyFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
 
@@ -187,7 +189,10 @@ void ActionDungeon::TeardownCurrentFloor() {
 	SetUseObjectColliderFlag(false);
 	// RemoveAllCharacter();
 	StageManager::GetInstance().Execute();
-	RemoveAllStageObject();
+	// 現在残っている敵の片付け処理
+	TeardownEnemy();
+	// プレイヤーが持っているお宝以外を削除
+	TeardownStageObject();
 }
 /*
  *	@brief		次の階層の準備
@@ -259,6 +264,30 @@ void ActionDungeon::SetupNextFloor() {
 	// 当たり判定の有効化
 	SetUseObjectColliderFlag(true);
 }
+/*
+ *	@brief		敵の片付け処理
+ */
+void ActionDungeon::TeardownEnemy() {
+	std::vector<GameObjectList> deleteList;
+	deleteList[currentFloor] = enemyFloorList[currentFloor];
+	for (auto& enemy : deleteList[currentFloor]) {
+		if (!enemy) continue;
+		int deleteID = enemy->ID;
+		RemoveCharacter(deleteID);
+	}
+}
+/*
+ *	@brief		ステージオブジェクトの片付け処理
+ */
+void ActionDungeon::TeardownStageObject() {
+	GameObject* haveTreasure = StageManager::GetInstance().GetLiftObject();
+	for (auto& treasure : stageObjectFloorList[currentFloor]) {
+		if (!treasure) continue;
+		int treasureID = treasure->ID;
+		if (treasure->ID == haveTreasure->ID) continue;
+		RemoveStageObject(treasureID);
+	}
+}
 void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageData) {
 	isComplete = false;
 	stageData = setStageData;
@@ -292,7 +321,7 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	for (int i = 0; i < IDList.size(); i++) {
-		GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 }, IDList[i]);
+		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 }, IDList[i]);
 	}
 	GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
 	GenerateExit("exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
@@ -304,6 +333,8 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
 	currentFloor = 0;
 	enemyFloorList.resize(16);
 	enemyFloorList[currentFloor].resize(1);
+	stageObjectFloorList.resize(16);
+	stageObjectFloorList[currentFloor].resize(1);
 
 	// ステージの設定
 	// モデルハンドルの取得
@@ -358,6 +389,8 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
 	size_t treasureCount = treasureSpawnPos.size();
 	// ハンドルの要素数の取得
 	size_t treasureTypeCount = setResource.treasureResource.size();
+	// お宝の取得
+	stageObjectFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_TREASURE);
 	for (int i = 0; i < treasureCount; i++) {
 		// モデルハンドルの取得
 		int treasureHandle = setResource.treasureResource[i]->GetHandle();
@@ -373,6 +406,7 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
 		SetModelHandle(treasure, treasureHandle);
 	}
 	// 階段の設定
+
 	int stairCount = treasureCount;
 	auto stair = GetStageObject(stairCount);
 	if (!stair) return;

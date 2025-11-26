@@ -46,10 +46,10 @@ class GameObject;
  */
 class ActionDungeon : public DayActionBase {
 private:
-	DungeonStageData stageData;													// ステージデータ
-	std::vector<DungeonFloorData> dungeonFloorList;								// ダンジョンフロアデータリスト
-	std::vector<std::vector<std::shared_ptr<GameObject>>> enemyFloorList;		// 階層ごとの敵のリスト
-	std::vector<std::vector<std::shared_ptr<GameObject>>> treasureFloorList;	// 階層ごとのお宝のリスト
+	DungeonStageData stageData;														// ステージデータ
+	std::vector<DungeonFloorData> dungeonFloorList;									// ダンジョンフロアデータリスト
+	std::vector<std::vector<std::shared_ptr<GameObject>>> enemyFloorList;			// 階層ごとの敵のリスト
+	std::vector<std::vector<std::shared_ptr<GameObject>>> stageObjectFloorList;		// 階層ごとのステージオブジェクト
 
 	int currentFloor = -1;								// 現在の階層
 	bool inputHandle = false;							// 入力フラグ
@@ -103,6 +103,14 @@ private:
 	 *	@brief		次の階層の準備
 	 */
 	void SetupNextFloor();
+	/*
+	 *	@brief		敵の片付け処理
+	 */
+	void TeardownEnemy();
+	/*
+	 *	@brief		ステージオブジェクトの片付け処理
+	 */
+	void TeardownStageObject();
 
 public:
 
