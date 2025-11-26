@@ -12,6 +12,7 @@
 #include <string>
 #include <fstream>
 #include <filesystem>
+#include <iostream>
 
 class SaveDataManager : public Singleton<SaveDataManager> {
 	friend class Singleton<SaveDataManager>;
@@ -22,6 +23,7 @@ private:
 	std::string currentSlot;						// 現在のスロット
 
 	const std::string _SAVE_PATH = "SaveData/";		// ファイルパス
+	const std::string _AUTO_SAVE = "AutoSave";		// オートセーブ
 	const int _SAVE_VERSION = 1;					// 将来のバージョン管理用
 
 private:
@@ -52,7 +54,7 @@ public:
 			currentSlot = "Slot" + std::to_string(setSlot);
 		}
 		else {
-			currentSlot = "AutoSave";
+			currentSlot = _AUTO_SAVE;
 		}
 	}
 	/*
@@ -92,50 +94,64 @@ public:
 	 *  @param[in]	const std::string& slotName
 	 */
 	bool LoadSaveData(SaveData& saveData, const std::string& slotName){
-		std::string filePath = _SAVE_PATH + currentSlot + ".json";
+		std::string filePath = _SAVE_PATH + slotName + ".json";
 		if (!std::filesystem::exists(filePath)) return false;
 
 		std::ifstream in(filePath);
 		if (!in.is_open()) return false;
 
-		JSON json;
-		in >> json;
-		in.close();
+		try {
+			JSON json;
+			in >> json;
+			saveData = FromJSONToSaveData(json);
+		} catch(const std::exception& exception) {
+			std::cerr << "LoadSaveData exception: " << exception.what() << std::endl;
+			return false;
+		} catch (...) {
+			std::cerr << "[LoadSaveData] unknown exception occurred." << std::endl;
+			return false;
+		}
 
-		saveData = FromJSONToSaveData(json);
 		return true;
 	}
 	/*
-	 *	@brief		現在のセーブデータの書き込み
+	 *	@brief		セーブデータの書き込み
+	 *  @param[in]	const SaveData& saveData
+	 *  @param[in]	const std::string& slotName
 	 */
-	bool Save() {
-		std::string filePath = _SAVE_PATH + currentSlot + ".json";
+	bool Save(const SaveData& saveData, const std::string& slotName) {
+		std::string filePath = _SAVE_PATH + slotName + ".json";
 
-		std::ofstream out(filePath);
-		if (!out.is_open()) return false;
+		try {
+			std::ofstream out(filePath);
+			if (!out.is_open()) return false;
 
-		JSON json = FromSaveDataToJSON(currentSaveData);
-
-		out << json.dump(4);
-		out.close();
+			JSON json = FromSaveDataToJSON(saveData);
+			out << json.dump(4);
+			out.close();
+		}
+		catch (const std::exception& exception) {
+			std::cerr << "[Save] exception: " << exception.what() << std::endl;
+			return false;
+		}
+		catch (...) {
+			std::cerr << "[Save] unknown exception occurred." << std::endl;
+			return false;
+		}
 		return true;
 	}
-
+	/*
+	 *	@brief		現在セーブデータの書き込み
+	 */
+	bool SaveCurrentSlot() {
+		return Save(currentSaveData, currentSlot);
+	}
 	/*
 	 *	@brief		オートセーブ書き込み
 	 */
 	bool SaveAuto() {
-		std::string filePath = _SAVE_PATH + "AutoSave.json";
-
-		std::ofstream out(filePath);
-		if (!out.is_open()) return false;
-
 		autoSaveData = currentSaveData;
-
-		JSON json = FromSaveDataToJSON(autoSaveData);
-		out << json.dump(4);
-		out.close();
-		return true;
+		return Save(autoSaveData, _AUTO_SAVE);
 	}
 
 	/*
@@ -151,7 +167,7 @@ public:
 		currentSaveData.currentMoney = 0;
 		currentSaveData.dungeonFlags = 0;
 
-		Save();
+		Save(currentSaveData, currentSlot);
 	}
 
 public:
