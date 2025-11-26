@@ -7,6 +7,7 @@
 #define _STAIR_H_
 
 #include "StageObjectBase.h"
+#include "../../JSON.h"
 
 class Stair : public StageObjectBase {
 private:
