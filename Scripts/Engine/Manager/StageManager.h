@@ -20,6 +20,15 @@
 #include <string>
 
 using namespace CharacterUtility;
+
+/*
+ *	敵の出現位置の構造体
+ */
+struct EnemySpawnPoint {
+	int id;           // スポーンID
+	Vector3 pos;      // 座標
+};
+
 /*
  *	ステージ全体の管理
  */
@@ -34,6 +43,10 @@ private:
 	StageState stageState;				// ステージの状態保持
 
 	std::unique_ptr<StageBase> loadedStage;	// 読み込み済みステージデータ
+
+
+	EnemySpawnPoint enemySpawnID;
+
 
 private:
 	StageManager();						// コンストラクタ
@@ -171,6 +184,13 @@ public:
 		return treasure;
 
 	}
+
+	/*
+	 *	敵のスポーン位置のIDを取得
+	 *  @return	enemySpawnID
+	 */
+	int GetEnemySpawnID()const { return enemySpawnID.id; }
+
 
 };
 
