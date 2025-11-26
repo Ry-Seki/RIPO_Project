@@ -9,6 +9,7 @@
 #include "DayActionBase.h"
 #include "ActionFactory.h"
 #include "../../../Data/DungeonStageData.h"
+#include "../../../Data/DungeonFloorData.h"
 #include "../../Load/JSON/LoadJSON.h"
 
 #include <vector>
@@ -54,8 +55,8 @@ public:
     /*
      *  @brief      ダンジョンアクション開始
      */
-    void ActiveDungeon(Engine& engine, DungeonStageData setStageData);
-    void DebugActiveDungeon(Engine& engine, DungeonStageData setStageData);
+    void ActiveDungeon(Engine& engine, DungeonStageData setStageData, DungeonFloorData setFloorData);
+    void DebugActiveDungeon(Engine& engine, DungeonStageData setStageData, DungeonFloorData setFloorData);
     /*
      *  @brief      トレーニングアクション開始
      *  @param[in]  const int setActionNum    アクション番号

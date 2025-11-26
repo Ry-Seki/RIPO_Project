@@ -9,6 +9,7 @@
 #include "../SelectionBase.h"
 #include "../../../../Data/DungeonData.h"
 #include "../../../../Data/DungeonStageData.h"
+#include "../../../../Data/DungeonFloorData.h"
 #include "../../../Load/CSV/LoadCSV.h"
 #include "../../../Load/JSON/LoadJSON.h"
 #include "../../../Load/Dungeon/DungeonDataLoader.h"
@@ -25,11 +26,17 @@ class Engine;
  */
 class SelectionDungeon : public SelectionBase {
 private:
-	std::vector<DungeonData> dungeonDataList;											// ダンジョンデータ配列
-	std::shared_ptr<DungeonDataLoader> dungeonDataLoader;								// ダンジョン用読み込みクラス
-	bool inputHandle = false;															// 入力フラグ
+	std::vector<DungeonData> dungeonDataList;								// ダンジョンデータ配列
+	std::shared_ptr<DungeonDataLoader> dungeonDataLoader;					// ダンジョン用読み込みクラス
+	int dungeonID = -1;														// 選択されたダンジョンID
+	bool inputHandle = false;												// 入力フラグ
 	bool isLoad = false;
-	std::function<void(Engine& engine, DungeonStageData setStageData)> ActiveDungeon;	// 行動管理クラスのダンジョン開放関数
+
+	std::function<void(Engine& engine, 
+					   DungeonStageData setStageData, 
+					   DungeonFloorData setFloorData)> ActiveDungeon;		// 行動管理クラスのダンジョン開放関数
+
+	static constexpr const char* _DUNGEON_FLOOR_PATH = "Data/Dungeon/DungeonFloorData.json";
 
 public:
 	/*
@@ -63,17 +70,18 @@ private:
 	void StartStageDataLoad(Engine& engine, int dungeonID);
 	/*
 	 *	読み込んだステージデータをセットし、アクションマネージャーに渡す(コールバック)
-	 *  param[in]	std::shared_ptr<LoadJSON> setData	ロードしたJSONデータ
+	 *  param[in]	const std::vector<std::shared_ptr<LoadJSON>>& setDataList	ロードしたJSONデータリスト
 	 */
-	void SetStageData(Engine& engine, std::shared_ptr<LoadJSON> setData);
+	void SetStageData(Engine& engine, const std::vector<std::shared_ptr<LoadJSON>>& setDataList);
 
 public:
 	/*
 	 *	ActionManagerのダンジョン管理関数の設定
-	 *	@param[in]	std::function<void(Engine& engine, DungeonStageData setStageData)> 
+	 *	@param[in]	std::function<void(Engine& engine, DungeonStageData setStageData, DungeonFloorData setFloorData)> 
 	 *				setActiveDungeon	行動管理クラスのダンジョン解放関数
 	 */
-	inline void SetActiveDungeon(std::function<void(Engine& engine, DungeonStageData setStageData)> setActiveDungeon) {
+	inline void SetActiveDungeon(std::function<void(Engine& engine, 
+								 DungeonStageData setStageData, DungeonFloorData setFloorData)> setActiveDungeon) {
 		ActiveDungeon = setActiveDungeon;
 	}
 };

@@ -39,11 +39,12 @@ void SelectionDungeon::Update(Engine& engine, float deltaTime) {
 	if (!inputHandle && CheckHitKey(KEY_INPUT_0)) { 
 		// SEの再生
 		PlaySE("DebugSE");
+		dungeonID = 0;
 		inputHandle = true;
 		isComplete = true;
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
 		FadeManager::GetInstance().StartFade(fade, [&engine, this]() {
-			StartStageDataLoad(engine, 0); 
+			StartStageDataLoad(engine, dungeonID);
 		});
 	}
 	if (CheckHitKey(KEY_INPUT_0) == 0) inputHandle = false;
@@ -64,20 +65,28 @@ void SelectionDungeon::StartStageDataLoad(Engine& engine, int dungeonID) {
 	std::string filePath = dungeonData.dungeonPath;
 	if (filePath.empty()) return;
 	// ダンジョンステージデータの読み込み
-	auto dungeonStageLoader = load.LoadResource<LoadJSON>(filePath);
+	std::vector<std::shared_ptr<LoadJSON>> jsonList;
+	jsonList.push_back(load.LoadResource<LoadJSON>(filePath));
+	jsonList.push_back(load.LoadResource<LoadJSON>(_DUNGEON_FLOOR_PATH));
 	// コールバック登録
-	load.SetOnComplete([this, &engine, dungeonStageLoader]() {SetStageData(engine, dungeonStageLoader); });
+	load.SetOnComplete([this, &engine, jsonList]() {SetStageData(engine, jsonList); });
 }
 /*
- *	ロード済みデータのコールバック処理
+ *	@brief		読み込んだステージデータをセットし、アクションマネージャーに渡す(コールバック)
+ *  param[in]	const std::vector<std::shared_ptr<LoadJSON>>& setDataList	ロードしたJSONデータリスト
  */
-void SelectionDungeon::SetStageData(Engine& engine, std::shared_ptr<LoadJSON> setData) {
+void SelectionDungeon::SetStageData(Engine& engine, const std::vector<std::shared_ptr<LoadJSON>>& setDataList) {
 	// JSONデータの取得
-	JSON dungeonData = setData->GetData();
-	if (dungeonData.empty()) return;
+	JSON dungeonData = setDataList[0]->GetData();
+	JSON dungeonfloorData = setDataList[1]->GetData();
+	if (dungeonData.empty() || dungeonfloorData.empty()) return;
 	// ダンジョンステージデータの宣言
 	DungeonStageData stageData;
 	// JSONデータを再帰的に登録
-	stageData.LoadFromJson(dungeonData);
-	ActiveDungeon(engine, stageData);
+	stageData.LoadFromJSON(dungeonData);
+	// ダンジョンフロアデータの宣言
+	DungeonFloorData floorData;
+	// JSONデータの登録
+	floorData.LoadFromJSON(dungeonfloorData, 1);
+	ActiveDungeon(engine, stageData, floorData);
 }

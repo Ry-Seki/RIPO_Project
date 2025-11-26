@@ -102,6 +102,7 @@ public:
 	 *  @param	rotation	生成角度
 	 *  @param	AABBMin		AABBの各軸における最小値
 	 *  @param	AABBMax		AABBの各軸における最大値
+	 *  @param	ID			階段固有のID
 	 */
 	void GenerateStair(
 		const std::string& name,
@@ -126,7 +127,12 @@ public:
 	 *	ID指定のステージオブジェクト取得
 	 */
 	StageObjectBasePtr GetStageObject(int stageObjectID);
-
+	/*
+	 *	@brief		ステージオブジェクト配列の取得
+	 *	@return		GameObjectList&
+	 *  @author		Seki
+	 */
+	inline GameObjectList& GetCreateObjectList() { return createStageObjectList; }
 	/*
 	 *	脱出フラグの取得
 	 *  @retrn bool
@@ -149,10 +155,14 @@ public:
 	/*
 	 *	当たり判定フラグをすべて初期化する
 	 */
-	void ResetFlag()const {
+	void ResetFlag() {
 		if (!stair && !exitPoint) return;
 		stair->SetStairMove(false);
 		exitPoint->SetExitTrigger(false);
+	}
+	void ClearObject() {
+		stair = nullptr;
+		exitPoint = nullptr;
 	}
 
 public:

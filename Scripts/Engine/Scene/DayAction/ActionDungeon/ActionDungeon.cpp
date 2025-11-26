@@ -66,12 +66,8 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
 		EndDungeon();
 	}
 	else if (stairFrag) {
-		StageManager::GetInstance().NextStage();
-		//StageManager::GetInstance().GetPrevStageHandle();
-		//StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
-		//auto stair = StageObjectManager::GetInstance().GetStageObject(2);
-		//Vector3 stairSpawnPos = StageManager::GetInstance().GetStairsPos();
-		//stair->GetOwner()->position = stairSpawnPos;
+		//StageManager::GetInstance().NextStage(1);
+		ChangeFloor();
 	}
 	if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
 		// SEの再生
@@ -170,10 +166,169 @@ void ActionDungeon::Render() {
 void ActionDungeon::Teardown() {
 
 }
+/*
+ *	@brief		階層変更
+ */
+void ActionDungeon::ChangeFloor() {
+	// 当たり判定の解除
+	SetUseObjectColliderFlag(false);
+	// 現在の階層の片付け処理
+	TeardownCurrentFloor();
+	// 階層の変更
+	StageManager::GetInstance().NextStage(1);
+	// 次の階層の準備処理
+	SetupNextFloor();
+}
+/*
+ *	@brief		現在の階層の片付け処理
+ */
+void ActionDungeon::TeardownCurrentFloor() {
+	// 当たり判定の解除
+	SetUseObjectColliderFlag(false);
+	StageObjectManager::GetInstance().ClearObject();
+	// 現在のフロアの敵のデータを設定
+	enemyFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
+	// 現在残っている敵の片付け処理
+	TeardownEnemy();
+	// プレイヤーが持っているお宝以外を削除
+	TeardownStageObject();
+}
+/*
+ *	@brief		次の階層の準備
+ */
+void ActionDungeon::SetupNextFloor() {
+	FloorData spawnData;
+	auto treasureMap = stageData.GetCategory("Treasure");
+	std::string leafKey;
+	std::vector<int> IDList;
+	for (const auto& [key, path] : treasureMap) {
+		// 最後の階層だけを取得
+		if (stageData.TryGetLeafKey(key, leafKey)) {
+			IDList.push_back(std::stoi(leafKey));
+		}
+	}
+	// もろもろの生成処理
+	floorData.TryGetFloorData(1, spawnData);
+	// 敵の生成
+	for (int i = 0; i < spawnData.enemySpawnCount; i++) {
+		GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+	}
+	// お宝の生成処理
+	for (int i = 0; i < spawnData.treasureSpawnCount; i++) {
+		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 }, IDList[i]);
+	}
+	// 階段の生成処理
+	for (int i = 0; i < spawnData.stairSpawnCount; i++) {
+		GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
+	}
+	// 出口の生成処理
+	for (int i = 0; i < spawnData.goalSpawnCount; i++) {
+		GenerateExit("exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
+	}
+	// 敵の設定
 
-void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageData) {
+	// プレイヤーの再配置
+	auto player = GetUseObject(0);
+	if (!player) return;
+	// 位置の設定
+	player->position = GetStartPos();
+
+	// 敵の生成位置の取得
+	std::vector<int> enemySpawnIDList;
+	std::vector<Vector3> enemySpawnPos = GetEnemySpwanPos(enemySpawnIDList);
+	size_t enemyCount = enemySpawnPos.size();
+	// 敵の再配置
+	size_t enemyFloorCount = enemyFloorList[currentFloor].size();
+	for (int i = 0; i < enemyFloorCount; i++) {
+		if (enemyFloorList[currentFloor].size() <= 0) break;
+		auto enemyCharacter = enemyFloorList[currentFloor][i];
+		if (!enemyCharacter) continue;
+		// コンポーネントの取得
+		std::shared_ptr<EnemyComponent> component = enemyCharacter->GetComponent<EnemyComponent>();
+		if (!component) continue;
+		// 位置の設定
+		enemyCharacter->position = enemySpawnPos[i];
+		enemyCharacter->scale = { 4.5f, 4.5f, 4.5f };
+		// WayPointの設定
+		component->SetWayPoint(enemyCharacter->position);
+	}
+
+	// お宝の再配置
+	// お宝の生成位置の取得
+	std::vector<Vector3> treasureSpawnPos = GetTreasureSpwanPos();
+	// 生成位置の要素数の取得
+	size_t treasureCount = treasureSpawnPos.size();
+	for (int i = 0; i < treasureCount; i++) {
+		// 宝の取得
+		StageObjectBasePtr treasureObject = GetStageObject(i);
+		if (!treasureObject) continue;
+		// 宝オブジェクトの取得
+		GameObject* treasure = GetStageObjectOwner(treasureObject);
+		if (!treasure) continue;
+		// 位置の設定
+		if (treasure == haveTreasure) {
+			RemoveStageObject(i);
+			continue;
+		}
+		treasure->position = treasureSpawnPos[i];
+	}
+	int stairCount = treasureCount;
+	auto stair = GetStageObject(stairCount);
+	if (stair) {
+		Vector3 stairSpawnPos = GetStairsPos();
+		stair->GetOwner()->position = stairSpawnPos;
+	}
+
+	// 出口の設定
+	int exitCount = stairCount + 1;
+	auto exit = GetStageObject(exitCount);
+	if (exit) {
+		Vector3 exitSpawnPos = GetGoalPos();
+		exit->GetOwner()->position = exitSpawnPos;
+	}
+	// フェードイン
+	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop);
+	FadeManager::GetInstance().StartFade(fade);
+	// 当たり判定の有効化
+	SetUseObjectColliderFlag(true);
+}
+/*
+ *	@brief		敵の片付け処理
+ */
+void ActionDungeon::TeardownEnemy() {
+	std::vector<GameObjectList> deleteList;
+	deleteList.resize(enemyFloorList[currentFloor].size());
+	deleteList[currentFloor] = enemyFloorList[currentFloor];
+	for (auto& enemy : deleteList[currentFloor]) {
+		if (!enemy) continue;
+		int deleteID = enemy->ID;
+		RemoveCharacter(deleteID);
+	}
+}
+/*
+ *	@brief		ステージオブジェクトの片付け処理
+ */
+void ActionDungeon::TeardownStageObject() {
+	haveTreasure = StageManager::GetInstance().GetLiftObject();
+	GameObjectList stageObjectList = GetCreateObjectList();
+	// プレイヤーが所持しているお宝以外を削除する
+	for (int i = stageObjectList.size() - 1; i >= 0; i--) {
+		GameObject* stageObject = stageObjectList[i].get();
+		if (!stageObject) continue;
+
+		int ID = stageObject->ID;
+		if (haveTreasure) {
+			if (ID == haveTreasure->ID) continue;
+		}
+		else {
+			RemoveStageObject(i);
+		}
+	}
+}
+void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageData, DungeonFloorData& setFloorData) {
 	isComplete = false;
 	stageData = setStageData;
+	floorData = setFloorData;
 	LoadManager& load = LoadManager::GetInstance();
 	DungeonResource dungeonResource;
 	auto treasureMap = stageData.GetCategory("Treasure");
@@ -195,13 +350,13 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 		StageObjectManager::GetInstance().Initialize(engine);
 		BulletManager::GetInstance().Initialize(engine);
 	}
-	GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, { 0, 100, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100,  300,  100 });
+	GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100,  300,  100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
-	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
-	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 });
+	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+	GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	for (int i = 0; i < IDList.size(); i++) {
-		GenerateTreasure("treasure", { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 }, IDList[i]);
+		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 }, IDList[i]);
 	}
 	GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
 	GenerateExit("exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
@@ -209,15 +364,19 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 	LoadResourcesFromStageData(engine, stageData, dungeonResource);
 }
 
-void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResource) {
+void ActionDungeon::DebugSetupData(Engine& engine, const DungeonResource& setResource) {
+	currentFloor = 0;
+	enemyFloorList.resize(16);
+	enemyFloorList[currentFloor].resize(1);
+
 	// ステージの設定
 	// モデルハンドルの取得
 	int stageHandleCount = setResource.stageResource.size();
 	std::vector<int> stageHandleList(stageHandleCount);
 	for (int i = 0; i < stageHandleCount; i++) {
 		stageHandleList[i] = setResource.stageResource[i]->GetHandle();
-		LoadStage(stageHandleList);
 	}
+	LoadStage(stageHandleList);
 	// ステージボーンデータの設定
 	SetStageJSONData(setResource.stageBoneResource[0]->GetData());
 
@@ -234,15 +393,16 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
 
 	// 敵の設定
 	// 敵の生成位置の取得
-	std::vector<Vector3> enemySpawnPos = GetEnemySpwanPos();
+	std::vector<int> enemySpawnIDList;
+	std::vector<Vector3> enemySpawnPos = GetEnemySpwanPos(enemySpawnIDList);
 	size_t enemyCount = enemySpawnPos.size();
 	// モデルハンドルの取得
 	int enemyHandle = setResource.enemyResource[0]->GetHandle();
 	// 敵の取得
-	std::vector<GameObjectPtr> enemyList = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
+	enemyFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
 	for (int i = 0; i < enemyCount; i++) {
-		if (enemyList.size() <= 0) break;
-		auto enemyCharacter = enemyList[i];
+		if (enemyFloorList[currentFloor].size() <= 0) break;
+		auto enemyCharacter = enemyFloorList[currentFloor][i];
 		if (!enemyCharacter) continue;
 		// 位置の設定
 		enemyCharacter->position = enemySpawnPos[i];
@@ -263,6 +423,7 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
 	size_t treasureCount = treasureSpawnPos.size();
 	// ハンドルの要素数の取得
 	size_t treasureTypeCount = setResource.treasureResource.size();
+	// お宝の取得
 	for (int i = 0; i < treasureCount; i++) {
 		// モデルハンドルの取得
 		int treasureHandle = setResource.treasureResource[i]->GetHandle();
@@ -345,8 +506,9 @@ void ActionDungeon::LoadResourcesFromStageData(Engine& engine, DungeonStageData&
 	std::string eventTreasurePath;
 	if (stageData.TryGet("Treasure.EventTreasureData", eventTreasurePath) && !eventTreasurePath.empty()) {
 		dungeonResource.eventTreasureResource = load.LoadResource<LoadModel>(eventTreasurePath);
-	}    // ロード完了時のコールバック登録
+	}
+	// ロード完了時のコールバック登録
 	load.SetOnComplete([this, &engine, dungeonResource]() {
-		DebugSetup(engine, dungeonResource);
+		DebugSetupData(engine, dungeonResource);
 	});
 }

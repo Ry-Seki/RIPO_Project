@@ -52,6 +52,12 @@ public:
 	 */
 	bool GetGroundingFrag()const { return hitGroundingFrag; }
 
+	/*
+	 * —Ž‰º‘¬“x‚ÌŽæ“¾
+	 * @author oorui
+	 */
+	float GetFallSpeed()const { return fallSpeed; }
+
 };
 
 #endif // !_GRAVITYCOMPONENT_H_

@@ -199,6 +199,7 @@
     <ClCompile Include="Scripts\Engine\Scene\Scene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\MiniGameSokoban.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\SelectionPartTime.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\Shop\SelectionShop.cpp" />
@@ -220,9 +221,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Data\DungeonData.h" />
+    <ClInclude Include="Scripts\Data\DungeonFloorData.h" />
     <ClInclude Include="Scripts\Data\DungeonStageData.h" />
     <ClInclude Include="Scripts\Data\ItemCatalogData.h" />
     <ClInclude Include="Scripts\Data\PlayerStatusData.h" />
+    <ClInclude Include="Scripts\Data\SaveData.h" />
     <ClInclude Include="Scripts\Data\TreasureDataList.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioSource.h" />
@@ -288,6 +291,7 @@
     <ClInclude Include="Scripts\Engine\Menu\MenuBase.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h" />
     <ClInclude Include="Scripts\Engine\RayCast.h" />
+    <ClInclude Include="Scripts\Engine\Save\SaveDataManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarSystem.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\DateBase.h" />
@@ -310,6 +314,7 @@
     <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\MiniGameBase.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\MiniGameSokoban.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapCreater.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\SelectionPartTime.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionBase.h" />
     <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionFactory.h" />

@@ -41,6 +41,7 @@ public:
             case ActionType::PartTime: 
                 return std::make_shared<ActionPartTime>();
         }
+        return nullptr;
     }
 };
 

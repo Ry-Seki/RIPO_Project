@@ -5,25 +5,29 @@
 #include "EnemyComponent.h"
 #include "../../Vision.h"
 #include "../../Manager/CameraManager.h"
-
-/*
- *	コンストラクタ
- */
+#include "../../Manager/StageManager.h"
+ /*
+  *	コンストラクタ
+  */
 EnemyComponent::EnemyComponent()
-	: moveSpeed(700.0f)
-	, wayPoint(0.0f, 0.0f, 0.0f)
+	: wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
-	, wayPointDistance(300.0f)
+	, wayPointDistance(1000.0f)
 	, enemy(nullptr)
 	, chaseTargetChangeFrag(false)
+	, closePlayer(false)
 	, turnDelay(0)
 	, TOP_VALUE(5000)
-{
+	, RANDOM_RANGE(100)
+	, ROTATE_SPEED(3.0f)
+	, MOVE_SPEED(700.0f)
+	, DIFFERENCE_PLAYER(700) {
 }
 
 void EnemyComponent::Start() {
 	enemy = GetOwner();
 	if (enemy == nullptr) return;
+	player = CameraManager::GetInstance().GetTarget();
 	wayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z + wayPointDistance);
 	nextWayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z - wayPointDistance);
 }
@@ -33,11 +37,14 @@ void EnemyComponent::Start() {
  *  param[in]	float	deltaTime
  */
 void EnemyComponent::Update(float deltaTime) {
+	// 移動量を初期化
+	moveVec = Vector3::zero;
+
 	// モデルが反対なので逆にする
-	enemy->rotation.y += 180 * Deg2Rad;
 	// 移動処理
 	EnemyMove(deltaTime);
-	turnDelay += GetRand(100);
+	// ステージとの当たり判定
+	StageManager::GetInstance().StageCollider(enemy, moveVec);
 }
 
 /*
@@ -45,7 +52,6 @@ void EnemyComponent::Update(float deltaTime) {
  *  param[in]	float			deltaTime
  */
 void EnemyComponent::EnemyMove(float deltaTime) {
-	GameObjectPtr player = CameraManager::GetInstance().GetTarget();
 	if (Vision(enemy->position, enemy->rotation, player->position, 30, 2000)) {
 		ChaseWayPoint(player->position, true, deltaTime);
 	}
@@ -70,13 +76,54 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 	// 目標と自身のpositionの差
 	const float differenceTarget = 100.0f;
 	// 目標の方向
-	Vector3 direction = wayPoint - enemy->position;
-	Vector3 normDirection = Normalized(direction);
-	// 目標の方向を向く
-	enemy->rotation.y = atan2(normDirection.x, normDirection.z);
-	enemy->rotation.y += 180 * Deg2Rad;
+	Vector3 direction = Direction(enemy->position, wayPoint);
+	float goalAngle = atan2(direction.x, direction.z);
+	//goalAngle += 180 * Deg2Rad;
+	// 正規化した角度の移動量
+	float angleDirection = fmod((goalAngle - enemy->rotation.y) * Rad2Deg, 360);
+	angleDirection = angleDirection * Deg2Rad;
+
+	// 正規化したエネミーの角度
+	float enemyDirection = fmod(enemy->rotation.y * Rad2Deg, 360);
+	enemyDirection = enemyDirection * Deg2Rad;
+
+	Vector3 enemyForward = ForwardDir(enemy->rotation);
+
+	// -の状態
+	if (angleDirection < 0) {
+		if (enemyDirection > goalAngle) {
+			enemy->rotation.y -= ROTATE_SPEED * deltaTime;
+		}
+		else {
+			// 目標の方向に補正
+			enemy->rotation.y = goalAngle;
+		}
+	}
+	// +の状態
+	else if (angleDirection > 0) {
+		if (enemyDirection < goalAngle) {
+			enemy->rotation.y += ROTATE_SPEED * deltaTime;
+		}
+		else {
+			enemy->rotation.y = goalAngle;
+		}
+	}
+
+	auto distance = Distance(wayPoint, enemy->position);
+	// プレイヤーの手前で止まる
+	if (wayPoint == player->position) {
+		if (distance > DIFFERENCE_PLAYER) {
+			closePlayer = true;
+			enemy->position.x += direction.x * MOVE_SPEED * deltaTime;
+			enemy->position.z += direction.z * MOVE_SPEED * deltaTime;
+		}
+		else {
+			closePlayer = false;
+		}
+	}
 	// 目標地点についたらターゲットを変える
-	if (direction.Magnitude() < differenceTarget) {
+	else if (distance < differenceTarget) {
+		turnDelay += GetRand(RANDOM_RANGE);
 		// ランダムに待つ
 		if (turnDelay > TOP_VALUE) {
 			chaseTargetChangeFrag = targetChange;
@@ -84,10 +131,13 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 		}
 	}
 	else {
-	// 目標の方向に進む
-		enemy->position.x += normDirection.x * moveSpeed * deltaTime;
-		enemy->position.z += normDirection.z * moveSpeed * deltaTime;
+		// 目標の方向に進む
+		enemy->position.x += direction.x * MOVE_SPEED * deltaTime;
+		enemy->position.z += direction.z * MOVE_SPEED * deltaTime;
+
+		float moveX = enemy->position.x;
+		float moveY = enemy->position.y;
+		// 移動量を更新
+		moveVec = { moveX,0.0f,moveY };
 	}
-
-
 }

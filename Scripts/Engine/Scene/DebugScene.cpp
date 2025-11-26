@@ -35,12 +35,12 @@ void DebugScene::Initialize(Engine& engine) {
 	auto stageBoneData = load.LoadResource<LoadJSON>("Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json");
 	auto treasureModel1 = load.LoadResource<LoadModel>("Res/Model/Treasure/Treasure01.mv1");
 	auto treasureModel2 = load.LoadResource<LoadModel>("Res/Model/Treasure/Treasure02.mv1");
-	auto player = CharacterManager::GetInstance().GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, { 0, 100, 0 }, { 0,  200,  0 }, 100);
+	auto player = CharacterManager::GetInstance().GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, { 0, 100, 0 }, { 0,  200,  0 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	CameraManager::GetInstance().CreateCamera("camera", V_ZERO, V_ZERO);
 	std::vector<GameObjectPtr> enemy(3);
-	enemy[0] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 });
-	enemy[1] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 });
-	enemy[2] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 });
+	enemy[0] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+	enemy[1] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+	enemy[2] = CharacterManager::GetInstance().GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	StageObjectManager::GetInstance().GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO, { -100,0,-100 }, { 100,300,100 }, 0);
 	StageObjectManager::GetInstance().GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO, { -100,0,-100 }, { 100,300,100 }, 1);
 	std::vector<StageObjectBasePtr> treasure(2);
@@ -64,8 +64,8 @@ void DebugScene::Initialize(Engine& engine) {
 			int modelHandle = playerModel->GetHandle();
 			CharacterManager::GetInstance().SetModelHandle(player.get(), modelHandle);
 			player->position = StageManager::GetInstance().GetStartPos();
-
-			std::vector<Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpwanPos();
+			std::vector<int> enemySpawnIDList;
+			std::vector<Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpwanPos(enemySpawnIDList);
 			int enemyModelHandle = enemyModel->GetHandle();
 			size_t enemySpawnCount = enemySpawnPos.size();
 			for (int i = 0; i < enemy.size(); i++) {
@@ -107,7 +107,7 @@ void DebugScene::Update(Engine& engine, float deltaTime) {
 
 	bool stairFrag = StageObjectManager::GetInstance().GetStairMove();
 	if (stairFrag) {
-		StageManager::GetInstance().NextStage();
+		StageManager::GetInstance().NextStage(1);
 	}
 
 }

@@ -8,6 +8,7 @@
 
 #include "../DayActionBase.h"
 #include "../../../../Data/DungeonStageData.h"
+#include "../../../../Data/DungeonFloorData.h"
 #include "../../../Load/Model/LoadModel.h"
 #include "../../../Load/JSON/LoadJSON.h"
 #include <vector>
@@ -22,23 +23,31 @@ struct DungeonResource {
 	std::vector<std::shared_ptr<LoadJSON>> stageBoneResource;
 	std::shared_ptr<LoadModel> playerResource;
 	std::vector<std::shared_ptr<LoadModel>> enemyResource;
-	std::shared_ptr<LoadModel> bulletResource;
 	std::shared_ptr<LoadModel> bossResource;
 	std::vector<std::shared_ptr<LoadModel>> treasureResource;
 	std::shared_ptr<LoadModel> eventTreasureResource;
 };
 
+// 前方宣言
+class GameObject;
+
 /*
- *	ダンジョンアクションクラス
+ *	@brief	ダンジョンアクションクラス
  */
 class ActionDungeon : public DayActionBase {
 private:
-	DungeonStageData stageData;
+	DungeonStageData stageData;												// ステージデータ
+	DungeonFloorData floorData;												// フロアデータ
+	std::vector<std::vector<std::shared_ptr<GameObject>>> enemyFloorList;	// 階層ごとの敵のリスト
+	GameObject* haveTreasure = nullptr;										// プレイヤーが所持しているお宝
 
-	bool inputHandle = false;
+	int currentFloor = -1;								// 現在の階層
+	bool inputHandle = false;							// 入力フラグ
+	bool isChangeFloor = false;							// 階層変更フラグ
 
 private:
 	static bool isFirst;
+
 public:
 	/*
 	 *	コンストラクタ
@@ -71,19 +80,43 @@ public:
 	 */
 	void Teardown() override;
 
-	void DebugInitialize(Engine& engine, DungeonStageData& setStageData);
-	void DebugSetup(Engine& engine, const DungeonResource& setResource);
+private:
+	/*
+	 *	@brief		階層の変更処理
+	 */
+	void ChangeFloor();
+	/*
+	 *	@brief		現在の階層の片付け処理
+	 */
+	void TeardownCurrentFloor();
+	/*
+	 *	@brief		次の階層の準備
+	 */
+	void SetupNextFloor();
+	/*
+	 *	@brief		敵の片付け処理
+	 */
+	void TeardownEnemy();
+	/*
+	 *	@brief		ステージオブジェクトの片付け処理
+	 */
+	void TeardownStageObject();
+
+public:
+
+	void DebugInitialize(Engine& engine, DungeonStageData& setStageData, DungeonFloorData& setFloorData);
+	void DebugSetupData(Engine& engine, const DungeonResource& setResource);
 	void EndDungeon();
 private:
 	/*
-	 *	ステージデータからロードリストに追加
+	 *	@brief		ステージデータからロードリストに追加
 	 *	@param[in]	DungeonStageData& stageData			ステージデータ
 	 *	@param[in]	DungeonResource&  dungeonResource	セットするリソース
 	 */
 	void LoadResourcesFromStageData(Engine& engine, DungeonStageData& stageData, DungeonResource& dungeonResource);
 public:
 	/*
-	 *	ダンジョンステージデータの設定
+	 *	@brief		ダンジョンステージデータの設定
 	 */
 	inline void SetDungeonStageData(DungeonStageData setData) { stageData = setData; }
 };

@@ -45,10 +45,11 @@ namespace StageUtility {
 	}
 	/*
 	 *	“G‚Ì‰Šú¶¬ˆÊ’u‚Ìæ“¾
+	 *  @param[out]	std::vector<int>& IDList
 	 *	@return		std::vector<Vector3>
 	 */
-	inline std::vector<Vector3> GetEnemySpwanPos() {
-		return StageManager::GetInstance().GetEnemySpwanPos(); 
+	inline std::vector<Vector3> GetEnemySpwanPos(std::vector<int>& IDList) {
+		return StageManager::GetInstance().GetEnemySpwanPos(IDList); 
 	}
 	/*
 	 *  ‚¨•ó‚Ì¶¬ˆÊ’u‚Ìæ“¾
