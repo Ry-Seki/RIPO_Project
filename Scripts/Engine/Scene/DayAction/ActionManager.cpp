@@ -36,7 +36,7 @@ void ActionManager::Render() {
 /*
  *	ダンジョンアクション開始
  */
-void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData) {
+void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData, DungeonFloorData setFloorData) {
 	currentAction = ActionFactory::CreateAction(ActionType::Dungeon);
 	if (!currentAction) return;
 
@@ -51,14 +51,14 @@ void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData)
 /*
  *	デバッグ用ダンジョンアクション開始
  */
-void ActionManager::DebugActiveDungeon(Engine& engine, DungeonStageData setStageData) {
+void ActionManager::DebugActiveDungeon(Engine& engine, DungeonStageData setStageData, DungeonFloorData setFloorData) {
 	currentAction = ActionFactory::CreateAction(ActionType::Dungeon);
 	if (!currentAction) return;
 
 	auto dungeonAction = std::dynamic_pointer_cast<ActionDungeon>(currentAction);
 	if (!dungeonAction) return;
 
-	dungeonAction->DebugInitialize(engine, setStageData);
+	dungeonAction->DebugInitialize(engine, setStageData, setFloorData);
 	currentAction = dungeonAction;
 	isActive = true;
 }

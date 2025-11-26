@@ -60,7 +60,8 @@ namespace StageObjectUtility {
 		const Vector3& position,
 		const Vector3& rotation,
 		const Vector3& AABBMin,
-		const Vector3& AABBMax) {
+		const Vector3& AABBMax
+	) {
 		StageObjectManager::GetInstance().GenerateStair(name, position, rotation, AABBMin, AABBMax);
 	}
 	/*
@@ -85,7 +86,13 @@ namespace StageObjectUtility {
 	inline void RemoveAllStageObject() {
 		StageObjectManager::GetInstance().RemoveAllStageObject();
 	}
-
+	/*
+	 *	@brief		ステージオブジェクト配列の取得
+	 *	@return		GameObjectList&
+	 */
+	inline GameObjectList& GetCreateObjectList() {
+		return StageObjectManager::GetInstance().GetCreateObjectList();
+	}
 	/*
 	 *	ID指定のステージオブジェクト取得
 	 *  @return		StageObjectBasePtr

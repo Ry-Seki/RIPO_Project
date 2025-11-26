@@ -20,19 +20,19 @@
 class DungeonStageData {
 private:
     std::unordered_map<std::string, std::string> dungeonDataList;        // ステージデータのマップ
-    
+
 public:
     /*
-     *  コンストラクタ
+     *  @brief  コンストラクタ
      */
     DungeonStageData() = default;
 
 public:
     /*
-     *  JSONデータの読み込み、mapに自動で登録する
+     *  @brief      JSONデータの読み込み、mapに自動で登録する
      *  @param[in]  const JSON& setJSON     読み込むJSONデータ
      */
-    void LoadFromJson(const JSON& setJSON) {
+    void LoadFromJSON(const JSON& setJSON) {
         // 自動登録クラス
         AutoJSONRegistry registry;
         // データの登録

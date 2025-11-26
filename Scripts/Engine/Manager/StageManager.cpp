@@ -62,8 +62,8 @@ void StageManager::ChangeStage() {
 /*
  * @brief 次のステージへ進む
  */
-void StageManager::NextStage() {
-	stageState.NextStage();
+void StageManager::NextStage(int setID) {
+	stageState.NextStage(setID);
 	ChangeStage();
 }
 
@@ -182,7 +182,7 @@ Vector3 StageManager::GetGoalPos() const {
 /*
  *	敵の初期生成位置の取得
  */
-std::vector<Vector3> StageManager::GetEnemySpwanPos() const {
+std::vector<Vector3> StageManager::GetEnemySpwanPos(std::vector<int>& id) const {
 	std::vector<Vector3> result;
 
 	if (!loadedStage)return result;
@@ -203,13 +203,25 @@ std::vector<Vector3> StageManager::GetEnemySpwanPos() const {
 	auto spawnArray = json[GameConst::_CREATE_POSNAME_ENEMY]["SpawnPos"];
 
 	// jsonファイルのテキストを配列で取得
-	for (const auto& spawnName : spawnArray) {
-		int frameIndex = MV1SearchFrame(modelHandle, spawnName.get<std::string>().c_str());
+	for (int i = 0; i < spawnArray.size(); i++) {
+		// 敵スポーンデータを格納する構造体
+		EnemySpawnPoint eSpawnPos;
+		eSpawnPos.id = i;
+
+		// フレーム名を取得
+		std::string frameName = spawnArray[i].get<std::string>();
+
+		// フレームの番号を取得
+		int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
 		if (frameIndex == -1) continue;
 
+		// フレームの位置を取得
 		VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
+		eSpawnPos.pos = FromVECTOR(framePos);
 		result.push_back(FromVECTOR(framePos));
+		id.push_back(eSpawnPos.id);
 	}
+
 
 	return result;
 

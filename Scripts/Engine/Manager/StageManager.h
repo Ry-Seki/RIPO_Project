@@ -14,12 +14,24 @@
 #include "../Load/JSON/LoadJSON.h"
 #include "../VecMath.h"
 #include "../Stage/StageState.h"
+#include "../Component/Character/ArmActionComponent.h"
+#include "../Component/Character/CharacterUtility.h"
 #include <memory>
 #include <string>
 
- /*
-  *	ステージ全体の管理
-  */
+using namespace CharacterUtility;
+
+/*
+ *	敵の出現位置の構造体
+ */
+struct EnemySpawnPoint {
+	int id;           // スポーンID
+	Vector3 pos;      // 座標
+};
+
+/*
+ *	ステージ全体の管理
+ */
 class StageManager : public Singleton<StageManager> {
 	// フレンド宣言
 	friend class Singleton<StageManager>;
@@ -31,6 +43,10 @@ private:
 	StageState stageState;				// ステージの状態保持
 
 	std::unique_ptr<StageBase> loadedStage;	// 読み込み済みステージデータ
+
+
+	EnemySpawnPoint enemySpawnID;
+
 
 private:
 	StageManager();						// コンストラクタ
@@ -70,7 +86,7 @@ public:
 	/*
 	 * @brief 次のステージへ進む
 	 */
-	void NextStage();
+	void NextStage(int setID);
 
 	/*
 	 * @brief 前のステージに戻る
@@ -130,7 +146,7 @@ public:
 	/*
 	 *	敵の初期生成位置の取得
 	 */
-	std::vector<Vector3> GetEnemySpwanPos()const;
+	std::vector<Vector3> GetEnemySpwanPos(std::vector<int>& id)const;
 
 	/*
 	 * お宝の生成位置の取得
@@ -151,6 +167,30 @@ public:
 	 *	jsonの変更
 	 */
 	void SetStageJSONData(JSON setJSON) { json = setJSON; }
+
+	/*
+	 *	プレイヤーが保持しているお宝を取得する関数を呼ぶ
+	 */
+	GameObject* GetLiftObject() {
+		// プレイヤーを取得
+		auto player = GetPlayer();
+		if (!player)return nullptr;
+
+		// お宝を取得
+		auto treasure = player->GetComponent<ArmActionComponent>()->GetLiftObject();
+		if (!treasure)return nullptr;
+
+		// 取得したお宝を返す
+		return treasure;
+
+	}
+
+	/*
+	 *	敵のスポーン位置のIDを取得
+	 *  @return	enemySpawnID
+	 */
+	int GetEnemySpawnID()const { return enemySpawnID.id; }
+
 
 };
 

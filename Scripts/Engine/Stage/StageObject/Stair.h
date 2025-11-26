@@ -7,10 +7,13 @@
 #define _STAIR_H_
 
 #include "StageObjectBase.h"
+#include "../../JSON.h"
 
 class Stair : public StageObjectBase {
 private:
 	bool isStairMoved = false;		// ŠK‘wˆÚ“®ƒtƒ‰ƒO
+	int	stairID = -1;				// ŠK’i‚ÌID
+	int nextID = -1;				// Ÿ‚ÌŠK‘w‚ÌID
 
 public:
 	Stair() :isStairMoved(false) {};		// ƒRƒ“ƒXƒgƒ‰ƒNƒ^
@@ -43,6 +46,29 @@ public:
 	 */
 	void SetStairMove(bool setValue) { isStairMoved = setValue; }
 
+public:
+
+	/*
+	 *	ŠK’i‚ÌID‚Ìæ“¾
+	 */
+	inline int GetStairID()const { return stairID; };
+
+	/*
+	 *	ŠK’i‚ÌID‚Ì•ÏX
+	 *  @param	setValue	ID”Ô
+	 */
+	inline void SetStairID(int setValue) { stairID = setValue; }
+
+	/*
+	 *	Ÿ‚ÌŠK‘wID‚Ìæ“¾
+	 */
+	inline int GetNextID()const { return nextID; }
+
+	/*
+	 *	Ÿ‚ÌŠK‘wID‚Ì•ÏX
+	 *  @oaram	setValue	ID”Ô
+	 */
+	inline void SetNextID(int setValue) { nextID = setValue; }
 
 };
 #endif // !_STAIR_H_
