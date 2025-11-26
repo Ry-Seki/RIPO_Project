@@ -166,7 +166,7 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(GameObject* othe
 	// 移動方向ベクトルを正規化
 	Vector3 forward = Normalized(MoveVec);
 
-	float forwardLength = 2000.0f;		 // 前方判定距離
+	float forwardLength = 5000.0f;		 // 前方判定距離
 	float backwardLength = 500.0f;		 // 後退判定距離
 	float boxHalfSize = radius + 500.0f;  // 左右/上下余裕
 
