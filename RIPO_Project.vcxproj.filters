@@ -190,6 +190,9 @@
     <Filter Include="ソース ファイル\Engine\Scene\Selection\PartTime\Sokoban">
       <UniqueIdentifier>{00b75555-559c-4807-b810-f8e1f49e23cc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Data\Save">
+      <UniqueIdentifier>{e75571c1-2bf6-45db-a66c-2429cc31db01}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -761,8 +764,11 @@
     <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapManager.h">
       <Filter>ヘッダー ファイル\Engine\Scene\Selection\PartTime\MiniGame\Sokoban</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\EnemyAttack.h">
+    <ClInclude Include="Scripts\Engine\Save\SaveDataManager.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\SaveData.h">
+      <Filter>ヘッダー ファイル\Data\Save</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
