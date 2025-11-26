@@ -166,7 +166,7 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(GameObject* othe
 	// 移動方向ベクトルを正規化
 	Vector3 forward = Normalized(MoveVec);
 
-	float forwardLength = 2000.0f;		 // 前方判定距離
+	float forwardLength = 5000.0f;		 // 前方判定距離
 	float backwardLength = 500.0f;		 // 後退判定距離
 	float boxHalfSize = radius + 500.0f;  // 左右/上下余裕
 
@@ -374,10 +374,10 @@ void Stage::ProcessFloorCollision(
 		return;
 	}
 
-	// 接地していたら
+	// 接地しているかどうかの判定を重力コンポーネントに渡す
 	if (isGround) {
 		// 対象がいなければいけない位置
-		float desiredY = MaxY - capsule->capsule.startPoint.y;
+		float desiredY = capsule->capsule.startPoint.y;
 
 		// 壁から押し出されたとき対策
 		// 床よりもしたに押し出された場合、押し戻す
