@@ -19,9 +19,10 @@
 #include <memory>
 #include <string>
 
- /*
-  *	ステージ全体の管理
-  */
+using namespace CharacterUtility;
+/*
+ *	ステージ全体の管理
+ */
 class StageManager : public Singleton<StageManager> {
 	// フレンド宣言
 	friend class Singleton<StageManager>;
@@ -159,7 +160,7 @@ public:
 	 */
 	GameObject* GetLiftObject() {
 		// プレイヤーを取得
-		auto player = CharacterUtility::GetPlayer();
+		auto player = GetPlayer();
 		if (!player)return;
 
 		// お宝を取得
