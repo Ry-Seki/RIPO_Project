@@ -48,9 +48,9 @@ public:
 		if (!setJSON.contains(dungeonKey)) return;
 
 		const auto& dungeonJson = setJSON.at(dungeonKey);
-		const auto& floors = dungeonJson["Floors"];
+		if (!dungeonJson.contains("Floors") || !dungeonJson["Floors"].is_array()) return;
 
-		for (const auto& floor : floors) {
+		for (const auto& floor : dungeonJson["Floors"]) {
 			int floorID = floor.value("FloorID", 0);
 			FloorData data;
 			data.enemySpawnCount = floor.value("EnemySpawnCount", 0);
@@ -67,10 +67,10 @@ public:
 	/*
 	 *	@brief		指定したIDのフロアデータの取得
 	 *	@param[in]	const int floorID
-	 *  @param[out] FloorData floorData
+	 *  @param[out] FloorData& floorData
 	 *  @return		bool
 	 */
-	bool TryGetFloorData(const int floorID, FloorData floorData) {
+	bool TryGetFloorData(const int floorID, FloorData& floorData) {
 		auto itr = dungeonFloorMap.find(floorID);
 		if (itr == dungeonFloorMap.end()) return false;
 

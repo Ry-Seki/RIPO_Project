@@ -155,10 +155,14 @@ public:
 	/*
 	 *	“–‚½‚è”»’èƒtƒ‰ƒO‚ð‚·‚×‚Ä‰Šú‰»‚·‚é
 	 */
-	void ResetFlag()const {
+	void ResetFlag() {
 		if (!stair && !exitPoint) return;
 		stair->SetStairMove(false);
 		exitPoint->SetExitTrigger(false);
+	}
+	void ClearObject() {
+		stair = nullptr;
+		exitPoint = nullptr;
 	}
 
 public:
