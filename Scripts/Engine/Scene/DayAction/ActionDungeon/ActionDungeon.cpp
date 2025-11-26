@@ -66,7 +66,7 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
 		EndDungeon();
 	}
 	else if (stairFrag) {
-		StageManager::GetInstance().NextStage(0);
+		StageManager::GetInstance().NextStage(1);
 	}
 	if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
 		// SEの再生
@@ -172,7 +172,7 @@ void ActionDungeon::ChangeFloor() {
 	// 現在の階層の片付け処理
 
 	// 階層の変更
-	
+
 	// 次の階層の準備処理
 
 }
@@ -182,7 +182,7 @@ void ActionDungeon::ChangeFloor() {
 void ActionDungeon::TeardownCurrentFloor() {
 	// 現在のフロアの敵のデータを設定
 	enemyFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
-	
+
 	// ステージの片付け処理
 	SetUseObjectColliderFlag(false);
 	// RemoveAllCharacter();
@@ -203,12 +203,12 @@ void ActionDungeon::SetupNextFloor() {
 		dungeonFloorList[currentFloor].isFirst = false;
 		// 敵を生成する
 		for (int i = 0; i < enemyCount; i++) {
-			GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, 
-						  { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+			GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY,
+				{ 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 		}
 		// 敵を取得する
 		enemyFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
-	} 
+	}
 	// プレイヤーの再配置
 	auto player = GetUseObject(0);
 	if (!player) return;
@@ -311,8 +311,8 @@ void ActionDungeon::DebugSetup(Engine& engine, const DungeonResource& setResourc
 	std::vector<int> stageHandleList(stageHandleCount);
 	for (int i = 0; i < stageHandleCount; i++) {
 		stageHandleList[i] = setResource.stageResource[i]->GetHandle();
-		LoadStage(stageHandleList);
 	}
+	LoadStage(stageHandleList);
 	// ステージボーンデータの設定
 	SetStageJSONData(setResource.stageBoneResource[0]->GetData());
 
@@ -443,5 +443,5 @@ void ActionDungeon::LoadResourcesFromStageData(Engine& engine, DungeonStageData&
 	}    // ロード完了時のコールバック登録
 	load.SetOnComplete([this, &engine, dungeonResource]() {
 		DebugSetup(engine, dungeonResource);
-	});
+		});
 }
