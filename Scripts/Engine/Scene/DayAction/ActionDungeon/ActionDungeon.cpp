@@ -66,7 +66,8 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
 		EndDungeon();
 	}
 	else if (stairFrag) {
-		StageManager::GetInstance().NextStage(1);
+		//StageManager::GetInstance().NextStage(1);
+		ChangeFloor();
 	}
 	if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
 		// SEの再生
@@ -169,12 +170,14 @@ void ActionDungeon::Teardown() {
  *	@brief		階層変更
  */
 void ActionDungeon::ChangeFloor() {
+	// 当たり判定の解除
+	SetUseObjectColliderFlag(false);
 	// 現在の階層の片付け処理
 	TeardownCurrentFloor();
 	// 階層の変更
-
+	StageManager::GetInstance().NextStage(1);
 	// 次の階層の準備処理
-
+	SetupNextFloor();
 }
 /*
  *	@brief		現在の階層の片付け処理
@@ -182,12 +185,9 @@ void ActionDungeon::ChangeFloor() {
 void ActionDungeon::TeardownCurrentFloor() {
 	// 当たり判定の解除
 	SetUseObjectColliderFlag(false);
+	StageObjectManager::GetInstance().ClearObject();
 	// 現在のフロアの敵のデータを設定
 	enemyFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
-	// ステージの片付け処理
-	SetUseObjectColliderFlag(false);
-	// RemoveAllCharacter();
-	StageManager::GetInstance().Execute();
 	// 現在残っている敵の片付け処理
 	TeardownEnemy();
 	// プレイヤーが持っているお宝以外を削除
@@ -197,14 +197,35 @@ void ActionDungeon::TeardownCurrentFloor() {
  *	@brief		次の階層の準備
  */
 void ActionDungeon::SetupNextFloor() {
+	FloorData spawnData;
+	auto treasureMap = stageData.GetCategory("Treasure");
+	std::string leafKey;
+	std::vector<int> IDList;
+	for (const auto& [key, path] : treasureMap) {
+		// 最後の階層だけを取得
+		if (stageData.TryGetLeafKey(key, leafKey)) {
+			IDList.push_back(std::stoi(leafKey));
+		}
+	}
 	// もろもろの生成処理
-	
-	
+	floorData.TryGetFloorData(1, spawnData);
+	// 敵の生成
+	for (int i = 0; i < spawnData.enemySpawnCount; i++) {
+		GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, { 0, 0, 0 }, { 0, 0, 0 }, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+	}
+	// お宝の生成処理
+	for (int i = 0; i < spawnData.treasureSpawnCount; i++) {
+		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 }, IDList[i]);
+	}
+	// 階段の生成処理
+	for (int i = 0; i < spawnData.stairSpawnCount; i++) {
+		GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
+	}
+	// 出口の生成処理
+	for (int i = 0; i < spawnData.goalSpawnCount; i++) {
+		GenerateExit("exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
+	}
 	// 敵の設定
-	// 敵の生成位置の取得
-	std::vector<int> enemySpawnIDList;
-	std::vector<Vector3> enemySpawnPos = GetEnemySpwanPos(enemySpawnIDList);
-	size_t enemyCount = enemySpawnPos.size();
 
 	// プレイヤーの再配置
 	auto player = GetUseObject(0);
@@ -212,6 +233,10 @@ void ActionDungeon::SetupNextFloor() {
 	// 位置の設定
 	player->position = GetStartPos();
 
+	// 敵の生成位置の取得
+	std::vector<int> enemySpawnIDList;
+	std::vector<Vector3> enemySpawnPos = GetEnemySpwanPos(enemySpawnIDList);
+	size_t enemyCount = enemySpawnPos.size();
 	// 敵の再配置
 	size_t enemyFloorCount = enemyFloorList[currentFloor].size();
 	for (int i = 0; i < enemyFloorCount; i++) {
@@ -222,7 +247,6 @@ void ActionDungeon::SetupNextFloor() {
 		std::shared_ptr<EnemyComponent> component = enemyCharacter->GetComponent<EnemyComponent>();
 		if (!component) continue;
 		// 位置の設定
-		// int enemySpawnID = component->GetSpawnID();
 		enemyCharacter->position = enemySpawnPos[i];
 		enemyCharacter->scale = { 4.5f, 4.5f, 4.5f };
 		// WayPointの設定
@@ -242,10 +266,26 @@ void ActionDungeon::SetupNextFloor() {
 		GameObject* treasure = GetStageObjectOwner(treasureObject);
 		if (!treasure) continue;
 		// 位置の設定
+		if (treasure == haveTreasure) {
+			RemoveStageObject(i);
+			continue;
+		}
 		treasure->position = treasureSpawnPos[i];
 	}
+	int stairCount = treasureCount;
+	auto stair = GetStageObject(stairCount);
+	if (stair) {
+		Vector3 stairSpawnPos = GetStairsPos();
+		stair->GetOwner()->position = stairSpawnPos;
+	}
 
-
+	// 出口の設定
+	int exitCount = stairCount + 1;
+	auto exit = GetStageObject(exitCount);
+	if (exit) {
+		Vector3 exitSpawnPos = GetGoalPos();
+		exit->GetOwner()->position = exitSpawnPos;
+	}
 	// フェードイン
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop);
 	FadeManager::GetInstance().StartFade(fade);
@@ -257,6 +297,7 @@ void ActionDungeon::SetupNextFloor() {
  */
 void ActionDungeon::TeardownEnemy() {
 	std::vector<GameObjectList> deleteList;
+	deleteList.resize(enemyFloorList[currentFloor].size());
 	deleteList[currentFloor] = enemyFloorList[currentFloor];
 	for (auto& enemy : deleteList[currentFloor]) {
 		if (!enemy) continue;
@@ -276,9 +317,12 @@ void ActionDungeon::TeardownStageObject() {
 		if (!stageObject) continue;
 
 		int ID = stageObject->ID;
-		if (ID == haveTreasure->ID) continue;
-
-		RemoveStageObject(i);
+		if (haveTreasure) {
+			if (ID == haveTreasure->ID) continue;
+		}
+		else {
+			RemoveStageObject(i);
+		}
 	}
 }
 void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageData, DungeonFloorData& setFloorData) {
@@ -395,7 +439,6 @@ void ActionDungeon::DebugSetupData(Engine& engine, const DungeonResource& setRes
 		SetModelHandle(treasure, treasureHandle);
 	}
 	// 階段の設定
-
 	int stairCount = treasureCount;
 	auto stair = GetStageObject(stairCount);
 	if (!stair) return;
