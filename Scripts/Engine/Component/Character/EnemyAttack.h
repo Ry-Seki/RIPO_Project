@@ -27,13 +27,12 @@ public:
 	void Attack() override {
 		enemy = GetOwner();
 		if (enemy == nullptr) return;
-		// プレイヤーの距離が判定内に入ったら
 		if (enemy->GetComponent<EnemyComponent>()->GetClosePlayer()) {
-
-		}
 		// 前方に当たり判定を出す
 
 		// クールタイム
+
+		}
 
 	}
 };
