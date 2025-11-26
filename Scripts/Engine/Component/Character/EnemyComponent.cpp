@@ -43,6 +43,7 @@ void EnemyComponent::Update(float deltaTime) {
 	// モデルが反対なので逆にする
 	// 移動処理
 	EnemyMove(deltaTime);
+
 	// ステージとの当たり判定
 	StageManager::GetInstance().StageCollider(enemy, moveVec);
 }
@@ -108,6 +109,15 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 			enemy->rotation.y = goalAngle;
 		}
 	}
+
+	// EnemyAttackに移動するかも(Update de tuneni yomikonndeoku hituyouha nai)
+	// AABBコライダーを前方に置く
+	auto aabbCollider = enemy->GetComponent<AABBCollider>();
+	float value = 500;
+	Vector3 aabbDirection = { value * direction.x, 0, value * direction.z };
+	const Vector3 aabbMin = { -100, 0, -100 };
+	const Vector3 aabbMax = { 100, 300, 100 };
+	aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
 
 	auto distance = Distance(wayPoint, enemy->position);
 	// プレイヤーの手前で止まる
