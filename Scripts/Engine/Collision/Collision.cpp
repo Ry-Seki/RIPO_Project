@@ -5,78 +5,16 @@
 
 #include "Collision.h"
 
- /*
-  *  AABB同士の交差判定
-  *  @param[in]  AABB a   判定対象1
-  *  @param[in]  AABB b   判定対象2
-  *  @param[out] Vector3 penetration 貫通ベクトル
-  */
-bool Intersect(const AABB& a, const AABB& b, Vector3& penetration) {
-	// aの左側面がbの右側面より右にある場合は交差していない
-	const float dx0 = b.max.x - a.min.x;
-	if (dx0 <= 0)
-		return false;
-	// aの右側面がbの左側面より左にある場合は交差していない
-	const float dx1 = a.max.x - b.min.x;
-	if (dx1 <= 0)
-		return false;
-	// aの下面がbの上面より上にある場合は交差していない
-	const float dy0 = b.max.y - a.min.y;
-	if (dy0 <= 0)
-		return false;
-	// aの上面がbの下面より下にある場合は交差していない
-	const float dy1 = a.max.y - b.min.y;
-	if (dy1 <= 0)
-		return false;
-	// aの奥側面がbの手前側面より手前にある場合は交差していない
-	const float dz0 = b.max.z - a.min.z;
-	if (dz0 <= 0)
-		return false;
-	// aの手前側面がbの奥側面より奥にある場合は交差していない
-	const float dz1 = a.max.z - b.min.z;
-	if (dz1 <= 0)
-		return false;
-
-	// XY軸で交差している距離が最も短い軸を計算
-	Vector3 length = { dx1, dy1, dz1 }; // 貫通距離の絶対値
-	Vector3 signedLength = length;      // 符号付き
-	if (dx0 < dx1) {
-		length.x = dx0;
-		signedLength.x = -dx0;
-	}
-	if (dy0 < dy1) {
-		length.y = dy0;
-		signedLength.y = -dy0;
-	}
-	if (dz0 < dz1) {
-		length.z = dz0;
-		signedLength.z = -dz0;
-	}
-
-	// 最も貫通距離が短い軸を保存
-	if (length.x < length.y) {
-		if (length.x < length.z) {
-			penetration = { signedLength.x, 0, 0 };
-			return true;
-		}
-	}
-	else if (length.y < length.z) {
-		penetration = { 0, signedLength.y, 0 };
-		return true;
-	}
-	penetration = { 0, 0, signedLength.z };
-	return true;
-}
-
 /*
  *  点から線分への最近接点
- *  @param[in]  Vector3 startPos    最近接点を調べる線文の開始点
- *  @param[in]  Vector3 endPos      最近接点を調べる線分の終了点
  *  @param[in]  Vecror3 point       最近接点を調べる点
+ *  @param[in]  Segment segment		最近接点を調べる線分
  *  @param[out] float   minRatio    線分内の最近接点(0～1)
  *  @return     Vector3             最近接点の座標
  */
-Vector3 PointToSegmentMinLength(const Vector3& startPos, const Vector3& endPos, const Vector3& point, float& minRatio) {
+Vector3 PointToSegmentMinLength(const Vector3& point, const Segment& segment, float& minRatio) {
+	Vector3 startPos = segment.startPoint;
+	Vector3 endPos = segment.endPoint;
 	// 線分の方向ベクトル(非正規化)
 	Vector3 segDir = endPos - startPos;
 	// ベクトルの長さの2乗
@@ -95,6 +33,16 @@ Vector3 PointToSegmentMinLength(const Vector3& startPos, const Vector3& endPos, 
 
 	minRatio = segmentRatio;
 	return Lerp(startPos, endPos, segmentRatio);
+}
+
+/*
+ *	点からAABBへの最近接点
+ *	@param[in]	Vector3	point	最近接点を調べる点
+ *	@param[in]	AABB	aabb	最近接点を調べるAABB
+ *  @return		Vector3			最近接点の座標
+ */
+Vector3 PointToAABBMinLength(const Vector3& point, const AABB& aabb) {
+	return Vector3();
 }
 
 /*
@@ -202,25 +150,25 @@ void SegmentBetweenMinLength(const Segment& a, const Segment& b, Vector3& aMinPo
 	// aの開始点からbの線分
 	aMinRatioCand = 0.0f;
 	aPointCand = aStart;
-	bPointCand = PointToSegmentMinLength(bStart, bEnd, aStart, bMinRatioCand);
+	bPointCand = PointToSegmentMinLength(aStart, b, bMinRatioCand);
 	TryUpdateBest(aPointCand, bPointCand, aMinRatioCand, bMinRatioCand, bestPointA, bestPointB, aSegRatio, bSegRatio, bestLengthSq);
 
 	// aの終了点からbの線分
 	aMinRatioCand = 1.0f;
 	aPointCand = aEnd;
-	bPointCand = PointToSegmentMinLength(bStart, bEnd, aEnd, bMinRatioCand);
+	bPointCand = PointToSegmentMinLength(aEnd, b, bMinRatioCand);
 	TryUpdateBest(aPointCand, bPointCand, aMinRatioCand, bMinRatioCand, bestPointA, bestPointB, aSegRatio, bSegRatio, bestLengthSq);
 
 	// bの開始点からaの線分
 	bMinRatioCand = 0.0f;
 	bPointCand = bStart;
-	aPointCand = PointToSegmentMinLength(aStart, aEnd, bStart, aMinRatioCand);
+	aPointCand = PointToSegmentMinLength(bStart, a, aMinRatioCand);
 	TryUpdateBest(aPointCand, bPointCand, aMinRatioCand, bMinRatioCand, bestPointA, bestPointB, aSegRatio, bSegRatio, bestLengthSq);
 
 	// bの終了点からaの線分
 	bMinRatioCand = 1.0f;
 	bPointCand = bEnd;
-	aPointCand = PointToSegmentMinLength(aStart, aEnd, bEnd, aMinRatioCand);
+	aPointCand = PointToSegmentMinLength(bEnd, a, aMinRatioCand);
 	TryUpdateBest(aPointCand, bPointCand, aMinRatioCand, bMinRatioCand, bestPointA, bestPointB, aSegRatio, bSegRatio, bestLengthSq);
 
 	// 最終的な最近接点を返す
@@ -284,5 +232,68 @@ bool Intersect(const Capsule& a, const Capsule& b, Vector3& penetration) {
 	float depth = sumRadius - length;
 	// 貫通距離
 	penetration = direction * depth;
+	return true;
+}
+
+/*
+ *  AABB同士の交差判定
+ *  @param[in]  AABB a   判定対象1
+ *  @param[in]  AABB b   判定対象2
+ *  @param[out] Vector3 penetration 貫通ベクトル
+ */
+bool Intersect(const AABB& a, const AABB& b, Vector3& penetration) {
+	// aの左側面がbの右側面より右にある場合は交差していない
+	const float dx0 = b.max.x - a.min.x;
+	if (dx0 <= 0)
+		return false;
+	// aの右側面がbの左側面より左にある場合は交差していない
+	const float dx1 = a.max.x - b.min.x;
+	if (dx1 <= 0)
+		return false;
+	// aの下面がbの上面より上にある場合は交差していない
+	const float dy0 = b.max.y - a.min.y;
+	if (dy0 <= 0)
+		return false;
+	// aの上面がbの下面より下にある場合は交差していない
+	const float dy1 = a.max.y - b.min.y;
+	if (dy1 <= 0)
+		return false;
+	// aの奥側面がbの手前側面より手前にある場合は交差していない
+	const float dz0 = b.max.z - a.min.z;
+	if (dz0 <= 0)
+		return false;
+	// aの手前側面がbの奥側面より奥にある場合は交差していない
+	const float dz1 = a.max.z - b.min.z;
+	if (dz1 <= 0)
+		return false;
+
+	// XY軸で交差している距離が最も短い軸を計算
+	Vector3 length = { dx1, dy1, dz1 }; // 貫通距離の絶対値
+	Vector3 signedLength = length;      // 符号付き
+	if (dx0 < dx1) {
+		length.x = dx0;
+		signedLength.x = -dx0;
+	}
+	if (dy0 < dy1) {
+		length.y = dy0;
+		signedLength.y = -dy0;
+	}
+	if (dz0 < dz1) {
+		length.z = dz0;
+		signedLength.z = -dz0;
+	}
+
+	// 最も貫通距離が短い軸を保存
+	if (length.x < length.y) {
+		if (length.x < length.z) {
+			penetration = { signedLength.x, 0, 0 };
+			return true;
+		}
+	}
+	else if (length.y < length.z) {
+		penetration = { 0, signedLength.y, 0 };
+		return true;
+	}
+	penetration = { 0, 0, signedLength.z };
 	return true;
 }
