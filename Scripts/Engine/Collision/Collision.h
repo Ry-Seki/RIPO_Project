@@ -8,8 +8,8 @@
 
 #include "../VecMath.h"
 
-// 線分を点とする基準数(指数表記)
-const float EPSILON_SEGMENT = 1e-8f;
+// 限りなく0に近いしきい値(指数表記)
+const float EPSILON = 1e-6f;
 
 /*
  *	軸並行境界ボックス
