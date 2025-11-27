@@ -94,11 +94,19 @@ namespace StageObjectUtility {
 		return StageObjectManager::GetInstance().GetCreateObjectList();
 	}
 	/*
-	 *	ID指定のステージオブジェクト取得
+	 *	@brief		ID指定のステージオブジェクト取得
 	 *  @return		StageObjectBasePtr
 	 */
 	inline StageObjectBasePtr GetStageObject(int stageObjectID) {
 		return StageObjectManager::GetInstance().GetStageObject(stageObjectID);
+	}
+	/*
+	 *	@brief		名前指定のステージオブジェクトの取得
+	 *  @param[in]	const std::string& objectName
+	 *	@return		GameObjectPtr
+	 */
+	inline GameObjectPtr GetStageObject(const std::string& objectName) {
+		return StageObjectManager::GetInstance().GetStageObject(objectName);
 	}
 	/*
 	 *	脱出フラグの取得
