@@ -110,13 +110,13 @@ void EnemyComponent::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float de
 		}
 	}
 
-	// EnemyAttackに移動するかも(Update de tuneni yomikonndeoku hituyouha nai)
+	// EnemyAttackに移動するかも(攻撃の直前だけ動かすでよいため)
 	// AABBコライダーを前方に置く
 	auto aabbCollider = enemy->GetComponent<AABBCollider>();
-	float value = 500;
+	float value = 100;
 	Vector3 aabbDirection = { value * direction.x, 0, value * direction.z };
-	const Vector3 aabbMin = { -100, 0, -100 };
-	const Vector3 aabbMax = { 100, 300, 100 };
+	const Vector3 aabbMin = { -40, 0, -40 };
+	const Vector3 aabbMax = { 40, 100, 40 };
 	aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
 
 	auto distance = Distance(wayPoint, enemy->position);

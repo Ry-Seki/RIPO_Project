@@ -30,8 +30,11 @@ void AABBCollider::OnCollision(
 void AABBCollider::DebugRender() {
 	auto owner = GetOwner();
 	// ƒ[ƒ‹ƒhÀ•W‚ÌAABB
-	VECTOR aabbMin = ToVECTOR(aabb.min + owner->position);
-	VECTOR aabbMax = ToVECTOR(aabb.max + owner->position);
+	//VECTOR aabbMin = ToVECTOR(aabb.min + owner->position);
+	//VECTOR aabbMax = ToVECTOR(aabb.max + owner->position);
+	VECTOR aabbMin = ToVECTOR(Scale(aabb.min, owner->scale) + owner->position);
+	VECTOR aabbMax = ToVECTOR(Scale(aabb.max, owner->scale) + owner->position);
+
 	std::vector<VECTOR> aabbPoits = {
 		aabbMin,
 		{ aabbMin.x, aabbMin.y, aabbMax.z },
