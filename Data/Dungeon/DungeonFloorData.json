@@ -17,7 +17,7 @@
         "FloorID": 0,
         "EnemySpawnCount": 3,
         "BossSpawnCount": 0,
-        "TreasureSpawnCount": 1,
+        "TreasureSpawnCount": 2,
         "StairSpawnCount": 1,
         "GoalSpawnCount": 1
       },

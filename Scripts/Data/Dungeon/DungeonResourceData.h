@@ -20,6 +20,7 @@ class DungeonResourceData {
 public:
 	std::vector<std::shared_ptr<LoadModel>> stageResource;
 	std::vector<std::shared_ptr<LoadJSON>> stageBoneResource;
+	std::shared_ptr<LoadJSON> stageFloorResource;
 	std::shared_ptr<LoadModel> playerResource;
 	std::vector<std::shared_ptr<LoadModel>> enemyResource;
 	std::shared_ptr<LoadModel> bossResource;
@@ -31,7 +32,7 @@ public:
 	 *	ステージデータからロードリストに追加
 	 *	@param[in]	DungeonStageData& stageData			ステージデータ
 	 */
-	void LoadResourcesFromStageData(Engine& engine, DungeonStageData& stageData) {
+	void LoadResourcesFromStageData(DungeonStageData& stageData) {
 		LoadManager& load = LoadManager::GetInstance();
 		// Stageカテゴリ
 		auto stageMap = stageData.GetCategory("Stage");
@@ -41,6 +42,9 @@ public:
 			}
 			else if (key.rfind("StageBoneData", 0) == 0) {
 				stageBoneResource.push_back(load.LoadResource<LoadJSON>(path));
+			}
+			else if (key.rfind("StageFloorData", 0) == 0) {
+				stageFloorResource = load.LoadResource<LoadJSON>(path);
 			}
 		}
 		// Characterカテゴリ
