@@ -189,6 +189,7 @@
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarSystem.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\Day.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionDungeon\ActionDungeon.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionDungeon\DungeonCreater.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.cpp" />
@@ -220,9 +221,10 @@
     <ClCompile Include="Scripts\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Scripts\Data\DungeonData.h" />
-    <ClInclude Include="Scripts\Data\DungeonFloorData.h" />
-    <ClInclude Include="Scripts\Data\DungeonStageData.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonData.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonFloorData.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonResourceData.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonStageData.h" />
     <ClInclude Include="Scripts\Data\ItemCatalogData.h" />
     <ClInclude Include="Scripts\Data\PlayerStatusData.h" />
     <ClInclude Include="Scripts\Data\SaveData.h" />
@@ -275,7 +277,6 @@
     <ClInclude Include="Scripts\Engine\Load\Audio\LoadAudio.h" />
     <ClInclude Include="Scripts\Engine\Load\Binary\LoadBinary.h" />
     <ClInclude Include="Scripts\Engine\Load\CSV\LoadCSV.h" />
-    <ClInclude Include="Scripts\Engine\Load\Dungeon\DungeonDataLoader.h" />
     <ClInclude Include="Scripts\Engine\Load\JSON\LoadJSON.h" />
     <ClInclude Include="Scripts\Engine\Load\LoadBase.h" />
     <ClInclude Include="Scripts\Engine\Load\LoadManager.h" />
@@ -300,6 +301,7 @@
     <ClInclude Include="Scripts\Engine\Scene\Calendar\Week.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\Year.h" />
     <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionDungeon\ActionDungeon.h" />
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionDungeon\DungeonCreater.h" />
     <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionFactory.h" />
     <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.h" />

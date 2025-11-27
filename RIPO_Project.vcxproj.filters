@@ -408,6 +408,9 @@
     <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapManager.cpp">
       <Filter>ソース ファイル\Engine\Scene\Selection\PartTime\Sokoban</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionDungeon\DungeonCreater.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Action\Dungeon</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -710,15 +713,6 @@
     <ClInclude Include="Scripts\Engine\System\Item\ItemManager.h">
       <Filter>ヘッダー ファイル\Engine\System\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Data\DungeonData.h">
-      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\DungeonStageData.h">
-      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\Dungeon\DungeonDataLoader.h">
-      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Data\PlayerStatusData.h">
       <Filter>ヘッダー ファイル\Data\Player</Filter>
     </ClInclude>
@@ -769,6 +763,21 @@
     </ClInclude>
     <ClInclude Include="Scripts\Data\SaveData.h">
       <Filter>ヘッダー ファイル\Data\Save</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionDungeon\DungeonCreater.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\Action\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonData.h">
+      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonFloorData.h">
+      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonStageData.h">
+      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonResourceData.h">
+      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

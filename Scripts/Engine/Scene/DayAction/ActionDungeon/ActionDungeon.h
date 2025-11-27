@@ -7,8 +7,8 @@
 #define _ACTION_DUNGEON_H_
 
 #include "../DayActionBase.h"
-#include "../../../../Data/DungeonStageData.h"
-#include "../../../../Data/DungeonFloorData.h"
+#include "../../../../Data/Dungeon/DungeonStageData.h"
+#include "../../../../Data/Dungeon/DungeonFloorData.h"
 #include "../../../Load/Model/LoadModel.h"
 #include "../../../Load/JSON/LoadJSON.h"
 #include <vector>

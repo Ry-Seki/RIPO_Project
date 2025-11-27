@@ -315,6 +315,8 @@ void ActionDungeon::TeardownStageObject() {
 		int ID = stageObject->ID;
 		if (haveTreasure) {
 			if (ID == haveTreasure->ID) continue;
+
+			RemoveStageObject(ID);
 		}
 		else {
 			RemoveStageObject(ID);
