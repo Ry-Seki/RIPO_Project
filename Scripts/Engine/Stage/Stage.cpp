@@ -159,9 +159,9 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(GameObject* othe
 	if (!capsule)return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
 
 	// 下端
-	Vector3 capLower = other->position + capsule->capsule.startPoint;
+	Vector3 capLower = other->position + capsule->capsule.segment.startPoint;
 	// 上端
-	Vector3 capTop = other->position + capsule->capsule.endPoint;
+	Vector3 capTop = other->position + capsule->capsule.segment.endPoint;
 	// 中心点
 	Vector3 capCenter = (capLower + capTop) * _HALF;
 	// 半径
@@ -244,9 +244,9 @@ void Stage::ProcessWallCollision(
 	float capsuleRadius = capsule->capsule.radius;
 
 	// ワールド座標に変換したカプセルの下端
-	Vector3 capLower = nowPos + capsule->capsule.startPoint;
+	Vector3 capLower = nowPos + capsule->capsule.segment.startPoint;
 	// ワールド座標に変換したカプセルの上端
-	Vector3 capTop = nowPos + capsule->capsule.endPoint;
+	Vector3 capTop = nowPos + capsule->capsule.segment.endPoint;
 
 	// 壁ポリゴンの配列分回す
 	for (auto* poly : walls) {
@@ -277,8 +277,8 @@ void Stage::ProcessWallCollision(
 		nowPos += pushDir * penetrate;
 
 		// 新しいカプセル位置
-		capLower = nowPos + capsule->capsule.startPoint;
-		capTop = nowPos + capsule->capsule.endPoint;
+		capLower = nowPos + capsule->capsule.segment.startPoint;
+		capTop = nowPos + capsule->capsule.segment.endPoint;
 	}
 
 	if (moveFlag) {
@@ -335,9 +335,9 @@ void Stage::ProcessFloorCollision(
 	if (!capsule) return;
 
 	// ワールド座標での下端
-	Vector3 capStart = nowPos + capsule->capsule.startPoint;
+	Vector3 capStart = nowPos + capsule->capsule.segment.startPoint;
 	// ワールド座標での上端
-	Vector3 capEnd = nowPos + capsule->capsule.endPoint;
+	Vector3 capEnd = nowPos + capsule->capsule.segment.endPoint;
 	// カプセル中心点
 	Vector3 capCenter = (capStart + capEnd) * _HALF;
 	// カプセルの半径
@@ -377,7 +377,7 @@ void Stage::ProcessFloorCollision(
 	// 接地しているかどうかの判定を重力コンポーネントに渡す
 	if (isGround) {
 		// 対象がいなければいけない位置
-		float desiredY = MaxY - capsule->capsule.startPoint.y;
+		float desiredY = MaxY - capsule->capsule.segment.startPoint.y;
 
 		// 壁から押し出されたとき対策
 		// 床よりもしたに押し出された場合、押し戻す
