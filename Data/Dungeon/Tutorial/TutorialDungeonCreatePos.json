@@ -22,6 +22,10 @@
       "PointLightPos_0",
       "PointLightPos_1"
     ]
+  },
+  "Stair": {
+    "0": 1,
+    "1": 0
   }
 
 }
