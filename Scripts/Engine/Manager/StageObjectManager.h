@@ -24,13 +24,12 @@ private:
 	ExitPoint* exitPoint = nullptr;
 	Stair* stair = nullptr;
 
-	StageObjectBaseList createStageList;
 	GameObjectList createStageObjectList;
 
 	const size_t CREATE_STAGEOBJ_COUNT = 16;	// 事前に生成する数
 
 private:
-	StageObjectManager();
+	StageObjectManager() = default;
 	~StageObjectManager() = default;
 
 private:
@@ -46,7 +45,6 @@ private:
 	 */
 	template <typename T>
 	StageObjectBasePtr CreateStageObject(
-		const int setID,
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
@@ -128,6 +126,13 @@ public:
 	 */
 	StageObjectBasePtr GetStageObject(int stageObjectID);
 	/*
+	 *	@brief		名前指定のステージオブジェクト取得
+	 *  @param[in]	const std::string& objectName
+	 *  @return		GameObjectPtr
+	 *	@author		Seki
+	 */
+	GameObjectPtr GetStageObject(const std::string& objectName);
+	/*
 	 *	@brief		ステージオブジェクト配列の取得
 	 *	@return		GameObjectList&
 	 *  @author		Seki
@@ -156,9 +161,8 @@ public:
 	 *	当たり判定フラグをすべて初期化する
 	 */
 	void ResetFlag() {
-		if (!stair && !exitPoint) return;
-		stair->SetStairMove(false);
-		exitPoint->SetExitTrigger(false);
+		if(stair) stair->SetStairMove(false);
+		if(exitPoint) exitPoint->SetExitTrigger(false);
 	}
 	void ClearObject() {
 		stair = nullptr;
