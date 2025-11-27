@@ -134,7 +134,10 @@ void Stage::UpdateCollision(GameObject* other, Vector3 MoveVec) {
 
 	// 結果反映
 	other->position = nowPos;
-	MV1CollResultPolyDimTerminate(*hitDim);
+
+	if (hitDim && hitDim->HitNum > 0) {
+		MV1CollResultPolyDimTerminate(*hitDim);
+	}
 
 }
 
@@ -154,6 +157,12 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(GameObject* othe
 		effectiveMove = Vector3::zero;
 	}
 
+	Vector3 forward = Vector3::zero;
+	float moveLen = effectiveMove.Magnitude();
+	if (moveLen > 0.0f) {
+		forward = Normalized(effectiveMove);
+	}
+
 	// カプセルの取得
 	auto capsule = other->GetComponent<CapsuleCollider>();
 	if (!capsule)return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
@@ -167,14 +176,11 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(GameObject* othe
 	// 半径
 	float radius = capsule->capsule.radius;
 
-	// 移動方向ベクトルを正規化
-	Vector3 forward = Normalized(MoveVec);
-
 	// 前方限定の球判定用中心
-	Vector3 sphereCenter = capCenter + forward * MoveVec.Magnitude() * _HALF;
+	Vector3 sphereCenter = capCenter + forward * (moveLen * _HALF);
 
 	// 球の半径
-	float sphereRadius = radius + MoveVec.Magnitude() * _HALF;
+	float sphereRadius = sphereRadius = radius + moveLen * _HALF;
 
 	auto hitDim = std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
 	*hitDim = MV1CollCheck_Sphere(modelHandle, -1, ToVECTOR(sphereCenter), sphereRadius);
@@ -270,7 +276,6 @@ void Stage::ProcessWallCollision(
 		float penetrate = capsuleRadius - dist;
 		if (penetrate <= Vector3::zero.y) continue;
 
-
 		Vector3 pushDir = Normalized(diff);
 
 		// 貫通した分戻す
@@ -322,7 +327,7 @@ void Stage::ProcessFloorCollision(
 	if (floors.empty())return;
 
 	// 接地点の最大値
-	float MaxY = 0.1f;
+	float MaxY = -FLT_MAX;
 	// 接地しているかどうか
 	bool isGround = false;
 
