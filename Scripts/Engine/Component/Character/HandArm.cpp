@@ -7,6 +7,7 @@
 #include "../../RayCast.h"
 #include "../../Manager/CameraManager.h"
 #include "../../VecMath.h"
+#include "../../GameConst.h"
 
 HandArm::HandArm()
 	: liftObject(nullptr)
@@ -18,7 +19,7 @@ void HandArm::OnCollision(
 	const std::shared_ptr<Component>& self,
 	const std::shared_ptr<Component>& other) {
 	auto otherObject = other->GetOwner();
-	if (otherObject->name == "treasure")
+	if (otherObject->name == GameConst::_CREATE_POSNAME_TREASURE)
 		liftObject = other->GetOwner();
 }
 
