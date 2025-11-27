@@ -11,31 +11,52 @@
  *	敵の攻撃処理基底クラス
  */
 class EnemyAttackBase : public Component {
+private:
+	GameObjectPtr player = CameraManager::GetInstance().GetTarget();;
+	if (player == nullptr) return;
 public:
 	EnemyAttackBase() = default;
 	virtual ~EnemyAttackBase() = default;
 public:
 	virtual void Attack() = 0;
+
+	///*
+	// *	ダメージを与える処理
+	// */
+	//void AddDamage(int enemyPower) {
+	//	int playerHP = player->AddComponent<CharacterBase>()->GetHP();
+	//	playerHP -= enemyPower;
+	//	player->AddComponent<CharacterBase>()->SetHP(playerHP);
+	//}
 };
 
 /*
  *	通常敵の攻撃処理クラス
  */
 class NormalEnemyAttack : public EnemyAttackBase {
-	GameObject* enemy;
+	GameObject* enemy = GetOwner;
+	if (enemy == nullptr) return;
+	float coolTime = 3;
 public:
-	void Attack() override {
-		enemy = GetOwner();
-		if (enemy == nullptr) return;
+	void Attack(float deltaTime) override {
+		coolTime -= deltaTime;
+		//enemy = GetOwner();
 		if (enemy->GetComponent<EnemyComponent>()->GetClosePlayer()) {
+			if (coolTime > 0) return;
 		// 前方に当たり判定を出す
-
-		// クールタイム
-
+			enemy->GetComponent<ColliderBase>()->isCollider = true;
+			coolTime = 3;
+			// 当たったらダメージを与える
+			//AddDamage(3);
+		}
+		else {
+			enemy->GetComponent<ColliderBase>()->isCollider = false;
 		}
 
 	}
 };
+
+
 
 
 
