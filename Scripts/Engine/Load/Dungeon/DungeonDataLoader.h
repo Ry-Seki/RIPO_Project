@@ -7,7 +7,7 @@
 #define _DUNGEON_DATA_LOADER_H_
 
 #include "../CSV/LoadCSV.h"
-#include "../../../Data/DungeonData.h"
+#include "../../../Data/Dungeon/DungeonData.h"
 
 #include <vector>
 #include <string>

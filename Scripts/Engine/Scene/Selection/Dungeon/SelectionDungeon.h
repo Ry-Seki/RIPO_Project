@@ -7,9 +7,9 @@
 #define _SELECTION_DUNGEON_H_
 
 #include "../SelectionBase.h"
-#include "../../../../Data/DungeonData.h"
-#include "../../../../Data/DungeonStageData.h"
-#include "../../../../Data/DungeonFloorData.h"
+#include "../../../../Data/Dungeon/DungeonData.h"
+#include "../../../../Data/Dungeon/DungeonStageData.h"
+#include "../../../../Data/Dungeon/DungeonFloorData.h"
 #include "../../../Load/CSV/LoadCSV.h"
 #include "../../../Load/JSON/LoadJSON.h"
 #include "../../../Load/Dungeon/DungeonDataLoader.h"

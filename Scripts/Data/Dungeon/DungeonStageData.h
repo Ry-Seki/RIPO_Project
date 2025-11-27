@@ -6,8 +6,8 @@
 #ifndef _DUNGEON_STAGE_DATA_H_
 #define _DUNGEON_STAGE_DATA_H_
 
-#include "../Engine/JSON.h"
-#include "../Engine/AutoJSONRegitry.h"
+#include "../../Engine/JSON.h"
+#include "../../Engine/AutoJSONRegitry.h"
 
 #include <string>
 #include <vector>
