@@ -377,7 +377,7 @@ void Stage::ProcessFloorCollision(
 	// 接地しているかどうかの判定を重力コンポーネントに渡す
 	if (isGround) {
 		// 対象がいなければいけない位置
-		float desiredY = capsule->capsule.startPoint.y;
+		float desiredY = MaxY - capsule->capsule.startPoint.y;
 
 		// 壁から押し出されたとき対策
 		// 床よりもしたに押し出された場合、押し戻す
@@ -447,7 +447,7 @@ void Stage::StageColliderRenderer(GameObject* other, Vector3 MoveVec) {
 		unsigned int drawColor = isWall ? wallColor : floorColor;
 
 		// ポリゴンを半透明で描画
-		DrawTriangle3D(poly.Position[0], poly.Position[1], poly.Position[2], drawColor, FALSE);
+		DrawTriangle3D(poly.Position[0], poly.Position[1], poly.Position[2], drawColor, TRUE);
 
 		// ポリゴンを白線で描画
 		DrawLine3D(poly.Position[0], poly.Position[1], lineColor);

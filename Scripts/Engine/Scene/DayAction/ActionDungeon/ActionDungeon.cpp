@@ -197,6 +197,7 @@ void ActionDungeon::TeardownCurrentFloor() {
  *	@brief		次の階層の準備
  */
 void ActionDungeon::SetupNextFloor() {
+	currentFloor = 1;
 	FloorData spawnData;
 	auto treasureMap = stageData.GetCategory("Treasure");
 	std::string leafKey;
@@ -219,11 +220,11 @@ void ActionDungeon::SetupNextFloor() {
 	}
 	// 階段の生成処理
 	for (int i = 0; i < spawnData.stairSpawnCount; i++) {
-		GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
+		GenerateStair("Stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
 	}
 	// 出口の生成処理
 	for (int i = 0; i < spawnData.goalSpawnCount; i++) {
-		GenerateExit("exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
+		GenerateExit("Exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
 	}
 	// 敵の設定
 
@@ -254,16 +255,13 @@ void ActionDungeon::SetupNextFloor() {
 	}
 
 	// お宝の再配置
-	// お宝の生成位置の取得
 	std::vector<Vector3> treasureSpawnPos = GetTreasureSpwanPos();
 	// 生成位置の要素数の取得
 	size_t treasureCount = treasureSpawnPos.size();
-	for (int i = 0; i < treasureCount; i++) {
-		// 宝の取得
-		StageObjectBasePtr treasureObject = GetStageObject(i);
-		if (!treasureObject) continue;
+	GameObjectList treasureList = GetObjectByName(GameConst::_CREATE_POSNAME_TREASURE);
+	for (int i = 0; i < treasureList.size(); i++) {
 		// 宝オブジェクトの取得
-		GameObject* treasure = GetStageObjectOwner(treasureObject);
+		GameObject* treasure = treasureList[i].get();
 		if (!treasure) continue;
 		// 位置の設定
 		if (treasure == haveTreasure) {
@@ -272,19 +270,17 @@ void ActionDungeon::SetupNextFloor() {
 		}
 		treasure->position = treasureSpawnPos[i];
 	}
-	int stairCount = treasureCount;
-	auto stair = GetStageObject(stairCount);
+	auto stair = GetStageObject("Stair");
 	if (stair) {
 		Vector3 stairSpawnPos = GetStairsPos();
-		stair->GetOwner()->position = stairSpawnPos;
+		stair->position = stairSpawnPos;
 	}
 
 	// 出口の設定
-	int exitCount = stairCount + 1;
-	auto exit = GetStageObject(exitCount);
+	auto exit = GetStageObject("Exit");
 	if (exit) {
 		Vector3 exitSpawnPos = GetGoalPos();
-		exit->GetOwner()->position = exitSpawnPos;
+		exit->position = exitSpawnPos;
 	}
 	// フェードイン
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop);
@@ -321,7 +317,7 @@ void ActionDungeon::TeardownStageObject() {
 			if (ID == haveTreasure->ID) continue;
 		}
 		else {
-			RemoveStageObject(i);
+			RemoveStageObject(ID);
 		}
 	}
 }
@@ -358,8 +354,8 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 	for (int i = 0; i < IDList.size(); i++) {
 		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, { 0,0,0 }, { 0,0,0 }, { -100,0,-100 }, { 100,300,100 }, IDList[i]);
 	}
-	GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
-	GenerateExit("exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
+	GenerateStair("Stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
+	GenerateExit("Exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
 
 	LoadResourcesFromStageData(engine, stageData, dungeonResource);
 }
@@ -423,15 +419,13 @@ void ActionDungeon::DebugSetupData(Engine& engine, const DungeonResource& setRes
 	size_t treasureCount = treasureSpawnPos.size();
 	// ハンドルの要素数の取得
 	size_t treasureTypeCount = setResource.treasureResource.size();
+	GameObjectList treasureList = GetObjectByName(GameConst::_CREATE_POSNAME_TREASURE);
 	// お宝の取得
 	for (int i = 0; i < treasureCount; i++) {
 		// モデルハンドルの取得
 		int treasureHandle = setResource.treasureResource[i]->GetHandle();
-		// 宝の取得
-		StageObjectBasePtr treasureObject = GetStageObject(i);
-		if (!treasureObject) continue;
 		// 宝オブジェクトの取得
-		GameObject* treasure = GetStageObjectOwner(treasureObject);
+		GameObject* treasure = treasureList[i].get();
 		if (!treasure) continue;
 		// 位置の設定
 		treasure->position = treasureSpawnPos[i];
@@ -439,18 +433,16 @@ void ActionDungeon::DebugSetupData(Engine& engine, const DungeonResource& setRes
 		SetModelHandle(treasure, treasureHandle);
 	}
 	// 階段の設定
-	int stairCount = treasureCount;
-	auto stair = GetStageObject(stairCount);
+	auto stair = GetStageObject("Stair");
 	if (!stair) return;
 	Vector3 stairSpawnPos = GetStairsPos();
-	stair->GetOwner()->position = stairSpawnPos;
+	stair->position = stairSpawnPos;
 
 	// 出口の設定
-	int exitCount = stairCount + 1;
-	auto exit = GetStageObject(exitCount);
+	auto exit = GetStageObject("Exit");
 	if (!exit) return;
 	Vector3 exitSpawnPos = GetGoalPos();
-	exit->GetOwner()->position = exitSpawnPos;
+	exit->position = exitSpawnPos;
 
 	// フェードイン
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop);
