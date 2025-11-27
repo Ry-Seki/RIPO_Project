@@ -32,7 +32,7 @@ public:
 	 *	ステージデータからロードリストに追加
 	 *	@param[in]	DungeonStageData& stageData			ステージデータ
 	 */
-	void LoadResourcesFromStageData(Engine& engine, DungeonStageData& stageData) {
+	void LoadResourcesFromStageData(DungeonStageData& stageData) {
 		LoadManager& load = LoadManager::GetInstance();
 		// Stageカテゴリ
 		auto stageMap = stageData.GetCategory("Stage");

@@ -29,13 +29,14 @@ void DungeonCreater::Setup() {
 }
 /*
  *	@brief		ダンジョン生成
- *	@param[in]	const int floorID
+ *	@param[in]	int floorID
  *  @param[in]	DungeonFloorData& floorData
  *  @param[in]	DungeonResourceData& resourceData
  *  @param[in]	const std::vector<int>& treasureIDList
+ *  @param[out]	int& stairID
  */
 void DungeonCreater::CreateDungeon(
-	const int floorID, DungeonFloorData& floorData, DungeonResourceData& resourceData, const std::vector<int>& treasureIDList) {
+	int floorID, DungeonFloorData& floorData, DungeonResourceData& resourceData, const std::vector<int>& treasureIDList, int& stairID) {
 	// フロアデータの取得
 	FloorData spawnData;
 	floorData.TryGetFloorData(floorID, spawnData);
@@ -75,7 +76,8 @@ void DungeonCreater::CreateDungeon(
 	}
 
 	// ステージボーンデータの設定
-	SetStageJSONData(resourceData.stageBoneResource[floorID]->GetData());
+	// TODO : スポーンデータの修正
+	SetStageJSONData(resourceData.stageBoneResource[0]->GetData());
 
 	// プレイヤーの設定
 	// モデルの取得
@@ -132,9 +134,15 @@ void DungeonCreater::CreateDungeon(
 	}
 	// 階段の設定
 	auto stair = GetStageObject("Stair");
+	auto stairMoveData = resourceData.stageFloorResource->GetData();
+	// TODO: この数字を生成される階段の数にする
+	stairID = stairMoveData[std::to_string(floorID)]["0"];
 	if (stair) {
 		Vector3 stairSpawnPos = GetStairsPos();
 		stair->position = stairSpawnPos;
+		auto stairComponent = stair->GetComponent<Stair>();
+		if (stairComponent) 
+			stairComponent->SetStairID(stairID);
 	}
 	// 出口の設定
 	auto exit = GetStageObject("Exit");

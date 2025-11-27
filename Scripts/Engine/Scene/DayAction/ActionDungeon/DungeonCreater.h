@@ -27,13 +27,14 @@ public:
 	void Setup();
 	/*
 	 *	@brief		É_ÉìÉWÉáÉìê∂ê¨
-	 *	@param[in]	const int floorID
+	 *	@param[in]	int floorID
 	 *  @param[in]	DungeonFloorData& floorData
 	 *  @param[in]	DungeonResourceData& resourceData
 	 *  @param[in]	const std::vector<int>& treasureIDList
+	 *  @param[out]	int& stairID
 	 */
 	void CreateDungeon(
-		const int floorID, DungeonFloorData& floorData, DungeonResourceData& resourceData, const std::vector<int>& treasureIDList);
+		int floorID, DungeonFloorData& floorData, DungeonResourceData& resourceData, const std::vector<int>& treasureIDList, int& stairID);
 	
 };
 
