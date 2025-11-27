@@ -7,12 +7,14 @@
 #define _DUNGEON_CREATER_H_
 
 #include "../../../../Data/Dungeon/DungeonFloorData.h"
+#include "../../../../Data/Dungeon/DungeonResourceData.h"
 
 /*
  *	@brief	ダンジョン生成クラス
  */
 class DungeonCreater {
-	DungeonFloorData floorData;
+private:
+	bool isFirst = true;
 
 public:
 	/*
@@ -24,9 +26,14 @@ public:
 	 */
 	void Setup();
 	/*
-	 *	@brief	ダンジョン生成
+	 *	@brief		ダンジョン生成
+	 *	@param[in]	const int floorID
+	 *  @param[in]	DungeonFloorData& floorData
+	 *  @param[in]	DungeonResourceData& resourceData
+	 *  @param[in]	const std::vector<int>& treasureIDList
 	 */
-	void CreateDungeon();
+	void CreateDungeon(
+		const int floorID, DungeonFloorData& floorData, DungeonResourceData& resourceData, const std::vector<int>& treasureIDList);
 	
 };
 

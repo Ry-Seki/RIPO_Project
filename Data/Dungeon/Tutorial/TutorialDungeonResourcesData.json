@@ -3,7 +3,7 @@
     "StageData1": "Res/Model/Stage/StageModel_1.mv1",
     "StageData2": "Res/Model/Stage/StageModel_1_TwoLayer.mv1",
     "StageBoneData": "Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json",
-    "StageStairData": ""
+    "StageFloorData": "Data/Dungeon/Stage1/Stage1DungeonFloorData.json"
   },
   "Character": {
     "PlayerData": "Res/Model/Player/RIPO_Model.mv1",
