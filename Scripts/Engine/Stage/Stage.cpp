@@ -71,6 +71,9 @@ void Stage::Render() {
 			StageColliderRenderer(player.get(), player->GetComponent<PlayerComponent>()->GetMoveVec());
 
 		}
+
+
+
 #endif // _DEBUG
 
 
@@ -113,7 +116,7 @@ void Stage::UpdateCollision(GameObject* other, Vector3 MoveVec) {
 	// 縦方向のオフセット
 	float polyOffset = PolyPosTop.y - PolyPos.y;
 	// キャラクターが水平移動しているかどうか
-	bool moveFlag = (fabs(MoveVec.x) > 0.01f || fabs(MoveVec.z) > 0.01f);
+	bool moveFlag = (fabs(MoveVec.x) > _CHARACTER_MOVEVEC_MIN || fabs(MoveVec.z) > _CHARACTER_MOVEVEC_MIN);
 
 	// ステージのコリジョン情報取得
 	auto hitDim = SetupCollision(other, MoveVec);
@@ -145,11 +148,12 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(GameObject* othe
 	// 対象がいない場合は抜ける
 	if (!other)return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
 
+	// 移動していない場合、最小範囲で当たり判定を検知
 	Vector3 effectiveMove = MoveVec;
-	if (Magnitude(effectiveMove) < 0.0001f) {
-		// 移動していない場合は小さめの球を用意して静止判定用
+	if (Magnitude(effectiveMove) < _CHARACTER_MOVEVEC_MIN) {
 		effectiveMove = Vector3::zero;
 	}
+
 	// カプセルの取得
 	auto capsule = other->GetComponent<CapsuleCollider>();
 	if (!capsule)return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
@@ -159,23 +163,18 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(GameObject* othe
 	// 上端
 	Vector3 capTop = other->position + capsule->capsule.endPoint;
 	// 中心点
-	Vector3 capCenter = (capLower + capTop) * 0.5f;
+	Vector3 capCenter = (capLower + capTop) * _HALF;
 	// 半径
 	float radius = capsule->capsule.radius;
 
 	// 移動方向ベクトルを正規化
 	Vector3 forward = Normalized(MoveVec);
 
-	float forwardLength = 5000.0f;		 // 前方判定距離
-	float backwardLength = 500.0f;		 // 後退判定距離
-	float boxHalfSize = radius + 500.0f;  // 左右/上下余裕
-
-
 	// 前方限定の球判定用中心
-	Vector3 sphereCenter = capCenter + forward * MoveVec.Magnitude() * 0.5f;
+	Vector3 sphereCenter = capCenter + forward * MoveVec.Magnitude() * _HALF;
 
 	// 球の半径
-	float sphereRadius = radius + MoveVec.Magnitude() * 0.5f;
+	float sphereRadius = radius + MoveVec.Magnitude() * _HALF;
 
 	auto hitDim = std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
 	*hitDim = MV1CollCheck_Sphere(modelHandle, -1, ToVECTOR(sphereCenter), sphereRadius);
@@ -199,7 +198,7 @@ void Stage::ClassifyPolygons(
 	for (int i = 0; i < hitDim.HitNum; i++) {
 		const auto& poly = hitDim.Dim[i];
 		// 壁か床かの判断を行う
-		bool isWall = (poly.Normal.y < 0.9f && poly.Normal.y > -0.9f);
+		bool isWall = (poly.Normal.y < _POLYGON_HEIGHT && poly.Normal.y > -_POLYGON_HEIGHT);
 
 		// 壁かどうか
 		if (isWall) {
@@ -257,18 +256,19 @@ void Stage::ProcessWallCollision(
 		Vector3 p2 = FromVECTOR(poly->Position[2]);
 
 		// カプセル中心点
-		Vector3 capCenter = (capLower + capTop) * 0.5f;
+		Vector3 capCenter = (capLower + capTop) * _HALF;
 
 		// 最近接点を求める
 		Vector3 nearest = Nearest(capCenter, p0, p1, p2);
 
 		// どれだけ貫通しているかを求める
 		Vector3 diff = capCenter - nearest;
+
 		float dist = Magnitude(diff);
 
 		// カプセルが触れていないなら処理しない
 		float penetrate = capsuleRadius - dist;
-		if (penetrate <= 0.0f) continue;
+		if (penetrate <= Vector3::zero.y) continue;
 
 
 		Vector3 pushDir = Normalized(diff);
@@ -339,7 +339,7 @@ void Stage::ProcessFloorCollision(
 	// ワールド座標での上端
 	Vector3 capEnd = nowPos + capsule->capsule.endPoint;
 	// カプセル中心点
-	Vector3 capCenter = (capStart + capEnd) * 0.5f;
+	Vector3 capCenter = (capStart + capEnd) * _HALF;
 	// カプセルの半径
 	float capsuleRadius = capsule->capsule.radius;
 
@@ -358,7 +358,7 @@ void Stage::ProcessFloorCollision(
 		float dist = Magnitude(diff);
 
 		// カプセルの半径以下なら接地
-		const float EPS = 0.5f;
+		const float EPS = _HALF;
 		if (dist <= capsuleRadius + EPS) {
 			// 接地判定
 			if (!isGround || MaxY < nearest.y) {
@@ -443,7 +443,7 @@ void Stage::StageColliderRenderer(GameObject* other, Vector3 MoveVec) {
 		const auto& poly = hitDim->Dim[i];
 
 		// 壁／床を判定
-		bool isWall = (poly.Normal.y < 0.9f && poly.Normal.y > -0.9f);
+		bool isWall = (poly.Normal.y < _POLYGON_HEIGHT && poly.Normal.y > -_POLYGON_HEIGHT);
 		unsigned int drawColor = isWall ? wallColor : floorColor;
 
 		// ポリゴンを半透明で描画

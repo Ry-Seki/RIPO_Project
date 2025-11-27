@@ -18,14 +18,14 @@
   */
 class Stage : public StageBase {
 private:
-	std::string modelPath;	// モデルのパス
-	Vector3 lightDirection;
+	std::string modelPath;				// モデルのパス
+	Vector3 lightDirection;				// ライトの距離
 
+	Vector3 pointLightColor;			// 色
 	std::vector<Vector3>pointLightPos;	// 位置
-	Vector3 pointLightColor;// 色
-	float pointLightRange;	// 効果範囲
+	float pointLightRange;				// 効果範囲
 
-	GameObjectPtr player;
+	GameObjectPtr player;				// プレイヤー
 
 	static constexpr DxLib::COLOR_F _MAP_DIF_COLOR = { 1.5f, 1.5f, 1.3f, 1.0f };	// マップ全体のライト ディフューズカラー
 	static constexpr DxLib::COLOR_F _MAP_AMB_COLOR = { 0.2f, 0.25f, 0.3f, 1 };		// マップ全体のライト アンビエントカラー
@@ -39,6 +39,9 @@ private:
 	static constexpr Attenuation _POINT_ATTAN = { 0.0f, 0.0005f, 0.0f };
 	static constexpr DxLib::COLOR_F _POINT_SPC_COLOR = { 0.1f, 0.1f, 0.1f, 1.0f };	// ポイントライト スペキュラーカラー
 
+	static constexpr float _CHARACTER_MOVEVEC_MIN = 0.01f;		// キャラクターの移動量の最小値
+	static constexpr float _HALF = 0.5f;						// 半分
+	static constexpr float _POLYGON_HEIGHT = 0.9f;
 
 
 public:
