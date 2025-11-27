@@ -8,8 +8,8 @@
 
 #include "DayActionBase.h"
 #include "ActionFactory.h"
-#include "../../../Data/DungeonStageData.h"
-#include "../../../Data/DungeonFloorData.h"
+#include "../../../Data/Dungeon/DungeonStageData.h"
+#include "../../../Data/Dungeon/DungeonFloorData.h"
 #include "../../Load/JSON/LoadJSON.h"
 
 #include <vector>

@@ -13,7 +13,7 @@ private:
 	int currentStageID = -1;  // 現在の階層のID
 	int previousStageID = -1; // 直前の階層のID
 
-	
+
 public:
 	StageState() = default;	// コンストラクタ
 	~StageState() = default;	// デストラクタ
@@ -52,7 +52,7 @@ public:
 
 		// ひとつ前の階層にする
 		previousStageID = tmp;
-		
+
 	}
 
 	/*

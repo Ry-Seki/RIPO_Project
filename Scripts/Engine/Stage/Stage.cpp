@@ -155,9 +155,9 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(GameObject* othe
 	if (!capsule)return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
 
 	// 下端
-	Vector3 capLower = other->position + capsule->capsule.segment.startPoint;
+	Vector3 capLower = other->position + capsule->capsule.startPoint;
 	// 上端
-	Vector3 capTop = other->position + capsule->capsule.segment.endPoint;
+	Vector3 capTop = other->position + capsule->capsule.endPoint;
 	// 中心点
 	Vector3 capCenter = (capLower + capTop) * 0.5f;
 	// 半径
@@ -245,9 +245,9 @@ void Stage::ProcessWallCollision(
 	float capsuleRadius = capsule->capsule.radius;
 
 	// ワールド座標に変換したカプセルの下端
-	Vector3 capLower = nowPos + capsule->capsule.segment.startPoint;
+	Vector3 capLower = nowPos + capsule->capsule.startPoint;
 	// ワールド座標に変換したカプセルの上端
-	Vector3 capTop = nowPos + capsule->capsule.segment.endPoint;
+	Vector3 capTop = nowPos + capsule->capsule.endPoint;
 
 	// 壁ポリゴンの配列分回す
 	for (auto* poly : walls) {
@@ -277,8 +277,8 @@ void Stage::ProcessWallCollision(
 		nowPos += pushDir * penetrate;
 
 		// 新しいカプセル位置
-		capLower = nowPos + capsule->capsule.segment.startPoint;
-		capTop = nowPos + capsule->capsule.segment.endPoint;
+		capLower = nowPos + capsule->capsule.startPoint;
+		capTop = nowPos + capsule->capsule.endPoint;
 	}
 
 	if (moveFlag) {
@@ -335,9 +335,9 @@ void Stage::ProcessFloorCollision(
 	if (!capsule) return;
 
 	// ワールド座標での下端
-	Vector3 capStart = nowPos + capsule->capsule.segment.startPoint;
+	Vector3 capStart = nowPos + capsule->capsule.startPoint;
 	// ワールド座標での上端
-	Vector3 capEnd = nowPos + capsule->capsule.segment.endPoint;
+	Vector3 capEnd = nowPos + capsule->capsule.endPoint;
 	// カプセル中心点
 	Vector3 capCenter = (capStart + capEnd) * 0.5f;
 	// カプセルの半径
@@ -377,7 +377,7 @@ void Stage::ProcessFloorCollision(
 	// 接地しているかどうかの判定を重力コンポーネントに渡す
 	if (isGround) {
 		// 対象がいなければいけない位置
-		float desiredY = capsule->capsule.segment.startPoint.y;
+		float desiredY = MaxY - capsule->capsule.startPoint.y;
 
 		// 壁から押し出されたとき対策
 		// 床よりもしたに押し出された場合、押し戻す
@@ -447,7 +447,7 @@ void Stage::StageColliderRenderer(GameObject* other, Vector3 MoveVec) {
 		unsigned int drawColor = isWall ? wallColor : floorColor;
 
 		// ポリゴンを半透明で描画
-		DrawTriangle3D(poly.Position[0], poly.Position[1], poly.Position[2], drawColor, FALSE);
+		DrawTriangle3D(poly.Position[0], poly.Position[1], poly.Position[2], drawColor, TRUE);
 
 		// ポリゴンを白線で描画
 		DrawLine3D(poly.Position[0], poly.Position[1], lineColor);
