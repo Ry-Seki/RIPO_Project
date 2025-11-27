@@ -33,9 +33,13 @@ public:
 	 *  @param[in]	const std::vector<int>& treasureIDList
 	 *  @param[out]	int& stairID
 	 */
-	void CreateDungeon(
+	void GenerateDungeon(
 		int floorID, DungeonFloorData& floorData, DungeonResourceData& resourceData, const std::vector<int>& treasureIDList, int& stairID);
-	
+	/*
+	 *	@brief		ƒ_ƒ“ƒWƒ‡ƒ“‚ÌÄ¶¬
+	 *	@param[in]	int floorID
+	 *	@param[in]	GameObjectList enemyList
+	 */
 };
 
 #endif // !_DUNGEON_CREATER_H_

@@ -211,7 +211,7 @@ void ActionDungeon::SetupNextFloor() {
 		}
 	}
 	// ダンジョンの再構築
-	dungeonCreater.CreateDungeon(currentFloor, floorData, resourceData, IDList, nextFloor);
+	dungeonCreater.GenerateDungeon(currentFloor, floorData, resourceData, IDList, nextFloor);
 	// フェードイン
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop);
 	FadeManager::GetInstance().StartFade(fade);
@@ -283,7 +283,7 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 	load.SetOnComplete([this, &engine, IDList]() {
 		isStart = true;
 		// ダンジョンの生成
-		dungeonCreater.CreateDungeon(currentFloor, floorData, resourceData, IDList, nextFloor);
+		dungeonCreater.GenerateDungeon(currentFloor, floorData, resourceData, IDList, nextFloor);
 		SetUseObjectColliderFlag(true);
 	});
 }
