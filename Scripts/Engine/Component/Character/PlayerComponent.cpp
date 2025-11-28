@@ -44,6 +44,7 @@ void PlayerComponent::Update(float deltaTime) {
 	// ステージとの当たり判定
 	StageManager::GetInstance().StageCollider(player, moveVec);
 
+
 	// 右クリックでウデアクションをハンドに設定
 	auto playerArm = player->GetComponent<ArmActionComponent>();
 	if (GetMouseInput() & MOUSE_INPUT_RIGHT)

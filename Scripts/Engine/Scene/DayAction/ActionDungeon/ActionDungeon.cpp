@@ -22,6 +22,7 @@
 #include "../../../Fade/FadeFactory.h"
 #include "../../../Fade/FadeManager.h"
 #include "../../../Stage/StageUtility.h"
+#include "../../../Component/GravityComponent.h"
 #include "../../../GameObject/GameObjectUtility.h"
 #include "../../../System/Money/MoneyManager.h"
 
@@ -284,7 +285,10 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 		isStart = true;
 		// ƒ_ƒ“ƒWƒ‡ƒ“‚Ì¶¬
 		dungeonCreater.GenerateDungeon(currentFloor, floorData, resourceData, IDList, nextFloor);
+		// d—Í
+		auto player = CharacterManager::GetInstance().GetPlayer();
 		SetUseObjectColliderFlag(true);
+		player->GetComponent<GravityComponent>()->SetGravity(true);
 	});
 }
 
