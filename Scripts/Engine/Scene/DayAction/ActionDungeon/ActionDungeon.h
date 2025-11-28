@@ -7,10 +7,12 @@
 #define _ACTION_DUNGEON_H_
 
 #include "../DayActionBase.h"
-#include "../../../../Data/DungeonStageData.h"
-#include "../../../../Data/DungeonFloorData.h"
+#include "../../../../Data/Dungeon/DungeonStageData.h"
+#include "../../../../Data/Dungeon/DungeonFloorData.h"
 #include "../../../Load/Model/LoadModel.h"
 #include "../../../Load/JSON/LoadJSON.h"
+#include "DungeonCreater.h"
+
 #include <vector>
 #include <memory>
 #include <string>
@@ -36,14 +38,19 @@ class GameObject;
  */
 class ActionDungeon : public DayActionBase {
 private:
+	DungeonCreater dungeonCreater;											// ダンジョン生成クラス
 	DungeonStageData stageData;												// ステージデータ
 	DungeonFloorData floorData;												// フロアデータ
+	DungeonResourceData resourceData;										// ダンジョンリソースデータ
+
 	std::vector<std::vector<std::shared_ptr<GameObject>>> enemyFloorList;	// 階層ごとの敵のリスト
 	GameObject* haveTreasure = nullptr;										// プレイヤーが所持しているお宝
 
 	int currentFloor = -1;								// 現在の階層
+	int nextFloor = -1;									// 次の階層
 	bool inputHandle = false;							// 入力フラグ
 	bool isChangeFloor = false;							// 階層変更フラグ
+	bool isStart = false;
 
 private:
 	static bool isFirst;
@@ -107,13 +114,7 @@ public:
 	void DebugInitialize(Engine& engine, DungeonStageData& setStageData, DungeonFloorData& setFloorData);
 	void DebugSetupData(Engine& engine, const DungeonResource& setResource);
 	void EndDungeon();
-private:
-	/*
-	 *	@brief		ステージデータからロードリストに追加
-	 *	@param[in]	DungeonStageData& stageData			ステージデータ
-	 *	@param[in]	DungeonResource&  dungeonResource	セットするリソース
-	 */
-	void LoadResourcesFromStageData(Engine& engine, DungeonStageData& stageData, DungeonResource& dungeonResource);
+
 public:
 	/*
 	 *	@brief		ダンジョンステージデータの設定
