@@ -37,12 +37,13 @@ public:
 	/*
 	 *	@brief		ƒ_ƒ“ƒWƒ‡ƒ“‚ÌÄ¶¬
 	 *	@param[in]	int floorID
+	 *  @param[in]	const std::vector<int>& enemySpawnIDList
 	 *	@param[in]	const int holdTreasureID
 	 *  @param[in]	GameObjectPtr& holdTreasure
 	 *  @param[in]	const std::vector<int>& treasureIDList
 	 *  @param[out]	int& stairID
 	 */
-	void RegenerateDungeon(int floorID, GameObjectList& setEnemyList, const int holdTreasureID,
+	void RegenerateDungeon(int floorID, const std::vector<int>& enemySpawnIDList, const int holdTreasureID,
 						   const std::vector<int>& treasureIDList, int& stairID);
 
 public:
