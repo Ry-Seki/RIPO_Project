@@ -14,22 +14,15 @@
   */
 class Treasure : public StageObjectBase {
 private:
+	int spawnID;				// 生成位置のID
 	bool isCollected;			// 取得済みかどうか
-	int modelHandle;			// モデルのハンドル
 	float viewRadius;			// 取得範囲
 
 public:
 	Treasure();
-	virtual ~Treasure();
+	~Treasure() override;
 
 public:
-	/*
-	 *	@function	ModelLoad
-	 *  @brief		モデルの読み込み
-	 *  @param		const int modelHandleBase
-	 */
-	void ModelLoad(const int modelHandleBase)override;
-
 	/*
 	 *	@function	Update
 	 *  @brief		更新
@@ -43,16 +36,21 @@ public:
 	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
 
 public:
-
 	/*
-	 *	取得済み判定
-	 *  @return bool
+	 *	@brief		取得済み判定
+	 *  @return		bool
 	 */
 	bool GetCollected() const { return isCollected; }
-
+	/*
+	 *	@brief		スポーンIDの取得
+	 *	@return		int
+	 */
+	int GetSpawnID() const { return spawnID; }
+	/*
+	 *	@brief		スポーンIDの設定
+	 *	@param[in]	const int setID
+	 */
+	inline void SetSpawnID(const int setID) { spawnID = setID; }
 };
 
-
 #endif // !_TREASURE_H_
-
-

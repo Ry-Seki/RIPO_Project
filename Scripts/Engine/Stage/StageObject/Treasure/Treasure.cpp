@@ -1,6 +1,6 @@
 /*
  *	@file	@Treasure.cpp
- *  @author	oorui
+ *  @author	oorui & Seki
  */
 
 #include "Treasure.h"
@@ -11,26 +11,14 @@
   */
 Treasure::Treasure()
 	: StageObjectBase()
-	, isCollected(false)
-	, modelHandle(-1){
+	, isCollected(false){
 }
-
+/*
+ *	デストラクタ
+ */
 Treasure::~Treasure() {
 
 }
-
-/*
-  *	@function	ModelLoad
-  *  @brief		モデルの読み込み
-  *  @param		const int modelHandleBase
-  */
-void Treasure::ModelLoad(const int modelHandleBase) {
-	// 種類別でモデルを読み込む
-	modelHandle = modelHandleBase;
-
-}
-
-
 /*
  *	@function	Update
  *  @brief		更新
@@ -39,8 +27,6 @@ void Treasure::ModelLoad(const int modelHandleBase) {
 void Treasure::Update(float deltaTime) {
 	if (isCollected) return;
 }
-
-
 /*
  *	衝突が起きたときに呼び出される処理
  */

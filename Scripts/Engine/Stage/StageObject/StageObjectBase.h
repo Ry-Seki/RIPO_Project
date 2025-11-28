@@ -30,7 +30,7 @@ public:
 	 *	@brief		ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
 	 *  @param		const int modelHandle
 	 */
-	virtual void ModelLoad(const int modelHandleBase) = 0;
+	virtual void ModelLoad(const int modelHandleBase) {};
 
 public:
 	/*
