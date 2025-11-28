@@ -209,11 +209,15 @@ void DungeonCreater::RegenerateDungeon(int floorID, GameObjectList& setEnemyList
 	// 敵の取得
 	GameObjectList originEnemyList = setEnemyList;
 	GameObjectList enemyList = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
+	// モデルハンドルの取得
+	int enemyHandle = resourceData.enemyResource[0]->GetHandle();
 	// 敵の設定
 	for (int i = 0; i < enemyCount; i++) {
 		if (enemyList.size() <= 0) break;
 		auto enemyCharacter = enemyList[i];
 		if (!enemyCharacter) continue;
+		// モデルの設定
+		SetModelHandle(enemyCharacter.get(), enemyHandle);
 		// コンポーネントの取得
 		std::shared_ptr<EnemyComponent> component = originEnemyList[i]->GetComponent<EnemyComponent>();
 		if (!component) continue;
@@ -232,6 +236,8 @@ void DungeonCreater::RegenerateDungeon(int floorID, GameObjectList& setEnemyList
 	// お宝の取得
 	for (int i = 0; i < treasureCount; i++) {
 		if (treasureList.size() <= 0) break;
+		// モデルハンドルの取得
+		int treasureHandle = resourceData.treasureResource[i]->GetHandle();
 		// 宝オブジェクトの取得
 		auto treasure = treasureList[i].get();
 		if (!treasure) continue;
@@ -245,6 +251,8 @@ void DungeonCreater::RegenerateDungeon(int floorID, GameObjectList& setEnemyList
 		} else {
 			// 位置の設定
 			treasure->position = treasureSpawnPos[i];
+			// モデルの設定
+			SetModelHandle(treasure, treasureHandle);
 		}
 	}
 

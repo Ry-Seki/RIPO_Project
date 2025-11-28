@@ -226,7 +226,7 @@ void ActionDungeon::SetupNextFloor() {
 	if (setFloorData.isFirst) {
 		setFloorData.isFirst = false;
 	} else {
-		if (!enemyFloorList[currentFloor].empty()) {
+		if (enemyFloorList[currentFloor].size()> 0) {
 			setFloorData.enemySpawnCount = enemyFloorList[currentFloor].size();
 		}
 	}
