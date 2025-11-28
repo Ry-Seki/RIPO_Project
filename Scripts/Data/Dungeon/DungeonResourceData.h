@@ -16,6 +16,9 @@
 // 前方宣言
 class Engine;
 
+/*
+ *	@breif	ダンジョンに必要なリソースデータ
+ */
 class DungeonResourceData {
 public:
 	std::vector<std::shared_ptr<LoadModel>> stageResource;

@@ -49,6 +49,9 @@ private:
 	void PlayerAvoid(GameObject* player, float deltaTime);
 
 public:
+	/*
+	 *	ˆÚ“®—Ê‚ÌŽæ“¾
+	 */
 	inline Vector3 GetMoveVec()const { return moveVec; }
 
 };
