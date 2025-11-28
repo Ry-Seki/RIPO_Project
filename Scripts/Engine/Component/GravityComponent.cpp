@@ -18,12 +18,16 @@ void GravityComponent::Update(float deltaTime) {
 	if (!owner) return;
 
 	// d—Í‚ª‚©‚©‚é‚Ü‚Åˆ—‚µ‚È‚¢
-	if (!isGravity) return;
+	if (!isGravity) {
+		fallSpeed = 0.0f;
+		return;
+	}
 
 	// Ú’n‚µ‚Ä‚¢‚½ê‡‚Í—‰º‚µ‚È‚¢
 	if (hitGroundingFrag) {
 		// —‰º‘¬“x‚ğ0‚É‚·‚é
 		fallSpeed = 0.0f;
+		return;
 	}
 
 
