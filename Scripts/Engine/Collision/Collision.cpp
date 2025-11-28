@@ -317,7 +317,7 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 	// •Ó‚ğ—ñ‹“(min/max‚Ì‘g‚İ‡‚í‚¹)
 	auto AddEdge = [&](Vector3 p1, Vector3 p2) {
 		Segment e(p1, p2);
-		}
+		};
 
 	return;
 }
