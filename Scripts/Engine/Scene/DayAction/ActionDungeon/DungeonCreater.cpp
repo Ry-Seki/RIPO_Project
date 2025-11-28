@@ -25,7 +25,7 @@ void DungeonCreater::Initialize() {
  *	@brief		準備前処理
  */
 void DungeonCreater::Setup() {
-	isFirst = true;
+	
 }
 /*
  *	@brief		ダンジョン生成
@@ -35,28 +35,17 @@ void DungeonCreater::Setup() {
  *  @param[in]	const std::vector<int>& treasureIDList
  *  @param[out]	int& stairID
  */
-void DungeonCreater::RegenerateDungeon(
+void DungeonCreater::GenerateDungeon(
 	int floorID, DungeonFloorData& floorData, DungeonResourceData& resourceData, const std::vector<int>& treasureIDList, int& stairID) {
 	// フロアデータの取得
 	FloorData spawnData;
 	floorData.TryGetFloorData(floorID, spawnData);
 
 	// オブジェクトの生成
-	// 初回生成時のみ、プレイヤーとカメラ、ステージモデル生成
-	if (isFirst) {
-		isFirst = false;
-		// プレイヤー生成
-		GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100,  300,  100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
-		// カメラ生成
-		CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
-		// ステージハンドルの設定
-		int stageHandleCount = resourceData.stageResource.size();
-		std::vector<int> stageHandleList(stageHandleCount);
-		for (int i = 0; i < stageHandleCount; i++) {
-			stageHandleList[i] = resourceData.stageResource[i]->GetHandle();
-		}
-		LoadStage(stageHandleList);
-	}
+	// プレイヤー生成
+	GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100,  300,  100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+	// カメラ生成
+	CameraManager::GetInstance().CreateCamera("camera", { 0, 0, 0 }, { 0, 0, 0 });
 
 	// 敵の生成
 	for (int i = 0; i < spawnData.enemySpawnCount; i++) {
@@ -75,6 +64,13 @@ void DungeonCreater::RegenerateDungeon(
 		GenerateExit("Exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
 	}
 
+	// ステージハンドルの設定
+	int stageHandleCount = resourceData.stageResource.size();
+	std::vector<int> stageHandleList(stageHandleCount);
+	for (int i = 0; i < stageHandleCount; i++) {
+		stageHandleList[i] = resourceData.stageResource[i]->GetHandle();
+	}
+	LoadStage(stageHandleList);
 	// ステージボーンデータの設定
 	// TODO : スポーンデータの修正
 	SetStageJSONData(resourceData.stageBoneResource[0]->GetData());
