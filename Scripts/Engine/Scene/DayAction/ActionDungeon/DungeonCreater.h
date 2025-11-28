@@ -14,7 +14,7 @@
  */
 class DungeonCreater {
 private:
-	bool isFirst = true;
+	FloorData d_floorData;
 
 public:
 	/*
@@ -38,8 +38,15 @@ public:
 	/*
 	 *	@brief		É_ÉìÉWÉáÉìÇÃçƒê∂ê¨
 	 *	@param[in]	int floorID
-	 *	@param[in]	GameObjectList enemyList
+	 * 	@param[in]	DungeonFloorData& floorData
+	 *  @param[in]	DungeonResourceData& resourceData
+	 *	@param[in]	GameObjectList& enemyList
+	 *  @param[in]	GameObjectPtr& holdTreasure
+	 *  @param[in]	const std::vector<int>& treasureIDList
+	 *  @param[out]	int& stairID
 	 */
+	//void RegenerateDungeon(int floorID, DungeonFloorData& floorData, DungeonResourceData& resourceData, GameObjectList& enemyList,
+	//					   GameObjectPtr& holdTreasure, const std::vector<int>& treasureIDList, int& stairID);
 };
 
 #endif // !_DUNGEON_CREATER_H_
