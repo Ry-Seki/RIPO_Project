@@ -35,7 +35,7 @@ void DungeonCreater::Setup() {
  *  @param[in]	const std::vector<int>& treasureIDList
  *  @param[out]	int& stairID
  */
-void DungeonCreater::RegenerateDungeon(
+void DungeonCreater::GenerateDungeon(
 	int floorID, DungeonFloorData& floorData, DungeonResourceData& resourceData, const std::vector<int>& treasureIDList, int& stairID) {
 	// フロアデータの取得
 	FloorData spawnData;
