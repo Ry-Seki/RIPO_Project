@@ -19,15 +19,6 @@ public:
 	virtual ~EnemyAttackBase() = default;
 public:
 	virtual void Attack() = 0;
-
-	///*
-	// *	ƒ_ƒ[ƒW‚ð—^‚¦‚éˆ—
-	// */
-	//void AddDamage(int enemyPower) {
-	//	int playerHP = player->AddComponent<CharacterBase>()->GetHP();
-	//	playerHP -= enemyPower;
-	//	player->AddComponent<CharacterBase>()->SetHP(playerHP);
-	//}
 };
 
 /*

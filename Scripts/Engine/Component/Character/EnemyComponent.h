@@ -24,6 +24,8 @@ private:
 	bool closePlayer;
 	// 方向転換時のディレイ
 	float turnDelay;
+	// スポーンID
+	int enemySpawnID = 0;
 
 	// ランダムで加算されるカウントの天井値
 	const float TOP_VALUE;
@@ -87,6 +89,18 @@ public:
 	 *	プレイヤーの距離判定の取得
 	 */
 	inline bool GetClosePlayer() const { return closePlayer; }
+
+	/*
+	 *	スポーンIDの取得
+	 */
+	inline int GetSpawnEnemyID() const { return enemySpawnID; }
+
+	/*
+	 *	スポーンIDの変更
+	 */
+	inline void SetSpawnEnemyID(int& setValue) {
+		enemySpawnID = setValue;
+	}
 };
 
 #endif // !_ENEMYCOMPONENT_H_
