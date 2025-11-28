@@ -12,16 +12,20 @@
 #include <vector>
 
 /*
- *	@brief	ダンジョン階層データ
+ *	@brief	階層データ
  */
 struct FloorData {
-	int enemySpawnCount = 0;
-	int bossSpawnCount = 0;
-	int treasureSpawnCount = 0;
-	int stairSpawnCount = 0;
-	int goalSpawnCount = 0;
+	bool isFirst = true;			// 最初にその階層に入ったか判別フラグ
+	int enemySpawnCount = 0;		// 敵の生成数
+	int bossSpawnCount = 0;			// ボスの生成数
+	int treasureSpawnCount = 0;		// お宝生成数
+	int stairSpawnCount = 0;		// 階段生成数
+	int goalSpawnCount = 0;			// 出口生成数
 };
 
+/*
+ *	@brief	ダンジョン階層データ
+ */
 class DungeonFloorData {
 private:
 	std::unordered_map<int, FloorData> dungeonFloorMap;
@@ -53,6 +57,7 @@ public:
 		for (const auto& floor : dungeonJson["Floors"]) {
 			int floorID = floor.value("FloorID", 0);
 			FloorData data;
+			data.isFirst = true;
 			data.enemySpawnCount = floor.value("EnemySpawnCount", 0);
 			data.bossSpawnCount = floor.value("BossSpawnCount", 0);
 			data.treasureSpawnCount = floor.value("TreasureSpawnCount", 0);
@@ -77,6 +82,18 @@ public:
 		floorData = itr->second;
 		return true;
 	}
-	
+	/*
+	 *	@brief		指定したIDのフロアデータのセット
+	 *  @prram[in]	const int floorID
+	 *	@param[in]	FloorData& setFloorData
+	 *	@return		bool
+	 */
+	bool TrySetFloorData(const int floorID, FloorData& setFloorData) {
+		auto itr = dungeonFloorMap.find(floorID);
+		if (itr == dungeonFloorMap.end()) return false;
+
+		itr->second = setFloorData;
+		return true;
+	}
 };
 #endif // !_DUNGEON_FLOOR_DATA_H_

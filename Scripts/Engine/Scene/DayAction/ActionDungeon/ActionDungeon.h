@@ -17,19 +17,6 @@
 #include <memory>
 #include <string>
 
-/*
- *	各ロードデータ構造体
- */
-struct DungeonResource {
-	std::vector<std::shared_ptr<LoadModel>> stageResource;
-	std::vector<std::shared_ptr<LoadJSON>> stageBoneResource;
-	std::shared_ptr<LoadModel> playerResource;
-	std::vector<std::shared_ptr<LoadModel>> enemyResource;
-	std::shared_ptr<LoadModel> bossResource;
-	std::vector<std::shared_ptr<LoadModel>> treasureResource;
-	std::shared_ptr<LoadModel> eventTreasureResource;
-};
-
 // 前方宣言
 class GameObject;
 
@@ -112,7 +99,7 @@ private:
 public:
 
 	void DebugInitialize(Engine& engine, DungeonStageData& setStageData, DungeonFloorData& setFloorData);
-	void DebugSetupData(Engine& engine, const DungeonResource& setResource);
+	void DebugSetupData(Engine& engine, const DungeonResourceData& setResource);
 	void EndDungeon();
 
 public:

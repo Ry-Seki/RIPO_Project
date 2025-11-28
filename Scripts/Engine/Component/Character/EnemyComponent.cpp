@@ -28,6 +28,7 @@ void EnemyComponent::Start() {
 	enemy = GetOwner();
 	if (enemy == nullptr) return;
 	player = CameraManager::GetInstance().GetTarget();
+	if (player == nullptr) return;
 	wayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z + wayPointDistance);
 	nextWayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z - wayPointDistance);
 }

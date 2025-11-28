@@ -211,7 +211,7 @@ void ActionDungeon::SetupNextFloor() {
 		}
 	}
 	// ダンジョンの再構築
-	dungeonCreater.CreateDungeon(currentFloor, floorData, resourceData, IDList, nextFloor);
+	dungeonCreater.GenerateDungeon(currentFloor, floorData, resourceData, IDList, nextFloor);
 	// フェードイン
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop);
 	FadeManager::GetInstance().StartFade(fade);
@@ -257,7 +257,7 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 	stageData = setStageData;
 	floorData = setFloorData;
 	LoadManager& load = LoadManager::GetInstance();
-	DungeonResource dungeonResource;
+	//DungeonResource dungeonResource;
 	auto treasureMap = stageData.GetCategory("Treasure");
 	std::string leafKey;
 	std::vector<int> IDList;
@@ -283,12 +283,12 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 	load.SetOnComplete([this, &engine, IDList]() {
 		isStart = true;
 		// ダンジョンの生成
-		dungeonCreater.CreateDungeon(currentFloor, floorData, resourceData, IDList, nextFloor);
+		dungeonCreater.GenerateDungeon(currentFloor, floorData, resourceData, IDList, nextFloor);
 		SetUseObjectColliderFlag(true);
 	});
 }
 
-void ActionDungeon::DebugSetupData(Engine& engine, const DungeonResource& setResource) {
+void ActionDungeon::DebugSetupData(Engine& engine, const DungeonResourceData& setResource) {
 	currentFloor = 0;
 	enemyFloorList.resize(16);
 	enemyFloorList[currentFloor].resize(1);
