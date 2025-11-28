@@ -143,12 +143,13 @@ Vector3 StageManager::GetStartPos() const {
 /*
  *	ゴール位置の取得
  */
-Vector3 StageManager::GetGoalPos() const {
-	if (!loadedStage)return Vector3();
+std::vector<Vector3> StageManager::GetGoalPos() const {
+	std::vector<Vector3> result;
+	if (!loadedStage)return result;
 
 	// ステージのモデルハンドルの取得
 	int modelHandle = loadedStage->GetStageModelHandle();
-	if (modelHandle == -1) return Vector3();
+	if (modelHandle == -1) return result;
 
 	// 終了位置の名前の取得
 	// jsonファイルの文字列がなかった場合のnullCheck
@@ -156,7 +157,7 @@ Vector3 StageManager::GetGoalPos() const {
 		!json.contains(GameConst::_CREATE_POSNAME_PLAYER) ||
 		!json[GameConst::_CREATE_POSNAME_PLAYER].contains("GoalPos")
 		)
-		return Vector3();
+		return result;
 
 	// フレーム名を取得
 	std::string framName = json[GameConst::_CREATE_POSNAME_PLAYER]["GoalPos"];
@@ -166,16 +167,16 @@ Vector3 StageManager::GetGoalPos() const {
 
 	// 終了位置のフレーム番号を取得
 	int frameIndex = MV1SearchFrame(modelHandle, cstr);
-	if (frameIndex == -1)return Vector3();
+	if (frameIndex == -1)return result;
 
 	// 終了位置の座標を取得
 	VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
 
 	// VECTOR型をVector3型に変換
 	Vector3 goalPos = FromVECTOR(framePos);
-
+	result.push_back(FromVECTOR(framePos));
 	// 座標を返す
-	return goalPos;
+	return result;
 
 }
 
@@ -292,17 +293,18 @@ std::vector<Vector3> StageManager::GetPointLightPos()const {
 /*
  *	階層移動用階段位置の取得
  */
-Vector3 StageManager::GetStairsPos() const {
-	if (!loadedStage)return Vector3();
+std::vector<Vector3> StageManager::GetStairsPos() const {
+	std::vector<Vector3> result;
+	if (!loadedStage)return result;
 
 	// ステージのモデルハンドルの取得
 	int modelHandle = loadedStage->GetStageModelHandle();
-	if (modelHandle == -1) return Vector3();
+	if (modelHandle == -1) return result;
 
 	// 階段位置の名前の取得
 	// jsonファイルの文字列がなかった場合のnullCheck
 	if (!json.contains(GameConst::_CREATE_POSNAME_PLAYER) || !json[GameConst::_CREATE_POSNAME_PLAYER].contains("StairsPos"))
-		return Vector3();
+		return result;
 	std::string frameName = json[GameConst::_CREATE_POSNAME_PLAYER]["StairsPos"];
 
 	// string型→const char* 型への型変換
@@ -310,15 +312,15 @@ Vector3 StageManager::GetStairsPos() const {
 
 	// 階段位置のフレーム番号を取得
 	int frameIndex = MV1SearchFrame(modelHandle, cstr);
-	if (frameIndex == -1)return Vector3();
+	if (frameIndex == -1)return result;
 
 	// 階段位置の座標を取得
 	VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
 
 	// VECTOR型をVector3型に変換
 	Vector3 stairsPos = FromVECTOR(framePos);
-
+	result.push_back(FromVECTOR(framePos));
 	// 座標を返す
-	return stairsPos;
+	return result;
 
 }

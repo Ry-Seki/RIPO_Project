@@ -141,7 +141,7 @@ public:
 	/*
 	 * ゴール位置の取得
 	 */
-	Vector3 GetGoalPos()const;
+	std::vector<Vector3> GetGoalPos()const;
 
 	/*
 	 *	敵の初期生成位置の取得
@@ -161,7 +161,7 @@ public:
 	/*
 	 *	階層移動用階段位置の取得
 	 */
-	Vector3 GetStairsPos()const;
+	std::vector<Vector3> GetStairsPos()const;
 
 	/*
 	 *	jsonの変更

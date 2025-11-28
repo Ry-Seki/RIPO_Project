@@ -225,8 +225,9 @@ void ActionDungeon::SetupNextFloor() {
 	// 初めてかどうかで分ける
 	if (setFloorData.isFirst) {
 		setFloorData.isFirst = false;
-	} else {
-		if (enemyFloorList[currentFloor].size()> 0) {
+	}
+	else {
+		if (enemyFloorList[currentFloor].size() > 0) {
 			setFloorData.enemySpawnCount = enemyFloorList[currentFloor].size();
 		}
 	}
@@ -317,7 +318,7 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 		auto player = CharacterManager::GetInstance().GetPlayer();
 		SetUseObjectColliderFlag(true);
 		player->GetComponent<GravityComponent>()->SetGravity(true);
-	});
+		});
 }
 
 void ActionDungeon::DebugSetupData(Engine& engine, const DungeonResourceData& setResource) {
@@ -396,14 +397,21 @@ void ActionDungeon::DebugSetupData(Engine& engine, const DungeonResourceData& se
 	// 階段の設定
 	auto stair = GetStageObject("Stair");
 	if (!stair) return;
-	Vector3 stairSpawnPos = GetStairsPos();
-	stair->position = stairSpawnPos;
+	std::vector<Vector3> stairSpawnPos = GetStairsPos();
+	size_t stairSpawnPosCount = stairSpawnPos.size();
+	for (int i = 0; i < stairSpawnPosCount; i++) {
+		stair->position = stairSpawnPos[i];
+	}
 
 	// 出口の設定
 	auto exit = GetStageObject("Exit");
 	if (!exit) return;
-	Vector3 exitSpawnPos = GetGoalPos();
-	exit->position = exitSpawnPos;
+	std::vector<Vector3> exitSpawnPos = GetGoalPos();
+	size_t exitPointCount = exitSpawnPos.size();
+	for (int i = 0; i < exitPointCount; i++) {
+		exit->position = exitSpawnPos[i];
+
+	}
 
 	// フェードイン
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop);

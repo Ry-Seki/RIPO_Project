@@ -30,7 +30,7 @@ void DebugScene::Initialize(Engine& engine) {
 	BulletManager::GetInstance().Initialize(engine);
 	auto stageModel = load.LoadResource<LoadModel>("Res/Model/Stage/StageModel_1.mv1");
 	auto stageModel2 = load.LoadResource<LoadModel>("Res/Model/Stage/StageModel_1_TwoLayer.mv1");
-	auto playerModel = load.LoadResource<LoadModel>("Res/Model/Player/RIPO_Model.mv1");	
+	auto playerModel = load.LoadResource<LoadModel>("Res/Model/Player/RIPO_Model.mv1");
 	auto enemyModel = load.LoadResource<LoadModel>("Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1");
 	auto stageBoneData = load.LoadResource<LoadJSON>("Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json");
 	auto treasureModel1 = load.LoadResource<LoadModel>("Res/Model/Treasure/Treasure01.mv1");
@@ -90,12 +90,20 @@ void DebugScene::Initialize(Engine& engine) {
 				treasure[i]->GetOwner()->position = treasureSpawnPos[i];
 			}
 
-			Vector3 stairSpawnPos = StageManager::GetInstance().GetStairsPos();
-			stair->GetOwner()->position = stairSpawnPos;
+			std::vector<Vector3>stairSpawnPos = StageManager::GetInstance().GetStairsPos();
+			size_t stairSpawnPosCount = stairSpawnPos.size();
+			for (int i = 0; i < stairSpawnPosCount; i++) {
+				stair->GetOwner()->position = stairSpawnPos[i];
 
-			Vector3 exitSpawnPos = StageManager::GetInstance().GetGoalPos();
-			exit->GetOwner()->position = exitSpawnPos;
-			GameObjectManager::GetInstance().SetObjectColliderFlag(true);
+			}
+
+			std::vector<Vector3> exitSpawnPos = StageManager::GetInstance().GetGoalPos();
+			size_t exitSpawnCount = exitSpawnPos.size();
+			for (int i = 0; i < exitSpawnCount; i++) {
+				exit->GetOwner()->position = exitSpawnPos[i];
+				GameObjectManager::GetInstance().SetObjectColliderFlag(true);
+
+			}
 		}
 	);
 }
