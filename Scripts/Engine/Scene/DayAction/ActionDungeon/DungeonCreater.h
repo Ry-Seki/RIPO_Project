@@ -15,8 +15,8 @@
  */
 class DungeonCreater {
 private:
-	FloorData d_floorData;
-	DungeonResourceData d_resourceData;
+	FloorData floorData;
+	DungeonResourceData resourceData;
 
 public:
 	/*
@@ -30,13 +30,10 @@ public:
 	/*
 	 *	@brief		ダンジョン生成
 	 *	@param[in]	int floorID
-	 *  @param[in]	DungeonFloorData& floorData
-	 *  @param[in]	DungeonResourceData& resourceData
 	 *  @param[in]	const std::vector<int>& treasureIDList
 	 *  @param[out]	int& stairID
 	 */
-	void GenerateDungeon(
-		int floorID, DungeonFloorData& floorData, DungeonResourceData& resourceData, const std::vector<int>& treasureIDList, int& stairID);
+	void GenerateDungeon(int floorID, const std::vector<int>& treasureIDList, int& stairID);
 	/*
 	 *	@brief		ダンジョンの再生成
 	 *	@param[in]	int floorID
@@ -47,6 +44,22 @@ public:
 	 */
 	void RegenerateDungeon(int floorID, GameObjectList& setEnemyList, const int holdTreasureID,
 						   const std::vector<int>& treasureIDList, int& stairID);
+
+public:
+	/*
+	 *	@brief		ダンジョンに必要なデータの設定
+	 *	@param[in]	FloorData& setFloorData
+	 *	@param[in]	DungeonResourceData& setResourceData
+	 */
+	inline void SetDungeonData(FloorData& setFloorData, DungeonResourceData& setResourceData) {
+		floorData = setFloorData;
+		resourceData = setResourceData;
+	}
+	/*
+	 *	@brief		ダンジョンフロアデータの設定
+	 *	@param[in]	FloorData& setFloorData
+	 */
+	inline void SetFloorData(FloorData& setFloorData) { floorData = setFloorData; }
 };
 
 #endif // !_DUNGEON_CREATER_H_

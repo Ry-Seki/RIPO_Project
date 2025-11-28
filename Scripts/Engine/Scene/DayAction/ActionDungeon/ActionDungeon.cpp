@@ -25,6 +25,7 @@
 #include "../../../Component/GravityComponent.h"
 #include "../../../GameObject/GameObjectUtility.h"
 #include "../../../System/Money/MoneyManager.h"
+#include "../../../Stage/StageObject/Treasure/Treasure.h"
 
 #include <iostream>
 
@@ -168,7 +169,7 @@ void ActionDungeon::Render() {
  *  破棄処理
  */
 void ActionDungeon::Teardown() {
-
+	delete holdTreasure;
 }
 /*
  *	@brief		階層変更
@@ -192,7 +193,7 @@ void ActionDungeon::TeardownCurrentFloor() {
 	SetUseObjectColliderFlag(false);
 	StageObjectManager::GetInstance().ClearObject();
 	// 現在のフロアの敵のデータを設定
-	//enemyFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
+	enemyFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
 	// 現在残っている敵の片付け処理
 	TeardownEnemy();
 	// プレイヤーが持っているお宝以外を削除
@@ -211,8 +212,28 @@ void ActionDungeon::SetupNextFloor() {
 			IDList.push_back(std::stoi(leafKey));
 		}
 	}
+	// プレイヤーが持っているお宝IDの取得
+	int holdTreasureID = -1;
+	if (holdTreasure) {
+		auto component = holdTreasure->GetComponent<StageObjectBase>();
+		holdTreasureID = component->GetTreasureID();
+	}
 	// ダンジョンの再構築
-	dungeonCreater.GenerateDungeon(currentFloor, floorData, resourceData, IDList, nextFloor);
+	FloorData setFloorData;
+	// フロアデータの取得
+	floorData.TryGetFloorData(currentFloor, setFloorData);
+	// 初めてかどうかで分ける
+	if (setFloorData.isFirst) {
+		setFloorData.isFirst = false;
+	} else {
+		if (!enemyFloorList[currentFloor].empty()) {
+			setFloorData.enemySpawnCount = enemyFloorList[currentFloor].size();
+		}
+	}
+	dungeonCreater.SetFloorData(setFloorData);
+	dungeonCreater.RegenerateDungeon(currentFloor, enemyFloorList[currentFloor], holdTreasureID, IDList, nextFloor);
+	// フロアデータの更新
+	floorData.TrySetFloorData(currentFloor, setFloorData);
 	// フェードイン
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop);
 	FadeManager::GetInstance().StartFade(fade);
@@ -234,7 +255,7 @@ void ActionDungeon::TeardownEnemy() {
  *	@brief		ステージオブジェクトの片付け処理
  */
 void ActionDungeon::TeardownStageObject() {
-	haveTreasure = StageManager::GetInstance().GetLiftObject();
+	holdTreasure = StageManager::GetInstance().GetLiftObject();
 	GameObjectList stageObjectList = GetCreateObjectList();
 	// プレイヤーが所持しているお宝以外を削除する
 	for (int i = stageObjectList.size() - 1; i >= 0; i--) {
@@ -242,8 +263,8 @@ void ActionDungeon::TeardownStageObject() {
 		if (!stageObject) continue;
 
 		int ID = stageObject->ID;
-		if (haveTreasure) {
-			if (ID == haveTreasure->ID) continue;
+		if (holdTreasure) {
+			if (ID == holdTreasure->ID) continue;
 
 			RemoveStageObject(ID);
 		}
@@ -255,6 +276,8 @@ void ActionDungeon::TeardownStageObject() {
 void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageData, DungeonFloorData& setFloorData) {
 	isComplete = false;
 	currentFloor = 0;
+	enemyFloorList.resize(16);
+	enemyFloorList[currentFloor].resize(16);
 	stageData = setStageData;
 	floorData = setFloorData;
 	LoadManager& load = LoadManager::GetInstance();
@@ -284,7 +307,12 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 	load.SetOnComplete([this, &engine, IDList]() {
 		isStart = true;
 		// ダンジョンの生成
-		dungeonCreater.GenerateDungeon(currentFloor, floorData, resourceData, IDList, nextFloor);
+		FloorData setFloorData;
+		floorData.TryGetFloorData(currentFloor, setFloorData);
+		setFloorData.isFirst = false;
+		dungeonCreater.SetDungeonData(setFloorData, resourceData);
+		dungeonCreater.GenerateDungeon(currentFloor, IDList, nextFloor);
+		floorData.TrySetFloorData(currentFloor, setFloorData);
 		// 重力
 		auto player = CharacterManager::GetInstance().GetPlayer();
 		SetUseObjectColliderFlag(true);
@@ -295,7 +323,7 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 void ActionDungeon::DebugSetupData(Engine& engine, const DungeonResourceData& setResource) {
 	currentFloor = 0;
 	enemyFloorList.resize(16);
-	enemyFloorList[currentFloor].resize(1);
+	enemyFloorList[currentFloor].resize(16);
 
 
 	// ステージの設定
@@ -385,6 +413,7 @@ void ActionDungeon::DebugSetupData(Engine& engine, const DungeonResourceData& se
 }
 
 void ActionDungeon::EndDungeon() {
+	holdTreasure = nullptr;
 	// 当たり判定の無効化
 	SetUseObjectColliderFlag(false);
 	RemoveAllCharacter();

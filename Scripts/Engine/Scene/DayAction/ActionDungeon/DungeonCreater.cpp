@@ -31,24 +31,16 @@ void DungeonCreater::Setup() {
 /*
  *	@brief		ダンジョン生成
  *	@param[in]	int floorID
- *  @param[in]	DungeonFloorData& floorData
- *  @param[in]	DungeonResourceData& resourceData
  *  @param[in]	const std::vector<int>& treasureIDList
  *  @param[out]	int& stairID
  */
-void DungeonCreater::GenerateDungeon(
-	int floorID, DungeonFloorData& floorData, DungeonResourceData& resourceData, 
-	const std::vector<int>& treasureIDList, int& stairID) {
-	// フロアデータの取得
-	FloorData spawnData;
-	floorData.TryGetFloorData(floorID, spawnData);
-
+void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasureIDList, int& stairID) {
 	// オブジェクトの生成
-	int enemyCount = d_floorData.enemySpawnCount;
-	int bossCount = d_floorData.bossSpawnCount;
-	int treasureCount = d_floorData.treasureSpawnCount;
-	int stairCount = d_floorData.stairSpawnCount;
-	int goalCount = d_floorData.goalSpawnCount;
+	int enemyCount = floorData.enemySpawnCount;
+	int bossCount = floorData.bossSpawnCount;
+	int treasureCount = floorData.treasureSpawnCount;
+	int stairCount = floorData.stairSpawnCount;
+	int goalCount = floorData.goalSpawnCount;
 
 	// プレイヤー生成
 	GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100,  300,  100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
@@ -146,7 +138,7 @@ void DungeonCreater::GenerateDungeon(
 	// 階段の取得
 	GameObjectList stairList = GetObjectByName("Stair");
 	// 階段の遷移先IDデータの取得
-	auto stairMoveData = d_resourceData.stageFloorResource->GetData();
+	auto stairMoveData = resourceData.stageFloorResource->GetData();
 	// 階段の設定
 	for (int i = 0; i < stairCount; i++) {
 		if (stairList.size() <= 0) break;
@@ -178,11 +170,11 @@ void DungeonCreater::GenerateDungeon(
 void DungeonCreater::RegenerateDungeon(int floorID, GameObjectList& setEnemyList, const int holdTreasureID, 
 									   const std::vector<int>& treasureIDList, int& stairID) {
 	// オブジェクトの再生成
-	int enemyCount = d_floorData.enemySpawnCount;
-	int bossCount = d_floorData.bossSpawnCount;
-	int treasureCount = d_floorData.treasureSpawnCount;
-	int stairCount = d_floorData.stairSpawnCount;
-	int goalCount = d_floorData.goalSpawnCount;
+	int enemyCount = floorData.enemySpawnCount;
+	int bossCount = floorData.bossSpawnCount;
+	int treasureCount = floorData.treasureSpawnCount;
+	int stairCount = floorData.stairSpawnCount;
+	int goalCount = floorData.goalSpawnCount;
 
 	// 敵の再生成
 	for (int i = 0; i < enemyCount; i++) {
@@ -217,18 +209,13 @@ void DungeonCreater::RegenerateDungeon(int floorID, GameObjectList& setEnemyList
 	// 敵の取得
 	GameObjectList originEnemyList = setEnemyList;
 	GameObjectList enemyList = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
-	// 階層移動前の敵がいれば、生成した敵の情報を上書きする
-	if (originEnemyList.size() > 0) {
-		for (int i = 0; i < enemyCount; i++) {
-			enemyList[i] = originEnemyList[i];
-		}
-	}
 	// 敵の設定
-	for (int i = 0, max = enemyList.size(); i < max; i++) {
+	for (int i = 0; i < enemyCount; i++) {
+		if (enemyList.size() <= 0) break;
 		auto enemyCharacter = enemyList[i];
 		if (!enemyCharacter) continue;
 		// コンポーネントの取得
-		std::shared_ptr<EnemyComponent> component = enemyCharacter->GetComponent<EnemyComponent>();
+		std::shared_ptr<EnemyComponent> component = originEnemyList[i]->GetComponent<EnemyComponent>();
 		if (!component) continue;
 		// 位置の設定
 		int spawnPos = component->GetSpawnEnemyID();
@@ -265,7 +252,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, GameObjectList& setEnemyList
 	// 階段の取得
 	GameObjectList stairList = GetObjectByName("Stair");
 	// 階段の遷移先IDデータの取得
-	auto stairMoveData = d_resourceData.stageFloorResource->GetData();
+	auto stairMoveData = resourceData.stageFloorResource->GetData();
 	// 階段の設定
 	for (int i = 0; i < stairCount; i++) {
 		if (stairList.size() <= 0) break;
