@@ -4,6 +4,7 @@
  */
 
 #include "Collision.h"
+#include <cfloat>
 
  /*
   *  点から線分への最近接点
@@ -240,10 +241,12 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 	Vector3 segEnd = segment.endPoint;
 	Vector3 boxMin = box.min;
 	Vector3 boxMax = box.max;
+	// より小さい値を探していくため初期値は最大
+	minLengthSq = FLT_MAX;
 
 	// 線分がAABB内に入っているか
 
-	// 線分がAABBと交差しているか(ラムダ式)
+	// 線分がAABBと交差しているか
 	auto IntersectSegmentAABB = [&](Vector3& intersectPoint) {
 		// 線分の方向ベクトル(非正規化)
 		Vector3 segDir = segEnd - segStart;
@@ -267,7 +270,7 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 		return true;
 	};
 
-	// 交差しているなら最近接点は0(以降未開拓領域)
+	// 交差しているなら最近接点は0
 	Vector3 intersect;
 	if (IntersectSegmentAABB(intersect)) {
 		segMinPoint = intersect;
@@ -278,46 +281,105 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 
 	// 線分の端点からAABBへの最近接点
 
-	auto CheckCandidate = [&](const Vector3& p, const Vector3& q) {
-		float d2 = Dot((p - q), (p - q));
-		if (d2 < minLengthSq) {
-			minLengthSq = d2;
-			segMinPoint = p;
-			boxMinPoint = q;
+	// 現状の最短より短ければ値更新
+	auto CheckCandidate = [&](const Vector3& segPoint, const Vector3& boxPoint) {
+		float lengthSq = Dot((segPoint - boxPoint), (segPoint - boxPoint));
+		if (lengthSq < minLengthSq) {
+			minLengthSq = lengthSq;
+			segMinPoint = segPoint;
+			boxMinPoint = boxPoint;
 		}
 	};
 
-	Vector3 qa = PointToAABBMinLength(segStart, box);
-	CheckCandidate(segStart, qa);
+	// 線分の開始点からAABB
+	Vector3 startMinPoint = PointToAABBMinLength(segStart, box);
+	CheckCandidate(segStart, startMinPoint);
 
-	Vector3 qb = PointToAABBMinLength(segEnd, box);
-	CheckCandidate(segEnd, qb);
+	// 線分の終了点からAABB
+	Vector3 engMinPoint = PointToAABBMinLength(segEnd, box);
+	CheckCandidate(segEnd, engMinPoint);
 
 	// AABBの8コーナーから線分への最近接点
 
-	Vector3 cornaers[8] = {
-		{boxMin.x, boxMin.y, boxMin.z},
-		{boxMax.x, boxMin.y, boxMin.z},
-		{boxMin.x, boxMax.y, boxMin.z},
-		{boxMax.x, boxMax.y, boxMin.z},
-		{boxMin.x, boxMin.y, boxMax.z},
-		{boxMax.x, boxMin.y, boxMax.z},
-		{boxMin.x, boxMax.y, boxMax.z},
-		{boxMax.x, boxMax.y, boxMax.z},
+	// 各コーナーから線分への最近接点
+	auto CheckCorner = [&](const float x, const float y, const float z) {
+		Vector3 corner = { x, y, z };
+		float minRatio;
+		Vector3 segPoint = PointToSegmentMinLength(corner, segment, minRatio);
+		CheckCandidate(segPoint, corner);
 	};
 
-	for (int i = 0; i < 8; i++) {
-		float t;
-		Vector3 sp = PointToSegmentMinLength(cornaers[i], segment, t);
-		CheckCandidate(sp, cornaers[i]);
-	}
+	// 8つのコーナーで最近接点を求める
+	CheckCorner(boxMin.x, boxMin.y, boxMin.z);
+	CheckCorner(boxMax.x, boxMin.y, boxMin.z);
+	CheckCorner(boxMin.x, boxMax.y, boxMin.z);
+	CheckCorner(boxMax.x, boxMax.y, boxMin.z);
+	CheckCorner(boxMin.x, boxMin.y, boxMax.z);
+	CheckCorner(boxMax.x, boxMin.y, boxMax.z);
+	CheckCorner(boxMin.x, boxMax.y, boxMax.z);
+	CheckCorner(boxMax.x, boxMax.y, boxMax.z);
 
 	// AABBの12辺から線分への最近接点
 
-	// 辺を列挙(min/maxの組み合わせ)
-	auto AddEdge = [&](Vector3 p1, Vector3 p2) {
-		Segment e(p1, p2);
-		};
+	// 各辺から線分への最近接点
+	auto CheckEdge = [&](Vector3 start, Vector3 end) {
+		Segment edgeSeg(start, end);
+		Vector3 aMinPoint, bMinPoint;
+		float aMinRatio, bMinRatio;
+		SegmentBetweenMinLength(segment, edgeSeg, aMinPoint, bMinPoint, aMinRatio, bMinRatio);
+		CheckCandidate(aMinPoint, bMinPoint);
+	};
+
+	// x方向の4辺
+	CheckEdge({ boxMin.x, boxMin.y, boxMin.z }, { boxMax.x, boxMin.y, boxMin.z });
+	CheckEdge({ boxMin.x, boxMin.y, boxMax.z }, { boxMax.x, boxMin.y, boxMax.z });
+	CheckEdge({ boxMin.x, boxMax.y, boxMin.z }, { boxMax.x, boxMax.y, boxMin.z });
+	CheckEdge({ boxMin.x, boxMax.y, boxMax.z }, { boxMax.x, boxMax.y, boxMax.z });
+
+	// y方向の4辺
+	CheckEdge({ boxMin.x, boxMin.y, boxMin.z }, { boxMin.x, boxMax.y, boxMin.z });
+	CheckEdge({ boxMax.x, boxMin.y, boxMin.z }, { boxMax.x, boxMax.y, boxMin.z });
+	CheckEdge({ boxMin.x, boxMin.y, boxMax.z }, { boxMin.x, boxMax.y, boxMax.z });
+	CheckEdge({ boxMax.x, boxMin.y, boxMax.z }, { boxMax.x, boxMax.y, boxMax.z });
+	
+	// z方向の4辺
+	CheckEdge({ boxMin.x, boxMin.y, boxMin.z }, { boxMin.x, boxMin.y, boxMax.z });
+	CheckEdge({ boxMax.x, boxMin.y, boxMin.z }, { boxMax.x, boxMin.y, boxMax.z });
+	CheckEdge({ boxMin.x, boxMax.y, boxMin.z }, { boxMin.x, boxMax.y, boxMax.z });
+	CheckEdge({ boxMax.x, boxMax.y, boxMin.z }, { boxMax.x, boxMax.y, boxMax.z });
+
+	// AABBの6面への投影(線分が面に垂直に近い場合に必要)
+
+	auto CheckFace = [&](int axis, float coord) {
+		Vector3 AB = segEnd - segStart;
+		float d = AB[axis];
+
+		if (fabs(d) < EPSILON) return;// 平行 -> 無限
+
+		float t = (coord - segStart[axis]) / d;
+		if (t < 0.0f || t > 1.0f) return;// 線分外
+
+		Vector3 P = segStart + AB * t; // 面の高さでの線分上の点
+
+		// 他の2軸がAABBの範囲内なら面内
+		int ax1 = (axis + 1) % 3;
+		int ax2 = (axis + 2) % 3;
+
+		if (P[ax1] >= box.min[ax1] && P[ax1] <= box.max[ax1] && P[ax2] >= box.min[ax2] && P[ax2] <= box.max[ax2]) {
+			Vector3 Q = P; // 面上の点
+			CheckCandidate(P, Q);
+		}
+	};
+
+	// x = min.x / max.x
+	CheckFace(0, box.min.x);
+	CheckFace(0, box.max.x);
+	// y = min.y / max.y
+	CheckFace(1, box.min.y);
+	CheckFace(1, box.max.y);
+	// z = min.z / max.z
+	CheckFace(2, box.min.z);
+	CheckFace(2, box.max.z);
 
 	return;
 }
