@@ -61,6 +61,12 @@ private:
 	 */
 	void ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaTime);
 
+public:
+	/*
+	 *	ウェイポイント追尾切り替えフラグ
+	 */
+	inline bool GetChaseTargetChangeFrag() const { return chaseTargetChangeFrag; }
+
 };
 
 #endif // !_ENEMYCHASE_H_

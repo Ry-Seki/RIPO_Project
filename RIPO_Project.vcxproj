@@ -161,6 +161,7 @@
     <ClCompile Include="Scripts\Engine\Component\Character\BulletComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyChase.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyTurn.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\RevolverArm.cpp" />
@@ -250,6 +251,7 @@
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterUtility.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyChase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyTurn.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\RevolverArm.h" />

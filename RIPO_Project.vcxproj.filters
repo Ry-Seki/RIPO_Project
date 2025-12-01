@@ -411,6 +411,12 @@
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionDungeon\DungeonCreater.cpp">
       <Filter>ソース ファイル\Engine\Scene\Action\Dungeon</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyChase.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyTurn.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -778,6 +784,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\Data\Dungeon\DungeonResourceData.h">
       <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyChase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyTurn.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
