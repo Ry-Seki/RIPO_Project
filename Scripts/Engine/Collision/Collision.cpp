@@ -241,6 +241,8 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 	Vector3 segEnd = segment.endPoint;
 	Vector3 boxMin = box.min;
 	Vector3 boxMax = box.max;
+	// 線分の方向ベクトル(非正規化)
+	Vector3 segDir = segEnd - segStart;
 	// より小さい値を探していくため初期値は最大
 	minLengthSq = FLT_MAX;
 
@@ -248,8 +250,6 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 
 	// 線分がAABBと交差しているか
 	auto IntersectSegmentAABB = [&](Vector3& intersectPoint) {
-		// 線分の方向ベクトル(非正規化)
-		Vector3 segDir = segEnd - segStart;
 		// 線分の有効区間
 		float segMinRatio = 0.0f;
 		float segMaxRatio = 1.0f;
@@ -268,7 +268,7 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 		// 全ての軸で交差しているなら線分とAABBは交差している
 		intersectPoint = segStart + (segEnd - segStart) * segMinRatio;
 		return true;
-	};
+		};
 
 	// 交差しているなら最近接点は0
 	Vector3 intersect;
@@ -285,11 +285,11 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 	auto CheckCandidate = [&](const Vector3& segPoint, const Vector3& boxPoint) {
 		float lengthSq = Dot((segPoint - boxPoint), (segPoint - boxPoint));
 		if (lengthSq < minLengthSq) {
-			minLengthSq = lengthSq;
 			segMinPoint = segPoint;
 			boxMinPoint = boxPoint;
+			minLengthSq = lengthSq;
 		}
-	};
+		};
 
 	// 線分の開始点からAABB
 	Vector3 startMinPoint = PointToAABBMinLength(segStart, box);
@@ -307,7 +307,7 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 		float minRatio;
 		Vector3 segPoint = PointToSegmentMinLength(corner, segment, minRatio);
 		CheckCandidate(segPoint, corner);
-	};
+		};
 
 	// 8つのコーナーで最近接点を求める
 	CheckCorner(boxMin.x, boxMin.y, boxMin.z);
@@ -328,7 +328,7 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 		float aMinRatio, bMinRatio;
 		SegmentBetweenMinLength(segment, edgeSeg, aMinPoint, bMinPoint, aMinRatio, bMinRatio);
 		CheckCandidate(aMinPoint, bMinPoint);
-	};
+		};
 
 	// x方向の4辺
 	CheckEdge({ boxMin.x, boxMin.y, boxMin.z }, { boxMax.x, boxMin.y, boxMin.z });
@@ -341,7 +341,7 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 	CheckEdge({ boxMax.x, boxMin.y, boxMin.z }, { boxMax.x, boxMax.y, boxMin.z });
 	CheckEdge({ boxMin.x, boxMin.y, boxMax.z }, { boxMin.x, boxMax.y, boxMax.z });
 	CheckEdge({ boxMax.x, boxMin.y, boxMax.z }, { boxMax.x, boxMax.y, boxMax.z });
-	
+
 	// z方向の4辺
 	CheckEdge({ boxMin.x, boxMin.y, boxMin.z }, { boxMin.x, boxMin.y, boxMax.z });
 	CheckEdge({ boxMax.x, boxMin.y, boxMin.z }, { boxMax.x, boxMin.y, boxMax.z });
@@ -350,36 +350,30 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 
 	// AABBの6面への投影(線分が面に垂直に近い場合に必要)
 
-	auto CheckFace = [&](int axis, float coord) {
-		Vector3 AB = segEnd - segStart;
-		float d = AB[axis];
+	// 各面から線分への最近接点
+	auto CheckFace = [&](float coord, int i) {
+		float dirAxis = segDir[i];
+		// 限りなく平行に近いなら無効
+		if (fabs(dirAxis) < EPSILON) return;
 
-		if (fabs(d) < EPSILON) return;// 平行 -> 無限
+		// 線分が面と交わる位置(正規化)
+		float intersectRatio = (coord - segStart[i]) / dirAxis;
+		// 線分外なら無効
+		if (intersectRatio < 0.0f || intersectRatio > 1.0f) return;
 
-		float t = (coord - segStart[axis]) / d;
-		if (t < 0.0f || t > 1.0f) return;// 線分外
+		// 面の高さでの線分上の点
+		Vector3 segPoint = segStart + segDir * intersectRatio;
 
-		Vector3 P = segStart + AB * t; // 面の高さでの線分上の点
-
-		// 他の2軸がAABBの範囲内なら面内
-		int ax1 = (axis + 1) % 3;
-		int ax2 = (axis + 2) % 3;
-
-		if (P[ax1] >= box.min[ax1] && P[ax1] <= box.max[ax1] && P[ax2] >= box.min[ax2] && P[ax2] <= box.max[ax2]) {
-			Vector3 Q = P; // 面上の点
-			CheckCandidate(P, Q);
+		if (segPoint[i + 1 % 3] >= boxMin[i + 1 % 3] && segPoint[i + 1 % 3] <= boxMax[i + 1 % 3] &&
+			segPoint[i + 2 % 3] >= boxMin[i + 1 % 3] && segPoint[i + 2 % 3] <= boxMax[i + 2 % 3]) {
+			CheckCandidate(segPoint, segPoint);
 		}
-	};
+		};
 
-	// x = min.x / max.x
-	CheckFace(0, box.min.x);
-	CheckFace(0, box.max.x);
-	// y = min.y / max.y
-	CheckFace(1, box.min.y);
-	CheckFace(1, box.max.y);
-	// z = min.z / max.z
-	CheckFace(2, box.min.z);
-	CheckFace(2, box.max.z);
+	for (int i = 0; i < 3; i++) {
+		CheckFace(boxMin[i], i);
+		CheckFace(boxMax[i], i);
+	}
 
 	return;
 }

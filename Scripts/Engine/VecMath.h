@@ -30,6 +30,11 @@ struct Vector3 {
 	static Vector3 forward;		// {  0.0f, 0.0f, 1.0f }
 	static Vector3 back;		// {  0.0f, 0.0f,-1.0f }
 
+	float& operator [] (int index) {
+		if (index < 3)
+			return *(&x + index);
+	}
+
 	/*
 	 *	コンストラクタ
 	 */
@@ -41,6 +46,9 @@ struct Vector3 {
 	 *  @param setZ		Z成分
 	 */
 	Vector3(float setX, float setY, float setZ);
+
+	Vector3(VECTOR v)
+		: x(v.x), y(v.y), z(v.z) {}
 
 	/*
 	 *	デストラクタ
