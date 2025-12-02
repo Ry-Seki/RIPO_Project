@@ -12,7 +12,11 @@
  */
 class EnemyTurn : public EnemyComponent {
 private:
+	GameObject* enemy;
 
+private:
+	// 回転スピード
+	const float ROTATE_SPEED;
 public:
 	EnemyTurn();
 	~EnemyTurn() = default;

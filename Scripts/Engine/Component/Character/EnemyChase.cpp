@@ -14,7 +14,6 @@ EnemyChase::EnemyChase()
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(1000.0f)
 	, enemy(nullptr)
-	, chaseTargetChangeFrag(false)
 	, closePlayer(false)
 	, MOVE_SPEED(700.0f)
 	, ROTATE_SPEED(3.0f)
@@ -45,10 +44,10 @@ void EnemyChase::Update(float deltaTime)
 	}
 	else {
 		// 目標に向かって移動
-		if (!chaseTargetChangeFrag) {
+		if (!enemy->GetComponent<EnemyComponent>()->GetChaseTargetChangeFrag()) {
 			ChaseWayPoint(wayPoint, true, deltaTime);
 		}
-		else if (chaseTargetChangeFrag) {
+		else if (enemy->GetComponent<EnemyComponent>()->GetChaseTargetChangeFrag()) {
 			ChaseWayPoint(nextWayPoint, false, deltaTime);
 		}
 	}
@@ -120,7 +119,7 @@ void EnemyChase::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaT
 	}
 	// 目標地点についたらターゲットを変える
 	else if (distance < differenceTarget) {
-		chaseTargetChangeFrag = targetChange;
+		enemy->GetComponent<EnemyComponent>()->SetChaseTargetChangeFrag(targetChange);
 	}
 	else {
 		// 目標の方向に進む

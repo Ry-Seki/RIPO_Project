@@ -20,8 +20,6 @@ private:
 	Vector3 nextWayPoint;
 	// ウェイポイント間の距離
 	float wayPointDistance;
-	// ウェイポイント追尾切り替えフラグ
-	bool chaseTargetChangeFrag;
 	// プレイヤーの距離判定フラグ
 	bool closePlayer;
 	// 移動量
@@ -33,6 +31,7 @@ private:
 	const float ROTATE_SPEED;
 	// プレイヤーの距離
 	const float DIFFERENCE_PLAYER;
+
 public:
 	/*
 	 *	コンストラクタ
@@ -62,10 +61,6 @@ private:
 	void ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaTime);
 
 public:
-	/*
-	 *	ウェイポイント追尾切り替えフラグ
-	 */
-	inline bool GetChaseTargetChangeFrag() const { return chaseTargetChangeFrag; }
 
 };
 

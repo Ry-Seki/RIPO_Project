@@ -91,6 +91,20 @@ public:
 	inline bool GetClosePlayer() const { return closePlayer; }
 
 	/*
+     *	ウェイポイント追尾切り替えフラグの取得
+	 */
+	inline bool GetChaseTargetChangeFrag() const { return chaseTargetChangeFrag; }
+
+	/*
+	 *	ウェイポイント追尾切り替えフラグの変更
+	 */
+	inline void SetChaseTargetChangeFrag(bool setValue) {
+		chaseTargetChangeFrag = setValue;
+	}
+
+
+
+	/*
 	 *	スポーンIDの取得
 	 */
 	inline int GetSpawnEnemyID() const { return enemySpawnID; }

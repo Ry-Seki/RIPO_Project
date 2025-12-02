@@ -6,8 +6,9 @@
 #include "EnemyChase.h"
 
 EnemyTurn::EnemyTurn()
+	:enemy(nullptr)
+	, ROTATE_SPEED(3.0f)
 {
-
 }
 
 /*
@@ -15,7 +16,8 @@ EnemyTurn::EnemyTurn()
  */
 void EnemyTurn::Start()
 {
-
+	if (enemy == nullptr) return;
+	enemy = GetOwner();
 }
 
 /*
@@ -24,5 +26,10 @@ void EnemyTurn::Start()
  */
 void EnemyTurn::Update(float deltaTime)
 {
-	GetChaseTargetChangeFrag()
+	if (enemy->GetComponent<EnemyComponent>()->GetChaseTargetChangeFrag()) {
+		enemy->rotation.y -= ROTATE_SPEED * deltaTime;
+	}
+	else {
+		enemy->rotation.y += ROTATE_SPEED * deltaTime;
+	}
 }
