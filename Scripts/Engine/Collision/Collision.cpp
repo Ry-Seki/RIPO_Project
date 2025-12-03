@@ -268,7 +268,7 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 		// 全ての軸で交差しているなら線分とAABBは交差している
 		intersectPoint = segStart + (segEnd - segStart) * segMinRatio;
 		return true;
-		};
+	};
 
 	// 交差しているなら最近接点は0
 	Vector3 intersect;
@@ -289,7 +289,7 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 			boxMinPoint = boxPoint;
 			minLengthSq = lengthSq;
 		}
-		};
+	};
 
 	// 線分の開始点からAABB
 	Vector3 startMinPoint = PointToAABBMinLength(segStart, box);
@@ -307,7 +307,7 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 		float minRatio;
 		Vector3 segPoint = PointToSegmentMinLength(corner, segment, minRatio);
 		CheckCandidate(segPoint, corner);
-		};
+	};
 
 	// 8つのコーナーで最近接点を求める
 	CheckCorner(boxMin.x, boxMin.y, boxMin.z);
@@ -328,7 +328,7 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 		float aMinRatio, bMinRatio;
 		SegmentBetweenMinLength(segment, edgeSeg, aMinPoint, bMinPoint, aMinRatio, bMinRatio);
 		CheckCandidate(aMinPoint, bMinPoint);
-		};
+	};
 
 	// x方向の4辺
 	CheckEdge({ boxMin.x, boxMin.y, boxMin.z }, { boxMax.x, boxMin.y, boxMin.z });
@@ -348,28 +348,33 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 	CheckEdge({ boxMin.x, boxMax.y, boxMin.z }, { boxMin.x, boxMax.y, boxMax.z });
 	CheckEdge({ boxMax.x, boxMax.y, boxMin.z }, { boxMax.x, boxMax.y, boxMax.z });
 
-	// AABBの6面への投影(線分が面に垂直に近い場合に必要)
+	// AABBの6面から線分への交点
 
-	// 各面から線分への最近接点
+	// 各面から線分への交点
 	auto CheckFace = [&](float coord, int i) {
 		float dirAxis = segDir[i];
 		// 限りなく平行に近いなら無効
 		if (fabs(dirAxis) < EPSILON) return;
 
-		// 線分が面と交わる位置(正規化)
+		// 線分上の面と交わる位置
 		float intersectRatio = (coord - segStart[i]) / dirAxis;
 		// 線分外なら無効
 		if (intersectRatio < 0.0f || intersectRatio > 1.0f) return;
 
-		// 面の高さでの線分上の点
+		// 面と交わる座標
 		Vector3 segPoint = segStart + segDir * intersectRatio;
+		// チェック中以外の軸
+		int axisA = (i + 1) % 3;
+		int axisB = (i + 2) % 3;
 
-		if (segPoint[i + 1 % 3] >= boxMin[i + 1 % 3] && segPoint[i + 1 % 3] <= boxMax[i + 1 % 3] &&
-			segPoint[i + 2 % 3] >= boxMin[i + 1 % 3] && segPoint[i + 2 % 3] <= boxMax[i + 2 % 3]) {
-			CheckCandidate(segPoint, segPoint);
-		}
-		};
+		// 他の軸がAABB内に収まっているかどうか
+		if (segPoint[axisA] < boxMin[axisA] || segPoint[axisA] > boxMax[axisA]) return;
+		if (segPoint[axisB] < boxMin[axisB] || segPoint[axisB] > boxMax[axisB]) return;
+			
+		CheckCandidate(segPoint, segPoint);
+	};
 
+	// 6つの面を順番に確認
 	for (int i = 0; i < 3; i++) {
 		CheckFace(boxMin[i], i);
 		CheckFace(boxMax[i], i);
@@ -505,10 +510,56 @@ bool Intersect(const AABB& a, const AABB& b, Vector3& penetration) {
  *  @param[out] Vector3 penetration 貫通ベクトル
  */
 bool Intersect(const Capsule& capsule, const AABB& box, Vector3& penetration) {
-	Vector3 segStart = capsule.segment.startPoint;
-	Vector3 segEnd = capsule.segment.endPoint;
+	Vector3 segMinPoint, boxMinPoint;
+	float minLengthSq;
+	// カプセルの線分とAABBの最近接点を求める
+	SegmentToAABBMinLength(capsule.segment, box, segMinPoint, boxMinPoint, minLengthSq);
 
+	// カプセルの半径とその2乗
+	float radius = capsule.radius;
+	float radiusSq = radius * radius;
 
+	// 最近接点間の長さがカプセルの半径以上なら交差していない
+	if (minLengthSq >= radiusSq) return false;
+
+	// 貫通距離を出す
+	// 2つの最近接点間の差ベクトル
+	Vector3 difference = segMinPoint - boxMinPoint;
+	// 最近接点間の長さ
+	float minLength = sqrt(minLengthSq);
+
+	Vector3 direction;
+	// 最近接点間の長さが0に限りなく近くなければ正規化
+	if (minLength > EPSILON) {
+		direction = difference / minLength;
+	}
+	else {
+		// 方向が不定な場合はAABBからカプセル中心方向へ
+		Vector3 boxCenter = (box.min + box.max) * 0.5f;
+		Vector3 capCenter = (capsule.segment.startPoint + capsule.segment.endPoint) * 0.5f;
+		Vector3 d = capCenter - boxCenter;
+
+		if (fabs(d.x) > fabs(d.y)) {
+			if (fabs(d.x) > fabs(d.z)) {
+				direction = { d.x >= 0 ? 1 : -1, 0, 0 };
+			}
+			else {
+				direction = { 0, 0, d.z >= 0 ? 1 : -1};
+			}
+		}
+		else {
+			if (fabs(d.y) > fabs(d.z)) {
+				direction = { 0, d.y >= 0 ? 1 : -1, 0 };
+			}
+			else {
+				direction = { 0, 0, d.z >= 0 ? 1 : -1 };
+			}
+		}
+	}
+	// 貫通深度
+	float depth = radius - minLength;
+	// 貫通距離
+	penetration = direction * depth;
 	return false;
 }
 bool Intersect(const AABB& box, const Capsule& capsule, Vector3& penetration) {
