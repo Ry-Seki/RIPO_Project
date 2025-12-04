@@ -1,5 +1,5 @@
 /*
- *  @file   Collision.h
+ *  @file   Collision.cpp
  *  @author Riku
  */
 
@@ -236,7 +236,7 @@ bool SlabAxisTest(float segStart, float segEnd, float boxMin, float boxMax, floa
  *	@param[out]	Vector3	boxMinPoint	AABBの最近接点座標
  *  @param[out]	float	minLengthSq	最近接点間の長さ2乗
  */
-void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& segMinPoint, Vector3& boxMinPoint, float& minLengthSq) {
+void SegmentToAABBMinLength(const Segment& segment, const AABB& box, Vector3& segMinPoint, Vector3& boxMinPoint, float& minLengthSq) {
 	Vector3 segStart = segment.startPoint;
 	Vector3 segEnd = segment.endPoint;
 	Vector3 boxMin = box.min;
@@ -370,7 +370,7 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 		// 他の軸がAABB内に収まっているかどうか
 		if (segPoint[axisA] < boxMin[axisA] || segPoint[axisA] > boxMax[axisA]) return;
 		if (segPoint[axisB] < boxMin[axisB] || segPoint[axisB] > boxMax[axisB]) return;
-			
+		
 		CheckCandidate(segPoint, segPoint);
 	};
 
@@ -381,63 +381,6 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& seg
 	}
 
 	return;
-}
-
-/*
- *  カプセル同士の交差判定
- *  @param[in]  Capsule a   判定対象1
- *  @param[in]  Capsule b   判定対象2
- *  @param[out] Vector3 penetration 貫通ベクトル
- */
-bool Intersect(const Capsule& a, const Capsule& b, Vector3& penetration) {
-	Vector3 aMinPoint, bMinPoint;
-	float aMinRatio, bMinRatio;
-	// 各カプセルの線分同士の最近接点を求める
-	SegmentBetweenMinLength(a.segment, b.segment, aMinPoint, bMinPoint, aMinRatio, bMinRatio);
-	// 2つの最近接点の差ベクトル
-	Vector3 difference = aMinPoint - bMinPoint;
-	// 最近接点間の長さの2乗(比較の時点では2乗で十分なので今はsqrtしない)
-	float lengthSquare = Dot(difference, difference);
-	// 各カプセルの半径の合計とその2乗
-	float sumRadius = a.radius + b.radius;
-	float sumRadiusSq = sumRadius * sumRadius;
-
-	// 最近接点間の長さが半径の合計以上な時点で衝突はしていない
-	if (lengthSquare >= sumRadiusSq) return false;
-
-	// 貫通距離を出す
-	// 最近接点間の長さが必要になるので2乗を直す
-	float length = std::sqrt(lengthSquare);
-	// 貫通方向ベクトル
-	Vector3 direction;
-	// 最近接点間の長さが0に限りなく近くなければ正規化
-	if (length > EPSILON) {
-		direction = difference / length;
-	}
-	// 最近接点間の長さが限りなく0に近い場合は最も成分の大きい軸に固定
-	else {
-		if (fabs(difference.x) > fabs(difference.y)) {
-			if (fabs(difference.x) > fabs(difference.z)) {
-				direction = V_RIGHT;
-			}
-			else {
-				direction = V_FORWARD;
-			}
-		}
-		else {
-			if (fabs(difference.y) > fabs(difference.z)) {
-				direction = V_UP;
-			}
-			else {
-				direction = V_FORWARD;
-			}
-		}
-	}
-	// 貫通深度
-	float depth = sumRadius - length;
-	// 貫通距離
-	penetration = direction * depth;
-	return true;
 }
 
 /*
@@ -504,6 +447,68 @@ bool Intersect(const AABB& a, const AABB& b, Vector3& penetration) {
 }
 
 /*
+ * カプセル同士の交差判定
+ * @param[in]  Capsule a   判定対象1
+ * @param[in]  Capsule b   判定対象2
+ * @param[out] Vector3 penetration 貫通ベクトル
+ */
+bool Intersect(const Capsule & a, const Capsule & b, Vector3 & penetration) {
+	Vector3 aMinPoint, bMinPoint;
+	float aMinRatio, bMinRatio;
+	// 各カプセルの線分同士の最近接点を求める
+	SegmentBetweenMinLength(a.segment, b.segment, aMinPoint, bMinPoint, aMinRatio, bMinRatio);
+	// 2つの最近接点の差ベクトル
+	Vector3 difference = aMinPoint - bMinPoint;
+	// 最近接点間の長さの2乗(比較の時点では2乗で十分なので今はsqrtしない)
+	float lengthSquare = Dot(difference, difference);
+	// 各カプセルの半径の合計とその2乗
+	float sumRadius = a.radius + b.radius;
+	float sumRadiusSq = sumRadius * sumRadius;
+
+	// 最近接点間の長さが半径の合計以上な時点で衝突はしていない
+	if (lengthSquare >= sumRadiusSq) return false;
+
+	// 貫通距離を出す
+	// 最近接点間の長さが必要になるので2乗を直す
+	float length = std::sqrt(lengthSquare);
+	// 貫通方向ベクトル
+	Vector3 direction;
+	// 最近接点間の長さが0に限りなく近くなければ正規化
+	if (length > EPSILON) {
+		direction = difference / length;
+	}
+	// 最近接点間の長さが限りなく0に近い場合は中心点間の方向で比較
+	else {
+		Vector3 aCenter = (a.segment.startPoint + a.segment.endPoint) * 0.5f;
+		Vector3 bCenter = (b.segment.startPoint + b.segment.endPoint) * 0.5f;
+		Vector3 centerDir = bCenter - aCenter;
+
+		float cdx = fabsf(centerDir.x);
+		float cdy = fabsf(centerDir.y);
+		float cdz = fabsf(centerDir.z);
+
+		if (cdx > cdy && cdx > cdz) {
+			direction = V_RIGHT;
+			direction.x = centerDir.x >= 0 ? 1 : -1;
+		}
+		else if (cdy > cdz) {
+			direction = V_UP;
+			direction.y = centerDir.y >= 0 ? 1 : -1;
+		}
+		else {
+			direction = V_FORWARD;
+			direction.z = centerDir.z >= 0 ? 1 : -1;
+		}
+	}
+	// 貫通深度
+	float depth = sumRadius - length;
+	if (depth < 0) depth = 0;
+	// 貫通距離
+	penetration = direction * depth;
+	return true;
+}
+
+/*
  *  カプセル対AABBの交差判定
  *  @param[in]  Capsule cap			判定対象1
  *  @param[in]  AABB	box			判定対象2
@@ -533,34 +538,36 @@ bool Intersect(const Capsule& capsule, const AABB& box, Vector3& penetration) {
 	if (minLength > EPSILON) {
 		direction = difference / minLength;
 	}
+	// 最近接点間の長さが限りなく0に近い場合はAABBの中心からカプセル中心方向で比較
 	else {
-		// 方向が不定な場合はAABBからカプセル中心方向へ
 		Vector3 boxCenter = (box.min + box.max) * 0.5f;
 		Vector3 capCenter = (capsule.segment.startPoint + capsule.segment.endPoint) * 0.5f;
-		Vector3 d = capCenter - boxCenter;
+		Vector3 centerDir = capCenter - boxCenter;
 
-		if (fabs(d.x) > fabs(d.y)) {
-			if (fabs(d.x) > fabs(d.z)) {
-				direction = { d.x >= 0 ? 1 : -1, 0, 0 };
-			}
-			else {
-				direction = { 0, 0, d.z >= 0 ? 1 : -1};
-			}
+		float cdx = fabsf(centerDir.x);
+		float cdy = fabsf(centerDir.y);
+		float cdz = fabsf(centerDir.z);
+
+		// 最も成分の大きい軸に固定
+		if (cdx > cdy && cdx > cdz) {
+			direction = V_RIGHT;
+			direction.x = centerDir.x >= 0 ? 1 : -1;
+		}
+		else if (cdy > cdz) {
+			direction = V_UP;
+			direction.y = centerDir.y >= 0 ? 1 : -1;
 		}
 		else {
-			if (fabs(d.y) > fabs(d.z)) {
-				direction = { 0, d.y >= 0 ? 1 : -1, 0 };
-			}
-			else {
-				direction = { 0, 0, d.z >= 0 ? 1 : -1 };
-			}
+			direction = V_FORWARD;
+			direction.z = centerDir.z >= 0 ? 1 : -1;
 		}
 	}
 	// 貫通深度
 	float depth = radius - minLength;
+	if (depth < 0) depth = 0;
 	// 貫通距離
 	penetration = direction * depth;
-	return false;
+	return true;
 }
 bool Intersect(const AABB& box, const Capsule& capsule, Vector3& penetration) {
 	return Intersect(capsule, box, penetration);

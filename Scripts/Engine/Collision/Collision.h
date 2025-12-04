@@ -42,7 +42,7 @@ Vector3 PointToAABBMinLength(const Vector3& point, const AABB& box);
 // ü•ª‚©‚çü•ª‚Ö‚ÌÅ‹ßÚ“_
 void SegmentBetweenMinLength(const Segment& a, const Segment& b, Vector3& aMinPoint, Vector3& bMinPoint, float& aMinRatio, float& bMinRatio);
 // ü•ª‚©‚çAABB‚Ö‚ÌÅ‹ßÚ“_
-void SegmentToAABBMinLength(const Segment& segment, const AABB box, Vector3& segMinPoint, Vector3& boxMinPoint, float& minLengthSq);
+void SegmentToAABBMinLength(const Segment& segment, const AABB& box, Vector3& segMinPoint, Vector3& boxMinPoint, float& minLengthSq);
 // Õ“Ë‚µ‚Ä‚¢‚é‚©‚Ç‚¤‚©
 bool Intersect(const Capsule& a, const Capsule& b, Vector3& penetration);
 bool Intersect(const AABB& a, const AABB& b, Vector3& penetration);
