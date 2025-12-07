@@ -61,19 +61,6 @@ public:
 	virtual void Update(float deltaTime) override;
 
 private:
-	/*
-	 *	移動処理
-	 *  param[in]	float			deltaTime
-	 */
-	void EnemyMove(float deltaTime);
-
-	/*
-	 *	目標に向かって進む処理
-	 *  param[in]	Vector3		wayPoint		目標の座標
-	 *  param[in]	bool		targetChange	chaseTargetChangeFragの切り替え
-	 *  param[in]	float		deltaTime
-	 */
-	void ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaTime);
 
 public:
 	/*
