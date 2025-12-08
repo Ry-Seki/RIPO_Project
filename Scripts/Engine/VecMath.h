@@ -30,6 +30,61 @@ struct Vector3 {
 	static Vector3 forward;		// {  0.0f, 0.0f, 1.0f }
 	static Vector3 back;		// {  0.0f, 0.0f,-1.0f }
 
+	bool operator==(const Vector3& v)const {
+		return { x == v.x && y == v.y && z == v.z };
+	};
+	bool operator!=(const Vector3& v)const {
+		return { x != v.x && y != v.y && z != v.z };
+	};
+
+	Vector3 operator+(const Vector3& v)const {
+		return { x + v.x, y + v.y, z + v.z };
+	};
+	Vector3 operator-(const Vector3& v)const {
+		return { x - v.x, y - v.y, z - v.z };
+	};
+	Vector3 operator*(float v)const {
+		return { x * v, y * v, z * v };
+	};
+	Vector3 operator/(float v) {
+		return { x / v, y / v, z / v };
+	};
+
+	Vector3& operator += (const Vector3& v) {
+		x += v.x;
+		y += v.y;
+		z += v.z;
+
+		return *this;
+	};
+	Vector3& operator -= (const Vector3& v) {
+		x -= v.x;
+		y -= v.y;
+		z -= v.z;
+
+		return *this;
+	};
+	Vector3& operator *= (float v) {
+		x *= v;
+		y *= v;
+		z *= v;
+
+		return *this;
+	};
+	Vector3& operator /= (float v) {
+		x /= v;
+		y /= v;
+		z /= v;
+
+		return *this;
+	};
+
+
+
+	Vector3 operator-() {
+		return { -x,-y,-z };
+	};
+
 	float& operator [] (int index) {
 		if (index < 3)
 			return *(&x + index);
@@ -48,7 +103,8 @@ struct Vector3 {
 	Vector3(float setX, float setY, float setZ);
 
 	Vector3(VECTOR v)
-		: x(v.x), y(v.y), z(v.z) {}
+		: x(v.x), y(v.y), z(v.z) {
+	}
 
 	/*
 	 *	デストラクタ
@@ -177,24 +233,6 @@ struct Vector3 {
 	 */
 	static Vector3 Nearest(const Vector3& senterPos, const Vector3& v1, const Vector3& v2, const Vector3& v3);
 };
-
-/*
- *	非メンバ演算子の宣言
- */
-bool operator==(const Vector3& a, const Vector3& b);
-bool operator!=(const Vector3& a, const Vector3& b);
-
-Vector3 operator+(const Vector3& a, const Vector3& b);
-Vector3 operator-(const Vector3& a, const Vector3& b);
-Vector3 operator*(const Vector3& a, float s);
-Vector3 operator/(const Vector3& a, float s);
-Vector3 operator-(const Vector3& v);
-
-Vector3& operator+=(Vector3& lhs, const Vector3& rhs);
-Vector3& operator-=(Vector3& lhs, const Vector3& rhs);
-Vector3& operator*=(Vector3& lhs, float s);
-Vector3& operator/=(Vector3& lhs, float s);
-
 
 /*
  *	非メンバ演算関数の宣言
