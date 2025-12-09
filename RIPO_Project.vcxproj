@@ -251,6 +251,7 @@
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterUtility.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyChase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyState.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyTurn.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />

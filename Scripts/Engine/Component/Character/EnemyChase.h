@@ -5,12 +5,12 @@
 #ifndef _ENEMYCHASE_H_
 #define _ENEMYCHASE_H_
 
-#include "EnemyComponent.h"
+#include "EnemyState.h"
 
 /*
  *	“G‚Ì’Ç]ˆ—ƒNƒ‰ƒX
  */
-class EnemyChase : public EnemyComponent {
+class EnemyChase : public EnemyState {
 private:
 	GameObject* enemy;
 	GameObjectPtr player;

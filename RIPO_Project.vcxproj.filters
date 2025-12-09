@@ -791,5 +791,8 @@
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyTurn.h">
       <Filter>ヘッダー ファイル\Engine\Component</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyState.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

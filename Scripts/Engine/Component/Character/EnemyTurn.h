@@ -5,12 +5,12 @@
 #ifndef _ENEMYTURN_H_
 #define _ENEMYTURN_H_
 
-#include "EnemyComponent.h"
+#include "EnemyState.h"
 
 /*
  *	“G‚Ì‰ñ“]ˆ—ƒNƒ‰ƒX
  */
-class EnemyTurn : public EnemyComponent {
+class EnemyTurn : public EnemyState {
 private:
 	GameObject* enemy;
 
