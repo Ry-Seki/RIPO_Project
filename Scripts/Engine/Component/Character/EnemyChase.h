@@ -5,6 +5,7 @@
 #ifndef _ENEMYCHASE_H_
 #define _ENEMYCHASE_H_
 
+#include "EnemyComponent.h"
 #include "EnemyState.h"
 
 /*
