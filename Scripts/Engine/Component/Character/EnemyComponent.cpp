@@ -12,8 +12,9 @@
  /*
   *	コンストラクタ
   */
-EnemyComponent::EnemyComponent()
-	: wayPoint(0.0f, 0.0f, 0.0f)
+EnemyComponent::EnemyComponent(EnemyState* initState)
+	: state(initState)
+	, wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(1000.0f)
 	, enemy(nullptr)
@@ -25,6 +26,12 @@ EnemyComponent::EnemyComponent()
 	, ROTATE_SPEED(3.0f)
 	, MOVE_SPEED(700.0f)
 	, DIFFERENCE_PLAYER(700) {
+	state->Start(*this);
+}
+
+EnemyComponent::~EnemyComponent()
+{
+	delete state;
 }
 
 void EnemyComponent::Start() {
@@ -39,7 +46,7 @@ void EnemyComponent::Update(float deltaTime) {
 	// 移動量を初期化
 	moveVec = Vector3::zero;
 
-
+	state->Update(*this);
 
 	// ステージとの当たり判定
 	StageManager::GetInstance().StageCollider(enemy, moveVec);

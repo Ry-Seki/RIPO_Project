@@ -6,12 +6,14 @@
 #define _ENEMYCOMPONENT_H_
 
 #include "CharacterBase.h"
+#include "EnemyState.h"
 #include "../../Engine.h"
 
 class EnemyComponent : public CharacterBase {
 private:
 	GameObject* enemy;
 	GameObjectPtr player;
+	EnemyState* state;
 	// ウェイポイント
 	Vector3 wayPoint;
 	// 目先のウェイポイント予定地
@@ -45,8 +47,8 @@ public:
 	/*
 	 *	コンストラクタ
 	 */
-	EnemyComponent();
-	virtual ~EnemyComponent() = default;
+	EnemyComponent(EnemyState* initState);
+	~EnemyComponent();
 
 public:
 	/*
@@ -63,6 +65,16 @@ public:
 private:
 
 public:
+	/*
+	 *	状態の変更
+	 *  param[in]	EnemyState*	setValue	次の状態
+	 */
+	inline void SetState(EnemyState* setValue) {
+		state->Execute(*this);
+		state = setValue;
+		state->Start(*this);
+	}
+
 	/*
 	 *	ウェイポイントの位置変更
 	 *  param[in]	Vector3&	setValue	敵の座標

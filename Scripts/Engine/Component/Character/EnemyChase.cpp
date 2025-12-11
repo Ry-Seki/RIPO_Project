@@ -120,6 +120,7 @@ void EnemyChase::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaT
 	// 目標地点についたらターゲットを変える
 	else if (distance < differenceTarget) {
 		enemy->GetComponent<EnemyComponent>()->SetChaseTargetChangeFrag(targetChange);
+		enemy.SetState(new EnemyTurn());
 	}
 	else {
 		// 目標の方向に進む
