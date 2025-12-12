@@ -14,19 +14,18 @@ EnemyTurn::EnemyTurn()
 /*
  *	更新処理の前に呼び出す処理
  */
-void EnemyTurn::Start()
+void EnemyTurn::Start(EnemyComponent& enemy)
 {
-	if (enemy == nullptr) return;
-	enemy = GetOwner();
+	
 }
 
 /*
  *	更新処理
  *  param[in]	float	deltaTime
  */
-void EnemyTurn::Update(float deltaTime)
+void EnemyTurn::Update(EnemyComponent& enemy, float deltaTime)
 {
-	if (enemy->GetComponent<EnemyComponent>()->GetChaseTargetChangeFrag()) {
+	if (enemy.GetChaseTargetChangeFrag()) {
 		enemy->rotation.y -= ROTATE_SPEED * deltaTime;
 	}
 	else {

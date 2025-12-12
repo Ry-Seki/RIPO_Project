@@ -44,13 +44,13 @@ public:
 	/*
 	 *	更新処理の前に呼び出す処理
 	 */
-	virtual void Start() override;
+	virtual void Start(EnemyComponent& enemy) override;
 
 	/*
 	 *	更新処理
 	 *  param[in]	float	deltaTime
 	 */
-	virtual void Update(float deltaTime) override;
+	virtual void Update(EnemyComponent& enemy, float deltaTime) override;
 
 private:
 	/*

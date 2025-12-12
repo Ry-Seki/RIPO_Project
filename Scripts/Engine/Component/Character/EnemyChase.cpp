@@ -20,10 +20,8 @@ EnemyChase::EnemyChase()
 	, DIFFERENCE_PLAYER(700) {
 }
 
-void EnemyChase::Start()
+void EnemyChase::Start(EnemyComponent& enemy)
 {
-	enemy = GetOwner();
-	if (enemy == nullptr) return;
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
 	wayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z + wayPointDistance);
@@ -34,7 +32,7 @@ void EnemyChase::Start()
  *	XVˆ—
  *  param[in]	float	deltaTime
  */
-void EnemyChase::Update(float deltaTime)
+void EnemyChase::Update(EnemyComponent& enemy, float deltaTime)
 {
 	// ˆÚ“®—Ê‚ğ‰Šú‰»
 	moveVec = Vector3::zero;
