@@ -26,7 +26,7 @@ void EnemyTurn::Start(EnemyComponent& enemy)
 void EnemyTurn::Update(EnemyComponent& enemy, float deltaTime)
 {
 	if (enemy.GetChaseTargetChangeFrag()) {
-		enemy->rotation.y -= ROTATE_SPEED * deltaTime;
+		enemy.SetEnemyRotation(enemy.GetEnemyRotation().y -= ROTATE_SPEED * deltaTime);
 	}
 	else {
 		enemy->rotation.y += ROTATE_SPEED * deltaTime;

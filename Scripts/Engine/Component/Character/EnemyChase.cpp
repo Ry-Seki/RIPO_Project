@@ -24,8 +24,8 @@ void EnemyChase::Start(EnemyComponent& enemy)
 {
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
-	wayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z + wayPointDistance);
-	nextWayPoint = Vector3(enemy->position.x, enemy->position.y, enemy->position.z - wayPointDistance);
+	wayPoint = Vector3(enemy.GetEnemyPosition().x, enemy.GetEnemyPosition().y, enemy.GetEnemyPosition().z + wayPointDistance);
+	nextWayPoint = Vector3(enemy.GetEnemyPosition().x, enemy.GetEnemyPosition().y, enemy.GetEnemyPosition().z - wayPointDistance);
 }
 
 /*
@@ -37,15 +37,15 @@ void EnemyChase::Update(EnemyComponent& enemy, float deltaTime)
 	// ˆÚ“®—Ê‚ð‰Šú‰»
 	moveVec = Vector3::zero;
 
-	if (Vision(enemy->position, enemy->rotation, player->position, 30, 2000)) {
+	if (Vision(enemy.GetEnemyPosition(), enemy.GetEnemyRotation(), player->position, 30, 2000)) {
 		ChaseWayPoint(player->position, true, deltaTime);
 	}
 	else {
 		// –Ú•W‚ÉŒü‚©‚Á‚ÄˆÚ“®
-		if (!enemy->GetComponent<EnemyComponent>()->GetChaseTargetChangeFrag()) {
+		if (!enemy.GetChaseTargetChangeFrag()) {
 			ChaseWayPoint(wayPoint, true, deltaTime);
 		}
-		else if (enemy->GetComponent<EnemyComponent>()->GetChaseTargetChangeFrag()) {
+		else if (enemy.GetChaseTargetChangeFrag()) {
 			ChaseWayPoint(nextWayPoint, false, deltaTime);
 		}
 	}

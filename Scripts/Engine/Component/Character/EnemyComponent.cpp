@@ -35,7 +35,8 @@ EnemyComponent::~EnemyComponent()
 }
 
 void EnemyComponent::Start() {
-
+	enemy = GetOwner();
+	if (enemy == nullptr) return;
 }
 
 /*
@@ -46,7 +47,7 @@ void EnemyComponent::Update(float deltaTime) {
 	// 移動量を初期化
 	moveVec = Vector3::zero;
 
-	state->Update(*this);
+	state->Update(*this, deltaTime);
 
 	// ステージとの当たり判定
 	StageManager::GetInstance().StageCollider(enemy, moveVec);

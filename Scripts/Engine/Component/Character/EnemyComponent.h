@@ -101,6 +101,30 @@ public:
 		chaseTargetChangeFrag = setValue;
 	}
 
+	/*
+	 *	位置の取得
+	 */
+	inline Vector3 GetEnemyPosition() const { return enemy->position; }
+
+	/*
+	 *	位置の変更
+	 */
+	inline void SetEnemyPosition(Vector3 setValue) {
+		enemy->position = setValue;
+	}
+
+	/*
+	 *	角度の取得
+	 */
+	inline Vector3 GetEnemyRotation() const { return enemy->rotation; }
+	
+	/*
+	 *	角度の変更
+	 */
+	inline void SetEnemyRotation(Vector3 setValue) {
+		enemy->rotation = setValue;
+	}
+
 
 
 	/*
