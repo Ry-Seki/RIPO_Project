@@ -13,6 +13,7 @@
 class EnemyTurn : public EnemyState {
 private:
 	GameObject* enemy;
+	CharacterBasePtr character;
 
 private:
 	// 回転スピード

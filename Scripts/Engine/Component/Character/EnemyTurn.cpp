@@ -4,6 +4,10 @@
  */
 #include "EnemyTurn.h"
 #include "EnemyChase.h"
+#include "../../Manager/CharacterManager.h"
+#include "CharacterUtility.h"
+
+using namespace CharacterUtility;
 
 EnemyTurn::EnemyTurn()
 	:enemy(nullptr)
@@ -16,19 +20,22 @@ EnemyTurn::EnemyTurn()
  */
 void EnemyTurn::Start(EnemyComponent& enemy)
 {
-	
+	character = 
+	enemy = CharacterManager::GetInstance().GetCharacterOwner(character)
 }
 
 /*
  *	XVˆ—
  *  param[in]	float	deltaTime
  */
-void EnemyTurn::Update(EnemyComponent& enemy, float deltaTime)
+void EnemyTurn::Update(GameObjectPtr& enemy, float deltaTime)
 {
-	if (enemy.GetChaseTargetChangeFrag()) {
+	enemy = 
+	auto e = GetOwnerObject(enemy);
+	if (enemy->GetChaseTargetChangeFrag()) {
 		enemy.SetEnemyRotation(enemy.GetEnemyRotation().y -= ROTATE_SPEED * deltaTime);
 	}
 	else {
-		enemy->rotation.y += ROTATE_SPEED * deltaTime;
+		e->rotation.y += ROTATE_SPEED * deltaTime;
 	}
 }
