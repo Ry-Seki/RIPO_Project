@@ -20,8 +20,7 @@ EnemyTurn::EnemyTurn()
  */
 void EnemyTurn::Start(EnemyComponent& enemy)
 {
-	character = 
-	enemy = CharacterManager::GetInstance().GetCharacterOwner(character)
+	
 }
 
 /*
@@ -30,12 +29,11 @@ void EnemyTurn::Start(EnemyComponent& enemy)
  */
 void EnemyTurn::Update(GameObjectPtr& enemy, float deltaTime)
 {
-	enemy = 
-	auto e = GetOwnerObject(enemy);
-	if (enemy->GetChaseTargetChangeFrag()) {
-		enemy.SetEnemyRotation(enemy.GetEnemyRotation().y -= ROTATE_SPEED * deltaTime);
+	//auto e = GetOwnerObject(enemy);
+	if (enemy->GetComponent<EnemyComponent>()->GetChaseTargetChangeFrag()) {
+		enemy->rotation.y -= ROTATE_SPEED * deltaTime;
 	}
 	else {
-		e->rotation.y += ROTATE_SPEED * deltaTime;
+		enemy->rotation.y += ROTATE_SPEED * deltaTime;
 	}
 }

@@ -13,7 +13,6 @@
 class EnemyTurn : public EnemyState {
 private:
 	GameObject* enemy;
-	CharacterBasePtr character;
 
 private:
 	// 回転スピード
@@ -32,7 +31,7 @@ public:
 	 *	更新処理
 	 *  param[in]	float	deltaTime
 	 */
-	virtual void Update(EnemyComponent& enemy, float deltaTime) override;
+	virtual void Update(GameObjectPtr& enemy, float deltaTime) override;
 };
 
 #endif // !_ENEMYTURN_H_

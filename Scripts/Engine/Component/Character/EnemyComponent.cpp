@@ -47,9 +47,7 @@ void EnemyComponent::Update(float deltaTime) {
 	// 移動量を初期化
 	moveVec = Vector3::zero;
 
-	CharacterBasePtr enemy = this;
-
-	state->Update(*this, deltaTime);
+	state->Update(enemy, deltaTime);
 
 	// ステージとの当たり判定
 	StageManager::GetInstance().StageCollider(enemy, moveVec);
