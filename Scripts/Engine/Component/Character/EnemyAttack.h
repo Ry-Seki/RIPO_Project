@@ -12,21 +12,19 @@
  */
 class EnemyAttackBase : public Component {
 private:
-	GameObjectPtr player = CameraManager::GetInstance().GetTarget();;
-	if (player == nullptr) return;
+	GameObjectPtr player = CameraManager::GetInstance().GetTarget();
 public:
 	EnemyAttackBase() = default;
 	virtual ~EnemyAttackBase() = default;
 public:
-	virtual void Attack() = 0;
+	virtual void Attack(float deltaTime) = 0;
 };
 
 /*
  *	’Êí“G‚ÌUŒ‚ˆ—ƒNƒ‰ƒX
  */
 class NormalEnemyAttack : public EnemyAttackBase {
-	GameObject* enemy = GetOwner;
-	if (enemy == nullptr) return;
+	GameObject* enemy = GetOwner();
 	float coolTime = 3;
 public:
 	void Attack(float deltaTime) override {

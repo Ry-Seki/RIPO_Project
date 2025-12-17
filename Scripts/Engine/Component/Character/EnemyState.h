@@ -5,6 +5,8 @@
 #ifndef _ENEMYSTATE_H_
 #define _ENEMYSTATE_H_
 
+#include "../../GameObject.h"
+
 // ‘O•ûéŒ¾
 class EnemyComponent;
 
@@ -17,7 +19,7 @@ public:
 	virtual ~EnemyState() {};
 
 	virtual void Start(EnemyComponent& enemy) {};
-	virtual void Update(GameObjectPtr& enemy, float deltaTime) = 0;
+	virtual void Update(GameObject* enemy, float deltaTime) = 0;
 	virtual void Execute(EnemyComponent& enemy) {};
 
 };

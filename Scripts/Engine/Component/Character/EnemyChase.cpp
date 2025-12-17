@@ -32,20 +32,22 @@ void EnemyChase::Start(EnemyComponent& enemy)
  *	更新処理
  *  param[in]	float	deltaTime
  */
-void EnemyChase::Update(EnemyComponent& enemy, float deltaTime)
+void EnemyChase::Update(GameObject* enemy, float deltaTime)
 {
 	// 移動量を初期化
 	moveVec = Vector3::zero;
 
-	if (Vision(enemy.GetEnemyPosition(), enemy.GetEnemyRotation(), player->position, 30, 2000)) {
+	auto enemyComponent = enemy->GetComponent<EnemyComponent>();
+
+	if (Vision(enemyComponent->GetEnemyPosition(), enemyComponent->GetEnemyRotation(), player->position, 30, 2000)) {
 		ChaseWayPoint(player->position, true, deltaTime);
 	}
 	else {
 		// 目標に向かって移動
-		if (!enemy.GetChaseTargetChangeFrag()) {
+		if (!enemyComponent->GetChaseTargetChangeFrag()) {
 			ChaseWayPoint(wayPoint, true, deltaTime);
 		}
-		else if (enemy.GetChaseTargetChangeFrag()) {
+		else if (enemyComponent->GetChaseTargetChangeFrag()) {
 			ChaseWayPoint(nextWayPoint, false, deltaTime);
 		}
 	}
@@ -118,7 +120,7 @@ void EnemyChase::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaT
 	// 目標地点についたらターゲットを変える
 	else if (distance < differenceTarget) {
 		enemy->GetComponent<EnemyComponent>()->SetChaseTargetChangeFrag(targetChange);
-		enemy.SetState(new EnemyTurn());
+		//enemy.SetState(new EnemyTurn());
 	}
 	else {
 		// 目標の方向に進む

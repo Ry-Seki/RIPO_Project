@@ -31,7 +31,7 @@ public:
 	 *	XVˆ—
 	 *  param[in]	float	deltaTime
 	 */
-	virtual void Update(GameObjectPtr& enemy, float deltaTime) override;
+	virtual void Update(GameObject* enemy, float deltaTime) override;
 };
 
 #endif // !_ENEMYTURN_H_

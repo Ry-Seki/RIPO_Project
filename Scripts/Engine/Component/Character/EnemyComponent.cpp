@@ -12,21 +12,22 @@
  /*
   *	コンストラクタ
   */
+EnemyComponent::EnemyComponent()
+	: EnemyComponent(new EnemyChase())
+{
+}
+
 EnemyComponent::EnemyComponent(EnemyState* initState)
-	: state(initState)
+	: enemy(nullptr)
+	, state(initState)
 	, wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(1000.0f)
-	, enemy(nullptr)
 	, chaseTargetChangeFrag(false)
 	, closePlayer(false)
-	, turnDelay(0)
+	, turnDelay(0.0f)
 	, TOP_VALUE(5000)
-	, RANDOM_RANGE(100)
-	, ROTATE_SPEED(3.0f)
-	, MOVE_SPEED(700.0f)
-	, DIFFERENCE_PLAYER(700) {
-	state->Start(*this);
+	, RANDOM_RANGE(100) {
 }
 
 EnemyComponent::~EnemyComponent()
@@ -37,6 +38,10 @@ EnemyComponent::~EnemyComponent()
 void EnemyComponent::Start() {
 	enemy = GetOwner();
 	if (enemy == nullptr) return;
+
+	if (state == nullptr)
+		state = new EnemyChase();
+	state->Start(*this);
 }
 
 /*
@@ -47,6 +52,7 @@ void EnemyComponent::Update(float deltaTime) {
 	// 移動量を初期化
 	moveVec = Vector3::zero;
 
+	if (state == nullptr || enemy == nullptr) return;
 	state->Update(enemy, deltaTime);
 
 	// ステージとの当たり判定

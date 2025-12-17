@@ -27,7 +27,7 @@ void EnemyTurn::Start(EnemyComponent& enemy)
  *	XVˆ—
  *  param[in]	float	deltaTime
  */
-void EnemyTurn::Update(GameObjectPtr& enemy, float deltaTime)
+void EnemyTurn::Update(GameObject* enemy, float deltaTime)
 {
 	//auto e = GetOwnerObject(enemy);
 	if (enemy->GetComponent<EnemyComponent>()->GetChaseTargetChangeFrag()) {

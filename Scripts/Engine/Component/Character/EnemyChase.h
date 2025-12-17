@@ -50,7 +50,7 @@ public:
 	 *	XVˆ—
 	 *  param[in]	float	deltaTime
 	 */
-	virtual void Update(EnemyComponent& enemy, float deltaTime) override;
+	virtual void Update(GameObject* enemy, float deltaTime) override;
 
 private:
 	/*

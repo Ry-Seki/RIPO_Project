@@ -12,7 +12,6 @@
 class EnemyComponent : public CharacterBase {
 private:
 	GameObject* enemy;
-	GameObjectPtr player;
 	EnemyState* state;
 	// ウェイポイント
 	Vector3 wayPoint;
@@ -33,20 +32,14 @@ private:
 	const float TOP_VALUE;
 	// ランダムで加算される値の範囲
 	const int RANDOM_RANGE;
-	// 回転スピード
-	const float ROTATE_SPEED;
-	// 移動スピード
-	const float MOVE_SPEED;
-	// プレイヤーの距離
-	const float DIFFERENCE_PLAYER;
 	// 移動量
 	Vector3 moveVec;
-
 
 public:
 	/*
 	 *	コンストラクタ
 	 */
+	EnemyComponent();
 	EnemyComponent(EnemyState* initState);
 	~EnemyComponent();
 
@@ -104,7 +97,10 @@ public:
 	/*
 	 *	位置の取得
 	 */
-	inline Vector3 GetEnemyPosition() const { return enemy->position; }
+	inline Vector3 GetEnemyPosition() const {
+		if (enemy == nullptr) return Vector3::zero;
+		return enemy->position;
+	}
 
 	/*
 	 *	位置の変更
