@@ -149,7 +149,9 @@ void Stage::UpdateCollision(GameObject* other, Vector3 MoveVec) {
  */
 std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(GameObject* other, Vector3 MoveVec) {
 	// 対象がいない場合は抜ける
-	if (!other)return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
+	if (!other) return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
+	// モデルがロードされていない場合も抜ける
+	if (modelHandle < 0) return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
 
 	// 移動していない場合、最小範囲で当たり判定を検知
 	Vector3 effectiveMove = MoveVec;
@@ -324,8 +326,13 @@ void Stage::ProcessFloorCollision(
 	float moveVec
 ) {
 	// 床がなければ落下
-	if (floors.empty())return;
-
+	if (floors.empty()) {
+		auto hitGrounding = other->GetComponent<GravityComponent>();
+		if (hitGrounding) {
+			hitGrounding->SetGroundingFrag(false);
+		}
+		return;
+	}
 	// 接地点の最大値
 	float MaxY = -FLT_MAX;
 	// 接地しているかどうか

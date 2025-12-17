@@ -30,7 +30,7 @@ private:
 	DungeonFloorData floorData;												// フロアデータ
 	DungeonResourceData resourceData;										// ダンジョンリソースデータ
 
-	std::vector<std::vector<std::shared_ptr<GameObject>>> enemyFloorList;	// 階層ごとの敵のリスト
+	std::vector<std::vector<int>> enemyFloorList;							// 階層ごとの敵のリスト
 	GameObject* holdTreasure = nullptr;										// プレイヤーが所持しているお宝
 
 	int currentFloor = -1;								// 現在の階層
@@ -87,6 +87,10 @@ private:
 	 *	@brief		次の階層の準備
 	 */
 	void SetupNextFloor();
+	/*
+	 *	@brief		敵の再生成に必要なデータへ変換
+	 */
+	void ConvertEnemyData();
 	/*
 	 *	@brief		敵の片付け処理
 	 */

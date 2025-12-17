@@ -69,7 +69,6 @@ void ActionDungeon::Update(Engine& engine, float deltaTime) {
 		EndDungeon();
 	}
 	else if (stairFrag) {
-		//StageManager::GetInstance().NextStage(1);
 		ChangeFloor();
 	}
 	if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
@@ -193,7 +192,7 @@ void ActionDungeon::TeardownCurrentFloor() {
 	SetUseObjectColliderFlag(false);
 	StageObjectManager::GetInstance().ClearObject();
 	// 現在のフロアの敵のデータを設定
-	enemyFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
+	ConvertEnemyData();
 	// 現在残っている敵の片付け処理
 	TeardownEnemy();
 	// プレイヤーが持っているお宝以外を削除
@@ -225,8 +224,9 @@ void ActionDungeon::SetupNextFloor() {
 	// 初めてかどうかで分ける
 	if (setFloorData.isFirst) {
 		setFloorData.isFirst = false;
-	} else {
-		if (enemyFloorList[currentFloor].size()> 0) {
+	}
+	else {
+		if (enemyFloorList[currentFloor].size() > 0) {
 			setFloorData.enemySpawnCount = enemyFloorList[currentFloor].size();
 		}
 	}
@@ -239,6 +239,23 @@ void ActionDungeon::SetupNextFloor() {
 	FadeManager::GetInstance().StartFade(fade);
 	// 当たり判定の有効化
 	SetUseObjectColliderFlag(true);
+}
+/*
+ *	@brief		敵の再生成に必要なデータへ変換
+ */
+void ActionDungeon::ConvertEnemyData() {
+	// 要素数を空にする
+	enemyFloorList[currentFloor].clear();
+	auto enemyList = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
+	for (int i = 0, max = enemyList.size(); i < max; i++) {
+		auto enemy = enemyList[i];
+		if (!enemy) continue;
+
+		auto component = enemy->GetComponent<EnemyComponent>();
+		if (!component) continue;
+
+		enemyFloorList[currentFloor].push_back(component->GetSpawnEnemyID());
+	}
 }
 /*
  *	@brief		敵の片付け処理
@@ -277,7 +294,6 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 	isComplete = false;
 	currentFloor = 0;
 	enemyFloorList.resize(16);
-	enemyFloorList[currentFloor].resize(16);
 	stageData = setStageData;
 	floorData = setFloorData;
 	LoadManager& load = LoadManager::GetInstance();
@@ -317,7 +333,7 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 		auto player = CharacterManager::GetInstance().GetPlayer();
 		SetUseObjectColliderFlag(true);
 		player->GetComponent<GravityComponent>()->SetGravity(true);
-	});
+		});
 }
 
 void ActionDungeon::DebugSetupData(Engine& engine, const DungeonResourceData& setResource) {
@@ -356,22 +372,6 @@ void ActionDungeon::DebugSetupData(Engine& engine, const DungeonResourceData& se
 	// モデルハンドルの取得
 	int enemyHandle = setResource.enemyResource[0]->GetHandle();
 	// 敵の取得
-	enemyFloorList[currentFloor] = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
-	for (int i = 0; i < enemyCount; i++) {
-		if (enemyFloorList[currentFloor].size() <= 0) break;
-		auto enemyCharacter = enemyFloorList[currentFloor][i];
-		if (!enemyCharacter) continue;
-		// 位置の設定
-		enemyCharacter->position = enemySpawnPos[i];
-		enemyCharacter->scale = { 4.5f, 4.5f, 4.5f };
-		// モデルの設定
-		SetModelHandle(enemyCharacter.get(), enemyHandle);
-		// コンポーネントの取得
-		std::shared_ptr<EnemyComponent> component = enemyCharacter->GetComponent<EnemyComponent>();
-		if (!component) continue;
-		// WayPointの設定
-		component->SetWayPoint(enemyCharacter->position);
-	}
 
 	// 宝の設定
 	// お宝の生成位置の取得
@@ -396,14 +396,21 @@ void ActionDungeon::DebugSetupData(Engine& engine, const DungeonResourceData& se
 	// 階段の設定
 	auto stair = GetStageObject("Stair");
 	if (!stair) return;
-	Vector3 stairSpawnPos = GetStairsPos();
-	stair->position = stairSpawnPos;
+	std::vector<Vector3> stairSpawnPos = GetStairsPos();
+	size_t stairSpawnPosCount = stairSpawnPos.size();
+	for (int i = 0; i < stairSpawnPosCount; i++) {
+		stair->position = stairSpawnPos[i];
+	}
 
 	// 出口の設定
 	auto exit = GetStageObject("Exit");
 	if (!exit) return;
-	Vector3 exitSpawnPos = GetGoalPos();
-	exit->position = exitSpawnPos;
+	std::vector<Vector3> exitSpawnPos = GetGoalPos();
+	size_t exitPointCount = exitSpawnPos.size();
+	for (int i = 0; i < exitPointCount; i++) {
+		exit->position = exitSpawnPos[i];
+
+	}
 
 	// フェードイン
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop);

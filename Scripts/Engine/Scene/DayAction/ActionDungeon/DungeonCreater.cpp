@@ -26,7 +26,7 @@ void DungeonCreater::Initialize() {
  *	@brief		準備前処理
  */
 void DungeonCreater::Setup() {
-	
+
 }
 /*
  *	@brief		ダンジョン生成
@@ -51,7 +51,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 		GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	}
 	// TODO : ボスの生成
-	
+
 	// お宝の生成処理
 	for (int i = 0; i < treasureCount; i++) {
 		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO, { -100,0,-100 }, { 100,300,100 }, treasureIDList[i]);
@@ -140,35 +140,44 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 	// 階段の遷移先IDデータの取得
 	auto stairMoveData = resourceData.stageFloorResource->GetData();
 	// 階段の設定
+	// 生成位置の取得
+	std::vector<Vector3> stairSpawnPos = GetStairsPos();
+	// 階段の設定
 	for (int i = 0; i < stairCount; i++) {
 		if (stairList.size() <= 0) break;
 		// 遷移先IDの取得
 		auto stair = stairList[i];
 		stairID = stairMoveData[std::to_string(floorID)][std::to_string(i)];
-		if (stair) {
-			Vector3 stairSpawnPos = GetStairsPos();
-			stair->position = stairSpawnPos;
-			auto stairComponent = stair->GetComponent<Stair>();
-			if (stairComponent) stairComponent->SetStairID(stairID);
-		}
+		if (!stair) continue;
+		stair->position = stairSpawnPos[i];
+		auto stairComponent = stair->GetComponent<Stair>();
+		if (!stairComponent) continue;
+		stairComponent->SetStairID(stairID);
 	}
+
 	// 出口の設定
-	auto exit = GetStageObject("Exit");
-	if (exit) {
-		Vector3 exitSpawnPos = GetGoalPos();
-		exit->position = exitSpawnPos;
+	GameObjectList exitList = GetObjectByName("Exit");
+	// 生成位置の取得
+	std::vector<Vector3> exitSpawnPos = GetGoalPos();
+	for (int i = 0; i < goalCount; i++) {
+		if (exitList.size() <= 0) break;
+		auto exit = exitList[i];
+		if (!exit) continue;
+
+		exit->position = exitSpawnPos[i];
 	}
 }
 /*
  *	@brief		ダンジョンの再生成
  *	@param[in]	int floorID
+ *  @param[in]	const std::vector<int>& enemySpawnIDList
  *	@param[in]	const int holdTreasureID
  *  @param[in]	GameObjectPtr& holdTreasure
  *  @param[in]	const std::vector<int>& treasureIDList
  *  @param[out]	int& stairID
  */
-void DungeonCreater::RegenerateDungeon(int floorID, GameObjectList& setEnemyList, const int holdTreasureID, 
-									   const std::vector<int>& treasureIDList, int& stairID) {
+void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enemySpawnIDList, const int holdTreasureID,
+	const std::vector<int>& treasureIDList, int& stairID) {
 	// オブジェクトの再生成
 	int enemyCount = floorData.enemySpawnCount;
 	int bossCount = floorData.bossSpawnCount;
@@ -181,7 +190,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, GameObjectList& setEnemyList
 		GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	}
 	// TODO : ボスの生成処理
-	
+
 	// お宝の生成処理
 	for (int i = 0; i < treasureCount; i++) {
 		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO, { -100,0,-100 }, { 100,300,100 }, treasureIDList[i]);
@@ -201,13 +210,12 @@ void DungeonCreater::RegenerateDungeon(int floorID, GameObjectList& setEnemyList
 	if (!player) return;
 	// 位置の設定
 	player->position = GetStartPos();
-	
+
 	// 敵
 	// 敵の生成位置の取得
-	std::vector<int> enemySpawnIDList;
-	std::vector<Vector3> enemySpawnPos = GetEnemySpwanPos(enemySpawnIDList);
+	std::vector<int> tmpIDList;
+	std::vector<Vector3> enemySpawnPos = GetEnemySpwanPos(tmpIDList);
 	// 敵の取得
-	GameObjectList originEnemyList = setEnemyList;
 	GameObjectList enemyList = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
 	// モデルハンドルの取得
 	int enemyHandle = resourceData.enemyResource[0]->GetHandle();
@@ -219,14 +227,21 @@ void DungeonCreater::RegenerateDungeon(int floorID, GameObjectList& setEnemyList
 		// モデルの設定
 		SetModelHandle(enemyCharacter.get(), enemyHandle);
 		// コンポーネントの取得
-		std::shared_ptr<EnemyComponent> component = originEnemyList[i]->GetComponent<EnemyComponent>();
+		std::shared_ptr<EnemyComponent> component = enemyCharacter->GetComponent<EnemyComponent>();
 		if (!component) continue;
 		// 位置の設定
-		int spawnPos = component->GetSpawnEnemyID();
-		enemyCharacter->position = enemySpawnPos[spawnPos];
+		int spawnID;
+		// enemySpawnIDListのサイズで変更する
+		if (enemySpawnIDList.size() > 0) {
+			spawnID = enemySpawnIDList[i];
+		} else {
+			spawnID = i;
+		}
+		enemyCharacter->position = enemySpawnPos[spawnID];
 		enemyCharacter->scale = { 4.5f, 4.5f, 4.5f };
 		// WayPointの設定
 		component->SetWayPoint(enemyCharacter->position);
+		component->SetSpawnEnemyID(spawnID);
 	}
 
 	// お宝
@@ -248,7 +263,8 @@ void DungeonCreater::RegenerateDungeon(int floorID, GameObjectList& setEnemyList
 		if (component->GetTreasureID() == holdTreasureID) {
 			RemoveStageObject(treasure->ID);
 			continue;
-		} else {
+		}
+		else {
 			// 位置の設定
 			treasure->position = treasureSpawnPos[i];
 			// モデルの設定
@@ -261,23 +277,31 @@ void DungeonCreater::RegenerateDungeon(int floorID, GameObjectList& setEnemyList
 	GameObjectList stairList = GetObjectByName("Stair");
 	// 階段の遷移先IDデータの取得
 	auto stairMoveData = resourceData.stageFloorResource->GetData();
+	// 生成位置の取得
+	std::vector<Vector3> stairSpawnPos = GetStairsPos();
 	// 階段の設定
 	for (int i = 0; i < stairCount; i++) {
 		if (stairList.size() <= 0) break;
 		// 遷移先IDの取得
 		auto stair = stairList[i];
 		stairID = stairMoveData[std::to_string(floorID)][std::to_string(i)];
-		if (stair) {
-			Vector3 stairSpawnPos = GetStairsPos();
-			stair->position = stairSpawnPos;
-			auto stairComponent = stair->GetComponent<Stair>();
-			if (stairComponent) stairComponent->SetStairID(stairID);
-		}
+		if (!stair) continue;
+
+		stair->position = stairSpawnPos[i];
+		auto stairComponent = stair->GetComponent<Stair>();
+		if (!stairComponent) continue;
+
+		stairComponent->SetStairID(stairID);
 	}
 	// 出口の設定
-	auto exit = GetStageObject("Exit");
-	if (exit) {
-		Vector3 exitSpawnPos = GetGoalPos();
-		exit->position = exitSpawnPos;
+	GameObjectList exitList = GetObjectByName("Exit");
+	// 生成位置の取得
+	std::vector<Vector3> exitSpawnPos = GetGoalPos();
+	for (int i = 0; i < goalCount; i++) {
+		if (exitList.size() <= 0) break;
+		auto exit = exitList[i];
+		if (!exit) continue;
+
+		exit->position = exitSpawnPos[i];
 	}
 }

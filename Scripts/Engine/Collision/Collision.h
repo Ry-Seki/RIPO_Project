@@ -35,13 +35,19 @@ struct Capsule {
 	float radius;
 };
 
-// 衝突しているかどうか
-bool Intersect(const AABB& a, const AABB& b, Vector3& penetration);
-bool Intersect(const Capsule& a, const Capsule& b, Vector3& penetration);
 // 点から線分への最近接点
-Vector3 PointToSegmentMinLength(const Vector3& startPos, const Vector3& endPos, const Vector3& point, float& minRatio);
+Vector3 PointToSegmentMinLength(const Vector3& point, const Segment& segment, float& minRatio);
+// 点からAABBへの最近接点
+Vector3 PointToAABBMinLength(const Vector3& point, const AABB& box);
 // 線分から線分への最近接点
 void SegmentBetweenMinLength(const Segment& a, const Segment& b, Vector3& aMinPoint, Vector3& bMinPoint, float& aMinRatio, float& bMinRatio);
+// 線分からAABBへの最近接点
+void SegmentToAABBMinLength(const Segment& segment, const AABB& box, Vector3& segMinPoint, Vector3& boxMinPoint, float& minLengthSq);
+// 衝突しているかどうか
+bool Intersect(const Capsule& a, const Capsule& b, Vector3& penetration);
+bool Intersect(const AABB& a, const AABB& b, Vector3& penetration);
+bool Intersect(const Capsule& capsule, const AABB& box, Vector3& penetration);
+bool Intersect(const AABB& box, const Capsule& capsule , Vector3& penetration);
 
 
 #endif // !_COLLISION_H_
