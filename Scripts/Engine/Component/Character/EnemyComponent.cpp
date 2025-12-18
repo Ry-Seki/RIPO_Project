@@ -27,7 +27,8 @@ EnemyComponent::EnemyComponent(EnemyState* initState)
 	, closePlayer(false)
 	, turnDelay(0.0f)
 	, TOP_VALUE(5000)
-	, RANDOM_RANGE(100) {
+	, RANDOM_RANGE(100)
+	, moveVec(Vector3::zero) {
 }
 
 EnemyComponent::~EnemyComponent()

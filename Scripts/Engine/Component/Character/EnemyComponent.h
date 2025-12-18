@@ -63,7 +63,10 @@ public:
 	 *  param[in]	EnemyState*	setValue	ŽŸ‚Ìó‘Ô
 	 */
 	inline void SetState(EnemyState* setValue) {
-		state->Execute(*this);
+		if (state) {
+			state->Execute(*this);
+			delete state;
+		}
 		state = setValue;
 		state->Start(*this);
 	}
