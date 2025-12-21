@@ -124,5 +124,5 @@ void ActionManager::ActivePartTime(Engine& engine, const int incomeValue) {
  *  @return     std::shared_ptr<DayActionBase>
  */
 std::shared_ptr<DayActionBase> ActionManager::GetAction(GameEnum::ActionType type) {
-	return null;
+	return nullptr;
 }
