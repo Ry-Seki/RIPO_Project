@@ -8,14 +8,17 @@
 #include "../../../Fade/FadeManager.h"
 #include "../../../Audio/AudioUtility.h"
 
-using namespace AudioUtility;
-
 /*
  *	@brief	初期化処理
  */
 void SelectionTraining::Initialize(Engine& engine) {
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fade);
+}
+/*
+ *	@brief	準備前処理
+ */
+void SelectionTraining::Setup(Engine& engine) {
 }
 /*
  *	@brief	ロード済みデータのセット
@@ -28,7 +31,7 @@ void SelectionTraining::SetupData(Engine& engine) {
 void SelectionTraining::Update(Engine& engine, float deltaTime) {
 	if (!inputHandle && CheckHitKey(KEY_INPUT_1)) {
 		// SEの再生
-		PlaySE("DebugSE");
+		AudioUtility::PlaySE("DebugSE");
 		inputHandle = true;
 		isComplete = true;
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
@@ -37,7 +40,7 @@ void SelectionTraining::Update(Engine& engine, float deltaTime) {
 		});
 	} else if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
 		// SEの再生
-		PlaySE("DebugSE");
+		AudioUtility::PlaySE("DebugSE");
 		inputHandle = true;
 		isComplete = true;
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
@@ -46,7 +49,7 @@ void SelectionTraining::Update(Engine& engine, float deltaTime) {
 		});
 	} else if (!inputHandle && CheckHitKey(KEY_INPUT_3)) {
 		// SEの再生
-		PlaySE("DebugSE");
+		AudioUtility::PlaySE("DebugSE");
 		inputHandle = true;
 		isComplete = true;
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
@@ -55,7 +58,7 @@ void SelectionTraining::Update(Engine& engine, float deltaTime) {
 		});
 	} else if (!inputHandle && CheckHitKey(KEY_INPUT_4)) {
 		// SEの再生
-		PlaySE("DebugSE");
+		AudioUtility::PlaySE("DebugSE");
 		inputHandle = true;
 		isComplete = true;
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);

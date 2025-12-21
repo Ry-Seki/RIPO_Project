@@ -18,10 +18,14 @@ void ActionPartTime::Initialize(Engine& engine) {
 	});
 }
 /*
- *  @brief	ロード済みのデータをセット(コールバック)
+ *	@brief	準備前処理
  */
-void ActionPartTime::SetupData(Engine& engine) {
-
+void ActionPartTime::Setup(Engine& engine) {
+}
+/*
+ *	@brief	ロード済みのデータをセット(コールバック)
+ */
+void ActionPartTime::SetupData() {
 }
 /*
  *	@brief	更新処理

@@ -40,10 +40,15 @@ using namespace StageObjectUtility;
 using namespace GameObjectUtility;
 
 /*
- *	初期化処理
+ *	@brief	初期化処理
  */
 void ActionDungeon::Initialize(Engine& engine) {
 
+}
+/*
+ *	@brief	準備前処理
+ */
+void ActionDungeon::Setup(Engine& engine) {
 }
 /*
  *  ロード済みのデータをセット(コールバック)
@@ -334,89 +339,6 @@ void ActionDungeon::DebugInitialize(Engine& engine, DungeonStageData& setStageDa
 		SetUseObjectColliderFlag(true);
 		player->GetComponent<GravityComponent>()->SetGravity(true);
 		});
-}
-
-void ActionDungeon::DebugSetupData(Engine& engine, const DungeonResourceData& setResource) {
-	currentFloor = 0;
-	enemyFloorList.resize(16);
-	enemyFloorList[currentFloor].resize(16);
-
-
-	// ステージの設定
-	// モデルハンドルの取得
-	int stageHandleCount = setResource.stageResource.size();
-	std::vector<int> stageHandleList(stageHandleCount);
-	for (int i = 0; i < stageHandleCount; i++) {
-		stageHandleList[i] = setResource.stageResource[i]->GetHandle();
-	}
-	LoadStage(stageHandleList);
-	// ステージボーンデータの設定
-	SetStageJSONData(setResource.stageBoneResource[0]->GetData());
-
-	// プレイヤーの設定
-	// モデルの取得
-	int playerHandle = setResource.playerResource->GetHandle();
-	// プレイヤーオブジェクトの取得
-	auto player = GetUseObject(0);
-	if (!player) return;
-	// 位置の設定
-	player->position = GetStartPos();
-	// モデルの設定
-	SetModelHandle(player.get(), playerHandle);
-
-	// 敵の設定
-	// 敵の生成位置の取得
-	std::vector<int> enemySpawnIDList;
-	std::vector<Vector3> enemySpawnPos = GetEnemySpwanPos(enemySpawnIDList);
-	size_t enemyCount = enemySpawnPos.size();
-	// モデルハンドルの取得
-	int enemyHandle = setResource.enemyResource[0]->GetHandle();
-	// 敵の取得
-
-	// 宝の設定
-	// お宝の生成位置の取得
-	std::vector<Vector3> treasureSpawnPos = GetTreasureSpwanPos();
-	// 生成位置の要素数の取得
-	size_t treasureCount = treasureSpawnPos.size();
-	// ハンドルの要素数の取得
-	size_t treasureTypeCount = setResource.treasureResource.size();
-	GameObjectList treasureList = GetObjectByName(GameConst::_CREATE_POSNAME_TREASURE);
-	// お宝の取得
-	for (int i = 0; i < treasureCount; i++) {
-		// モデルハンドルの取得
-		int treasureHandle = setResource.treasureResource[i]->GetHandle();
-		// 宝オブジェクトの取得
-		GameObject* treasure = treasureList[i].get();
-		if (!treasure) continue;
-		// 位置の設定
-		treasure->position = treasureSpawnPos[i];
-		// モデルの設定
-		SetModelHandle(treasure, treasureHandle);
-	}
-	// 階段の設定
-	auto stair = GetStageObject("Stair");
-	if (!stair) return;
-	std::vector<Vector3> stairSpawnPos = GetStairsPos();
-	size_t stairSpawnPosCount = stairSpawnPos.size();
-	for (int i = 0; i < stairSpawnPosCount; i++) {
-		stair->position = stairSpawnPos[i];
-	}
-
-	// 出口の設定
-	auto exit = GetStageObject("Exit");
-	if (!exit) return;
-	std::vector<Vector3> exitSpawnPos = GetGoalPos();
-	size_t exitPointCount = exitSpawnPos.size();
-	for (int i = 0; i < exitPointCount; i++) {
-		exit->position = exitSpawnPos[i];
-
-	}
-
-	// フェードイン
-	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop);
-	FadeManager::GetInstance().StartFade(fade);
-	// 当たり判定の有効化
-	SetUseObjectColliderFlag(true);
 }
 
 void ActionDungeon::EndDungeon() {

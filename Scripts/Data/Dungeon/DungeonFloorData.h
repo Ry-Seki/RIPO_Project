@@ -44,6 +44,7 @@ public:
 	/*
 	 *  @brief      JSONデータの読み込み、mapに自動で登録する
 	 *  @param[in]  const JSON& setJSON     読み込むJSONデータ
+	 *  @param[in]	int dungeonID			ダンジョンID
 	 */
 	void LoadFromJSON(const JSON& setJSON, int dungeonID) {
 		dungeonFloorMap.clear();
@@ -71,11 +72,11 @@ public:
 public:
 	/*
 	 *	@brief		指定したIDのフロアデータの取得
-	 *	@param[in]	const int floorID
-	 *  @param[out] FloorData& floorData
+	 *	@param[in]	int floorID				フロアID
+	 *  @param[out] FloorData& floorData	取得したものを返すフロアデータ
 	 *  @return		bool
 	 */
-	bool TryGetFloorData(const int floorID, FloorData& floorData) {
+	bool TryGetFloorData(int floorID, FloorData& floorData) {
 		auto itr = dungeonFloorMap.find(floorID);
 		if (itr == dungeonFloorMap.end()) return false;
 
@@ -84,16 +85,60 @@ public:
 	}
 	/*
 	 *	@brief		指定したIDのフロアデータのセット
-	 *  @prram[in]	const int floorID
-	 *	@param[in]	FloorData& setFloorData
+	 *  @prram[in]	int floorID
+	 *	@param[in]	FloorData setFloorData
 	 *	@return		bool
 	 */
-	bool TrySetFloorData(const int floorID, FloorData& setFloorData) {
+	bool TrySetFloorData(int floorID, FloorData setFloorData) {
 		auto itr = dungeonFloorMap.find(floorID);
 		if (itr == dungeonFloorMap.end()) return false;
 
 		itr->second = setFloorData;
 		return true;
+	}
+	/*
+	 *	@brief		最初の階層突入フラグ変更
+	 *  @param[in]	int floorID
+	 *  @param[in]	bool setFlag
+	 */
+	void MarkFloorEntered(int floorID, bool setFlag) {
+		auto itr = dungeonFloorMap.find(floorID);
+		if (itr == dungeonFloorMap.end()) return;
+
+		itr->second.isFirst = setFlag;
+	}
+	/*
+	 *	@brief		敵の生成数変更
+	 *	@param[in]	int floorID
+	 *	@param[in]	int setSpawnCount
+	 */
+	void SaveEnemySpawnCount(int floorID, int setSpawnCount) {
+		auto itr = dungeonFloorMap.find(floorID);
+		if (itr == dungeonFloorMap.end()) return;
+
+		itr->second.enemySpawnCount = setSpawnCount;
+	}
+	/*
+	 *	@brief		ボスの生成数変更
+	 *	@param[in]	int floorID
+	 *	@param[in]	int setSpawnCount
+	 */
+	void SaveBossSpawnCount(int floorID, int setSpawnCount) {
+		auto itr = dungeonFloorMap.find(floorID);
+		if (itr == dungeonFloorMap.end()) return;
+
+		itr->second.bossSpawnCount = setSpawnCount;
+	}
+	/*
+	 *	@brief		お宝の生成数変更
+	 *	@param[in]	int floorID
+	 *	@param[in]	int setSpawnCount
+	 */
+	void SaveTreasureSpawnCount(int floorID, int setSpawnCount) {
+		auto itr = dungeonFloorMap.find(floorID);
+		if (itr == dungeonFloorMap.end()) return;
+
+		itr->second.treasureSpawnCount = setSpawnCount;
 	}
 };
 #endif // !_DUNGEON_FLOOR_DATA_H_

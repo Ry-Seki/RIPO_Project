@@ -10,8 +10,6 @@
 #include "../../../System/Money/MoneyManager.h"
 #include "../../../System/Item/ItemManager.h"
 
-using namespace AudioUtility;
-
 /*
  *	@brief	初期化処理
  */
@@ -19,6 +17,11 @@ void SelectionShop::Initialize(Engine& engine) {
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fade);
 	MoneyManager::GetInstance().SetItemDataList(itemDataList);
+}
+/*
+ *	@brief	準備前処理
+ */
+void SelectionShop::Setup(Engine& engine) {
 }
 /*
  *	@brief	ロード済みデータのセット(コールバック)
@@ -37,7 +40,7 @@ void SelectionShop::Update(Engine& engine, float deltaTime) {
 		if (money.GetCurrentMoney() < itemDataList[ID]->price) return;
 
 		// SEの再生
-		PlaySE("DebugSE");
+		AudioUtility::PlaySE("DebugSE");
 		// 所持金から引く
 		money.SubItemMoney(ID);
 		// 購入済みリストに追加
@@ -49,7 +52,7 @@ void SelectionShop::Update(Engine& engine, float deltaTime) {
 		if (money.GetCurrentMoney() < itemDataList[ID]->price) return;
 
 		// SEの再生
-		PlaySE("DebugSE");
+		AudioUtility::PlaySE("DebugSE");
 		// 所持金から引く
 		money.SubItemMoney(ID);
 		// 購入済みリストに追加
@@ -61,7 +64,7 @@ void SelectionShop::Update(Engine& engine, float deltaTime) {
 		if (money.GetCurrentMoney() < itemDataList[ID]->price) return;
 
 		// SEの再生
-		PlaySE("DebugSE");
+		AudioUtility::PlaySE("DebugSE");
 		// 所持金から引く
 		money.SubItemMoney(ID);
 		// 購入済みリストに追加
@@ -73,7 +76,7 @@ void SelectionShop::Update(Engine& engine, float deltaTime) {
 		if (money.GetCurrentMoney() < itemDataList[ID]->price) return;
 
 		// SEの再生
-		PlaySE("DebugSE");
+		AudioUtility::PlaySE("DebugSE");
 		// 所持金から引く
 		money.SubItemMoney(ID);
 		// 購入済みリストに追加
@@ -81,7 +84,7 @@ void SelectionShop::Update(Engine& engine, float deltaTime) {
 	}
 	else if (!inputHandle && CheckHitKey(KEY_INPUT_RETURN)) {
 		// SEの再生
-		PlaySE("DebugSE");
+		AudioUtility::PlaySE("DebugSE");
 		inputHandle = true;
 		isComplete = true;
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);

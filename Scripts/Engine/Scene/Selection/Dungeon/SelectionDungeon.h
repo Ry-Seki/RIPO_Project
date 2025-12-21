@@ -20,9 +20,13 @@
 
 // 前方宣言
 class Engine;
+struct DungeonData;
+class DungeonDataLoader;
+class DungeonFloorData;
+class DungeonStageData;
 
 /*
- *	ダンジョン選択クラス
+ *	@brief	ダンジョン選択クラス
  */
 class SelectionDungeon : public SelectionBase {
 private:
@@ -42,17 +46,21 @@ public:
 	/*
 	 *	デストラクタ
 	 */
-	~SelectionDungeon() override = default;
+	~SelectionDungeon() override {}
 
 public:
 	/*
-	 *	初期化処理
+	 *	@brief	初期化処理
 	 */
 	void Initialize(Engine& engine) override;
 	/*
+	 *	@brief	準備前処理
+	 */
+	void Setup(Engine& engine) override;
+	/*
 	 *	ロード済みデータのセット（コールバック）
 	 */
-	void SetupData(Engine& engine) override;
+	void SetupData(Engine& engine);
 	/*
 	 *	更新処理
 	 */

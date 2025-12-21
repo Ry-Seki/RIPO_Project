@@ -20,9 +20,9 @@ private:
 
 public:
 	/*
-	 *	デストラクタ
+	 *	@brief	デストラクタ
 	 */
-	~SelectionTraining() override = default;
+	~SelectionTraining() override {}
 
 public:
 	/*
@@ -30,9 +30,13 @@ public:
 	 */
 	void Initialize(Engine& engine) override;
 	/*
+	 *	@brief	準備前処理
+	 */
+	void Setup(Engine& engine) override;
+	/*
 	 *	ロード済みデータのセット（コールバック）
 	 */
-	void SetupData(Engine& engine) override;
+	void SetupData(Engine& engine);
 	/*
 	 *	更新処理
 	 */

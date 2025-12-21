@@ -11,10 +11,8 @@
 #include "../../../Fade/FadeFactory.h"
 #include "../../../Fade/FadeManager.h"
 
-using namespace AudioUtility;
-
 /*
- *	初期化処理
+ *	@brief	初期化処理
  */
 void SelectionDungeon::Initialize(Engine& engine) {
 	LoadManager& load = LoadManager::GetInstance();
@@ -23,7 +21,12 @@ void SelectionDungeon::Initialize(Engine& engine) {
 	load.SetOnComplete( [this, &engine]() { SetupData(engine); } );
 }
 /*
- *	ロード済みデータのセット (コールバック処理)
+ *	@brief	準備前処理
+ */
+void SelectionDungeon::Setup(Engine& engine) {
+}
+/*
+ *	@brief	ロード済みデータのセット (コールバック処理)
  */
 void SelectionDungeon::SetupData(Engine& engine) {
 	dungeonDataList = dungeonDataLoader->dungeonList;
@@ -31,14 +34,14 @@ void SelectionDungeon::SetupData(Engine& engine) {
 	FadeManager::GetInstance().StartFade(fade);
 }
 /*
- *	更新処理
+ *	@brief	更新処理
  */
 void SelectionDungeon::Update(Engine& engine, float deltaTime) {
 	if (dungeonDataList.empty() || isComplete) return;
 
 	if (!inputHandle && CheckHitKey(KEY_INPUT_0)) { 
 		// SEの再生
-		PlaySE("DebugSE");
+		AudioUtility::PlaySE("DebugSE");
 		dungeonID = 0;
 		inputHandle = true;
 		isComplete = true;
@@ -50,13 +53,13 @@ void SelectionDungeon::Update(Engine& engine, float deltaTime) {
 	if (CheckHitKey(KEY_INPUT_0) == 0) inputHandle = false;
 }
 /*
- *	描画処理
+ *	@brief	描画処理
  */
 void SelectionDungeon::Render() {
 	DrawFormatString(50, 50, GetColor(0, 0, 0), "0: TutorialDungeon");
 }
 /*
- *	ダンジョンステージデータの読み込み
+ *	@brief	ダンジョンステージデータの読み込み
  */
 void SelectionDungeon::StartStageDataLoad(Engine& engine, int dungeonID) {
 	LoadManager& load = LoadManager::GetInstance();
@@ -73,7 +76,7 @@ void SelectionDungeon::StartStageDataLoad(Engine& engine, int dungeonID) {
 }
 /*
  *	@brief		読み込んだステージデータをセットし、アクションマネージャーに渡す(コールバック)
- *  param[in]	const std::vector<std::shared_ptr<LoadJSON>>& setDataList	ロードしたJSONデータリスト
+ *  @param[in]	const std::vector<std::shared_ptr<LoadJSON>>& setDataList	ロードしたJSONデータリスト
  */
 void SelectionDungeon::SetStageData(Engine& engine, const std::vector<std::shared_ptr<LoadJSON>>& setDataList) {
 	// JSONデータの取得

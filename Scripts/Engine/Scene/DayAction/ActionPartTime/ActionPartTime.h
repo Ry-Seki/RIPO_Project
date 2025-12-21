@@ -11,7 +11,7 @@
 #include <memory>
 
 /*
- *	アルバイトアクションクラス
+ *	@brief  アルバイトアクションクラス
  */
 class ActionPartTime : public DayActionBase {
 private:
@@ -35,9 +35,13 @@ public:
      */
     void Initialize(Engine& engine) override;
     /*
+     *  @brief  準備前処理
+     */
+    void Setup(Engine& engine) override;
+    /*
      *  @brief  ロード済みのデータをセット(コールバック)
      */
-    void SetupData(Engine& engine) override;
+    void SetupData();
     /*
      *  @brief  更新処理
      */
