@@ -13,7 +13,6 @@
  */
 class EnemyChase : public EnemyState {
 private:
-	GameObject* enemy;
 	GameObjectPtr player;
 	// ウェイポイント
 	Vector3 wayPoint;
@@ -59,7 +58,7 @@ private:
 	 *  param[in]	bool		targetChange	chaseTargetChangeFragの切り替え
 	 *  param[in]	float		deltaTime
 	 */
-	void ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaTime);
+	void ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetChange, float deltaTime);
 
 public:
 

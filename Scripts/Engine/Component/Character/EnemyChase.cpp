@@ -3,6 +3,7 @@
  *  @author kuu
  */
 #include "EnemyChase.h"
+#include "EnemyTurn.h"
 #include "../../Vision.h"
 #include "../../Manager/CameraManager.h"
 
@@ -13,7 +14,6 @@ EnemyChase::EnemyChase()
 	: wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(1000.0f)
-	, enemy(nullptr)
 	, closePlayer(false)
 	, MOVE_SPEED(700.0f)
 	, ROTATE_SPEED(3.0f)
@@ -40,26 +40,27 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime)
 	auto enemyComponent = enemy->GetComponent<EnemyComponent>();
 
 	if (Vision(enemyComponent->GetEnemyPosition(), enemyComponent->GetEnemyRotation(), player->position, 30, 2000)) {
-		ChaseWayPoint(player->position, true, deltaTime);
+		ChaseWayPoint(enemy, player->position, true, deltaTime);
 	}
 	else {
 		// 目標に向かって移動
 		if (!enemyComponent->GetChaseTargetChangeFrag()) {
-			ChaseWayPoint(wayPoint, true, deltaTime);
+			ChaseWayPoint(enemy, wayPoint, true, deltaTime);
 		}
 		else if (enemyComponent->GetChaseTargetChangeFrag()) {
-			ChaseWayPoint(nextWayPoint, false, deltaTime);
+			ChaseWayPoint(enemy, nextWayPoint, false, deltaTime);
 		}
 	}
 }
 
 /*
  *	目標に向かって進む処理
+ *  param[in]	GameObject*	enemy			敵
  *  param[in]	Vector3		wayPoint		目標の座標
  *  param[in]	bool		targetChange	chaseTargetChangeFragの切り替え
  *  param[in]	float		deltaTime
  */
-void EnemyChase::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaTime) {
+void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetChange, float deltaTime) {
 	// 目標と自身のpositionの差
 	const float differenceTarget = 100.0f;
 	// 目標の方向
@@ -120,7 +121,7 @@ void EnemyChase::ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaT
 	// 目標地点についたらターゲットを変える
 	else if (distance < differenceTarget) {
 		enemy->GetComponent<EnemyComponent>()->SetChaseTargetChangeFrag(targetChange);
-		//enemy.SetState(new EnemyTurn());
+		enemy->GetComponent<EnemyComponent>()->SetState(new EnemyTurn());
 	}
 	else {
 		// 目標の方向に進む
