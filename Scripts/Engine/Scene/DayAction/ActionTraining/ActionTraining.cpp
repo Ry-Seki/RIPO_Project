@@ -11,7 +11,7 @@
 #include <DxLib.h>
 
 /*
- *	初期化処理
+ *	@brief	初期化処理
  */
 void ActionTraining::Initialize(Engine& engine) {
 	auto fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
@@ -20,13 +20,18 @@ void ActionTraining::Initialize(Engine& engine) {
 	});
 }
 /*
- *  ロード済みのデータをセット(コールバック)
+ *	@brief	準備前処理
+ */
+void ActionTraining::Setup(Engine& engine) {
+}
+/*
+ *  @brief	ロード済みのデータをセット(コールバック)
  */
 void ActionTraining::SetupData(Engine& engine) {
 
 }
 /*
- *	更新処理
+ *	@brief	更新処理
  */
 void ActionTraining::Update(Engine& engine, float deltaTime) {
 	timer += deltaTime;
@@ -35,7 +40,7 @@ void ActionTraining::Update(Engine& engine, float deltaTime) {
 	}
 }
 /*
- *	描画処理
+ *	@brief	描画処理
  */
 void ActionTraining::Render() {
 	PlayerStatusData* status = PlayerStatusManager::GetInstance().GetPlayerStatusData();
@@ -45,7 +50,7 @@ void ActionTraining::Render() {
 	DrawFormatString(50, 160, GetColor(0, 255, 0), "ResistTime : %d", status->base.resistTime);
 }
 /*
- *	破棄処理
+ *	@brief	破棄処理
  */
 void ActionTraining::Teardown() {
 }

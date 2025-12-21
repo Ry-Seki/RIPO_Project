@@ -8,6 +8,8 @@
 #include "Training/SelectionTraining.h"
 #include "Shop/SelectionShop.h"
 #include "PartTime/SelectionPartTime.h"
+#include "SelectionFactory.h"
+#include "../DayAction/ActionManager.h"
 
 #include "../../Engine.h"
 

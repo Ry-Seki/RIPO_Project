@@ -7,11 +7,12 @@
 #define _SELECTION_MANAGER_H_
 
 #include "SelectionBase.h"
-#include "SelectionFactory.h"
-#include "../DayAction/ActionManager.h"
 
 #include <memory>
 #include <functional>
+
+// 前方宣言
+class ActionManager;
 
 /*
  *	各選択管理クラス

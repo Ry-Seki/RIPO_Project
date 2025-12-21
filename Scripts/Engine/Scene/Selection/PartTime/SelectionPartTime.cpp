@@ -9,7 +9,6 @@
 #include "../../../Audio/AudioUtility.h"
 #include "MiniGame/Sokoban/MiniGameSokoban.h"
 
-using namespace AudioUtility;
 /*
  *	@brief	初期化処理
  */
@@ -19,6 +18,11 @@ void SelectionPartTime::Initialize(Engine& engine) {
 	FadeManager::GetInstance().StartFade(fadeIn, [&engine, this]() {
 		SetupData(engine);
 	});
+}
+/*
+ *	@brief	準備前処理
+ */
+void SelectionPartTime::Setup(Engine& engine) {
 }
 /*
  *	@brief	ロード済みデータのセット(コールバック)
@@ -36,7 +40,7 @@ void SelectionPartTime::Update(Engine& engine, float deltaTime) {
 
 	// ミニゲーム終了時、その結果を反映
 	if (currentMiniGame->IsComplete()) {
-		PlaySE("DebugSE");
+		AudioUtility::PlaySE("DebugSE");
 		inputHandle = true;
 		isComplete = true;
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);

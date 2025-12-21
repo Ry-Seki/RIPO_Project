@@ -28,13 +28,13 @@ public:
     virtual ~DayActionBase() = default;
 
     /*
-     *  初期化処理(データのロード登録)
+     *  @brief  初期化処理(データのロード登録)
      */
     virtual void Initialize(Engine& engine) = 0;
     /*
-     *  ロード済みのデータをセット(コールバック)
+     *  @brief  準備前処理
      */
-    virtual void SetupData(Engine& engine) = 0;
+    virtual void Setup(Engine& engine) = 0;
     /*
      *  更新処理
      */
