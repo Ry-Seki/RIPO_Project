@@ -4,6 +4,7 @@
  */
 
 #include "SelectionTraining.h"
+#include "../SelectionFactory.h"
 #include "../../../Fade/FadeFactory.h"
 #include "../../../Fade/FadeManager.h"
 #include "../../../Audio/AudioUtility.h"
@@ -78,4 +79,9 @@ void SelectionTraining::Render() {
 	DrawFormatString(50, 100, GetColor(0, 255, 0), "2: Stamina");
 	DrawFormatString(50, 120, GetColor(0, 255, 0), "3: Strength");
 	DrawFormatString(50, 140, GetColor(0, 255, 0), "4: ResistTime");
+}
+/*
+ *  @brief  çsìÆé¿çsä÷êîÇÃåƒÇ—èoÇµ
+ */
+void SelectionTraining::SetAction() {
 }

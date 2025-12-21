@@ -46,6 +46,10 @@ public:
      *  @brief  片付け処理
      */
     virtual void Teardown() {}
+    /*
+     *  @brief  行動実行関数の呼び出し
+     */
+    virtual void SetAction() = 0;
 
 public:
     /*

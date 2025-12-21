@@ -191,6 +191,7 @@
     <ClCompile Include="Scripts\Engine\Scene\Calendar\Day.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionDungeon\ActionDungeon.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionDungeon\DungeonCreater.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionFactory.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.cpp" />
@@ -203,6 +204,7 @@
     <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\MiniGameSokoban.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\SelectionPartTime.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionFactory.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\Shop\SelectionShop.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\Training\SelectionTraining.cpp" />
@@ -269,6 +271,7 @@
     <ClInclude Include="Scripts\Engine\Fade\SpiralFade.h" />
     <ClInclude Include="Scripts\Engine\Fade\TileFade.h" />
     <ClInclude Include="Scripts\Engine\GameConst.h" />
+    <ClInclude Include="Scripts\Engine\GameEnum.h" />
     <ClInclude Include="Scripts\Engine\GameObject.h" />
     <ClInclude Include="Scripts\Engine\GameObject\GameObjectUtility.h" />
     <ClInclude Include="Scripts\Engine\Input\InputManager.h" />

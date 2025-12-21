@@ -69,6 +69,10 @@ public:
 	 *	•`‰æˆ—
 	 */
 	void Render() override;
+	/*
+	 *  @brief  s“®ÀsŠÖ”‚ÌŒÄ‚Ño‚µ
+	 */
+	void SetAction() override;
 
 private:
 	/*

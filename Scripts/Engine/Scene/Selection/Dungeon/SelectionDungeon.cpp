@@ -11,6 +11,8 @@
 #include "../../../Fade/FadeFactory.h"
 #include "../../../Fade/FadeManager.h"
 
+#include "../../../GameEnum.h"
+
 /*
  *	@brief	初期化処理
  */
@@ -57,6 +59,12 @@ void SelectionDungeon::Update(Engine& engine, float deltaTime) {
  */
 void SelectionDungeon::Render() {
 	DrawFormatString(50, 50, GetColor(0, 0, 0), "0: TutorialDungeon");
+}
+/*
+ *  @brief  行動実行関数の呼び出し
+ */
+void SelectionDungeon::SetAction() {
+
 }
 /*
  *	@brief	ダンジョンステージデータの読み込み

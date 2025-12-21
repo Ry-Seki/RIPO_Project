@@ -6,25 +6,31 @@
 #ifndef _ACTION_MANAGER_H_
 #define _ACTION_MANAGER_H_
 
-#include "DayActionBase.h"
-#include "ActionFactory.h"
-#include "../../../Data/Dungeon/DungeonStageData.h"
-#include "../../../Data/Dungeon/DungeonFloorData.h"
-#include "../../Load/JSON/LoadJSON.h"
+#include "../../JSON.h"
+#include "../../GameEnum.h"
 
 #include <vector>
 #include <memory>
 #include <string>
 #include <functional>
 
+// 前方宣言
+class Engine;
+class DayActionBase;
+class DungeonStageData;
+class DungeonFloorData;
+
 /*
  *  各アクションの管理クラス 
  */
 class ActionManager{
 private:
-    DayActionPtr currentAction;             // 現在のアクション
-    std::function<void()> onComplete;       // アクション完了コールバック
-    bool isActive = false;                  // 処理有効フラグ
+    std::unordered_map<GameEnum::ActionType,
+        std::shared_ptr<DayActionBase>> selectionMap;	// 選択クラスリスト
+
+    std::shared_ptr<DayActionBase> currentAction;       // 現在のアクション
+    std::function<void()> onComplete;                   // アクション完了コールバック
+    bool isActive = false;                              // 処理有効フラグ
 
 public:
     /*
@@ -74,6 +80,12 @@ public:
     void ActivePartTime(Engine& engine, const int incomeValue);
 
 public:
+    /*
+     *  @brief      行動クラスの取得
+     *  @param[in]  ActionType type
+     *  @return     std::shared_ptr<DayActionBase>
+     */
+    std::shared_ptr<DayActionBase> GetAction(GameEnum::ActionType type);
     /*
      *  コールバックの設定
      *  param[in]   std::function<void()> callback      コールバック

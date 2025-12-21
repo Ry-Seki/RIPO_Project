@@ -26,6 +26,16 @@ private:
 
 public:
     /*
+     *  @brief  コンストラクタ
+     */
+    MainGameScene() = default;
+    /*
+     *  @brief  デストラクタ
+     */
+    ~MainGameScene() override;
+
+public:
+    /*
      *  初期化処理
      */
     void Initialize(class Engine& engine) override;
@@ -50,7 +60,5 @@ public:
      */
     void AdvanceDay(Engine& engine);
 };
+
 #endif // !_MAINGAMESCENE_H_
-
-
-

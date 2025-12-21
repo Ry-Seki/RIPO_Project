@@ -4,6 +4,7 @@
  */
 
 #include "SelectionShop.h"
+#include "../SelectionFactory.h"
 #include "../../../Fade/FadeFactory.h"
 #include "../../../Fade/FadeManager.h"
 #include "../../../Audio/AudioUtility.h"
@@ -117,4 +118,9 @@ void SelectionShop::Render() {
  */
 void SelectionShop::Teardown() {
 	buyItemIDList.clear();
+}
+/*
+ *  @brief  çsìÆé¿çsä÷êîÇÃåƒÇ—èoÇµ
+ */
+void SelectionShop::SetAction() {
 }

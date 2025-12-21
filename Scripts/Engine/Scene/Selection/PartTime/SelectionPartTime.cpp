@@ -4,6 +4,7 @@
  */
 
 #include "SelectionPartTime.h"
+#include "../SelectionFactory.h"
 #include "../../../Fade/FadeFactory.h"
 #include "../../../Fade/FadeManager.h"
 #include "../../../Audio/AudioUtility.h"
@@ -61,4 +62,9 @@ void SelectionPartTime::Render() {
  */
 void SelectionPartTime::Teardown() {
 	partTimeScore = 0;
+}
+/*
+ *  @brief  s“®ÀsŠÖ”‚ÌŒÄ‚Ño‚µ
+ */
+void SelectionPartTime::SetAction() {
 }

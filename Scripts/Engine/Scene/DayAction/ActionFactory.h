@@ -6,43 +6,43 @@
 #ifndef _ACTION_FACTORY_H_
 #define _ACTION_FACTORY_H_
 
-#include "DayActionBase.h"
-#include "ActionDungeon/ActionDungeon.h"
-#include "ActionTraining/ActionTraining.h"
-#include "ActionShop/ActionShop.h"
-#include "ActionPartTime/ActionPartTime.h"
+#include "../../GameEnum.h"
 
+#include <functional>
 #include <memory>
+#include <unordered_map>
 #include <string>
 
-enum class ActionType {
-    Dungeon,
-    Training,
-    Shop,
-    PartTime
-};
+// 前方宣言
+class DayActionBase;
 
  /*
-  *  各アクションの生成するファクトリクラス
+  *  @brief	各アクションの生成するファクトリクラス
   */
 class ActionFactory {
+public:		// 別名定義
+	using CreateFuntion = std::function<std::shared_ptr<DayActionBase>()>;
+
+private:
+	static std::unordered_map<GameEnum::ActionType, CreateFuntion> actionMap;		// 行動クラスマップ
+
 public:
-    /*
-     *  アクション生成
-     */
-    static DayActionPtr CreateAction(ActionType type) {
-        switch (type) {
-            case ActionType::Dungeon: 
-                return std::make_shared<ActionDungeon>();
-            case ActionType::Training: 
-                return std::make_shared<ActionTraining>();
-            case ActionType::Shop: 
-                return std::make_shared<ActionShop>();
-            case ActionType::PartTime: 
-                return std::make_shared<ActionPartTime>();
-        }
-        return nullptr;
-    }
+	/*
+	 *	@brief		行動クラスを全て登録
+	 */
+	static void RegisterAll();
+	/*
+	 *	@brief		行動クラス登録
+	 *  @param[in]	ActionType type
+	 *  @param[in]	CreateFuntion function
+	 */
+	static void Register(GameEnum::ActionType type, CreateFuntion function);
+	/*
+	 *	@brief		行動クラス生成
+	 *  @param[in]	ActionType type
+	 *  @return		std::shared_ptr<SelectionBase>
+	 */
+	static std::shared_ptr<DayActionBase> CreateAction(GameEnum::ActionType type);
 };
 
 #endif // !_ACTION_FACTORY_H_

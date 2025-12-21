@@ -13,10 +13,21 @@
 #include "../System/Money/MoneyManager.h"
 #include "../System/Status/PlayerStatusManager.h"
 
+#include "Selection/SelectionFactory.h"
+
+/*
+ *  @brief  デストラクタ
+ */
+MainGameScene::~MainGameScene() {
+
+}
+
 /*
  *  初期化処理
  */
 void MainGameScene::Initialize(Engine& engine) {
+    // 選択管理生成クラスの登録
+    SelectionFactory::RegisterAll();
     // カレンダー管理クラスの生成
     calendarManager = std::make_unique<CalendarManager>();
     // カレンダー管理クラスの初期化

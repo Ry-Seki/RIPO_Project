@@ -58,6 +58,10 @@ public:
 	 *	@brief	片付け処理
 	 */
 	void Teardown() override;
+	/*
+	 *  @brief  行動実行関数の呼び出し
+	 */
+	void SetAction() override;
 
 public:
 	/*
