@@ -74,6 +74,13 @@ namespace StageUtility {
 	}
 
 	/*
+	 *	リスポーン位置の取得
+	 */
+	inline std::vector<Vector3> GetRespawnPos() {
+		return StageManager::GetInstance().GetRespawnPos();
+	}
+
+	/*
 	 *	jsonの変更
 	 *  @param[in]	JSON setJSON
 	 */
