@@ -164,6 +164,11 @@ public:
 	std::vector<Vector3> GetStairsPos()const;
 
 	/*
+	 *	階段手前のリスポーン場所の取得
+	 */
+	std::vector<Vector3> GetRespawnPos()const;
+
+	/*
 	 *	jsonの変更
 	 */
 	void SetStageJSONData(JSON setJSON) { json = setJSON; }
