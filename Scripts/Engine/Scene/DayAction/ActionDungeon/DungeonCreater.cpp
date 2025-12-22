@@ -259,16 +259,18 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 		// お宝コンポーネントの取得
 		auto component = treasure->GetComponent<StageObjectBase>();
 		if (!component) continue;
-		// 持っているお宝IDと生成されたお宝IDが同じ場合は、それを削除する
-		if (component->GetTreasureID() == holdTreasureID) {
-			RemoveStageObject(treasure->ID);
-			continue;
-		}
-		else {
-			// 位置の設定
-			treasure->position = treasureSpawnPos[i];
-			// モデルの設定
-			SetModelHandle(treasure, treasureHandle);
+		// お宝が持たれているか
+		if (!component->IsHold()) {
+			// 持っているお宝IDと生成されたお宝IDが同じ場合は、それを削除する
+			if (component->GetTreasureID() == holdTreasureID) {
+				RemoveStageObject(treasure->ID);
+				continue;
+			} else {
+				// 位置の設定
+				treasure->position = treasureSpawnPos[i];
+				// モデルの設定
+				SetModelHandle(treasure, treasureHandle);
+			}
 		}
 	}
 
