@@ -14,12 +14,12 @@
 #include "../../Engine.h"
 
 /*
- *	初期化処理
+ *	@brief	初期化処理
  */
 void ActionManager::Initialize(JSON setJSON) {
 }
 /*
- *	更新処理
+ *	@brief	更新処理
  */
 void ActionManager::Update(Engine& engine, float deltaTime) {
 	if (!isActive || !currentAction) return;
@@ -34,7 +34,7 @@ void ActionManager::Update(Engine& engine, float deltaTime) {
 	}
 }
 /*
- *	描画処理
+ *	@brief	描画処理
  */
 void ActionManager::Render() {
 	if (!isActive || !currentAction) return;
@@ -42,7 +42,7 @@ void ActionManager::Render() {
 	currentAction->Render();
 }
 /*
- *	ダンジョンアクション開始
+ *	@brief	ダンジョンアクション開始
  */
 void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData, DungeonFloorData setFloorData) {
 	currentAction = ActionFactory::CreateAction(GameEnum::ActionType::Dungeon);
@@ -57,7 +57,7 @@ void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData,
 	isActive = true;
 }
 /*
- *	デバッグ用ダンジョンアクション開始
+ *	@brief	デバッグ用ダンジョンアクション開始
  */
 void ActionManager::DebugActiveDungeon(Engine& engine, DungeonStageData setStageData, DungeonFloorData setFloorData) {
 	currentAction = ActionFactory::CreateAction(GameEnum::ActionType::Dungeon);
@@ -71,7 +71,7 @@ void ActionManager::DebugActiveDungeon(Engine& engine, DungeonStageData setStage
 	isActive = true;
 }
 /*
- *  トレーニングアクション開始
+ *  @brief		トレーニングアクション開始
  *  @param[in]  const int setActionNum    アクション番号
  */
 void ActionManager::ActiveTraining(Engine& engine, const int setActionNum) {
@@ -87,7 +87,7 @@ void ActionManager::ActiveTraining(Engine& engine, const int setActionNum) {
 	isActive = true;
 }
 /*
- *  ショップアクション開始
+ *  @brief		ショップアクション開始
  *  @param[in]  const std::vector<int>& itemIDList     アイテムIDリスト
  */
 void ActionManager::ActiveShop(Engine& engine, const std::vector<int>& itemIDList) {
@@ -103,7 +103,7 @@ void ActionManager::ActiveShop(Engine& engine, const std::vector<int>& itemIDLis
 	isActive = true;
 }
 /*
- *	アルバイトアクション開始
+ *	@brief		アルバイトアクション開始
  *  @param[in]	const int incomeValue		アルバイトの収入
  */
 void ActionManager::ActivePartTime(Engine& engine, const int incomeValue) {
@@ -123,6 +123,12 @@ void ActionManager::ActivePartTime(Engine& engine, const int incomeValue) {
  *  @param[in]  ActionType type
  *  @return     std::shared_ptr<DayActionBase>
  */
-std::shared_ptr<DayActionBase> ActionManager::GetAction(GameEnum::ActionType type) {
-	return nullptr;
+std::shared_ptr<DayActionBase> ActionManager::GetAction(GameEnum::ActionType type,Engine& engine) {
+	auto action = actionMap[type];
+	if (!action) {
+		action = ActionFactory::CreateAction(type);
+		action->Initialize(engine);
+		actionMap[type] = action;
+	}
+	return action;
 }

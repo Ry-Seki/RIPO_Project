@@ -26,7 +26,7 @@ class DungeonFloorData;
 class ActionManager{
 private:
     std::unordered_map<GameEnum::ActionType,
-        std::shared_ptr<DayActionBase>> selectionMap;	// 選択クラスリスト
+        std::shared_ptr<DayActionBase>> actionMap;	    // 選択クラスリスト
 
     std::shared_ptr<DayActionBase> currentAction;       // 現在のアクション
     std::function<void()> onComplete;                   // アクション完了コールバック
@@ -34,26 +34,26 @@ private:
 
 public:
     /*
-     *  コンストラクタ
+     *  @brief  コンストラクタ
      */
     ActionManager() = default;
     /*
-     *  デストラクタ
+     *  @brief  デストラクタ
      */
     ~ActionManager() = default;
 
 public:
     /*
-     *  初期化処理
+     *  @brief      初期化処理
      *  @param[in]  JSON setJSON    セットするJSONデータ
      */
     void Initialize(JSON setJSON);
     /*
-     *  更新処理
+     *  @brief      更新処理
      */
     void Update(Engine& engine, float deltaTime);
     /*
-     *  描画処理
+     *  @brief      描画処理
      */
     void Render();
 
@@ -85,7 +85,7 @@ public:
      *  @param[in]  ActionType type
      *  @return     std::shared_ptr<DayActionBase>
      */
-    std::shared_ptr<DayActionBase> GetAction(GameEnum::ActionType type);
+    std::shared_ptr<DayActionBase> GetAction(GameEnum::ActionType type, Engine& engine);
     /*
      *  コールバックの設定
      *  param[in]   std::function<void()> callback      コールバック
