@@ -1,0 +1,67 @@
+/*
+ *	@file	GameState_InAction.cpp
+ *	@author	Seki
+ */
+
+#include "GameState_InAction.h"
+#include "Dungeon/InAction_Dungeon.h"
+#include "Training/InAction_Training.h"
+#include "Shop/InAction_Shop.h"
+#include "PartTime/InAction_PartTime.h"
+
+#include "../../../GameEnum.h"
+
+/*
+ *	@brief	初期化処理
+ */
+void GameState_InAction::Initialize() {
+	// 行動の要素分をあらかじめ確保する
+	int maxCount = static_cast<int>(GameEnum::ActionType::Max);
+	inActionList.resize(maxCount);
+	// 各行動クラスを生成
+	inActionList[static_cast<int>(GameEnum::ActionType::Dungeon)]
+		= std::make_shared<InAction_Dungeon>();
+	inActionList[static_cast<int>(GameEnum::ActionType::Training)]
+		= std::make_shared<InAction_Training>();
+	inActionList[static_cast<int>(GameEnum::ActionType::Shop)]
+		= std::make_shared<InAction_Shop>();
+	inActionList[static_cast<int>(GameEnum::ActionType::PartTime)]
+		= std::make_shared<InAction_PartTime>();
+	// 各行動クラスの初期化
+	for (int i = 0; i < maxCount; i++) {
+		auto action = inActionList[i];
+		if (!action) continue;
+
+		action->Initialize();
+	}
+}
+/*
+ *	@brief	準備前処理
+ */
+void GameState_InAction::Setup() {
+	// currentAction = inActionList[type];
+	// currentAction->Setup();
+}
+/*
+ *	@brief	更新処理
+ */
+void GameState_InAction::Update(float deltaTime) {
+	if (currentAction) currentAction->Update(deltaTime);
+}
+/*
+ *	@brief	描画処理
+ */
+void GameState_InAction::Render() {
+	if (currentAction) currentAction->Render();
+}
+/*
+ *	@brief	片付け処理
+ */
+void GameState_InAction::Teardown() {
+	if (currentAction) currentAction->Teardown();
+}
+/*
+ *	@brief	ロード済みデータのセット(コールバック)
+ */
+void GameState_InAction::SetupData() {
+}

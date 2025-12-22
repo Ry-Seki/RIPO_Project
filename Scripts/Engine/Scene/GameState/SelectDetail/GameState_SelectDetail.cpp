@@ -15,9 +15,10 @@
  *	@brief	初期化処理
  */
 void GameState_SelectDetail::Initialize() {
+	// 行動の要素分をあらかじめ
 	int maxCount = static_cast<int>(GameEnum::ActionType::Max);
 	selectDetailList.resize(maxCount);
-	// 各派生クラスの生成
+	// 各詳細クラスの生成
 	selectDetailList[static_cast<int>(GameEnum::ActionType::Dungeon)]
 		= std::make_shared<SelectDetail_Dungeon>();
 	selectDetailList[static_cast<int>(GameEnum::ActionType::Training)]
@@ -26,12 +27,12 @@ void GameState_SelectDetail::Initialize() {
 		= std::make_shared<SelectDetail_Shop>();
 	selectDetailList[static_cast<int>(GameEnum::ActionType::PartTime)]
 		= std::make_shared<SelectDetail_PartTime>();
-	// 各派生クラスの初期化
+	// 各詳細クラスの初期化
 	for (int i = 0; i < maxCount; i++) {
-		SelectDetailPtr detail = selectDetailList[i];
+		auto detail = selectDetailList[i];
 		if (!detail) continue;
 
-		selectDetailList[i]->Initialize();
+		detail->Initialize();
 	}
 }
 /*
@@ -41,7 +42,6 @@ void GameState_SelectDetail::Setup() {
 	// currentDetail = selectdetailList[];
 	// currentDetail->Setup();
 
-	
 }
 /*
  *	@brief	更新処理
@@ -49,6 +49,12 @@ void GameState_SelectDetail::Setup() {
 void GameState_SelectDetail::Update(float deltaTime) {
 	if (currentDetail) currentDetail->Update(deltaTime);
 
+}
+/*
+ *	@brief	描画処理(デバッグ用)
+ */
+void GameState_SelectDetail::Render() {
+	if (currentDetail) currentDetail->Render();
 }
 /*
  *	@brief	片付け処理

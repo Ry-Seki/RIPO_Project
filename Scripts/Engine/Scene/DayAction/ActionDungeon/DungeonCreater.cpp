@@ -204,12 +204,13 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 		GenerateExit("Exit", V_ZERO, V_ZERO, { -1000,-700,-10 }, { 1000,700,10 });
 	}
 	// オブジェクトの設定
+	std::vector<Vector3> respawnPos = GetRespawnPos();
 	// プレイヤー
 	// プレイヤーオブジェクトの取得
 	auto player = GetUseObject(0);
 	if (!player) return;
 	// 位置の設定
-	player->position = GetStartPos();
+	player->position = respawnPos[0];
 
 	// 敵
 	// 敵の生成位置の取得
@@ -295,6 +296,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 
 		stairComponent->SetStairID(stairID);
 	}
+
 	// 出口の設定
 	GameObjectList exitList = GetObjectByName("Exit");
 	// 生成位置の取得

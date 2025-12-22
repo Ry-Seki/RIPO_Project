@@ -197,6 +197,11 @@
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionTraining\ActionTraining.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DebugScene.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\InAction_Dungeon.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\GameState_InAction.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\PartTime\InAction_PartTime.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\Shop\InAction_Shop.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\Training\InAction_Training.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\GameState\SelectAction\GameState_SelectAction.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\Dungeon\SelectDetail_Dungeon.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\GameState_SelectDetail.cpp" />
@@ -321,6 +326,12 @@
     <ClInclude Include="Scripts\Engine\Scene\DayAction\DayActionBase.h" />
     <ClInclude Include="Scripts\Engine\Scene\DebugScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\GameState\GameStateBase.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\InAction_Dungeon.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\GameState_InAction.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\InActionBase.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\InAction_PartTime.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\Shop\InAction_Shop.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\Training\InAction_Training.h" />
     <ClInclude Include="Scripts\Engine\Scene\GameState\SelectAction\GameState_SelectAction.h" />
     <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\Dungeon\SelectDetail_Dungeon.h" />
     <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\GameState_SelectDetail.h" />

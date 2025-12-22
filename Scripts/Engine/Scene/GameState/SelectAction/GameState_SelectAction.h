@@ -8,6 +8,9 @@
 
 #include "../GameStateBase.h"
 
+/*
+ *	@brief	s“®‘I‘ğó‘Ô
+ */
 class GameState_SelectAction : public GameStateBase {
 private:
 	bool inputHandle = false;

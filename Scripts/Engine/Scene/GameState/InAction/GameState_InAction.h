@@ -1,30 +1,29 @@
 /*
- *	@brief	GameState_SelectDetail.h
+ *	@file	GameState_InAction.h
  *	@author	Seki
  */
 
-#ifndef _GAME_STATE_SELECT_DETAIL_H_
-#define _GAME_STATE_SELECT_DETAIL_H_
+#ifndef _GAME_STATE_IN_ACTION_H_
+#define _GAME_STATE_IN_ACTION_H_
 
 #include "../GameStateBase.h"
 
-#include <vector>
 #include <memory>
+#include <vector>
 
 // 前方宣言
-class SelectDetailBase;
+class InActionBase;
 
 /*
- *	@brief	行動詳細選択状態
+ *	@brief	行動実行状態
  */
-class GameState_SelectDetail : public GameStateBase {
+class GameState_InAction : public GameStateBase {
 public:		// 別名定義
-	using SelectDetailPtr = std::shared_ptr<SelectDetailBase>;
+	using InActionPtr = std::shared_ptr<InActionBase>;
 
 private:
-	std::vector<SelectDetailPtr> selectDetailList;
-	SelectDetailPtr currentDetail;
-	SelectDetailPtr prevDetail;
+	std::vector<InActionPtr> inActionList;
+	InActionPtr currentAction;
 
 public:
 	/*
@@ -54,9 +53,5 @@ public:
 	 */
 	void SetupData();
 
-public:
-	
-
 };
-
-#endif // !_GAME_STATE_SELECT_DETAIL_H_
+#endif // !_GAME_STATE_IN_ACTION_H_
