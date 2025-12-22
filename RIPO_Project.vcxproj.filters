@@ -265,6 +265,18 @@
     <Filter Include="ソース ファイル\Engine\Scene\GameState\InAction\PartTime">
       <UniqueIdentifier>{42b201c0-541c-451c-b127-26fd55ce56d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InitialTutorial">
+      <UniqueIdentifier>{97c521e9-3895-430a-b004-99e2df2b348a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\GameState\InitialTutorial">
+      <UniqueIdentifier>{556e2650-830b-4167-b943-189cd19fbb17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\Pause">
+      <UniqueIdentifier>{da628408-a0b5-42ec-bada-c64a11cc3c17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\GameState\Pause">
+      <UniqueIdentifier>{366ada36-34ac-410e-9291-826dc559fd02}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -498,12 +510,6 @@
     <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\Dungeon\SelectDetail_Dungeon.cpp">
       <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail\Dungeon</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\Training\SelectDetail_Training.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\GameState_SelectDetail.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail\Training</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\Shop\SelectDetail_Shop.cpp">
       <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail\Shop</Filter>
     </ClCompile>
@@ -524,6 +530,21 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\PartTime\InAction_PartTime.cpp">
       <Filter>ソース ファイル\Engine\Scene\GameState\InAction\PartTime</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\GameState_SelectDetail.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\Training\SelectDetail_Training.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail\Training</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InitialTutorial\GameState_InitialTutorial.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState\InitialTutorial</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\GameStateMachine.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\Pause\GameState_Pause.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState\Pause</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -940,6 +961,15 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\InAction_PartTime.h">
       <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InitialTutorial\GameState_InitialTutorial.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InitialTutorial</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\GameStateMachine.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\Pause\GameState_Pause.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\Pause</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

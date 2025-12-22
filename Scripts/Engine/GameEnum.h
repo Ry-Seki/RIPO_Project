@@ -12,10 +12,11 @@ namespace GameEnum {
 	 */
 	enum class GameState {
 		Invalid = -1,
+		InitialTutorial,	// NewGame時専用、一回きり
 		SelectAction,		// アクションの選択
 		SelectDetail,		// アクションの中身を選択
 		InAction,			// アクション中
-
+		Pause,				// ポーズ
 		Max
 	};
 	/*
