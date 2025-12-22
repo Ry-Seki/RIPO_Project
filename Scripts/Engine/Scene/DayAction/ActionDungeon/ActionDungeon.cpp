@@ -220,6 +220,8 @@ void ActionDungeon::SetupNextFloor() {
 	int holdTreasureID = -1;
 	if (holdTreasure) {
 		auto component = holdTreasure->GetComponent<StageObjectBase>();
+		if (!component) return;
+		component->SetIsHold(true);
 		holdTreasureID = component->GetTreasureID();
 	}
 	// ƒ_ƒ“ƒWƒ‡ƒ“‚ÌÄ\’z

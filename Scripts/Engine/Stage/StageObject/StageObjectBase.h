@@ -16,6 +16,7 @@ protected:
 	int treasureID = -1;
 	int nameID = -1;
 
+	bool isHold = false;
 	Vector3 position;
 	Vector3 rotation;
 	Vector3 scale;
@@ -134,7 +135,18 @@ public:
 	inline void SetScale(Vector3& setValue) {
 		scale = setValue;
 	}
-
+	/*
+	 *	@brief		‚¨•ó‚ğ‚Á‚Ä‚¢‚é‚©”»’è
+	 *	@return		bool
+	 *  @author		Seki
+	 */
+	inline bool IsHold() const { return isHold; }
+	/*
+	 *	@brief		‚¨•ó‚½‚ê‚Ä‚¢‚é‚©”»’èƒtƒ‰ƒO•ÏX
+	 *	@param[in]	bool setFlag
+	 *  @author		Seki
+	 */
+	inline void SetIsHold(bool setFlag){ isHold = setFlag; }
 
 };
 
