@@ -6,6 +6,7 @@
 #include "EnemyChase.h"
 #include "../../Manager/CharacterManager.h"
 #include "CharacterUtility.h"
+#include "EnemyAttack.h"
 
 using namespace CharacterUtility;
 
@@ -20,7 +21,7 @@ EnemyTurn::EnemyTurn()
  */
 void EnemyTurn::Start(EnemyComponent& enemy)
 {
-	
+	printfDx("EnemyTurn");
 }
 
 /*
@@ -29,6 +30,10 @@ void EnemyTurn::Start(EnemyComponent& enemy)
  */
 void EnemyTurn::Update(GameObject* enemy, float deltaTime)
 {
+	// デバッグ用
+	if (CheckHitKey(KEY_INPUT_E)) {
+		//enemy->GetComponent<EnemyComponent>()->SetState(new EnemyAttackBase());
+	}
 	//auto e = GetOwnerObject(enemy);
 	if (enemy->GetComponent<EnemyComponent>()->GetChaseTargetChangeFrag()) {
 		enemy->rotation.y -= ROTATE_SPEED * deltaTime;

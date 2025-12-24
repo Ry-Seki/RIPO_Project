@@ -5,29 +5,28 @@
 #ifndef _ENEMYATTACK_H_
 #define _ENEMYATTACK_H_
 
-#include "EnemyComponent.h"
+#include "EnemyState.h"
 
 /*
  *	“G‚ÌUŒ‚ˆ—Šî’êƒNƒ‰ƒX
  */
-class EnemyAttackBase : public Component {
+class EnemyAttackBase : public EnemyState {
 private:
-	GameObjectPtr player = CameraManager::GetInstance().GetTarget();
+	//GameObjectPtr player = CameraManager::GetInstance().GetTarget();
 public:
 	EnemyAttackBase() = default;
 	virtual ~EnemyAttackBase() = default;
 public:
-	virtual void Attack(float deltaTime) = 0;
+	virtual void Attack(GameObject* enemy, float deltaTime) = 0;
 };
 
 /*
  *	’Êí“G‚ÌUŒ‚ˆ—ƒNƒ‰ƒX
  */
 class NormalEnemyAttack : public EnemyAttackBase {
-	GameObject* enemy = GetOwner();
 	float coolTime = 3;
 public:
-	void Attack(float deltaTime) override {
+	void Attack(GameObject* enemy, float deltaTime) override {
 		coolTime -= deltaTime;
 		//enemy = GetOwner();
 		if (enemy->GetComponent<EnemyComponent>()->GetClosePlayer()) {

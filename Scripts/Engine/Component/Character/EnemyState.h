@@ -16,7 +16,7 @@ class EnemyComponent;
 class EnemyState {
 public:
 	EnemyState() = default;
-	virtual ~EnemyState() {};
+	virtual ~EnemyState() = default;
 
 	virtual void Start(EnemyComponent& enemy) {};
 	virtual void Update(GameObject* enemy, float deltaTime) = 0;

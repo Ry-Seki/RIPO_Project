@@ -65,7 +65,7 @@ public:
 	inline void SetState(EnemyState* setValue) {
 		if (state) {
 			state->Execute(*this);
-			delete state;
+			//delete state;
 		}
 		state = setValue;
 		state->Start(*this);
