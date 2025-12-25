@@ -18,6 +18,7 @@ EnemyTurn::EnemyTurn()
 
 /*
  *	更新処理の前に呼び出す処理
+ *  param[in]	EnemyComponent&	enemy
  */
 void EnemyTurn::Start(EnemyComponent& enemy)
 {
@@ -26,13 +27,14 @@ void EnemyTurn::Start(EnemyComponent& enemy)
 
 /*
  *	更新処理
+ *  param[in]	GameObject*	enemy
  *  param[in]	float	deltaTime
  */
 void EnemyTurn::Update(GameObject* enemy, float deltaTime)
 {
 	// デバッグ用
 	if (CheckHitKey(KEY_INPUT_E)) {
-		//enemy->GetComponent<EnemyComponent>()->SetState(new EnemyAttackBase());
+		enemy->GetComponent<EnemyComponent>()->SetState(new EnemyAttack());
 	}
 	//auto e = GetOwnerObject(enemy);
 	if (enemy->GetComponent<EnemyComponent>()->GetChaseTargetChangeFrag()) {

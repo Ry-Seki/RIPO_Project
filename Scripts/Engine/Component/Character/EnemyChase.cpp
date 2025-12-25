@@ -30,6 +30,7 @@ void EnemyChase::Start(EnemyComponent& enemy)
 
 /*
  *	更新処理
+ *  param[in]	GameObject*	enemy
  *  param[in]	float	deltaTime
  */
 void EnemyChase::Update(GameObject* enemy, float deltaTime)
@@ -55,6 +56,7 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime)
 
 /*
  *	目標に向かって進む処理
+ *  param[in]	GameObject*	enemy
  *  param[in]	GameObject*	enemy			敵
  *  param[in]	Vector3		wayPoint		目標の座標
  *  param[in]	bool		targetChange	chaseTargetChangeFragの切り替え

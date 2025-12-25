@@ -417,6 +417,9 @@
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyTurn.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyAttack.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">

@@ -5,47 +5,39 @@
 #ifndef _ENEMYATTACK_H_
 #define _ENEMYATTACK_H_
 
+#include "EnemyComponent.h"
 #include "EnemyState.h"
 
 /*
- *	敵の攻撃処理基底クラス
+ *	敵の攻撃処理クラス
  */
-class EnemyAttackBase : public EnemyState {
+class EnemyAttack : public EnemyState {
 private:
-	//GameObjectPtr player = CameraManager::GetInstance().GetTarget();
+	// クールタイム
+	float coolTime;
+
 public:
-	EnemyAttackBase() = default;
-	virtual ~EnemyAttackBase() = default;
+	/*
+	 *	コンストラクタ
+	 */
+	EnemyAttack();
+	~EnemyAttack() = default;
+
 public:
-	virtual void Attack(GameObject* enemy, float deltaTime) = 0;
+	/*
+	 *	更新処理の前に呼び出す処理
+	 *  param[in]	EnemyComponent&	enemy
+	 */
+	virtual void Start(EnemyComponent& enemy) override;
+
+	/*
+	 *	更新処理
+	 *  param[in]	GameObject*	enemy
+	 *  param[in]	float		deltaTime
+	 */
+	virtual void Update(GameObject* enemy, float deltaTime) override;
+
 };
-
-/*
- *	通常敵の攻撃処理クラス
- */
-class NormalEnemyAttack : public EnemyAttackBase {
-	float coolTime = 3;
-public:
-	void Attack(GameObject* enemy, float deltaTime) override {
-		coolTime -= deltaTime;
-		//enemy = GetOwner();
-		if (enemy->GetComponent<EnemyComponent>()->GetClosePlayer()) {
-			if (coolTime > 0) return;
-		// 前方に当たり判定を出す
-			enemy->GetComponent<ColliderBase>()->isCollider = true;
-			coolTime = 3;
-			// 当たったらダメージを与える
-			//AddDamage(3);
-		}
-		else {
-			enemy->GetComponent<ColliderBase>()->isCollider = false;
-		}
-
-	}
-};
-
-
-
 
 
 #endif // !_ENEMYATTACK_H_

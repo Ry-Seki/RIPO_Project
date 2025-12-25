@@ -159,6 +159,7 @@
     <ClCompile Include="Scripts\Engine\Component\CapsuleCollider.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\ArmActionComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BulletComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyAttack.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyChase.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyTurn.cpp" />

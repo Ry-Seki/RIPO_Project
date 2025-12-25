@@ -24,12 +24,14 @@ public:
 public:
 	/*
 	 *	更新処理の前に呼び出す処理
+	 *  param[in]	EnemyComponent&	enemy
 	 */
 	virtual void Start(EnemyComponent& enemy) override;
 
 	/*
 	 *	更新処理
-	 *  param[in]	float	deltaTime
+	 *  param[in]	GameObject*	enemy
+	 *  param[in]	float		deltaTime
 	 */
 	virtual void Update(GameObject* enemy, float deltaTime) override;
 };
