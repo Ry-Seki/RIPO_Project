@@ -193,6 +193,51 @@
     <Filter Include="ヘッダー ファイル\Data\Save">
       <UniqueIdentifier>{e75571c1-2bf6-45db-a66c-2429cc31db01}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState">
+      <UniqueIdentifier>{9fa58c1c-9f26-4d0b-afdb-33d6be497d74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction">
+      <UniqueIdentifier>{5bab4546-c784-4c80-9567-0bca72245ad3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail">
+      <UniqueIdentifier>{80d572c7-1307-4bce-86e8-062835dccd7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectAction">
+      <UniqueIdentifier>{1c7e79d4-6074-449c-bdaa-92ec7996c080}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\GameState">
+      <UniqueIdentifier>{bfedba27-bada-456c-96e5-0b9ec26cd09b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\GameState\SelectAction">
+      <UniqueIdentifier>{b5847c31-305e-4bd9-8dee-c6d804d3c3a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Dungeon">
+      <UniqueIdentifier>{7d90da95-0d37-4069-8592-3130b7731ab2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Shop">
+      <UniqueIdentifier>{0d3ed3c0-02ec-4ee6-aaee-41c5abb98b3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Training">
+      <UniqueIdentifier>{500abb44-b4d8-4e86-adb2-b942c77f28d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\PartTime">
+      <UniqueIdentifier>{cf99530e-db37-41ee-80ea-16a90cd616fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\GameState\SelectDetail">
+      <UniqueIdentifier>{f627e3c9-4436-47fd-8f84-e85510c5734b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\GameState\SelectDetail\Dungeon">
+      <UniqueIdentifier>{87bd4024-b06e-4fbd-a429-b750634765a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\GameState\SelectDetail\PartTime">
+      <UniqueIdentifier>{c5b1fd6d-fe5d-4ddb-857a-ba38345f6364}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\GameState\SelectDetail\Shop">
+      <UniqueIdentifier>{60a0f751-59e1-47d0-971b-bb72147423a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\GameState\SelectDetail\Training">
+      <UniqueIdentifier>{1aad714b-aa94-49b0-bf2a-fc5ab801cb34}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -414,11 +459,29 @@
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyChase.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\EnemyTurn.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionFactory.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Selection</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\EnemyAttack.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionFactory.cpp">
+      <Filter>ソース ファイル\Engine\Scene\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectAction\GameState_SelectAction.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState\SelectAction</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\Dungeon\SelectDetail_Dungeon.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail\Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\Training\SelectDetail_Training.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\GameState_SelectDetail.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail\Training</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\Shop\SelectDetail_Shop.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\PartTime\SelectDetail_PartTime.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail\PartTime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -791,11 +854,32 @@
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyChase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\EnemyTurn.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    <ClInclude Include="Scripts\Engine\GameEnum.h">
+      <Filter>ヘッダー ファイル\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\EnemyState.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\GameStateBase.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectAction\GameState_SelectAction.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\SelectAction</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\GameState_SelectDetail.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\SelectDetail</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\SelectDetailBase.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\SelectDetail</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\Dungeon\SelectDetail_Dungeon.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\Training\SelectDetail_Training.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Training</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\Shop\SelectDetail_Shop.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\PartTime\SelectDetail_PartTime.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\PartTime</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

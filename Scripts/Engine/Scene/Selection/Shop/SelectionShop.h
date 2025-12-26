@@ -11,6 +11,9 @@
 
 #include <vector>
 
+/*
+ *	@brief	ショップ選択クラス
+ */
 class SelectionShop : public SelectionBase {
 private:
 	std::vector<ItemData*> itemDataList;	// アイテムデータリスト
@@ -28,7 +31,7 @@ public:
 	/*
 	 *	@brief	デストラクタ
 	 */
-	~SelectionShop() override = default;
+	~SelectionShop() override {}
 
 public:
 	/*
@@ -36,9 +39,13 @@ public:
 	 */
 	void Initialize(Engine& engine) override;
 	/*
+	 *	@brief	準備前処理
+	 */
+	void Setup(Engine& engine) override;
+	/*
 	 *	@brief	ロード済みデータのセット（コールバック）
 	 */
-	void SetupData(Engine& engine) override;
+	void SetupData(Engine& engine);
 	/*
 	 *	@brief	更新処理
 	 */
@@ -51,6 +58,10 @@ public:
 	 *	@brief	片付け処理
 	 */
 	void Teardown() override;
+	/*
+	 *  @brief  行動実行関数の呼び出し
+	 */
+	void SetAction() override;
 
 public:
 	/*

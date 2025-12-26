@@ -13,7 +13,7 @@
 class Engine;
 
 /*
- *	行動の選択肢を管理するクラス
+ *	@brief  行動の選択肢を管理するクラス
  */
 class SelectionBase {
 protected:
@@ -21,35 +21,39 @@ protected:
 
 public:
     /*
-     *  デストラクタ
+     *  @brief  デストラクタ
      */
     virtual ~SelectionBase() = default;
 
 public:
     /*
-     *  初期化処理
+     *  @brief  初期化処理
      */
     virtual void Initialize(Engine& engine) = 0;
     /*
-     *  ロード済みデータのセット（コールバック）
+     *  @brief  準備前処理
      */
-    virtual void SetupData(Engine& engine) = 0;
+    virtual void Setup(Engine& engine) = 0;
     /*
-     *  更新処理
+     *  @brief  更新処理
      */
     virtual void Update(Engine& engine, float deltaTime) = 0;
     /*
-     *  描画処理
+     *  @brief  描画処理
      */
     virtual void Render() = 0;
     /*
-     *  片付け処理
+     *  @brief  片付け処理
      */
     virtual void Teardown() {}
+    /*
+     *  @brief  行動実行関数の呼び出し
+     */
+    virtual void SetAction() = 0;
 
 public:
     /*
-     *  選択完了フラグの取得
+     *  @brief  選択完了フラグの取得
      */
     inline virtual bool IsComplete() const { return isComplete; }
 };

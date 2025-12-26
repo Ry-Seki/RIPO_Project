@@ -18,8 +18,8 @@ class SaveDataManager : public Singleton<SaveDataManager> {
 	friend class Singleton<SaveDataManager>;
 
 private:
-	SaveData currentSaveData;						// 現在プレイ中のスロット
-	SaveData autoSaveData;							// オートセーブ専用
+	UserData currentSaveData;						// 現在プレイ中のスロット
+	UserData autoSaveData;							// オートセーブ専用
 	std::string currentSlot;						// 現在のスロット
 
 	const std::string _SAVE_PATH = "SaveData/";		// ファイルパス
@@ -60,26 +60,23 @@ public:
 	/*
 	 *	@brief		JSON->SaveDataへの変換
 	 */
-	SaveData FromJSONToSaveData(const JSON& json) {
-		SaveData data;
+	UserData FromJSONToSaveData(const JSON& json) {
+		UserData data;
 		data.elapsedDay = json.value("elapsedDay", 0);
 		data.isHalf = json.value("isHalf", false);
 		data.playTime = json.value("playTime", 0);
 		data.currentMoney = json.value("currentMoney", 0);
-		data.dungeonFlags = json.value("dungeonFlags", 0);
 		return data;
 	}
 	/*
 	 *	@brief		SaveData->JSONへの変換
 	 */
-	JSON FromSaveDataToJSON(const SaveData& data) {
+	JSON FromSaveDataToJSON(const UserData& data) {
 		JSON json;
-		json["version"] = _SAVE_VERSION; // 将来の互換用
 		json["elapsedDay"] = data.elapsedDay;
 		json["isHalf"] = data.isHalf;
 		json["playTime"] = data.playTime;
 		json["currentMoney"] = data.currentMoney;
-		json["dungeonFlags"] = data.dungeonFlags;
 		return json;
 	}
 	/*
@@ -93,7 +90,7 @@ public:
 	 *  @param[in]	SaveData& saveData
 	 *  @param[in]	const std::string& slotName
 	 */
-	bool LoadSaveData(SaveData& saveData, const std::string& slotName){
+	bool LoadSaveData(UserData& saveData, const std::string& slotName){
 		std::string filePath = _SAVE_PATH + slotName + ".json";
 		if (!std::filesystem::exists(filePath)) return false;
 
@@ -119,7 +116,7 @@ public:
 	 *  @param[in]	const SaveData& saveData
 	 *  @param[in]	const std::string& slotName
 	 */
-	bool Save(const SaveData& saveData, const std::string& slotName) {
+	bool Save(const UserData& saveData, const std::string& slotName) {
 		std::string filePath = _SAVE_PATH + slotName + ".json";
 
 		try {
@@ -175,23 +172,23 @@ public:
 	 *	@brief		セーブデータの取得
 	 *	@return		SaveData&
 	 */
-	inline SaveData& GetSaveData() { return currentSaveData; }
+	inline UserData& GetSaveData() { return currentSaveData; }
 	/*
 	 *	@brief		セーブデータの取得
 	 *	@return		const SaveData&
 	 */
-	inline const SaveData& GetSaveData() const { return currentSaveData; }
+	inline const UserData& GetSaveData() const { return currentSaveData; }
 
 	/*
 	 *	@brief		オートセーブデータの取得
 	 *	@return		SaveData&
 	 */
-	inline SaveData& GetAutoSaveData() { return autoSaveData; }
+	inline UserData& GetAutoSaveData() { return autoSaveData; }
 	/*
 	 *	@brief		オートセーブデータの取得
 	 *	@return		const SaveData&
 	 */
-	inline const SaveData& GetAutoSaveData() const { return autoSaveData; }
+	inline const UserData& GetAutoSaveData() const { return autoSaveData; }
 };
 
 #endif // !_SAVE_DATA_MANAGER_H_

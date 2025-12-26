@@ -324,3 +324,36 @@ std::vector<Vector3> StageManager::GetStairsPos() const {
 	return result;
 
 }
+
+/*
+ *	階段手前のリスポーン位置の取得
+ */
+std::vector<Vector3> StageManager::GetRespawnPos() const {
+	std::vector<Vector3> result;
+	if (!loadedStage)return result;
+
+	// ステージモデルハンドルの取得
+	int modelHandle = loadedStage->GetStageModelHandle();
+	if (modelHandle == -1)return result;
+
+	// リスポーン位置の名前の取得
+	if (!json.contains(GameConst::_CREATE_POSNAME_PLAYER) || !json[GameConst::_CREATE_POSNAME_PLAYER].contains("RespawnPos"))
+		return result;
+	std::string frameName = json[GameConst::_CREATE_POSNAME_PLAYER]["RespawnPos"];
+
+	// sting型→const char* 型への変換
+	const char* cstr = frameName.c_str();
+
+	// リスポーン位置のフレーム番号を取得
+	int frameIndex = MV1SearchFrame(modelHandle, cstr);
+	if (frameIndex == -1)return result;
+
+	// リスポーン位置の座標を取得
+	VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
+
+	// VECTOR型をVEctor3型に変換
+	Vector3 respawnPos = FromVECTOR(framePos);
+	result.push_back(respawnPos);
+	// 座標を返す
+	return result;
+}

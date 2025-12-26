@@ -9,7 +9,7 @@
 #include "../../../Fade/FadeManager.h"
 
 /*
- *	初期化処理
+ *	@brief	初期化処理
  */
 void ActionShop::Initialize(Engine& engine) {
 	auto fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
@@ -20,13 +20,18 @@ void ActionShop::Initialize(Engine& engine) {
 	});
 }
 /*
- *  ロード済みのデータをセット(コールバック)
+ *	@brief	準備前処理
+ */
+void ActionShop::Setup(Engine& engine) {
+}
+/*
+ *  @brief	ロード済みのデータをセット(コールバック)
  */
 void ActionShop::SetupData(Engine& engine) {
 
 }
 /*
- *	更新処理
+ *	@brief	更新処理
  */
 void ActionShop::Update(Engine& engine, float deltaTime) {
 	timer += deltaTime;
@@ -35,7 +40,7 @@ void ActionShop::Update(Engine& engine, float deltaTime) {
 	}
 }
 /*
- *	描画処理
+ *	@brief	描画処理
  */
 void ActionShop::Render() {
 	PlayerStatusData* status = PlayerStatusManager::GetInstance().GetPlayerStatusData();
@@ -45,7 +50,7 @@ void ActionShop::Render() {
 	DrawFormatString(50, 160, GetColor(0, 255, 0), "ResistTime : %d", status->base.resistTime);
 }
 /*
- *	破棄処理
+ *	@brief	破棄処理
  */
 void ActionShop::Teardown() {
 	itemIDList.clear();

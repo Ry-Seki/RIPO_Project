@@ -4,14 +4,22 @@
  */
 
 #include "ActionManager.h"
+#include "DayActionBase.h"
+#include "ActionFactory.h"
+#include "ActionDungeon/ActionDungeon.h"
+#include "ActionTraining/ActionTraining.h"
+#include "ActionShop/ActionShop.h"
+#include "ActionPartTime/ActionPartTime.h"
 
- /*
-  *	初期化処理
-  */
+#include "../../Engine.h"
+
+/*
+ *	@brief	初期化処理
+ */
 void ActionManager::Initialize(JSON setJSON) {
 }
 /*
- *	更新処理
+ *	@brief	更新処理
  */
 void ActionManager::Update(Engine& engine, float deltaTime) {
 	if (!isActive || !currentAction) return;
@@ -26,7 +34,7 @@ void ActionManager::Update(Engine& engine, float deltaTime) {
 	}
 }
 /*
- *	描画処理
+ *	@brief	描画処理
  */
 void ActionManager::Render() {
 	if (!isActive || !currentAction) return;
@@ -34,10 +42,10 @@ void ActionManager::Render() {
 	currentAction->Render();
 }
 /*
- *	ダンジョンアクション開始
+ *	@brief	ダンジョンアクション開始
  */
 void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData, DungeonFloorData setFloorData) {
-	currentAction = ActionFactory::CreateAction(ActionType::Dungeon);
+	currentAction = ActionFactory::CreateAction(GameEnum::ActionType::Dungeon);
 	if (!currentAction) return;
 
 	auto dungeonAction = std::dynamic_pointer_cast<ActionDungeon>(currentAction);
@@ -49,10 +57,10 @@ void ActionManager::ActiveDungeon(Engine& engine, DungeonStageData setStageData,
 	isActive = true;
 }
 /*
- *	デバッグ用ダンジョンアクション開始
+ *	@brief	デバッグ用ダンジョンアクション開始
  */
 void ActionManager::DebugActiveDungeon(Engine& engine, DungeonStageData setStageData, DungeonFloorData setFloorData) {
-	currentAction = ActionFactory::CreateAction(ActionType::Dungeon);
+	currentAction = ActionFactory::CreateAction(GameEnum::ActionType::Dungeon);
 	if (!currentAction) return;
 
 	auto dungeonAction = std::dynamic_pointer_cast<ActionDungeon>(currentAction);
@@ -63,11 +71,11 @@ void ActionManager::DebugActiveDungeon(Engine& engine, DungeonStageData setStage
 	isActive = true;
 }
 /*
- *  トレーニングアクション開始
+ *  @brief		トレーニングアクション開始
  *  @param[in]  const int setActionNum    アクション番号
  */
 void ActionManager::ActiveTraining(Engine& engine, const int setActionNum) {
-	currentAction = ActionFactory::CreateAction(ActionType::Training);
+	currentAction = ActionFactory::CreateAction(GameEnum::ActionType::Training);
 	if (!currentAction) return;
 
 	auto trainingAction = std::dynamic_pointer_cast<ActionTraining>(currentAction);
@@ -79,11 +87,11 @@ void ActionManager::ActiveTraining(Engine& engine, const int setActionNum) {
 	isActive = true;
 }
 /*
- *  ショップアクション開始
+ *  @brief		ショップアクション開始
  *  @param[in]  const std::vector<int>& itemIDList     アイテムIDリスト
  */
 void ActionManager::ActiveShop(Engine& engine, const std::vector<int>& itemIDList) {
-	currentAction = ActionFactory::CreateAction(ActionType::Shop);
+	currentAction = ActionFactory::CreateAction(GameEnum::ActionType::Shop);
 	if (!currentAction) return;
 
 	auto shopAction = std::dynamic_pointer_cast<ActionShop>(currentAction);
@@ -95,11 +103,11 @@ void ActionManager::ActiveShop(Engine& engine, const std::vector<int>& itemIDLis
 	isActive = true;
 }
 /*
- *	アルバイトアクション開始
+ *	@brief		アルバイトアクション開始
  *  @param[in]	const int incomeValue		アルバイトの収入
  */
 void ActionManager::ActivePartTime(Engine& engine, const int incomeValue) {
-	currentAction = ActionFactory::CreateAction(ActionType::PartTime);
+	currentAction = ActionFactory::CreateAction(GameEnum::ActionType::PartTime);
 	if (!currentAction) return;
 
 	auto partTimeAction = std::dynamic_pointer_cast<ActionPartTime>(currentAction);
@@ -109,4 +117,18 @@ void ActionManager::ActivePartTime(Engine& engine, const int incomeValue) {
 	currentAction = partTimeAction;
 	currentAction->Initialize(engine);
 	isActive = true;
+}
+/*
+ *  @brief      行動クラスの取得
+ *  @param[in]  ActionType type
+ *  @return     std::shared_ptr<DayActionBase>
+ */
+std::shared_ptr<DayActionBase> ActionManager::GetAction(GameEnum::ActionType type,Engine& engine) {
+	auto action = actionMap[type];
+	if (!action) {
+		action = ActionFactory::CreateAction(type);
+		action->Initialize(engine);
+		actionMap[type] = action;
+	}
+	return action;
 }

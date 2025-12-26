@@ -12,7 +12,7 @@
 #include <memory>
 
 /*
- *	ショップアクションクラス
+ *	@brief  ショップアクションクラス
  */
 class ActionShop : public DayActionBase {
 private:
@@ -22,33 +22,37 @@ private:
 
 public:
     /*
-     *  コンストラクタ
+     *  @brief  コンストラクタ
      */
     ActionShop() : DayActionBase("Shop") {}
     /*
-     *  デストラクタ
+     *  @brief  デストラクタ
      */
     ~ActionShop() override {}
 
 public:
     /*
-     *  初期化処理
+     *  @brief  初期化処理
      */
     void Initialize(Engine& engine) override;
     /*
-     *  ロード済みのデータをセット(コールバック)
+     *  @brief  準備前処理
      */
-    void SetupData(Engine& engine) override;
+    void Setup(Engine& engine) override;
     /*
-     *  更新処理
+     *  @brief  ロード済みのデータをセット(コールバック)
+     */
+    void SetupData(Engine& engine);
+    /*
+     *  @brief  更新処理
      */
     void Update(Engine& engine, float deltaTime) override;
     /*
-     *  描画処理
+     *  @brief  描画処理
      */
     void Render() override;
     /*
-     *  破棄処理
+     *  @brief  破棄処理
      */
     void Teardown() override;
 

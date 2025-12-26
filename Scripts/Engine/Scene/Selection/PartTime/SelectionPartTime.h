@@ -7,19 +7,23 @@
 #define _SELECTION_PART_TIME_H_
 
 #include "../SelectionBase.h"
-#include "MiniGame/MiniGameBase.h"
 
 #include <memory>
 #include <vector>
 
+// 前方宣言
+class MiniGameBase;
+
+/*
+ *	@brief	アルバイト選択クラス
+ */
 class SelectionPartTime : public SelectionBase {
 private:
-	std::vector<MiniGameBasePtr> miniGameList;	// ミニゲーム配列
-	MiniGameBasePtr currentMiniGame = nullptr;	// 現在のミニゲーム			
-	int partTimeScore = 0;						// アルバイトの値段
-	bool inputHandle = false;					// 入力フラグ
-	bool isLoad = false;						// ロードフラグ
-
+	std::vector<std::shared_ptr<MiniGameBase>> miniGameList;	// ミニゲーム配列
+	std::shared_ptr<MiniGameBase> currentMiniGame = nullptr;	// 現在のミニゲーム			
+	int partTimeScore = 0;										// アルバイトの値段
+	bool inputHandle = false;									// 入力フラグ
+	bool isLoad = false;										// ロードフラグ
 
 	std::function<void(Engine& engine, int)> ActivePartTime;	// 行動管理クラスのアルバイト開放関数
 
@@ -31,7 +35,7 @@ public:
 	/*
 	 *	@brief	デストラクタ
 	 */
-	~SelectionPartTime() override = default;
+	~SelectionPartTime() override {}
 
 public:
 	/*
@@ -39,9 +43,13 @@ public:
 	 */
 	void Initialize(Engine& engine) override;
 	/*
+	 *	@brief	準備前処理
+	 */
+	void Setup(Engine& engine) override;
+	/*
 	 *	@brief	ロード済みデータのセット（コールバック）
 	 */
-	void SetupData(Engine& engine) override;
+	void SetupData(Engine& engine);
 	/*
 	 *	@brief	更新処理
 	 */
@@ -54,6 +62,10 @@ public:
 	 *	@brief	片付け処理
 	 */
 	void Teardown() override;
+	/*
+	 *  @brief  行動実行関数の呼び出し
+	 */
+	void SetAction() override;
 
 public:
 	/*

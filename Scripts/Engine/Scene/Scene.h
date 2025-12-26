@@ -46,12 +46,7 @@ public:
     /*
      *  XVˆ—
      */
-    virtual void Update(Engine& engine, float 
-    
-    
-    
-    
-    );
+    virtual void Update(Engine& engine, float deltaTime);
     /*
      *  •`‰æˆ—
      */

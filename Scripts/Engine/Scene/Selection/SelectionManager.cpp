@@ -4,12 +4,16 @@
  */
 
 #include "SelectionManager.h"
+#include "SelectionBase.h"
+#include "SelectionFactory.h"
 #include "Dungeon/SelectionDungeon.h"
 #include "Training/SelectionTraining.h"
 #include "Shop/SelectionShop.h"
 #include "PartTime/SelectionPartTime.h"
+#include "../DayAction/ActionManager.h"
 
 #include "../../Engine.h"
+#include "../../GameEnum.h"
 
 /*
  *	更新処理
@@ -37,7 +41,7 @@ void SelectionManager::Render() {
  *	ダンジョン選択
  */
 void SelectionManager::DungeonSelection(Engine& engine) {
-	currentSelection = SelectionFactory::CreateSelection(SelectionType::Dungeon);
+	currentSelection = SelectionFactory::CreateSelection(GameEnum::ActionType::Dungeon);
 	if (!currentSelection) return;
 
 	auto dungeonSelection = std::dynamic_pointer_cast<SelectionDungeon>(currentSelection);
@@ -54,7 +58,7 @@ void SelectionManager::DungeonSelection(Engine& engine) {
  *	トレーニング選択
  */
 void SelectionManager::TrainingSelection(Engine& engine) {
-	currentSelection = SelectionFactory::CreateSelection(SelectionType::Training);
+	currentSelection = SelectionFactory::CreateSelection(GameEnum::ActionType::Training);
 	if (!currentSelection) return;
 
 	auto trainingSelection = std::dynamic_pointer_cast<SelectionTraining>(currentSelection);
@@ -71,7 +75,7 @@ void SelectionManager::TrainingSelection(Engine& engine) {
  *	ショップ選択
  */
 void SelectionManager::ShopSelection(Engine& engine) {
-	currentSelection = SelectionFactory::CreateSelection(SelectionType::Shop);
+	currentSelection = SelectionFactory::CreateSelection(GameEnum::ActionType::Shop);
 	if (!currentSelection) return;
 
 	auto shopSelection = std::dynamic_pointer_cast<SelectionShop>(currentSelection);
@@ -88,7 +92,7 @@ void SelectionManager::ShopSelection(Engine& engine) {
  *	アルバイト選択
  */
 void SelectionManager::PartTimeSelection(Engine& engine) {
-	currentSelection = SelectionFactory::CreateSelection(SelectionType::PartTime);
+	currentSelection = SelectionFactory::CreateSelection(GameEnum::ActionType::PartTime);
 	if (!currentSelection) return;
 
 	auto partTimeSelection = std::dynamic_pointer_cast<SelectionPartTime>(currentSelection);
@@ -100,4 +104,19 @@ void SelectionManager::PartTimeSelection(Engine& engine) {
 	currentSelection = partTimeSelection;
 	currentSelection->Initialize(engine);
 	isActive = true;
+}
+/*
+ *	@brief		選択クラスの取得
+ *  @param[in]	ActionType type
+ *	@return		std::shared_ptr<SelectionBase>
+ */
+std::shared_ptr<SelectionBase> SelectionManager::GetSelection(GameEnum::ActionType type, Engine& engine) {
+	auto& selection = selectionMap[type];
+	// 取得できなければ生成
+	if (!selection) {
+		selection = SelectionFactory::CreateSelection(type);
+		selection->Initialize(engine);
+		selectionMap[type] = selection;
+	}
+	return selection;
 }

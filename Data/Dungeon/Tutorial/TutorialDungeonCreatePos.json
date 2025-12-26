@@ -2,7 +2,8 @@
   "Player": {
     "StartPos": "Col_StartPos",
     "GoalPos": "Col_GoalPos",
-    "StairsPos": "Col_StairsPos"
+    "StairsPos": "Col_StairsPos",
+    "RespawnPos": "Col_RespownPos"
   },
   "Enemy": {
     "SpawnPos": [
