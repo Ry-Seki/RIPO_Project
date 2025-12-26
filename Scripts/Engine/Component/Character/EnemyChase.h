@@ -6,13 +6,13 @@
 #define _ENEMYCHASE_H_
 
 #include "EnemyComponent.h"
+#include "EnemyState.h"
 
 /*
  *	敵の追従処理クラス
  */
-class EnemyChase : public EnemyComponent {
+class EnemyChase : public EnemyState {
 private:
-	GameObject* enemy;
 	GameObjectPtr player;
 	// ウェイポイント
 	Vector3 wayPoint;
@@ -20,8 +20,6 @@ private:
 	Vector3 nextWayPoint;
 	// ウェイポイント間の距離
 	float wayPointDistance;
-	// ウェイポイント追尾切り替えフラグ
-	bool chaseTargetChangeFrag;
 	// プレイヤーの距離判定フラグ
 	bool closePlayer;
 	// 移動量
@@ -33,6 +31,7 @@ private:
 	const float ROTATE_SPEED;
 	// プレイヤーの距離
 	const float DIFFERENCE_PLAYER;
+
 public:
 	/*
 	 *	コンストラクタ
@@ -43,23 +42,28 @@ public:
 public:
 	/*
 	 *	更新処理の前に呼び出す処理
+	 *  param[in]	EnemyComponent&	enemy
 	 */
-	virtual void Start() override;
+	virtual void Start(EnemyComponent& enemy) override;
 
 	/*
 	 *	更新処理
-	 *  param[in]	float	deltaTime
+	 *  param[in]	GameObject*	enemy
+	 *  param[in]	float		deltaTime
 	 */
-	virtual void Update(float deltaTime) override;
+	virtual void Update(GameObject* enemy, float deltaTime) override;
 
 private:
 	/*
 	 *	目標に向かって進む処理
+	 *  param[in]	GameObject*	enemy
 	 *  param[in]	Vector3		wayPoint		目標の座標
 	 *  param[in]	bool		targetChange	chaseTargetChangeFragの切り替え
 	 *  param[in]	float		deltaTime
 	 */
-	void ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaTime);
+	void ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetChange, float deltaTime);
+
+public:
 
 };
 

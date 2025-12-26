@@ -6,12 +6,13 @@
 #define _ENEMYCOMPONENT_H_
 
 #include "CharacterBase.h"
+#include "EnemyState.h"
 #include "../../Engine.h"
 
 class EnemyComponent : public CharacterBase {
 private:
 	GameObject* enemy;
-	GameObjectPtr player;
+	EnemyState* state;
 	// ウェイポイント
 	Vector3 wayPoint;
 	// 目先のウェイポイント予定地
@@ -31,22 +32,16 @@ private:
 	const float TOP_VALUE;
 	// ランダムで加算される値の範囲
 	const int RANDOM_RANGE;
-	// 回転スピード
-	const float ROTATE_SPEED;
-	// 移動スピード
-	const float MOVE_SPEED;
-	// プレイヤーの距離
-	const float DIFFERENCE_PLAYER;
 	// 移動量
 	Vector3 moveVec;
-
 
 public:
 	/*
 	 *	コンストラクタ
 	 */
 	EnemyComponent();
-	virtual ~EnemyComponent() = default;
+	EnemyComponent(EnemyState* initState);
+	~EnemyComponent();
 
 public:
 	/*
@@ -61,21 +56,21 @@ public:
 	virtual void Update(float deltaTime) override;
 
 private:
-	/*
-	 *	移動処理
-	 *  param[in]	float			deltaTime
-	 */
-	void EnemyMove(float deltaTime);
-
-	/*
-	 *	目標に向かって進む処理
-	 *  param[in]	Vector3		wayPoint		目標の座標
-	 *  param[in]	bool		targetChange	chaseTargetChangeFragの切り替え
-	 *  param[in]	float		deltaTime
-	 */
-	void ChaseWayPoint(Vector3 wayPoint, bool targetChange, float deltaTime);
 
 public:
+	/*
+	 *	状態の変更
+	 *  param[in]	EnemyState*	setValue	次の状態
+	 */
+	inline void SetState(EnemyState* setValue) {
+		if (state) {
+			state->Execute(*this);
+			//delete state;
+		}
+		state = setValue;
+		state->Start(*this);
+	}
+
 	/*
 	 *	ウェイポイントの位置変更
 	 *  param[in]	Vector3&	setValue	敵の座標
@@ -89,6 +84,47 @@ public:
 	 *	プレイヤーの距離判定の取得
 	 */
 	inline bool GetClosePlayer() const { return closePlayer; }
+
+	/*
+     *	ウェイポイント追尾切り替えフラグの取得
+	 */
+	inline bool GetChaseTargetChangeFrag() const { return chaseTargetChangeFrag; }
+
+	/*
+	 *	ウェイポイント追尾切り替えフラグの変更
+	 */
+	inline void SetChaseTargetChangeFrag(bool setValue) {
+		chaseTargetChangeFrag = setValue;
+	}
+
+	/*
+	 *	位置の取得
+	 */
+	inline Vector3 GetEnemyPosition() const {
+		if (enemy == nullptr) return Vector3::zero;
+		return enemy->position;
+	}
+
+	/*
+	 *	位置の変更
+	 */
+	inline void SetEnemyPosition(Vector3 setValue) {
+		enemy->position = setValue;
+	}
+
+	/*
+	 *	角度の取得
+	 */
+	inline Vector3 GetEnemyRotation() const { return enemy->rotation; }
+	
+	/*
+	 *	角度の変更
+	 */
+	inline void SetEnemyRotation(Vector3 setValue) {
+		enemy->rotation = setValue;
+	}
+
+
 
 	/*
 	 *	スポーンIDの取得

@@ -1,27 +1,25 @@
 /*
- *	@file	EnemyAttack.h
+ *	@file	EnemyTurn.h
  *  @author kuu
  */
-#ifndef _ENEMYATTACK_H_
-#define _ENEMYATTACK_H_
+#ifndef _ENEMYTURN_H_
+#define _ENEMYTURN_H_
 
-#include "EnemyComponent.h"
 #include "EnemyState.h"
 
 /*
- *	敵の攻撃処理クラス
+ *	敵の回転処理クラス
  */
-class EnemyAttack : public EnemyState {
+class EnemyTurn : public EnemyState {
 private:
-	// クールタイム
-	float coolTime;
+	GameObject* enemy;
 
+private:
+	// 回転スピード
+	const float ROTATE_SPEED;
 public:
-	/*
-	 *	コンストラクタ
-	 */
-	EnemyAttack();
-	~EnemyAttack() = default;
+	EnemyTurn();
+	~EnemyTurn() = default;
 
 public:
 	/*
@@ -36,8 +34,6 @@ public:
 	 *  param[in]	float		deltaTime
 	 */
 	virtual void Update(GameObject* enemy, float deltaTime) override;
-
 };
 
-
-#endif // !_ENEMYATTACK_H_
+#endif // !_ENEMYTURN_H_
