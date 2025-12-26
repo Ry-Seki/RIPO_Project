@@ -107,6 +107,30 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 }
 
 /*
+ *	ボス生成
+ */
+GameObjectPtr CharacterManager::GenerateBoss(
+	const std::string& name,
+	const Vector3& position,
+	const Vector3& rotation,
+	const Vector3& AABBMin,
+	const Vector3& AABBMax,
+	const Vector3& capsuleStart,
+	const Vector3& capsuleEnd,
+	const float& capsuleRadius) {
+	// ボスのベース作成
+	GameObjectPtr boss = CreateCharacter<BossComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
+	// AABBコライダーコンポーネント追加
+	AABBColliderPtr aabbCollider = boss->AddComponent<AABBCollider>();
+	aabbCollider->aabb = { AABBMin, AABBMax };
+	// シーンが持つゲームオブジェクト配列に追加
+	engine->AddGameObject(boss);
+	// 生成キャラクターリストに追加
+	createCharacterList.push_back(boss);
+	return boss;
+}
+
+/*
  *	ID指定のキャラクター削除
  */
 void CharacterManager::RemoveCharacter(int ID) {

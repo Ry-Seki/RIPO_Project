@@ -50,8 +50,8 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 	for (int i = 0; i < enemyCount; i++) {
 		GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	}
-	// TODO : ボスの生成
-
+	// ボスの生成
+	GenerateBoss("Boss", V_ZERO, V_ZERO, {-100, 0, -100}, {100, 300, 100}, {0, 100, 0}, {0,  200,  0}, 200);
 	// お宝の生成処理
 	for (int i = 0; i < treasureCount; i++) {
 		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO, { -100,0,-100 }, { 100,300,100 }, treasureIDList[i]);
