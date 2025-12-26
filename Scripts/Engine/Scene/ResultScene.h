@@ -36,6 +36,10 @@ public:
 	 */
 	void SetupData(Engine& engine);
 	/*
+	 *	@brief	€”õ‘Oˆ—
+	 */
+	void Setup() override;
+	/*
 	 *	XVˆ—
 	 */
 	void Update(Engine& engine, float deltaTime) override;

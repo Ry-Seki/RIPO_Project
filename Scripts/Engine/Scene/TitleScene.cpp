@@ -56,6 +56,11 @@ void TitleScene::SetupData(Engine& engine) {
 	});
 }
 /*
+ *	@brief	€”õ‘Oˆ—
+ */
+void TitleScene::Setup() {
+}
+/*
  *  XVˆ—
  */
 void TitleScene::Update(Engine& engine, float deltaTime) {

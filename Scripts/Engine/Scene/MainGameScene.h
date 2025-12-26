@@ -7,22 +7,20 @@
 #define _MAINGAMESCENE_H_
 
 #include "Scene.h"
-#include "Calendar/CalendarManager.h"
-#include "DayAction/ActionManager.h"
-#include "Selection/SelectionManager.h"
-#include "../Load/JSON/LoadJSON.h"
+#include "../GameEnum.h"
+#include "GameState/GameStateMachine.h"
 
 #include <memory>
-#include <DxLib.h>
+
+// 前方宣言
+class GameStateMachine;
 
 /*
  *  メインゲームシーン
  */
 class MainGameScene : public Scene {
 private:
-    std::unique_ptr<CalendarManager> calendarManager;       // カレンダー管理クラス
-    std::unique_ptr<SelectionManager> selectionManager;     // 選択管理クラス
-    std::unique_ptr<ActionManager> actionManager;           // 行動管理クラス
+    std::unique_ptr<GameStateMachine> gameState;
 
 public:
     /*
@@ -36,15 +34,13 @@ public:
 
 public:
     /*
-     *  初期化処理
+     *  @brief  初期化処理
      */
     void Initialize(class Engine& engine) override;
     /*
-     *  ロード済みのデータのセット(コールバック)
-     *  @param[in]  std::shared_ptr<LoadJSON> setSelectionData       選択クラスのデータ
-     *  @param[in]  std::shared_ptr<LoadJSON> setActionData          アクションクラスのデータ
+     *  @brief  準備前処理
      */
-    void SetupData(class Engine& engine, std::shared_ptr<LoadJSON> setSelectionData, std::shared_ptr<LoadJSON> setActionData);
+    void Setup() override;
     /*
      *  更新処理
      */
@@ -54,11 +50,6 @@ public:
      */
     void Render() override;
 
-public:
-    /*
-     *  日にち更新処理
-     */
-    void AdvanceDay(Engine& engine);
 };
 
 #endif // !_MAINGAMESCENE_H_

@@ -9,6 +9,11 @@
  *	@brief	行動実行処理クラス
  */
 class InActionBase {
+public:
+	/*
+	 *	@brief	デストラク
+	 */
+	virtual ~InActionBase() {}
 
 public:
 	/*

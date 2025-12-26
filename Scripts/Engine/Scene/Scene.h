@@ -44,6 +44,10 @@ public:
      */
     virtual void Initialize(Engine& engine);
     /*
+     *  @brief  €”õ‘Oˆ—
+     */
+    virtual void Setup() {}
+    /*
      *  XVˆ—
      */
     virtual void Update(Engine& engine, float deltaTime);

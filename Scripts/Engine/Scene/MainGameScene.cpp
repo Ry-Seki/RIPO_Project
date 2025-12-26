@@ -19,29 +19,15 @@
 /*
  *  @brief  デストラクタ
  */
-MainGameScene::~MainGameScene() {
-
-}
+MainGameScene::~MainGameScene() = default;
 
 /*
  *  初期化処理
  */
 void MainGameScene::Initialize(Engine& engine) {
-    // 選択生成クラスの登録
-    SelectionFactory::RegisterAll();
-    // 行動生成クラスの登録
-    ActionFactory::RegisterAll();
-    // カレンダー管理クラスの生成
-    calendarManager = std::make_unique<CalendarManager>();
-    // カレンダー管理クラスの初期化
-    calendarManager->Initialize();
-    // 選択管理クラスの生成
-    selectionManager = std::make_unique<SelectionManager>();
-    // 行動管理クラスの初期化
-    actionManager = std::make_unique<ActionManager>();
-    calendarManager->SetSelectionManager(selectionManager.get());
-    calendarManager->SetActionManager(actionManager.get());
-    selectionManager->SetActionManager(actionManager.get());
+    // ゲームステートの初期化
+    gameState = std::make_unique<GameStateMachine>();
+    gameState->Initialize();
     auto treasureData = LoadManager::GetInstance().LoadResource<LoadJSON>("Data/Treasure/TreasureDataList.json");
     auto itemData = LoadManager::GetInstance().LoadResource<LoadJSON>("Data/Item/ItemCatalogData.json");
     LoadManager::GetInstance().SetOnComplete([treasureData, itemData]() {
@@ -50,40 +36,19 @@ void MainGameScene::Initialize(Engine& engine) {
     PlayerStatusManager::GetInstance().Initialize();
 }
 /*
- *  ロード済みのデータの設定(コールバック)
+ *  @brief  準備前処理
  */
-void MainGameScene::SetupData(Engine& engine, std::shared_ptr<LoadJSON> setSelectionData, std::shared_ptr<LoadJSON> setActionData) {
-
+void MainGameScene::Setup() {
 }
 /*
  *  更新処理
  */
 void MainGameScene::Update(Engine& engine, float deltaTime) {
-    if (FadeManager::GetInstance().IsFading()) return;
-
-    calendarManager->Update(engine);
-
-    selectionManager->Update(engine, deltaTime);
-
-    actionManager->Update(engine, deltaTime);
-
-    // 基底クラスの更新処理
-    Scene::Update(engine, deltaTime);
-
-    // 日が終わったら Engine 側フェード
-    if (calendarManager->IsDayComplete() && !calendarManager->IsEndDayAdvance()) {
-        engine.StartFadeOutIn(1.0f, 1.0f, [&engine, this]() {
-            AdvanceDay(engine); // 日進行
-        });
-    }
 }
 /*
  *  描画処理
  */
 void MainGameScene::Render() {
-    calendarManager->Render();
-    selectionManager->Render();
-    actionManager->Render();
     Scene::Render();
     DrawFormatString(50, 400, GetColor(255, 255, 255), "Money : %d", MoneyManager::GetInstance().GetCurrentMoney());
 
@@ -95,17 +60,4 @@ void MainGameScene::Render() {
         aabb->DebugRender();
     }
 #endif
-}
-/*
- *  日にち更新処理
- */
-void MainGameScene::AdvanceDay(Engine& engine) {
-    if (calendarManager->IsEndDayAdvance()) {
-		auto fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fadeOut, [&engine]() {
-			engine.SetNextScene(std::make_shared<ResultScene>());
-		});
-    }else {
-		calendarManager->NextDay();
-    }
 }

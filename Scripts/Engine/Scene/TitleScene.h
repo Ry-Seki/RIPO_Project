@@ -22,6 +22,10 @@ public:
      */
     void SetupData(Engine& engine);
     /*
+     *  @brief  €”õ‘Oˆ—
+     */
+    void Setup() override;
+    /*
      *  XVˆ—
      */
     virtual void Update(Engine& engine, float deltaTime) override;

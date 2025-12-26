@@ -10,7 +10,12 @@
  *	@brief	行動の詳細を選択するクラス
  */
 class SelectDetailBase {
-
+public:
+	/*
+	 *	@brief	デストラクタ
+	 */
+	virtual ~SelectDetailBase() {}
+		
 public:
 	/*
 	 *	@brief	初期化処理

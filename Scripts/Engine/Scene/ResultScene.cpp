@@ -29,6 +29,11 @@ void ResultScene::Initialize(Engine& engine) {
 void ResultScene::SetupData(Engine& engine) {
 }
 /*
+ *	@brief	€”õ‘Oˆ—
+ */
+void ResultScene::Setup() {
+}
+/*
  *	XVˆ—
  */
 void ResultScene::Update(Engine& engine, float deltaTime) {

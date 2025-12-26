@@ -6,10 +6,10 @@
 #ifndef _AUDIO_SOURCE_H_
 #define _AUDIO_SOURCE_H_
 
-#include "DxLib.h"
 #include "../VecMath.h"
 #include "../GameConst.h"
 
+#include <DxLib.h>
 #include <memory>
 
 /*

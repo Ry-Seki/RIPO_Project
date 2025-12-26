@@ -26,6 +26,11 @@ void TutorialScene::Initialize(Engine& engine) {
 void TutorialScene::SetupData(Engine& engine) {
 }
 /*
+ *	@brief	€”õ‘Oˆ—
+ */
+void TutorialScene::Setup() {
+}
+/*
  *	XVˆ—
  */
 void TutorialScene::Update(Engine& engine, float deltaTime) {
