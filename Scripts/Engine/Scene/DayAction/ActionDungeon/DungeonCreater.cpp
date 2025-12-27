@@ -37,7 +37,7 @@ void DungeonCreater::Setup() {
 void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasureIDList, int& stairID) {
 	// オブジェクトの生成
 	int enemyCount = floorData.enemySpawnCount;
-	int bossCount = floorData.bossSpawnCount;
+	int bossCount = 1;
 	int treasureCount = floorData.treasureSpawnCount;
 	int stairCount = floorData.stairSpawnCount;
 	int goalCount = floorData.goalSpawnCount;
@@ -51,7 +51,9 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 		GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	}
 	// ボスの生成
-	GenerateBoss("Boss", V_ZERO, V_ZERO, {-100, 0, -100}, {100, 300, 100}, {0, 100, 0}, {0,  200,  0}, 200);
+	for (int i = 0; i < bossCount; i++) {
+		GenerateBoss("Boss", V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+	}
 	// お宝の生成処理
 	for (int i = 0; i < treasureCount; i++) {
 		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO, { -100,0,-100 }, { 100,300,100 }, treasureIDList[i]);
@@ -113,6 +115,20 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 		component->SetWayPoint(enemyCharacter->position);
 		// スポーンIDの設定
 		component->SetSpawnEnemyID(i);
+	}
+
+	// ボスの取得
+	std::vector<GameObjectPtr> bossList = GetObjectByName("Boss");
+	// モデルハンドルの取得
+	int bossHandle = resourceData.bossResource->GetHandle();
+	// ボスの設定
+	for (int i = 0; i < bossCount; i++) {
+		if (bossList.size() <= 0) break;
+		// ボスの取得
+		auto bossCharacter = bossList[i];
+		if (!bossCharacter) continue;
+		// モデルの設定
+		SetModelHandle(bossCharacter.get(), bossHandle);
 	}
 
 	// 宝の設定
@@ -189,8 +205,10 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	for (int i = 0; i < enemyCount; i++) {
 		GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	}
-	// TODO : ボスの生成処理
-
+	// ボスの生成処理
+	for (int i = 0; i < bossCount; i++) {
+		GenerateBoss("Boss", V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+	}
 	// お宝の生成処理
 	for (int i = 0; i < treasureCount; i++) {
 		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO, { -100,0,-100 }, { 100,300,100 }, treasureIDList[i]);
