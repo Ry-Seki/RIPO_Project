@@ -9,6 +9,9 @@
 
 class BossComponent : public CharacterBase {
 private:
+	GameObject* boss;
+	int animationHandle;
+
 
 public:
 	/*
@@ -18,6 +21,7 @@ public:
 	~BossComponent() = default;
 
 public:
+	virtual void Start() override;
 	/*
 	 *	XVˆ—
 	 */
