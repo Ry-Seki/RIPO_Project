@@ -16,7 +16,9 @@ void BossComponent::Start()
 	animationHandle = MV1LoadModel("Res/Model/Enemy/Boss/Boss.mv1");
 	boss = GetOwner();
 	if (boss == nullptr) return;
-	boss->GetComponent<AnimatorComponent>()->SetModelHandle(animationHandle);
+	auto animator = boss->GetComponent<AnimatorComponent>();
+	if (animator == nullptr) return;
+	animator->SetModelHandle(animationHandle);
 }
 
 /*
