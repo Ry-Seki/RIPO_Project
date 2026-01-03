@@ -31,8 +31,8 @@ GameObjectPtr CharacterManager::CreateCharacter(
 	characterObject->AddComponent<T>();
 	// コライダーコンポーネント追加
 	// AABB
-	AABBColliderPtr aabbCollider = characterObject->AddComponent<AABBCollider>();
-	aabbCollider->aabb = { AABBMin, AABBMax };
+	//AABBColliderPtr aabbCollider = characterObject->AddComponent<AABBCollider>();
+	//aabbCollider->aabb = { AABBMin, AABBMax };
 	// Capsule
 	CapsuleColliderPtr capsuleCollider = characterObject->AddComponent<CapsuleCollider>();
 	capsuleCollider->capsule = { capsuleStart, capsuleEnd, capsuleRadius };
@@ -98,7 +98,7 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 	GameObjectPtr enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	// AABBコライダーコンポーネント追加
 	AABBColliderPtr aabbCollider = enemy->AddComponent<AABBCollider>();
-	aabbCollider->aabb = { AABBMin, AABBMax };
+	//aabbCollider->aabb = { AABBMin, AABBMax };
 	// シーンが持つゲームオブジェクト配列に追加
 	engine->AddGameObject(enemy);
 	// 生成キャラクターリストに追加

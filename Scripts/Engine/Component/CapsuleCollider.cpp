@@ -30,8 +30,9 @@ void CapsuleCollider::OnCollision(
 void CapsuleCollider::DebugRender() {
 	auto owner = GetOwner();
 	// ワールド座標のカプセル
-	VECTOR capsuleStart = ToVECTOR(capsule.segment.startPoint + owner->position);
-	VECTOR capsuleEnd = ToVECTOR(capsule.segment.endPoint + owner->position);
+	VECTOR capsuleStart = ToVECTOR(Scale(capsule.segment.startPoint, owner->scale) + owner->position);
+	VECTOR capsuleEnd = ToVECTOR(Scale(capsule.segment.endPoint, owner->scale) + owner->position);
+	float radius = capsule.radius * ((owner->scale.x + owner->scale.z) * 0.5f);
 
 	// hit判定によるカラー変更
 	unsigned int color;
@@ -44,6 +45,6 @@ void CapsuleCollider::DebugRender() {
 
 	// 描画の瞬間でライティングを消す
 	SetUseLighting(false);
-	DrawCapsule3D(capsuleStart, capsuleEnd, capsule.radius, 16, color, color, FALSE);
+	DrawCapsule3D(capsuleStart, capsuleEnd, radius, 16, color, color, FALSE);
 	SetUseLighting(true);
 }
