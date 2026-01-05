@@ -483,6 +483,15 @@
     <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\PartTime\SelectDetail_PartTime.cpp">
       <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail\PartTime</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\BossComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyAttack.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyTurn.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -880,6 +889,21 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\PartTime\SelectDetail_PartTime.h">
       <Filter>ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\PartTime</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\BossComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyTurn.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\BossState.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\BossAttack.h">
+      <Filter>ヘッダー ファイル\Engine\Component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

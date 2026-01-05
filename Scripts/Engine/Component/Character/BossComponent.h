@@ -11,7 +11,7 @@ class BossComponent : public CharacterBase {
 private:
 	GameObject* boss;
 	int animationHandle;
-
+	int modelHandle;
 
 public:
 	/*

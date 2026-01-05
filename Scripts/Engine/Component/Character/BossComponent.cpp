@@ -8,19 +8,21 @@
 BossComponent::BossComponent()
 	: boss(nullptr)
 	, animationHandle(-1)
+	, modelHandle(-1)
 {
 }
 
 void BossComponent::Start()
 {
+	animationHandle = MV1LoadModel("Res/Model/Enemy/Boss/BossAnimation.mv1");
 	// モデルハンドルの読み込み
-	animationHandle = MV1LoadModel("Res/Model/Enemy/Boss/Boss.mv1");
+	modelHandle = MV1LoadModel("Res/Model/Enemy/Boss/Boss.mv1");
 	boss = GetOwner();
 	if (boss == nullptr) return;
 	auto animator = boss->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
 	// モデルハンドルのセット
-	animator->SetModelHandle(animationHandle);
+	animator->SetModelHandle(modelHandle);
 	animator->SetAttachIndex(animationHandle);
 }
 
