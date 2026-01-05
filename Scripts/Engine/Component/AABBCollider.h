@@ -40,5 +40,6 @@ public:
 };
 // •Ê–¼’è‹`
 using AABBColliderPtr = std::shared_ptr<AABBCollider>;
+using AABBColliderList = std::vector<AABBColliderPtr>;
 
 #endif // !_AABBCOLLIDER_H_

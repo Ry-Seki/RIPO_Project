@@ -42,5 +42,6 @@ public:
 };
 // •Ê–¼’è‹`
 using CapsuleColliderPtr = std::shared_ptr<CapsuleCollider>;
+using CapsuleColliderList = std::vector<CapsuleColliderPtr>;
 
 #endif // !_CAPSULECOLLIDER_H_

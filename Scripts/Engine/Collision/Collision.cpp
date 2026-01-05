@@ -569,6 +569,33 @@ bool Intersect(const Capsule& capsule, const AABB& box, Vector3& penetration) {
 	penetration = direction * depth;
 	return true;
 }
+
 bool Intersect(const AABB& box, const Capsule& capsule, Vector3& penetration) {
 	return Intersect(capsule, box, penetration);
+}
+
+/*
+ * コライダー同士の交差判定
+ * @param[in]  std::variant<AABB, Capsule> a	判定対象1
+ * @param[in]  std::variant<AABB, Capsule> b	判定対象2
+ * @param[out] Vector3 penetration	貫通ベクトル
+ */
+bool Intersect(const std::variant<AABB, Capsule>& a, const std::variant<AABB, Capsule>& b, Vector3& penetration) {
+	// 各対象のコライダーを判別し、それに合った交差判定を呼ぶ
+	if (auto aabbA = std::get_if<AABB>(&a)) {
+		if (auto aabbB = std::get_if<AABB>(&b)) {
+			return Intersect(*aabbA, *aabbB, penetration);
+		}
+		else if (auto capsuleB = std::get_if<Capsule>(&b)) {
+			return Intersect(*aabbA, *capsuleB, penetration);
+		}
+	}
+	else if (auto capsuleA = std::get_if<Capsule>(&a)) {
+		if (auto aabbB = std::get_if<AABB>(&b)) {
+			return Intersect(*capsuleA, *aabbB, penetration);
+		}
+		else if (auto capsuleB = std::get_if<Capsule>(&b)) {
+			return Intersect(*capsuleA, *capsuleB, penetration);
+		}
+	}
 }

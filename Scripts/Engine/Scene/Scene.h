@@ -9,6 +9,7 @@
 #include "../GameObject.h"
 #include <vector>
 #include <memory>
+#include <variant>
 
 // 前方宣言
 class Engine;
@@ -20,10 +21,11 @@ class Scene {
 public:
     // ワールド座標系のコライダーを表す構造体
     struct WorldCollider {
-        AABBColliderPtr origin;
-        AABB world;
+        ColliderBasePtr origin;
+        std::variant<AABB, Capsule> world;
     };
-    using WorldColliderList = std::vector<WorldCollider>;
+    using WorldColliderPtr = std::shared_ptr<WorldCollider>;
+    using WorldColliderList = std::vector<WorldColliderPtr>;
 
 protected:
     std::vector<GameObjectPtr> gameObjects;     // ゲームオブジェクト配列

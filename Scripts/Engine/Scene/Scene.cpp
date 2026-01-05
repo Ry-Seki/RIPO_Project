@@ -7,6 +7,8 @@
 #include "../Engine.h"
 #include "../Component/ModelRenderer.h"
 #include "../Component/SpriteRenderer.h"
+#include "../Component/AABBCollider.h"
+#include "../Component/CapsuleCollider.h"
 #include <algorithm>
 
  /*
@@ -61,17 +63,17 @@ void Scene::Finalize(Engine& engine) {
 void Scene::HandleGameObjectCollision() {
 	// 全てのオブジェクトでコライダーの座標を計算
 	std::vector<WorldColliderList> colliders = ChangeGameObjectWorldColliders();
-
+	
 	if (colliders.size() > 1) {
 		// ゲームオブジェクト毎の衝突判定
 		for (auto A = colliders.begin(); A != colliders.end() - 1; A++) {
-			const GameObject* objA = A->at(0).origin->GetOwner();
+			const GameObject* objA = A->at(0)->origin->GetOwner();
 			// 削除済みは処理しない
 			if (objA->IsDestroyed())
 				continue;
 
 			for (auto B = A + 1; B != colliders.end(); B++) {
-				const GameObject* objB = B->at(0).origin->GetOwner();
+				GameObject* objB = B->at(0)->origin->GetOwner();
 				// 削除済みは処理しない
 				if (objB->IsDestroyed())
 					continue;
@@ -95,21 +97,21 @@ void Scene::HandleWorldColliderCollision(
 	for (const auto& colA : *colliderA) {
 		for (const auto& colB : *colliderB) {
 			// スタティックなコライダー同士では処理しない
-			if (colA.origin->isStatic && colB.origin->isStatic)
+			if (colA->origin->isStatic && colB->origin->isStatic)
 				continue;
 			// どちらかが配置完了していなければ判定しない
-			if (!colA.origin->isCollider || !colB.origin->isCollider)
+			if (!colA->origin->isCollider || !colB->origin->isCollider)
 				continue;
 
 			// 衝突判定
 			Vector3 penetration;
-			if (Intersect(colA.world, colB.world, penetration)) {
-				GameObject* objA = colA.origin->GetOwner();
-				GameObject* objB = colB.origin->GetOwner();
+			if (Intersect(colA->world, colB->world, penetration)) {
+				GameObject* objA = colA->origin->GetOwner();
+				GameObject* objB = colB->origin->GetOwner();
 
 				// イベントの発火
-				objA->OnCollision(colA.origin, colB.origin);
-				objB->OnCollision(colB.origin, colA.origin);
+				objA->OnCollision(colA->origin, colB->origin);
+				objB->OnCollision(colB->origin, colA->origin);
 
 				// イベントの結果、どちらかが削除予定が入ったら処理を抜ける
 				if (objA->IsDestroyed() || objB->IsDestroyed())
@@ -151,19 +153,45 @@ std::vector<Scene::WorldColliderList> Scene::ChangeGameObjectWorldColliders() {
 		if (obj->colliders.empty())
 			continue;
 
-		WorldColliderList list(obj->colliders.size());
-
+		// 各コライダーのワールド座標を出す
+		WorldColliderList worldList(obj->colliders.size());
 		for (int i = 0; i < obj->colliders.size(); i++) {
-			// オリジナルのコライダーをコピー
-			list[i].origin = obj->colliders[i];
-			list[i].world = obj->colliders[i]->aabb;
-
-			list[i].world.min = Vector3::Scale(list[i].world.min, obj->scale);
-			list[i].world.max = Vector3::Scale(list[i].world.max, obj->scale);
-			list[i].world.min += obj->position;
-			list[i].world.max += obj->position;
+			worldList[i] = std::make_shared<WorldCollider>();
+			// AABBColliderのワールド座標変換
+			if (auto aabb = std::dynamic_pointer_cast<AABBCollider>(obj->colliders[i])) {
+				// オリジナルのコライダーをコピー
+				worldList[i]->origin = aabb;
+				// ワールド座標に変換
+				AABB originAABB = aabb->aabb;
+				// スケール適応
+				originAABB.min = Vector3::Scale(originAABB.min, obj->scale);
+				originAABB.max = Vector3::Scale(originAABB.max, obj->scale);
+				// ポジション適応
+				originAABB.min += obj->position;
+				originAABB.max += obj->position;
+				// ワールド座標保存
+				worldList[i]->world = originAABB;
+			}
+			// CapsuleColliderのワールド座標変換
+			else if (auto capsule = std::dynamic_pointer_cast<CapsuleCollider>(obj->colliders[i])) {
+				// オリジナルのコライダーをコピー
+				worldList[i]->origin = capsule;
+				// ワールド座標に変換
+				Capsule originCapsule = capsule->capsule;
+				// スケール適応
+				originCapsule.segment.startPoint = Vector3::Scale(originCapsule.segment.startPoint, obj->scale);
+				originCapsule.segment.endPoint = Vector3::Scale(originCapsule.segment.endPoint, obj->scale);
+				// カプセルの半径はy軸を参照せず、xz軸の平均を参照する
+				originCapsule.radius *= (obj->scale.x + obj->scale.z) * 0.5f;
+				// ポジション適応
+				originCapsule.segment.startPoint += obj->position;
+				originCapsule.segment.endPoint += obj->position;
+				// ワールド座標保存
+				worldList[i]->world = originCapsule;
+			}
 		}
-		colliders.push_back(list);
+		// 1オブジェクト内の全てのコライダーのワールド座標をリストに保存
+		colliders.push_back(worldList);
 	}
 	return colliders;
 }
