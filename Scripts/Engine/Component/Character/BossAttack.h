@@ -13,6 +13,7 @@
 class BossAttack : public BossState {
 private:
 
+
 };
 
 #endif // !_BOSSATTACK_H_
