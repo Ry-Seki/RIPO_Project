@@ -10,7 +10,8 @@ GravityComponent::GravityComponent()
 	: fallSpeed(0.0f)
 
 	, FALL_SPEED_MAX(3000.0f)
-	, GRAVITY_ACCELERATION(3000.0f) {
+	, GRAVITY_ACCELERATION(3000.0f)
+	, gravityLocked(false) {
 }
 
 void GravityComponent::Update(float deltaTime) {
@@ -18,7 +19,7 @@ void GravityComponent::Update(float deltaTime) {
 	if (!owner) return;
 
 	// èdóÕÇ™Ç©Ç©ÇÈÇ‹Ç≈èàóùÇµÇ»Ç¢
-	if (!isGravity) {
+	if (gravityLocked) {
 		fallSpeed = 0.0f;
 		return;
 	}

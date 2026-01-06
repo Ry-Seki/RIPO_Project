@@ -22,6 +22,8 @@ private:
 	bool isGravity = false;				// 重力を掛けるかどうか
 public:
 	bool hitGroundingFrag = false;		// 接地判定
+	bool isCollisionReady = false;		// 床の検出が完了したかどうか
+	bool gravityLocked = true;		    // 初期はロック
 public:
 	GravityComponent();
 	~GravityComponent() = default;
@@ -36,6 +38,14 @@ public:
 	 */
 	void AddFallSpeed(float addValue) {
 		fallSpeed += addValue;
+	}
+
+	/*
+	 *	接地判定初期化
+	 */
+	void ResetForGounding() {
+		fallSpeed = 0.0f;			// 落下速度をリセット
+		hitGroundingFrag = true;	// 接地状態にする
 	}
 
 public:
@@ -71,6 +81,10 @@ public:
 	 *  @author oorui
 	 */
 	bool GetGravity()const { return isGravity; }
+
+	bool GetCollisionReady()const { return isCollisionReady; }
+
+	void SetCollisionReady(const bool setValue) { isCollisionReady = setValue; }
 };
 
 #endif // !_GRAVITYCOMPONENT_H_

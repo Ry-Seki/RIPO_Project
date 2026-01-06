@@ -325,6 +325,15 @@ void Stage::ProcessFloorCollision(
 	GameObject* other,
 	float moveVec
 ) {
+
+	auto gravity = other->GetComponent<GravityComponent>();
+
+	// ステージコリジョンが1回でも動いたら重力解放
+	if (gravity && !gravity->GetCollisionReady()) {
+		gravity->SetCollisionReady(true);
+		gravity->gravityLocked = false;
+	}
+
 	// 床がなければ落下
 	if (floors.empty()) {
 		auto hitGrounding = other->GetComponent<GravityComponent>();
@@ -380,8 +389,7 @@ void Stage::ProcessFloorCollision(
 		}
 	}
 
-	// 地面から離れていた場合は接地判定を行わない
-	if (hitGrounding->GetFallSpeed() < 0) {
+	if (hitGrounding->GetFallSpeed() < 0.0f) {
 		hitGrounding->SetGroundingFrag(false);
 		return;
 	}
