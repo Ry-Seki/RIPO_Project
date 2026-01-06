@@ -1,3 +1,7 @@
+/*
+ *	@file	BossComponent.cpp
+ *	@author	kuu
+ */
 #include "BossComponent.h"
 #include "../AnimatorComponent.h"
 #include "../../Manager/GameObjectManager.h"
