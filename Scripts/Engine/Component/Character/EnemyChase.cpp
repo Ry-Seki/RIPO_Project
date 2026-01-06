@@ -11,7 +11,8 @@
  *	コンストラクタ
  */
 EnemyChase::EnemyChase()
-	: wayPoint(0.0f, 0.0f, 0.0f)
+	: player(nullptr)
+	, wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(1000.0f)
 	, closePlayer(false)
