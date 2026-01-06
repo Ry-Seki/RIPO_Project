@@ -20,7 +20,7 @@ PlayerComponent::PlayerComponent()
 	, moveDirectionY(0.0f)
 	, canAvoid(true)
 	, isAvoid(false)
-
+	, hasResolvedInitialGrounding(false)
 	, PLAYER_MODEL_ANGLE_CORRECTION(89.98f)
 	, DEFAULT_MOVE_SPEED(1500.0f)
 	, ACCELERATION_RATE(800.0f)
@@ -32,6 +32,13 @@ PlayerComponent::PlayerComponent()
 
 void PlayerComponent::Update(float deltaTime) {
 	GameObject* player = GetOwner();
+
+	// 初期接地判定（最初の1回のみ実行）
+	if (!hasResolvedInitialGrounding) {
+		ResolveInitialGrounding(player);
+		hasResolvedInitialGrounding = true;
+	}
+
 	moveVec = Vector3::zero;
 	// 回避
 	PlayerAvoid(player, deltaTime);
@@ -168,4 +175,14 @@ void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 			avoidCoolTime -= deltaTime;
 		}
 	}
+}
+
+void PlayerComponent::ResolveInitialGrounding(GameObject* other) {
+	other->position.y -= 500.0f;
+	// 下方向に微小ベクトルを与える
+	Vector3 fakeMove = { 0.0f, 1000.0f, 0.0f };
+
+	// 通常の衝突判定を流用
+		// ステージとの当たり判定
+	StageManager::GetInstance().StageCollider(other, fakeMove);
 }

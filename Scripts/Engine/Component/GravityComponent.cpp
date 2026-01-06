@@ -8,7 +8,9 @@
 
 GravityComponent::GravityComponent()
 	: fallSpeed(0.0f)
-
+	, hitGroundingFrag(false)
+	, isGravity(false)
+	, isFirstFrame(true)
 	, FALL_SPEED_MAX(3000.0f)
 	, GRAVITY_ACCELERATION(3000.0f) {
 }
@@ -37,4 +39,5 @@ void GravityComponent::Update(float deltaTime) {
 		fallSpeed = FALL_SPEED_MAX;
 
 	owner->position.y -= fallSpeed * deltaTime;
+	isFirstFrame = false;
 }
