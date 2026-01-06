@@ -105,10 +105,16 @@ std::vector<GameObjectPtr> GameObjectManager::GetObjectByName(const std::string&
 void GameObjectManager::SetObjectColliderFlag(bool setColliderFlag) {
 	for (auto object : useObjectList) {
 		if (!object) continue;
-		// 当たり判定の取得
-		auto collider = object->GetComponent<AABBCollider>();
-		if (!collider) continue;
-		collider->isCollider = setColliderFlag;
+		// AABBコライダーの取得
+		auto aabbCollider = object->GetComponent<AABBCollider>();
+		if (aabbCollider) {
+			aabbCollider->isCollider = setColliderFlag;
+			continue;
+		}
+		// カプセルコライダーの取得
+		auto capsuleCollider = object->GetComponent<CapsuleCollider>();
+		if (capsuleCollider)
+			capsuleCollider->isCollider = setColliderFlag;
 	}
 }
 

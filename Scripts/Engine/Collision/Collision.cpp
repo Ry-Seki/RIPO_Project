@@ -197,35 +197,34 @@ void SegmentBetweenMinLength(const Segment& a, const Segment& b, Vector3& aMinPo
  *	@param[out]	float	segMaxRatio	線分の有効区間の終了点
  *  @return		bool				交差するかどうか
  */
-bool SlabAxisTest(float segStart, float segEnd, float boxMin, float boxMax, float& segMinRatio, float& segMaxRatio) {
+bool IntersectSlab(float segStart, float segEnd, float boxMin, float boxMax, float& segMinRatio, float& segMaxRatio) {
 	// 方向ベクトル
 	float dir = segEnd - segStart;
 
 	// 限りなく平行に近いなら
 	if (fabs(dir) < EPSILON) {
 		// 線分の開始点がその軸上でboxの中になければ交差はしていない
-		if (segStart < boxMin || segStart > boxMax) return false;
-		return true;
+		return (segStart >= boxMin && segStart <= boxMax);
 	}
 
-	// dirの逆数
+	// dirの逆数(除算をできるだけ避けるため)
 	float reciprocalDir = 1.0f / dir;
 	// スラブに到達する地点
 	float enterRatio = (boxMin - segStart) * reciprocalDir;
 	float exitRatio = (boxMax - segStart) * reciprocalDir;
 
 	// enterRatio <= exitRatio にする(方向によっては逆転する可能性があるため)
-	if (enterRatio > exitRatio) std::swap(enterRatio, exitRatio);
+	if (enterRatio > exitRatio)
+		std::swap(enterRatio, exitRatio);
 
 	// 線分の有効区間を更新
-	if (enterRatio > segMinRatio) segMinRatio = enterRatio;
-	if (exitRatio < segMaxRatio) segMaxRatio = exitRatio;
+	if (enterRatio > segMinRatio)
+		segMinRatio = enterRatio;
+	if (exitRatio < segMaxRatio)
+		segMaxRatio = exitRatio;
 
 	// 交差区間がなくなったら交差していない
-	if (segMinRatio > segMaxRatio) return false;
-
-	return true;
-
+	return segMinRatio <= segMaxRatio;
 }
 
 /*
@@ -256,13 +255,13 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB& box, Vector3& se
 
 		// 各軸のスラブ判定
 		// x軸
-		if (!SlabAxisTest(segStart.x, segEnd.x, boxMin.x, boxMax.x, segMinRatio, segMaxRatio))
+		if (!IntersectSlab(segStart.x, segEnd.x, boxMin.x, boxMax.x, segMinRatio, segMaxRatio))
 			return false;
 		// y軸
-		if (!SlabAxisTest(segStart.y, segEnd.y, boxMin.y, boxMax.y, segMinRatio, segMaxRatio))
+		if (!IntersectSlab(segStart.y, segEnd.y, boxMin.y, boxMax.y, segMinRatio, segMaxRatio))
 			return false;
 		// z軸
-		if (!SlabAxisTest(segStart.z, segEnd.z, boxMin.z, boxMax.z, segMinRatio, segMaxRatio))
+		if (!IntersectSlab(segStart.z, segEnd.z, boxMin.z, boxMax.z, segMinRatio, segMaxRatio))
 			return false;
 
 		// 全ての軸で交差しているなら線分とAABBは交差している
