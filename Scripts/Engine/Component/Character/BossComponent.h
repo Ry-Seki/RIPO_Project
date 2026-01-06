@@ -7,10 +7,12 @@
 
 #include "CharacterBase.h"
 #include "BossState.h"
+#include "../AnimatorComponent.h"
 
 class BossComponent : public CharacterBase {
 private:
 	GameObject* boss;
+	std::shared_ptr<AnimatorComponent> animator;
 	BossState* state;
 	int animationHandle;
 	int modelHandle;
