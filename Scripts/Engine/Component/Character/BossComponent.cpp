@@ -1,15 +1,27 @@
 #include "BossComponent.h"
 #include "../AnimatorComponent.h"
 #include "../../Manager/GameObjectManager.h"
+#include "BossStandby.h"
 
 /*
  *	コンストラクタ
  */
 BossComponent::BossComponent()
+	: BossComponent(new BossStandby())
+{
+}
+
+BossComponent::BossComponent(BossState* initState)
 	: boss(nullptr)
+	, state(initState)
 	, animationHandle(-1)
 	, modelHandle(-1)
 {
+}
+
+BossComponent::~BossComponent()
+{
+	delete state;
 }
 
 void BossComponent::Start()
@@ -23,7 +35,11 @@ void BossComponent::Start()
 	if (animator == nullptr) return;
 	// モデルハンドルのセット
 	animator->SetModelHandle(modelHandle);
-	animator->SetAttachIndex(animationHandle);
+	//animator->SetAttachIndex(animationHandle);
+
+	if (state == nullptr)
+		state = new BossStandby();
+	state->Start(*this);
 }
 
 /*
@@ -31,5 +47,6 @@ void BossComponent::Start()
  */
 void BossComponent::Update(float deltaTime)
 {
-
+	if (state == nullptr || boss == nullptr) return;
+	state->Update(boss, deltaTime);
 }

@@ -9,7 +9,7 @@
 AnimatorComponent::AnimatorComponent()
 	: animModelHandle(-1)
 	, currentAnimation(-1)
-	, animIndex(-1)
+	, animIndex(0)
 	, attachIndex(-1)
 	, isPlaying(false)
 {
@@ -21,10 +21,10 @@ AnimatorComponent::AnimatorComponent()
  */
 void AnimatorComponent::Update(float deltaTime) {
 	// 無効なアニメーションだった場合は処理しない
-	if (animIndex == -1)return;
+	if (currentAnimation == -1)return;
 
 	// 現在のアニメーションを取得
-	AnimatorClip* pCurrentAnim = GetAnimation(animIndex);
+	AnimatorClip* pCurrentAnim = GetAnimation(currentAnimation);
 	if (pCurrentAnim == nullptr)return;
 
 	// アニメーションを進める
