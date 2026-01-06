@@ -7,7 +7,9 @@
 #define _GAMEOBJECT_H_
 
 #include "Component/Component.h"
+#include "Collision/ColliderBase.h"
 #include "Component/AABBCollider.h"
+#include "Component/CapsuleCollider.h"
 #include "VecMath.h"
 
 #include <memory>
