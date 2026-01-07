@@ -588,10 +588,10 @@ bool Intersect(const AABB& box, const Capsule& capsule, Vector3& penetration) {
 }
 
 /*
- * コライダー同士の交差判定
- * @param[in]  std::variant<AABB, Capsule> a	判定対象1
- * @param[in]  std::variant<AABB, Capsule> b	判定対象2
- * @param[out] Vector3 penetration	貫通ベクトル
+ *  コライダー同士の交差判定
+ *  @param[in]  std::variant<AABB, Capsule> a			判定対象1
+ *  @param[in]  std::variant<AABB, Capsule> b			判定対象2
+ *  @param[out] Vector3						penetration	貫通ベクトル
  */
 bool Intersect(const std::variant<AABB, Capsule>& a, const std::variant<AABB, Capsule>& b, Vector3& penetration) {
 	// 各対象のコライダーを判別し、それに合った交差判定を呼ぶ
@@ -614,10 +614,10 @@ bool Intersect(const std::variant<AABB, Capsule>& a, const std::variant<AABB, Ca
 }
 
 /*
- * レイとAABBの交差判定
- * @param[in]  Ray		ray			判定対象1
- * @param[in]  AABB		box			判定対象2
- * @param[out] float	distance	貫通ベクトル
+ *  レイとAABBの交差判定
+ *  @param[in]  Ray		ray			判定対象1
+ *  @param[in]  AABB	box			判定対象2
+ *  @param[out] float	distance	貫通ベクトル
  */
 bool RayIntersect(const Ray& ray, const AABB& box, float& distance) {
 	float segMinRatio = 0;
@@ -641,9 +641,27 @@ bool RayIntersect(const Ray& ray, const AABB& box, float& distance) {
 }
 
 /*
- * レイとカプセルの交差判定
- * @param[in]	Ray 
+ *  レイとカプセルの交差判定
+ *  @param[in]	Ray		ray			判定対象1
+ *  @param[in]	Capsule	capsule		判定対象2
+ *	@param[out]	float	distance	貫通ベクトル
  */
 bool RayIntersect(const Ray& ray, const Capsule& capsule, float& distance) {
 	return false;
+}
+
+/*
+ *  レイとコライダーの交差判定
+ *  @param[in]	Ray							ray			判定対象1
+ *  @param[in]	std::variant<AABB, Capsule>	collider	判定対象2
+ *	@param[out]	float						distance	貫通ベクトル
+ */
+bool RayIntersect(const Ray& ray, const std::variant<AABB, Capsule>& collider, float& distance) {
+	// 各対象のコライダーを判別し、それに合った交差判定を呼ぶ
+	if (auto aabb = std::get_if<AABB>(&collider)) {
+		return RayIntersect(ray, *aabb, distance);
+	}
+	else if (auto capsule = std::get_if<Capsule>(&collider)) {
+		return RayIntersect(ray, *capsule, distance);
+	}
 }
