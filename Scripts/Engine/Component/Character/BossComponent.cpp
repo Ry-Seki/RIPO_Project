@@ -41,6 +41,8 @@ void BossComponent::Start()
 	animator->SetModelHandle(modelHandle);
 	//animator->SetAttachIndex(animationHandle);
 
+	animator->LoadIndex(true);
+
 	if (state == nullptr)
 		state = new BossStandby();
 	state->Start(*this);
@@ -54,5 +56,5 @@ void BossComponent::Update(float deltaTime)
 	if (state == nullptr || boss == nullptr) return;
 	state->Update(boss, deltaTime);
 	
-	animator->Play(0,1);
+	animator->Play(5);
 }

@@ -21,10 +21,10 @@ AnimatorComponent::AnimatorComponent()
  */
 void AnimatorComponent::Update(float deltaTime) {
 	// 無効なアニメーションだった場合は処理しない
-	if (currentAnimation == -1)return;
+	if (animIndex == -1)return;
 
 	// 現在のアニメーションを取得
-	AnimatorClip* pCurrentAnim = GetAnimation(currentAnimation);
+	AnimatorClip* pCurrentAnim = GetAnimation(animIndex);
 	if (pCurrentAnim == nullptr)return;
 
 	// アニメーションを進める
@@ -104,7 +104,7 @@ void AnimatorComponent::Play(int index, float speed) {
 	anim->playAnimSpeed = speed;
 
 	// モデル内のアニメーション番号を直接指定してアタッチ
-	attachIndex = MV1AttachAnim(animModelHandle, anim->animationHandle);
+	attachIndex = MV1AttachAnim(animModelHandle, anim->animationHandle, -1);
 	// 終了時間を初期化
 	anim->exitAnimTime = MV1GetAttachAnimTotalTime(animModelHandle, attachIndex);
 
