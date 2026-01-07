@@ -13,6 +13,7 @@
 #include "../VecMath.h"
 #include "../GameConst.h"
 #include "../Manager/StageManager.h"
+#include "StageObject/StageCollision.h"
  /*
   *  ステージクラス
   */
@@ -43,7 +44,7 @@ private:
 	static constexpr float _HALF = 0.5f;						// 半分
 	static constexpr float _POLYGON_HEIGHT = 0.9f;
 
-
+	std::unique_ptr<StageCollision> collisionController;
 public:
 	Stage();
 	virtual ~Stage() override;
@@ -74,62 +75,6 @@ public:
 	 * @param MoveVec      移動ベクトル
 	 */
 	void UpdateCollision(GameObject* other, Vector3 MoveVec) override;
-
-private:
-
-	/*
-	 * @brief 周囲ポリゴンの当たり判定を実行し、結果を返す
-	 * @param position  プレイヤー位置
-	 * @param MoveVec   移動ベクトル
-	 * @return std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> コリジョン結果構造体
-	 */
-	std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> SetupCollision(GameObject* other, Vector3 MoveVec);
-
-
-	/**
-	 * @brief 壁ポリゴン／床ポリゴンの振り分け
-	 * @param hitDim   コリジョン結果構造体
-	 * @param walls    壁ポリゴン格納先
-	 * @param floors   床ポリゴン格納先
-	 */
-	void ClassifyPolygons(
-		const MV1_COLL_RESULT_POLY_DIM& hitDim,
-		std::vector<MV1_COLL_RESULT_POLY*>& walls,
-		std::vector<MV1_COLL_RESULT_POLY*>& floors
-	);
-
-	/**
-	 * @brief 壁ポリゴンとの衝突・スライド・押し出し処理
-	 * @param nowPos      現在座標（処理結果として更新）
-	 * @param prevPos     移動前座標
-	 * @param polyOffset  カプセル縦方向のオフセット
-	 * @param MoveVec     移動ベクトル
-	 * @param walls       壁ポリゴン配列
-	 * @param moveFlag    水平移動しているかどうか
-	 */
-	void ProcessWallCollision(
-		Vector3& nowPos,
-		const Vector3& prevPos,
-		float polyOffset,
-		const Vector3& MoveVec,
-		const std::vector<MV1_COLL_RESULT_POLY*>& walls,
-		bool moveFlag,
-		GameObject* other
-	);
-
-	/**
-	 * @brief 床ポリゴンとの衝突処理
-	 * @param nowPos      現在座標
-	 * @param polyOffset  カプセル縦方向のオフセット
-	 * @param floors      床ポリゴン配列
-	 */
-	void ProcessFloorCollision(
-		Vector3& nowPos,
-		float polyOffset,
-		const std::vector<MV1_COLL_RESULT_POLY*>& floors,
-		GameObject* other,
-		float moveVec
-	);
 
 public:
 	/*
