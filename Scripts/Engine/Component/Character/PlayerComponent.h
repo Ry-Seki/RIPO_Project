@@ -51,9 +51,10 @@ private:
 
 	/*
 	 *	初期接地チェック
+	 *  @param GameObject* player　接地判定をするキャラクター
 	 *  @author oorui
 	 */
-	void ResolveInitialGrounding(GameObject* player);
+	void IsGrounding(GameObject* player);
 
 public:
 	/*

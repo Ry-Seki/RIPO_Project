@@ -33,9 +33,9 @@ PlayerComponent::PlayerComponent()
 void PlayerComponent::Update(float deltaTime) {
 	GameObject* player = GetOwner();
 
-	// 初期接地判定（最初の1回のみ実行）
+	// 初期接地判定
 	if (!hasResolvedInitialGrounding) {
-		ResolveInitialGrounding(player);
+		IsGrounding(player);
 		hasResolvedInitialGrounding = true;
 	}
 
@@ -177,12 +177,15 @@ void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 	}
 }
 
-void PlayerComponent::ResolveInitialGrounding(GameObject* other) {
+/*
+ * 初期接地チェック
+ */
+void PlayerComponent::IsGrounding(GameObject* other) {
 	other->position.y -= 500.0f;
 	// 下方向に微小ベクトルを与える
-	Vector3 fakeMove = { 0.0f, 1000.0f, 0.0f };
+	Vector3 fakeMove = { 0.0f, other->position.y, 0.0f };
 
 	// 通常の衝突判定を流用
-		// ステージとの当たり判定
+	// ステージとの当たり判定
 	StageManager::GetInstance().StageCollider(other, fakeMove);
 }
