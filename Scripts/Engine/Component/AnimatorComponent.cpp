@@ -28,7 +28,7 @@ void AnimatorComponent::Update(float deltaTime) {
 	if (pCurrentAnim == nullptr)return;
 
 	// アニメーションを進める
-	pCurrentAnim->playAnimTime += pCurrentAnim->playAnimSpeed;
+	pCurrentAnim->playAnimTime += deltaTime * pCurrentAnim->playAnimSpeed;
 
 	// 再生時間を超えたら
 	if (pCurrentAnim->playAnimTime > pCurrentAnim->exitAnimTime) {
