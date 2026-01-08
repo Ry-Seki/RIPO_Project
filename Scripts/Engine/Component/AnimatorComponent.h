@@ -42,7 +42,7 @@ struct AnimatorClip {
 	 *	デストラクタ
 	 */
 	~AnimatorClip() {
-		MV1DeleteModel(animationHandle);
+		//MV1DeleteModel(animationHandle);
 	}
 
 	/*
