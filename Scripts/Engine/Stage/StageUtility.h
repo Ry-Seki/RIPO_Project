@@ -76,7 +76,7 @@ namespace StageUtility {
 	/*
 	 *	リスポーン位置の取得
 	 */
-	inline std::vector<Vector3> GetRespawnPos() {
+	inline Vector3 GetRespawnPos() {
 		return StageManager::GetInstance().GetRespawnPos();
 	}
 
