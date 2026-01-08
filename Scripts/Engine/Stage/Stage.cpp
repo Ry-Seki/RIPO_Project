@@ -327,9 +327,15 @@ void Stage::ProcessFloorCollision(
 ) {
 	// 床がなければ落下
 	if (floors.empty()) {
-		auto hitGrounding = other->GetComponent<GravityComponent>();
-		if (hitGrounding) {
-			hitGrounding->SetGroundingFrag(false);
+		auto gravity = other->GetComponent<GravityComponent>();
+		if (gravity) {
+			// 初回フレームのみ接地
+			if (gravity->GetFirstFrame()) {
+				gravity->SetGroundingFrag(true);
+			}
+			else {
+				gravity->SetGroundingFrag(false);
+			}
 		}
 		return;
 	}
@@ -403,6 +409,7 @@ void Stage::ProcessFloorCollision(
 		// 接地していない
 		hitGrounding->SetGroundingFrag(false);
 	}
+
 }
 
 /*

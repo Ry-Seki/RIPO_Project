@@ -137,6 +137,8 @@ public:
 	 */
 	void LightSettings();
 
+
+
 public:
 	/*
 	 *	ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹‚ÌŽæ“¾
