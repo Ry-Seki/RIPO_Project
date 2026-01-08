@@ -55,14 +55,14 @@ class AnimatorComponent : public Component {
 private:
 	int animModelHandle;					// アニメーションのモデルハンドル
 	std::vector<AnimatorClip*> pAnimations;	// アニメーションのハンドル
+
 	int currentAnimation;					// 現在のアニメーション
-	int animIndex;							// アニメーション番号
 	int attachIndex;						// アタッチ番号
 	bool isPlaying;							// 再生中かどうか
 
 public:
 	AnimatorComponent();
-	~AnimatorComponent() = default;
+	~AnimatorComponent();
 
 public:
 	/*
@@ -76,7 +76,7 @@ public:
 	 *  @param		isLoop		// ループするかどうか
 	 *  @param		transition	// 終了後の番号
 	 */
-	void LoadIndex(bool isLoop = false, int transition = 0);
+	void LoadIndex(bool isLoop = false, int transition = -1);
 
 	/*
 	 *	アニメーションの再生
@@ -93,13 +93,6 @@ public:
 	inline void SetModelHandle(int setValue) { animModelHandle = setValue; }
 
 	/*
-	 *	アニメーションクリップの取得
-	 *  @param	index			// 取得するアニメーションクリップ番号
-	 *  @retunr	AnimationClip*	// アニメーションクリップを返す
-	 */
-	inline AnimatorClip* GetAnimation(int index) const { return pAnimations[index]; }
-
-	/*
 	 *	@function	GetCurrentAnimation
 	 *	@brief		現在のアニメーションの取得
 	 *	@return		int
@@ -113,11 +106,6 @@ public:
 	 */
 	inline bool	IsPlaying() const { return isPlaying; }
 
-	/*
-	 *	@function	SetAnimIndex
-	 *  @brief		名前でアニメーション番号をセット
-	 */
-	inline void SetAttachIndex(int animIndexs) { animIndex = animIndexs; }
 
 };
 #endif // !_ANIMATORCOMPONENT_H_
