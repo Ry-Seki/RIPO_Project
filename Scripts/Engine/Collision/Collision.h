@@ -40,7 +40,7 @@ struct Capsule {
  *　レイ
  */
 struct Ray {
-	Vector3 origin;
+	Vector3 start;
 	Vector3 direction;
 };
 
@@ -54,7 +54,6 @@ void SegmentBetweenMinLength(const Segment& a, const Segment& b, Vector3& aMinPo
 void SegmentToAABBMinLength(const Segment& segment, const AABB& box, Vector3& segMinPoint, Vector3& boxMinPoint, float& minLengthSq);
 // 1つの軸のスラブ判定
 bool IntersectSlab(float start, float direction, float boxMin, float boxMax, float& segMinRatio, float& segMaxRatio);
-bool IntersectSlab(float segStart, float segEnd, float boxMin, float boxMax, float& segMinRatio, float& segMaxRatio);
 // 衝突しているかどうか
 bool Intersect(const Capsule& a, const Capsule& b, Vector3& penetration);
 bool Intersect(const AABB& a, const AABB& b, Vector3& penetration);

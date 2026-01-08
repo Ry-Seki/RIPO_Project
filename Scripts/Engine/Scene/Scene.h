@@ -10,6 +10,7 @@
 #include <vector>
 #include <memory>
 #include <variant>
+#include <functional>
 
 // ‘O•ûéŒ¾
 class Engine;

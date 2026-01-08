@@ -4,10 +4,10 @@
  */
 
 #include "HandArm.h"
-#include "../../RayCast.h"
 #include "../../Manager/CameraManager.h"
 #include "../../VecMath.h"
 #include "../../GameConst.h"
+#include "../../Scene/Scene.h"
 
 HandArm::HandArm()
 	: liftObject(nullptr)
@@ -38,11 +38,21 @@ void HandArm::LiftTreasure(GameObject* player, Engine* engine) {
 	float hitLength = 0;
 	GameObject* hitObject;
 	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
-	//if (RayCast(engine, camera->position, camera->rotation, hitLength, hitObject)) {
-	//	// 持ち上げ可能距離なら持ち上げ対象を保存
-	//	if (hitLength < LEFTABLE_DISTANCE) return;
-	//	liftObject = hitObject;
-	//}
+	// レイキャストで持ち上げ対象があるか探す
+	Ray ray = { camera->position, ForwardDir(camera->rotation) };
+	Scene::RaycastHit hitInfo;
+	bool hit = Scene::Raycast(
+		ray, hitInfo,
+		[](const ColliderBasePtr& col, float distance) {
+			// 交点が指定値以内かつプレイヤー以外のオブジェクト
+			return distance < 1.0f && col->GetOwner()->name != GameConst::_CREATE_POSNAME_PLAYER;
+		}
+	);
+	if (hit) {
+		// 持ち上げ可能距離なら持ち上げ対象を保存
+		if (hitLength < LEFTABLE_DISTANCE) return;
+		liftObject = hitObject;
+	}
 }
 
 /*

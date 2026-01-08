@@ -227,7 +227,7 @@ bool Scene::Raycast(const Ray& ray, RaycastHit& hitInfo, const RaycastPredicate&
 	// 交差するコライダーがある場合
 	if (hitInfo.collider) {
 		// 交差の座標を計算
-		hitInfo.point = ray.origin + ray.direction * hitInfo.distance;
+		hitInfo.point = ray.start + ray.direction * hitInfo.distance;
 		return true;
 	}
 	
