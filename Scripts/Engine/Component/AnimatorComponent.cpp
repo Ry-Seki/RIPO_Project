@@ -6,7 +6,14 @@
 #include "AnimatorComponent.h"
 
 
- /*
+AnimatorComponent::AnimatorComponent()
+	:animModelHandle(-1)
+	, currentAnimation(-1)
+	, attachIndex(-1)
+	, isPlaying(false) {
+}
+
+/*
   *	@function	Update
   *	@brief		XVˆ—
   */
