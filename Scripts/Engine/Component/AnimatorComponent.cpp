@@ -6,42 +6,42 @@
 #include "AnimatorComponent.h"
 
 
-/*
- *	@function	Update
- *	@brief		更新処理
- */
+ /*
+  *	@function	Update
+  *	@brief		更新処理
+  */
 void AnimatorComponent::Update(float deltaTime) {
-	// 無効なアニメーションだった場合は処理しない
-	if (animIndex == -1)return;
+	if (!isPlaying) return;
+	if (attachIndex < 0) return;
 
 	// 現在のアニメーションを取得
-	AnimatorClip* pCurrentAnim = GetAnimation(animIndex);
-	if (pCurrentAnim == nullptr)return;
+	AnimatorClip* anim = pAnimations[currentAnimation];
+	if (!anim) return;
 
-	// アニメーションを進める
-	pCurrentAnim->playAnimTime += pCurrentAnim->playAnimSpeed;
+	// アニメーションの再生時間を進める
+	anim->playAnimTime += deltaTime * anim->playAnimSpeed;
 
-	// 再生時間を超えたら
-	if (pCurrentAnim->playAnimTime > pCurrentAnim->exitAnimTime) {
-		// 再生中フラグをfalseにする
-		isPlaying = false;
-		// 再生時間をリセットする
-		pCurrentAnim->playAnimTime = 0.0f;
+	// 再生終了判定
+	if (anim->playAnimTime >= anim->exitAnimTime) {
 
-		// 再生していたアニメーションがループ再生するかどうか
-		if (pCurrentAnim->isAnimLoop) {
-			isPlaying = true;
+		if (anim->isAnimLoop) {
+			// ループ時は余剰時間を保持
+			anim->playAnimTime =
+				fmod(anim->playAnimTime, anim->exitAnimTime);
 		}
 		else {
-			// 終了後のアニメーションがループ再生するかどうか
-			Play(pCurrentAnim->animTransitionNum);
+			// 非ループは次へ遷移
+			Play(anim->animTransitionNum);
+			return;
 		}
-
 	}
 
-	// アニメーションを再生
-	MV1SetAttachAnimTime(animModelHandle, attachIndex, pCurrentAnim->playAnimTime);
-
+	// 再生時間をモデルに反映
+	MV1SetAttachAnimTime(
+		animModelHandle,
+		attachIndex,
+		anim->playAnimTime
+	);
 }
 
 
