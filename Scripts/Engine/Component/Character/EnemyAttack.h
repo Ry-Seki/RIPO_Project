@@ -16,6 +16,9 @@ private:
 	// クールタイム
 	float coolTime;
 
+	// クールタイム最大値
+	const float MAX_COOL_TIME;
+
 public:
 	/*
 	 *	コンストラクタ
