@@ -166,7 +166,7 @@ public:
 	/*
 	 *	階段手前のリスポーン場所の取得
 	 */
-	std::vector<Vector3> GetRespawnPos()const;
+	Vector3 GetRespawnPos()const;
 
 	/*
 	 *	jsonの変更

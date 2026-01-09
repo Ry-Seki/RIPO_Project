@@ -22,6 +22,7 @@ private:
 	bool isGravity = false;				// d—Í‚ğŠ|‚¯‚é‚©‚Ç‚¤‚©
 public:
 	bool hitGroundingFrag = false;		// Ú’n”»’è
+	bool isFirstFrame;					// ‰‰ñUpdate‚©‚Ç‚¤‚©
 public:
 	GravityComponent();
 	~GravityComponent() = default;
@@ -36,6 +37,10 @@ public:
 	 */
 	void AddFallSpeed(float addValue) {
 		fallSpeed += addValue;
+	}
+
+	void ResetFallSpeed() {
+		fallSpeed = 0.0f;
 	}
 
 public:
@@ -71,6 +76,11 @@ public:
 	 *  @author oorui
 	 */
 	bool GetGravity()const { return isGravity; }
+
+	bool GetFirstFrame()const { return isFirstFrame; }
+
+	void SetFirstFrame(const bool setValue) { isFirstFrame = setValue; }
+
 };
 
 #endif // !_GRAVITYCOMPONENT_H_

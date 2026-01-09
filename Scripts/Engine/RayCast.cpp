@@ -14,25 +14,25 @@
  *  @param  GameObject*&    hitObject       当たったオブジェクト
  */
 bool RayCast(Engine* engine, Vector3 startPosition, Vector3 direction, float& hitLength, GameObject*& hitObject) {
-    ScenePtr scene = engine->GetCurrentScene();
-    Ray ray = { startPosition, ForwardDir(direction) };
+//    ScenePtr scene = engine->GetCurrentScene();
+//    Ray ray = { startPosition, ForwardDir(direction) };
     bool hit = false;
-    // 全てのオブジェクトでコライダーの座標を計算
-    std::vector<Scene::WorldColliderList> colliders = scene->ChangeGameObjectWorldColliders();
-
-    // ゲームオブジェクト毎の衝突判定
-    for (auto box = colliders.begin(); box != colliders.end(); box++) {
-        GameObject* objBox = box->at(0).origin->GetOwner();
-        // 削除済みは処理しない
-        if (objBox->IsDestroyed())
-            continue;
-
-        // 衝突判定
-        for (const auto& boxCol : *box) {
-            if (RayIntersect(ray, boxCol.world, hitLength, hitObject, objBox, hit))
-                hit = true;
-        }
-    }
+//    // 全てのオブジェクトでコライダーの座標を計算
+//    std::vector<Scene::WorldAABBColliderList> colliders = scene->ChangeGameObjectWorldColliders();
+//
+//    // ゲームオブジェクト毎の衝突判定
+//    for (auto box = colliders.begin(); box != colliders.end(); box++) {
+//        GameObject* objBox = box->at(0).origin->GetOwner();
+//        // 削除済みは処理しない
+//        if (objBox->IsDestroyed())
+//            continue;
+//
+//        // 衝突判定
+//        for (const auto& boxCol : *box) {
+//            if (RayIntersect(ray, boxCol.world, hitLength, hitObject, objBox, hit))
+//                hit = true;
+//        }
+//    }
     return hit;
 }
 

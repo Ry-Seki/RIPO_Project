@@ -197,35 +197,34 @@ void SegmentBetweenMinLength(const Segment& a, const Segment& b, Vector3& aMinPo
  *	@param[out]	float	segMaxRatio	線分の有効区間の終了点
  *  @return		bool				交差するかどうか
  */
-bool SlabAxisTest(float segStart, float segEnd, float boxMin, float boxMax, float& segMinRatio, float& segMaxRatio) {
+bool IntersectSlab(float segStart, float segEnd, float boxMin, float boxMax, float& segMinRatio, float& segMaxRatio) {
 	// 方向ベクトル
 	float dir = segEnd - segStart;
 
 	// 限りなく平行に近いなら
 	if (fabs(dir) < EPSILON) {
 		// 線分の開始点がその軸上でboxの中になければ交差はしていない
-		if (segStart < boxMin || segStart > boxMax) return false;
-		return true;
+		return (segStart >= boxMin && segStart <= boxMax);
 	}
 
-	// dirの逆数
+	// dirの逆数(除算をできるだけ避けるため)
 	float reciprocalDir = 1.0f / dir;
 	// スラブに到達する地点
 	float enterRatio = (boxMin - segStart) * reciprocalDir;
 	float exitRatio = (boxMax - segStart) * reciprocalDir;
 
 	// enterRatio <= exitRatio にする(方向によっては逆転する可能性があるため)
-	if (enterRatio > exitRatio) std::swap(enterRatio, exitRatio);
+	if (enterRatio > exitRatio)
+		std::swap(enterRatio, exitRatio);
 
 	// 線分の有効区間を更新
-	if (enterRatio > segMinRatio) segMinRatio = enterRatio;
-	if (exitRatio < segMaxRatio) segMaxRatio = exitRatio;
+	if (enterRatio > segMinRatio)
+		segMinRatio = enterRatio;
+	if (exitRatio < segMaxRatio)
+		segMaxRatio = exitRatio;
 
 	// 交差区間がなくなったら交差していない
-	if (segMinRatio > segMaxRatio) return false;
-
-	return true;
-
+	return segMinRatio <= segMaxRatio;
 }
 
 /*
@@ -256,13 +255,13 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB& box, Vector3& se
 
 		// 各軸のスラブ判定
 		// x軸
-		if (!SlabAxisTest(segStart.x, segEnd.x, boxMin.x, boxMax.x, segMinRatio, segMaxRatio))
+		if (!IntersectSlab(segStart.x, segEnd.x, boxMin.x, boxMax.x, segMinRatio, segMaxRatio))
 			return false;
 		// y軸
-		if (!SlabAxisTest(segStart.y, segEnd.y, boxMin.y, boxMax.y, segMinRatio, segMaxRatio))
+		if (!IntersectSlab(segStart.y, segEnd.y, boxMin.y, boxMax.y, segMinRatio, segMaxRatio))
 			return false;
 		// z軸
-		if (!SlabAxisTest(segStart.z, segEnd.z, boxMin.z, boxMax.z, segMinRatio, segMaxRatio))
+		if (!IntersectSlab(segStart.z, segEnd.z, boxMin.z, boxMax.z, segMinRatio, segMaxRatio))
 			return false;
 
 		// 全ての軸で交差しているなら線分とAABBは交差している
@@ -569,6 +568,33 @@ bool Intersect(const Capsule& capsule, const AABB& box, Vector3& penetration) {
 	penetration = direction * depth;
 	return true;
 }
+
 bool Intersect(const AABB& box, const Capsule& capsule, Vector3& penetration) {
 	return Intersect(capsule, box, penetration);
+}
+
+/*
+ * コライダー同士の交差判定
+ * @param[in]  std::variant<AABB, Capsule> a	判定対象1
+ * @param[in]  std::variant<AABB, Capsule> b	判定対象2
+ * @param[out] Vector3 penetration	貫通ベクトル
+ */
+bool Intersect(const std::variant<AABB, Capsule>& a, const std::variant<AABB, Capsule>& b, Vector3& penetration) {
+	// 各対象のコライダーを判別し、それに合った交差判定を呼ぶ
+	if (auto aabbA = std::get_if<AABB>(&a)) {
+		if (auto aabbB = std::get_if<AABB>(&b)) {
+			return Intersect(*aabbA, *aabbB, penetration);
+		}
+		else if (auto capsuleB = std::get_if<Capsule>(&b)) {
+			return Intersect(*aabbA, *capsuleB, penetration);
+		}
+	}
+	else if (auto capsuleA = std::get_if<Capsule>(&a)) {
+		if (auto aabbB = std::get_if<AABB>(&b)) {
+			return Intersect(*capsuleA, *aabbB, penetration);
+		}
+		else if (auto capsuleB = std::get_if<Capsule>(&b)) {
+			return Intersect(*capsuleA, *capsuleB, penetration);
+		}
+	}
 }

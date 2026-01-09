@@ -7,7 +7,9 @@
 #define _GAMEOBJECT_H_
 
 #include "Component/Component.h"
+#include "Collision/ColliderBase.h"
 #include "Component/AABBCollider.h"
+#include "Component/CapsuleCollider.h"
 #include "VecMath.h"
 
 #include <memory>
@@ -31,7 +33,7 @@ private:
     bool isStarted = false;                     // 開始フラグ
 
 
-    std::vector<AABBColliderPtr> colliders;     // コライダーのリスト
+    std::vector<ColliderBasePtr> colliders;     // コライダーのリスト
     std::vector<ComponentPtr> components;       // コンポーネントのリスト
     std::vector<ComponentPtr> addComponents;    // 追加予定のコンポーネント
 
@@ -97,7 +99,7 @@ public:
         // 所有者の設定
         component->owner = this;
         // コライダーならコライダーリストにも追加
-        if constexpr (std::is_base_of_v<AABBCollider, T>)
+        if constexpr (std::is_base_of_v<ColliderBase, T>)
             colliders.push_back(component);
 
         component->Awake();
@@ -112,7 +114,7 @@ public:
         // 所有者の設定
         component->owner = this;
         // コライダーならコライダーリストにも追加
-        if constexpr (std::is_base_of_v<AABBCollider, T>)
+        if constexpr (std::is_base_of_v<ColliderBase, T>)
             colliders.push_back(component);
 
         component->Awake();

@@ -12,6 +12,7 @@
 #include "../Load/JSON/LoadJSON.h"
 #include "../System/Money/MoneyManager.h"
 #include "../System/Status/PlayerStatusManager.h"
+#include "../Component/CapsuleCollider.h"
 
 #include "Selection/SelectionFactory.h"
 #include "DayAction/ActionFactory.h"
@@ -56,8 +57,11 @@ void MainGameScene::Render() {
     // 全オブジェクトのAABBCollider描画
     for (auto& obj : gameObjects) {
         auto aabb = obj->GetComponent<AABBCollider>();
-        if (aabb == nullptr) continue;
-        aabb->DebugRender();
+        if (aabb != nullptr)
+            aabb->DebugRender();
+        auto capsule = obj->GetComponent<CapsuleCollider>();
+        if (capsule != nullptr)
+            capsule->DebugRender();
     }
 #endif
 }

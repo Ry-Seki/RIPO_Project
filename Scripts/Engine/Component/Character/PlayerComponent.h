@@ -18,6 +18,7 @@ private:
 	Vector3 moveVec;		// プレイヤーの移動量
 	bool canAvoid;			// 回避可能か否か
 	bool isAvoid;			// 回避中か否か
+	bool hasResolvedInitialGrounding;	// 初期接地処理を行ったかどうか
 
 	const float PLAYER_MODEL_ANGLE_CORRECTION;	// プレイヤーのモデル角度を補正する値
 	const float DEFAULT_MOVE_SPEED;				// デフォルトの移動速度
@@ -47,6 +48,13 @@ private:
 	 *	回避
 	 */
 	void PlayerAvoid(GameObject* player, float deltaTime);
+
+	/*
+	 *	初期接地チェック
+	 *  @param GameObject* player　接地判定をするキャラクター
+	 *  @author oorui
+	 */
+	void IsGrounding(GameObject* player);
 
 public:
 	/*

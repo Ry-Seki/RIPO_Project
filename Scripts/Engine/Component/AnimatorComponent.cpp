@@ -6,42 +6,61 @@
 #include "AnimatorComponent.h"
 
 
+AnimatorComponent::AnimatorComponent()
+	:animModelHandle(-1)
+	, currentAnimation(-1)
+	, attachIndex(-1)
+	, isPlaying(false) {
+}
+
+AnimatorComponent::~AnimatorComponent() {
+	for (auto* anim : pAnimations) {
+		delete anim;
+	}
+	pAnimations.clear();
+}
+
 /*
- *	@function	Update
- *	@brief		更新処理
- */
+  *	@function	Update
+  *	@brief		更新処理
+  */
 void AnimatorComponent::Update(float deltaTime) {
-	// 無効なアニメーションだった場合は処理しない
-	if (animIndex == -1)return;
+	if (!isPlaying) return;
+	if (attachIndex < 0) return;
 
 	// 現在のアニメーションを取得
-	AnimatorClip* pCurrentAnim = GetAnimation(animIndex);
-	if (pCurrentAnim == nullptr)return;
+	AnimatorClip* anim = pAnimations[currentAnimation];
+	if (!anim) return;
 
-	// アニメーションを進める
-	pCurrentAnim->playAnimTime += pCurrentAnim->playAnimSpeed;
+	// アニメーションの再生時間を進める
+	anim->playAnimTime += deltaTime * anim->playAnimSpeed;
 
-	// 再生時間を超えたら
-	if (pCurrentAnim->playAnimTime > pCurrentAnim->exitAnimTime) {
-		// 再生中フラグをfalseにする
-		isPlaying = false;
-		// 再生時間をリセットする
-		pCurrentAnim->playAnimTime = 0.0f;
+	// 再生終了判定
+	if (anim->playAnimTime >= anim->exitAnimTime) {
 
-		// 再生していたアニメーションがループ再生するかどうか
-		if (pCurrentAnim->isAnimLoop) {
-			isPlaying = true;
+		if (anim->isAnimLoop) {
+			// ループ時は余剰時間を保持
+			anim->playAnimTime =
+				fmod(anim->playAnimTime, anim->exitAnimTime);
 		}
 		else {
-			// 終了後のアニメーションがループ再生するかどうか
-			Play(pCurrentAnim->animTransitionNum);
+			// 非ループ：遷移先があれば再生
+			if (anim->animTransitionNum >= 0) {
+				Play(anim->animTransitionNum);
+			}
+			else {
+				isPlaying = false;
+			}
+			return;
 		}
-
 	}
 
-	// アニメーションを再生
-	MV1SetAttachAnimTime(animModelHandle, attachIndex, pCurrentAnim->playAnimTime);
-
+	// 再生時間をモデルに反映
+	MV1SetAttachAnimTime(
+		animModelHandle,
+		attachIndex,
+		anim->playAnimTime
+	);
 }
 
 
@@ -51,15 +70,11 @@ void AnimatorComponent::Update(float deltaTime) {
  *  @param		transition	// 終了後の番号
  */
 void AnimatorComponent::LoadIndex(bool isLoop, int transition) {
-	if (animModelHandle == -1) {
-		return;
-	}
+	if (animModelHandle < 0)return;
 
 	// モデル内のアニメーション数を取得
 	int animCount = MV1GetAnimNum(animModelHandle);
-	if (animCount <= 0) {
-		return;
-	}
+	if (animCount <= 0)return;
 
 	pAnimations.reserve(animCount);
 
@@ -78,17 +93,17 @@ void AnimatorComponent::LoadIndex(bool isLoop, int transition) {
  *  @param  spped = 1.0f;
  */
 void AnimatorComponent::Play(int index, float speed) {
-	// 現在再生中のアニメーションの場合は処理しない
-	if (index == animIndex)return;
 	// 同じアニメーションなら再生しない
 	if (currentAnimation == index) return;
-	if (attachIndex != -1)
+	// すでにアニメーションがアタッチされていれば海図尾
+	if (attachIndex >= -1)
 		MV1DetachAnim(animModelHandle, attachIndex);
 
 	// 現在のアニメーションに設定する
 	currentAnimation = index;
 	// アニメーションハンドルに登録
 	auto* anim = pAnimations[index];
+
 	// アニメーションの再生時間を初期化
 	anim->playAnimTime = 0.0f;
 	// アニメーションスピードを指定されたスピードに設定
