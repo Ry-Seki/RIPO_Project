@@ -216,6 +216,10 @@ bool Scene::Raycast(const Ray& ray, RaycastHit& hitInfo, const RaycastPredicate&
 			if (!RayIntersect(ray, col->world, d))
 				continue;
 
+			// 交差判定対象かどうか
+			if (!pred(col->origin, d))
+				continue;
+
 			// 最初に当たったコライダーを保存
 			if (d < hitInfo.distance) {
 				hitInfo.collider = col->origin;
