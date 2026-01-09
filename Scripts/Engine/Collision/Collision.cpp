@@ -189,29 +189,26 @@ void SegmentBetweenMinLength(const Segment& a, const Segment& b, Vector3& aMinPo
 
 /*
  *	1つの軸のスラブ判定
- *	@param[in]	float	segStart	軸単位の線分の開始点
- *	@param[in]	float	segEnd		軸単位の線分の終了点
+ *	@param[in]	float	start		軸単位の線の開始点
+ *	@param[in]	float	direction	線の向く方向
  *	@param[in]	float	boxMin		軸単位のAABBの最小点
  *	@param[in]	float	boxMax		軸単位のAABBの最大点
  *	@param[out]	float	segMinRatio 線分の有効区間の開始点
  *	@param[out]	float	segMaxRatio	線分の有効区間の終了点
  *  @return		bool				交差するかどうか
  */
-bool IntersectSlab(float segStart, float segEnd, float boxMin, float boxMax, float& segMinRatio, float& segMaxRatio) {
-	// 方向ベクトル
-	float dir = segEnd - segStart;
-
+bool IntersectSlab(float start, float direction, float boxMin, float boxMax, float& segMinRatio, float& segMaxRatio) {
 	// 限りなく平行に近いなら
-	if (fabs(dir) < EPSILON) {
+	if (fabs(direction) < EPSILON) {
 		// 線分の開始点がその軸上でboxの中になければ交差はしていない
-		return (segStart >= boxMin && segStart <= boxMax);
+		return (start >= boxMin && start <= boxMax);
 	}
 
 	// dirの逆数(除算をできるだけ避けるため)
-	float reciprocalDir = 1.0f / dir;
+	float reciprocalDir = 1.0f / direction;
 	// スラブに到達する地点
-	float enterRatio = (boxMin - segStart) * reciprocalDir;
-	float exitRatio = (boxMax - segStart) * reciprocalDir;
+	float enterRatio = (boxMin - start) * reciprocalDir;
+	float exitRatio = (boxMax - start) * reciprocalDir;
 
 	// enterRatio <= exitRatio にする(方向によっては逆転する可能性があるため)
 	if (enterRatio > exitRatio)
@@ -254,18 +251,18 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB& box, Vector3& se
 		float segMaxRatio = 1.0f;
 
 		// 各軸のスラブ判定
-		// x軸
-		if (!IntersectSlab(segStart.x, segEnd.x, boxMin.x, boxMax.x, segMinRatio, segMaxRatio))
+		// xスラブ
+		if (!IntersectSlab(segStart.x, segDir.x, boxMin.x, boxMax.x, segMinRatio, segMaxRatio))
 			return false;
-		// y軸
-		if (!IntersectSlab(segStart.y, segEnd.y, boxMin.y, boxMax.y, segMinRatio, segMaxRatio))
+		// yスラブ
+		if (!IntersectSlab(segStart.y, segDir.y, boxMin.y, boxMax.y, segMinRatio, segMaxRatio))
 			return false;
-		// z軸
-		if (!IntersectSlab(segStart.z, segEnd.z, boxMin.z, boxMax.z, segMinRatio, segMaxRatio))
+		// zスラブ
+		if (!IntersectSlab(segStart.z, segDir.z, boxMin.z, boxMax.z, segMinRatio, segMaxRatio))
 			return false;
 
 		// 全ての軸で交差しているなら線分とAABBは交差している
-		intersectPoint = segStart + (segEnd - segStart) * segMinRatio;
+		intersectPoint = segStart + segDir * segMinRatio;
 		return true;
 	};
 
@@ -574,10 +571,10 @@ bool Intersect(const AABB& box, const Capsule& capsule, Vector3& penetration) {
 }
 
 /*
- * コライダー同士の交差判定
- * @param[in]  std::variant<AABB, Capsule> a	判定対象1
- * @param[in]  std::variant<AABB, Capsule> b	判定対象2
- * @param[out] Vector3 penetration	貫通ベクトル
+ *  コライダー同士の交差判定
+ *  @param[in]  std::variant<AABB, Capsule> a			判定対象1
+ *  @param[in]  std::variant<AABB, Capsule> b			判定対象2
+ *  @param[out] Vector3						penetration	貫通ベクトル
  */
 bool Intersect(const std::variant<AABB, Capsule>& a, const std::variant<AABB, Capsule>& b, Vector3& penetration) {
 	// 各対象のコライダーを判別し、それに合った交差判定を呼ぶ
@@ -596,5 +593,58 @@ bool Intersect(const std::variant<AABB, Capsule>& a, const std::variant<AABB, Ca
 		else if (auto capsuleB = std::get_if<Capsule>(&b)) {
 			return Intersect(*capsuleA, *capsuleB, penetration);
 		}
+	}
+}
+
+/*
+ *  レイとAABBの交差判定
+ *  @param[in]  Ray		ray			判定対象1
+ *  @param[in]  AABB	box			判定対象2
+ *  @param[out] float	distance	貫通ベクトル
+ */
+bool RayIntersect(const Ray& ray, const AABB& box, float& distance) {
+	float segMinRatio = 0;
+	float segMaxRatio = FLT_MAX;
+
+	// xスラブ
+	if (!IntersectSlab(ray.start.x, ray.direction.x, box.min.x, box.max.x, segMinRatio, segMaxRatio))
+		return false;
+
+	// yスラブ
+	if (!IntersectSlab(ray.start.y, ray.direction.y, box.min.y, box.max.y, segMinRatio, segMaxRatio))
+		return false;
+
+	// zスラブ
+	if (!IntersectSlab(ray.start.z, ray.direction.z, box.min.z, box.max.z, segMinRatio, segMaxRatio))
+		return false;
+
+	// 交点までの距離を保存
+	distance = segMinRatio;
+	return true;
+}
+
+/*
+ *  レイとカプセルの交差判定
+ *  @param[in]	Ray		ray			判定対象1
+ *  @param[in]	Capsule	capsule		判定対象2
+ *	@param[out]	float	distance	貫通ベクトル
+ */
+bool RayIntersect(const Ray& ray, const Capsule& capsule, float& distance) {
+	return false;
+}
+
+/*
+ *  レイとコライダーの交差判定
+ *  @param[in]	Ray							ray			判定対象1
+ *  @param[in]	std::variant<AABB, Capsule>	collider	判定対象2
+ *	@param[out]	float						distance	貫通ベクトル
+ */
+bool RayIntersect(const Ray& ray, const std::variant<AABB, Capsule>& collider, float& distance) {
+	// 各対象のコライダーを判別し、それに合った交差判定を呼ぶ
+	if (auto aabb = std::get_if<AABB>(&collider)) {
+		return RayIntersect(ray, *aabb, distance);
+	}
+	else if (auto capsule = std::get_if<Capsule>(&collider)) {
+		return RayIntersect(ray, *capsule, distance);
 	}
 }

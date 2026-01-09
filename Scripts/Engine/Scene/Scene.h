@@ -10,6 +10,7 @@
 #include <vector>
 #include <memory>
 #include <variant>
+#include <functional>
 
 // 前方宣言
 class Engine;
@@ -26,6 +27,21 @@ public:
     };
     using WorldColliderPtr = std::shared_ptr<WorldCollider>;
     using WorldColliderList = std::vector<WorldColliderPtr>;
+
+    // レイキャストの判定結果
+    struct RaycastHit {
+        ColliderBasePtr collider;   // 最初にレイと交差したコライダー
+        Vector3 point;              // 最初のレイの座標
+        float distance;             // 最初の交点までの距離
+    };
+
+    /*
+     *  レイキャストの交差判定の対象になるかどうか調べる
+     *  @param  collider
+     *  @param  distance
+     *  @return bool
+     */
+    using RaycastPredicate = std::function<bool(const ColliderBasePtr& collider, float distance)>;
 
 protected:
     std::vector<GameObjectPtr> gameObjects;     // ゲームオブジェクト配列
@@ -90,6 +106,16 @@ public:
      *  @author Riku
      */
     std::vector<WorldColliderList> ChangeGameObjectWorldColliders();
+    /*
+     *  レイキャスト
+     *  @param  ray     判定を取るレイ
+     *  @param  hitInfo レイが最初にヒットしたコライダーの情報
+     *  @param  pred    交差判定の条件(述語)
+     *  @return bool    ヒットしたかどうか
+     *  @author Riku
+     */
+    bool Raycast(const Ray& ray, RaycastHit& hitInfo, const RaycastPredicate& pred);
+
 };
 // 別名定義
 using ScenePtr = std::shared_ptr<Scene>;
