@@ -189,7 +189,6 @@
     <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp" />
-    <ClCompile Include="Scripts\Engine\RayCast.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\CalendarSystem.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Calendar\Day.cpp" />
@@ -309,7 +308,6 @@
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuBase.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h" />
-    <ClInclude Include="Scripts\Engine\RayCast.h" />
     <ClInclude Include="Scripts\Engine\Save\SaveDataManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\Calendar\CalendarSystem.h" />

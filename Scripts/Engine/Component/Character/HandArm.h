@@ -16,7 +16,7 @@ class HandArm : public ArmActionComponent {
 private:
 	GameObject* liftObject;			// 運ぶオブジェクト
 
-	const float LEFTABLE_DISTANCE;
+	const float LEFTABLE_DISTANCE;	// 運べる距離
 
 public:
 	HandArm();

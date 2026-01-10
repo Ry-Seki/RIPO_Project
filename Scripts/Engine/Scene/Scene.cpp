@@ -195,3 +195,45 @@ std::vector<Scene::WorldColliderList> Scene::ChangeGameObjectWorldColliders() {
 	}
 	return colliders;
 }
+/*
+ *  レイキャスト
+ *  @param  ray     判定を取るレイ
+ *  @param  hitInfo レイが最初にヒットしたコライダーの情報
+ *  @param  pred    交差判定の条件(述語)
+ *  @return bool    ヒットしたかどうか
+ *  @author Riku
+ */
+bool Scene::Raycast(const Ray& ray, RaycastHit& hitInfo, const RaycastPredicate& pred) {
+	hitInfo.collider = nullptr;
+	hitInfo.distance = FLT_MAX;
+	// 全てのワールド座標系コライダー
+	std::vector<WorldColliderList> colliders = ChangeGameObjectWorldColliders();
+
+	for (const auto& colList : colliders) {
+		for (const auto& col : colList) {
+			// レイとの交差判定
+			float d;
+			if (!RayIntersect(ray, col->world, d))
+				continue;
+
+			// 交差判定対象かどうか
+			if (!pred(col->origin, d))
+				continue;
+
+			// 最初に当たったコライダーを保存
+			if (d < hitInfo.distance) {
+				hitInfo.collider = col->origin;
+				hitInfo.distance = d;
+			}
+		}
+	}
+
+	// 交差するコライダーがある場合
+	if (hitInfo.collider) {
+		// 交差の座標を計算
+		hitInfo.point = ray.start + ray.direction * hitInfo.distance;
+		return true;
+	}
+	
+	return false;
+}

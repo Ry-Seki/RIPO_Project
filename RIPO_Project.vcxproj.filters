@@ -351,9 +351,6 @@
     <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\RayCast.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Audio\SE\SEManager.cpp">
       <Filter>ソース ファイル\Engine\Audio</Filter>
     </ClCompile>
@@ -647,9 +644,6 @@
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h">
       <Filter>ヘッダー ファイル\Engine\Character</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\RayCast.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Audio\AudioSource.h">
       <Filter>ヘッダー ファイル\Engine\Audio</Filter>
     </ClInclude>
@@ -898,12 +892,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyTurn.h">
       <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\BossState.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\BossAttack.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
