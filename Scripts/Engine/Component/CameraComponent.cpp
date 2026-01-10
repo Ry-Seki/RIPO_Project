@@ -6,14 +6,15 @@
 #include "CameraComponent.h"
 #include "../Manager/CameraManager.h"
 #include "../GameConst.h"
+#include "Character/ArmActionComponent.h"
 #include "DxLib.h"
 #include <algorithm>
 
 CameraComponent::CameraComponent()
 	: mousePosition(Vector3::zero)
 	, mouseMoveValue(Vector3::zero)
-	, sensitivity(0.005f) 
-	
+	, sensitivity(0.005f)
+
 	, CAMERA_ROTATION_MAX_X(1.5f)
 	, CAMERA_ROTATION_MIN_X(-1.5f)
 	, PLAYER_HEAD_HEIGHT(310)
@@ -33,25 +34,30 @@ void CameraComponent::Update(float deltaTime) {
 	// 画面中央
 	int windowWidthCenter = GameConst::WINDOW_WIDTH / 2;
 	int windowHeightCenter = GameConst::WINDOW_HEIGHT / 2;
+
 	// 移動量計算
 	mouseMoveValue.x = mousePosition.x - windowWidthCenter;
 	mouseMoveValue.y = mousePosition.y - windowHeightCenter;
 	// 感度を加える
 	mouseMoveValue *= sensitivity;
-	// 移動量を角度に変換
-	Vector3 moveRotation = { mouseMoveValue.y, mouseMoveValue.x, 0 };
-	// カメラの角度に移動量を加える
-	camera->rotation += moveRotation;
-	// x軸の角度は制限を掛ける
-	camera->rotation.x = std::clamp(camera->rotation.x, CAMERA_ROTATION_MIN_X, CAMERA_ROTATION_MAX_X);
-	// カメラの位置をプレイヤーの頭の位置に合わせる
-	if (player) {
-		Vector3 playerHeadPos = player->position;
-		playerHeadPos.y += PLAYER_HEAD_HEIGHT;
-		camera->position = playerHeadPos;
+	auto handArm = player->GetComponent<ArmActionComponent>();
+	if (handArm->GetLiftObject()) {
+		
 	}
-
-
+	else {
+		// 移動量を角度に変換
+		Vector3 moveRotation = { mouseMoveValue.y, mouseMoveValue.x, 0 };
+		// カメラの角度に移動量を加える
+		camera->rotation += moveRotation;
+		// x軸の角度は制限を掛ける
+		camera->rotation.x = std::clamp(camera->rotation.x, CAMERA_ROTATION_MIN_X, CAMERA_ROTATION_MAX_X);
+		// カメラの位置をプレイヤーの頭の位置に合わせる
+		if (player) {
+			Vector3 playerHeadPos = player->position;
+			playerHeadPos.y += PLAYER_HEAD_HEIGHT;
+			camera->position = playerHeadPos;
+		}
+	}
 
 #if _DEBUG
 	// デバッグ用移動
