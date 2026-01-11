@@ -14,6 +14,7 @@ CameraComponent::CameraComponent()
 	: mousePosition(Vector3::zero)
 	, mouseMoveValue(Vector3::zero)
 	, sensitivity(0.005f)
+	, playerDistancePos(500)
 
 	, CAMERA_ROTATION_MAX_X(1.5f)
 	, CAMERA_ROTATION_MIN_X(-1.5f)
@@ -23,6 +24,7 @@ CameraComponent::CameraComponent()
 void CameraComponent::Update(float deltaTime) {
 	GameObject* camera = GetOwner();
 	GameObjectPtr player = CameraManager::GetInstance().GetTarget();
+	if (!player) return;
 
 	// マウスの位置を取得
 	int mouseX = 0, mouseY = 0;
@@ -42,7 +44,12 @@ void CameraComponent::Update(float deltaTime) {
 	mouseMoveValue *= sensitivity;
 	auto handArm = player->GetComponent<ArmActionComponent>();
 	if (handArm->GetLiftObject()) {
-		
+		// カメラの位置をプレイヤーの背後に配置
+		camera->position = player->position - ForwardDir(camera->rotation) * playerDistancePos;
+		// 移動量を加算
+		camera->position += mouseMoveValue * 10;
+		// 常にプレイヤーの方を向く
+		camera->rotation = Direction(camera->rotation, player->rotation);
 	}
 	else {
 		// 移動量を角度に変換
@@ -52,11 +59,9 @@ void CameraComponent::Update(float deltaTime) {
 		// x軸の角度は制限を掛ける
 		camera->rotation.x = std::clamp(camera->rotation.x, CAMERA_ROTATION_MIN_X, CAMERA_ROTATION_MAX_X);
 		// カメラの位置をプレイヤーの頭の位置に合わせる
-		if (player) {
-			Vector3 playerHeadPos = player->position;
-			playerHeadPos.y += PLAYER_HEAD_HEIGHT;
-			camera->position = playerHeadPos;
-		}
+		Vector3 playerHeadPos = player->position;
+		playerHeadPos.y += PLAYER_HEAD_HEIGHT;
+		camera->position = playerHeadPos;
 	}
 
 #if _DEBUG
