@@ -16,6 +16,7 @@ BossComponent::BossComponent()
 
 BossComponent::BossComponent(BossState* initState)
 	: boss(nullptr)
+	//, modelRenderer(nullptr)
 	, animator(nullptr)
 	, state(initState)
 	, animationHandle(-1)
@@ -55,6 +56,13 @@ void BossComponent::Update(float deltaTime)
 {
 	if (state == nullptr || boss == nullptr) return;
 	state->Update(boss, deltaTime);
-	
+
+	// モデルハンドルのセット
+	auto modelRenderer = boss->GetComponent<ModelRenderer>()->GetModelHandle();
+	if (modelRenderer == -1) return;
+	animator->SetModelHandle(modelRenderer);
+
+	animator->Update(deltaTime);
 	animator->Play(5);
+	//MV1DrawModel(modelHandle);
 }

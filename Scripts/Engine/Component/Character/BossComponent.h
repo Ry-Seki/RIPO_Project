@@ -8,10 +8,12 @@
 #include "CharacterBase.h"
 #include "BossState.h"
 #include "../AnimatorComponent.h"
+#include "../ModelRenderer.h"
 
 class BossComponent : public CharacterBase {
 private:
 	GameObject* boss;
+	//GameObject* modelRenderer;
 	std::shared_ptr<AnimatorComponent> animator;
 	BossState* state;
 	int animationHandle;

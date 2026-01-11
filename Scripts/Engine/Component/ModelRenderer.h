@@ -45,6 +45,11 @@ public:
      *  param[in]   const int setHandle   モデルハンドル
      */
     void SetModelHandle(const int setHandle) { modelHandle = MV1DuplicateModel(setHandle); }
+
+    /*
+     *  モデルハンドルの取得
+     */
+    inline int GetModelHandle() const { return modelHandle; }
 };
 #endif // !_MODELRENDERER_H_
 
