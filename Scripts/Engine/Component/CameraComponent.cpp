@@ -15,6 +15,8 @@ CameraComponent::CameraComponent()
 	, mouseMoveValue(Vector3::zero)
 	, sensitivity(0.005f)
 	, playerDistancePos(500)
+	, yaw(0.0f)
+	, pitch(0.0f)
 
 	, CAMERA_ROTATION_MAX_X(1.5f)
 	, CAMERA_ROTATION_MIN_X(-1.5f)
@@ -44,12 +46,25 @@ void CameraComponent::Update(float deltaTime) {
 	mouseMoveValue *= sensitivity;
 	auto handArm = player->GetComponent<ArmActionComponent>();
 	if (handArm->GetLiftObject()) {
+		// カメラのターゲット位置
+		Vector3 targetPos = player->position;
+		targetPos.y += PLAYER_HEAD_HEIGHT;
 		// カメラの位置をプレイヤーの背後に配置
-		camera->position = player->position - ForwardDir(camera->rotation) * playerDistancePos;
-		// 移動量を加算
-		camera->position += mouseMoveValue * 10;
+		camera->position = targetPos - ForwardDir(camera->rotation) * playerDistancePos;
+		// カメラの右方向に移動
+		Vector3 right = { cosf(camera->rotation.y), 0.0f, -sinf(camera->rotation.y) };
+		right = right.Normalized();
+		camera->position -= right * mouseMoveValue.x * 20;
+		// カメラの制限付き上下移動
+		float cameraPosY = camera->position.y;
+		cameraPosY += mouseMoveValue.y * 20;
+		cameraPosY = Clamp(cameraPosY, targetPos.y - 300, targetPos.y + 300);
+		camera->position.y = cameraPosY;
 		// 常にプレイヤーの方を向く
-		camera->rotation = Direction(camera->rotation, player->rotation);
+		Vector3 dir = Direction(camera->position, targetPos);
+		camera->rotation.x = -atan2f(dir.y, sqrtf(dir.x * dir.x + dir.z * dir.z));;
+		camera->rotation.y = atan2f(dir.x, dir.z);
+		camera->rotation.z = 0;
 	}
 	else {
 		// 移動量を角度に変換

@@ -184,6 +184,20 @@ struct Vector3 {
 	static Vector3 ForwardDir(const Vector3& rotation);
 
 	/*
+	 *	右方向のベクトル
+	 *  @param[in]	rotation	回転
+	 *  @return Vector3
+	 */
+	static Vector3 RightDir(const Vector3& rotation);
+
+	/*
+	 *	上方向のベクトル
+	 *  @param[in]	rotation	回転
+	 *  @return Vector3
+	 */
+	static Vector3 UpDir(const Vector3& rotation);
+
+	/*
 	 *	各成分を指定範囲内に制限する
 	 *	@param[in]  v1   対象のベクトル
 	 *	@param[in]  min  下限値ベクトル
@@ -306,6 +320,20 @@ Vector3 Offset(const Vector3& v1, const Vector3& v2);
  *  @return Vector3
  */
 Vector3 ForwardDir(const Vector3& rotation);
+
+/*
+ *	右方向のベクトル
+ *  @param[in]	rotation	回転
+ *  @return Vector3
+ */
+Vector3 RightDir(const Vector3& rotation);
+
+/*
+ *	上方向のベクトル
+ *  @param[in]	rotation	回転
+ *  @return Vector3
+ */
+Vector3 UpDir(const Vector3& rotation);
 
 /*
  *	各成分を指定範囲内に制限する
