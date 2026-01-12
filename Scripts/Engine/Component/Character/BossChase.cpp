@@ -1,14 +1,14 @@
 /*
- *	@file	BossStandby.h
- *	@author	kuu
+ *	@file	BossChase.cpp
+ *  @author	kuu
  */
-#include "BossStandby.h"
+#include "BossChase.h"
 #include "../ModelRenderer.h"
 
 /*
  *	コンストラクタ
  */
-BossStandby::BossStandby()
+BossChase::BossChase()
 	: animator(nullptr)
 	, modelHandle(-1)
 {
@@ -18,7 +18,7 @@ BossStandby::BossStandby()
  *	更新処理の前に呼び出す処理
  *  param[in]	BossComponent&	boss
  */
-void BossStandby::Start(GameObject* boss)
+void BossChase::Start(GameObject* boss)
 {
 	animator = boss->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
@@ -29,7 +29,7 @@ void BossStandby::Start(GameObject* boss)
  *  param[in]	GameObject*	boss
  *  param[in]	float		deltaTime
  */
-void BossStandby::Update(GameObject* boss, float deltaTime)
+void BossChase::Update(GameObject* boss, float deltaTime)
 {
 	// モデルハンドルのセット
 	auto modelRenderer = boss->GetComponent<ModelRenderer>()->GetModelHandle();
@@ -37,5 +37,5 @@ void BossStandby::Update(GameObject* boss, float deltaTime)
 	animator->SetModelHandle(modelRenderer);
 
 	animator->Update(deltaTime);
-	animator->Play(7, 10);
+	animator->Play(2, 10);
 }

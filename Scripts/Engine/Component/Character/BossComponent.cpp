@@ -31,7 +31,6 @@ BossComponent::~BossComponent()
 
 void BossComponent::Start()
 {
-	animationHandle = MV1LoadModel("Res/Model/Enemy/Boss/BossAnimation.mv1");
 	// モデルハンドルの読み込み
 	modelHandle = MV1LoadModel("Res/Model/Enemy/Boss/Boss.mv1");
 	boss = GetOwner();
@@ -46,7 +45,7 @@ void BossComponent::Start()
 
 	if (state == nullptr)
 		state = new BossStandby();
-	state->Start(*this);
+	state->Start(boss);
 }
 
 /*
@@ -57,12 +56,4 @@ void BossComponent::Update(float deltaTime)
 	if (state == nullptr || boss == nullptr) return;
 	state->Update(boss, deltaTime);
 
-	// モデルハンドルのセット
-	auto modelRenderer = boss->GetComponent<ModelRenderer>()->GetModelHandle();
-	if (modelRenderer == -1) return;
-	animator->SetModelHandle(modelRenderer);
-
-	animator->Update(deltaTime);
-	animator->Play(5);
-	//MV1DrawModel(modelHandle);
 }

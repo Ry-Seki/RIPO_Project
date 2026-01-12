@@ -18,7 +18,7 @@ public:
 	BossState() = default;
 	virtual ~BossState() = default;
 
-	virtual void Start(BossComponent& boss) {};
+	virtual void Start(GameObject* boss) {};
 	virtual void Update(GameObject* boss, float deltaTime) = 0;
 	virtual void Execute(BossComponent& boss) {};
 };

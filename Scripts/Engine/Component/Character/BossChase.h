@@ -1,17 +1,17 @@
 /*
- *	@file	BossStandby
+ *	@file	BossChase
  *	@author	kuu
  */
-#ifndef _BOSSSTANDBY_H_
-#define _BOSSSTANDBY_H_
+#ifndef _BOSSCHASE_H_
+#define	_BOSSCHASE_H_
 
 #include "BossState.h"
 #include "../AnimatorComponent.h"
 
-/*
- *	待機状態処理
- */
-class BossStandby : public BossState {
+ /*
+  *	追跡状態処理
+  */
+class BossChase : public BossState {
 private:
 	std::shared_ptr<AnimatorComponent> animator;
 	int modelHandle;
@@ -20,8 +20,8 @@ public:
 	/*
 	 *	コンストラクタ
 	 */
-	BossStandby();
-	~BossStandby() = default;
+	BossChase();
+	~BossChase() = default;
 
 public:
 	/*
@@ -38,4 +38,5 @@ public:
 	virtual void Update(GameObject* boss, float deltaTime) override;
 
 };
-#endif // !_BOSSSTANDBY_H_
+
+#endif // !_BOSSCHASE_H_
