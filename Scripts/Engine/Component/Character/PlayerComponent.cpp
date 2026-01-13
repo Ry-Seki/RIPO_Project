@@ -21,6 +21,8 @@ PlayerComponent::PlayerComponent()
 	, canAvoid(true)
 	, isAvoid(false)
 	, hasResolvedInitialGrounding(false)
+	, animator(nullptr)
+
 	, PLAYER_MODEL_ANGLE_CORRECTION(89.98f)
 	, DEFAULT_MOVE_SPEED(1500.0f)
 	, ACCELERATION_RATE(800.0f)
@@ -31,7 +33,12 @@ PlayerComponent::PlayerComponent()
 }
 
 void PlayerComponent::Start() {
-
+	GameObject* player = GetOwner();
+	animator = player->GetComponent<AnimatorComponent>();
+	int modelHandle = player->GetComponent<ModelRenderer>()->GetModelHandle();
+	// モデルハンドルのセット
+	animator->SetModelHandle(modelHandle);
+	animator->LoadIndex(true);
 }
 
 void PlayerComponent::Update(float deltaTime) {
