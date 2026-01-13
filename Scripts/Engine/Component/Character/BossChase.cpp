@@ -38,4 +38,5 @@ void BossChase::Update(GameObject* boss, float deltaTime)
 
 	animator->Update(deltaTime);
 	animator->Play(2, 10);
+	// ˆê’UŽ‹ŠE‚©‚çŠO‚ê‚½Žž‚Ì‘JˆÚˆ—‚ð‘‚¢‚ÄŠm‚©‚ß‚Ä‚Ý‚é
 }

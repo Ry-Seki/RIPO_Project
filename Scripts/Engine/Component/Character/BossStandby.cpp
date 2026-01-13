@@ -7,6 +7,7 @@
 #include "../../Vision.h"
 #include "BossComponent.h"
 #include "../../Manager/CameraManager.h"
+#include "BossChase.h"
 
 /*
  *	コンストラクタ
@@ -45,8 +46,8 @@ void BossStandby::Update(GameObject* boss, float deltaTime)
 	auto bossComponent = boss->GetComponent<BossComponent>();
 
 	animator->Play(7, 10);
-	// 視界判定
+	// 状態遷移
 	if (Vision(bossComponent->GetBossPosition(), bossComponent->GetBossRotation(), player->position, 30, 4000)) {
-		//boss->GetComponent<BossComponent>()-> EnemyChase.cppを見よ
+		boss->GetComponent<BossComponent>()->SetState(new BossChase());
 	}
 }

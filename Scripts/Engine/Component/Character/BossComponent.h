@@ -62,6 +62,17 @@ public:
 		boss->rotation = setValue;
 	}
 
+	/*
+	 *	ó‘Ô‚Ì•ÏX
+	 *  param[in]	BossState*	setValue	ŽŸ‚Ìó‘Ô
+	 */
+	inline void SetState(BossState* setValue) {
+		if (state) {
+			state->Execute(*this);
+		}
+		state = setValue;
+		state->Start(boss);
+	}
 };
 
 #endif // !_BOSSCOMPONENT_H_
