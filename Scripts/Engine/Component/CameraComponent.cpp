@@ -15,11 +15,9 @@ CameraComponent::CameraComponent()
 	, mouseMoveValue(Vector3::zero)
 	, sensitivity(0.005f)
 	, playerDistancePos(500)
-	, yaw(0.0f)
-	, pitch(0.0f)
 
-	, CAMERA_ROTATION_MAX_X(1.5f)
-	, CAMERA_ROTATION_MIN_X(-1.5f)
+	, CAMERA_ROTATION_X_MAX(1.5f)
+	, CAMERA_ROTATION_X_MIN(-1.5f)
 	, PLAYER_HEAD_HEIGHT(310)
 {}
 
@@ -45,37 +43,21 @@ void CameraComponent::Update(float deltaTime) {
 	// 感度を加える
 	mouseMoveValue *= sensitivity;
 	auto handArm = player->GetComponent<ArmActionComponent>();
+	// 移動量を角度に変換
+	Vector3 moveRotation = { mouseMoveValue.y, mouseMoveValue.x, 0 };
+	// カメラの角度に移動量を加える
+	camera->rotation += moveRotation;
+	// x軸の角度は制限を掛ける
+	camera->rotation.x = Clamp(camera->rotation.x, CAMERA_ROTATION_X_MIN, CAMERA_ROTATION_X_MAX);
+	// カメラの位置調整
+	Vector3 playerHeadPos = player->position;
+	playerHeadPos.y += PLAYER_HEAD_HEIGHT;
 	if (handArm->GetLiftObject()) {
-		// カメラのターゲット位置
-		Vector3 targetPos = player->position;
-		targetPos.y += PLAYER_HEAD_HEIGHT;
-		// カメラの位置をプレイヤーの背後に配置
-		camera->position = targetPos - ForwardDir(camera->rotation) * playerDistancePos;
-		// カメラの右方向に移動
-		Vector3 right = { cosf(camera->rotation.y), 0.0f, -sinf(camera->rotation.y) };
-		right = right.Normalized();
-		camera->position -= right * mouseMoveValue.x * 20;
-		// カメラの制限付き上下移動
-		float cameraPosY = camera->position.y;
-		cameraPosY += mouseMoveValue.y * 20;
-		cameraPosY = Clamp(cameraPosY, targetPos.y - 300, targetPos.y + 300);
-		camera->position.y = cameraPosY;
-		// 常にプレイヤーの方を向く
-		Vector3 dir = Direction(camera->position, targetPos);
-		camera->rotation.x = -atan2f(dir.y, sqrtf(dir.x * dir.x + dir.z * dir.z));;
-		camera->rotation.y = atan2f(dir.x, dir.z);
-		camera->rotation.z = 0;
+		// 物を持っていたらプレイヤーの背後
+		camera->position = playerHeadPos - ForwardDir(camera->rotation) * playerDistancePos;
 	}
 	else {
-		// 移動量を角度に変換
-		Vector3 moveRotation = { mouseMoveValue.y, mouseMoveValue.x, 0 };
-		// カメラの角度に移動量を加える
-		camera->rotation += moveRotation;
-		// x軸の角度は制限を掛ける
-		camera->rotation.x = std::clamp(camera->rotation.x, CAMERA_ROTATION_MIN_X, CAMERA_ROTATION_MAX_X);
-		// カメラの位置をプレイヤーの頭の位置に合わせる
-		Vector3 playerHeadPos = player->position;
-		playerHeadPos.y += PLAYER_HEAD_HEIGHT;
+		// 持っていなかったら頭の位置
 		camera->position = playerHeadPos;
 	}
 
