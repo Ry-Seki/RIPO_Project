@@ -59,6 +59,9 @@ public:
 			else if (key.rfind("EnemyData") != std::string::npos) {
 				enemyResource.push_back(load.LoadResource<LoadModel>(path));
 			}
+			else if (key.find("Boss") != std::string::npos) {
+				bossResource = load.LoadResource<LoadModel>(path);
+			}
 		}
 		// TreasureData
 		auto treasureMap = stageData.GetCategory("Treasure");

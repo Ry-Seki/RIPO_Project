@@ -11,7 +11,8 @@
  *	コンストラクタ
  */
 EnemyChase::EnemyChase()
-	: wayPoint(0.0f, 0.0f, 0.0f)
+	: player(nullptr)
+	, wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(1000.0f)
 	, closePlayer(false)
@@ -127,7 +128,7 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 		}
 	}
 	// 目標地点についたらターゲットを変える
-	else if (distance < differenceTarget) {
+	if (distance < differenceTarget) {
 		enemy->GetComponent<EnemyComponent>()->SetChaseTargetChangeFrag(targetChange);
 		enemy->GetComponent<EnemyComponent>()->SetState(new EnemyTurn());
 	}

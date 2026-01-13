@@ -10,6 +10,7 @@
 #include "../Singleton.h"
 #include "../Component/Character/PlayerComponent.h"
 #include "../Component/Character/EnemyComponent.h"
+#include "../Component/Character/BossComponent.h"
 
 
  /*
@@ -95,6 +96,26 @@ public:
 		const Vector3& capsuleStart,
 		const Vector3& capsuleEnd,
 		const float& capsuleRadius);
+
+	/*
+	 *	ボス生成
+	 *	@param	name		ボスの名前
+	 *	@param	position	生成位置
+	 *  @param	rotation	生成角度
+	 *  @param	AABBMin		AABBの各軸に置ける最小値
+	 *  @param	AABBMax		AABBの各軸に置ける最大値
+	 *  @author	kuu
+	 */
+	GameObjectPtr GenerateBoss(
+		const std::string& name,
+		const Vector3& position,
+		const Vector3& rotation,
+		const Vector3& AABBMin,
+		const Vector3& AABBMax,
+		const Vector3& capsuleStart,
+		const Vector3& capsuleEnd,
+		const float& capsuleRadius);
+
 	/*
 	 *	ID指定のキャラクター削除処理
 	 */

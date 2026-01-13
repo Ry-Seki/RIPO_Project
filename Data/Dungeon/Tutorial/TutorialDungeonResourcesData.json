@@ -8,7 +8,7 @@
   "Character": {
     "PlayerData": "Res/Model/Player/RIPO_Model.mv1",
     "EnemyData": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1",
-    "BossData": ""
+    "BossData": "Res/Model/Enemy/Boss/Boss.mv1"
   },
   "Treasure": {
     "0": "Res/Model/Treasure/Treasure01.mv1",

@@ -56,6 +56,27 @@ namespace CharacterUtility {
 		const float& capsuleRadius) {
 		CharacterManager::GetInstance().GenerateEnemy(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	}
+
+	/*
+	 *	ボス生成
+	 *	@param	name		ボスの名前
+	 *	@param	position	生成位置
+	 *  @param	rotation	生成角度
+	 *  @param	AABBMin		AABBの各軸に置ける最小値
+	 *  @param	AABBMax		AABBの各軸に置ける最大値
+	 *  @author	kuu
+	 */
+	inline void GenerateBoss(
+		const std::string& name,
+		const Vector3& position,
+		const Vector3& rotation,
+		const Vector3& AABBMin,
+		const Vector3& AABBMax,
+		const Vector3& capsuleStart,
+		const Vector3& capsuleEnd,
+		const float& capsuleRadius) {
+		CharacterManager::GetInstance().GenerateBoss(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
+	}
 	/*
 	 *	ID指定のキャラクター削除
 	 *  @param[in]	int characterID

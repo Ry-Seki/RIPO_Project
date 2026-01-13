@@ -158,7 +158,10 @@
     <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\CapsuleCollider.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\ArmActionComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\BossAttack.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\BossChase.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BossComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\BossStandby.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BulletComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyAttack.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyChase.cpp" />
@@ -255,10 +258,15 @@
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\CapsuleCollider.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BossAttack.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BossChase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BossStandby.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BossState.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BulletComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterUtility.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyAttack.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyChase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyState.h" />
