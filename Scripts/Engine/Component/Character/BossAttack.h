@@ -25,7 +25,7 @@ public:
 	 *	更新処理の前に呼び出す処理
 	 *  param[in]	BossComponent&	boss
 	 */
-	virtual void Start(BossComponent& boss) override;
+	virtual void Start(GameObject* boss) override;
 
 	/*
 	 *	更新処理
