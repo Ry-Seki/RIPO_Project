@@ -6,6 +6,7 @@
 #define _PLAYERCOMPONENT_H_
 
 #include "CharacterBase.h"
+#include "../AnimatorComponent.h"
 #include "../../Engine.h"
 
 class PlayerComponent : public CharacterBase {
@@ -19,6 +20,7 @@ private:
 	bool canAvoid;			// 回避可能か否か
 	bool isAvoid;			// 回避中か否か
 	bool hasResolvedInitialGrounding;	// 初期接地処理を行ったかどうか
+	std::shared_ptr<AnimatorComponent> animator;
 
 	const float PLAYER_MODEL_ANGLE_CORRECTION;	// プレイヤーのモデル角度を補正する値
 	const float DEFAULT_MOVE_SPEED;				// デフォルトの移動速度
@@ -33,6 +35,7 @@ public:
 	~PlayerComponent() = default;
 
 public:
+	void Start() override;
 	void Update(float deltaTime) override;
 
 private:

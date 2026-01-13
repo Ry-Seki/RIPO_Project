@@ -30,6 +30,10 @@ PlayerComponent::PlayerComponent()
 	, AVOID_COOL_TIME_MAX(1.0f) {
 }
 
+void PlayerComponent::Start() {
+
+}
+
 void PlayerComponent::Update(float deltaTime) {
 	GameObject* player = GetOwner();
 
