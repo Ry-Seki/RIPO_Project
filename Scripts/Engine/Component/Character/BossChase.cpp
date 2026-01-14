@@ -8,6 +8,7 @@
 #include "../../Vision.h"
 #include "../../Manager/CameraManager.h"
 #include "BossStandby.h"
+#include "BossAttack.h"
 
 /*
  *	ƒRƒ“ƒXƒgƒ‰ƒNƒ^
@@ -45,7 +46,7 @@ void BossChase::Update(GameObject* boss, float deltaTime)
 	animator->SetModelHandle(modelRenderer);
 
 	animator->Update(deltaTime);
-	animator->Play(1, 10);
+	animator->Play(11, 10);
 
 	auto bossComponent = boss->GetComponent<BossComponent>();
 	// ó‘Ô‘JˆÚ
@@ -53,5 +54,8 @@ void BossChase::Update(GameObject* boss, float deltaTime)
 		// ˆê’UŽ~‚Ü‚Á‚Ä‚à‚ç‚¤
 		boss->GetComponent<BossComponent>()->SetState(new BossStandby());
 	}
-	//if (PLAYER_DISTANCE > player->position)
+	// ŽË’ö‹——£”»’è
+	if (PLAYER_DISTANCE > Distance(player->position, boss->position)) {
+		boss->GetComponent<BossComponent>()->SetState(new BossAttack());
+	}
 }

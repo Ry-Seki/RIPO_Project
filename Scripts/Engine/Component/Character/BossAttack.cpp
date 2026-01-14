@@ -20,6 +20,8 @@ BossAttack::BossAttack()
  */
 void BossAttack::Start(GameObject* boss)
 {
+	animator = boss->GetComponent<AnimatorComponent>();
+	if (animator == nullptr) return;
 }
 
 /*
