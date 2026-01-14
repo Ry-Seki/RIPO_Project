@@ -176,14 +176,8 @@ std::vector<Scene::WorldColliderList> Scene::ChangeGameObjectWorldColliders() {
 			else if (auto capsule = std::dynamic_pointer_cast<CapsuleCollider>(obj->colliders[i])) {
 				// オリジナルのコライダーをコピー
 				worldList[i]->origin = capsule;
-				// ワールド座標に変換
+				// ワールド座標に変換(スケール適応はなし)
 				Capsule originCapsule = capsule->capsule;
-				// スケール適応
-				originCapsule.segment.startPoint = Vector3::Scale(originCapsule.segment.startPoint, obj->scale);
-				originCapsule.segment.endPoint = Vector3::Scale(originCapsule.segment.endPoint, obj->scale);
-				// カプセルの半径はy軸を参照せず、xz軸の平均を参照する
-				originCapsule.radius *= (obj->scale.x + obj->scale.z) * 0.5f;
-				// ポジション適応
 				originCapsule.segment.startPoint += obj->position;
 				originCapsule.segment.endPoint += obj->position;
 				// ワールド座標保存

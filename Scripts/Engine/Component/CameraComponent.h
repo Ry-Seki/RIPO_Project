@@ -15,10 +15,11 @@ private:
 	Vector3 mousePosition;			// マウスの位置
 	Vector3 mouseMoveValue;			// マウスの移動量
 	float sensitivity;				// 感度
+	float playerDistancePos;		// プレイヤーから離れる距離
 
-	const float CAMERA_ROTATION_MAX_X;	// カメラの角度のxの最大
-	const float CAMERA_ROTATION_MIN_X;	// カメラの角度のxの最小
-	const float PLAYER_HEAD_HEIGHT;		// プレイヤーの頭の高さ
+	const float CAMERA_ROTATION_X_MAX;		// カメラの角度のxの最大
+	const float CAMERA_ROTATION_X_MIN;		// カメラの角度のxの最小
+	const float PLAYER_HEAD_HEIGHT;			// プレイヤーの頭の高さ
 
 public:
 	CameraComponent();
