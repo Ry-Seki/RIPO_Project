@@ -229,6 +229,16 @@ std::vector<Vector3> StageManager::GetEnemySpwanPos(std::vector<int>& id) const 
 }
 
 /*
+ * ボスの生成位置の取得
+ * @author	kuu
+ */
+std::vector<Vector3> StageManager::GetBossSpwanPos(std::vector<int>& id) const
+{
+	//　のちに実装
+	return std::vector<Vector3>();
+}
+
+/*
  * お宝の生成位置の取得
  */
 std::vector<Vector3> StageManager::GetTreasureSpwanPos()const {

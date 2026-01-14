@@ -149,6 +149,12 @@ public:
 	std::vector<Vector3> GetEnemySpwanPos(std::vector<int>& id)const;
 
 	/*
+	 *　ボスの初期生成位置の取得
+	 *  author	kuu
+	 */
+	std::vector<Vector3> GetBossSpwanPos(std::vector<int>& id)const;
+
+	/*
 	 * お宝の生成位置の取得
 	 */
 	std::vector<Vector3> GetTreasureSpwanPos()const;

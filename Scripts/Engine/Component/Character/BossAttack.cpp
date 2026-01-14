@@ -3,11 +3,14 @@
  *	@author	kuu
  */
 #include "BossAttack.h"
+#include "../ModelRenderer.h"
 
  /*
   *	コンストラクタ
   */
 BossAttack::BossAttack()
+	: animator(nullptr)
+	, modelHandle(-1)
 {
 }
 
@@ -26,4 +29,11 @@ void BossAttack::Start(GameObject* boss)
  */
 void BossAttack::Update(GameObject* boss, float deltaTime)
 {
+	// モデルハンドルのセット
+	auto modelRenderer = boss->GetComponent<ModelRenderer>()->GetModelHandle();
+	if (modelRenderer == -1) return;
+	animator->SetModelHandle(modelRenderer);
+
+	animator->Update(deltaTime);
+	animator->Play(4, 10);
 }

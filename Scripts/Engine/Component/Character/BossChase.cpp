@@ -4,13 +4,19 @@
  */
 #include "BossChase.h"
 #include "../ModelRenderer.h"
+#include "BossComponent.h"
+#include "../../Vision.h"
+#include "../../Manager/CameraManager.h"
+#include "BossStandby.h"
 
 /*
  *	ƒRƒ“ƒXƒgƒ‰ƒNƒ^
  */
 BossChase::BossChase()
-	: animator(nullptr)
+	: player(nullptr)
+	, animator(nullptr)
 	, modelHandle(-1)
+	, PLAYER_DISTANCE(1000.0)
 {
 }
 
@@ -20,6 +26,8 @@ BossChase::BossChase()
  */
 void BossChase::Start(GameObject* boss)
 {
+	player = CameraManager::GetInstance().GetTarget();
+	if (player == nullptr) return;
 	animator = boss->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
 }
@@ -37,6 +45,13 @@ void BossChase::Update(GameObject* boss, float deltaTime)
 	animator->SetModelHandle(modelRenderer);
 
 	animator->Update(deltaTime);
-	animator->Play(2, 10);
-	// ˆê’UŽ‹ŠE‚©‚çŠO‚ê‚½Žž‚Ì‘JˆÚˆ—‚ð‘‚¢‚ÄŠm‚©‚ß‚Ä‚Ý‚é
+	animator->Play(1, 10);
+
+	auto bossComponent = boss->GetComponent<BossComponent>();
+	// ó‘Ô‘JˆÚ
+	if (!Vision(bossComponent->GetBossPosition(), bossComponent->GetBossRotation(), player->position, 30, 4000)) {
+		// ˆê’UŽ~‚Ü‚Á‚Ä‚à‚ç‚¤
+		boss->GetComponent<BossComponent>()->SetState(new BossStandby());
+	}
+	//if (PLAYER_DISTANCE > player->position)
 }
