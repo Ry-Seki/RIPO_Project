@@ -29,6 +29,8 @@ private:
 	const float AVOID_ACCELERATION_MAX;			// 回避の最大加速度
 	const float AVOID_MOVE_VALUE_MAX;			// 回避の最大移動距離
 	const float AVOID_COOL_TIME_MAX;			// 回避のクールタイムの最大
+	const float JUMP_POWER;						// ジャンプ力
+	const float BACK_ACCELERATION;				// 後ろ歩き時の加速度
 
 public:
 	PlayerComponent();
@@ -44,9 +46,9 @@ private:
 	 */
 	void PlayerMove(GameObject* player, float deltaTime);
 	/*
-	 *	ダッシュ
+	 *	速度調節
 	 */
-	void PlayerRun(float deltaTime);
+	void SpeedControl(float deltaTime);
 	/*
 	 *	回避
 	 */

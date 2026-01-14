@@ -74,6 +74,8 @@ GameObjectPtr CharacterManager::GeneratePlayer(
 	player = CreateCharacter<PlayerComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	// ウデアクションコンポーネント追加
 	player->AddComponent<ArmActionComponent>();
+	// アニメーターコンポーネント追加
+	player->AddComponent<AnimatorComponent>();
 	// カメラのターゲットに追加
 	CameraManager::GetInstance().SetTarget(player);
 	// シーンが持つゲームオブジェクト配列に追加
