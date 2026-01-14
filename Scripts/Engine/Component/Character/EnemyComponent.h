@@ -81,12 +81,24 @@ public:
 	}
 
 	/*
+	 *	ウェイポイントの取得
+	 *  @author oorui
+	 */
+	inline Vector3 GetWayPoint()const { return wayPoint; }
+
+	/*
+	 *	反対のウェイポイントの取得
+	 *  @auhtor oorui
+	 */
+	inline Vector3 GetNextWayPoint()const { return nextWayPoint; }
+
+	/*
 	 *	プレイヤーの距離判定の取得
 	 */
 	inline bool GetClosePlayer() const { return closePlayer; }
 
 	/*
-     *	ウェイポイント追尾切り替えフラグの取得
+	 *	ウェイポイント追尾切り替えフラグの取得
 	 */
 	inline bool GetChaseTargetChangeFrag() const { return chaseTargetChangeFrag; }
 
@@ -116,7 +128,7 @@ public:
 	 *	角度の取得
 	 */
 	inline Vector3 GetEnemyRotation() const { return enemy->rotation; }
-	
+
 	/*
 	 *	角度の変更
 	 */
