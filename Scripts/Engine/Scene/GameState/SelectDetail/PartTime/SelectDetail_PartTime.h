@@ -18,12 +18,8 @@ class MiniGameBase;
  *	@brief	アルバイト内容を選択するクラス
  */
 class SelectDetail_PartTime : public SelectDetailBase {
-public:
-	using MiniGamePtr = std::shared_ptr<MiniGameBase>;
 
-private:
-	std::vector<MiniGamePtr> miniGameList;
-	MiniGamePtr miniGame = nullptr;
+
 
 public:
 	/*

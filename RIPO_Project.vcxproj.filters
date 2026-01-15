@@ -582,6 +582,21 @@
     <ClCompile Include="Scripts\Engine\Scene\GameState\ResultAction\GameState_ResultAction.cpp">
       <Filter>ソース ファイル\Engine\Scene\GameState\ResultAction</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\ResultAction\Dungeon\ResultAction_Dungeon.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState\ResultAction\Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\ResultAction\Training\ResultAction_Training.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState\ResultAction\Training</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\ResultAction\Shop\ResultAction_Shop.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState\ResultAction\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\ResultAction\PartTime\ResultAction_PartTime.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState\ResultAction\PartTime</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\FloorProcessor.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -1036,6 +1051,21 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\ResultActionBase.h">
       <Filter>ヘッダー ファイル\Engine\Scene\GameState\ResultAction</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\Dungeon\ResultAction_Dungeon.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\ResultAction\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\Training\ResultAction_Training.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\ResultAction\Training</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\Shop\ResultAction_Shop.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\ResultAction\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\PartTime\ResultAction_PartTime.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\ResultAction\PartTime</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\FloorProcessor.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\Dungeon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
