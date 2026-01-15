@@ -38,4 +38,5 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 
 	animator->Update(deltaTime);
 	animator->Play(4, 10);
+	if ()
 }
