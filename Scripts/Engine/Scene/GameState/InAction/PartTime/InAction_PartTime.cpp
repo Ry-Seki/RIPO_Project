@@ -8,7 +8,7 @@
 /*
  *	@brief	‰Šú‰»ˆ—
  */
-void InAction_PartTime::Initialize() {
+void InAction_PartTime::Initialize(Engine& engine) {
 }
 /*
  *	@brief	€”õ‘Oˆ—

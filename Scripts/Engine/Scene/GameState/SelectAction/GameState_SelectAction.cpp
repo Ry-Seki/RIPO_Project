@@ -5,8 +5,9 @@
 
 #include "GameState_SelectAction.h"
 #include "../../../Audio/AudioUtility.h"
-
+#include "../GameStateMachine.h"
 #include <DxLib.h>
+
 /*
  *	@brief	準備前処理
  */
@@ -20,24 +21,32 @@ void GameState_SelectAction::Update(float deltaTime) {
     // TODO : 現在は決め打ちのため、ここをメニューの更新にする
     if (!inputHandle) {
         if (CheckHitKey(KEY_INPUT_1)) {
-            inputHandle = true;
             // SEの再生
             AudioUtility::PlaySE("DebugSE");
+            inputHandle = true;
+            owner->SetActionType(GameEnum::ActionType::Dungeon);
+            owner->ChageState(GameEnum::GameState::SelectDetail);
         }
         else if (CheckHitKey(KEY_INPUT_2)) {
-            inputHandle = true;
             // SEの再生
             AudioUtility::PlaySE("DebugSE");
+            inputHandle = true;
+            owner->SetActionType(GameEnum::ActionType::Training);
+            owner->ChageState(GameEnum::GameState::SelectDetail);
         }
         else if (CheckHitKey(KEY_INPUT_3)) {
-            inputHandle = true;
             // SEの再生
             AudioUtility::PlaySE("DebugSE");
+            inputHandle = true;
+            owner->SetActionType(GameEnum::ActionType::Shop);
+            owner->ChageState(GameEnum::GameState::SelectDetail);
         }
         else if (CheckHitKey(KEY_INPUT_4)) {
-            inputHandle = true;
             // SEの再生
             AudioUtility::PlaySE("DebugSE");
+            inputHandle = true;
+            owner->SetActionType(GameEnum::ActionType::PartTime);
+            owner->ChageState(GameEnum::GameState::SelectDetail);
         }
     }
 }

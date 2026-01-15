@@ -12,6 +12,7 @@
 #include <memory>
 
 // 前方宣言
+class Engine;
 class SelectDetailBase;
 
 /*
@@ -30,7 +31,7 @@ public:
 	/*
 	 *	@brief	初期化処理
 	 */
-	void Initialize() override;
+	void Initialize(Engine& engine) override;
 	/*
 	 *	@brief	準備前処理
 	 */
@@ -53,9 +54,6 @@ public:
 	 *	@brief	ロード済みデータのセット(コールバック)
 	 */
 	void SetupData();
-
-public:
-	
 
 };
 

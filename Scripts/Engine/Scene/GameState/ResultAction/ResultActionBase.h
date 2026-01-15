@@ -1,27 +1,27 @@
 /*
- *	@file	SelectDetailBase.h
+ *	@brief	ResultActionBase.h
  *	@author	Seki
  */
 
-#ifndef _SELECT_DETAIL_BASE_H_
-#define _SELECT_DETAIL_BASE_H_
+#ifndef _RESULT_ACTION_BASE_H_
+#define _RESULT_ACTION_BASE_H_
 
 // 前方宣言
-class GameState_SelectDetail;
+class GameState_ResultAction;
 
 /*
- *	@brief	行動の詳細を選択するクラス
+ *	@brief	アクションリザルト基底クラス
  */
-class SelectDetailBase {
+class ResultActionBase {
 protected:
-	GameState_SelectDetail* owner = nullptr;
+	GameState_ResultAction* owner = nullptr;		// オーナークラス
 
 public:
 	/*
 	 *	@brief	デストラクタ
 	 */
-	virtual ~SelectDetailBase() {}
-		
+	virtual ~ResultActionBase() {}
+
 public:
 	/*
 	 *	@brief	初期化処理
@@ -47,11 +47,11 @@ public:
 public:
 	/*
 	 *	@brief		オーナーの設定
-	 *	@param[in]	GameState_SelectDetail* setOwner
+	 *	@param[in]	GameState_ResultAction* setOwner
 	 */
-	inline void SetOwner(GameState_SelectDetail* setOwner) {
+	inline void SetOnwer(GameState_ResultAction* setOwner) {
 		owner = setOwner;
 	}
 };
 
-#endif // !_SELECT_DETAIL_BASE_H_
+#endif // !_RESULT_ACTION_BASE_H_

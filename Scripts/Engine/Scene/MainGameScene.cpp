@@ -28,7 +28,7 @@ MainGameScene::~MainGameScene() = default;
 void MainGameScene::Initialize(Engine& engine) {
     // ゲームステートの初期化
     gameState = std::make_unique<GameStateMachine>();
-    gameState->Initialize();
+    gameState->Initialize(engine);
     auto treasureData = LoadManager::GetInstance().LoadResource<LoadJSON>("Data/Treasure/TreasureDataList.json");
     auto itemData = LoadManager::GetInstance().LoadResource<LoadJSON>("Data/Item/ItemCatalogData.json");
     LoadManager::GetInstance().SetOnComplete([treasureData, itemData]() {

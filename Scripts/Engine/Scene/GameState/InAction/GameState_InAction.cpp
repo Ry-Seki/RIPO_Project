@@ -14,10 +14,9 @@
 /*
  *	@brief	初期化処理
  */
-void GameState_InAction::Initialize() {
+void GameState_InAction::Initialize(Engine& engine) {
 	// 行動の要素分をあらかじめ確保する
-	int maxCount = static_cast<int>(GameEnum::ActionType::Max);
-	inActionList.resize(maxCount);
+	inActionList.resize(static_cast<int>(GameEnum::ActionType::Max));
 	// 各行動クラスを生成
 	inActionList[static_cast<int>(GameEnum::ActionType::Dungeon)]
 		= std::make_shared<InAction_Dungeon>();
@@ -28,11 +27,11 @@ void GameState_InAction::Initialize() {
 	inActionList[static_cast<int>(GameEnum::ActionType::PartTime)]
 		= std::make_shared<InAction_PartTime>();
 	// 各行動クラスの初期化
-	for (int i = 0; i < maxCount; i++) {
-		auto action = inActionList[i];
-		if (!action) continue;
+	for (auto& inAction : inActionList) {
+		if (!inAction) continue;
 
-		action->Initialize();
+		inAction->Initialize(engine);
+		inAction->SetOwner(this);
 	}
 }
 /*

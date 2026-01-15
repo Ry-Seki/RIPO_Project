@@ -14,10 +14,9 @@
 /*
  *	@brief	初期化処理
  */
-void GameState_SelectDetail::Initialize() {
-	// 行動の要素分をあらかじめ
-	int maxCount = static_cast<int>(GameEnum::ActionType::Max);
-	selectDetailList.resize(maxCount);
+void GameState_SelectDetail::Initialize(Engine& engine) {
+	// 行動の要素分をあらかじめ生成する
+	selectDetailList.resize(static_cast<int>(GameEnum::ActionType::Max));
 	// 各詳細クラスの生成
 	selectDetailList[static_cast<int>(GameEnum::ActionType::Dungeon)]
 		= std::make_shared<SelectDetail_Dungeon>();
@@ -28,11 +27,11 @@ void GameState_SelectDetail::Initialize() {
 	selectDetailList[static_cast<int>(GameEnum::ActionType::PartTime)]
 		= std::make_shared<SelectDetail_PartTime>();
 	// 各詳細クラスの初期化
-	for (int i = 0; i < maxCount; i++) {
-		auto detail = selectDetailList[i];
+	for (auto& detail : selectDetailList) {
 		if (!detail) continue;
 
 		detail->Initialize();
+		detail->SetOwner(this);
 	}
 }
 /*

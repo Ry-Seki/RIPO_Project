@@ -6,12 +6,17 @@
 #ifndef _GAME_STATE_BASE_H_
 #define _GAME_STATE_BASE_H_
 
+// 前方宣言
+class Engine;
+class GameStateMachine;
+
 /*
  *	@brief	メインゲームの状態クラス
  */
 class GameStateBase {
 protected:
-	bool isFinished = false;	// 終了フラグ
+	GameStateMachine* owner = nullptr;	// オーナークラス
+	bool isFinished = false;			// 終了フラグ
 
 public:
 	/*
@@ -23,7 +28,7 @@ public:
 	/*
 	 *	@brief	初期化処理
 	 */
-	virtual void Initialize() {}
+	virtual void Initialize(Engine& engine) {}
 	/*
 	 *	@brief	準備前処理
 	 */
@@ -55,6 +60,18 @@ public:
 	 *  @return		bool
 	 */
 	inline bool IsFinished() { return isFinished; }
+	/*
+	 *	@brief		オーナーの取得
+	 *	@return		GameStateMachine*
+	 */
+	inline GameStateMachine* GetOwner() const { return owner; }
+	/*
+	 *	@brief		オーナーの設定
+	 *	@param[in]	GameStateMachine setOwner
+	 */
+	inline void SetOwner(GameStateMachine* setOwner) {
+		owner = setOwner;
+	}
 };
 
 #endif // !_GAME_STATE_BASE_H_

@@ -8,12 +8,13 @@
 #include "SelectAction/GameState_SelectAction.h"
 #include "SelectDetail/GameState_SelectDetail.h"
 #include "InAction/GameState_InAction.h"
+#include "ResultAction/GameState_ResultAction.h"
 #include "Pause/GameState_Pause.h"
 
 /*
  *	@brief	初期化処理
  */
-void GameStateMachine::Initialize() {
+void GameStateMachine::Initialize(Engine& engine) {
 	// ゲームステートの要素分、あらかじめ確保しておく
     stateList.resize(static_cast<int>(GameEnum::GameState::Max));
     // 各ステートの生成
@@ -25,13 +26,16 @@ void GameStateMachine::Initialize() {
         = std::make_shared<GameState_SelectDetail>();
     stateList[static_cast<int>(GameEnum::GameState::InAction)]
         = std::make_shared<GameState_InAction>();
+    stateList[static_cast<int>(GameEnum::GameState::ResultAction)]
+        = std::make_shared<GameState_ResultAction>();
     stateList[static_cast<int>(GameEnum::GameState::Pause)]
         = std::make_shared<GameState_Pause>();
     // 各ステートの初期化
     for (auto& state : stateList) {
         if (!state) continue;
 
-        state->Initialize();
+        state->Initialize(engine);
+        state->SetOwner(this);
     }
 }
 /*

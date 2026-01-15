@@ -17,7 +17,7 @@ public:
 	/*
 	 *	@brief	‰Šú‰»ˆ—
 	 */
-	void Initialize() override;
+	void Initialize(Engine& engine) override;
 	/*
 	 *	@brief	€”õ‘Oˆ—
 	 */

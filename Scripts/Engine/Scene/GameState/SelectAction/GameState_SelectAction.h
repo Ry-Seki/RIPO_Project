@@ -7,13 +7,14 @@
 #define _GAME_STATE_SELECT_ACTION_H_
 
 #include "../GameStateBase.h"
+#include "../../../GameEnum.h"
 
 /*
  *	@brief	s“®‘I‘ğó‘Ô
  */
 class GameState_SelectAction : public GameStateBase {
 private:
-	bool inputHandle = false;
+	bool inputHandle = false;											
 
 public:
 	/*

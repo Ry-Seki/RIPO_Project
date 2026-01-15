@@ -1,23 +1,23 @@
 /*
- *	@file	InAction_Training.h
+ *	@file	ResultAction_Training.h
  *	@author	Seki
  */
 
-#ifndef _IN_ACTION_TRAINING_H_
-#define _IN_ACTION_TRAINING_H_
+#ifndef _RESULT_ACTION_TRAINING_H_
+#define _RESULT_ACTION_TRAINING_H_
 
-#include "../InActionBase.h"
+#include "../ResultActionBase.h"
 
 /*
- *	@brief	トレーニング行動実行クラス
+ *	@brief	トレーニングアクションリザルト
  */
-class InAction_Training : public InActionBase {
+class ResultAction_Training : public ResultActionBase {
 
 public:
 	/*
 	 *	@brief	初期化処理
 	 */
-	void Initialize(Engine& engine) override;
+	void Initialize() override;
 	/*
 	 *	@brief	準備前処理
 	 */
@@ -36,4 +36,4 @@ public:
 	void Teardown() override;
 };
 
-#endif // !_IN_ACTION_TRAINING_H_
+#endif // !_RESULT_ACTION_TRAINING_H_

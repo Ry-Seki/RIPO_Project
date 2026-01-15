@@ -7,11 +7,13 @@
 #define _GAME_STATE_MACHINE_H_
 
 #include "../../GameEnum.h"
+#include "ActionContext.h"
 
 #include <vector>
 #include <memory>
 
 // 前方宣言
+class Engine;
 class GameStateBase;
 
 /*
@@ -22,16 +24,17 @@ public:		// 別名定義
 	using GameStatePtr = std::shared_ptr<GameStateBase>;
 
 private:
-	std::vector<GameStatePtr> stateList;	// ステートリスト
-	GameEnum::GameState stateType;			// ステートの種類
-	GameStatePtr currentState;				// 現在のステート
-	GameStatePtr pauseState;				// ポーズ用ステート
+	std::vector<GameStatePtr> stateList;								// ステートリスト
+	GameEnum::GameState stateType = GameEnum::GameState::Invalid;		// ステートの種類
+	ActionContext actionContext;										// ステート間で必要なデータ構造体
+	GameStatePtr currentState = nullptr;								// 現在のステート
+	GameStatePtr pauseState = nullptr;									// ポーズ用ステート
 
 public:
 	/*
 	 *	@brief	初期化処理
 	 */
-	void Initialize();
+	void Initialize(Engine& engine);
 	/*
 	 *	@brief	準備前処理
 	 */
@@ -61,6 +64,20 @@ public:
 	 *	@param[in]	GameState type
 	 */
 	void ChageState(GameEnum::GameState type);
+
+public:
+	/*
+	 *	@brief		アクションデータ構造体の取得
+	 *	@return		ActionContext*
+	 */
+	inline ActionContext& GetActionContext() { return actionContext; }
+	/*
+	 *	@brief		アクションの設定
+	 *	@param[in]	GameEnum::ActionType setType
+	 */
+	inline void SetActionType(GameEnum::ActionType setType) {
+		actionContext.actionType = setType;
+	}
 
 };
 #endif // !_GAME_STATE_MACHINE_H_

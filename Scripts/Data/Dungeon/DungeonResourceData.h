@@ -17,7 +17,7 @@
 class Engine;
 
 /*
- *	@breif	ダンジョンに必要なリソースデータ
+ * @brief	ダンジョンに必要なリソースデータ
  */
 class DungeonResourceData {
 public:

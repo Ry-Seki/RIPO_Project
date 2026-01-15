@@ -8,6 +8,8 @@
 
 #include "../GameStateBase.h"
 
+// 前方宣言
+class Engine;
 /*
  *	@brief	NewGame時のチュートリアル状態
  */
@@ -17,7 +19,7 @@ public:
 	/*
 	 *	@brief	初期化処理
 	 */
-	void Initialize() override;
+	void Initialize(Engine& engine) override;
 	/*
 	 *	@brief	準備前処理
 	 */

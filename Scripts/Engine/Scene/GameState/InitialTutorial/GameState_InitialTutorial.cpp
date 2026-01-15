@@ -8,7 +8,7 @@
 /*
  *	@brief	‰Šú‰»ˆ—
  */
-void GameState_InitialTutorial::Initialize() {
+void GameState_InitialTutorial::Initialize(Engine& engine) {
 }
 /*
  *	@brief	€”õ‘Oˆ—

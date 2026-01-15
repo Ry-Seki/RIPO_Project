@@ -12,6 +12,7 @@
 #include <vector>
 
 // ‘O•ûéŒ¾
+class Engine;
 class InActionBase;
 
 /*
@@ -29,7 +30,7 @@ public:
 	/*
 	 *	@brief	‰Šú‰»ˆ—
 	 */
-	void Initialize() override;
+	void Initialize(Engine& engine) override;
 	/*
 	 *	@brief	€”õ‘Oˆ—
 	 */

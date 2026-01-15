@@ -8,10 +8,22 @@
 
 #include "../SelectDetailBase.h"
 
+#include <memory>
+#include <vector>
+
+ // 前方宣言
+class MiniGameBase;
+
 /*
  *	@brief	アルバイト内容を選択するクラス
  */
 class SelectDetail_PartTime : public SelectDetailBase {
+public:
+	using MiniGamePtr = std::shared_ptr<MiniGameBase>;
+
+private:
+	std::vector<MiniGamePtr> miniGameList;
+	MiniGamePtr miniGame = nullptr;
 
 public:
 	/*

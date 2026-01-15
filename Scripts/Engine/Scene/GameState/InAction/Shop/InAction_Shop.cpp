@@ -8,7 +8,7 @@
 /*
  *	@brief	‰Šú‰»ˆ—
  */
-void InAction_Shop::Initialize() {
+void InAction_Shop::Initialize(Engine& engine) {
 }
 /*
  *	@brief	€”õ‘Oˆ—

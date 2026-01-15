@@ -7,7 +7,7 @@
 /*
  *	@brief	‰Šú‰»ˆ—
  */
-void InAction_Training::Initialize() {
+void InAction_Training::Initialize(Engine& engine) {
 }
 /*
  *	@brief	€”õ‘Oˆ—

@@ -16,6 +16,7 @@ namespace GameEnum {
 		SelectAction,		// アクションの選択
 		SelectDetail,		// アクションの中身を選択
 		InAction,			// アクション中
+		ResultAction,		// アクションの結果
 		Pause,				// ポーズ
 		Max
 	};
