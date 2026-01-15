@@ -18,6 +18,8 @@ PlayerComponent::PlayerComponent()
 	, acceleration(0.0f)
 	, avoidMoveValue(0.0f)
 	, avoidCoolTime(0.0f)
+	, staminaHealCoolTime(0.0f)
+	, staminaChangePoint(0.0f)
 	, moveDirectionY(0.0f)
 	, canAvoid(true)
 	, isAvoid(false)
@@ -32,7 +34,11 @@ PlayerComponent::PlayerComponent()
 	, AVOID_ACCELERATION_MAX(6.0f)
 	, AVOID_MOVE_VALUE_MAX(1000.0f)
 	, AVOID_COOL_TIME_MAX(1.0f)
-	, JUMP_POWER(1400)
+	, STAMINA_HEAL_COOL_TIME_MAX(50.0f)
+	, STAMINA_RUN_COST(0.3f)
+	, STAMINA_AVOID_COST(10.0f)
+	, STAMINA_HEAL_VALUE(0.2f)
+	, JUMP_POWER(1400.0f)
 	, BACK_ACCELERATION(0.5f)
 {
 }
@@ -44,14 +50,32 @@ void PlayerComponent::Start() {
 
 void PlayerComponent::Update(float deltaTime) {
 	GameObject* player = GetOwner();
+	// プレイヤーの基礎ステータス
+	PlayerStatusValue baseStatus = PlayerStatusManager::GetInstance().GetPlayerStatusData()->base;
 
 	// 初期接地判定
 	if (!hasResolvedInitialGrounding) {
 		IsGrounding(player);
 		hasResolvedInitialGrounding = true;
 	}
-
 	moveVec = Vector3::zero;
+
+	// クールタイムが開け次第スタミナ回復
+	if (staminaHealCoolTime <= 0) {
+		if (status.stamina < baseStatus.stamina) {
+			if (staminaChangePoint >= 1) {
+				status.stamina += 1;
+				staminaChangePoint = 0;
+			}
+			else {
+				staminaChangePoint += STAMINA_HEAL_VALUE;
+			}
+		}
+	}
+	else {
+		staminaHealCoolTime -= 1;
+	}
+
 	// 回避
 	PlayerAvoid(player, deltaTime);
 	// 回避中は処理しない
@@ -159,14 +183,22 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
  */
 void PlayerComponent::SpeedControl(float deltaTime) {
 	// ダッシュ
-	if (CheckHitKey(KEY_INPUT_LSHIFT) && CheckHitKey(KEY_INPUT_W)) {
+	if (CheckHitKey(KEY_INPUT_LSHIFT) && CheckHitKey(KEY_INPUT_W) && status.stamina > 0) {
 		// なめらかな加速
 		if (acceleration < RUN_ACCELERATION_MAX)
 			acceleration += sinf(Deg2Rad * deltaTime * ACCELERATION_RATE);
 		else
 			acceleration = RUN_ACCELERATION_MAX;
+
 		// スタミナを消費していく
-		status.stamina -= 1;
+		if (staminaChangePoint <= -1) {
+			status.stamina -= 1;
+			staminaChangePoint = 0;
+		}
+		else {
+			staminaChangePoint -= STAMINA_RUN_COST;
+		}
+		staminaHealCoolTime = STAMINA_HEAL_COOL_TIME_MAX;
 	}
 	else {
 		// なめらかな減速
@@ -187,10 +219,13 @@ void PlayerComponent::SpeedControl(float deltaTime) {
  */
 void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 	// 回避開始
-	if (CheckHitKey(KEY_INPUT_LCONTROL) && canAvoid) {
+	if (CheckHitKey(KEY_INPUT_LCONTROL) && canAvoid && status.stamina > STAMINA_AVOID_COST) {
 		canAvoid = false;
 		isAvoid = true;
 		moveSpeed = DEFAULT_MOVE_SPEED * AVOID_ACCELERATION_MAX;
+		// スタミナ消費
+		status.stamina -= STAMINA_AVOID_COST;
+		staminaHealCoolTime = STAMINA_HEAL_COOL_TIME_MAX;
 	}
 	if (isAvoid) {
 		// プレイヤーの角度のsin,cos
