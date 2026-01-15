@@ -8,7 +8,19 @@
 
 #include "../InActionBase.h"
 
+#include <vector>
+#include <memory>
+
+// ‘O•ûéŒ¾
+class MiniGameBase;
+
 class InAction_PartTime : public InActionBase {
+public:
+	using MiniGamePtr = std::shared_ptr<MiniGameBase>;
+
+private:
+	std::vector<MiniGamePtr> miniGameList;
+	MiniGamePtr miniGame = nullptr;
 
 public:
 	/*
