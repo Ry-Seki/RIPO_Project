@@ -26,6 +26,7 @@
 #include "../../../GameObject/GameObjectUtility.h"
 #include "../../../System/Money/MoneyManager.h"
 #include "../../../Stage/StageObject/Treasure/Treasure.h"
+#include "../../../System/Status/PlayerStatusManager.h"
 
 #include <iostream>
 
@@ -168,6 +169,13 @@ void ActionDungeon::Render() {
 
 	}
 #endif
+
+	PlayerStatusData* status = PlayerStatusManager::GetInstance().GetPlayerStatusData();
+	DrawFormatString(550, 50, GetColor(255, 255, 255), "HP : %d", status->base.HP);
+	DrawFormatString(550, 70, GetColor(255, 255, 255), "Stamina : %d", status->base.stamina);
+	DrawFormatString(550, 90, GetColor(255, 255, 255), "Strength : %d", status->base.strength);
+	DrawFormatString(550, 110, GetColor(255, 255, 255), "ResistTime : %d", status->base.resistTime);
+
 }
 /*
  *  ”jŠüˆ—
