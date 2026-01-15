@@ -21,13 +21,22 @@ PlayerComponent::PlayerComponent()
 	, canAvoid(true)
 	, isAvoid(false)
 	, hasResolvedInitialGrounding(false)
+	, animator(nullptr)
+
 	, PLAYER_MODEL_ANGLE_CORRECTION(89.98f)
 	, DEFAULT_MOVE_SPEED(1500.0f)
 	, ACCELERATION_RATE(800.0f)
 	, RUN_ACCELERATION_MAX(2.0f)
 	, AVOID_ACCELERATION_MAX(6.0f)
 	, AVOID_MOVE_VALUE_MAX(1000.0f)
-	, AVOID_COOL_TIME_MAX(1.0f) {
+	, AVOID_COOL_TIME_MAX(1.0f)
+	, JUMP_POWER(1400)
+	, BACK_ACCELERATION(0.5f)
+{
+}
+
+void PlayerComponent::Start() {
+	
 }
 
 void PlayerComponent::Update(float deltaTime) {
@@ -44,16 +53,18 @@ void PlayerComponent::Update(float deltaTime) {
 	PlayerAvoid(player, deltaTime);
 	// 回避中は処理しない
 	if (isAvoid) return;
-	// ダッシュ
-	PlayerRun(deltaTime);
+	// 速度調節
+	SpeedControl(deltaTime);
 	// 移動処理
 	PlayerMove(player, deltaTime);
 	// ステージとの当たり判定
 	StageManager::GetInstance().StageCollider(player, moveVec);
 
-
-	// 右クリックでウデアクションをハンドに設定
 	auto playerArm = player->GetComponent<ArmActionComponent>();
+	// 物を持っていたらウデ変更不可
+	if (playerArm->GetLiftObject())
+		return;
+	// 右クリックでウデアクションをハンドに設定
 	if (GetMouseInput() & MOUSE_INPUT_RIGHT)
 		playerArm->SetCurrentArm<HandArm>();
 	// 左クリックでウデアクションを銃に設定
@@ -111,30 +122,57 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 		if (CheckHitKey(KEY_INPUT_TAB)) {
 			player->position.y -= moveSpeed * deltaTime;
 		}
-		if (CheckHitKey(KEY_INPUT_SPACE) && gravity->GetGroundingFrag()) {
-			gravity->AddFallSpeed(-1400);
-		}
+	}
+
+	// ジャンプ
+	if (CheckHitKey(KEY_INPUT_SPACE) && gravity->GetGroundingFrag()) {
+		gravity->AddFallSpeed(-JUMP_POWER);
+	}
+
+	// アニメーション
+	animator = player->GetComponent<AnimatorComponent>();
+	if (!animator)
+		return;
+	auto modelRenderer = player->GetComponent<ModelRenderer>();
+	if (!modelRenderer)
+		return;
+	int modelHandle = modelRenderer->GetModelHandle();
+	if (modelHandle == -1)
+		return;
+	// モデルハンドルのセット
+	animator->SetModelHandle(modelHandle);
+	animator->LoadIndex(true);
+	// アニメーション再生
+	if (moveVec == V_ZERO) {
+		//animator->Play(0, 1);
+	}
+	else {
+		animator->Play(1, moveSpeed * 0.066f);
 	}
 }
 
 /*
- *	ダッシュ
+ *	速度調節
  */
-void PlayerComponent::PlayerRun(float deltaTime) {
-	// なめらかに加速する処理
-	if (CheckHitKey(KEY_INPUT_LSHIFT)) {
-		// 加速
+void PlayerComponent::SpeedControl(float deltaTime) {
+	// ダッシュ
+	if (CheckHitKey(KEY_INPUT_LSHIFT) && CheckHitKey(KEY_INPUT_W)) {
+		// なめらかな加速
 		if (acceleration < RUN_ACCELERATION_MAX)
 			acceleration += sinf(Deg2Rad * deltaTime * ACCELERATION_RATE);
 		else
 			acceleration = RUN_ACCELERATION_MAX;
 	}
 	else {
-		// 減速
+		// なめらかな減速
 		if (acceleration > 1)
 			acceleration -= sinf(Deg2Rad * deltaTime * ACCELERATION_RATE);
 		else
 			acceleration = 1;
+	}
+	// 後ろ歩きは少し遅くする
+	if (CheckHitKey(KEY_INPUT_S)) {
+		acceleration = BACK_ACCELERATION;
 	}
 	moveSpeed = DEFAULT_MOVE_SPEED * acceleration;
 }

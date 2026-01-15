@@ -96,8 +96,8 @@ void AnimatorComponent::Play(int index, float speed) {
 	// 同じアニメーションなら再生しない
 	if (currentAnimation == index) return;
 	// すでにアニメーションがアタッチされていれば海図尾
-	if (attachIndex >= -1)
-		MV1DetachAnim(animModelHandle, attachIndex);
+	//if (attachIndex >= 0)
+	//	MV1DetachAnim(animModelHandle, attachIndex);
 
 	// 現在のアニメーションに設定する
 	currentAnimation = index;

@@ -176,14 +176,8 @@ std::vector<Scene::WorldColliderList> Scene::ChangeGameObjectWorldColliders() {
 			else if (auto capsule = std::dynamic_pointer_cast<CapsuleCollider>(obj->colliders[i])) {
 				// オリジナルのコライダーをコピー
 				worldList[i]->origin = capsule;
-				// ワールド座標に変換
+				// ワールド座標に変換(スケール適応はなし)
 				Capsule originCapsule = capsule->capsule;
-				// スケール適応
-				originCapsule.segment.startPoint = Vector3::Scale(originCapsule.segment.startPoint, obj->scale);
-				originCapsule.segment.endPoint = Vector3::Scale(originCapsule.segment.endPoint, obj->scale);
-				// カプセルの半径はy軸を参照せず、xz軸の平均を参照する
-				originCapsule.radius *= (obj->scale.x + obj->scale.z) * 0.5f;
-				// ポジション適応
 				originCapsule.segment.startPoint += obj->position;
 				originCapsule.segment.endPoint += obj->position;
 				// ワールド座標保存
@@ -194,4 +188,46 @@ std::vector<Scene::WorldColliderList> Scene::ChangeGameObjectWorldColliders() {
 		colliders.push_back(worldList);
 	}
 	return colliders;
+}
+/*
+ *  レイキャスト
+ *  @param  ray     判定を取るレイ
+ *  @param  hitInfo レイが最初にヒットしたコライダーの情報
+ *  @param  pred    交差判定の条件(述語)
+ *  @return bool    ヒットしたかどうか
+ *  @author Riku
+ */
+bool Scene::Raycast(const Ray& ray, RaycastHit& hitInfo, const RaycastPredicate& pred) {
+	hitInfo.collider = nullptr;
+	hitInfo.distance = FLT_MAX;
+	// 全てのワールド座標系コライダー
+	std::vector<WorldColliderList> colliders = ChangeGameObjectWorldColliders();
+
+	for (const auto& colList : colliders) {
+		for (const auto& col : colList) {
+			// レイとの交差判定
+			float d;
+			if (!RayIntersect(ray, col->world, d))
+				continue;
+
+			// 交差判定対象かどうか
+			if (!pred(col->origin, d))
+				continue;
+
+			// 最初に当たったコライダーを保存
+			if (d < hitInfo.distance) {
+				hitInfo.collider = col->origin;
+				hitInfo.distance = d;
+			}
+		}
+	}
+
+	// 交差するコライダーがある場合
+	if (hitInfo.collider) {
+		// 交差の座標を計算
+		hitInfo.point = ray.start + ray.direction * hitInfo.distance;
+		return true;
+	}
+	
+	return false;
 }

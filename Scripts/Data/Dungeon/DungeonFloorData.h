@@ -60,7 +60,7 @@ public:
 			FloorData data;
 			data.isFirst = true;
 			data.enemySpawnCount = floor.value("EnemySpawnCount", 0);
-			data.bossSpawnCount = floor.value("BossSpawnCount", 0);
+  			data.bossSpawnCount = floor.value("BossSpawnCount", 0);
 			data.treasureSpawnCount = floor.value("TreasureSpawnCount", 0);
 			data.stairSpawnCount = floor.value("StairSpawnCount", 0);
 			data.goalSpawnCount = floor.value("GoalSpawnCount", 0);

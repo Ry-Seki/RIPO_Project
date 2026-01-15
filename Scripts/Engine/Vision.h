@@ -5,7 +5,7 @@
 #ifndef _VISION_H_
 #define _VISION_H_
 
-#include "RayCast.h"
+#include "Collision/Collision.h"
 
 /*
  *	‹ŠEˆ—

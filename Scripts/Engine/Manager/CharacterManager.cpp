@@ -10,6 +10,7 @@
 #include "../Component/ModelRenderer.h"
 #include "../Component/GravityComponent.h"
 #include "../Component/CapsuleCollider.h"
+#include "../Component/AnimatorComponent.h"
 
 CharacterManager::CharacterManager()
 	: engine(nullptr) {
@@ -73,6 +74,8 @@ GameObjectPtr CharacterManager::GeneratePlayer(
 	player = CreateCharacter<PlayerComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	// ウデアクションコンポーネント追加
 	player->AddComponent<ArmActionComponent>();
+	// アニメーターコンポーネント追加
+	player->AddComponent<AnimatorComponent>();
 	// カメラのターゲットに追加
 	CameraManager::GetInstance().SetTarget(player);
 	// シーンが持つゲームオブジェクト配列に追加
@@ -98,12 +101,38 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 	GameObjectPtr enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	// AABBコライダーコンポーネント追加
 	AABBColliderPtr aabbCollider = enemy->AddComponent<AABBCollider>();
-	//aabbCollider->aabb = { AABBMin, AABBMax };
+	aabbCollider->aabb = { AABBMin, AABBMax };
 	// シーンが持つゲームオブジェクト配列に追加
 	engine->AddGameObject(enemy);
 	// 生成キャラクターリストに追加
 	createCharacterList.push_back(enemy);
 	return enemy;
+}
+
+/*
+ *	ボス生成
+ */
+GameObjectPtr CharacterManager::GenerateBoss(
+	const std::string& name,
+	const Vector3& position,
+	const Vector3& rotation,
+	const Vector3& AABBMin,
+	const Vector3& AABBMax,
+	const Vector3& capsuleStart,
+	const Vector3& capsuleEnd,
+	const float& capsuleRadius) {
+	// ボスのベース作成
+	GameObjectPtr boss = CreateCharacter<BossComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
+	// アニメーターコンポーネント追加
+	boss->AddComponent<AnimatorComponent>();
+	// AABBコライダーコンポーネント追加
+	AABBColliderPtr aabbCollider = boss->AddComponent<AABBCollider>();
+	aabbCollider->aabb = { AABBMin, AABBMax };
+	// シーンが持つゲームオブジェクト配列に追加
+	engine->AddGameObject(boss);
+	// 生成キャラクターリストに追加
+	createCharacterList.push_back(boss);
+	return boss;
 }
 
 /*

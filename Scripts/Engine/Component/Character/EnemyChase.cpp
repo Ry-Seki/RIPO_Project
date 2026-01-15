@@ -7,11 +7,12 @@
 #include "../../Vision.h"
 #include "../../Manager/CameraManager.h"
 
-/*
- *	コンストラクタ
- */
+ /*
+  *	コンストラクタ
+  */
 EnemyChase::EnemyChase()
-	: wayPoint(0.0f, 0.0f, 0.0f)
+	: player(nullptr)
+	, wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(1000.0f)
 	, closePlayer(false)
@@ -20,12 +21,11 @@ EnemyChase::EnemyChase()
 	, DIFFERENCE_PLAYER(700) {
 }
 
-void EnemyChase::Start(EnemyComponent& enemy)
-{
+void EnemyChase::Start(EnemyComponent& enemy) {
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
-	wayPoint = Vector3(enemy.GetEnemyPosition().x, enemy.GetEnemyPosition().y, enemy.GetEnemyPosition().z + wayPointDistance);
-	nextWayPoint = Vector3(enemy.GetEnemyPosition().x, enemy.GetEnemyPosition().y, enemy.GetEnemyPosition().z - wayPointDistance);
+	wayPoint = enemy.GetWayPoint();
+	nextWayPoint = enemy.GetNextWayPoint();
 }
 
 /*
@@ -33,8 +33,7 @@ void EnemyChase::Start(EnemyComponent& enemy)
  *  param[in]	GameObject*	enemy
  *  param[in]	float	deltaTime
  */
-void EnemyChase::Update(GameObject* enemy, float deltaTime)
-{
+void EnemyChase::Update(GameObject* enemy, float deltaTime) {
 	// 移動量を初期化
 	moveVec = Vector3::zero;
 
@@ -44,10 +43,15 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime)
 		ChaseWayPoint(enemy, player->position, true, deltaTime);
 	}
 	else {
+		// WayPointを取得
+		wayPoint = enemyComponent->GetWayPoint();
+		// 反対のWayPointを取得
+		nextWayPoint = enemyComponent->GetNextWayPoint();
 		// 目標に向かって移動
 		if (!enemyComponent->GetChaseTargetChangeFrag()) {
 			ChaseWayPoint(enemy, wayPoint, true, deltaTime);
 		}
+		// 反対の目標に向かって移動
 		else if (enemyComponent->GetChaseTargetChangeFrag()) {
 			ChaseWayPoint(enemy, nextWayPoint, false, deltaTime);
 		}
@@ -127,18 +131,21 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 		}
 	}
 	// 目標地点についたらターゲットを変える
-	else if (distance < differenceTarget) {
+	if (distance < differenceTarget) {
 		enemy->GetComponent<EnemyComponent>()->SetChaseTargetChangeFrag(targetChange);
-		enemy->GetComponent<EnemyComponent>()->SetState(new EnemyTurn());
+		 enemy->GetComponent<EnemyComponent>()->SetState(new EnemyTurn());
 	}
 	else {
+		float moveX = 0;
+		float moveZ = 0;
 		// 目標の方向に進む
-		enemy->position.x += direction.x * MOVE_SPEED * deltaTime;
-		enemy->position.z += direction.z * MOVE_SPEED * deltaTime;
+		moveX += direction.x * MOVE_SPEED * deltaTime;
+		moveZ += direction.z * MOVE_SPEED * deltaTime;
 
-		float moveX = enemy->position.x;
-		float moveY = enemy->position.y;
+		enemy->position.x += moveX;
+		enemy->position.z += moveZ;
+
 		// 移動量を更新
-		moveVec = { moveX,0.0f,moveY };
+		moveVec = { moveX,0.0f,moveZ };
 	}
 }

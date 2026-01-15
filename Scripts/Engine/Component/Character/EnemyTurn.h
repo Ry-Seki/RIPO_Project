@@ -7,12 +7,13 @@
 
 #include "EnemyState.h"
 
-/*
- *	敵の回転処理クラス
- */
+ /*
+  *	敵の回転処理クラス
+  */
 class EnemyTurn : public EnemyState {
 private:
-	GameObject* enemy;
+	GameObject* enemy;		// 敵
+	float targetAngle;		// 回転する際の対象の位置
 
 private:
 	// 回転スピード

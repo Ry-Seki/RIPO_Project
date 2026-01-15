@@ -8,7 +8,9 @@
  *	コンストラクタ
  */
 EnemyAttack::EnemyAttack()
-	: coolTime(3) {
+	: coolTime(0)
+	, MAX_COOL_TIME(3) {
+	coolTime = MAX_COOL_TIME;
 }
 
 /*
@@ -27,16 +29,14 @@ void EnemyAttack::Start(EnemyComponent& enemy)
  */
 void EnemyAttack::Update(GameObject* enemy, float deltaTime)
 {
+
 	coolTime -= deltaTime;
-	auto enemyComponent = enemy->GetComponent<EnemyComponent>();
-	//enemy = GetOwner();
 	if (enemy->GetComponent<EnemyComponent>()->GetClosePlayer()) {
 		if (coolTime > 0) return;
 		// 前方に当たり判定を出す
 		enemy->GetComponent<ColliderBase>()->isCollider = true;
-		coolTime = 3;
+		coolTime = MAX_COOL_TIME;
 		// 当たったらダメージを与える
-		//AddDamage(3);
 	}
 	else {
 		enemy->GetComponent<ColliderBase>()->isCollider = false;
