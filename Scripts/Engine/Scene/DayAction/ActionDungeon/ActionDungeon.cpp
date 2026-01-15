@@ -27,6 +27,7 @@
 #include "../../../System/Money/MoneyManager.h"
 #include "../../../Stage/StageObject/Treasure/Treasure.h"
 #include "../../../System/Status/PlayerStatusManager.h"
+#include "../../../Component/Character/CharacterUtility.h"
 
 #include <iostream>
 
@@ -170,11 +171,12 @@ void ActionDungeon::Render() {
 	}
 #endif
 
-	PlayerStatusData* status = PlayerStatusManager::GetInstance().GetPlayerStatusData();
-	DrawFormatString(550, 50, GetColor(255, 255, 255), "HP : %d", status->base.HP);
-	DrawFormatString(550, 70, GetColor(255, 255, 255), "Stamina : %d", status->base.stamina);
-	DrawFormatString(550, 90, GetColor(255, 255, 255), "Strength : %d", status->base.strength);
-	DrawFormatString(550, 110, GetColor(255, 255, 255), "ResistTime : %d", status->base.resistTime);
+	PlayerStatusData* BaseStatus = PlayerStatusManager::GetInstance().GetPlayerStatusData();
+	PlayerStatusValue playerStatus = GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus();
+	DrawFormatString(450, 20, GetColor(255, 255, 255), "HP : %d / HP : %d", playerStatus.HP, BaseStatus->base.HP);
+	DrawFormatString(450, 40, GetColor(255, 255, 255), "Stamina : %d / Stamina : %d", playerStatus.stamina, BaseStatus->base.stamina);
+	DrawFormatString(450, 60, GetColor(255, 255, 255), "Strength : %d / Strength : %d", playerStatus.strength, BaseStatus->base.strength);
+	DrawFormatString(450, 80, GetColor(255, 255, 255), "ResistTime : %d / ResistTime : %d", playerStatus.resistTime, BaseStatus->base.resistTime);
 
 }
 /*

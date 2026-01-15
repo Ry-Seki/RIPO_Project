@@ -7,20 +7,22 @@
 
 #include "CharacterBase.h"
 #include "../AnimatorComponent.h"
+#include "../../System/Status/PlayerStatusManager.h"
 #include "../../Engine.h"
 
 class PlayerComponent : public CharacterBase {
 private:
-	float moveSpeed;		// 移動速度
-	float acceleration;		// 加速度
-	float avoidMoveValue;	// 回避の移動量
-	float avoidCoolTime;	// 回避のクールタイム
-	float moveDirectionY;	// y軸の移動方向
-	Vector3 moveVec;		// プレイヤーの移動量
-	bool canAvoid;			// 回避可能か否か
-	bool isAvoid;			// 回避中か否か
-	bool hasResolvedInitialGrounding;	// 初期接地処理を行ったかどうか
-	std::shared_ptr<AnimatorComponent> animator;
+	float moveSpeed;								// 移動速度
+	float acceleration;								// 加速度
+	float avoidMoveValue;							// 回避の移動量
+	float avoidCoolTime;							// 回避のクールタイム
+	float moveDirectionY;							// y軸の移動方向
+	Vector3 moveVec;								// プレイヤーの移動量
+	bool canAvoid;									// 回避可能か否か
+	bool isAvoid;									// 回避中か否か
+	bool hasResolvedInitialGrounding;				// 初期接地処理を行ったかどうか
+	std::shared_ptr<AnimatorComponent> animator;	// アニメーターコンポーネント
+	PlayerStatusValue status;		// プレイヤーのステータス
 
 	const float PLAYER_MODEL_ANGLE_CORRECTION;	// プレイヤーのモデル角度を補正する値
 	const float DEFAULT_MOVE_SPEED;				// デフォルトの移動速度
@@ -66,6 +68,10 @@ public:
 	 *	移動量の取得
 	 */
 	inline Vector3 GetMoveVec()const { return moveVec; }
+	/*
+	 *	プレイヤーのステータス取得
+	 */
+	inline PlayerStatusValue GetPlayerStatus()const { return status; }
 
 };
 
