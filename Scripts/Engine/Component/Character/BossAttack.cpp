@@ -4,6 +4,8 @@
  */
 #include "BossAttack.h"
 #include "../ModelRenderer.h"
+#include "BossComponent.h"
+#include "BossStandby.h"
 
  /*
   *	コンストラクタ
@@ -11,6 +13,8 @@
 BossAttack::BossAttack()
 	: animator(nullptr)
 	, modelHandle(-1)
+	, coolTime(0)
+	, MAX_COOL_TIME(3)
 {
 }
 
@@ -22,6 +26,7 @@ void BossAttack::Start(GameObject* boss)
 {
 	animator = boss->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
+	coolTime = MAX_COOL_TIME;
 }
 
 /*
@@ -38,5 +43,23 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 
 	animator->Update(deltaTime);
 	animator->Play(4, 10);
-	if ()
+
+	// 攻撃の当たり判定
+	auto aabbCollider = boss->GetComponent<AABBCollider>();
+	Vector3 aabbDirection = { 0, 0, 0 };
+	const Vector3 aabbMin = { -1000, 0, -1000 };
+	const Vector3 aabbMax = { 1000, 100, 1000 };
+	
+	// 攻撃処理
+	aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
+
+	// アニメーションが終わるまで待ちたい
+	// 仮
+		coolTime -= deltaTime;
+	if (coolTime <= 0) {
+		aabbCollider->aabb = { Vector3::zero, Vector3::zero };
+		// 状態遷移
+		boss->GetComponent<BossComponent>()->SetState(new BossStandby());
+	}
+
 }

@@ -15,6 +15,9 @@ class BossAttack : public BossState {
 private:
 	std::shared_ptr<AnimatorComponent> animator;
 	int modelHandle;
+	float coolTime;
+
+	const float MAX_COOL_TIME;
 
 public:
 	/*
