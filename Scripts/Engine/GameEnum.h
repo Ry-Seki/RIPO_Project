@@ -33,5 +33,26 @@ namespace GameEnum {
 
 		Max
 	};
+	/*
+	 *	@brief	プレイヤーのステータスの種類
+	 */
+	enum class PlayerStatusType {
+		Invalid = -1,
+		HP,				// HP
+		Stamina,		// スタミナ
+		Strength,		// 力
+		ResistTime,		// 抵抗力
+		Max
+	};
+	/*
+	 *	@brief	ミニゲーム難易度
+	 */
+	enum class MiniGameLevel {
+		Invalid = -1,
+		Easy,
+		Normal,
+		Hard,
+		Max
+	};
 }
 #endif // !_GAME_ENUM_H_

@@ -35,7 +35,6 @@ void InAction_Dungeon::Setup() {
 	auto& context = owner->GetOwner()->GetActionContext();
 	floorProcessor.CreateFloor(context, isStart);
 }
-
 /*
  *	@brief	XVˆ—
  */

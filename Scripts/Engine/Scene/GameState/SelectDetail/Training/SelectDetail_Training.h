@@ -12,6 +12,8 @@
  *	@brief	トレーニングの内容を選択するクラス
  */
 class SelectDetail_Training : public SelectDetailBase {
+private:
+	bool inputHandle = false;
 
 public:
 	/*

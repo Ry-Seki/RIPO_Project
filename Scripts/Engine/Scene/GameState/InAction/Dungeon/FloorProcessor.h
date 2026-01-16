@@ -6,7 +6,7 @@
 #ifndef _FLOOR_PROCESSOR_H_
 #define _FLOOR_PROCESSOR_H_
 
-#include "../../../DayAction/ActionDungeon/DungeonCreater.h"
+#include "DungeonCreater.h"
 
 #include <vector>
 

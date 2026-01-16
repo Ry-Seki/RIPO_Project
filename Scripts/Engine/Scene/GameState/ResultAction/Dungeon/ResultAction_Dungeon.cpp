@@ -8,6 +8,9 @@
 #include "../../GameStateMachine.h"
 #include "../../../../System/Money/MoneyManager.h"
 #include "../../../../Audio/AudioUtility.h"
+#include "../../../../Fade/FadeFactory.h"
+#include "../../../../Fade/FadeManager.h"
+
 #include <DxLib.h>
 
 /*
@@ -30,7 +33,10 @@ void ResultAction_Dungeon::Update(float deltaTime) {
 		// SE‚ÌÄ¶
 		AudioUtility::PlaySE("DebugSE");
 		inputHandle = true;
-		owner->GetOwner()->ChageState(GameEnum::GameState::SelectAction);
+		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
+		FadeManager::GetInstance().StartFade(fadeOut, [this]() {
+			owner->GetOwner()->ChageState(GameEnum::GameState::SelectAction);
+		});
 	}
 }
 /*
