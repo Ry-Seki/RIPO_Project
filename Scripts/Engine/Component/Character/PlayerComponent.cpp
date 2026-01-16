@@ -10,6 +10,7 @@
 #include "RevolverArm.h"
 #include "../../Manager/StageManager.h"
 #include "../GravityComponent.h"
+#include "../../System/Status/PlayerStatusManager.h"
 #include "DxLib.h"
 
 PlayerComponent::PlayerComponent()
@@ -22,6 +23,7 @@ PlayerComponent::PlayerComponent()
 	, isAvoid(false)
 	, hasResolvedInitialGrounding(false)
 	, animator(nullptr)
+	, status(-1,-1,-1,-1)
 
 	, PLAYER_MODEL_ANGLE_CORRECTION(89.98f)
 	, DEFAULT_MOVE_SPEED(1500.0f)
@@ -36,7 +38,8 @@ PlayerComponent::PlayerComponent()
 }
 
 void PlayerComponent::Start() {
-	
+	// プレイヤーの基礎ステータスを受け取る
+	status = PlayerStatusManager::GetInstance().GetPlayerStatusData()->base;
 }
 
 void PlayerComponent::Update(float deltaTime) {
@@ -162,6 +165,8 @@ void PlayerComponent::SpeedControl(float deltaTime) {
 			acceleration += sinf(Deg2Rad * deltaTime * ACCELERATION_RATE);
 		else
 			acceleration = RUN_ACCELERATION_MAX;
+		// スタミナを消費していく
+		status.stamina -= 1;
 	}
 	else {
 		// なめらかな減速
