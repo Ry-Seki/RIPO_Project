@@ -76,14 +76,17 @@ void PlayerComponent::Update(float deltaTime) {
 		staminaHealCoolTime -= 1;
 	}
 
+
+
 	// 回避
 	PlayerAvoid(player, deltaTime);
 	// 回避中は処理しない
-	if (isAvoid) return;
-	// 速度調節
-	SpeedControl(deltaTime);
-	// 移動処理
-	PlayerMove(player, deltaTime);
+	if (!isAvoid) {
+		// 速度調節
+		SpeedControl(deltaTime);
+		// 移動処理
+		PlayerMove(player, deltaTime);
+	}
 	// ステージとの当たり判定
 	StageManager::GetInstance().StageCollider(player, moveVec);
 

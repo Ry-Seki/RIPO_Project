@@ -9,6 +9,11 @@
 #include "../../GameConst.h"
 #include "../../Scene/Scene.h"
 
+#include "../../Stage/StageObject/StageObjectUtility.h"
+#include "../../Component/Character/CharacterUtility.h"
+using namespace StageObjectUtility;
+using namespace CharacterUtility;
+
 HandArm::HandArm()
 	: liftObject(nullptr)
 	
@@ -49,7 +54,33 @@ void HandArm::LiftTreasure(GameObject* player, Engine* engine) {
 	);
 	// 条件内でヒットすればそのオブジェクトを保存
 	if (hit) {
-		liftObject = hitInfo.collider->GetOwner();
+		// 仮でパワーを反映する(IDで宝を判定して無理やり制限を掛ける)
+		auto player = GetPlayer()->GetComponent<PlayerComponent>();
+		int ID1 = -1;
+		int ID2 = -1;
+		auto objectList = GetCreateObjectList();
+		for (auto& obj : objectList) {
+			if (obj->name == GameConst::_CREATE_POSNAME_TREASURE) {
+				if (ID1 == -1) {
+					ID1 = obj->ID;
+					continue;
+				}
+				else if (ID2 == -1) {
+					ID2 = obj->ID;
+					break;
+				}
+			}
+		}
+		if (hitInfo.collider->GetOwner()->ID == ID1) {
+			liftObject = hitInfo.collider->GetOwner();
+		}
+		else if (hitInfo.collider->GetOwner()->ID == ID2) {
+			if (player->GetPlayerStatus().strength > 2) {
+				liftObject = hitInfo.collider->GetOwner();
+			}
+		}
+			
+		//liftObject = hitInfo.collider->GetOwner();
 	}
 }
 
