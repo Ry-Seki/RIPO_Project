@@ -9,6 +9,7 @@
 #include "../../GameConst.h"
 #include "../../GameObject/GameObjectUtility.h"
 #include "../../Manager/CameraManager.h"
+#include "../../System/Money/MoneyManager.h"
 
 using namespace GameObjectUtility;
 using namespace CharacterUtility;
@@ -47,5 +48,7 @@ void BulletComponent::OnCollision(const std::shared_ptr<Component>& self, const 
 	// ìGÇ…ìñÇΩÇ¡ÇΩÇÁìGÇ‡îjä¸
 	if (otherOwner->name == GameConst::_CREATE_POSNAME_ENEMY) {
 		RemoveCharacter(otherOwner);
+		// è≠ó ÇÃÇ®ã‡Çì¸éË
+		MoneyManager::GetInstance().AddMoney(5);
 	}
 }
