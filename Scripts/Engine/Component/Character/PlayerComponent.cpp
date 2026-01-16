@@ -20,6 +20,7 @@ PlayerComponent::PlayerComponent()
 	, avoidCoolTime(0.0f)
 	, staminaHealCoolTime(0.0f)
 	, staminaChangePoint(0.0f)
+	, resistTimePoint(0.0f)
 	, moveDirectionY(0.0f)
 	, canAvoid(true)
 	, isAvoid(false)
@@ -40,6 +41,7 @@ PlayerComponent::PlayerComponent()
 	, STAMINA_HEAL_VALUE(0.2f)
 	, JUMP_POWER(1400.0f)
 	, BACK_ACCELERATION(0.5f)
+	, HP_DECREASE_RATE(0.2f)
 {
 }
 
@@ -76,7 +78,22 @@ void PlayerComponent::Update(float deltaTime) {
 		staminaHealCoolTime -= 1;
 	}
 
-
+	// ‘Ï«’l‚ğí‚Á‚Ä‚¢‚­
+	resistTimePoint -= deltaTime;
+	if (resistTimePoint <= -1) {
+		if (status.resistTime > 0) {
+			status.resistTime -= 1;
+		}
+		// ‘Ï«’l‚ª‚È‚­‚È‚Á‚½ê‡‚ÍHP‚ªŠ„‡‚Åí‚ê‚é
+		else {
+			status.resistTime = 0;
+			if (status.HP > 0)
+				status.HP -= baseStatus.HP * HP_DECREASE_RATE;
+			else
+				status.HP = 0;
+		}
+		resistTimePoint = 0;
+	}
 
 	// ‰ñ”ğ
 	PlayerAvoid(player, deltaTime);
