@@ -49,8 +49,7 @@ void SelectDetail_Dungeon::Update(float deltaTime) {
 	if (!inputHandle && CheckHitKey(KEY_INPUT_1)) {
 		// SEの再生
 		AudioUtility::PlaySE("DebugSE");
-		// TODO:ここはしっかりと治す
-		dungeonID = 0;
+		dungeonID = 1;
 		inputHandle = true;
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
 		FadeManager::GetInstance().StartFade(fade, [this]() {
@@ -100,6 +99,7 @@ void SelectDetail_Dungeon::SetDungeonData(const std::vector<std::shared_ptr<Load
 	auto& ctx = owner->GetOwner()->GetActionContext();
 	// それぞれのデータを初期化
 	ctx.dungeonStageData.LoadFromJSON(dungeonData);
+	// TODO : ここ治す
 	ctx.dungeonFloorData.LoadFromJSON(dungeonfloorData, dungeonID);
 	// ステートの切り替え
 	owner->GetOwner()->ChageState(GameEnum::GameState::InAction);

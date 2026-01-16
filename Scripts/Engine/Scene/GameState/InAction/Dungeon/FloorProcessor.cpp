@@ -105,7 +105,7 @@ void FloorProcessor::SetupNextFloor() {
 	dungeonCreater.SetFloorData(setFloorData);
 	// フロアを再生成
 	dungeonCreater.RegenerateDungeon(
-		currentFloor, enemyFloorList[currentFloor], holdTreasureID, GetNameToTreasureID(), nextFloor
+		currentFloor, enemyFloorList[currentFloor], holdTreasureID, GetTreasureIDTable(currentFloor), nextFloor
 	);
 	// フロアデータの更新
 	floorData.TrySetFloorData(currentFloor, setFloorData);
@@ -139,7 +139,7 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart) {
 		// ダンジョン生成クラスに必要なデータを設定
 		dungeonCreater.SetDungeonData(setFloorData, resourceData);
 		// ダンジョンの生成
-		dungeonCreater.GenerateDungeon(currentFloor, GetNameToTreasureID(), nextFloor);
+		dungeonCreater.GenerateDungeon(currentFloor, GetTreasureIDTable(currentFloor), nextFloor);
 		// フロアデータの更新
 		floorData.TrySetFloorData(currentFloor, setFloorData);
 	#if _DEBUG
@@ -177,17 +177,28 @@ void FloorProcessor::EndDungeon() {
 	CameraManager::GetInstance().ResetCamera();
 }
 /*
- *	@brief	お宝データからお宝IDを取り出す
+ *	@brief		FloorごとのTreasureID一覧を取得
+ *  @param[in]	int floorID
+ *	@return		std::vector<int>
  */
-std::vector<int> FloorProcessor::GetNameToTreasureID() {
+std::vector<int> FloorProcessor::GetTreasureIDTable(int floorID) {
+	std::vector<std::vector<int>> result;
+
 	auto treasureMap = stageData.GetCategory("Treasure");
-	std::string leafKey;
-	std::vector<int> IDList;
-	for (const auto& [key, path] : treasureMap) {
-		// 最後の階層だけを取得
-		if (stageData.TryGetLeafKey(key, leafKey)) {
-			IDList.push_back(std::stoi(leafKey));
+	// JSONのキーから数字を取り出す
+	for (const auto& [key, value] : treasureMap) {
+		auto parts = StringUtility::Split(key, '.');
+		if (parts.size() != 2) continue;
+		// 一つ目はフロア数
+		int floor = std::stoi(parts[0]);
+		// 二つ目はお宝ID
+		int treasureID = std::stoi(parts[1]);
+		// floor 番目の要素が存在しないか判定
+		if (result.size() <= static_cast<size_t>(floor)) {
+			result.resize(floor + 1);
 		}
+
+		result[floor].push_back(treasureID);
 	}
-	return IDList;
+	return result[floorID];
 }

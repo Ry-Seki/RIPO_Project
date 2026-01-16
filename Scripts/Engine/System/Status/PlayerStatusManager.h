@@ -21,6 +21,8 @@ class PlayerStatusManager : public Singleton<PlayerStatusManager> {
 private:
 	std::shared_ptr<PlayerStatusData> playerStatus;		// プレイヤーステータスデータ
 
+	static constexpr const char* _PLAYER_STATUS_DATA_PATH = "Data/Player/PlayerStatusData.json";
+
 private:
 	/*
 	 *	コンストラクタ

@@ -22,6 +22,9 @@ class MainGameScene : public Scene {
 private:
     std::unique_ptr<GameStateMachine> gameState;
 
+    static constexpr const char* _TREASURE_DATA_PATH = "Data/Treasure/TreasureDataList.json";
+    static constexpr const char* _ITEM_DATA_PATH = "Data/Item/ItemCatalogData.json";
+
 public:
     /*
      *  @brief  コンストラクタ

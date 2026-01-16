@@ -65,13 +65,14 @@ public:
 	 */
 	void EndDungeon();
 
+
 private:
 	/*
-	 *	@brief		お宝データからお宝IDを取り出す
-	 *  @return		std::vector<int>
+	 *	@brief		FloorごとのTreasureID一覧を取得
+	 *  @param[in]	int floorID
+	 *	@return		std::vector<std::vector<int>>
 	 */
-	std::vector<int> GetNameToTreasureID();
-
+	std::vector<int> GetTreasureIDTable(int floorID);
 };
 
 #endif // !_FLOOR_PROCESSOR_H_

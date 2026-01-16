@@ -30,8 +30,8 @@ void MainGameScene::Initialize(Engine& engine) {
     gameState = std::make_unique<GameStateMachine>();
     gameState->Initialize(engine);
     gameState->ChageState(GameEnum::GameState::SelectAction);
-    auto treasureData = LoadManager::GetInstance().LoadResource<LoadJSON>("Data/Treasure/TreasureDataList.json");
-    auto itemData = LoadManager::GetInstance().LoadResource<LoadJSON>("Data/Item/ItemCatalogData.json");
+    auto treasureData = LoadManager::GetInstance().LoadResource<LoadJSON>(_TREASURE_DATA_PATH);
+    auto itemData = LoadManager::GetInstance().LoadResource<LoadJSON>(_ITEM_DATA_PATH);
     LoadManager::GetInstance().SetOnComplete([treasureData, itemData]() {
         MoneyManager::GetInstance().LoadFromJSON(treasureData->GetData(), itemData->GetData());
     });

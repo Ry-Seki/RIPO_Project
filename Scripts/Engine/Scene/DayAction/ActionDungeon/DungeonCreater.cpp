@@ -76,7 +76,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 	LoadStage(stageHandleList);
 	// ステージボーンデータの設定
 	// TODO : スポーンデータの修正
-	SetStageJSONData(resourceData.stageBoneResource[0]->GetData());
+	SetStageJSONData(resourceData.stageBoneResource->GetData());
 
 	// プレイヤーの設定
 	// モデルの取得
@@ -141,7 +141,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 	for (int i = 0; i < treasureCount; i++) {
 		if (treasureList.size() <= 0) break;
 		// モデルハンドルの取得
-		int treasureHandle = resourceData.treasureResource[i]->GetHandle();
+		int treasureHandle = resourceData.treasureResource[floorID][i]->GetHandle();
 		// 宝オブジェクトの取得
 		GameObject* treasure = treasureList[i].get();
 		if (!treasure) continue;
@@ -271,7 +271,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	for (int i = 0; i < treasureCount; i++) {
 		if (treasureList.size() <= 0) break;
 		// モデルハンドルの取得
-		int treasureHandle = resourceData.treasureResource[i]->GetHandle();
+		int treasureHandle = resourceData.treasureResource[floorID][i]->GetHandle();
 		// 宝オブジェクトの取得
 		auto treasure = treasureList[i].get();
 		if (!treasure) continue;

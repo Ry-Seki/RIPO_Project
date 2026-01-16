@@ -240,6 +240,7 @@
     <ClCompile Include="Scripts\Engine\Stage\StageObject\ExitPoint.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Stair.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.cpp" />
+    <ClCompile Include="Scripts\Engine\StringUtility.cpp" />
     <ClCompile Include="Scripts\Engine\System\Item\ItemManager.cpp" />
     <ClCompile Include="Scripts\Engine\System\Status\PlayerStatusManager.cpp" />
     <ClCompile Include="Scripts\Engine\Time.cpp" />
@@ -399,6 +400,7 @@
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageState.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageUtility.h" />
+    <ClInclude Include="Scripts\Engine\StringUtility.h" />
     <ClInclude Include="Scripts\Engine\System\Item\ItemManager.h" />
     <ClInclude Include="Scripts\Engine\System\Money\MoneyManager.h" />
     <ClInclude Include="Scripts\Engine\System\Status\PlayerStatusManager.h" />

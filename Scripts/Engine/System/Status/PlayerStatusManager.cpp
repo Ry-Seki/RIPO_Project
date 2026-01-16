@@ -12,7 +12,7 @@
  *	‰Šú‰»ˆ—
  */
 void PlayerStatusManager::Initialize() {
-	auto jsonData = LoadManager::GetInstance().LoadResource<LoadJSON>("Data/Player/PlayerStatusData.json");
+	auto jsonData = LoadManager::GetInstance().LoadResource<LoadJSON>(_PLAYER_STATUS_DATA_PATH);
 	LoadManager::GetInstance().SetOnComplete([this, jsonData]() {
 		SetupData(jsonData->GetData());
 	});
