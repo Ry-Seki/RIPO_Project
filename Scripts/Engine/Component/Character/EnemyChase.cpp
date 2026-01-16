@@ -6,6 +6,7 @@
 #include "EnemyTurn.h"
 #include "../../Vision.h"
 #include "../../Manager/CameraManager.h"
+#include "EnemyAttack.h"
 
  /*
   *	コンストラクタ
@@ -107,33 +108,18 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 		}
 	}
 
-	// EnemyAttackに移動するかも(攻撃の直前だけ動かすでよいため)
-	// AABBコライダーを前方に置く
-	auto aabbCollider = enemy->GetComponent<AABBCollider>();
-	float value = 100;
-	Vector3 aabbDirection = { value * direction.x, 0, value * direction.z };
-	const Vector3 aabbMin = { -40, 0, -40 };
-	const Vector3 aabbMax = { 40, 100, 40 };
-	aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
-
 	auto distance = Distance(wayPoint, enemy->position);
 	// プレイヤーの手前で止まる
-	if (player) {
-		if (wayPoint == player->position) {
-			if (distance > DIFFERENCE_PLAYER) {
-				closePlayer = true;
-				enemy->position.x += direction.x * MOVE_SPEED * deltaTime;
-				enemy->position.z += direction.z * MOVE_SPEED * deltaTime;
-			}
-			else {
-				closePlayer = false;
-			}
+	if (player && wayPoint == player->position) {
+		// 攻撃射程判定
+		if (distance > DIFFERENCE_PLAYER) {
+			enemy->position.x += direction.x * MOVE_SPEED * deltaTime;
+			enemy->position.z += direction.z * MOVE_SPEED * deltaTime;
 		}
-	}
-	// 目標地点についたらターゲットを変える
-	if (distance < differenceTarget) {
-		enemy->GetComponent<EnemyComponent>()->SetChaseTargetChangeFrag(targetChange);
-		 enemy->GetComponent<EnemyComponent>()->SetState(new EnemyTurn());
+		else {
+			// 攻撃状態遷移
+			enemy->GetComponent<EnemyComponent>()->SetState(new EnemyAttack());
+		}
 	}
 	else {
 		float moveX = 0;
@@ -147,5 +133,10 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 
 		// 移動量を更新
 		moveVec = { moveX,0.0f,moveZ };
+	}
+	// 目標地点についたらターゲットを変える
+	if (distance < differenceTarget) {
+		enemy->GetComponent<EnemyComponent>()->SetChaseTargetChangeFrag(targetChange);
+		enemy->GetComponent<EnemyComponent>()->SetState(new EnemyTurn());
 	}
 }
