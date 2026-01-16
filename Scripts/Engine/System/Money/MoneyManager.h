@@ -26,6 +26,7 @@ private:
 	ItemCatalogData itemCatalogData;	// アイテムカタログデータ
 
 	int currentMoney = 0;				// 現在の所持金
+	int prevMoney = 0;					// ひとつ前の所持金
 
 private:
 	/*
@@ -39,7 +40,7 @@ private:
 
 public:
 	/*
-	 *  JSONデータの読み込み、mapに自動で登録する
+	 *  @brief		SONデータの読み込み、mapに自動で登録する
 	 *  @param[in]  const JSON& setTreasureJSON
 	 *  @param[in]	const JSON& setItemJSON
 	 */
@@ -62,15 +63,21 @@ public:
 
 public:
 	/*
-	 *	@brief		所持金の取得
+	 *	@brief		現在の所持金の取得
 	 *	@return		int
 	 */
 	inline int GetCurrentMoney() { return currentMoney; }
 	/*
+	 *	@brief		ひとつ前の所持金の取得
+	 *	@return		int
+	 */
+	inline int GetPrevMoney() { return prevMoney; }
+	/*
 	 *	@brief		所持金の設定
 	 *	@param[in]	int setValue	お金の値
 	 */
-	inline void SetCurrentMoney(int setValue) {
+	inline void SetMoney(int setValue) {
+		prevMoney = currentMoney;
 		currentMoney = setValue;
 		if (currentMoney < 0) currentMoney = 0;
 	}
@@ -79,7 +86,7 @@ public:
 	 *	@param[in]	const int setValue	お金の値
 	 */
 	inline void AddMoney(const int setValue) {
-		SetCurrentMoney(currentMoney + setValue);
+		SetMoney(currentMoney + setValue);
 	}
 	/*
 	 *	@brief		お宝の価値を所持金に足す
@@ -95,10 +102,10 @@ public:
 	 *	@param[in]	const int setValue	お金の値
 	 */
 	inline void SubMoney(const int setValue) {
-		SetCurrentMoney(currentMoney - setValue);
+		SetMoney(currentMoney - setValue);
 	}
 	/*
-	 *	所持金からお金を引く
+	 *	@brief		所持金からお金を引く
 	 *	@param[in]	const int ID	アイテムID
 	 */
 	inline void SubItemMoney(const int ID) {

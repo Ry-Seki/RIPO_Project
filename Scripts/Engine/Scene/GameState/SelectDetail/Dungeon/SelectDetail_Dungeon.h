@@ -48,6 +48,10 @@ public:
 	 *	@brief	•`‰æˆ—
 	 */
 	void Render() override;
+	/*
+	 *	@brief	•Ğ•t‚¯ˆ—
+	 */
+	void Teardown() override;
 
 public:
 	/*

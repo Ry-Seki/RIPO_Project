@@ -4,6 +4,7 @@
  */
 
 #include "GameState_InAction.h"
+#include "../GameStateMachine.h"
 #include "Dungeon/InAction_Dungeon.h"
 #include "Training/InAction_Training.h"
 #include "Shop/InAction_Shop.h"
@@ -38,8 +39,9 @@ void GameState_InAction::Initialize(Engine& engine) {
  *	@brief	€”õ‘Oˆ—
  */
 void GameState_InAction::Setup() {
-	// currentAction = inActionList[type];
-	// currentAction->Setup();
+	auto& context = owner->GetActionContext();
+	currentAction = inActionList[static_cast<int>(context.actionType)];
+	currentAction->Setup();
 }
 /*
  *	@brief	XVˆ—

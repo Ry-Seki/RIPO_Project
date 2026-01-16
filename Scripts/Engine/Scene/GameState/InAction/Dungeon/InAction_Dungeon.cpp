@@ -14,6 +14,7 @@
 #include "../../../../Manager/StageObjectManager.h"
 #include "../../../../Load/LoadManager.h"
 #include "../../../../Component/GravityComponent.h"
+#include "../../../../Audio/AudioUtility.h"
 
 /*
  *	@brief	初期化処理
@@ -30,34 +31,11 @@ void InAction_Dungeon::Initialize(Engine& engine) {
  *	@brief	準備前処理
  */
 void InAction_Dungeon::Setup() {
-	currentFloor = 0;
-	auto& ctx = owner->GetOwner()->GetActionContext();
-	resourceData.LoadResourcesFromStageData(ctx.dungeonStageData);
-	LoadManager& load = LoadManager::GetInstance();
-	load.SetOnComplete([this]() {SetupDungeon(); });
+	isStart = false;
+	auto& context = owner->GetOwner()->GetActionContext();
+	floorProcessor.CreateFloor(context, isStart);
 }
-/*
- *	@brief	ダンジョン準備処理
- */
-void InAction_Dungeon::SetupDungeon() {
-	// フロアデータの作成
-	FloorData setFloorData;
-	// フロアデータの変更
-	floorData.TryGetFloorData(currentFloor, setFloorData);
-	setFloorData.isFirst = false;
-	// ダンジョン生成クラスに必要なデータを設定
-	dungeonCreater.SetDungeonData(setFloorData, resourceData);
-	// ダンジョンの生成
-	dungeonCreater.GenerateDungeon(currentFloor, TakeOutTreasureID(), nextFloor);
-	// フロアデータの更新
-	floorData.TrySetFloorData(currentFloor, setFloorData);
-#if _DEBUG
-	// 重力
-	auto player = CharacterManager::GetInstance().GetPlayer();
-	GameObjectManager::GetInstance().SetObjectColliderFlag(true);
-	player->GetComponent<GravityComponent>()->SetGravity(true);
-#endif
-}
+
 /*
  *	@brief	更新処理
  */
@@ -71,13 +49,12 @@ void InAction_Dungeon::Update(float deltaTime) {
 	// 出口に触れたとき
 	if (exitFrag) {
 		// SEの再生
-		//AudioUtility::PlaySE("GoalSE");
-		//EndDungeon();
+		AudioUtility::PlaySE("GoalSE");
+		EndDungeon();
 	}
 	else if (stairFrag) {
-		//ChangeFloor();
+		floorProcessor.ChangeFloor();
 	}
-
 }
 /*
  *	@brief	描画処理
@@ -167,17 +144,9 @@ void InAction_Dungeon::Render() {
 void InAction_Dungeon::Teardown() {
 }
 /*
- *	@brief	お宝データからお宝IDを取り出す
+ *	@brief	ダンジョン終了処理
  */
-std::vector<int> InAction_Dungeon::TakeOutTreasureID() {
-	auto treasureMap = stageData.GetCategory("Treasure");
-	std::string leafKey;
-	std::vector<int> IDList;
-	for (const auto& [key, path] : treasureMap) {
-		// 最後の階層だけを取得
-		if (stageData.TryGetLeafKey(key, leafKey)) {
-			IDList.push_back(std::stoi(leafKey));
-		}
-	}
-	return IDList;
+void InAction_Dungeon::EndDungeon() {
+	floorProcessor.EndDungeon();
+	owner->GetOwner()->ChageState(GameEnum::GameState::ResultAction);
 }

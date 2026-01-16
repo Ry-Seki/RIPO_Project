@@ -12,6 +12,10 @@
  *	@brief	ダンジョンアクションリザルト
  */
 class ResultAction_Dungeon : public ResultActionBase {
+private:
+	int prevMoney = -1;
+	int currentMoney = -1;
+	bool inputHandle = false;
 
 public:
 	/*

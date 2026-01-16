@@ -29,6 +29,7 @@ void MainGameScene::Initialize(Engine& engine) {
     // ゲームステートの初期化
     gameState = std::make_unique<GameStateMachine>();
     gameState->Initialize(engine);
+    gameState->ChageState(GameEnum::GameState::SelectAction);
     auto treasureData = LoadManager::GetInstance().LoadResource<LoadJSON>("Data/Treasure/TreasureDataList.json");
     auto itemData = LoadManager::GetInstance().LoadResource<LoadJSON>("Data/Item/ItemCatalogData.json");
     LoadManager::GetInstance().SetOnComplete([treasureData, itemData]() {
@@ -45,11 +46,14 @@ void MainGameScene::Setup() {
  *  更新処理
  */
 void MainGameScene::Update(Engine& engine, float deltaTime) {
+    gameState->Update(deltaTime);
+    Scene::Update(engine, deltaTime);
 }
 /*
  *  描画処理
  */
 void MainGameScene::Render() {
+    gameState->Render();
     Scene::Render();
     DrawFormatString(50, 400, GetColor(255, 255, 255), "Money : %d", MoneyManager::GetInstance().GetCurrentMoney());
 

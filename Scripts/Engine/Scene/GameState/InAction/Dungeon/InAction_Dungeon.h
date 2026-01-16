@@ -8,7 +8,7 @@
 
 #include "../InActionBase.h"
 #include "../../../DayAction/ActionDungeon/DungeonCreater.h"
-
+#include "FloorProcessor.h"
 
 // 前方宣言
 class DungeonResourceData;
@@ -19,13 +19,8 @@ class DungeonResourceData;
 class InAction_Dungeon : public InActionBase {
 private:
 	bool isStart = false;
-	int currentFloor = -1;
-	int nextFloor = -1;
 
-	DungeonCreater dungeonCreater;
-	DungeonResourceData resourceData;
-	DungeonFloorData floorData;
-	DungeonStageData stageData;
+	FloorProcessor floorProcessor;
 
 public:
 	/*
@@ -36,10 +31,6 @@ public:
 	 *	@brief	準備前処理
 	 */
 	void Setup() override;
-	/*
-	 *	@brief	ダンジョン準備処理
-	 */
-	void SetupDungeon();
 	/*
 	 *	@brief	更新処理
 	 */
@@ -54,10 +45,6 @@ public:
 	void Teardown() override;
 
 public:
-	/*
-	 *	@brief	お宝データからお宝IDを取り出す
-	 */
-	std::vector<int> TakeOutTreasureID();
 	/*
 	 *	@brief	ダンジョン終了処理
 	 */

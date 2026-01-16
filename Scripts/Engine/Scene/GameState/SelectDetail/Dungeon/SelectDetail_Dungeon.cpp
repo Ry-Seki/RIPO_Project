@@ -49,20 +49,27 @@ void SelectDetail_Dungeon::Update(float deltaTime) {
 	if (!inputHandle && CheckHitKey(KEY_INPUT_1)) {
 		// SEの再生
 		AudioUtility::PlaySE("DebugSE");
-		dungeonID = 1;
+		// TODO:ここはしっかりと治す
+		dungeonID = 0;
 		inputHandle = true;
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
 		FadeManager::GetInstance().StartFade(fade, [this]() {
 			StartDungeonDataLoad(dungeonID);
 		});
 	}
-	if (CheckHitKey(KEY_INPUT_0) == 0) inputHandle = false;
+	if (CheckHitKey(KEY_INPUT_1) == 0) inputHandle = false;
 }
 /*
  *	@brief	描画処理
  */
 void SelectDetail_Dungeon::Render() {
-
+	DrawFormatString(50, 50, GetColor(0, 0, 0), "1: TutorialDungeon");
+}
+/*
+ *	@brief	片付け処理
+ */
+void SelectDetail_Dungeon::Teardown() {
+	inputHandle = false;
 }
 /*
  *	@brief	ダンジョンステージデータの読み込み

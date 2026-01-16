@@ -4,6 +4,7 @@
  */
 
 #include "GameState_SelectDetail.h"
+#include "../GameStateMachine.h"
 #include "Dungeon/SelectDetail_Dungeon.h"
 #include "Training/SelectDetail_Training.h"
 #include "Shop/SelectDetail_Shop.h"
@@ -38,9 +39,9 @@ void GameState_SelectDetail::Initialize(Engine& engine) {
  *	@brief	€”õ‘Oˆ—
  */
 void GameState_SelectDetail::Setup() {
-	// currentDetail = selectdetailList[];
-	// currentDetail->Setup();
-
+	auto& context = owner->GetActionContext();
+	currentDetail = selectDetailList[static_cast<int>(context.actionType)];
+	currentDetail->Setup();
 }
 /*
  *	@brief	XVˆ—

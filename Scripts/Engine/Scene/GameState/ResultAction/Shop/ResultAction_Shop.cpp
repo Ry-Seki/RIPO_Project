@@ -8,25 +8,26 @@
 /*
  *	@brief	初期化処理
  */
-void ResultActionShop::Initialize() {
+void ResultAction_Shop::Initialize() {
 }
 /*
  *	@brief	準備前処理
  */
-void ResultActionShop::Setup() {
+void ResultAction_Shop::Setup() {
 }
 /*
  *	@brief	更新処理
  */
-void ResultActionShop::Update(float deltaTime) {
+void ResultAction_Shop::Update(float deltaTime) {
 }
 /*
  *	@brief	描画処理
  */
-void ResultActionShop::Render() {
+void ResultAction_Shop::Render() {
 }
 /*
  *	@brief	片付け処理
  */
-void ResultActionShop::Teardown() {
+void ResultAction_Shop::Teardown() {
+
 }
