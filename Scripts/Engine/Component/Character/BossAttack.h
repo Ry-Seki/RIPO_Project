@@ -6,12 +6,18 @@
 #define _BOSSATTACK_H_
 
 #include "BossState.h"
+#include "../AnimatorComponent.h"
 
 /*
  *	ボスの攻撃処理クラス
  */
 class BossAttack : public BossState {
 private:
+	std::shared_ptr<AnimatorComponent> animator;
+	int modelHandle;
+	float coolTime;
+
+	const float MAX_COOL_TIME;
 
 public:
 	/*

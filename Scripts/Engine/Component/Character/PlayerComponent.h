@@ -16,13 +16,16 @@ private:
 	float acceleration;								// 加速度
 	float avoidMoveValue;							// 回避の移動量
 	float avoidCoolTime;							// 回避のクールタイム
+	float staminaHealCoolTime;						// スタミナが回復し始めるまでの時間
+	float staminaChangePoint;						// スタミナの回復＆消費を調節するためのfloat型変数
+	float resistTimePoint;							// 耐性値の減少を調節するためのfloat型変数
 	float moveDirectionY;							// y軸の移動方向
 	Vector3 moveVec;								// プレイヤーの移動量
 	bool canAvoid;									// 回避可能か否か
 	bool isAvoid;									// 回避中か否か
 	bool hasResolvedInitialGrounding;				// 初期接地処理を行ったかどうか
 	std::shared_ptr<AnimatorComponent> animator;	// アニメーターコンポーネント
-	PlayerStatusValue status;		// プレイヤーのステータス
+	PlayerStatusValue status;						// プレイヤーのステータス
 
 	const float PLAYER_MODEL_ANGLE_CORRECTION;	// プレイヤーのモデル角度を補正する値
 	const float DEFAULT_MOVE_SPEED;				// デフォルトの移動速度
@@ -31,8 +34,13 @@ private:
 	const float AVOID_ACCELERATION_MAX;			// 回避の最大加速度
 	const float AVOID_MOVE_VALUE_MAX;			// 回避の最大移動距離
 	const float AVOID_COOL_TIME_MAX;			// 回避のクールタイムの最大
+	const float STAMINA_HEAL_COOL_TIME_MAX;		// スタミナ回復クールタイムの最大
+	const float STAMINA_RUN_COST;				// ダッシュによるスタミナ消費量
+	const float STAMINA_AVOID_COST;				// 回避によるスタミナ消費量
+	const float STAMINA_HEAL_VALUE;				// スタミナの回復量
 	const float JUMP_POWER;						// ジャンプ力
 	const float BACK_ACCELERATION;				// 後ろ歩き時の加速度
+	const float HP_DECREASE_RATE;				// HPの減少倍率
 
 public:
 	PlayerComponent();
@@ -72,6 +80,10 @@ public:
 	 *	プレイヤーのステータス取得
 	 */
 	inline PlayerStatusValue GetPlayerStatus()const { return status; }
+	/*
+	 *	プレイヤーのステータス更新
+	 */
+	inline void SetPlayerStatus(PlayerStatusValue setStatus) { status = setStatus; }
 
 };
 

@@ -51,6 +51,10 @@ void AABBCollider::DebugRender() {
 	if (isHit) {
 		color = GetColor( 0, 128, 0 );
 	}
+	// ”»’è‚ğæ‚ç‚È‚¢ê‡‚àƒJƒ‰[•ÏX
+	else if (!isCollider) {
+		color = GetColor(128, 0, 0);
+	}
 	else {
 		color = GetColor( 255, 255, 255 );
 	}

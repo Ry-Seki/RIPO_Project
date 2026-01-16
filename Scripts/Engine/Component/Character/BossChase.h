@@ -13,8 +13,12 @@
   */
 class BossChase : public BossState {
 private:
+	GameObjectPtr player;
 	std::shared_ptr<AnimatorComponent> animator;
 	int modelHandle;
+
+	// 攻撃用プレイヤー検知距離
+	const float PLAYER_DISTANCE;
 
 public:
 	/*

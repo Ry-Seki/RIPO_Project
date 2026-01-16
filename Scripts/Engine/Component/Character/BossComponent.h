@@ -34,6 +34,45 @@ public:
 	 */
 	virtual void Update(float deltaTime) override;
 
+public:
+	/*
+	 *	位置の取得
+	 */
+	inline Vector3 GetBossPosition() const {
+		if (boss == nullptr) return Vector3::zero;
+		return boss->position;
+	}
+
+	/*
+	 *	位置の変更
+	 */
+	inline void SetBossPosition(Vector3 setValue) {
+		boss->position = setValue;
+	}
+
+	/*
+	 *	角度の取得
+	 */
+	inline Vector3 GetBossRotation() const { return boss->rotation; }
+
+	/*
+	 *	角度の変更
+	 */
+	inline void SetBossRotation(Vector3 setValue) {
+		boss->rotation = setValue;
+	}
+
+	/*
+	 *	状態の変更
+	 *  param[in]	BossState*	setValue	次の状態
+	 */
+	inline void SetState(BossState* setValue) {
+		if (state) {
+			state->Execute(*this);
+		}
+		state = setValue;
+		state->Start(boss);
+	}
 };
 
 #endif // !_BOSSCOMPONENT_H_

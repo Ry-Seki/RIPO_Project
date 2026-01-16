@@ -118,6 +118,10 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 		component->SetSpawnEnemyID(i);
 	}
 
+	// ボスの生成ID
+	std::vector<int> bossSpawnIDList;
+	// ボスの生成位置の取得
+	std::vector<Vector3> bossSpawnPos = GetEnemySpwanPos(enemySpawnIDList);
 	// ボスの取得
 	std::vector<GameObjectPtr> bossList = GetObjectByName("Boss");
 	// モデルハンドルの取得

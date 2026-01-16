@@ -13,6 +13,7 @@
  */
 class EnemyAttack : public EnemyState {
 private:
+	GameObjectPtr player;
 	// クールタイム
 	float coolTime;
 
