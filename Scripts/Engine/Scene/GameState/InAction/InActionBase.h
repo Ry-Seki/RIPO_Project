@@ -14,6 +14,7 @@ class GameState_InAction;
  */
 class InActionBase {
 protected:
+	bool isStart = false;
 	GameState_InAction* owner = nullptr;
 
 public:

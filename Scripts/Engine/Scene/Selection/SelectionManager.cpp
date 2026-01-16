@@ -10,7 +10,6 @@
 #include "Training/SelectionTraining.h"
 #include "Shop/SelectionShop.h"
 #include "PartTime/SelectionPartTime.h"
-#include "../DayAction/ActionManager.h"
 
 #include "../../Engine.h"
 #include "../../GameEnum.h"
@@ -47,9 +46,6 @@ void SelectionManager::DungeonSelection(Engine& engine) {
 	auto dungeonSelection = std::dynamic_pointer_cast<SelectionDungeon>(currentSelection);
 	if (!dungeonSelection) return;
 
-	dungeonSelection->SetActiveDungeon([this](Engine& engine, DungeonStageData setStageData, DungeonFloorData setFloorData) {
-		actionManager->DebugActiveDungeon(engine, setStageData, setFloorData);
-	});
 	currentSelection = dungeonSelection;
 	currentSelection->Initialize(engine);
 	isActive = true;
@@ -64,9 +60,7 @@ void SelectionManager::TrainingSelection(Engine& engine) {
 	auto trainingSelection = std::dynamic_pointer_cast<SelectionTraining>(currentSelection);
 	if (!trainingSelection) return;
 
-	trainingSelection->SetActiveTraining([this](Engine& engine, int setActionNum) {
-		actionManager->ActiveTraining(engine, setActionNum);
-	});
+
 	currentSelection = trainingSelection;
 	currentSelection->Initialize(engine);
 	isActive = true;
@@ -81,9 +75,6 @@ void SelectionManager::ShopSelection(Engine& engine) {
 	auto shopSelection = std::dynamic_pointer_cast<SelectionShop>(currentSelection);
 	if (!shopSelection) return;
 
-	shopSelection->SetActiveShop([this](Engine& engine, std::vector<int> itemIDList) {
-		actionManager->ActiveShop(engine, itemIDList);
-	});
 	currentSelection = shopSelection;
 	currentSelection->Initialize(engine);
 	isActive = true;
@@ -98,9 +89,6 @@ void SelectionManager::PartTimeSelection(Engine& engine) {
 	auto partTimeSelection = std::dynamic_pointer_cast<SelectionPartTime>(currentSelection);
 	if (!partTimeSelection) return;
 
-	partTimeSelection->SetActivePartTime([this](Engine& engine, int incomeValue) {
-		actionManager->ActivePartTime(engine, incomeValue);
-	});
 	currentSelection = partTimeSelection;
 	currentSelection->Initialize(engine);
 	isActive = true;

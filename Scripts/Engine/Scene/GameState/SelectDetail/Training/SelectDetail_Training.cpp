@@ -33,6 +33,8 @@ void SelectDetail_Training::Update(float deltaTime) {
 		inputHandle = true;
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
 		FadeManager::GetInstance().StartFade(fade, [this]() {
+			auto& context = owner->GetOwner()->GetActionContext();
+			context.statusType = GameEnum::PlayerStatusType::HP;
 			owner->GetOwner()->ChageState(GameEnum::GameState::InAction);
 		});
 	}
@@ -42,6 +44,8 @@ void SelectDetail_Training::Update(float deltaTime) {
 		inputHandle = true;
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
 		FadeManager::GetInstance().StartFade(fade, [this]() {
+			auto& context = owner->GetOwner()->GetActionContext();
+			context.statusType = GameEnum::PlayerStatusType::Stamina;
 			owner->GetOwner()->ChageState(GameEnum::GameState::InAction);
 		});
 	}
@@ -51,6 +55,8 @@ void SelectDetail_Training::Update(float deltaTime) {
 		inputHandle = true;
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
 		FadeManager::GetInstance().StartFade(fade, [this]() {
+			auto& context = owner->GetOwner()->GetActionContext();
+			context.statusType = GameEnum::PlayerStatusType::Strength;
 			owner->GetOwner()->ChageState(GameEnum::GameState::InAction);
 		});
 	}
@@ -60,18 +66,18 @@ void SelectDetail_Training::Update(float deltaTime) {
 		inputHandle = true;
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
 		FadeManager::GetInstance().StartFade(fade, [this]() {
+			auto& context = owner->GetOwner()->GetActionContext();
+			context.statusType = GameEnum::PlayerStatusType::ResistTime;
 			owner->GetOwner()->ChageState(GameEnum::GameState::InAction);
 		});
 	}
-
 	if (CheckHitKey(KEY_INPUT_1) && CheckHitKey(KEY_INPUT_2) && CheckHitKey(KEY_INPUT_3) && CheckHitKey(KEY_INPUT_4) == 0) inputHandle = false;
-
 }
 /*
  *	@brief	ï`âÊèàóù
  */
 void SelectDetail_Training::Render() {
-	DrawFormatString(50, 50, GetColor(255, 255, 255), "=== Selection Training Sample ===");
+	DrawFormatString(50, 50, GetColor(255, 255, 255), "=== Selection Training ===");
 	DrawFormatString(50, 80, GetColor(0, 255, 0), "1: HP");
 	DrawFormatString(50, 100, GetColor(0, 255, 0), "2: Stamina");
 	DrawFormatString(50, 120, GetColor(0, 255, 0), "3: Strength");

@@ -30,45 +30,6 @@ void SelectionTraining::SetupData(Engine& engine) {
  *	çXêVèàóù
  */
 void SelectionTraining::Update(Engine& engine, float deltaTime) {
-	if (!inputHandle && CheckHitKey(KEY_INPUT_1)) {
-		// SEÇÃçƒê∂
-		AudioUtility::PlaySE("DebugSE");
-		inputHandle = true;
-		isComplete = true;
-		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fade, [&engine, this]() {
-			ActiveTraining(engine, 0);
-		});
-	} else if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
-		// SEÇÃçƒê∂
-		AudioUtility::PlaySE("DebugSE");
-		inputHandle = true;
-		isComplete = true;
-		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fade, [&engine, this]() {
-			ActiveTraining(engine, 1);
-		});
-	} else if (!inputHandle && CheckHitKey(KEY_INPUT_3)) {
-		// SEÇÃçƒê∂
-		AudioUtility::PlaySE("DebugSE");
-		inputHandle = true;
-		isComplete = true;
-		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fade, [&engine, this]() {
-			ActiveTraining(engine, 2);
-		});
-	} else if (!inputHandle && CheckHitKey(KEY_INPUT_4)) {
-		// SEÇÃçƒê∂
-		AudioUtility::PlaySE("DebugSE");
-		inputHandle = true;
-		isComplete = true;
-		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fade, [&engine, this]() {
-			ActiveTraining(engine, 3);
-		});
-	}
-
-	if (CheckHitKey(KEY_INPUT_1) && CheckHitKey(KEY_INPUT_2) && CheckHitKey(KEY_INPUT_3) && CheckHitKey(KEY_INPUT_4)== 0) inputHandle = false;
 }
 /*
  *	ï`âÊèàóù

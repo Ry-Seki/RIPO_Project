@@ -4,7 +4,6 @@
  */
 
 #include "SelectionFactory.h"
-#include "Dungeon/SelectionDungeon.h"
 #include "Training/SelectionTraining.h"
 #include "Shop/SelectionShop.h"
 #include "PartTime/SelectionPartTime.h"
@@ -19,7 +18,6 @@ SelectionFactory::selectionMap;
  *  @param[in]	CreateFuntion function
  */
 void SelectionFactory::RegisterAll() {
-    Register(GameEnum::ActionType::Dungeon,  []() { return std::make_shared<SelectionDungeon>(); });
     Register(GameEnum::ActionType::Training, []() { return std::make_shared<SelectionTraining>(); });
     Register(GameEnum::ActionType::Shop,     []() { return std::make_shared<SelectionShop>(); });
     Register(GameEnum::ActionType::PartTime, []() { return std::make_shared<SelectionPartTime>(); });

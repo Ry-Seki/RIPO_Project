@@ -17,8 +17,6 @@ class DungeonResourceData;
  */
 class InAction_Dungeon : public InActionBase {
 private:
-	bool isStart = false;
-
 	FloorProcessor floorProcessor;
 
 public:

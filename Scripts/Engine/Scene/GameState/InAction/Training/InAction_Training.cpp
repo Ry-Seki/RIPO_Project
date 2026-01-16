@@ -3,6 +3,8 @@
  */
 
 #include "InAction_Training.h"
+#include "../../../../Fade/FadeFactory.h"
+#include "../../../../Fade/FadeManager.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -13,11 +15,14 @@ void InAction_Training::Initialize(Engine& engine) {
  *	@brief	€”õ‘Oˆ—
  */
 void InAction_Training::Setup() {
+	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::In, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fade);
 }
 /*
  *	@brief	XVˆ—
  */
 void InAction_Training::Update(float deltaTime) {
+
 }
 /*
  *	@brief	•`‰æˆ—
