@@ -13,6 +13,7 @@ class EnemyComponent : public CharacterBase {
 private:
 	GameObject* enemy;
 	EnemyState* state;
+	GameObjectPtr player;
 	// ウェイポイント
 	Vector3 wayPoint;
 	// 目先のウェイポイント予定地
@@ -23,10 +24,14 @@ private:
 	bool chaseTargetChangeFrag;
 	// プレイヤーの距離判定フラグ
 	bool closePlayer;
+	// 衝突判定フラグ
+	bool isTriger;
 	// 方向転換時のディレイ
 	float turnDelay;
 	// スポーンID
 	int enemySpawnID = 0;
+	// 疑似クールタイム(苦肉の策)
+	float coolTime;
 
 	// ランダムで加算されるカウントの天井値
 	const float TOP_VALUE;
@@ -55,7 +60,10 @@ public:
 	 */
 	virtual void Update(float deltaTime) override;
 
-private:
+	/*
+	 *	衝突が起きたときに呼び出される処理
+	 */
+	virtual void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
 
 public:
 	/*

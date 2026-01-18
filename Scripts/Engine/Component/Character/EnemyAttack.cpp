@@ -5,6 +5,7 @@
 #include "EnemyAttack.h"
 #include "../../Manager/CameraManager.h"
 #include "EnemyChase.h"
+#include "PlayerComponent.h"
 
 /*
  *	コンストラクタ
@@ -46,7 +47,6 @@ void EnemyAttack::Update(GameObject* enemy, float deltaTime)
 	// 前方に当たり判定を出す
 	aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
 
-	// 当たったらダメージを与える
 	
 	coolTime -= deltaTime;
 	if (coolTime <= 0) {
