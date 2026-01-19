@@ -19,6 +19,10 @@ private:
 
 	// 攻撃用プレイヤー検知距離
 	const float PLAYER_DISTANCE;
+	// 回転スピード
+	const float ROTATE_SPEED;
+	// 移動スピード
+	const float MOVE_SPEED;
 
 public:
 	/*
@@ -41,6 +45,15 @@ public:
 	 */
 	virtual void Update(GameObject* boss, float deltaTime) override;
 
+private:
+	/*
+	 *	目標に向かって進む処理
+	 *  param[in]	GameObject*	boss
+	 *  param[in]	Vector3		wayPoint		目標の座標
+	 *  param[in]	bool		targetChange	chaseTargetChangeFragの切り替え
+	 *  param[in]	float		deltaTime
+	 */
+	void ChaseWayPoint(GameObject* boss, Vector3 wayPoint, float deltaTime);
 };
 
 #endif // !_BOSSCHASE_H_
