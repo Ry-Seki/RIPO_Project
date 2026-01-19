@@ -8,6 +8,16 @@
 
 namespace GameEnum {
 	/*
+	 *	@brief	ゲームモード
+	 */
+	enum class GameMode {
+		Invalid = -1,
+		NewGame,		// ニューゲーム
+		LoadGame,		// ロードゲーム
+		System,			// システム
+		Max
+	};
+	/*
 	 *	@brief	メインゲーム状態
 	 */
 	enum class GameState {

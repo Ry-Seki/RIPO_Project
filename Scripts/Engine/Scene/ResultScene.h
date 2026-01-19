@@ -15,6 +15,9 @@ class Engine;
  *	リザルトシーン
  */
 class ResultScene : public Scene {
+private:
+	bool isStart = false;
+	bool inputHandle = false;
 
 public:
 	/*

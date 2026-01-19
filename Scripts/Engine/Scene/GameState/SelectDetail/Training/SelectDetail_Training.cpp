@@ -23,6 +23,8 @@ void SelectDetail_Training::Initialize() {
 void SelectDetail_Training::Setup() {
 	isStart = false;
 	inputHandle = false;
+	auto& context = owner->GetOwner()->GetActionContext();
+	context.statusType = GameEnum::PlayerStatusType::Invalid;
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fade, [this]() {
 		isStart = true;
