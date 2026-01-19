@@ -136,9 +136,6 @@
     <Filter Include="ヘッダー ファイル\Engine\Scene\Selection\PartTime">
       <UniqueIdentifier>{b2fe3af3-fc89-4985-a829-4c5a80e321a9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\Selection\Training">
-      <UniqueIdentifier>{1a2a3b26-9705-4d6f-be9c-dedd41192bec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engine\Scene\Selection\Shop">
       <UniqueIdentifier>{59c9497f-54b1-44d0-92d1-801cbb470b07}</UniqueIdentifier>
     </Filter>
@@ -375,9 +372,6 @@
     <ClCompile Include="Scripts\Engine\Stage\StageObject\ExitPoint.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionManager.cpp">
-      <Filter>ソース ファイル\Engine\Scene\Selection</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -459,9 +453,6 @@
     <ClCompile Include="Scripts\Engine\System\Item\ItemManager.cpp">
       <Filter>ソース ファイル\Engine\System\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\Selection\Training\SelectionTraining.cpp">
-      <Filter>ソース ファイル\Engine\Scene\Selection\Training</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Scene\Selection\Shop\SelectionShop.cpp">
       <Filter>ソース ファイル\Engine\Scene\Selection\Shop</Filter>
     </ClCompile>
@@ -488,9 +479,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyChase.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionFactory.cpp">
-      <Filter>ソース ファイル\Engine\Scene\Selection</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Scene\GameState\SelectAction\GameState_SelectAction.cpp">
       <Filter>ソース ファイル\Engine\Scene\GameState\SelectAction</Filter>

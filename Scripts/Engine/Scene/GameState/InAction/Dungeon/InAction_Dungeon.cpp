@@ -15,6 +15,8 @@
 #include "../../../../Load/LoadManager.h"
 #include "../../../../Component/GravityComponent.h"
 #include "../../../../Audio/AudioUtility.h"
+#include "../../../../Fade/FadeFactory.h"
+#include "../../../../Fade/FadeManager.h"
 
 /*
  *	@brief	初期化処理
@@ -45,11 +47,23 @@ void InAction_Dungeon::Update(float deltaTime) {
 	// 階段、ゴールフラグの取得
 	bool exitFrag = stageObject.GetExitFlag();
 	bool stairFrag = stageObject.GetStairMove();
+	// プレイヤーが死亡した場合
+	if (IsPlayerDead()) {
+		auto& context = owner->GetOwner()->GetActionContext();
+		context.isPlayerDead = true;
+		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.5f, FadeDirection::Out, FadeMode::Stop);
+		FadeManager::GetInstance().StartFade(fade, [this]() {
+			EndDungeon();
+		});
+	}
 	// 出口に触れたとき
-	if (exitFrag) {
+	else if (exitFrag) {
 		// SEの再生
 		AudioUtility::PlaySE("GoalSE");
-		EndDungeon();
+		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.5f, FadeDirection::Out, FadeMode::Stop);
+		FadeManager::GetInstance().StartFade(fade, [this]() {
+			EndDungeon();
+		});
 	}
 	else if (stairFrag) {
 		floorProcessor.ChangeFloor();
@@ -149,9 +163,25 @@ void InAction_Dungeon::Render() {
 void InAction_Dungeon::Teardown() {
 }
 /*
+ *	@brief		プレイヤーの死亡判定
+ *	@return		bool
+ */
+bool InAction_Dungeon::IsPlayerDead() {
+	auto player = CharacterUtility::GetPlayer();
+	if (!player) return false;
+
+	auto component = player->GetComponent<PlayerComponent>();
+	if (!component) return false;
+	
+	return component->GetIsDead();
+}
+/*
  *	@brief	ダンジョン終了処理
  */
 void InAction_Dungeon::EndDungeon() {
+	isStart = false;
+	auto& context = owner->GetOwner()->GetActionContext();
+	context.isPlayerDead = IsPlayerDead();
 	floorProcessor.EndDungeon();
 	owner->GetOwner()->ChageState(GameEnum::GameState::ResultAction);
 }

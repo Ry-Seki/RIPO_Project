@@ -10,15 +10,22 @@
 #include "../../../Data/Dungeon/DungeonStageData.h"
 #include "../../../Data/Dungeon/DungeonFloorData.h"
 
+#include <vector>
+
 /*
  *	@brief	ステート間で受け渡されるデータ
  */
 struct ActionContext {
-	int currentDay = -1;						// 現在の経過日数
-	int dungeonID = -1;							// ダンジョンID
+	int currentDay = 0;						// 現在の経過日数
+	int dungeonID = 0;						// ダンジョンID
+	int prevIncome = 0;						// 前回の稼ぎ
+	int currentIncome = 0;					// 今回の稼ぎ
+	bool isPlayerDead = false;				// プレイヤーの死亡判定
+	bool isHalf = false;					// 半日かどうか
 
 	DungeonStageData dungeonStageData;			// ダンジョンステージデータ
 	DungeonFloorData dungeonFloorData;			// ダンジョンフロアデータ
+	std::vector<int> buyIDList;					// 購入したアイテムIDリスト
 
 	GameEnum::ActionType actionType = GameEnum::ActionType::Invalid;				// アクションタイプ
 	GameEnum::PlayerStatusType statusType = GameEnum::PlayerStatusType::Invalid;	// ステータスタイプ
