@@ -39,7 +39,7 @@ void ResultScene::SetupData(Engine& engine) {
 /*
  *	@brief	€”õ‘Oˆ—
  */
-void ResultScene::Setup() {
+void ResultScene::Setup(Engine& engine) {
 }
 /*
  *	XVˆ—

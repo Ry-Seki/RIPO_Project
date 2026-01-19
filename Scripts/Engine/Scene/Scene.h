@@ -64,7 +64,7 @@ public:
     /*
      *  @brief  €”õ‘Oˆ—
      */
-    virtual void Setup() {}
+    virtual void Setup(Engine& engine) {}
     /*
      *  XVˆ—
      */

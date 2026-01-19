@@ -88,6 +88,23 @@ int Engine::Initialize() {
 
 	// タイムクラスの初期化
 	Time::Init();
+	// シーンの初期化
+	sceneList.resize(static_cast<int>(GameEnum::SceneType::Max));
+	// 各シーンの生成
+	sceneList[static_cast<int>(GameEnum::SceneType::Standby)]
+		= std::make_shared<StandbyScene>();
+	sceneList[static_cast<int>(GameEnum::SceneType::Title)]
+		= std::make_shared<TitleScene>();
+	sceneList[static_cast<int>(GameEnum::SceneType::MainGame)]
+		= std::make_shared<MainGameScene>();
+	sceneList[static_cast<int>(GameEnum::SceneType::Result)]
+		= std::make_shared<ResultScene>();
+	// 各シーンの初期化
+	for (auto& scene : sceneList) {
+		if (!scene) continue;
+
+		scene->Initialize(*this);
+	}
 	// 初期化フラグの変更
 	initialized = true;
 	return 0;
@@ -201,7 +218,7 @@ void Engine::ChangeScene() {
 		if (currentScene) currentScene->Finalize(*this);
 		currentScene = nextScene;
 		nextScene.reset();
-		if (currentScene) currentScene->Initialize(*this);
+		if (currentScene) currentScene->Setup(*this);
 	}
 }
 /*
