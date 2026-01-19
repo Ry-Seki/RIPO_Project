@@ -39,7 +39,7 @@ void ResultAction_Shop::Update(float deltaTime) {
 		inputHandle = true;
 		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
 		FadeManager::GetInstance().StartFade(fadeOut, [this]() {
-			owner->GetOwner()->ChageState(GameEnum::GameState::SelectAction);
+			AdvanceDay();
 		});
 	}
 }
@@ -60,4 +60,21 @@ void ResultAction_Shop::Render() {
 void ResultAction_Shop::Teardown() {
 	auto& context = owner->GetOwner()->GetActionContext();
 	context.buyIDList.clear();
+}
+/*
+ *	@brief	日にち進行処理
+ */
+void ResultAction_Shop::AdvanceDay() {
+	auto& context = owner->GetOwner()->GetActionContext();
+	// 半日をすでに消化しているかで分岐
+	if (context.isHalf) {
+		// 一日進める
+		context.isHalf = false;
+		context.elapsedDay++;
+	} else {
+		// 半日進める
+		context.isHalf = true;
+	}
+	// アクション終了フラグの変更
+	owner->GetOwner()->SetIsActionEnd(true);
 }

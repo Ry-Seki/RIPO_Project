@@ -14,8 +14,6 @@
 #include "../System/Status/PlayerStatusManager.h"
 #include "../Component/CapsuleCollider.h"
 
-#include "Selection/SelectionFactory.h"
-
 /*
  *  @brief  デストラクタ
  */
@@ -47,6 +45,10 @@ void MainGameScene::Setup() {
 void MainGameScene::Update(Engine& engine, float deltaTime) {
     gameState->Update(deltaTime);
     Scene::Update(engine, deltaTime);
+    // 遷移条件
+    if (gameState->IsActionEnd()) {
+        EndMainGameScene(engine);
+    }
 }
 /*
  *  描画処理
@@ -74,5 +76,22 @@ void MainGameScene::Render() {
         auto aabb = obj->GetComponent<AABBCollider>();
         if (aabb != nullptr)
             aabb->DebugRender();
+    }
+}
+/*
+ *  @brief  メインシーン終了処理
+ */
+void MainGameScene::EndMainGameScene(Engine& engine) {
+    auto& context = gameState->GetActionContext();
+    // アクション終了フラグの変更
+    gameState->SetIsActionEnd(false);
+    // シーン遷移条件
+    if (context.elapsedDay > _END_DAY) {
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
+        FadeManager::GetInstance().StartFade(fadeOut, [&engine, this]() {
+            engine.SetNextScene(std::make_shared<ResultScene>());
+        });
+    } else {
+        gameState->ChageState(GameEnum::GameState::SelectAction);
     }
 }
