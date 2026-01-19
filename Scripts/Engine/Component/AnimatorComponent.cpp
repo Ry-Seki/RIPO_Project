@@ -95,10 +95,12 @@ void AnimatorComponent::LoadIndex(bool isLoop, int transition) {
 void AnimatorComponent::Play(int index, float speed) {
 	// 同じアニメーションなら再生しない
 	if (currentAnimation == index) return;
-	// すでにアニメーションがアタッチされていれば海図尾
-	//if (attachIndex >= 0)
-	//	MV1DetachAnim(animModelHandle, attachIndex);
-
+	// すでにアタッチされているアニメーションがあれば解除する
+	if (attachIndex >= 0) {
+		// 前のアニメーションをモデルからデタッチする
+		MV1DetachAnim(animModelHandle, attachIndex);
+		attachIndex = -1;
+	}
 	// 現在のアニメーションに設定する
 	currentAnimation = index;
 	// アニメーションハンドルに登録
