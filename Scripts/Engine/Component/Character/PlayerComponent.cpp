@@ -197,7 +197,7 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	animator->LoadIndex(true);
 	// アニメーション再生
 	if (moveVec == V_ZERO) {
-		animator->Play(2, 1);
+		animator->Play(3, 1);
 	}
 	else {
 		animator->Play(4, moveSpeed * 0.066f);
