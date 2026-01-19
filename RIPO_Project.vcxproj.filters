@@ -241,6 +241,9 @@
     <Filter Include="ソース ファイル\Engine\Scene\GameState\InAction\PartTime\Sokoban">
       <UniqueIdentifier>{747895b9-7f46-4785-8fa1-549e76a3694e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState">
+      <UniqueIdentifier>{4a65e24f-a81a-4998-b9bd-367bc96d647d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -910,6 +913,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\SokobanMapManager.h">
       <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\SceneStateMachine.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\SceneState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
