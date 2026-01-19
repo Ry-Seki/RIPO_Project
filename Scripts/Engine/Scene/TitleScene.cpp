@@ -54,6 +54,7 @@ void TitleScene::SetupData(Engine& engine) {
 	engine.StartFadeOutIn(0.5f, 0.5f, [&engine]() {
 		engine.SetNextScene(std::make_shared<MainGameScene>());
 	});
+
 }
 /*
  *	@brief	€”õ‘Oˆ—
