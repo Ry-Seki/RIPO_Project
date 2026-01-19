@@ -14,6 +14,8 @@ class GameState_ResultAction;
  */
 class ResultActionBase {
 protected:
+	bool isStart = false;
+	bool inputHandle = false;
 	GameState_ResultAction* owner = nullptr;		// オーナークラス
 
 public:
