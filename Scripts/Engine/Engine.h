@@ -7,7 +7,6 @@
 #define _ENGINE_H_
 
 #include "GameObject.h"
-#include "Scene/Scene.h"
 #include "VecMath.h"
 #include "Fade/FadeBase.h"
 #include "Load/LoadManager.h"
@@ -17,11 +16,18 @@
 #include <string>
 #include <functional>
 
+// 前方宣言
+class Scene;
+
 /*
  *  ゲームの基盤クラス
  */
 class Engine {
+public:     // 別名定義
+    using ScenePtr = std::shared_ptr<Scene>;
+
 private:
+    std::vector<ScenePtr> sceneList;        // シーンのリスト
     ScenePtr currentScene;                  // 現在のシーン
     ScenePtr nextScene;                     // 次のシーン
 
@@ -68,6 +74,11 @@ public:
      */
     void ChangeScene();
     /*
+     *  @brief      SceneのAddGameObjectの呼び出し
+     *  @param[in]  const GameObjectPtr& gameObject
+     */
+    void AddGameObject(const GameObjectPtr& gameObject);
+    /*
      *  フェード呼び出し処理
      *  param[in]           const FadeBasePtr& setFade          セットするフェード
      *  param[in]           std::function<void()> onComplete    コールバック
@@ -81,6 +92,7 @@ public:
      */
     void StartFadeOutIn(float fadeOutTime, float fadeInTime, std::function<void()> onMidPoint);
 
+public:
     /*
      *  GameObject生成
      *  param[in]           const std::string& name     オブジェクトの名前
@@ -102,18 +114,13 @@ public:
     
 public:
     /*
-     *  現在のシーンの取得
+     *  @brief      現在のシーンの取得
      */
     inline ScenePtr GetCurrentScene() const { return currentScene; }
     /*
-     *  次のシーンの設定
+     *  @brief      次のシーンの設定
      */
     inline void SetNextScene(ScenePtr setScene) { nextScene = setScene; }
-    /*
-     *  SceneのAddGameObjectの呼び出し
-     *  @param[in]  const GameObjectPtr& gameObject
-     */
-    inline void AddGameObject(const GameObjectPtr& gameObject) { if (currentScene) currentScene->AddGameObject(gameObject); }
 };
 #endif // !_ENGINE_H_
 

@@ -38,7 +38,6 @@ namespace GameEnum {
 		SelectDetail,		// アクションの中身を選択
 		InAction,			// アクション中
 		ResultAction,		// アクションの結果
-		EndAction,			// アクションの終了
 		Pause,				// ポーズ
 		Max
 	};

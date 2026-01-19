@@ -23,6 +23,8 @@ using namespace AudioUtility;
   *  初期化処理
   */
 void TitleScene::Initialize(Engine& engine) {
+	isStart = false;
+	inputHandle = false;
 	auto fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn);
 	SetBGMVolume(100);
@@ -51,10 +53,7 @@ void TitleScene::Initialize(Engine& engine) {
  *  ロード済みデータの設定 (コールバック)
  */
 void TitleScene::SetupData(Engine& engine) {
-	engine.StartFadeOutIn(0.5f, 0.5f, [&engine]() {
-		engine.SetNextScene(std::make_shared<MainGameScene>());
-	});
-
+	isStart = true;
 }
 /*
  *	@brief	準備前処理
@@ -65,11 +64,37 @@ void TitleScene::Setup() {
  *  更新処理
  */
 void TitleScene::Update(Engine& engine, float deltaTime) {
+	if (!isStart) return;
 
+	if (!inputHandle) {
+		if (CheckHitKey(KEY_INPUT_1)) {
+			AudioUtility::PlaySE("DebugSE");
+			gameMode = GameEnum::GameMode::NewGame;
+			engine.StartFadeOutIn(0.5f, 0.5f, [&engine]() {
+				engine.SetNextScene(std::make_shared<MainGameScene>());
+			});
+		} else if (CheckHitKey(KEY_INPUT_2)) {
+			AudioUtility::PlaySE("DebugSE");
+			gameMode = GameEnum::GameMode::LoadGame;
+			engine.StartFadeOutIn(0.5f, 0.5f, [&engine]() {
+				engine.SetNextScene(std::make_shared<MainGameScene>());
+			});
+		} else if (CheckHitKey(KEY_INPUT_3)) {
+			AudioUtility::PlaySE("DebugSE");
+			gameMode = GameEnum::GameMode::System;
+			engine.StartFadeOutIn(0.5f, 0.5f, [&engine]() {
+				engine.SetNextScene(std::make_shared<MainGameScene>());
+			});
+		}
+	}
 }
 /*
  *  描画処理
  */
 void TitleScene::Render() {
 	DrawFormatString(50, 50, GetColor(255, 255, 255), "[TitleScene] 描画中...");
+	DrawFormatString(50, 70, GetColor(255, 255, 255), "=== Selection GameMode ===");
+	DrawFormatString(50, 100, GetColor(0, 255, 0), "1: NewGame");
+	DrawFormatString(50, 120, GetColor(0, 255, 0), "2: LoadGame");
+	DrawFormatString(50, 140, GetColor(0, 255, 0), "3: System");
 }
