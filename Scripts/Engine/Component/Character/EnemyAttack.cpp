@@ -22,7 +22,7 @@ EnemyAttack::EnemyAttack()
  */
 void EnemyAttack::Start(EnemyComponent& enemy)
 {
-	printfDx("EnemyAttack");
+	//printfDx("EnemyAttack");
 	coolTime = MAX_COOL_TIME;
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
