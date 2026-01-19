@@ -24,6 +24,7 @@ public:		// 別名定義
 	using GameStatePtr = std::shared_ptr<GameStateBase>;
 
 private:
+	bool isActionEnd = false;											// アクション終了フラグ
 	std::vector<GameStatePtr> stateList;								// ステートリスト
 	GameEnum::GameState stateType = GameEnum::GameState::Invalid;		// ステートの種類
 	ActionContext actionContext;										// ステート間で必要なデータ構造体
@@ -66,6 +67,16 @@ public:
 	void ChageState(GameEnum::GameState type);
 
 public:
+	/*
+	 *	@brief		アクション終了判定
+	 *	@return		bool
+	 */
+	inline bool IsActionEnd() const { return isActionEnd; }
+	/*
+	 *	@brief		アクション終了フラグの変更
+	 *	@param[in]	bool setFlag
+	 */
+	inline void SetIsActionEnd(bool setFlag) { isActionEnd = setFlag; }
 	/*
 	 *	@brief		アクションデータ構造体の取得
 	 *	@return		ActionContext*

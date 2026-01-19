@@ -36,6 +36,11 @@ public:
 	 *	@brief	•Ğ•t‚¯ˆ—
 	 */
 	void Teardown() override;
+	/*
+	 *	@brief	“ú‚É‚¿isˆ—
+	 */
+	void AdvanceDay() override;
+
 };
 
 #endif // !_RESULT_ACTION_PART_TIME_H_

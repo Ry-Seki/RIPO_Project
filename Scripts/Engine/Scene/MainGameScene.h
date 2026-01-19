@@ -25,6 +25,8 @@ private:
     static constexpr const char* _TREASURE_DATA_PATH = "Data/Treasure/TreasureDataList.json";
     static constexpr const char* _ITEM_DATA_PATH = "Data/Item/ItemCatalogData.json";
 
+    const int _END_DAY = 7;
+
 public:
     /*
      *  @brief  コンストラクタ
@@ -52,6 +54,12 @@ public:
      *  描画処理
      */
     void Render() override;
+
+private:
+    /*
+     *  @brief  メインシーン終了処理
+     */
+    void EndMainGameScene(Engine& engine);
 
 };
 

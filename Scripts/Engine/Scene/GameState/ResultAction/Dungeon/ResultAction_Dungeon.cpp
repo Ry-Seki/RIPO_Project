@@ -44,7 +44,7 @@ void ResultAction_Dungeon::Update(float deltaTime) {
 		inputHandle = true;
 		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
 		FadeManager::GetInstance().StartFade(fadeOut, [this]() {
-			owner->GetOwner()->ChageState(GameEnum::GameState::SelectAction);
+			AdvanceDay();
 		});
 	}
 }
@@ -68,6 +68,16 @@ void ResultAction_Dungeon::Render() {
  */
 void ResultAction_Dungeon::Teardown() {
 	inputHandle = false;
+}
+/*
+ *	@brief	日にち進行処理
+ */
+void ResultAction_Dungeon::AdvanceDay() {
+	// 一日進める
+	auto& context = owner->GetOwner()->GetActionContext();
+	int elapsedDay = ++context.elapsedDay;
+	// アクション終了フラグの変更
+	owner->GetOwner()->SetIsActionEnd(true);
 }
 /*
  *	@brief	プレイヤーのリザルト処理
