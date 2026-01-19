@@ -8,6 +8,17 @@
 
 namespace GameEnum {
 	/*
+	 *	@brief	シーンの種類
+	 */
+	enum class SceneType {
+		Invalid = -1,
+		Standby,		// 準備シーン
+		Title,			// タイトルシーン
+		MainGame,		// メインゲームシーン
+		Result,			// リザルトシーン
+		Max
+	};
+	/*
 	 *	@brief	ゲームモード
 	 */
 	enum class GameMode {

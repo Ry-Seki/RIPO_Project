@@ -92,6 +92,9 @@ void MainGameScene::EndMainGameScene(Engine& engine) {
             engine.SetNextScene(std::make_shared<ResultScene>());
         });
     } else {
-        gameState->ChageState(GameEnum::GameState::SelectAction);
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
+        FadeManager::GetInstance().StartFade(fadeOut, [&engine, this]() {
+            gameState->ChageState(GameEnum::GameState::SelectAction);
+        });
     }
 }

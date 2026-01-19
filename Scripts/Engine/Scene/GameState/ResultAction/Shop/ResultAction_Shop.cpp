@@ -37,10 +37,7 @@ void ResultAction_Shop::Update(float deltaTime) {
 		// SEÇÃçƒê∂
 		AudioUtility::PlaySE("DebugSE");
 		inputHandle = true;
-		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
-		FadeManager::GetInstance().StartFade(fadeOut, [this]() {
-			AdvanceDay();
-		});
+		AdvanceDay();
 	}
 }
 /*
