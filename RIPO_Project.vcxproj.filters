@@ -58,18 +58,6 @@
     <Filter Include="ヘッダー ファイル\Engine\Load\Animation">
       <UniqueIdentifier>{ffab97aa-c776-491b-834e-4773cbcd9620}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\Action">
-      <UniqueIdentifier>{07368507-ebed-455f-b847-37a8ab637382}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\Action">
-      <UniqueIdentifier>{ea40ac7a-bba9-4642-947b-a7862ea4e33f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\Selection">
-      <UniqueIdentifier>{b8c2bbc6-5438-4c31-94ac-4bb9ed973672}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\Selection">
-      <UniqueIdentifier>{d4639ea7-e1a9-44e4-8da6-0b22b2204dd4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Engine\Audio">
       <UniqueIdentifier>{8b99aa5f-c92f-410b-8364-5698a7ae6bfe}</UniqueIdentifier>
     </Filter>
@@ -124,53 +112,8 @@
     <Filter Include="ソース ファイル\Engine\System\Item">
       <UniqueIdentifier>{6b29716e-b408-47b3-b866-337b4201290e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\Selection\Dungeon">
-      <UniqueIdentifier>{b9612847-a4dd-4196-9f33-3655bde1b92b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\Selection\Training">
-      <UniqueIdentifier>{432deab6-beb2-429d-9bee-f75e4f7474a0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\Selection\Shop">
-      <UniqueIdentifier>{30a94be8-6028-4995-8600-a736a275cd9f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\Selection\PartTime">
-      <UniqueIdentifier>{b2fe3af3-fc89-4985-a829-4c5a80e321a9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\Selection\Shop">
-      <UniqueIdentifier>{59c9497f-54b1-44d0-92d1-801cbb470b07}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\Selection\PartTime">
-      <UniqueIdentifier>{d5345967-675f-406d-ba52-584aa2c0ec1e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\Action\Training">
-      <UniqueIdentifier>{5c3c4921-294a-4791-b3b6-21c168fbe61c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\Action\Shop">
-      <UniqueIdentifier>{de15867c-b804-40c8-99c6-d78af5090127}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\Action\PartTime">
-      <UniqueIdentifier>{ca6419ec-4aff-44f7-a5a0-9eed38e70ea5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\Action\Training">
-      <UniqueIdentifier>{9ed785ad-3081-4ebd-b646-06f16cba6058}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\Action\Shop">
-      <UniqueIdentifier>{c5d9b93d-fa37-4571-a1e2-0453a06bcba3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\Action\PartTime">
-      <UniqueIdentifier>{7a5b51ab-232b-4178-a224-a47273ee6a7d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engine\Menu">
       <UniqueIdentifier>{fb237d36-d490-4882-8646-60554dedd981}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\Selection\PartTime\MiniGame">
-      <UniqueIdentifier>{bc140970-753f-40f2-a34d-b71d5907d37c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\Selection\PartTime\MiniGame\Sokoban">
-      <UniqueIdentifier>{f258451b-d117-4687-a9b4-98b8fe729802}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\Selection\PartTime\Sokoban">
-      <UniqueIdentifier>{00b75555-559c-4807-b810-f8e1f49e23cc}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Data\Save">
       <UniqueIdentifier>{e75571c1-2bf6-45db-a66c-2429cc31db01}</UniqueIdentifier>
@@ -288,6 +231,15 @@
     </Filter>
     <Filter Include="ソース ファイル\Engine\Scene\GameState\Pause">
       <UniqueIdentifier>{51c6cbc7-eeb1-4f35-a525-b9d4064e6847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame">
+      <UniqueIdentifier>{0d5c76b3-04e0-475d-9c8c-cba0c3a23856}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban">
+      <UniqueIdentifier>{53efc34b-f7f4-4a0c-906a-1f11166e0b7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\GameState\InAction\PartTime\Sokoban">
+      <UniqueIdentifier>{747895b9-7f46-4785-8fa1-549e76a3694e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -453,29 +405,8 @@
     <ClCompile Include="Scripts\Engine\System\Item\ItemManager.cpp">
       <Filter>ソース ファイル\Engine\System\Item</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\Selection\Shop\SelectionShop.cpp">
-      <Filter>ソース ファイル\Engine\Scene\Selection\Shop</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\SelectionPartTime.cpp">
-      <Filter>ソース ファイル\Engine\Scene\Selection\PartTime</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionTraining\ActionTraining.cpp">
-      <Filter>ソース ファイル\Engine\Scene\Action\Training</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.cpp">
-      <Filter>ソース ファイル\Engine\Scene\Action\Shop</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.cpp">
-      <Filter>ソース ファイル\Engine\Scene\Action\PartTime</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp">
       <Filter>ソース ファイル\Engine\Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\MiniGameSokoban.cpp">
-      <Filter>ソース ファイル\Engine\Scene\Selection\PartTime\Sokoban</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapManager.cpp">
-      <Filter>ソース ファイル\Engine\Scene\Selection\PartTime\Sokoban</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyChase.cpp">
       <Filter>ソース ファイル</Filter>
@@ -563,6 +494,12 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\StringUtility.cpp">
       <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\MiniGameSokoban.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState\InAction\PartTime\Sokoban</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\SokobanMapManager.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState\InAction\PartTime\Sokoban</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -680,15 +617,6 @@
     <ClInclude Include="Scripts\Engine\Load\LoadRegistry.h">
       <Filter>ヘッダー ファイル\Engine\Load</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionBase.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionManager.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\DayAction\DayActionBase.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Action</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h">
       <Filter>ヘッダー ファイル\Engine\Character</Filter>
     </ClInclude>
@@ -706,9 +634,6 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h">
       <Filter>ヘッダー ファイル\Engine\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\Selection\SelectionFactory.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Selection</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Audio\AudioUtility.h">
       <Filter>ヘッダー ファイル\Engine\Audio</Filter>
@@ -842,39 +767,6 @@
     <ClInclude Include="Scripts\Data\ItemCatalogData.h">
       <Filter>ヘッダー ファイル\Data\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\Selection\Dungeon\SelectionDungeon.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Selection\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\Selection\Training\SelectionTraining.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Selection\Training</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\Selection\Shop\SelectionShop.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Selection\Shop</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\SelectionPartTime.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Selection\PartTime</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionTraining\ActionTraining.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Action\Training</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionShop\ActionShop.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Action\Shop</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\DayAction\ActionPartTime\ActionPartTime.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Action\PartTime</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\MiniGameBase.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Selection\PartTime\MiniGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\MiniGameSokoban.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Selection\PartTime\MiniGame\Sokoban</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapCreater.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Selection\PartTime\MiniGame\Sokoban</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapManager.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\Selection\PartTime\MiniGame\Sokoban</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Save\SaveDataManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -1006,6 +898,18 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\StringUtility.h">
       <Filter>ヘッダー ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\MiniGameBase.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\MiniGameSokoban.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\SokobanMapCreater.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\SokobanMapManager.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

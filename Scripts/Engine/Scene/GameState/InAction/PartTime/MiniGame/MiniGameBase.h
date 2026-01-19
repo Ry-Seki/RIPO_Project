@@ -34,7 +34,7 @@ public:
 	/*
 	 *	@brief	XVˆ—
 	 */
-	virtual void Update(Engine& engine, float deltaTime) = 0;
+	virtual void Update(float deltaTime) = 0;
 	/*
 	 *	@brief	•`‰æˆ—
 	 */

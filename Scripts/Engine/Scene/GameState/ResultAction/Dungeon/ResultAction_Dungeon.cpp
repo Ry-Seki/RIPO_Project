@@ -61,7 +61,7 @@ void ResultAction_Dungeon::Render() {
 		DrawFormatString(70, 70, GetColor(255, 255, 255), "«  %d", currentMoney - prevMoney);
 		DrawFormatString(50, 90, GetColor(255, 255, 255), "Œ»İ : %d", currentMoney);
 	}
-	DrawFormatString(50, 120, GetColor(255, 255, 255), "Ÿ‚Ì“ú‚Éi‚Ş->SpaceKey");
+	DrawFormatString(50, 180, GetColor(255, 255, 255), "Ÿ‚Ì“ú‚Éi‚Ş->SpaceKey");
 }
 /*
  *	@brief	•Ğ•t‚¯ˆ—

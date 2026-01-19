@@ -12,6 +12,8 @@
  *	@brief	アルバイトアクションリザルト
  */
 class ResultAction_PartTime : public ResultActionBase {
+private:
+	const int _INCOME = 50;
 
 public:
 	/*

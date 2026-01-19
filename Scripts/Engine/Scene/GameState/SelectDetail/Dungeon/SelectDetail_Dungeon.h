@@ -22,7 +22,6 @@ class SelectDetail_Dungeon : public SelectDetailBase {
 private:
 	std::vector<DungeonData> dungeonDataList;				// ダンジョンデータ配列
 	std::shared_ptr<DungeonDataLoader> dungeonDataLoader;	// ダンジョン用読み込みクラス
-	bool inputHandle = false;
 	int dungeonID = -1;
 
 	static constexpr const char* _DUNGEON_FLOOR_PATH = "Data/Dungeon/DungeonFloorData.json";
