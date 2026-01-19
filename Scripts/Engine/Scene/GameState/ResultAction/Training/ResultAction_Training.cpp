@@ -51,6 +51,8 @@ void ResultAction_Training::Render() {
 	DrawFormatString(50, 120, GetColor(0, 255, 0), "Stamina : %d", status->base.stamina);
 	DrawFormatString(50, 140, GetColor(0, 255, 0), "Strength : %d", status->base.strength);
 	DrawFormatString(50, 160, GetColor(0, 255, 0), "ResistTime : %d", status->base.resistTime);
+	DrawFormatString(50, 180, GetColor(255, 255, 255), "Ÿ‚Ì“ú‚Éi‚Ş->SpaceKey");
+
 }
 /*
  *	@brief	•Ğ•t‚¯ˆ—

@@ -13,7 +13,7 @@
 EnemyAttack::EnemyAttack()
 	: player(nullptr)
 	, coolTime(0)
-	, MAX_COOL_TIME(3) {
+	, MAX_COOL_TIME(2) {
 }
 
 /*
@@ -22,7 +22,7 @@ EnemyAttack::EnemyAttack()
  */
 void EnemyAttack::Start(EnemyComponent& enemy)
 {
-	printfDx("EnemyAttack");
+	//printfDx("EnemyAttack");
 	coolTime = MAX_COOL_TIME;
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
@@ -43,14 +43,15 @@ void EnemyAttack::Update(GameObject* enemy, float deltaTime)
 	const Vector3 aabbMin = { -40, 0, -40 };
 	const Vector3 aabbMax = { 40, 100, 40 };
 	
-
-	// 前方に当たり判定を出す
-	aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
-
-	
 	coolTime -= deltaTime;
-	if (coolTime <= 0) {
+	if (coolTime <= 1.7f) {
+		// 前方に当たり判定を出す
+		aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
+	}
+	if (coolTime <= 1.5f) {
 		aabbCollider->aabb = { Vector3::zero, Vector3::zero };
+	}
+	if (coolTime <= 0) {
 		// 状態遷移
 		enemy->GetComponent<EnemyComponent>()->SetState(new EnemyChase());
 	}

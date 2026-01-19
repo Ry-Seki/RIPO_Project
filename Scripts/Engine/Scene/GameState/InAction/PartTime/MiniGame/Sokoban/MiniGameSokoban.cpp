@@ -74,7 +74,7 @@ void MiniGameSokoban::ParseBoxesFromMap() {
 /*
  *  @brief      更新処理
  */
-void MiniGameSokoban::Update(Engine& engine, float deltaTime) {
+void MiniGameSokoban::Update(float deltaTime) {
     // R でリセット（補間中でもリセット可能）
     if (CheckHitKey(KEY_INPUT_R)) {
         Reset();

@@ -4,6 +4,10 @@
  */
 
 #include "InAction_Shop.h"
+#include "../GameState_InAction.h"
+#include "../../GameStateMachine.h"
+#include "../../../../Fade/FadeFactory.h"
+#include "../../../../Fade/FadeManager.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -14,11 +18,24 @@ void InAction_Shop::Initialize(Engine& engine) {
  *	@brief	€”õ‘Oˆ—
  */
 void InAction_Shop::Setup() {
+	isStart = false;
+	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::In, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
+		isStart = true;
+	});
+
 }
 /*
  *	@brief	XVˆ—
  */
 void InAction_Shop::Update(float deltaTime) {
+	if (isStart) {
+		isStart = false;
+		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
+		FadeManager::GetInstance().StartFade(fadeOut, [this]() {
+			owner->GetOwner()->ChageState(GameEnum::GameState::ResultAction);
+		});
+	}
 }
 /*
  *	@brief	•`‰æˆ—

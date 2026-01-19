@@ -41,6 +41,13 @@ public:
 	 */
 	void Teardown() override;
 
+private:
+	/*
+	 *	@brief		プレイヤーの死亡判定
+	 *	@return		bool
+	 */
+	bool IsPlayerDead();
+
 public:
 	/*
 	 *	@brief	ダンジョン終了処理

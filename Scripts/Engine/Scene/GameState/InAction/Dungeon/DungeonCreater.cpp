@@ -38,7 +38,7 @@ void DungeonCreater::Setup() {
 void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasureIDList, int& stairID) {
 	// オブジェクトの生成
 	int enemyCount = floorData.enemySpawnCount;
-	int bossCount = 1;
+	int bossCount = floorData.bossSpawnCount;
 	int treasureCount = floorData.treasureSpawnCount;
 	int stairCount = floorData.stairSpawnCount;
 	int goalCount = floorData.goalSpawnCount;
@@ -49,7 +49,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 	CameraManager::GetInstance().CreateCamera("camera");
 	// 敵の生成
 	for (int i = 0; i < enemyCount; i++) {
-		GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+		GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	}
 	// ボスの生成
 	for (int i = 0; i < bossCount; i++) {
@@ -132,6 +132,8 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 		// ボスの取得
 		auto bossCharacter = bossList[i];
 		if (!bossCharacter) continue;
+
+		bossCharacter->position = bossSpawnPos[0];
 		// モデルの設定
 		SetModelHandle(bossCharacter.get(), bossHandle);
 	}
@@ -266,6 +268,26 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 		// WayPointの設定
 		component->SetWayPoint(enemyCharacter->position);
 		component->SetSpawnEnemyID(spawnID);
+	}
+
+	// ボスの生成ID
+	std::vector<int> bossSpawnIDList;
+	// ボスの生成位置の取得
+	std::vector<Vector3> bossSpawnPos = GetEnemySpwanPos(bossSpawnIDList);
+	// ボスの取得
+	std::vector<GameObjectPtr> bossList = GetObjectByName("Boss");
+	// モデルハンドルの取得
+	int bossHandle = resourceData.bossResource->GetHandle();
+	// ボスの設定
+	for (int i = 0; i < bossCount; i++) {
+		if (bossList.size() <= 0) break;
+		// ボスの取得
+		auto bossCharacter = bossList[i];
+		if (!bossCharacter) continue;
+
+		bossCharacter->position = bossSpawnPos[0];
+		// モデルの設定
+		SetModelHandle(bossCharacter.get(), bossHandle);
 	}
 
 	// お宝

@@ -15,7 +15,7 @@ class ResultAction_Dungeon : public ResultActionBase {
 private:
 	int prevMoney = -1;
 	int currentMoney = -1;
-	bool inputHandle = false;
+	bool isPlayerDead = false;
 
 public:
 	/*
@@ -38,6 +38,13 @@ public:
 	 *	@brief	片付け処理
 	 */
 	void Teardown() override;
+
+private:
+	/*
+	 *	@brief	プレイヤーのリザルト処理
+	 */
+	void ResultPlayerAction();
+
 };
 
 #endif // !_RESULT_ACTION_DUNGEON_H_
