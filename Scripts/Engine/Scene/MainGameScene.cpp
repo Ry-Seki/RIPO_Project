@@ -57,7 +57,7 @@ void MainGameScene::Render() {
     DrawFormatString(50, 400, GetColor(255, 255, 255), "Money : %d", MoneyManager::GetInstance().GetCurrentMoney());
 
 #if _DEBUG
-    // 全オブジェクトのAABBCollider描画
+    // 全オブジェクトのCollider描画
     for (auto& obj : gameObjects) {
         auto aabb = obj->GetComponent<AABBCollider>();
         if (aabb != nullptr)
@@ -67,4 +67,12 @@ void MainGameScene::Render() {
             capsule->DebugRender();
     }
 #endif
+    // 敵の攻撃仮描画
+    for (auto& obj : gameObjects) {
+        if (obj->name != GameConst::_CREATE_POSNAME_ENEMY)
+            continue;
+        auto aabb = obj->GetComponent<AABBCollider>();
+        if (aabb != nullptr)
+            aabb->DebugRender();
+    }
 }
