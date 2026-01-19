@@ -24,6 +24,7 @@ private:
 	bool canAvoid;									// 回避可能か否か
 	bool isAvoid;									// 回避中か否か
 	bool hasResolvedInitialGrounding;				// 初期接地処理を行ったかどうか
+	bool isDead;									// 死亡しているか否か
 	std::shared_ptr<AnimatorComponent> animator;	// アニメーターコンポーネント
 	PlayerStatusValue status;						// プレイヤーのステータス
 
@@ -84,7 +85,10 @@ public:
 	 *	プレイヤーのステータス更新
 	 */
 	inline void SetPlayerStatus(PlayerStatusValue setStatus) { status = setStatus; }
-
+	/*
+	 *	死亡フラグの取得
+	 */
+	inline bool GetIsDead()const { return isDead; }
 };
 
 #endif // !_PLAYERCOMPONENT_H_
