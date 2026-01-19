@@ -20,12 +20,15 @@ EnemyComponent::EnemyComponent()
 EnemyComponent::EnemyComponent(EnemyState* initState)
 	: enemy(nullptr)
 	, state(initState)
+	, player(nullptr)
 	, wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(1000.0f)
 	, chaseTargetChangeFrag(false)
 	, closePlayer(false)
+	, isTriger(false)
 	, turnDelay(0.0f)
+	, coolTime(3.0f)
 	, TOP_VALUE(5000)
 	, RANDOM_RANGE(100)
 	, moveVec(Vector3::zero) {
@@ -43,6 +46,9 @@ void EnemyComponent::Start() {
 	if (state == nullptr)
 		state = new EnemyChase();
 	state->Start(*this);
+
+	player = CameraManager::GetInstance().GetTarget();
+	if (player == nullptr) return;
 }
 
 /*
@@ -58,4 +64,27 @@ void EnemyComponent::Update(float deltaTime) {
 
 	// ステージとの当たり判定
 	StageManager::GetInstance().StageCollider(enemy, moveVec);
+
+	coolTime -= deltaTime;
+}
+
+/*
+ *	衝突が起きたときに呼び出される処理
+ */
+void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other)
+{
+	if (!isTriger && other->GetOwner()->name == "Player") {
+		// 当たったらダメージを与える
+		auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
+		// 今はとりあえず適当なダメージ
+		playerStatus.HP = playerStatus.HP - 10;
+		// ダメージを反映
+		player->GetComponent<PlayerComponent>()->SetPlayerStatus(playerStatus);
+
+		isTriger = true;
+	}
+	else if (coolTime <= 0) {
+		isTriger = false;
+		coolTime = 3;
+	}
 }
