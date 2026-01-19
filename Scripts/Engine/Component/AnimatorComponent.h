@@ -60,6 +60,7 @@ private:
 	int attachIndex;						// アタッチ番号
 	bool isPlaying;							// 再生中かどうか
 
+
 public:
 	AnimatorComponent();
 	~AnimatorComponent();
@@ -105,6 +106,7 @@ public:
 	 *  @return		bool
 	 */
 	inline bool	IsPlaying() const { return isPlaying; }
+
 
 
 };
