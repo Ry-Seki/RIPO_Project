@@ -25,6 +25,7 @@ PlayerComponent::PlayerComponent()
 	, canAvoid(true)
 	, isAvoid(false)
 	, hasResolvedInitialGrounding(false)
+	, isDead(false)
 	, animator(nullptr)
 	, status(-1,-1,-1,-1)
 
@@ -93,6 +94,11 @@ void PlayerComponent::Update(float deltaTime) {
 				status.HP = 0;
 		}
 		resistTimePoint = 0;
+	}
+	
+	// HP‚ª‚È‚­‚È‚Á‚½‚çŽ€–S
+	if (status.HP <= 0) {
+		isDead = true;
 	}
 
 	// ‰ñ”ð
