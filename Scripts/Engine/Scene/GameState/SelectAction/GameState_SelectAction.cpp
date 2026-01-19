@@ -6,6 +6,9 @@
 #include "GameState_SelectAction.h"
 #include "../../../Audio/AudioUtility.h"
 #include "../GameStateMachine.h"
+#include "../../../Fade/FadeFactory.h"
+#include "../../../Fade/FadeManager.h"
+
 #include <DxLib.h>
 
 /*
@@ -25,28 +28,40 @@ void GameState_SelectAction::Update(float deltaTime) {
             AudioUtility::PlaySE("DebugSE");
             inputHandle = true;
             owner->SetActionType(GameEnum::ActionType::Dungeon);
-            owner->ChageState(GameEnum::GameState::SelectDetail);
+            FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
+            FadeManager::GetInstance().StartFade(fade, [this]() {
+                owner->ChageState(GameEnum::GameState::SelectDetail);
+            });
         }
         else if (CheckHitKey(KEY_INPUT_2)) {
             // SE‚ÌÄ¶
             AudioUtility::PlaySE("DebugSE");
             inputHandle = true;
             owner->SetActionType(GameEnum::ActionType::Training);
-            owner->ChageState(GameEnum::GameState::SelectDetail);
+            FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
+            FadeManager::GetInstance().StartFade(fade, [this]() {
+                owner->ChageState(GameEnum::GameState::SelectDetail);
+            });
         }
         else if (CheckHitKey(KEY_INPUT_3)) {
             // SE‚ÌÄ¶
             AudioUtility::PlaySE("DebugSE");
             inputHandle = true;
             owner->SetActionType(GameEnum::ActionType::Shop);
-            owner->ChageState(GameEnum::GameState::SelectDetail);
+            FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
+            FadeManager::GetInstance().StartFade(fade, [this]() {
+                owner->ChageState(GameEnum::GameState::SelectDetail);
+            });
         }
         else if (CheckHitKey(KEY_INPUT_4)) {
             // SE‚ÌÄ¶
             AudioUtility::PlaySE("DebugSE");
             inputHandle = true;
             owner->SetActionType(GameEnum::ActionType::PartTime);
-            owner->ChageState(GameEnum::GameState::SelectDetail);
+            FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
+            FadeManager::GetInstance().StartFade(fade, [this]() {
+                owner->ChageState(GameEnum::GameState::SelectDetail);
+            });
         }
     }
 }

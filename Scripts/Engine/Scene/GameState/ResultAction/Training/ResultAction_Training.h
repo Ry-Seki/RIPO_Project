@@ -12,6 +12,8 @@
  *	@brief	トレーニングアクションリザルト
  */
 class ResultAction_Training : public ResultActionBase {
+private:
+	bool inputHandle = false;
 
 public:
 	/*

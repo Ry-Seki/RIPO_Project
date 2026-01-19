@@ -3,6 +3,8 @@
  */
 
 #include "InAction_Training.h"
+#include "../GameState_InAction.h"
+#include "../../GameStateMachine.h"
 #include "../../../../Fade/FadeFactory.h"
 #include "../../../../Fade/FadeManager.h"
 
@@ -15,14 +17,23 @@ void InAction_Training::Initialize(Engine& engine) {
  *	@brief	€”õ‘Oˆ—
  */
 void InAction_Training::Setup() {
-	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fade);
+	isStart = false;
+	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::In, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
+		isStart = true;
+	});
 }
 /*
  *	@brief	XVˆ—
  */
 void InAction_Training::Update(float deltaTime) {
-
+	if (isStart) {
+		isStart = false;
+		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
+		FadeManager::GetInstance().StartFade(fadeOut, [this]() {
+			owner->GetOwner()->ChageState(GameEnum::GameState::ResultAction);
+		});
+	}
 }
 /*
  *	@brief	•`‰æˆ—

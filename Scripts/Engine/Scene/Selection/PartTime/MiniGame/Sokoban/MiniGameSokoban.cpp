@@ -5,6 +5,7 @@
 
 #include "MiniGameSokoban.h"
 #include "SokobanMapManager.h"
+#include <DxLib.h>
 
 /*
  *  @brief ミニゲーム開始時処理

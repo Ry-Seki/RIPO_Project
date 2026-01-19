@@ -12,6 +12,7 @@
  *	@brief	トレーニング行動実行クラス
  */
 class InAction_Training : public InActionBase {
+private:
 
 public:
 	/*
