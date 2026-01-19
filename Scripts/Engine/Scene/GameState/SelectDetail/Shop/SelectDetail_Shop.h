@@ -7,11 +7,19 @@
 #define _SELECT_DETAIL_SHOP_H_
 
 #include "../SelectDetailBase.h"
+#include "../../../../../Data/ItemCatalogData.h"
+
+#include <vector>
 
 /*
  *	@brief	買い物の内容を選択するクラス
  */
 class SelectDetail_Shop : public SelectDetailBase {
+private:
+	std::vector<ItemData*> itemDataList;
+	std::vector<int> buyItemIDList;
+	const int startX = 180;
+	const int intervalX = 40; 
 
 public:
 	/*
