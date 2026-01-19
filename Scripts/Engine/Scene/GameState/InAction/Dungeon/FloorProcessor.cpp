@@ -142,12 +142,10 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart) {
 		dungeonCreater.GenerateDungeon(currentFloor, GetTreasureIDTable(currentFloor), nextFloor);
 		// フロアデータの更新
 		floorData.TrySetFloorData(currentFloor, setFloorData);
-	#if _DEBUG
 		// 重力
 		auto player = CharacterManager::GetInstance().GetPlayer();
 		GameObjectManager::GetInstance().SetObjectColliderFlag(true);
 		player->GetComponent<GravityComponent>()->SetGravity(true);
-	#endif
 		isStart = true;
 	});
 }

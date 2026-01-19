@@ -36,10 +36,7 @@ void ResultAction_Training::Update(float deltaTime) {
 		// SEの再生
 		AudioUtility::PlaySE("DebugSE");
 		inputHandle = true;
-		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
-		FadeManager::GetInstance().StartFade(fadeOut, [this]() {
-			owner->GetOwner()->ChageState(GameEnum::GameState::SelectAction);
-		});
+		AdvanceDay();
 	}
 }
 /*
@@ -51,9 +48,29 @@ void ResultAction_Training::Render() {
 	DrawFormatString(50, 120, GetColor(0, 255, 0), "Stamina : %d", status->base.stamina);
 	DrawFormatString(50, 140, GetColor(0, 255, 0), "Strength : %d", status->base.strength);
 	DrawFormatString(50, 160, GetColor(0, 255, 0), "ResistTime : %d", status->base.resistTime);
+	DrawFormatString(50, 180, GetColor(255, 255, 255), "次の日に進む->SpaceKey");
+
 }
 /*
  *	@brief	片付け処理
  */
 void ResultAction_Training::Teardown() {
+}
+/*
+ *	@brief	日にち進行処理
+ */
+void ResultAction_Training::AdvanceDay() {
+	auto& context = owner->GetOwner()->GetActionContext();
+	// 半日をすでに消化しているかで分岐
+	if (context.isHalf) {
+		// 一日進める
+		context.isHalf = false;
+		context.elapsedDay++;
+	}
+	else {
+		// 半日進める
+		context.isHalf = true;
+	}
+	// アクション終了フラグの変更
+	owner->GetOwner()->SetIsActionEnd(true);
 }

@@ -7,11 +7,17 @@
 #define _TITLESCENE_H_
 
 #include "Scene.h"
+#include "../GameEnum.h"
 
 /*
  *  タイトルシーン
  */
 class TitleScene : public Scene {
+private:
+    bool isStart = false;
+    bool inputHandle = false;
+    GameEnum::GameMode gameMode = GameEnum::GameMode::Invalid;
+
 public:
     /*
      *  初期化処理

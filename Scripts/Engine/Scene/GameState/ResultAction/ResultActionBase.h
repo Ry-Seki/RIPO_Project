@@ -45,6 +45,10 @@ public:
 	 *	@brief	•Ğ•t‚¯ˆ—
 	 */
 	virtual void Teardown() {}
+	/*
+	 *	@brief	“ú‚É‚¿isˆ—
+	 */
+	virtual void AdvanceDay() = 0;
 
 public:
 	/*

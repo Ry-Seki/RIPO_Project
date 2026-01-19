@@ -49,7 +49,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 	CameraManager::GetInstance().CreateCamera("camera");
 	// “G‚Ì¶¬
 	for (int i = 0; i < enemyCount; i++) {
-		GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+		GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, V_ZERO, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	}
 	// ƒ{ƒX‚Ì¶¬
 	for (int i = 0; i < bossCount; i++) {

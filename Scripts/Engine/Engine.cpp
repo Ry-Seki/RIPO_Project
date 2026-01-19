@@ -6,7 +6,11 @@
 #include "Engine.h"
 #include "Time.h"
 #include "GameConst.h"
+#include "Scene/Scene.h"
 #include "Scene/StandbyScene.h"
+#include "Scene/TitleScene.h"
+#include "Scene/MainGameScene.h"
+#include "Scene/ResultScene.h"
 #include "Scene/DebugScene.h"
 #include "Fade/FadeFactory.h"
 #include "Fade/FadeManager.h"
@@ -23,9 +27,9 @@
 #include <EffekseerForDXLib.h>
 #include <iostream>
 
- /*
-  *	初期化処理
-  */
+/*
+ *	@brief		初期化処理
+ */
 int Engine::Initialize() {
 	dxlibInitialized = false;
 	effekseerInitialized = false;
@@ -89,7 +93,7 @@ int Engine::Initialize() {
 	return 0;
 }
 /*
- *	破棄処理
+ *	@brief		破棄処理
  */
 void Engine::Teardown() {
 	if (initialized) {
@@ -107,7 +111,7 @@ void Engine::Teardown() {
 	if (dxlibInitialized) { DxLib_End(); dxlibInitialized = false; }
 }
 /*
- *	メインループ
+ *	@brief		メインループ
  */
 int Engine::Run() {
 	if (Initialize() != 0) { Teardown(); return 1; }
@@ -135,7 +139,7 @@ int Engine::Run() {
 	return 0;
 }
 /*
- *	更新処理
+ *	@brief		更新処理
  */
 void Engine::Update() {
 	Time::Update();
@@ -164,7 +168,7 @@ void Engine::Update() {
 	ChangeScene();
 }
 /*
- *	描画処理
+ *	@brief		描画処理
  */
 void Engine::Render() {
 	ClearDrawScreen();
@@ -190,7 +194,7 @@ void Engine::Render() {
 	ScreenFlip();
 }
 /*
- *	シーンの変更
+ *	@brief		シーンの変更
  */
 void Engine::ChangeScene() {
 	if (nextScene) {
@@ -201,7 +205,14 @@ void Engine::ChangeScene() {
 	}
 }
 /*
- *	フェードの呼び出し処理
+ *  @brief      SceneのAddGameObjectの呼び出し
+ *  @param[in]  const GameObjectPtr& gameObject
+ */
+void Engine::AddGameObject(const GameObjectPtr& gameObject) { 
+	if (currentScene) currentScene->AddGameObject(gameObject); 
+}
+/*
+ *	@brief		フェードの呼び出し処理
  */
 void Engine::StartSceneFade(const FadeBasePtr& setFade, std::function<void()> onComplete) {
 	if (!setFade) return;
@@ -211,7 +222,7 @@ void Engine::StartSceneFade(const FadeBasePtr& setFade, std::function<void()> on
 		});
 }
 /*
- *	フェードアウト・インコールバック付き同時呼び出し
+ *	@brief		フェードアウト・インコールバック付き同時呼び出し
  */
 void Engine::StartFadeOutIn(float fadeOutTime, float fadeInTime, std::function<void()> onMidPoint) {
 	// フェードアウト開始

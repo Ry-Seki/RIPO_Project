@@ -8,7 +8,7 @@
 
 #include "../MiniGameBase.h"
 #include "SokobanMapCreater.h"
-#include "../../../../../VecMath.h"
+#include "../../../../../../VecMath.h"
 
 #include <vector>
 
@@ -55,7 +55,7 @@ public:
 	/*
 	 *	@brief	XVˆ—
 	 */
-	void Update(Engine& engine, float deltaTime) override;
+	void Update(float deltaTime) override;
 	/*
 	 *	@brief	•`‰æˆ—
 	 */

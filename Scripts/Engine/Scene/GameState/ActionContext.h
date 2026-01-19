@@ -16,7 +16,7 @@
  *	@brief	ステート間で受け渡されるデータ
  */
 struct ActionContext {
-	int currentDay = 0;						// 現在の経過日数
+	int elapsedDay = 0;						// 現在の経過日数
 	int dungeonID = 0;						// ダンジョンID
 	int prevIncome = 0;						// 前回の稼ぎ
 	int currentIncome = 0;					// 今回の稼ぎ

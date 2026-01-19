@@ -12,6 +12,8 @@
  *	@brief	アルバイトアクションリザルト
  */
 class ResultAction_PartTime : public ResultActionBase {
+private:
+	const int _INCOME = 50;
 
 public:
 	/*
@@ -34,6 +36,11 @@ public:
 	 *	@brief	片付け処理
 	 */
 	void Teardown() override;
+	/*
+	 *	@brief	日にち進行処理
+	 */
+	void AdvanceDay() override;
+
 };
 
 #endif // !_RESULT_ACTION_PART_TIME_H_

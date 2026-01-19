@@ -43,6 +43,21 @@ private:
 	const float BACK_ACCELERATION;				// 後ろ歩き時の加速度
 	const float HP_DECREASE_RATE;				// HPの減少倍率
 
+	// プレイヤーのアニメーション番号
+	enum class PlayerAnimNum {
+		Invalid = -1,
+		Carry = 0,		// 運び開始時アニメーション
+		Deth = 1,		// 死亡時アニメーション
+		Idle = 2,		// 通常待機アニメーション
+		CarryIdle = 3,	// 運び時待機アニメーション
+		Walk = 4,		// 前方歩きアニメーション
+		BackWalk = 5,	// 後ろ歩きアニメーション
+		LeftWalk = 6,	// 左歩きアニメーション
+		RightWalk = 7,	// 右歩きアニメーション
+
+
+	};
+
 public:
 	PlayerComponent();
 	~PlayerComponent() = default;

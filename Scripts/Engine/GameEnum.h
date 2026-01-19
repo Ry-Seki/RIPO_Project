@@ -8,6 +8,27 @@
 
 namespace GameEnum {
 	/*
+	 *	@brief	シーンの種類
+	 */
+	enum class SceneType {
+		Invalid = -1,
+		Standby,		// 準備シーン
+		Title,			// タイトルシーン
+		MainGame,		// メインゲームシーン
+		Result,			// リザルトシーン
+		Max
+	};
+	/*
+	 *	@brief	ゲームモード
+	 */
+	enum class GameMode {
+		Invalid = -1,
+		NewGame,		// ニューゲーム
+		LoadGame,		// ロードゲーム
+		System,			// システム
+		Max
+	};
+	/*
 	 *	@brief	メインゲーム状態
 	 */
 	enum class GameState {
@@ -17,7 +38,6 @@ namespace GameEnum {
 		SelectDetail,		// アクションの中身を選択
 		InAction,			// アクション中
 		ResultAction,		// アクションの結果
-		EndAction,			// アクションの終了
 		Pause,				// ポーズ
 		Max
 	};
