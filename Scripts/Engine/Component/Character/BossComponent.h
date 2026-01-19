@@ -20,6 +20,7 @@ private:
 	int animationHandle;
 	int modelHandle;
 	float coolTime;
+	bool isTriger;
 
 public:
 	/*

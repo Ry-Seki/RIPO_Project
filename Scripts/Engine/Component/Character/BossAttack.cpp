@@ -47,8 +47,8 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 	// UŒ‚‚Ì“–‚½‚è”»’è
 	auto aabbCollider = boss->GetComponent<AABBCollider>();
 	Vector3 aabbDirection = { 0, 0, 0 };
-	const Vector3 aabbMin = { -1000, 0, -1000 };
-	const Vector3 aabbMax = { 1000, 100, 1000 };
+	const Vector3 aabbMin = { -500, 0, -500 };
+	const Vector3 aabbMax = { 500, 100, 500 };
 	
 	
 

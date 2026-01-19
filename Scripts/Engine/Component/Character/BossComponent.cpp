@@ -5,6 +5,7 @@
 #include "BossComponent.h"
 #include "../../Manager/GameObjectManager.h"
 #include "BossStandby.h"
+#include "PlayerComponent.h"
 #include "../../Manager/CameraManager.h"
 
 /*
@@ -24,6 +25,7 @@ BossComponent::BossComponent(BossState* initState)
 	, animationHandle(-1)
 	, modelHandle(-1)
 	, coolTime(3)
+	, isTriger(false)
 {
 }
 
@@ -74,7 +76,7 @@ void BossComponent::OnCollision(const std::shared_ptr<Component>& self, const st
 		// 当たったらダメージを与える
 		auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
 		// 今はとりあえず適当なダメージ
-		playerStatus.HP = playerStatus.HP - 10;
+		playerStatus.HP = playerStatus.HP - 20;
 		// ダメージを反映
 		player->GetComponent<PlayerComponent>()->SetPlayerStatus(playerStatus);
 

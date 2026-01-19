@@ -53,7 +53,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 	}
 	// ボスの生成
 	for (int i = 0; i < bossCount; i++) {
-		GenerateBoss("Boss", V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+		GenerateBoss("Boss", V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  500,  0 }, 300);
 	}
 	// お宝の生成処理
 	for (int i = 0; i < treasureCount; i++) {
@@ -214,7 +214,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	}
 	// ボスの生成処理
 	for (int i = 0; i < bossCount; i++) {
-		GenerateBoss("Boss", V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  200,  0 }, 200);
+		GenerateBoss("Boss", V_ZERO, V_ZERO, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  500,  0 }, 300);
 	}
 	// お宝の生成処理
 	for (int i = 0; i < treasureCount; i++) {
@@ -286,6 +286,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 		if (!bossCharacter) continue;
 
 		bossCharacter->position = bossSpawnPos[0];
+		bossCharacter->scale = { 3, 3, 3 };
 		// モデルの設定
 		SetModelHandle(bossCharacter.get(), bossHandle);
 	}
