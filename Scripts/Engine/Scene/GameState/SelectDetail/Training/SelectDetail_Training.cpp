@@ -21,12 +21,19 @@ void SelectDetail_Training::Initialize() {
  *	@brief	€”õ‘Oˆ—
  */
 void SelectDetail_Training::Setup() {
-
+	isStart = false;
+	inputHandle = false;
+	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::In, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fade, [this]() {
+		isStart = true;
+	});
 }
 /*
  *	@brief	XVˆ—
  */
 void SelectDetail_Training::Update(float deltaTime) {
+	if (!isStart) return;
+
 	if (!inputHandle && CheckHitKey(KEY_INPUT_1)) {
 		// SE‚ÌÄ¶
 		AudioUtility::PlaySE("DebugSE");
