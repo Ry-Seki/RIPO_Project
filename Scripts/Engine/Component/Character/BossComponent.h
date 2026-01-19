@@ -13,11 +13,13 @@
 class BossComponent : public CharacterBase {
 private:
 	GameObject* boss;
+	GameObjectPtr player;
 	//GameObject* modelRenderer;
 	std::shared_ptr<AnimatorComponent> animator;
 	BossState* state;
 	int animationHandle;
 	int modelHandle;
+	float coolTime;
 
 public:
 	/*
@@ -33,6 +35,11 @@ public:
 	 *	更新処理
 	 */
 	virtual void Update(float deltaTime) override;
+
+	/*
+	 *	衝突が起きたときに呼び出される処理
+	 */
+	virtual void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
 
 public:
 	/*
