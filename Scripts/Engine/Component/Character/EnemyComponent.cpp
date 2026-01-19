@@ -77,7 +77,7 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 		// 当たったらダメージを与える
 		auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
 		// 今はとりあえず適当なダメージ
-		playerStatus.HP = playerStatus.HP - 3;
+		playerStatus.HP = playerStatus.HP - 10;
 		// ダメージを反映
 		player->GetComponent<PlayerComponent>()->SetPlayerStatus(playerStatus);
 
