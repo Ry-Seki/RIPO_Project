@@ -28,7 +28,7 @@ EnemyComponent::EnemyComponent(EnemyState* initState)
 	, closePlayer(false)
 	, isTriger(false)
 	, turnDelay(0.0f)
-	, coolTime(3.0f)
+	, coolTime(2.0f)
 	, TOP_VALUE(5000)
 	, RANDOM_RANGE(100)
 	, moveVec(Vector3::zero) {
@@ -85,6 +85,6 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 	}
 	else if (coolTime <= 0) {
 		isTriger = false;
-		coolTime = 3;
+		coolTime = 2;
 	}
 }

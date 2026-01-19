@@ -42,7 +42,7 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 	animator->SetModelHandle(modelRenderer);
 
 	animator->Update(deltaTime);
-	animator->Play(4, 10);
+	animator->Play(3, 10);
 
 	// UŒ‚‚Ì“–‚½‚è”»’è
 	auto aabbCollider = boss->GetComponent<AABBCollider>();
@@ -50,14 +50,19 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 	const Vector3 aabbMin = { -1000, 0, -1000 };
 	const Vector3 aabbMax = { 1000, 100, 1000 };
 	
-	// UŒ‚ˆ—
-	aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
+	
 
 	// ƒAƒjƒ[ƒVƒ‡ƒ“‚ªI‚í‚é‚Ü‚Å‘Ò‚¿‚½‚¢
 	// ‰¼
-		coolTime -= deltaTime;
-	if (coolTime <= 0) {
+	coolTime -= deltaTime;
+	if (coolTime <= 1.5f) {
+		// UŒ‚ˆ—
+		aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
+	}
+	if (coolTime <= 1.2f) {
 		aabbCollider->aabb = { Vector3::zero, Vector3::zero };
+	}
+	if (coolTime <= 0) {
 		// ó‘Ô‘JˆÚ
 		boss->GetComponent<BossComponent>()->SetState(new BossStandby());
 	}
