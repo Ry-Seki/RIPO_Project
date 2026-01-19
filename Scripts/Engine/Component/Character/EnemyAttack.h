@@ -41,6 +41,11 @@ public:
 	 */
 	virtual void Update(GameObject* enemy, float deltaTime) override;
 
+public:
+	/*
+	 *	クールタイムの取得
+	 */
+	inline float GetCoolTime() const { return coolTime; }
 };
 
 
