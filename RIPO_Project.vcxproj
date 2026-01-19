@@ -222,10 +222,7 @@
     <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\MiniGameSokoban.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\MiniGame\Sokoban\SokobanMapManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\PartTime\SelectionPartTime.cpp" />
-    <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionFactory.cpp" />
-    <ClCompile Include="Scripts\Engine\Scene\Selection\SelectionManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Selection\Shop\SelectionShop.cpp" />
-    <ClCompile Include="Scripts\Engine\Scene\Selection\Training\SelectionTraining.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\StandbyScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TutorialScene.cpp" />

@@ -15,6 +15,7 @@ class GameState_SelectDetail;
 class SelectDetailBase {
 protected:
 	bool isStart = false;
+	bool inputHandle = false;
 	GameState_SelectDetail* owner = nullptr;
 
 public:

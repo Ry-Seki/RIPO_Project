@@ -45,6 +45,7 @@ void InAction_Dungeon::Update(float deltaTime) {
 	// 階段、ゴールフラグの取得
 	bool exitFrag = stageObject.GetExitFlag();
 	bool stairFrag = stageObject.GetStairMove();
+
 	// 出口に触れたとき
 	if (exitFrag) {
 		// SEの再生
