@@ -223,6 +223,7 @@
     <ClCompile Include="Scripts\Engine\Scene\MainGameScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\ResultScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Scene.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\SceneStateBase.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\StandbyScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TutorialScene.cpp" />
@@ -360,6 +361,7 @@
     <ClInclude Include="Scripts\Engine\Scene\MainGameScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\ResultScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\Scene.h" />
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\SceneStateBase.h" />
     <ClInclude Include="Scripts\Engine\Scene\SceneState\SceneStateMachine.h" />
     <ClInclude Include="Scripts\Engine\Scene\StandbyScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\TitleScene.h" />

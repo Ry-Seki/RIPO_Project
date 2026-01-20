@@ -12,10 +12,11 @@ namespace GameEnum {
 	 */
 	enum class SceneType {
 		Invalid = -1,
-		Standby,		// 準備シーン
-		Title,			// タイトルシーン
-		MainGame,		// メインゲームシーン
-		Result,			// リザルトシーン
+		Standby,		// 準備
+		Title,			// タイトル
+		Tutorial,		// チュートリアル
+		MainGame,		// メインゲーム
+		Result,			// リザルト
 		Max
 	};
 	/*
