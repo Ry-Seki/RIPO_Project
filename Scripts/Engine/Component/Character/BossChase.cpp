@@ -9,6 +9,9 @@
 #include "../../Manager/CameraManager.h"
 #include "BossStandby.h"
 #include "BossAttack.h"
+#include "../../Stage/StageUtility.h"
+
+using namespace StageUtility;
 
 /*
  *	コンストラクタ
@@ -33,6 +36,8 @@ void BossChase::Start(GameObject* boss)
 	if (player == nullptr) return;
 	animator = boss->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
+
+	boss->GetComponent<BossComponent>()->SetMoveFrag(true);
 }
 
 /*
@@ -56,9 +61,14 @@ void BossChase::Update(GameObject* boss, float deltaTime)
 
 	// 状態遷移
 	if (!Vision(boss->position, -ForwardDir(boss->rotation), player->position, 30, 4000)) {
+		// ボスの生成ID
+		std::vector<int> bossSpawnIDList;
+		// ボスの生成位置の取得
+		std::vector<Vector3> bossSpawnPos = GetEnemySpwanPos(bossSpawnIDList);
+
 		// 一旦初期位置に戻りきってからstandbyに遷移
-		//ChaseWayPoint(boss, )
-		bossComponent->SetState(new BossStandby());
+   		//ChaseWayPoint(boss, bossSpawnPos[0], deltaTime);
+		//bossComponent->SetState(new BossStandby());
 	}
 	// 射程距離判定
 	if (PLAYER_DISTANCE > Distance(player->position, boss->position)) {
@@ -113,8 +123,8 @@ void BossChase::ChaseWayPoint(GameObject* boss, Vector3 wayPoint, float deltaTim
 	auto distance = Distance(wayPoint, boss->position);
 	// プレイヤーの手前で止まる
 	if (player && wayPoint == player->position) {
-			boss->position.x += direction.x * MOVE_SPEED * deltaTime;
-			boss->position.z += direction.z * MOVE_SPEED * deltaTime;
+		boss->position.x += direction.x * MOVE_SPEED * deltaTime;
+		boss->position.z += direction.z * MOVE_SPEED * deltaTime;
 	}
 	// 初期位置に戻る時の処理
 	else {
@@ -126,9 +136,5 @@ void BossChase::ChaseWayPoint(GameObject* boss, Vector3 wayPoint, float deltaTim
 
 		boss->position.x += moveX;
 		boss->position.z += moveZ;
-	}
-	// 目標地点についたらターゲットを変える
-	if (distance < differenceTarget) {
-		//boss->GetComponent<bossComponent>()->SetState(new bossTurn());
 	}
 }

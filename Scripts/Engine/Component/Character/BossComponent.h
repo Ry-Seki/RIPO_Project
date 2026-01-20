@@ -21,6 +21,10 @@ private:
 	int modelHandle;
 	float coolTime;
 	bool isTriger;
+	// 行動フラグ
+	bool moveFrag;
+	// 定位置
+	Vector3 homePosition;
 
 public:
 	/*
@@ -80,6 +84,23 @@ public:
 		}
 		state = setValue;
 		state->Start(boss);
+	}
+
+	/*
+	 *	定位置の取得
+	 */
+	inline Vector3 GetHomePosition() const { return homePosition; }
+
+	/*
+	 *	行動フラグの取得
+	 */
+	inline bool GetMoveFrag() const { return moveFrag; }
+
+	/*
+	 *	行動フラグの変更
+	 */
+	inline void SetMoveFrag(bool setValue) {
+		moveFrag = setValue;
 	}
 };
 
