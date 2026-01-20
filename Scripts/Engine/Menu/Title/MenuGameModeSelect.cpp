@@ -10,6 +10,9 @@
 #include "../../../Engine/Engine.h"
 #include "../../Scene/MainGameScene.h"
 #include "../../Menu/MenuManager.h"
+#include "../../Menu/Title/MenuNewGame.h"
+#include "../../Menu/Title/MenuLoadGame.h"
+#include "../../Menu/Title/MenuSystem.h"
 
 #include <DxLib.h>
 
@@ -40,30 +43,33 @@ void MenuGameModeSelect::Update(Engine& engine, float deltaTime) {
 		if (CheckHitKey(KEY_INPUT_1)) {
 			AudioUtility::PlaySE("DebugSE");
 			inputHandle = true;
-			engine.StartFadeOutIn(0.5f, 0.5f, [&engine, &menu]() {
-				menu.CloseAll();
-				engine.SetNextScene(std::make_shared<MainGameScene>());
+			FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.0f, FadeDirection::Out, FadeMode::Stop);
+			FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+				isVisible = false;
+				menu.OpenMenu<MenuNewGame>();
 			});
 		} else if (CheckHitKey(KEY_INPUT_2)) {
 			AudioUtility::PlaySE("DebugSE");
 			inputHandle = true;
-			engine.StartFadeOutIn(0.5f, 0.5f, [&engine, &menu]() {
-				menu.CloseAll();
-				engine.SetNextScene(std::make_shared<MainGameScene>());
+			FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.0f, FadeDirection::Out, FadeMode::Stop);
+			FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+				isVisible = false;
+				menu.OpenMenu<MenuLoadGame>();
 			});
 		} else if (CheckHitKey(KEY_INPUT_3)) {
 			AudioUtility::PlaySE("DebugSE");
 			inputHandle = true;
-			engine.StartFadeOutIn(0.5f, 0.5f, [&engine, &menu]() {
-				menu.CloseAll();
-				engine.SetNextScene(std::make_shared<MainGameScene>());
+			FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.0f, FadeDirection::Out, FadeMode::Stop);
+			FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+				isVisible = false;
+				menu.OpenMenu<MenuSystem>();
 			});
 		} else if (CheckHitKey(KEY_INPUT_RETURN)) {
 			AudioUtility::PlaySE("DebugSE");
 			inputHandle = true;
 			FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.0f, FadeDirection::Out, FadeMode::Stop);
 			FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-				menu.CloseTop();
+				menu.CloseTopMenu();
 			});
 		}
 	}
@@ -76,6 +82,7 @@ void MenuGameModeSelect::Render() {
 	DrawFormatString(50, 100, GetColor(0, 255, 0), "1: NewGame");
 	DrawFormatString(50, 120, GetColor(0, 255, 0), "2: LoadGame");
 	DrawFormatString(50, 140, GetColor(0, 255, 0), "3: System");
+	DrawFormatString(300, 450, GetColor(255, 255, 255), "Return->EnterKey");
 }
 /*
  *	@brief	ÉÅÉjÉÖÅ[Çï¬Ç∂ÇÈ

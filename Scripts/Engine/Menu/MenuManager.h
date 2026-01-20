@@ -51,11 +51,11 @@ public:
 	/*
 	 *	@brief		使用リストから一番後ろの要素を削除する
 	 */
-	void CloseTop();
+	void CloseTopMenu();
 	/*
 	 *	@brief		現在開かれている全てのリストを削除する
 	 */
-	void CloseAll();
+	void CloseAllMenu();
 
 private:
 	/*
