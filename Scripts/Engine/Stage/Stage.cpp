@@ -375,15 +375,15 @@ void Stage::ProcessFloorCollision(
 		Vector3 p2 = FromVECTOR(poly->Position[2]);
 
 		// 中心点と三角形の最近接点を求める
-		Vector3 nearest = Nearest(capCenter, p0, p1, p2);
+		Vector3 nearest = Nearest(capStart, p0, p1, p2);
 
 		// 最近接点との差分と距離
-		Vector3 diff = capCenter - nearest;
+		Vector3 diff = capStart - nearest;
 		float dist = Magnitude(diff);
 
 		// カプセルの半径以下なら接地
 		const float EPS = _HALF;
-		if (dist <= capsuleRadius + EPS) {
+		if (dist <= capsuleRadius) {
 			// 接地判定
 			if (!isGround || MaxY < nearest.y) {
 				isGround = true;
