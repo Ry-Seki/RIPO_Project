@@ -15,9 +15,9 @@
 #include "../Fade/FadeFactory.h"
 #include "../Menu/MenuManager.h"
 #include "../Menu/Title/MenuTitle.h"
+#include "../Menu/Title/MenuGameModeSelect.h"
 
 #include <DxLib.h>
-#include <memory>
 
 using namespace AudioUtility;
 
@@ -31,7 +31,8 @@ void TitleScene::Initialize(Engine& engine) {
 	FadeManager::GetInstance().StartFade(fadeIn);
 	SetBGMVolume(100);
 	SetSEVolume(100);
-	// MenuManager::GetInstance().GetMenu<MenuTitle>()->Initialize();
+	MenuManager::GetInstance().GetMenu<MenuTitle>();
+	MenuManager::GetInstance().GetMenu<MenuGameModeSelect>();
 	auto debugSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/ButtonPush_Debug.mp3");
 	auto goalSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/GoalSE.mp3");
 	std::vector<std::shared_ptr<LoadSprite>> loadBGList;
@@ -57,47 +58,25 @@ void TitleScene::Initialize(Engine& engine) {
  */
 void TitleScene::SetupData(Engine& engine) {
 	isStart = true;
+	MenuManager::GetInstance().OpenMenu<MenuTitle>();
 }
 /*
  *	@brief	èÄîıëOèàóù
  */
 void TitleScene::Setup(Engine& engine) {
+
 }
 /*
  *  çXêVèàóù
  */
 void TitleScene::Update(Engine& engine, float deltaTime) {
-	if (!isStart) return;
 
-	if (!inputHandle) {
-		if (CheckHitKey(KEY_INPUT_1)) {
-			AudioUtility::PlaySE("DebugSE");
-			gameMode = GameEnum::GameMode::NewGame;
-			engine.StartFadeOutIn(0.5f, 0.5f, [&engine]() {
-				engine.SetNextScene(std::make_shared<MainGameScene>());
-			});
-		} else if (CheckHitKey(KEY_INPUT_2)) {
-			AudioUtility::PlaySE("DebugSE");
-			gameMode = GameEnum::GameMode::LoadGame;
-			engine.StartFadeOutIn(0.5f, 0.5f, [&engine]() {
-				engine.SetNextScene(std::make_shared<MainGameScene>());
-			});
-		} else if (CheckHitKey(KEY_INPUT_3)) {
-			AudioUtility::PlaySE("DebugSE");
-			gameMode = GameEnum::GameMode::System;
-			engine.StartFadeOutIn(0.5f, 0.5f, [&engine]() {
-				engine.SetNextScene(std::make_shared<MainGameScene>());
-			});
-		}
-	}
 }
 /*
  *  ï`âÊèàóù
  */
 void TitleScene::Render() {
+#if _DEBUG
 	DrawFormatString(50, 50, GetColor(255, 255, 255), "[TitleScene] ï`âÊíÜ...");
-	DrawFormatString(50, 70, GetColor(255, 255, 255), "=== Selection GameMode ===");
-	DrawFormatString(50, 100, GetColor(0, 255, 0), "1: NewGame");
-	DrawFormatString(50, 120, GetColor(0, 255, 0), "2: LoadGame");
-	DrawFormatString(50, 140, GetColor(0, 255, 0), "3: System");
+#endif
 }

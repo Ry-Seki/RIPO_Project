@@ -4,6 +4,9 @@
  */
 
 #include "GameState_InitialTutorial.h"
+#include "../GameStateMachine.h"
+#include "../../../Fade/FadeFactory.h"
+#include "../../../Fade/FadeManager.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -14,11 +17,21 @@ void GameState_InitialTutorial::Initialize(Engine& engine) {
  *	@brief	€”õ‘Oˆ—
  */
 void GameState_InitialTutorial::Setup() {
+	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.0f, FadeDirection::In, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fade, [this]() {
+		isStart = true;
+	});
 }
 /*
  *	@brief	XVˆ—
  */
 void GameState_InitialTutorial::Update(float deltaTime) {
+	if (isStart) {
+		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+		FadeManager::GetInstance().StartFade(fade, [this]() {
+			owner->ChageState(GameEnum::GameState::SelectAction);
+		});
+	}
 }
 /*
  *	@brief	•`‰æˆ—
