@@ -196,11 +196,25 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	animator->SetModelHandle(modelHandle);
 	animator->LoadIndex(true);
 	// アニメーション再生
-	if (moveVec == V_ZERO) {
-		animator->Play(3, 1);
-	}
-	else {
+	if (CheckHitKey(KEY_INPUT_W)) {
+		// 前移動
 		animator->Play(4, moveSpeed * 0.066f);
+	}
+	else if (CheckHitKey(KEY_INPUT_S)) {
+		// 後ろ移動
+		animator->Play(5, moveSpeed * 0.066f);
+	}
+	else if (CheckHitKey(KEY_INPUT_A)) {
+		// 左移動
+		animator->Play(6, moveSpeed * 0.066f);
+	}
+	else if (CheckHitKey(KEY_INPUT_A)) {
+		// 右移動
+		animator->Play(7, moveSpeed * 0.066f);
+	}
+	else  {
+		// 待機
+		animator->Play(3, 1);
 	}
 }
 
