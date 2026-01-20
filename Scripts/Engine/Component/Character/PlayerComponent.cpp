@@ -208,7 +208,7 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 		// ¶ˆÚ“®
 		animator->Play(6, moveSpeed * 0.066f);
 	}
-	else if (CheckHitKey(KEY_INPUT_A)) {
+	else if (CheckHitKey(KEY_INPUT_D)) {
 		// ‰EˆÚ“®
 		animator->Play(7, moveSpeed * 0.066f);
 	}
