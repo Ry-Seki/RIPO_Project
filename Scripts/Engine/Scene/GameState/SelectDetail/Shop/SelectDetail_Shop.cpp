@@ -23,7 +23,7 @@ void SelectDetail_Shop::Initialize() {
 void SelectDetail_Shop::Setup() {
 	isStart = false;
 	inputHandle = false;
-	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.0f, FadeDirection::In, FadeMode::Stop);
+	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fade, [this]() {
 		isStart = true;
 		MoneyManager::GetInstance().SetItemDataList(itemDataList);

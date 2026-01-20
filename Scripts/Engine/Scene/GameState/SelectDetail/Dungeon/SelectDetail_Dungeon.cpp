@@ -37,7 +37,7 @@ void SelectDetail_Dungeon::SetupData() {
  *	@brief	€”õ‘Oˆ—
  */
 void SelectDetail_Dungeon::Setup() {
-	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.0f, FadeDirection::In, FadeMode::Stop);
+	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fade);
 }
 /*

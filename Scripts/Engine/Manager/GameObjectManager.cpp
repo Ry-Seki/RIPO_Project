@@ -109,12 +109,12 @@ void GameObjectManager::SetObjectColliderFlag(bool setColliderFlag) {
 		auto aabbCollider = object->GetComponent<AABBCollider>();
 		if (aabbCollider) {
 			aabbCollider->isCollider = setColliderFlag;
-			continue;
 		}
 		// カプセルコライダーの取得
 		auto capsuleCollider = object->GetComponent<CapsuleCollider>();
-		if (capsuleCollider)
+		if (capsuleCollider) {
 			capsuleCollider->isCollider = setColliderFlag;
+		}
 	}
 }
 
