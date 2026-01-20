@@ -82,9 +82,10 @@ void ResultAction_Dungeon::AdvanceDay() {
 void ResultAction_Dungeon::ResultPlayerAction() {
 	auto& context = owner->GetOwner()->GetActionContext();
 
+	isPlayerDead = context.isPlayerDead;
 	context.currentIncome = 0;
 
-	if (context.isPlayerDead) return;
+	if (isPlayerDead) return;
 
 	int prev = MoneyManager::GetInstance().GetPrevMoney();
 	int current = MoneyManager::GetInstance().GetCurrentMoney();

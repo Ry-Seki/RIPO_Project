@@ -116,8 +116,8 @@ void SelectDetail_Shop::Render() {
 	DrawFormatString(50, 160, GetColor(0, 255, 0), "BuyItemList : ");
 
 	auto& context = owner->GetOwner()->GetActionContext();
-	for (int i = 0, max = context.buyIDList.size(); i < max; i++) {
-		DrawFormatString(startX + i * intervalX, 160, GetColor(255, 255, 255), "%d", context.buyIDList[i] + 1);
+	for (int i = 0, max = buyItemIDList.size(); i < max; i++) {
+		DrawFormatString(startX + i * intervalX, 160, GetColor(255, 255, 255), "%d", buyItemIDList[i] + 1);
 	}
 }
 /*

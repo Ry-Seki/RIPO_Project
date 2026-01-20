@@ -21,7 +21,7 @@ void MenuSystem::Initialize() {
  */
 void MenuSystem::Open() {
 	MenuBase::Open();
-	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::InkSpread, 1.2f, FadeDirection::In, FadeMode::Stop);
+	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
 		isStart = true;
 	});
