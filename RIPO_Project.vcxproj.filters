@@ -250,6 +250,9 @@
     <Filter Include="ヘッダー ファイル\Engine\Menu\Title">
       <UniqueIdentifier>{3719c741-c797-4156-bbec-e7f11c27e9fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\System\Save">
+      <UniqueIdentifier>{aac63f5d-d861-4147-a38d-8e51a32c3cb0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -511,6 +514,9 @@
       <Filter>ソース ファイル\Engine\Scene\GameState\InAction\PartTime\Sokoban</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuTitle.cpp">
+      <Filter>ソース ファイル\Engine\Menu\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\Title\MenuGameModeSelect.cpp">
       <Filter>ソース ファイル\Engine\Menu\Title</Filter>
     </ClCompile>
   </ItemGroup>
@@ -779,9 +785,6 @@
     <ClInclude Include="Scripts\Data\ItemCatalogData.h">
       <Filter>ヘッダー ファイル\Data\Item</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Save\SaveDataManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Data\SaveData.h">
       <Filter>ヘッダー ファイル\Data\Save</Filter>
     </ClInclude>
@@ -928,6 +931,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuTitle.h">
       <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\Title\MenuGameModeSelect.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Save\SaveDataManager.h">
+      <Filter>ヘッダー ファイル\Engine\System\Save</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
