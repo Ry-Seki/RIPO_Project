@@ -510,6 +510,9 @@
     <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\SokobanMapManager.cpp">
       <Filter>ソース ファイル\Engine\Scene\GameState\InAction\PartTime\Sokoban</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\Title\MenuTitle.cpp">
+      <Filter>ソース ファイル\Engine\Menu\Title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -922,6 +925,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\SceneState\SceneStateMachine.h">
       <Filter>ヘッダー ファイル\Engine\Scene\SceneState</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\Title\MenuTitle.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

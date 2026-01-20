@@ -21,7 +21,7 @@ public:
 	/*
 	 *	@brief	デストラクタ
 	 */
-	virtual ~MenuBase() = default;
+	virtual ~MenuBase() {}
 
 public:
 	/*
@@ -56,7 +56,5 @@ public:
 	 */
 	inline bool IsClose() const { return isClose; }
 };
-// 別名定義
-using MenuBasePtr = std::shared_ptr<MenuBase>;
 
 #endif // !_MENU_BASE_H_
