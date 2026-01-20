@@ -36,7 +36,7 @@ void MenuManager::Render() {
 /*
  *	@brief	使用リストから一番後ろの要素を削除する
  */
-void MenuManager::CloseTop() {
+void MenuManager::CloseTopMenu() {
 	if (useMenuList.empty()) return;
 
 	auto topMenu = useMenuList.back();
@@ -50,7 +50,7 @@ void MenuManager::CloseTop() {
 /*
  *	@brief		現在開かれている全てのリストを削除する
  */
-void MenuManager::CloseAll() {
+void MenuManager::CloseAllMenu() {
 	if (useMenuList.empty()) return;
 
 	for (auto& menu : useMenuList) {
