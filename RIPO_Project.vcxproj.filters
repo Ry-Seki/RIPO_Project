@@ -253,6 +253,9 @@
     <Filter Include="ヘッダー ファイル\Engine\System\Save">
       <UniqueIdentifier>{aac63f5d-d861-4147-a38d-8e51a32c3cb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\SceneState">
+      <UniqueIdentifier>{dd3fbd29-e0d8-4c47-bfdf-01e02431907a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -527,6 +530,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuSystem.cpp">
       <Filter>ソース ファイル\Engine\Menu\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\SceneStateBase.cpp">
+      <Filter>ソース ファイル\Engine\Scene\SceneState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -955,6 +961,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuSystem.h">
       <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\SceneStateBase.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\SceneState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
