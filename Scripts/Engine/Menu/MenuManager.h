@@ -59,11 +59,10 @@ public:
 	/*
 	 *	@brief		メニューの取得
 	 *  @param[in]	bool isUsedMenu = false		使用中メニューフラグ
-	 *  @param[in]	bool isCreate = true		メニューがない場合生成するフラグ
 	 *  @return		std::shared_ptr<T>(MenuBaseの派生クラス)
 	 */
 	template <class T, typename = std::enable_if_t<std::is_base_of_v<MenuBase, T>>>
-	std::shared_ptr<T> GetMenu(bool isUsedMenu = false, bool isCreate = true) {
+	std::shared_ptr<T> GetMenu(bool isUsedMenu = false) {
 		if (isUsedMenu) {
 			for (auto& menu : useMenuList) {
 				auto cast = std::dynamic_pointer_cast<T>(menu);
@@ -79,7 +78,7 @@ public:
 
 				return cast;
 			}
-			if(isCreate) return CreateMenu<T>();
+			return CreateMenu<T>();
 		}
 		return nullptr;
 	}
