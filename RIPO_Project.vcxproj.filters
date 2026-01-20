@@ -244,6 +244,12 @@
     <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState">
       <UniqueIdentifier>{4a65e24f-a81a-4998-b9bd-367bc96d647d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\Menu\Title">
+      <UniqueIdentifier>{d8709769-542c-40c5-9045-1362e3755acc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Menu\Title">
+      <UniqueIdentifier>{3719c741-c797-4156-bbec-e7f11c27e9fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">

@@ -58,7 +58,7 @@ void TitleScene::SetupData(Engine& engine) {
 /*
  *	@brief	€”õ‘Oˆ—
  */
-void TitleScene::Setup() {
+void TitleScene::Setup(Engine& engine) {
 }
 /*
  *  XVˆ—

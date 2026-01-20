@@ -29,6 +29,10 @@ public:
 	 */
 	virtual void Initialize() = 0;
 	/*
+	 *	@brief	準備前処理
+	 */
+	virtual void Setup() {}
+	/*
 	 *	@brief	メニューが開かれた時の処理
 	 */
 	virtual void Open() { isClose = false; }
