@@ -285,7 +285,7 @@ void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
  * 初期接地チェック
  */
 void PlayerComponent::IsGrounding(GameObject* other) {
-	other->position.y -= 500.0f;
+	other->position.y -= 250.0f;
 	// 下方向に微小ベクトルを与える
 	Vector3 fakeMove = { 0.0f, other->position.y, 0.0f };
 

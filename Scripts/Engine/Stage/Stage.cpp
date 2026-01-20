@@ -280,8 +280,14 @@ void Stage::ProcessWallCollision(
 
 		Vector3 pushDir = Normalized(diff);
 
-		// 貫通した分戻す
-		nowPos += pushDir * penetrate;
+		// 水平方向のみ押し出す
+		pushDir.y = 0.0f;
+
+		// 水平方向のみで押し戻す
+		if (Magnitude(pushDir) > 0.0f) {
+			pushDir = Normalized(pushDir);
+			nowPos += pushDir * penetrate;
+		}
 
 		// 新しいカプセル位置
 		capLower = nowPos + capsule->capsule.segment.startPoint;
