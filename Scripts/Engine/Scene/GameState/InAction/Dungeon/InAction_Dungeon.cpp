@@ -152,10 +152,10 @@ void InAction_Dungeon::Render() {
 #endif
 	PlayerStatusData* BaseStatus = PlayerStatusManager::GetInstance().GetPlayerStatusData();
 	PlayerStatusValue playerStatus = GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus();
-	DrawFormatString(450, 20, GetColor(255, 255, 255), "HP : %d / HP : %d", playerStatus.HP, BaseStatus->base.HP);
-	DrawFormatString(450, 40, GetColor(255, 255, 255), "Stamina : %d / Stamina : %d", playerStatus.stamina, BaseStatus->base.stamina);
-	DrawFormatString(450, 60, GetColor(255, 255, 255), "Strength : %d / Strength : %d", playerStatus.strength, BaseStatus->base.strength);
-	DrawFormatString(450, 80, GetColor(255, 255, 255), "ResistTime : %d / ResistTime : %d", playerStatus.resistTime, BaseStatus->base.resistTime);
+	DrawFormatString(450, 20, GetColor(255, 255, 255), "HP : %d / %d", playerStatus.HP, BaseStatus->base.HP);
+	DrawFormatString(450, 40, GetColor(255, 255, 255), "Stamina : %d / %d", playerStatus.stamina, BaseStatus->base.stamina);
+	DrawFormatString(450, 60, GetColor(255, 255, 255), "Strength : %d", BaseStatus->base.strength);
+	DrawFormatString(450, 80, GetColor(255, 255, 255), "ResistTime : %d / %d", playerStatus.resistTime, BaseStatus->base.resistTime);
 }
 /*
  *	@brief	•Ğ•t‚¯ˆ—

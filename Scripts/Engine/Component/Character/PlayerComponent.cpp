@@ -195,6 +195,16 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	// モデルハンドルのセット
 	animator->SetModelHandle(modelHandle);
 	animator->LoadIndex(true);
+
+	// モデルの透明度の調整
+	auto handArm = player->GetComponent<ArmActionComponent>();
+	if (!handArm->GetLiftObject()) {
+		MV1SetOpacityRate(modelHandle, 0);
+	}
+	else {
+		MV1SetOpacityRate(modelHandle, 1);
+	}
+
 	// アニメーション再生
 	if (CheckHitKey(KEY_INPUT_W)) {
 		// 前移動

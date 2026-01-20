@@ -24,7 +24,7 @@ void MenuLoadGame::Initialize() {
 void MenuLoadGame::Open() {
 	// TODO : セーブデータとの同期を完了させる
 	MenuBase::Open();
-	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::InkSpread, 1.2f, FadeDirection::In, FadeMode::Stop);
+	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
 		isStart = true;
 	});
@@ -58,6 +58,7 @@ void MenuLoadGame::Update(Engine& engine, float deltaTime) {
  *	@biref	描画処理
  */
 void MenuLoadGame::Render() {
+	DrawFormatString(50, 70, GetColor(255, 255, 255), "LoadGame");
 	DrawFormatString(300, 400, GetColor(255, 255, 255), "Play->SpaceKey");
 	DrawFormatString(300, 450, GetColor(255, 255, 255), "Return->EnterKey");
 }
