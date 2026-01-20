@@ -56,6 +56,12 @@ void FloorProcessor::TeardownEnemy() {
 		int deleteID = enemy->ID;
 		CharacterUtility::RemoveCharacter(deleteID);
 	}
+	GameObjectList deleteBossList = GameObjectUtility::GetObjectByName(GameConst::_CREATE_POSNAME_BOSS);
+	for (auto& boss : deleteBossList) {
+		if (!boss) continue;
+		int deleteID = boss->ID;
+		CharacterUtility::RemoveCharacter(deleteID);
+	}
 }
 /*
  *	@brief	ステージオブジェクトの片付け処理

@@ -20,6 +20,9 @@ class Engine;
   */
 class MenuManager : public Singleton<MenuManager> {
 	friend class Singleton<MenuManager>;
+public:		// 別名定義
+	using MenuBasePtr = std::shared_ptr<MenuBase>;
+
 private:
 	std::vector<MenuBasePtr> unuseMenuList;		// 未使用メニューリスト
 	std::vector<MenuBasePtr> useMenuList;		// 使用中メニューリスト
@@ -50,6 +53,8 @@ private:
 	template <class T, typename = std::enable_if_t<std::is_base_of_v<MenuBase, T>>>
 	std::shared_ptr<T> CreateMenu() {
 		auto createMenu = std::make_shared<T>();
+		if (!createMenu) return nullptr;
+
 		createMenu->Initialize();
 		unuseMenuList.push_back(createMenu);
 		return createMenu;
@@ -59,11 +64,10 @@ public:
 	/*
 	 *	@brief		メニューの取得
 	 *  @param[in]	bool isUsedMenu = false		使用中メニューフラグ
-	 *  @param[in]	bool isCreate = true		メニューがない場合生成するフラグ
 	 *  @return		std::shared_ptr<T>(MenuBaseの派生クラス)
 	 */
 	template <class T, typename = std::enable_if_t<std::is_base_of_v<MenuBase, T>>>
-	std::shared_ptr<T> GetMenu(bool isUsedMenu = false, bool isCreate = true) {
+	std::shared_ptr<T> GetMenu(bool isUsedMenu = false) {
 		if (isUsedMenu) {
 			for (auto& menu : useMenuList) {
 				auto cast = std::dynamic_pointer_cast<T>(menu);
@@ -79,7 +83,7 @@ public:
 
 				return cast;
 			}
-			if(isCreate) return CreateMenu<T>();
+			return CreateMenu<T>();
 		}
 		return nullptr;
 	}

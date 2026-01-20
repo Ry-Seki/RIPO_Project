@@ -63,6 +63,7 @@ public:
 	//				オブジェクト名関連の定数
 	//----------------------------------------------------
 	static constexpr const char* _CREATE_POSNAME_ENEMY = "Enemy";		// 敵の生成位置の名前
+	static constexpr const char* _CREATE_POSNAME_BOSS = "Boss";
 	static constexpr const char* _CREATE_POSNAME_PLAYER = "Player";		// プレイヤーの生成位置の名前
 	static constexpr const char* _CREATE_POSNAME_TREASURE = "Treasure";	// お宝の生成位置の名前
 	static constexpr const char* _CREATE_POSNAME_LIGHT = "PointLight";	// ポイントライトの生成位置の名前

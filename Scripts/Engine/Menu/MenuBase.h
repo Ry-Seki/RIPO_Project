@@ -21,13 +21,17 @@ public:
 	/*
 	 *	@brief	デストラクタ
 	 */
-	virtual ~MenuBase() = default;
+	virtual ~MenuBase() {}
 
 public:
 	/*
 	 *	@brief	初期化処理
 	 */
 	virtual void Initialize() = 0;
+	/*
+	 *	@brief	準備前処理
+	 */
+	virtual void Setup() {}
 	/*
 	 *	@brief	メニューが開かれた時の処理
 	 */
@@ -52,7 +56,5 @@ public:
 	 */
 	inline bool IsClose() const { return isClose; }
 };
-// 別名定義
-using MenuBasePtr = std::shared_ptr<MenuBase>;
 
 #endif // !_MENU_BASE_H_

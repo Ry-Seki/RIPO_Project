@@ -38,7 +38,7 @@ public:
 	/*
 	 *	@brief	€”õ‘Oˆ—
 	 */
-	void Setup() override;
+	void Setup(Engine& engine) override;
 	/*
 	 *	XVˆ—
 	 */

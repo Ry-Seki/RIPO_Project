@@ -37,7 +37,7 @@ void MainGameScene::Initialize(Engine& engine) {
 /*
  *  @brief  €”õ‘Oˆ—
  */
-void MainGameScene::Setup() {
+void MainGameScene::Setup(Engine& engine) {
 }
 /*
  *  XVˆ—

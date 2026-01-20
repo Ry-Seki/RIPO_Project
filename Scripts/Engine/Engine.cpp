@@ -27,9 +27,9 @@
 #include <EffekseerForDXLib.h>
 #include <iostream>
 
-/*
- *	@brief		初期化処理
- */
+ /*
+  *	@brief		初期化処理
+  */
 int Engine::Initialize() {
 	dxlibInitialized = false;
 	effekseerInitialized = false;
@@ -88,6 +88,23 @@ int Engine::Initialize() {
 
 	// タイムクラスの初期化
 	Time::Init();
+	//// シーンの初期化
+	//sceneList.resize(static_cast<int>(GameEnum::SceneType::Max));
+	//// 各シーンの生成
+	//sceneList[static_cast<int>(GameEnum::SceneType::Standby)]
+	//	= std::make_shared<StandbyScene>();
+	//sceneList[static_cast<int>(GameEnum::SceneType::Title)]
+	//	= std::make_shared<TitleScene>();
+	//sceneList[static_cast<int>(GameEnum::SceneType::MainGame)]
+	//	= std::make_shared<MainGameScene>();
+	//sceneList[static_cast<int>(GameEnum::SceneType::Result)]
+	//	= std::make_shared<ResultScene>();
+	//// 各シーンの初期化
+	//for (auto& scene : sceneList) {
+	//	if (!scene) continue;
+
+	//	scene->Initialize(*this);
+	//}
 	// 初期化フラグの変更
 	initialized = true;
 	return 0;
@@ -202,14 +219,15 @@ void Engine::ChangeScene() {
 		currentScene = nextScene;
 		nextScene.reset();
 		if (currentScene) currentScene->Initialize(*this);
+		// if(currentScene) currentScene->Setup(*this);
 	}
 }
 /*
  *  @brief      SceneのAddGameObjectの呼び出し
  *  @param[in]  const GameObjectPtr& gameObject
  */
-void Engine::AddGameObject(const GameObjectPtr& gameObject) { 
-	if (currentScene) currentScene->AddGameObject(gameObject); 
+void Engine::AddGameObject(const GameObjectPtr& gameObject) {
+	if (currentScene) currentScene->AddGameObject(gameObject);
 }
 /*
  *	@brief		フェードの呼び出し処理
@@ -219,7 +237,7 @@ void Engine::StartSceneFade(const FadeBasePtr& setFade, std::function<void()> on
 	FadeManager::GetInstance().StartFade(setFade, [this, onComplete]() {
 		ChangeScene();
 		if (onComplete) onComplete();
-		});
+	});
 }
 /*
  *	@brief		フェードアウト・インコールバック付き同時呼び出し
@@ -235,5 +253,5 @@ void Engine::StartFadeOutIn(float fadeOutTime, float fadeInTime, std::function<v
 		auto fadeIn = FadeFactory::CreateFade(FadeType::InkSpread, fadeInTime, FadeDirection::In, FadeMode::NonStop);
 		fadeIn->Reset(FadeDirection::In);
 		FadeManager::GetInstance().StartFade(fadeIn, nullptr);
-		});
+	});
 }

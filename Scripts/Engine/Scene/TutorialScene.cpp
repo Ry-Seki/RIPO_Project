@@ -28,7 +28,7 @@ void TutorialScene::SetupData(Engine& engine) {
 /*
  *	@brief	€”õ‘Oˆ—
  */
-void TutorialScene::Setup() {
+void TutorialScene::Setup(Engine& engine) {
 }
 /*
  *	XVˆ—

@@ -13,6 +13,8 @@
 #include "../Audio/AudioUtility.h"
 #include "../Fade/FadeManager.h"
 #include "../Fade/FadeFactory.h"
+#include "../Menu/MenuManager.h"
+#include "../Menu/Title/MenuTitle.h"
 
 #include <DxLib.h>
 #include <memory>
@@ -29,6 +31,7 @@ void TitleScene::Initialize(Engine& engine) {
 	FadeManager::GetInstance().StartFade(fadeIn);
 	SetBGMVolume(100);
 	SetSEVolume(100);
+	// MenuManager::GetInstance().GetMenu<MenuTitle>()->Initialize();
 	auto debugSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/ButtonPush_Debug.mp3");
 	auto goalSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/GoalSE.mp3");
 	std::vector<std::shared_ptr<LoadSprite>> loadBGList;
@@ -58,7 +61,7 @@ void TitleScene::SetupData(Engine& engine) {
 /*
  *	@brief	€”õ‘Oˆ—
  */
-void TitleScene::Setup() {
+void TitleScene::Setup(Engine& engine) {
 }
 /*
  *  XVˆ—
