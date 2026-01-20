@@ -16,6 +16,8 @@ private:
 	GameObjectPtr player;
 	std::shared_ptr<AnimatorComponent> animator;
 	int modelHandle;
+	// Ž‹–ìŠp‚Ì”¼Œa
+	float viewAngle;
 
 public:
 	/*

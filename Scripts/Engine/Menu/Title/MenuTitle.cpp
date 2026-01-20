@@ -6,6 +6,11 @@
 #include "MenuTitle.h"
 #include "../../Load/LoadManager.h"
 #include "../../Load/Sprite/LoadSprite.h"
+#include "../../Fade/FadeFactory.h"
+#include "../../Fade/FadeManager.h"
+#include "../../Audio/AudioUtility.h"
+#include "../MenuManager.h"
+#include "MenuGameModeSelect.h"
 
 /*
  *	@brief	初期化処理
@@ -22,17 +27,35 @@ void MenuTitle::Initialize() {
  */
 void MenuTitle::Open() {
 	MenuBase::Open();
+	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::In, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
+		isStart = true;
+	});
 }
 /*
  *	@brief	更新処理
  */
 void MenuTitle::Update(Engine& engine, float deltaTime) {
+	if (!isStart) return;
+
+	if (!inputHandle) {
+		if (CheckHitKey(KEY_INPUT_SPACE)) {
+			AudioUtility::PlaySE("DebugSE");
+			inputHandle = true;
+			FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.2f, FadeDirection::Out, FadeMode::Stop);
+			FadeManager::GetInstance().StartFade(fadeOut, [this]() {
+				isVisible = false;
+				MenuManager::GetInstance().OpenMenu<MenuGameModeSelect>();
+			});
+		}
+	}
 }
 /*
  *	@brief	描画処理
  */
 void MenuTitle::Render() {
-	DrawGraph(0, 0, titleGraphHandle, TRUE);
+	DrawExtendGraph(150, 50, 900, 400, titleGraphHandle, TRUE);
+	DrawFormatString(300, 400, GetColor(255, 255, 255), "Play->SpaceKey");
 }
 /*
  *	@brief	メニューを閉じる処理

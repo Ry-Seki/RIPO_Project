@@ -7,6 +7,10 @@
 #include "../../GameConst.h"
 #include "HandArm.h"
 
+ArmActionComponent::ArmActionComponent() 
+	: currentArm(nullptr)
+{}
+
 void ArmActionComponent::Start() {
 	player = GetOwner();
 	engine = player->GetEngine();

@@ -18,7 +18,7 @@ BulletComponent::BulletComponent()
 	: destroyTimeCount(3)
 	, bullet(nullptr)
 
-	, SHOT_SPEED(10000) 
+	, SHOT_SPEED(10000)
 {}
 
 void BulletComponent::Start() {
@@ -45,10 +45,15 @@ void BulletComponent::OnCollision(const std::shared_ptr<Component>& self, const 
 	auto isBullet = otherOwner->GetComponent<BulletComponent>();
 	if (otherOwner == playerOwner || isBullet)return;
 	ResetObject(bullet);
-	// ìGÇ…ìñÇΩÇ¡ÇΩÇÁìGÇ‡îjä¸
 	if (otherOwner->name == GameConst::_CREATE_POSNAME_ENEMY) {
 		RemoveCharacter(otherOwner);
 		// è≠ó ÇÃÇ®ã‡Çì¸éË
 		MoneyManager::GetInstance().AddMoney(5);
+	}
+	// É{ÉXÇ…ìñÇΩÇ¡ÇΩÇÁìGÇ‡îjä¸
+	else if (otherOwner->name == GameConst::_CREATE_POSNAME_BOSS) {
+		RemoveCharacter(otherOwner);
+		// è≠ó ÇÃÇ®ã‡Çì¸éË
+		MoneyManager::GetInstance().AddMoney(50);
 	}
 }

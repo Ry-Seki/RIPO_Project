@@ -11,6 +11,8 @@
 
 #include <vector>
 #include <memory>
+#include <type_traits>
+#include <algorithm>  
 
 // 前方宣言
 class Engine;
@@ -28,7 +30,13 @@ private:
 	std::vector<MenuBasePtr> useMenuList;		// 使用中メニューリスト
 
 private:
+	/*
+	 *	@brief	コンストラクタ
+	 */
 	MenuManager() = default;
+	/*
+	 *	@brief	デストラクタ
+	 */
 	~MenuManager() = default;
 
 public:
@@ -43,7 +51,11 @@ public:
 	/*
 	 *	@brief		使用リストから一番後ろの要素を削除する
 	 */
-	void RemoveBack();
+	void CloseTopMenu();
+	/*
+	 *	@brief		現在開かれている全てのリストを削除する
+	 */
+	void CloseAllMenu();
 
 private:
 	/*
@@ -63,42 +75,35 @@ private:
 public:
 	/*
 	 *	@brief		メニューの取得
-	 *  @param[in]	bool isUsedMenu = false		使用中メニューフラグ
 	 *  @return		std::shared_ptr<T>(MenuBaseの派生クラス)
 	 */
 	template <class T, typename = std::enable_if_t<std::is_base_of_v<MenuBase, T>>>
-	std::shared_ptr<T> GetMenu(bool isUsedMenu = false) {
-		if (isUsedMenu) {
-			for (auto& menu : useMenuList) {
-				auto cast = std::dynamic_pointer_cast<T>(menu);
-				if (!cast) continue;
+	std::shared_ptr<T> GetMenu() {
+		for (auto& menu : unuseMenuList) {
+			auto cast = std::dynamic_pointer_cast<T>(menu);
+			if (!cast) continue;
 
-				return cast;
-			}
-			return nullptr;
-		}else {
-			for (auto& menu : unuseMenuList) {
-				auto cast = std::dynamic_pointer_cast<T>(menu);
-				if (!cast) continue;
-
-				return cast;
-			}
-			return CreateMenu<T>();
+			return cast;
 		}
-		return nullptr;
+		return CreateMenu<T>();
 	}
 	/*
 	 *	@brief		未使用リストから使用リストへ変更する
 	 */
 	template <class T, typename = std::enable_if_t<std::is_base_of_v<MenuBase, T>>>
-	void ActiveMenu() {
+	void OpenMenu() {
 		auto menu = GetMenu<T>();
 		if (!menu) return;
 
-		unuseMenuList.erase(
-			std::remove(unuseMenuList.begin(), unuseMenuList.end(), menu),
-			unuseMenuList.end());
+		if (!useMenuList.empty()) {
+			// すでにオープンしていたら、それを削除して再びオープンする
+			useMenuList.erase(std::remove(useMenuList.begin(), useMenuList.end(), menu), useMenuList.end());
+			// ひとつ前のメニューを操作不可能にする
+			useMenuList.back()->SetIsInteractive(false);
+		}
+		// メニューをオープンする
 		menu->Open();
+		// 使用リストに登録する
 		useMenuList.push_back(menu);
 	}
 };

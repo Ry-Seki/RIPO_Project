@@ -54,8 +54,6 @@ private:
 		BackWalk = 5,	// 後ろ歩きアニメーション
 		LeftWalk = 6,	// 左歩きアニメーション
 		RightWalk = 7,	// 右歩きアニメーション
-
-
 	};
 
 public:
