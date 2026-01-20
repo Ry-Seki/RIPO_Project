@@ -53,7 +53,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 	}
 	// ボスの生成
 	for (int i = 0; i < bossCount; i++) {
-		GenerateBoss("Boss", V_ZERO, V_ZERO, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 100, 0 }, { 0,  500,  0 }, 300);
+		GenerateBoss("Boss", V_ZERO, { 0, 180 * Deg2Rad, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 100, 0 }, { 0,  500,  0 }, 300);
 	}
 	// お宝の生成処理
 	for (int i = 0; i < treasureCount; i++) {
@@ -214,7 +214,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	}
 	// ボスの生成処理
 	for (int i = 0; i < bossCount; i++) {
-		GenerateBoss("Boss", V_ZERO, V_ZERO, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 100, 0 }, { 0,  500,  0 }, 300);
+		GenerateBoss("Boss", V_ZERO, { 0, 180 * Deg2Rad, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 100, 0 }, { 0,  500,  0 }, 300);
 	}
 	// お宝の生成処理
 	for (int i = 0; i < treasureCount; i++) {

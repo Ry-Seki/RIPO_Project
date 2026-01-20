@@ -55,14 +55,14 @@ void BossChase::Update(GameObject* boss, float deltaTime)
 	ChaseWayPoint(boss, player->position, deltaTime);
 
 	// ó‘Ô‘JˆÚ
-	if (!Vision(bossComponent->GetBossPosition(), bossComponent->GetBossRotation(), player->position, 30, 4000)) {
+	if (!Vision(boss->position, -ForwardDir(boss->rotation), player->position, 30, 4000)) {
 		// ˆê’U‰ŠúˆÊ’u‚É–ß‚è‚«‚Á‚Ä‚©‚çstandby‚É‘JˆÚ
 		//ChaseWayPoint(boss, )
-		boss->GetComponent<BossComponent>()->SetState(new BossStandby());
+		bossComponent->SetState(new BossStandby());
 	}
 	// Ë’ö‹——£”»’è
 	if (PLAYER_DISTANCE > Distance(player->position, boss->position)) {
-		boss->GetComponent<BossComponent>()->SetState(new BossAttack());
+		bossComponent->SetState(new BossAttack());
 	}
 }
 
@@ -78,6 +78,8 @@ void BossChase::ChaseWayPoint(GameObject* boss, Vector3 wayPoint, float deltaTim
 	// –Ú•W‚Ì•ûŒü
 	Vector3 direction = Direction(boss->position, wayPoint);
 	float goalAngle = atan2(direction.x, direction.z);
+	goalAngle = goalAngle + 180 * Deg2Rad;
+
 	// ³‹K‰»‚µ‚½Šp“x‚ÌˆÚ“®—Ê
 	float angleDirection = fmod((goalAngle - boss->rotation.y) * Rad2Deg, 360);
 	angleDirection = angleDirection * Deg2Rad;
@@ -111,17 +113,10 @@ void BossChase::ChaseWayPoint(GameObject* boss, Vector3 wayPoint, float deltaTim
 	auto distance = Distance(wayPoint, boss->position);
 	// ƒvƒŒƒCƒ„[‚Ìè‘O‚Å~‚Ü‚é
 	if (player && wayPoint == player->position) {
-		// ‚±‚±‚ç•Ó‚Ìˆ—ã‚É‘‚¢‚Ä‚ ‚é‚©‚ç‚¢‚ç‚È‚¢‚©‚à
-		//// UŒ‚Ë’ö”»’è
-		//if (distance > DIFFERENCE_PLAYER) {
-		//	boss->position.x += direction.x * MOVE_SPEED * deltaTime;
-		//	boss->position.z += direction.z * MOVE_SPEED * deltaTime;
-		//}
-		//else {
-		//	// UŒ‚ó‘Ô‘JˆÚ
-		//	boss->GetComponent<bossComponent>()->SetState(new bossAttack());
-		//}
+			boss->position.x += direction.x * MOVE_SPEED * deltaTime;
+			boss->position.z += direction.z * MOVE_SPEED * deltaTime;
 	}
+	// ‰ŠúˆÊ’u‚É–ß‚é‚Ìˆ—
 	else {
 		float moveX = 0;
 		float moveZ = 0;

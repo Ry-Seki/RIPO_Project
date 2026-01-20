@@ -10,11 +10,11 @@
 /*
  *	視界処理
  *	param[in]	const Vector3& beholderPos	自身の位置
- *	param[in]	const Vector3& beholderDir	自身の向き
+ *	param[in]	const Vector3& direction	視界の方向ベクトル
  *	param[in]	const Vector3& targetPos	目標の位置
  *	param[in]	float viewAngle				視野角の半角
  *	param[in]	float viewDistance			視界の距離
  */
-bool Vision(const Vector3& beholderPos, const Vector3& beholderDir, const Vector3& targetPos, float viewAngle, float viewDistance);
+bool Vision(const Vector3& beholderPos, const Vector3& direction, const Vector3& targetPos, float viewAngle, float viewDistance);
 
 #endif // !_VISION_H_

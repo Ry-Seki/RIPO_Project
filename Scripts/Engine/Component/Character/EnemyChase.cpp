@@ -40,7 +40,7 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime) {
 
 	auto enemyComponent = enemy->GetComponent<EnemyComponent>();
 
-	if (player && Vision(enemyComponent->GetEnemyPosition(), enemyComponent->GetEnemyRotation(), player->position, 30, 2000)) {
+	if (player && Vision(enemy->position, ForwardDir(enemy->rotation), player->position, 30, 2000)) {
 		ChaseWayPoint(enemy, player->position, true, deltaTime);
 	}
 	else {
