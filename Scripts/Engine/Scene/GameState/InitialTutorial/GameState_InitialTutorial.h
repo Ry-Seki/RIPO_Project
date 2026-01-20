@@ -14,6 +14,8 @@ class Engine;
  *	@brief	NewGame時のチュートリアル状態
  */
 class GameState_InitialTutorial : public GameStateBase {
+private:
+	bool isStart = false;
 
 public:
 	/*

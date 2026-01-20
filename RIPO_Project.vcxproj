@@ -191,6 +191,7 @@
     <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\Title\MenuGameModeSelect.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuTitle.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DebugScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\GameState\GameStateMachine.cpp" />
@@ -316,6 +317,7 @@
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuBase.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h" />
+    <ClInclude Include="Scripts\Engine\Menu\Title\MenuGameModeSelect.h" />
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuTitle.h" />
     <ClInclude Include="Scripts\Engine\Save\SaveDataManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\DebugScene.h" />

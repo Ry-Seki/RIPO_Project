@@ -15,7 +15,11 @@ class Engine;
  *	メニューの基底クラス
  */
 class MenuBase {
-	bool isClose = true;		// メニュー開閉フラグ
+protected:
+	bool isInteractive = false;		// 操作可能フラグ
+	bool isVisible = false;			// 描画フラグ
+	bool isStart = false;			// 開始フラグ
+	bool inputHandle = false;		// 入力フラグ
 
 public:
 	/*
@@ -35,7 +39,12 @@ public:
 	/*
 	 *	@brief	メニューが開かれた時の処理
 	 */
-	virtual void Open() { isClose = false; }
+	virtual void Open() {
+		isVisible = true;
+		isInteractive = true;
+		isStart = false;
+		inputHandle = false;
+	}
 	/*
 	 *	更新処理
 	 */
@@ -47,14 +56,34 @@ public:
 	/*
 	 *	@brief	メニューを閉じたときの処理
 	 */
-	virtual void Close() { isClose = true; }
+	virtual void Close() {
+		isVisible = false;
+		isInteractive = false;
+		isStart = false;
+		inputHandle = false;
+	}
 
 public:
 	/*
-	 *	@brief		メニュー開閉フラグの取得
+	 *	@brief		描画フラグの取得
 	 *	@return		bool
 	 */
-	inline bool IsClose() const { return isClose; }
+	inline bool IsVisible() const { return isVisible; }
+	/*
+	 *	@brief		描画フラグの変更
+	 *	@param[in]	bool setFlag
+	 */
+	inline void SetIsVisible(bool setFlag) { isVisible = setFlag; }
+	/*
+	 *	@brief		操作可能フラグの取得
+	 *	@return		bool
+	 */
+	inline bool IsInteractive() const { return isInteractive; }
+	/*
+	 *	@brief		操作可能フラグの変更
+	 *	@param[in]	bool setFlag
+	 */
+	inline void SetIsInteractive(bool setFlag) { isInteractive = setFlag; }
 };
 
 #endif // !_MENU_BASE_H_
