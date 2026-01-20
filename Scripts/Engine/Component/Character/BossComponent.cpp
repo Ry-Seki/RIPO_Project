@@ -26,6 +26,8 @@ BossComponent::BossComponent(BossState* initState)
 	, modelHandle(-1)
 	, coolTime(3)
 	, isTriger(false)
+	, moveFrag(false)
+	, homePosition(Vector3::zero)
 {
 }
 
@@ -50,6 +52,8 @@ void BossComponent::Start()
 
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
+
+	homePosition = boss->position;
 
 	if (state == nullptr)
 		state = new BossStandby();

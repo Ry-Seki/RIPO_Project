@@ -23,7 +23,7 @@ void SelectDetail_PartTime::Setup() {
 	inputHandle = false;
 	auto& context = owner->GetOwner()->GetActionContext();
 	context.miniGameLevel = GameEnum::MiniGameLevel::Invalid;
-	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.0f, FadeDirection::In, FadeMode::Stop);
+	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black , 1.0f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fade, [this]() {
 		isStart = true;
 	});

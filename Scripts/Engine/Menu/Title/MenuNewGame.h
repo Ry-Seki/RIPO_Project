@@ -1,10 +1,10 @@
 /*
- *	@file	MenuTitle.h
+ *	@file	MenuNewGame.h
  *	@author	Seki
  */
 
-#ifndef _MENU_TITLE_H_
-#define _MENU_TITLE_H_
+#ifndef _MENU_NEW_GAME_H_
+#define _MENU_NEW_GAME_H_
 
 #include "../MenuBase.h"
 
@@ -12,19 +12,15 @@
 class Engine;
 
 /*
- *	@brief	タイトルメニュー
+ *	@brief	ニューゲームメニュー
  */
-class MenuTitle : public MenuBase{
-private:
-	int titleGraphHandle = -1;
-
-	static constexpr const char* _TITLE_LOGO_PATH = "Res/Menu/Title/Trealine_NewTitle.png";
+class MenuNewGame : public MenuBase {
 
 public:
 	/*
 	 *	@brief	デストラクタ
 	 */
-	~MenuTitle() override {};
+	~MenuNewGame() override {};
 
 public:
 	/*
@@ -48,12 +44,6 @@ public:
 	 */
 	void Close() override;
 
-public:
-	/*
-	 *	@brief		ロード済みデータのセット
-	 *  @prarm[in]	int setHandle
-	 */
-	void SetupData(int setHandle);
 };
 
-#endif // !_MENU_TITLE_H_
+#endif // !_MENU_NEW_GAME_H_
