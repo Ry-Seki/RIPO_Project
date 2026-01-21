@@ -226,6 +226,7 @@
     <ClCompile Include="Scripts\Engine\Scene\SceneState\MainGame\SceneState_MainGame.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\SceneState\Result\SceneState_Result.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\SceneState\SceneStateBase.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\SceneStateMachine.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\SceneState\Standby\SceneState_Standby.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\SceneState\Title\SceneState_Title.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\SceneState\Tutorial\SceneState_Tutorial.cpp" />
@@ -248,6 +249,7 @@
   <ItemGroup>
     <ClInclude Include="Scripts\Data\Dungeon\DungeonData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonFloorData.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonProgressData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonResourceData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonStageData.h" />
     <ClInclude Include="Scripts\Data\ItemCatalogData.h" />
