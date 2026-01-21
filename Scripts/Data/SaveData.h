@@ -7,13 +7,13 @@
 #define _SAVE_DATA_H_
 
 /*
- *	セーブデータ構造体
+ *	@brief	セーブデータ構造体(可視部分)
  */
 struct UserData {
-	int elapsedDay;		// 経過日数
-	bool isHalf;		// 半日フラグ
 	int playTime;		// 累計プレイ時間
+	int elapsedDay;		// 経過日数
+	bool isHalfDay;		// 半日消費フラグ
 	int currentMoney;	// 現在の所持金
-	int dungeonFlags;	// イベントお宝回収、ボス突破フラグ(ビットで管理)
+	int totalTreasureCount;	// イベントお宝回収、ボス突破フラグ(ビットで管理)
 };
 #endif // !_SAVE_DATA_H_

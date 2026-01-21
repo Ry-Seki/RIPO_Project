@@ -6,6 +6,8 @@
 #ifndef _SCENE_STATE_MACHINE_H_
 #define _SCENE_STATE_MACHINE_H_
 
+#include "../../GameEnum.h"
+
 #include <vector>
 #include <memory>
 
