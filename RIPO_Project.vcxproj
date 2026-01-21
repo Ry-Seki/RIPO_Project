@@ -223,7 +223,12 @@
     <ClCompile Include="Scripts\Engine\Scene\MainGameScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\ResultScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Scene.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\MainGame\SceneState_MainGame.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\Result\SceneState_Result.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\SceneState\SceneStateBase.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\Standby\SceneState_Standby.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\Title\SceneState_Title.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\Tutorial\SceneState_Tutorial.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\StandbyScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TutorialScene.cpp" />
@@ -361,8 +366,13 @@
     <ClInclude Include="Scripts\Engine\Scene\MainGameScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\ResultScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\Scene.h" />
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\MainGame\SceneState_MainGame.h" />
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\Result\SceneState_Result.h" />
     <ClInclude Include="Scripts\Engine\Scene\SceneState\SceneStateBase.h" />
     <ClInclude Include="Scripts\Engine\Scene\SceneState\SceneStateMachine.h" />
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\Standby\SceneState_Standby.h" />
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\Title\SceneState_Title.h" />
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\Tutorial\SceneState_Tutorial.h" />
     <ClInclude Include="Scripts\Engine\Scene\StandbyScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\TitleScene.h" />
     <ClInclude Include="Scripts\Engine\Manager\GameObjectManager.h" />
