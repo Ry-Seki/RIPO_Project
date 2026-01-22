@@ -104,8 +104,7 @@ void FloorProcessor::SetupNextFloor() {
 	if (setFloorData.isFirst) {
 		setFloorData.isFirst = false;
 	}else {
-		// 敵の数が0より大きければ、フロアデータ更新
-		if (enemyFloorList[currentFloor].size() > 0) setFloorData.enemySpawnCount = enemyFloorList[currentFloor].size();
+		setFloorData.enemySpawnCount = enemyFloorList[currentFloor].size();
 	}
 	// ダンジョンクリエイターに情報を設定
 	dungeonCreater.SetFloorData(setFloorData);

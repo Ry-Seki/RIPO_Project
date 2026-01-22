@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scripts\Data\DxLibResourcesManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\AudioManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMSource.cpp" />
@@ -192,6 +193,9 @@
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuGameModeSelect.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\Title\MenuLoadGame.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\Title\MenuNewGame.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\Title\MenuSystem.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuTitle.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DebugScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\GameState\GameStateMachine.cpp" />
@@ -220,6 +224,13 @@
     <ClCompile Include="Scripts\Engine\Scene\MainGameScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\ResultScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\Scene.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\MainGame\SceneState_MainGame.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\Result\SceneState_Result.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\SceneStateBase.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\SceneStateMachine.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\Standby\SceneState_Standby.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\Title\SceneState_Title.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\Tutorial\SceneState_Tutorial.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\StandbyScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\TutorialScene.cpp" />
@@ -239,8 +250,10 @@
   <ItemGroup>
     <ClInclude Include="Scripts\Data\Dungeon\DungeonData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonFloorData.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonProgressData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonResourceData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonStageData.h" />
+    <ClInclude Include="Scripts\Data\DxLibResourcesManager.h" />
     <ClInclude Include="Scripts\Data\ItemCatalogData.h" />
     <ClInclude Include="Scripts\Data\PlayerStatusData.h" />
     <ClInclude Include="Scripts\Data\SaveData.h" />
@@ -318,6 +331,9 @@
     <ClInclude Include="Scripts\Engine\Menu\MenuBase.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuGameModeSelect.h" />
+    <ClInclude Include="Scripts\Engine\Menu\Title\MenuLoadGame.h" />
+    <ClInclude Include="Scripts\Engine\Menu\Title\MenuNewGame.h" />
+    <ClInclude Include="Scripts\Engine\Menu\Title\MenuSystem.h" />
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuTitle.h" />
     <ClInclude Include="Scripts\Engine\Save\SaveDataManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\DebugScene.h" />
@@ -354,7 +370,13 @@
     <ClInclude Include="Scripts\Engine\Scene\MainGameScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\ResultScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\Scene.h" />
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\MainGame\SceneState_MainGame.h" />
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\Result\SceneState_Result.h" />
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\SceneStateBase.h" />
     <ClInclude Include="Scripts\Engine\Scene\SceneState\SceneStateMachine.h" />
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\Standby\SceneState_Standby.h" />
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\Title\SceneState_Title.h" />
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\Tutorial\SceneState_Tutorial.h" />
     <ClInclude Include="Scripts\Engine\Scene\StandbyScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\TitleScene.h" />
     <ClInclude Include="Scripts\Engine\Manager\GameObjectManager.h" />

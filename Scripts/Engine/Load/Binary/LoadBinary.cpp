@@ -13,7 +13,7 @@ void LoadBinary::Load() {
     binaryData.clear();
     try {
         std::ifstream file(filePath, std::ios::binary);
-        if (!file.is_open())	return;
+        if (!file.is_open()) return;
 
         // ファイルサイズを取得
         file.seekg(0, std::ios::end);

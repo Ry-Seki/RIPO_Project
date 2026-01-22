@@ -17,7 +17,6 @@ struct DungeonData {
     int openDay = 0;                    // ダンジョン開放日（0はチュートリアル）
     int eventStartDay = 0;              // イベント開始日
     int eventEndDay = 0;                // イベント終了日
-    bool isEventTreasureGet = false;    // お宝獲得フラグ
     bool isBossDefeated = false;        // ボス突破フラグ
     std::string dungeonPath = "";       // ダンジョンデータCSVやモデルパス
 };

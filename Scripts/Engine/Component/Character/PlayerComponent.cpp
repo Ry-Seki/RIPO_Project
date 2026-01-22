@@ -195,12 +195,36 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	// モデルハンドルのセット
 	animator->SetModelHandle(modelHandle);
 	animator->LoadIndex(true);
-	// アニメーション再生
-	if (moveVec == V_ZERO) {
-		animator->Play(3, 1);
+
+	// モデルの透明度の調整
+	auto handArm = player->GetComponent<ArmActionComponent>();
+	if (!handArm->GetLiftObject()) {
+		MV1SetOpacityRate(modelHandle, 0);
 	}
 	else {
+		MV1SetOpacityRate(modelHandle, 1);
+	}
+
+	// アニメーション再生
+	if (CheckHitKey(KEY_INPUT_W)) {
+		// 前移動
 		animator->Play(4, moveSpeed * 0.066f);
+	}
+	else if (CheckHitKey(KEY_INPUT_S)) {
+		// 後ろ移動
+		animator->Play(5, moveSpeed * 0.066f);
+	}
+	else if (CheckHitKey(KEY_INPUT_A)) {
+		// 左移動
+		animator->Play(6, moveSpeed * 0.066f);
+	}
+	else if (CheckHitKey(KEY_INPUT_D)) {
+		// 右移動
+		animator->Play(7, moveSpeed * 0.066f);
+	}
+	else  {
+		// 待機
+		animator->Play(3, 1);
 	}
 }
 

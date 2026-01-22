@@ -8,6 +8,7 @@
 
 #include "../LoadBase.h"
 
+#include <cassert>
 #include <DxLib.h>
 
 /*
@@ -18,25 +19,25 @@ class LoadAudio : public LoadBase {
 
 public:
 	/*
-	 *	コンストラクタ
-	 *	param[in]	const std::string& setFilePath		ファイルパス
+	 *	@brief		コンストラクタ
+	 *	@param[in]	const std::string& setFilePath		ファイルパス
 	 */
 	explicit LoadAudio(const std::string& setFilePath) : LoadBase(setFilePath) {}
 	/*
-	 *	デストラクタ
+	 *	@brief		デストラクタ
 	 */
-	~LoadAudio() override { DeleteSoundMem(audioHandle); }
+	~LoadAudio() override;
 
 public:
 	/*
-	 *	読み込み処理
+	 *	@brief	読み込み処理
 	 */
 	void Load() override;
 
 public:
 	/*
-	 *	モデルハンドルの取得
-	 *	return int
+	 *	@brief		モデルハンドルの取得
+	 *	@return		int
 	 */
 	inline int GetHandle() const { return audioHandle; }
 };

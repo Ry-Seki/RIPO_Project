@@ -4,9 +4,18 @@
  */
 
 #include "LoadSprite.h"
+#include "../../../Data/DxLibResourcesManager.h"
+
+#include <DxLib.h>
 
 /*
- *	読み込み処理
+ *	@brief	デストラクタ
+ */
+LoadSprite::~LoadSprite() {
+	if(graphHandle != -1) DeleteGraph(graphHandle);
+}
+/*
+ *	@brief	読み込み処理
  */
 void LoadSprite::Load() {
 	// 画像の読み込み
@@ -14,4 +23,5 @@ void LoadSprite::Load() {
 	if (graphHandle == -1) return;
 
 	isLoaded = true;
+	DxLibResourcesManager::GetInstance().AddGraphHandle(graphHandle);
 }

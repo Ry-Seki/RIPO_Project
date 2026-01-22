@@ -16,12 +16,8 @@
 #include "Fade/FadeManager.h"
 #include "Audio/AudioManager.h"
 #include "Load/LoadManager.h"
-#include "Manager/StageObjectManager.h"
-#include "Manager/StageManager.h"
-#include "Manager/GameObjectManager.h"
-#include "Manager/BulletManager.h"
-#include "Manager/CharacterManager.h"
 #include "Menu/MenuManager.h"
+#include "../Data/DxLibResourcesManager.h"
 
 #include <DxLib.h>
 #include <EffekseerForDXLib.h>
@@ -115,13 +111,7 @@ int Engine::Initialize() {
 void Engine::Teardown() {
 	if (initialized) {
 		initialized = false;
-		BulletManager::GetInstance().DestroyInstance();
-		AudioManager::GetInstance().DestroyInstance();
-		StageObjectManager::GetInstance().DestroyInstance();
-		StageManager::GetInstance().DestroyInstance();
-		LoadManager::GetInstance().DestroyInstance();
-		GameObjectManager::GetInstance().DestroyInstance();
-		CharacterManager::GetInstance().DestroyInstance();
+		DxLibResourcesManager::GetInstance().Teardown();
 		currentScene->Finalize(*this);
 	}
 	if (effekseerInitialized) { Effkseer_End(); effekseerInitialized = false; }

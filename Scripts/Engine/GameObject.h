@@ -26,6 +26,7 @@ class Engine;
 class GameObject {
 	friend class Engine;	// フレンドクラス
     friend class Scene;
+    friend class SceneStateBase;
 
 private:
     Engine* engine = nullptr;                   // エンジン

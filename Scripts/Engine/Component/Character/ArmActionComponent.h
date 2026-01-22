@@ -15,14 +15,14 @@
  */
 class ArmActionComponent : public Component {
 private:
-	std::shared_ptr<ArmActionComponent> currentArm = nullptr;
+	std::shared_ptr<ArmActionComponent> currentArm;
 
 protected:
 	GameObject* player;
 	Engine* engine;
 
 public:
-	ArmActionComponent() = default;
+	ArmActionComponent();
 	virtual ~ArmActionComponent() = default;
 
 public:
