@@ -262,6 +262,7 @@ void Stage::ProcessWallCollision(
 		Vector3 p0 = FromVECTOR(poly->Position[0]);
 		Vector3 p1 = FromVECTOR(poly->Position[1]);
 		Vector3 p2 = FromVECTOR(poly->Position[2]);
+		
 
 		// カプセル中心点
 		Vector3 capCenter = (capLower + capTop) * _HALF;
