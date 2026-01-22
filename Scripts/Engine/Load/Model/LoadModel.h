@@ -8,7 +8,7 @@
 
 #include "../LoadBase.h"
 
-#include <DxLib.h>
+#include <cassert>
 
 /*
  *	DxLibの3Dモデル読み込みクラス
@@ -26,7 +26,7 @@ public:
 	/*
 	 *	デストラクタ
 	 */
-	~LoadModel() override { MV1DeleteModel(modelHandle); }
+	~LoadModel() override;
 
 public:
 	/*

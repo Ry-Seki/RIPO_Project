@@ -256,6 +256,36 @@
     <Filter Include="ソース ファイル\Engine\Scene\SceneState">
       <UniqueIdentifier>{dd3fbd29-e0d8-4c47-bfdf-01e02431907a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\SceneState\Standby">
+      <UniqueIdentifier>{550145f3-1df6-4cdf-ba6c-3106e2f67386}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\SceneState\Title">
+      <UniqueIdentifier>{a505d185-7035-4873-9dfa-51d1a6da9a46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\SceneState\Tutorial">
+      <UniqueIdentifier>{f75b569b-f298-41cc-8186-3eecc562e0e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\SceneState\MainGame">
+      <UniqueIdentifier>{586ae321-74c1-4a94-aea2-b1864c091483}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\SceneState\Result">
+      <UniqueIdentifier>{831b1b94-607a-48a4-a322-58fe239fdac4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\Standby">
+      <UniqueIdentifier>{2d7ce63c-2de8-499d-a014-8386a9caf991}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\Title">
+      <UniqueIdentifier>{fbb655bf-360d-47be-a7f5-320165b2b86f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\Tutorial">
+      <UniqueIdentifier>{53f3ff99-da7a-41a7-8154-fff79632532a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\MainGame">
+      <UniqueIdentifier>{07da5422-2cb1-4c46-a163-369e1b34e4d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\Result">
+      <UniqueIdentifier>{f9631148-fda3-47fc-ac53-748e627f4314}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -533,6 +563,27 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Scene\SceneState\SceneStateBase.cpp">
       <Filter>ソース ファイル\Engine\Scene\SceneState</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\MainGame\SceneState_MainGame.cpp">
+      <Filter>ソース ファイル\Engine\Scene\SceneState\MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\Result\SceneState_Result.cpp">
+      <Filter>ソース ファイル\Engine\Scene\SceneState\Result</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\Standby\SceneState_Standby.cpp">
+      <Filter>ソース ファイル\Engine\Scene\SceneState\Standby</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\Title\SceneState_Title.cpp">
+      <Filter>ソース ファイル\Engine\Scene\SceneState\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\Tutorial\SceneState_Tutorial.cpp">
+      <Filter>ソース ファイル\Engine\Scene\SceneState\Tutorial</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\SceneState\SceneStateMachine.cpp">
+      <Filter>ソース ファイル\Engine\Scene\SceneState</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Data\DxLibResourcesManager.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -964,6 +1015,27 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\SceneState\SceneStateBase.h">
       <Filter>ヘッダー ファイル\Engine\Scene\SceneState</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\MainGame\SceneState_MainGame.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\SceneState\MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\Result\SceneState_Result.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\SceneState\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\Tutorial\SceneState_Tutorial.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\SceneState\Tutorial</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\Title\SceneState_Title.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\SceneState\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\Standby\SceneState_Standby.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\SceneState\Standby</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonProgressData.h">
+      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\DxLibResourcesManager.h">
+      <Filter>ヘッダー ファイル\Data</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
