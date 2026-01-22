@@ -13,8 +13,7 @@
  */
 void SaveDataManager::Initialize() {
     if (!std::filesystem::exists(_SAVE_FILE_PATH)) {
-        assert(false && "セーブファイル見つからないかった");
-        return;
+        std::filesystem::create_directories(_SAVE_FILE_PATH);
     }
     // 各スロットが存在しなければ初期データで作成
     const std::vector<std::string> slots = { "Slot1", "Slot2", "Slot3", _AUTO_SAVE };
