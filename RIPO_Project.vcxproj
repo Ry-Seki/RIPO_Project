@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scripts\Data\DxLibResourcesManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\AudioManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMSource.cpp" />
@@ -252,6 +253,7 @@
     <ClInclude Include="Scripts\Data\Dungeon\DungeonProgressData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonResourceData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonStageData.h" />
+    <ClInclude Include="Scripts\Data\DxLibResourcesManager.h" />
     <ClInclude Include="Scripts\Data\ItemCatalogData.h" />
     <ClInclude Include="Scripts\Data\PlayerStatusData.h" />
     <ClInclude Include="Scripts\Data\SaveData.h" />

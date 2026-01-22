@@ -7,10 +7,11 @@
 #define _LOAD_GRAPH_H_
 
 #include "../LoadBase.h"
-#include <DxLib.h>
+
+#include <cassert>
 
 /*
- *	DxLibの画像読み込みクラス
+ *	@breif  DxLibの画像読み込みクラス
  */
 class LoadSprite : public LoadBase {
 private:
@@ -25,7 +26,7 @@ public:
     /*
      *  デストラクタ
      */
-    ~LoadSprite() override { DeleteGraph(graphHandle); }
+    ~LoadSprite() override;
 
 public:
     /*
