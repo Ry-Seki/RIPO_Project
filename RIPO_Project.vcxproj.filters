@@ -956,5 +956,8 @@
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuSystem.h">
       <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Engine\Manager\InputManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
