@@ -70,9 +70,9 @@ namespace GameEnum {
 	 */
 	enum class MiniGameLevel {
 		Invalid = -1,
-		Easy,
-		Normal,
-		Hard,
+		Easy,			// ŠÈ’P
+		Normal,			// •’Ê
+		Hard,			// “ï‚µ‚¢
 		Max
 	};
 }

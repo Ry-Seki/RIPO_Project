@@ -14,7 +14,7 @@ void MiniGameSokoban::Open() {
     MiniGameBase::Open();
     // マップ読み込み
     SokobanMapManager mapManager;
-    if(!mapManager.LoadMapList("Data/MiniGame/Sokoban")) return;
+    if(!mapManager.LoadMapList("Data/MiniGame/Sokoban/Map")) return;
     // マップをランダムに取得する
     std::string mapFile = mapManager.GetRandomMap();
     if(!createMap.LoadMapFromFile(mapFile)) return;
