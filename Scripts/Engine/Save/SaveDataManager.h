@@ -13,18 +13,23 @@
 #include <fstream>
 #include <filesystem>
 #include <iostream>
+#include <cassert>
+
+// 前方宣言
+struct ActionContext;
 
 class SaveDataManager : public Singleton<SaveDataManager> {
 	friend class Singleton<SaveDataManager>;
 
 private:
-	UserData currentSaveData;						// 現在プレイ中のスロット
-	UserData autoSaveData;							// オートセーブ専用
-	std::string currentSlot;						// 現在のスロット
+	SaveData currentSaveData;							// 現在プレイ中のスロット
+	SaveData autoSaveData;								// オートセーブ専用
+	std::string currentSlot;							// 現在のスロット
 
-	const std::string _SAVE_PATH = "SaveData/";		// ファイルパス
-	const std::string _AUTO_SAVE = "AutoSave";		// オートセーブ
-	const int _SAVE_VERSION = 1;					// 将来のバージョン管理用
+	const std::string _SAVE_FILE_PATH = "SaveData/";	// ファイルパス
+	const std::string _JSON_PATH = ".json";				// JSON拡張子
+	const std::string _AUTO_SAVE = "AutoSave";			// オートセーブ
+	const int _SAVE_VERSION = 1;						// 将来のバージョン管理用
 
 private:
 	/*
@@ -38,157 +43,160 @@ private:
 
 public:
 	/*
-	 *	@brief	初期化処理
+	 *	@brief		初期化処理
 	 */
-	void Initialize() {
-		if (!std::filesystem::exists(_SAVE_PATH)) {
-			std::filesystem::create_directories(_SAVE_PATH);
-		}
-	}
+	void Initialize();
 	/*
-	 *	@brief		スロットの選択
-	 *	@param[in]	int setSlot
+	 *	@brief		スロット選択
+	 *	@param[in]	int selectSlot
 	 */
-	void SelectSlot(int setSlot) {
-		if (setSlot >= 1 && setSlot <= 3) {
-			currentSlot = "Slot" + std::to_string(setSlot);
-		}
-		else {
-			currentSlot = _AUTO_SAVE;
-		}
-	}
+	void SelectSlot(int selectSlot);
 	/*
-	 *	@brief		JSON->SaveDataへの変換
+	 *	@brief		セーブ処理
+	 *  @param[in]	const SaveData& data
+	 *  @param[in]	const std::string& slotPath
+	 *  @return		bool
 	 */
-	UserData FromJSONToSaveData(const JSON& json) {
-		UserData data;
-		data.elapsedDay = json.value("elapsedDay", 0);
-		data.isHalf = json.value("isHalf", false);
-		data.playTime = json.value("playTime", 0);
-		data.currentMoney = json.value("currentMoney", 0);
-		return data;
-	}
+	bool Save(const SaveData& data, const std::string& slotPath);
 	/*
-	 *	@brief		SaveData->JSONへの変換
+	 *	@brief		選択されたスロットにセーブ
+	 *  @return		bool
 	 */
-	JSON FromSaveDataToJSON(const UserData& data) {
-		JSON json;
-		json["elapsedDay"] = data.elapsedDay;
-		json["isHalf"] = data.isHalf;
-		json["playTime"] = data.playTime;
-		json["currentMoney"] = data.currentMoney;
-		return json;
-	}
+	bool SaveCurrentSlot();
 	/*
-	 *	@brief		現在のセーブデータの読み込み
+	 *	@brief		オートセーブスロットにセーブ
+	 *	@return		bool
 	 */
-	bool LoadCurrentSlot() {
-		return LoadSaveData(currentSaveData, currentSlot);
-	}
+	bool AutoSave();
 	/*
-	 *	@brief		セーブデータ読み込み
-	 *  @param[in]	SaveData& saveData
-	 *  @param[in]	const std::string& slotName
+	 *	@brief		ロード処理
+	 *  @param[out]	SaveData& outData
+	 *  @param[in]	const std::string& slotPath
+	 *  @return		bool
 	 */
-	bool LoadSaveData(UserData& saveData, const std::string& slotName){
-		std::string filePath = _SAVE_PATH + slotName + ".json";
-		if (!std::filesystem::exists(filePath)) return false;
-
-		std::ifstream in(filePath);
-		if (!in.is_open()) return false;
-
-		try {
-			JSON json;
-			in >> json;
-			saveData = FromJSONToSaveData(json);
-		} catch(const std::exception& exception) {
-			std::cerr << "LoadSaveData exception: " << exception.what() << std::endl;
-			return false;
-		} catch (...) {
-			std::cerr << "[LoadSaveData] unknown exception occurred." << std::endl;
-			return false;
-		}
-
-		return true;
-	}
+	bool Load(SaveData& outData, const std::string& slotPath);
 	/*
-	 *	@brief		セーブデータの書き込み
-	 *  @param[in]	const SaveData& saveData
-	 *  @param[in]	const std::string& slotName
+	 *	@brief		選択されたスロットにロード
+	 *	@return		bool
 	 */
-	bool Save(const UserData& saveData, const std::string& slotName) {
-		std::string filePath = _SAVE_PATH + slotName + ".json";
-
-		try {
-			std::ofstream out(filePath);
-			if (!out.is_open()) return false;
-
-			JSON json = FromSaveDataToJSON(saveData);
-			out << json.dump(4);
-			out.close();
-		}
-		catch (const std::exception& exception) {
-			std::cerr << "[Save] exception: " << exception.what() << std::endl;
-			return false;
-		}
-		catch (...) {
-			std::cerr << "[Save] unknown exception occurred." << std::endl;
-			return false;
-		}
-		return true;
-	}
+	bool LoadCurrentSlot();
 	/*
-	 *	@brief		現在セーブデータの書き込み
+	 *	@brief		オートセーブスロットからロード
+	 *	@return		bool
 	 */
-	bool SaveCurrentSlot() {
-		return Save(currentSaveData, currentSlot);
-	}
+	bool AutoSaveLoad();
 	/*
-	 *	@brief		オートセーブ書き込み
+	 *	@brief		SaveData->JSONへ変換
+	 *	@param[in]	const SaveData& data
+	 *	@return		JSON
 	 */
-	bool SaveAuto() {
-		autoSaveData = currentSaveData;
-		return Save(autoSaveData, _AUTO_SAVE);
-	}
-
+	Orderd_JSON ToJSON(const SaveData& data);
 	/*
-	 *	@brief		新規スロット作成
-	 *	@param[in]	int setSlot
+	 *	@brief		JSON->SaveDataへ変換
+	 *	@param[in]	const JSON& json
+	 *	@return		SaveData
 	 */
-	void CreateInitData(int setSlot) {
-		SelectSlot(setSlot);
-
-		currentSaveData.elapsedDay = 0;
-		currentSaveData.isHalf = false;
-		currentSaveData.playTime = 0;
-		currentSaveData.currentMoney = 0;
-		currentSaveData.dungeonFlags = 0;
-
-		Save(currentSaveData, currentSlot);
-	}
+	SaveData SaveDataFromJSON(const JSON& json);
+	/*
+	 *	@brief		ゲーム進行データ->JSONへ変換
+	 *	@param[in]	const GameProgressData& data
+	 *  @return		JSON
+	 */
+	Orderd_JSON ToJSON(const GameProgressData& data);
+	/*
+	 *	@brief		JSON->ゲーム進行データへ変換
+	 *	@param[in]	const JSON& json
+	 *	@return		GameProgressData
+	 */
+	GameProgressData GameDataFromJSON(const JSON& json);
+	/*
+	 *	@brief		プレイヤーステータスレベルデータ->JSONへ変換
+	 *	@param[in]	const PlayerProgressData& data
+	 *  @return		JSON
+	 */
+	Orderd_JSON ToJSON(const PlayerStatusLevelData& data);
+	/*
+	 *	@brief		JSON->プレイヤーステータスレベルデータへ変換
+	 *  @param[in]	const JSON& json
+	 *  @return		PlayerStatusLevelData
+	 */
+	PlayerStatusLevelData PlayerDataFromJSON(const JSON& json);
+	/*
+	 *	@brief		ワールド進行データ->JSONへ変換
+	 *	@param[in]	const WorldProgressData& data
+	 *  @return		JSON
+	 */
+	Orderd_JSON ToJSON(const WorldProgressData& data);
+	/*
+	 *	@brief		JSON->ワールド進行データへ変換
+	 *	@param[in]	const JSON& json
+	 *	@return		WorldProgressData
+	 */
+	WorldProgressData WorldDataFromJSON(const JSON& json);
+	/*
+	 *	@brief		ダンジョン進行データ->JSONへ変換
+	 *	@param[in]	const DungeonProgressData& data
+	 *	@return		JSON
+	 */
+	Orderd_JSON ToJSON(const DungeonProgressData& data);
+	/*
+	 *	@brief		JSON->ダンジョン進行データへ変換
+	 *	@param[in]	const JSON& json
+	 *  @param[in]	int dungeonID
+	 *	@return		DungeonProgressData
+	 */
+	DungeonProgressData DungeonDataFromJSON(const JSON& json, int dungeonID);
+	/*
+	 *	@brief		設定データ->JSONへ変換
+	 *	@param[in]	const GameProgressData& data
+	 *  @return		JSON
+	 */
+	Orderd_JSON ToJSON(const SettingsData& data);
+	/*
+	 *	@brief		JSON->設定データへ変換
+	 *	@param[in]	const JSON& json
+	 *	@return		SettingsData
+	 */
+	SettingsData SettingsDataFromJSON(const JSON& json);
+	/*
+	 *	@brief		セーブに必要なデータを集める
+	 *	@param[in]	const ActionContext& context
+	 */
+	void CollectSaveData(const ActionContext& context);
+	/*
+	 *	@brief		セーブデータからデータを渡す
+	 *	@param[in]	ActionContext& context
+	 */
+	void ApplyLoadData(ActionContext& context);
 
 public:
 	/*
+	 *	@brief		ファイルパスを生成
+	 *	@param[in]	const std::string& slotPath
+	 *	@return		std::string
+	 */
+	inline std::string MakeFilePath(const std::string& slotPath) { return _SAVE_FILE_PATH + slotPath + _JSON_PATH; }
+	/*
 	 *	@brief		セーブデータの取得
 	 *	@return		SaveData&
 	 */
-	inline UserData& GetSaveData() { return currentSaveData; }
+	inline SaveData& GetSaveData() { return currentSaveData; }
 	/*
 	 *	@brief		セーブデータの取得
 	 *	@return		const SaveData&
 	 */
-	inline const UserData& GetSaveData() const { return currentSaveData; }
+	inline const SaveData& GetSaveData() const { return currentSaveData; }
 
 	/*
 	 *	@brief		オートセーブデータの取得
 	 *	@return		SaveData&
 	 */
-	inline UserData& GetAutoSaveData() { return autoSaveData; }
+	inline SaveData& GetAutoSaveData() { return autoSaveData; }
 	/*
 	 *	@brief		オートセーブデータの取得
 	 *	@return		const SaveData&
 	 */
-	inline const UserData& GetAutoSaveData() const { return autoSaveData; }
+	inline const SaveData& GetAutoSaveData() const { return autoSaveData; }
 };
 
 #endif // !_SAVE_DATA_MANAGER_H_

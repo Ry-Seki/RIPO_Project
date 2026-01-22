@@ -1,8 +1,10 @@
 /*
  *	@file	DxLibResourcesManager.h
+ *  @author	Seki
  */
 
-#pragma once
+#ifndef _DXLIB_RESOURCES_MANAGER_H_
+#define _DXLIB_RESOURCES_MANAGER_H_
 
 #include "../Engine/Singleton.h"
 
@@ -58,3 +60,5 @@ public:
 	 */
 	inline void AddEffectHandle(const int setHandle) { effectHandleList.push_back(setHandle); }
 };
+
+#endif // !_DXLIB_RESOURCES_MANAGER_H_

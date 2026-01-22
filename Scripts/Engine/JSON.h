@@ -14,5 +14,6 @@
 
 // •Ê–¼’è‹`
 using JSON = nlohmann::json;
+using Orderd_JSON = nlohmann::ordered_json;
 
 #endif // !_JSON_H_

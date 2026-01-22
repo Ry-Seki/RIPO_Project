@@ -17,8 +17,8 @@ struct  DungeonProgressData {
 	int treasureCount = 0;					// 残りのお宝の数
 	bool isBossDefeated = false;			// ボス討伐フラグ
 
-	std::unordered_map<int, bool> treasureFlags;        // 通常お宝
-	std::unordered_map<int, bool> eventTreasureFlags;	// イベントお宝（スタンプ）
+	std::unordered_map<int, bool> treasureFlagMap;			// 通常お宝
+	std::unordered_map<int, bool> eventTreasureFlagMap;		// イベントお宝（スタンプ）
 };
 
 #endif // !_DUNGEON_PROGRESS_DATA_H_
