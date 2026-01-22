@@ -12,6 +12,9 @@
 
 #include <vector>
 
+// 前方宣言
+struct GameProgressData;
+
 /*
  *	@brief	ステート間で受け渡されるデータ
  */
@@ -30,6 +33,17 @@ struct ActionContext {
 	GameEnum::ActionType actionType = GameEnum::ActionType::Invalid;				// アクションタイプ
 	GameEnum::PlayerStatusType statusType = GameEnum::PlayerStatusType::Invalid;	// ステータスタイプ
 	GameEnum::MiniGameLevel miniGameLevel = GameEnum::MiniGameLevel::Invalid;		// ミニゲームの難易度
+
+	/*
+	 *	@biref		セーブデータに情報を渡す
+	 *	@return		GameProgressData
+	 */
+	GameProgressData GetSaveData() const;
+	/*
+	 *	@brief		セーブデータから情報を設定
+	 *  @param[in]	const GameProgressData& data
+	 */
+	void ApplyLoadData(const GameProgressData& data);
 };
 
 #endif // !_ACTION_CONTEXT_H_

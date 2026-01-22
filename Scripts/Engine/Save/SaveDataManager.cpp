@@ -1,0 +1,351 @@
+/*
+ *	@file	SaveDataManager.cpp
+ *	@author	Seki
+ */
+#include "SaveDataManager.h"
+#include "../../Data/Dungeon/DungeonProgressData.h"
+#include "../System/Status/PlayerStatusManager.h"
+#include "../System/Money/MoneyManager.h"
+#include "../Scene/GameState/ActionContext.h"
+
+/*
+ *	@brief	初期化処理
+ */
+void SaveDataManager::Initialize() {
+    if (!std::filesystem::exists(_SAVE_FILE_PATH)) {
+        assert(false && "セーブファイル見つからないかった");
+        return;
+    }
+    // 各スロットが存在しなければ初期データで作成
+    const std::vector<std::string> slots = { "Slot1", "Slot2", "Slot3", _AUTO_SAVE };
+    for (const auto& slot : slots) {
+        const std::string path = MakeFilePath(slot);
+        if (!std::filesystem::exists(path)) {
+            SaveData defaultData{};
+            Save(defaultData, slot);
+        }
+    }
+    // 初期スロットはオートセーブにしておく
+    SelectSlot(0);
+    // currentSaveDataにロード
+    LoadCurrentSlot();
+}
+/*
+ *	@brief		スロット選択
+ *	@param[in]	int selectSlot
+ */
+void SaveDataManager::SelectSlot(int selectSlot) {
+    if (selectSlot >= 1 && selectSlot <= 3) {
+        currentSlot = "Slot" + std::to_string(selectSlot);
+    } else {
+        currentSlot = _AUTO_SAVE;
+    }
+}
+/*
+ *	@brief		セーブ処理
+ *  @param[in]	const SaveData& data
+ *  @param[in]	const std::string& slotPath
+ *  @return		bool
+ */
+bool SaveDataManager::Save(const SaveData& data, const std::string& slotPath) {
+    const std::string path = MakeFilePath(slotPath);
+    std::ofstream saveFile(path);
+    if (!saveFile.is_open()) {
+        assert(false && "セーブファイルを開けませんでした");
+        return false;
+    }
+    Orderd_JSON json = ToJSON(data);
+    // ファイルの書き込み
+    saveFile << json.dump(4);
+    if (saveFile.fail()) {
+        assert(false && "セーブデータの書き込みに失敗しました");
+        return false;
+    }
+    return true;
+}
+/*
+ *	@brief		選択されたスロットにセーブ
+ *  @return		bool
+ */
+bool SaveDataManager::SaveCurrentSlot() {
+    return Save(currentSaveData, currentSlot);
+}
+/*
+ *	@brief		オートセーブスロットにセーブ
+ *	@return		bool
+ */
+bool SaveDataManager::AutoSave() {
+    return Save(currentSaveData, _AUTO_SAVE);
+}
+/*
+ *	@brief		ロード処理
+ *  @param[out]	SaveData& outData
+ *  @param[in]	const std::string& slotPath
+ *  @return		bool
+ */
+bool SaveDataManager::Load(SaveData& outData, const std::string& slotPath) {
+    const std::string path = MakeFilePath(slotPath);
+    if (!std::filesystem::exists(path)) {
+        assert(false && "ファイルが存在しませんでした");
+        return false;
+    }
+    std::ifstream loadFile(path);
+    if (!loadFile.is_open()) {
+        assert(false && "ファイルが開けませんでした");
+        return false;
+    }
+    JSON json;
+    try {
+        loadFile >> json;
+    } catch (...) {
+        assert(false && "JSONのパースに失敗しました");
+        return false;
+    }
+    outData = SaveDataFromJSON(json);
+    return true;
+}
+/*
+ *	@brief		選択されたスロットにロード
+ *	@return		bool
+ */
+bool SaveDataManager::LoadCurrentSlot() {
+    return Load(currentSaveData, currentSlot);
+}
+/*
+ *	@brief		オートセーブスロットからロード
+ *	@return		bool
+ */
+bool SaveDataManager::AutoSaveLoad() {
+    return Load(currentSaveData, _AUTO_SAVE);
+}
+/*
+ *	@brief		SaveData->JSONへ変換
+ *	@param[in]	const SaveData& data
+ *	@return		JSON
+ */
+Orderd_JSON SaveDataManager::ToJSON(const SaveData& data) {
+    Orderd_JSON json;
+    json["Version"] = _SAVE_VERSION;
+    json["Game"] = ToJSON(data.game);
+    json["Player"] = ToJSON(data.player);
+    json["World"] = ToJSON(data.world);
+    json["Settings"] = ToJSON(data.settings);
+    return json;
+}
+/*
+ *	@brief		JSON->SaveDataへ変換
+ *	@param[in]	const JSON& json
+ *	@return		SaveData
+ */
+SaveData SaveDataManager::SaveDataFromJSON(const JSON& json) {
+    SaveData data{};
+    data.game = GameDataFromJSON(json["Game"]);
+    data.player = PlayerDataFromJSON(json["Player"]);
+    data.world = WorldDataFromJSON(json["World"]);
+    data.settings = SettingsDataFromJSON(json["Settings"]);
+    return data;
+}
+/*
+ *	@brief		ゲーム進行データ->JSONへ変換
+ *	@param[in]	const GameProgressData& data
+ *  @return		JSON
+ */
+Orderd_JSON SaveDataManager::ToJSON(const GameProgressData& data) {
+    Orderd_JSON json;
+    json["playTime"] = data.playTime;
+    json["elapsedDay"] = data.elapsedDay;
+    json["isHalfDay"] = data.isHalfDay;
+    json["currentMoney"] = data.currentMoney;
+    json["totalTreasureCount"] = data.totalTreasureCount;
+    return json;
+}
+/*
+ *	@brief		JSON->ユーザー進行データ
+ *	@param[in]	JSON json
+ *	@return		GameProgressData
+ */
+GameProgressData SaveDataManager::GameDataFromJSON(const JSON& json) {
+    GameProgressData data{};
+    data.playTime = json.value("playTime", 0);
+    data.elapsedDay = json.value("elapsedDay", 0);
+    data.isHalfDay = json.value("isHalfDay", false);
+    data.currentMoney = json.value("currentMoney", 0);
+    data.totalTreasureCount = json.value("totalTreasureCount", 0);
+    return data;
+}
+/*
+ *	@brief		プレイヤーステータスレベルデータ->JSONへ変換
+ *	@param[in]	const PlayerProgressData& data
+ *  @return		JSON
+ */
+Orderd_JSON SaveDataManager::ToJSON(const PlayerStatusLevelData& data) {
+    Orderd_JSON json;
+    json["hpLevel"] = data.hpLevel;
+    json["staminaLevel"] = data.staminaLevel;
+    json["strengthLevel"] = data.strengthLevel;
+    json["resistTimeLevel"] = data.resistTimeLevel;
+    return json;
+}
+/*
+ *	@brief		JSON->プレイヤーステータスレベルデータへ変換
+ *  @param[in]	const JSON& json
+ *  @return		PlayerStatusLevelData
+ */
+PlayerStatusLevelData SaveDataManager::PlayerDataFromJSON(const JSON& json) {
+    PlayerStatusLevelData data{};
+    data.hpLevel = json.value("hpLevel", 0);
+    data.staminaLevel = json.value("staminaLevel", 0);
+    data.strengthLevel = json.value("strengthLevel", 0);
+    data.resistTimeLevel = json.value("resistTimeLevel", 0);
+    return data;
+}
+/*
+ *	@brief		ワールド進行データ->JSONへ変換
+ *	@param[in]	const WorldProgressData& data
+ *  @return		JSON
+ */
+Orderd_JSON SaveDataManager::ToJSON(const WorldProgressData& data) {
+    Orderd_JSON json;
+    json["getTreasureIDList"] = data.getTreasureIDList;
+    // ダンジョン進行
+    JSON dungeonJSON;
+    for (const auto& [dungeonID, progress] : data.dungeonProgress) {
+        dungeonJSON[std::to_string(dungeonID)] = ToJSON(progress);
+    }
+    json["dungeonProgress"] = dungeonJSON;
+
+    return json;
+}
+/*
+ *	@brief		JSON->ワールド進行データへ変換
+ *	@param[in]	const JSON& json
+ *	@return		WorldProgressData
+ */
+WorldProgressData SaveDataManager::WorldDataFromJSON(const JSON& json) {
+    WorldProgressData data{};
+    data.getTreasureIDList = json.value("getTreasureIDList", std::vector<int>{});
+    // ダンジョン進行
+    if (json.contains("dungeonProgress")) {
+        for (auto& [key, value] : json["dungeonProgress"].items()) {
+            int dungeonID = std::stoi(key);
+            data.dungeonProgress[dungeonID] = DungeonDataFromJSON(value, dungeonID);
+        }
+    }
+    return data;
+}
+/*
+ *	@brief		ダンジョン進行データ->JSONへ変換
+ *	@param[in]	const DungeonProgressData& data
+ *	@return		JSON
+ */
+Orderd_JSON SaveDataManager::ToJSON(const DungeonProgressData& data) {
+    Orderd_JSON json;
+    json["isBossDefeated"] = data.isBossDefeated;
+    // 通常お宝
+    JSON treasureJSON;
+    for (const auto& [treasureID, flag] : data.treasureFlagMap) {
+        if (!flag) continue;
+
+        treasureJSON[std::to_string(treasureID)] = true;
+    }
+    json["treasureFlags"] = treasureJSON;
+    // イベントお宝
+    JSON eventJSON;
+    for (const auto& [eventID, flag] : data.eventTreasureFlagMap) {
+        if (!flag) continue;
+        
+        eventJSON[std::to_string(eventID)] = true;
+    }
+    json["eventTreasureFlags"] = eventJSON;
+
+    return json;
+}
+/*
+ *	@brief		JSON->ダンジョン進行データへ変換
+ *	@param[in]	const JSON& json
+ *  @param[in]  int dungeonID
+ *	@return		DungeonProgressData
+ */
+DungeonProgressData SaveDataManager::DungeonDataFromJSON(const JSON& json, int dungeonID) {
+    DungeonProgressData data;
+    data.dungeonID = dungeonID;
+    data.isBossDefeated = json.value("isBossDefeated", false);
+    // 通常お宝
+    if (json.contains("treasureFlags")) {
+        for (auto& [key, value] : json["treasureFlags"].items()) {
+            int treasureID = std::stoi(key);
+            bool obtained = value.get<bool>();
+            if (obtained) {
+                data.treasureFlagMap[treasureID] = true;
+            }
+        }
+    }
+    // イベントお宝
+    if (json.contains("eventTreasureFlags")) {
+        for (auto& [key, value] : json["eventTreasureFlags"].items()) {
+            int eventID = std::stoi(key);
+            bool flag = value.get<bool>();
+            if (!flag) continue;
+
+            data.eventTreasureFlagMap[eventID] = true;
+        }
+    }
+    return data;
+}
+/*
+ *	@brief		設定データ->JSONへ変換
+ *	@param[in]	const GameProgressData& data
+ *  @return		JSON
+ */
+Orderd_JSON SaveDataManager::ToJSON(const SettingsData& data) {
+    Orderd_JSON json;
+    json["mouseSensitivity"] = data.mouseSensitivity;
+    json["masterVolume"] = data.masterVolume;
+    json["bgmVolume"] = data.bgmVolume;
+    json["seVolume"] = data.seVolume;
+    return json;
+}
+/*
+ *	@brief		JSON->設定データへ変換
+ *	@param[in]	const JSON& json
+ *	@return		SettingsData
+ */
+SettingsData SaveDataManager::SettingsDataFromJSON(const JSON& json) {
+    SettingsData data{};
+    data.mouseSensitivity = json.value("mouseSensitivity", 0.0f);
+    data.masterVolume = json.value("masterVolume", 0.0f);
+    data.bgmVolume = json.value("bgmVolume", 0.0f);
+    data.seVolume = json.value("seVolume", 0.0f);
+    return data;
+}
+/*
+ *	@brief		セーブに必要なデータを集める
+ *	@param[in]	const ActionContext& context
+ */
+void SaveDataManager::CollectSaveData(const ActionContext& context) {
+    // Game
+    currentSaveData.game = context.GetSaveData();
+    currentSaveData.game.currentMoney
+        = MoneyManager::GetInstance().GetCurrentMoney();
+    // Player
+    currentSaveData.player
+        = PlayerStatusManager::GetInstance().GetSaveData();
+    // World
+
+    // Settings
+
+}
+/*
+ *	@brief		セーブデータからデータを渡す
+ *	@param[in]	ActionContext& context
+ */
+void SaveDataManager::ApplyLoadData(ActionContext& context) {
+    // Game
+    context.ApplyLoadData(currentSaveData.game);
+    MoneyManager::GetInstance().SetMoney(currentSaveData.game.currentMoney);
+    // Player
+    PlayerStatusManager::GetInstance().ApplyLoadData(currentSaveData.player);
+    // World
+
+    // Settings
+}
