@@ -12,6 +12,7 @@
  */
 EnemyAttack::EnemyAttack()
 	: player(nullptr)
+	, enemyComponent(nullptr)
 	, coolTime(0)
 	, MAX_COOL_TIME(2) {
 }
@@ -20,7 +21,7 @@ EnemyAttack::EnemyAttack()
  *	更新処理の前に呼び出す処理
  *  param[in]	EnemyComponent&	enemy
  */
-void EnemyAttack::Start(EnemyComponent& enemy)
+void EnemyAttack::Start(GameObject* enemy)
 {
 	//printfDx("EnemyAttack");
 	coolTime = MAX_COOL_TIME;

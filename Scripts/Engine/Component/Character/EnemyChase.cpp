@@ -14,6 +14,7 @@
 EnemyChase::EnemyChase()
 	: player(nullptr)
 	, animator(nullptr)
+	, enemyComponent(nullptr)
 	, wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(1000.0f)
@@ -23,11 +24,12 @@ EnemyChase::EnemyChase()
 	, DIFFERENCE_PLAYER(700) {
 }
 
-void EnemyChase::Start(EnemyComponent& enemy) {
+void EnemyChase::Start(GameObject* enemy) {
+	enemyComponent = enemy->GetComponent<EnemyComponent>();
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
-	wayPoint = enemy.GetWayPoint();
-	nextWayPoint = enemy.GetNextWayPoint();
+	wayPoint = enemyComponent->GetWayPoint();
+	nextWayPoint = enemyComponent->GetNextWayPoint();
 	//animator = enemy.GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
 }
@@ -121,7 +123,7 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 		}
 		else {
 			// 攻撃状態遷移
-			enemy->GetComponent<EnemyComponent>()->SetState(new EnemyAttack());
+			enemyComponent->SetState(new EnemyAttack());
 		}
 	}
 	else {
@@ -139,7 +141,7 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 	}
 	// 目標地点についたらターゲットを変える
 	if (distance < differenceTarget) {
-		enemy->GetComponent<EnemyComponent>()->SetChaseTargetChangeFrag(targetChange);
-		enemy->GetComponent<EnemyComponent>()->SetState(new EnemyTurn());
+		enemyComponent->SetChaseTargetChangeFrag(targetChange);
+		enemyComponent->SetState(new EnemyTurn());
 	}
 }

@@ -80,7 +80,7 @@ public:
 			//delete state;
 		}
 		state = setValue;
-		state->Start(*this);
+		state->Start(enemy);
 	}
 
 	/*

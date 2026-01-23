@@ -12,6 +12,7 @@
   */
 class EnemyTurn : public EnemyState {
 private:
+	std::shared_ptr<EnemyComponent> enemyComponent;
 	float targetAngle;		// 回転する際の対象の位置
 
 private:
@@ -26,7 +27,7 @@ public:
 	 *	更新処理の前に呼び出す処理
 	 *  param[in]	EnemyComponent&	enemy
 	 */
-	virtual void Start(EnemyComponent& enemy) override;
+	virtual void Start(GameObject* enemy) override;
 
 	/*
 	 *	更新処理

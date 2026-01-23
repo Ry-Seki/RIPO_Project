@@ -15,6 +15,7 @@ class EnemyChase : public EnemyState {
 private:
 	GameObjectPtr player;
 	std::shared_ptr<AnimatorComponent> animator;
+	std::shared_ptr<EnemyComponent> enemyComponent;
 	// ウェイポイント
 	Vector3 wayPoint;
 	// 目先のウェイポイント予定地
@@ -45,7 +46,7 @@ public:
 	 *	更新処理の前に呼び出す処理
 	 *  param[in]	EnemyComponent&	enemy
 	 */
-	virtual void Start(EnemyComponent& enemy) override;
+	virtual void Start(GameObject* enemy) override;
 
 	/*
 	 *	更新処理

@@ -47,7 +47,7 @@ void EnemyComponent::Start() {
 
 	if (state == nullptr)
 		state = new EnemyChase();
-	state->Start(*this);
+	state->Start(enemy);
 
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
