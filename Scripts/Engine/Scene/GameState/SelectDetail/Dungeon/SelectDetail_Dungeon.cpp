@@ -23,7 +23,7 @@
  */
 void SelectDetail_Dungeon::Initialize() {
 	LoadManager& load = LoadManager::GetInstance();
-	dungeonDataLoader = load.LoadResource<DungeonDataLoader>("Data/Dungeon/DungeonList.csv");
+	dungeonDataLoader = load.LoadResource<DungeonDataLoader>(_DUNGEON_LIST_PATH);
 	load.SetOnComplete([this]() { SetupData(); });
 }
 /*
@@ -96,11 +96,11 @@ void SelectDetail_Dungeon::SetDungeonData(const std::vector<std::shared_ptr<Load
 	JSON dungeonfloorData = setDataList[1]->GetData();
 	if (dungeonData.empty() || dungeonfloorData.empty()) return;
 
-	auto& ctx = owner->GetOwner()->GetActionContext();
+	auto& context = owner->GetOwner()->GetActionContext();
 	// それぞれのデータを初期化
-	ctx.dungeonStageData.LoadFromJSON(dungeonData);
-	// TODO : ここ治す
-	ctx.dungeonFloorData.LoadFromJSON(dungeonfloorData, dungeonID);
+	context.dungeonID = dungeonID;
+	context.dungeonStageData.LoadFromJSON(dungeonData);
+	context.dungeonFloorData.LoadFromJSON(dungeonfloorData, dungeonID);
 	// ステートの切り替え
 	owner->GetOwner()->ChageState(GameEnum::GameState::InAction);
 }
