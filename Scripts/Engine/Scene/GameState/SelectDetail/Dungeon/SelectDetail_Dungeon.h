@@ -24,6 +24,7 @@ private:
 	std::shared_ptr<DungeonDataLoader> dungeonDataLoader;	// ダンジョン用読み込みクラス
 	int dungeonID = -1;
 
+	static constexpr const char* _DUNGEON_LIST_PATH = "Data/Dungeon/DungeonList.csv";
 	static constexpr const char* _DUNGEON_FLOOR_PATH = "Data/Dungeon/DungeonFloorData.json";
 
 public:

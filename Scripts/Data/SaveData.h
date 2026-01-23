@@ -34,7 +34,7 @@ struct PlayerStatusLevelData {
  */
 struct WorldProgressData {
 	std::unordered_map<int, DungeonProgressData> dungeonProgress;	// dungeonID -> ダンジョン進行
-	std::vector<int> getTreasureIDList;			// お宝ID管理（累計管理用）
+	std::vector<int> getTreasureIDList;								// お宝ID管理（累計管理用）
 };
 /*
  *	@brief	設定データ

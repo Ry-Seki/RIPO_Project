@@ -76,7 +76,6 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 	}
 	LoadStage(stageHandleList);
 	// ステージボーンデータの設定
-	// TODO : スポーンデータの修正
 	SetStageJSONData(resourceData.stageBoneResource->GetData());
 
 	// プレイヤーの設定
@@ -117,45 +116,59 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 		// スポーンIDの設定
 		component->SetSpawnEnemyID(i);
 	}
-
-	// ボスの生成ID
-	std::vector<int> bossSpawnIDList;
-	// ボスの生成位置の取得
-	std::vector<Vector3> bossSpawnPos = GetEnemySpwanPos(enemySpawnIDList);
-	// ボスの取得
-	std::vector<GameObjectPtr> bossList = GetObjectByName("Boss");
-	// モデルハンドルの取得
-	int bossHandle = resourceData.bossResource->GetHandle();
-	// ボスの設定
-	for (int i = 0; i < bossCount; i++) {
-		if (bossList.size() <= 0) break;
+	if (bossCount > 0) {
+		// ボスの生成ID
+		std::vector<int> bossSpawnIDList;
+		// ボスの生成位置の取得
+		std::vector<Vector3> bossSpawnPos = GetEnemySpwanPos(enemySpawnIDList);
 		// ボスの取得
-		auto bossCharacter = bossList[i];
-		if (!bossCharacter) continue;
-
-		bossCharacter->position = bossSpawnPos[0];
-		// モデルの設定
-		SetModelHandle(bossCharacter.get(), bossHandle);
-	}
-
-	// 宝の設定
-	// お宝の生成位置の取得
-	std::vector<Vector3> treasureSpawnPos = GetTreasureSpwanPos();
-	// ハンドルの要素数の取得
-	size_t treasureTypeCount = resourceData.treasureResource.size();
-	GameObjectList treasureList = GetObjectByName(GameConst::_CREATE_POSNAME_TREASURE);
-	// お宝の取得
-	for (int i = 0; i < treasureCount; i++) {
-		if (treasureList.size() <= 0) break;
+		std::vector<GameObjectPtr> bossList = GetObjectByName("Boss");
 		// モデルハンドルの取得
-		int treasureHandle = resourceData.treasureResource[floorID][i]->GetHandle();
-		// 宝オブジェクトの取得
-		GameObject* treasure = treasureList[i].get();
-		if (!treasure) continue;
-		// 位置の設定
-		treasure->position = treasureSpawnPos[i];
-		// モデルの設定
-		SetModelHandle(treasure, treasureHandle);
+		int bossHandle = resourceData.bossResource->GetHandle();
+		// ボスの設定
+		for (int i = 0; i < bossCount; i++) {
+			if (bossList.size() <= 0) break;
+			// ボスの取得
+			auto bossCharacter = bossList[i];
+			if (!bossCharacter) continue;
+
+			bossCharacter->position = bossSpawnPos[0];
+			// モデルの設定
+			SetModelHandle(bossCharacter.get(), bossHandle);
+		}
+	}
+	if (treasureCount > 0) {
+		// お宝の生成位置の取得
+		std::vector<Vector3> treasureSpawnPos = GetTreasureSpwanPos();
+		// お宝ID、生成位置のマップ
+		std::unordered_map<int, Vector3> treasureSpawnMap;
+		// 生成位置をお宝IDに結びつける
+		for (size_t i = 0; i < treasureIDList.size(); ++i) {
+			treasureSpawnMap.emplace(treasureIDList[i], treasureSpawnPos[i]);
+		}
+		// お宝オブジェクトの取得
+		GameObjectList treasureList = GetObjectByName(GameConst::_CREATE_POSNAME_TREASURE);
+		// お宝の設定
+		for (auto& treasure : treasureList) {
+			if (!treasure) continue;
+			// コンポーネントの取得
+			auto component = treasure->GetComponent<StageObjectBase>();
+			if (!component) continue;
+			// お宝IDの取得
+			int treasureID = component->GetTreasureID();
+			// 位置の取得
+			auto itrPosition = treasureSpawnMap.find(treasureID);
+			if (itrPosition == treasureSpawnMap.end()) continue;
+			// 位置の設定
+			treasure->position = itrPosition->second;
+			// モデルハンドルの取得
+			auto itrFloor = resourceData.treasureResource.find(floorID);
+			if (itrFloor == resourceData.treasureResource.end()) continue;
+			auto itrModel = itrFloor->second.find(treasureID);
+			if (itrModel == itrFloor->second.end()) continue;
+			// モデルの設定
+			SetModelHandle(treasure.get(), itrModel->second->GetHandle());
+		}
 	}
 	// 階段
 	// 階段の取得
@@ -269,54 +282,67 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 		component->SetWayPoint(enemyCharacter->position);
 		component->SetSpawnEnemyID(spawnID);
 	}
-
-	// ボスの生成ID
-	std::vector<int> bossSpawnIDList;
-	// ボスの生成位置の取得
-	std::vector<Vector3> bossSpawnPos = GetEnemySpwanPos(bossSpawnIDList);
-	// ボスの取得
-	std::vector<GameObjectPtr> bossList = GetObjectByName("Boss");
-	// モデルハンドルの取得
-	int bossHandle = resourceData.bossResource->GetHandle();
-	// ボスの設定
-	for (int i = 0; i < bossCount; i++) {
-		if (bossList.size() <= 0) break;
+	if (bossCount > 0) {
+		// ボスの生成ID
+		std::vector<int> bossSpawnIDList;
+		// ボスの生成位置の取得
+		std::vector<Vector3> bossSpawnPos = GetEnemySpwanPos(bossSpawnIDList);
 		// ボスの取得
-		auto bossCharacter = bossList[i];
-		if (!bossCharacter) continue;
-
-		bossCharacter->position = bossSpawnPos[0];
-		bossCharacter->scale = { 3, 3, 3 };
-		// モデルの設定
-		SetModelHandle(bossCharacter.get(), bossHandle);
-	}
-
-	// お宝
-	// お宝の生成位置の取得
-	std::vector<Vector3> treasureSpawnPos = GetTreasureSpwanPos();
-	GameObjectList treasureList = GetObjectByName(GameConst::_CREATE_POSNAME_TREASURE);
-	// お宝の取得
-	for (int i = 0; i < treasureCount; i++) {
-		if (treasureList.size() <= 0) break;
+		std::vector<GameObjectPtr> bossList = GetObjectByName("Boss");
 		// モデルハンドルの取得
-		int treasureHandle = resourceData.treasureResource[floorID][i]->GetHandle();
-		// 宝オブジェクトの取得
-		auto treasure = treasureList[i].get();
-		if (!treasure) continue;
-		// お宝コンポーネントの取得
-		auto component = treasure->GetComponent<StageObjectBase>();
-		if (!component) continue;
-		// お宝が持たれているか
-		if (!component->IsHold()) {
-			// 持っているお宝IDと生成されたお宝IDが同じ場合は、それを削除する
-			if (component->GetTreasureID() == holdTreasureID) {
-				RemoveStageObject(treasure->ID);
-				continue;
-			} else {
-				// 位置の設定
-				treasure->position = treasureSpawnPos[i];
-				// モデルの設定
-				SetModelHandle(treasure, treasureHandle);
+		int bossHandle = resourceData.bossResource->GetHandle();
+		// ボスの設定
+		for (int i = 0; i < bossCount; i++) {
+			if (bossList.size() <= 0) break;
+			// ボスの取得
+			auto bossCharacter = bossList[i];
+			if (!bossCharacter) continue;
+
+			bossCharacter->position = bossSpawnPos[0];
+			bossCharacter->scale = { 3, 3, 3 };
+			// モデルの設定
+			SetModelHandle(bossCharacter.get(), bossHandle);
+		}
+	}
+	if (treasureCount > 0) {
+		// お宝の生成位置の取得
+		std::vector<Vector3> treasureSpawnPos = GetTreasureSpwanPos();
+		// お宝ID、生成位置のマップ
+		std::unordered_map<int, Vector3> treasureSpawnMap;
+		// 生成位置をお宝IDに結びつける
+		for (size_t i = 0; i < treasureIDList.size(); ++i) {
+			treasureSpawnMap.emplace(treasureIDList[i], treasureSpawnPos[i]);
+		}
+		// お宝オブジェクトの取得
+		GameObjectList treasureList = GetObjectByName(GameConst::_CREATE_POSNAME_TREASURE);
+		// お宝の設定
+		for (auto& treasure : treasureList) {
+			if (!treasure) continue;
+			// コンポーネントの取得
+			auto component = treasure->GetComponent<StageObjectBase>();
+			if (!component) continue;
+			// プレイヤーが持っているお宝か判定
+			if (!component->IsHold()) {
+				// 持っているお宝IDと生成されたお宝IDが同じ場合は、それを削除する
+				if (component->GetTreasureID() == holdTreasureID) {
+					RemoveStageObject(treasure->ID);
+					continue;
+				}else {
+					// お宝IDの取得
+					int treasureID = component->GetTreasureID();
+					// 位置の取得
+					auto itrPosition = treasureSpawnMap.find(treasureID);
+					if (itrPosition == treasureSpawnMap.end()) continue;
+					// 位置の設定
+					treasure->position = itrPosition->second;
+					// モデルハンドルの取得
+					auto itrFloor = resourceData.treasureResource.find(floorID);
+					if (itrFloor == resourceData.treasureResource.end()) continue;
+					auto itrModel = itrFloor->second.find(treasureID);
+					if (itrModel == itrFloor->second.end()) continue;
+					// モデルの設定
+					SetModelHandle(treasure.get(), itrModel->second->GetHandle());
+				}
 			}
 		}
 	}
