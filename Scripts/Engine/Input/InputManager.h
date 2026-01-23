@@ -27,6 +27,33 @@ private:	//メンバ変数
 	int mouseInput[static_cast<int>(MouseInput::MouseInputMax)];
 	bool nowMouseInput[static_cast<int>(MouseInput::MouseInputMax)], prevInput[static_cast<int>(MouseInput::MouseInputMax)];
 
+public:
+	// 入力機の種類 
+	enum class InputType {
+		Key,	// キーボード
+		Mouse,	// マウス
+	};
+
+	// 入力
+	struct Input {
+		InputType type;
+		int input;
+	};
+
+	// 入力の種類
+	enum class BindingType {
+		Axis,	// 軸入力
+		Button,	// ボタン入力
+	};
+
+	// 入力の設定
+	struct Binding {
+		int action;			// 入力に対する行動
+		BindingType type;	// 入力の種類
+		Input positive;		// 入力を確認するボタン
+		Input negative;		// 入力を確認するボタン(positiveと対をなすもの)
+	};
+
 private:	    //コンストラクタとデストラクタ
 	/*
 	 *	コンストラクタ
@@ -81,18 +108,65 @@ public:		//マウス用入力管理
 	 *  @param[in]	int _mouseButton		マウスボタン番号
 	 *	@return		bool
 	 */
-	inline bool IsMouseDown(int _mouseButton) const { return !prevInput[_mouseButton] && nowMouseInput[_mouseButton]; }
+	inline bool IsMouseDown(int _mouseButton) const {
+		return !prevInput[_mouseButton] && nowMouseInput[_mouseButton]; 
+	}
 	/*
 	 *	ボタンが押されているかどうか
 	 *  @param[in]	int _mouseButton		マウスボタン番号
 	 *	@return		bool
 	 */
-	inline bool IsMouse(int _mouseButton) const { return nowMouseInput[_mouseButton]; }
+	inline bool IsMouse(int _mouseButton) const {
+		return nowMouseInput[_mouseButton]; 
+	}
 	/*
 	 *	ボタンが押されたかどうか
 	 *  @param[in]	int _mouseButton		マウスボタン番号
 	 *	@return		bool
 	 */
-	inline bool IsMouseUp(int _mouseButton) const { return prevInput[_mouseButton] && !nowMouseInput[_mouseButton]; }
+	inline bool IsMouseUp(int _mouseButton) const {
+		return prevInput[_mouseButton] && !nowMouseInput[_mouseButton];
+	}
+public: // マウスとキーの両方入力
+	/*
+	 *	ボタンが押されたかどうか
+	 *  @param[in]	Input _mouseButton		入力
+	 *	@return		bool
+	 */
+	inline bool IsInputDown(Input _button) const {
+		switch (_button.type) {
+		case InputType::Key:
+			return IsKeyDown(_button.input);
+		case InputType::Mouse:
+			return IsMouseDown(_button.input);
+		}
+	}
+	/*
+	 *	ボタンが押されているかどうか
+	 *  @param[in]	Input _button		入力
+	 *	@return		bool
+	 */
+	inline bool IsInput(Input _button) const {
+		switch (_button.type) {
+		case InputType::Key:
+			return IsKey(_button.input);
+		case InputType::Mouse:
+			return IsMouse(_button.input);
+		}
+	}
+	/*
+	 *	ボタンが押されたかどうか
+	 *  @param[in]	Input _button		入力
+	 *	@return		bool
+	 */
+	inline bool IsInputUp(Input _button) const {
+		switch (_button.type) {
+		case InputType::Key:
+			return IsKeyUp(_button.input);
+		case InputType::Mouse:
+			return IsMouseUp(_button.input);
+		}
+	}
+
 };
 
