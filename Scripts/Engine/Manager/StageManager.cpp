@@ -241,9 +241,9 @@ std::vector<Vector3> StageManager::GetBossSpwanPos(std::vector<int>& id) const
 /*
  * ‚¨•ó‚Ì¶¬ˆÊ’u‚Ìæ“¾
  */
-std::vector<Vector3> StageManager::GetTreasureSpwanPos()const {
+std::unordered_map<int, Vector3> StageManager::GetTreasureSpwanPos()const {
 	// ‹ó‚Ì”z—ñ‚ğì¬
-	std::vector<Vector3> result;
+	std::unordered_map<int, Vector3> result;
 
 	if (!loadedStage)return result;
 
@@ -264,7 +264,8 @@ std::vector<Vector3> StageManager::GetTreasureSpwanPos()const {
 		if (frameIndex == -1)continue;
 
 		VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
-		result.push_back(FromVECTOR(framePos));
+		result.emplace(FromVECTOR(framePos));
+	
 	}
 
 	return result;

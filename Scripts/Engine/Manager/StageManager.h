@@ -18,6 +18,7 @@
 #include "../Component/Character/CharacterUtility.h"
 #include <memory>
 #include <string>
+#include <unordered_map>
 
 using namespace CharacterUtility;
 
@@ -157,7 +158,7 @@ public:
 	/*
 	 * お宝の生成位置の取得
 	 */
-	std::vector<Vector3> GetTreasureSpwanPos()const;
+	std::unordered_map<int, Vector3> GetTreasureSpwanPos()const;
 
 	/*
 	 *	ポイントライト生成位置の取得

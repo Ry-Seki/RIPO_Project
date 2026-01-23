@@ -13,10 +13,10 @@
     ]
   },
   "Treasure": {
-    "SpawnPos": [
-      "TreasureSponer_0",
-      "TreasureSponer_1"
-    ]
+    "SpawnPos": {
+      "0": "TreasureSponer_0",
+      "1": "TreasureSponer_1"
+    }
   },
   "PointLight": {
     "LightPos": [
