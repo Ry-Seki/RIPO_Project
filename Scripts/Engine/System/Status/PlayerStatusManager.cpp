@@ -7,6 +7,7 @@
 #include "../../Load/LoadManager.h"
 #include "../../Load/JSON/LoadJSON.h"
 #include "../../GameConst.h"
+#include "../../../Data/SaveData.h"
 
 /*
  *	初期化処理
@@ -22,6 +23,7 @@ void PlayerStatusManager::Initialize() {
  *  @param[in]	const JSON& setJSON	設定するJSONデータ
  */
 void PlayerStatusManager::SetupData(const JSON& setJSON) {
+
 	for (int i = 0, max = playerStatus->base.Length(); i < max; i++) {
 		playerStatus->base[i] = setJSON[GameConst::_STATUS_KEY][GameConst::STATUS_PART[i]];
 	}
@@ -30,10 +32,43 @@ void PlayerStatusManager::SetupData(const JSON& setJSON) {
 	}
 }
 /*
- *	@brief		プレイヤーのステータス上昇
+ *	@brief		レベル指定のプレイヤーのステータス上昇
  *  @param[in]	const int statusPart	上昇するステータス
- *  @param[in]	int setValue = 1		上がった回数
+ *  @param[in]	int setValue			上がった回数
  */
 void PlayerStatusManager::AddPlayerStatus(const int statusPart, int setValue) {
+	if (setValue == 0) return;
+	playerStatus->lv[statusPart] += setValue;
 	playerStatus->base[statusPart] += playerStatus->rise[statusPart] * setValue;
+}
+/*
+ *	@brief		セーブ用ステータスレベルデータの収集
+ *	@return		PlayerStatusLevelData
+ */
+PlayerStatusLevelData PlayerStatusManager::GetSaveData() const {
+	PlayerStatusLevelData data{};
+	data.hpLevel = playerStatus->lv.HP;
+	data.staminaLevel = playerStatus->lv.stamina;
+	data.strengthLevel = playerStatus->lv.strength;
+	data.resistTimeLevel = playerStatus->lv.resistTime;
+	return data;
+}
+/*
+ *	@brief		セーブデータからステータスレベルを設定
+ *	@param[in]	const PlayerStatusLevelData& data
+ */
+void PlayerStatusManager::ApplyLoadData(const PlayerStatusLevelData& data) {
+	playerStatus->lv.HP = data.hpLevel;
+	playerStatus->lv.stamina = data.staminaLevel;
+	playerStatus->lv.strength = data.strengthLevel;
+	playerStatus->lv.resistTime = data.resistTimeLevel;
+	ApplyPlayerStatus();
+}
+/*
+ *	@brief		セーブデータからステータスレベルを設定
+ */
+void PlayerStatusManager::ApplyPlayerStatus() {
+	for (int i = 0, max = playerStatus->base.Length(); i < max; i++) {
+		AddPlayerStatus(i, playerStatus->lv[i]);
+	}
 }
