@@ -12,7 +12,6 @@
   */
 BossAttack::BossAttack()
 	: animator(nullptr)
-	, modelHandle(-1)
 	, coolTime(0)
 	, MAX_COOL_TIME(3)
 {

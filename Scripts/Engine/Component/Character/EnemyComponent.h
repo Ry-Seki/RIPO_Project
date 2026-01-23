@@ -8,12 +8,14 @@
 #include "CharacterBase.h"
 #include "EnemyState.h"
 #include "../../Engine.h"
+#include "../AnimatorComponent.h"
 
 class EnemyComponent : public CharacterBase {
 private:
 	GameObject* enemy;
 	EnemyState* state;
 	GameObjectPtr player;
+	std::shared_ptr<AnimatorComponent> animator;
 	// ウェイポイント
 	Vector3 wayPoint;
 	// 目先のウェイポイント予定地
@@ -30,6 +32,8 @@ private:
 	float turnDelay;
 	// スポーンID
 	int enemySpawnID = 0;
+	// 仮モデルハンドル
+	int modelHandle;
 	// 疑似クールタイム(苦肉の策)
 	float coolTime;
 

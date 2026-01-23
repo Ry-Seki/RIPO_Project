@@ -13,6 +13,7 @@
   */
 EnemyChase::EnemyChase()
 	: player(nullptr)
+	, animator(nullptr)
 	, wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(1000.0f)
@@ -27,6 +28,8 @@ void EnemyChase::Start(EnemyComponent& enemy) {
 	if (player == nullptr) return;
 	wayPoint = enemy.GetWayPoint();
 	nextWayPoint = enemy.GetNextWayPoint();
+	//animator = enemy.GetComponent<AnimatorComponent>();
+	if (animator == nullptr) return;
 }
 
 /*

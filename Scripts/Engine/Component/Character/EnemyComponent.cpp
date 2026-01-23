@@ -21,6 +21,7 @@ EnemyComponent::EnemyComponent(EnemyState* initState)
 	: enemy(nullptr)
 	, state(initState)
 	, player(nullptr)
+	, animator(nullptr)
 	, wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(1000.0f)
@@ -28,6 +29,7 @@ EnemyComponent::EnemyComponent(EnemyState* initState)
 	, closePlayer(false)
 	, isTriger(false)
 	, turnDelay(0.0f)
+	, modelHandle(0)
 	, coolTime(2.0f)
 	, TOP_VALUE(5000)
 	, RANDOM_RANGE(100)
@@ -49,6 +51,14 @@ void EnemyComponent::Start() {
 
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
+
+	animator = enemy->GetComponent<AnimatorComponent>();
+	if (animator == nullptr) return;
+	// モデルハンドルのセット
+	animator->SetModelHandle(modelHandle);
+
+
+	animator->LoadIndex(true);
 }
 
 /*

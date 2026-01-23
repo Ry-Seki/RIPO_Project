@@ -11,8 +11,7 @@
 using namespace CharacterUtility;
 
 EnemyTurn::EnemyTurn()
-	: enemy(nullptr)
-	, ROTATE_SPEED(3.0f)
+	: ROTATE_SPEED(3.0f)
 	, targetAngle(0.0f) {
 }
 
@@ -40,6 +39,8 @@ void EnemyTurn::Start(EnemyComponent& enemy) {
 
 	// YŽ²‰ñ“]‚Ì–Ú•WŠp“x‚ð‚¾‚·
 	targetAngle = atan2(direction.x, direction.z);
+	// ”½‘Îƒ‚ƒfƒ‹—p‚É•â³
+	targetAngle += Pi;
 }
 
 /*
@@ -53,10 +54,14 @@ void EnemyTurn::Update(GameObject* enemy, float deltaTime) {
 	// “G‚ÌƒRƒ“ƒ|[ƒlƒ“ƒg‚ðŽæ“¾
 	auto enemyComponent = enemy->GetComponent<EnemyComponent>();
 
+	// Šp“x‚ð³‹K‰»
+	while (targetAngle > Pi)  targetAngle -= Pi * 2;
+	while (targetAngle < -Pi) targetAngle += Pi * 2;
+
 	// Œ»ÝŠp“x‚Æ‚Ì·‚ð‹‚ß‚é
 	float angleDiff = targetAngle - enemy->rotation.y;
 
-
+	// Šp“x·‚ð³‹K‰»
 	while (angleDiff > Pi)  angleDiff -= Pi * 2;
 	while (angleDiff < -Pi) angleDiff += Pi * 2;
 

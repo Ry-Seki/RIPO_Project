@@ -14,6 +14,7 @@
 class EnemyChase : public EnemyState {
 private:
 	GameObjectPtr player;
+	std::shared_ptr<AnimatorComponent> animator;
 	// ウェイポイント
 	Vector3 wayPoint;
 	// 目先のウェイポイント予定地
