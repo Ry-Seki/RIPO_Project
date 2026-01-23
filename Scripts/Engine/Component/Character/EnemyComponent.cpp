@@ -54,6 +54,8 @@ void EnemyComponent::Start() {
 
 	animator = enemy->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
+	// 仮モデルハンドルの読み込み
+	modelHandle = MV1LoadModel("Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1");
 	// モデルハンドルのセット
 	animator->SetModelHandle(modelHandle);
 

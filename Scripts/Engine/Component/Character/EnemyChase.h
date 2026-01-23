@@ -7,6 +7,7 @@
 
 #include "EnemyComponent.h"
 #include "EnemyState.h"
+#include "../AnimatorComponent.h"
 
 /*
  *	敵の追従処理クラス
@@ -22,13 +23,13 @@ private:
 	Vector3 nextWayPoint;
 	// ウェイポイント間の距離
 	float wayPointDistance;
+	// 移動スピード
+	float moveSpeed;
 	// プレイヤーの距離判定フラグ
 	bool closePlayer;
 	// 移動量
 	Vector3 moveVec;
 
-	// 移動スピード
-	const float MOVE_SPEED;
 	// 回転スピード
 	const float ROTATE_SPEED;
 	// プレイヤーの距離

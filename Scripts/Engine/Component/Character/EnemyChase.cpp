@@ -7,6 +7,7 @@
 #include "../../Vision.h"
 #include "../../Manager/CameraManager.h"
 #include "EnemyAttack.h"
+#include "../ModelRenderer.h"
 
  /*
   *	コンストラクタ
@@ -18,8 +19,8 @@ EnemyChase::EnemyChase()
 	, wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(1000.0f)
+	, moveSpeed(700.0f)
 	, closePlayer(false)
-	, MOVE_SPEED(700.0f)
 	, ROTATE_SPEED(3.0f)
 	, DIFFERENCE_PLAYER(700) {
 }
@@ -30,7 +31,8 @@ void EnemyChase::Start(GameObject* enemy) {
 	if (player == nullptr) return;
 	wayPoint = enemyComponent->GetWayPoint();
 	nextWayPoint = enemyComponent->GetNextWayPoint();
-	//animator = enemy.GetComponent<AnimatorComponent>();
+
+	animator = enemy->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
 }
 
@@ -43,12 +45,22 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime) {
 	// 移動量を初期化
 	moveVec = Vector3::zero;
 
-	auto enemyComponent = enemy->GetComponent<EnemyComponent>();
+	// モデルハンドルのセット
+	auto modelRenderer = enemy->GetComponent<ModelRenderer>()->GetModelHandle();
+	if (modelRenderer == -1) return;
+	animator->SetModelHandle(modelRenderer);
 
+	// 目標判定
 	if (player && Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, 30, 2000)) {
+		// 足を早くする
+		moveSpeed = 1000;
+		// アニメーションを再生
+		animator->Play(4, 50);
 		ChaseWayPoint(enemy, player->position, true, deltaTime);
 	}
 	else {
+		// アニメーションを再生
+		animator->Play(7, 20);
 		// WayPointを取得
 		wayPoint = enemyComponent->GetWayPoint();
 		// 反対のWayPointを取得
@@ -118,8 +130,8 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 	if (player && wayPoint == player->position) {
 		// 攻撃射程判定
 		if (distance > DIFFERENCE_PLAYER) {
-			enemy->position.x += direction.x * MOVE_SPEED * deltaTime;
-			enemy->position.z += direction.z * MOVE_SPEED * deltaTime;
+			enemy->position.x += direction.x * moveSpeed * deltaTime;
+			enemy->position.z += direction.z * moveSpeed * deltaTime;
 		}
 		else {
 			// 攻撃状態遷移
@@ -130,8 +142,8 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 		float moveX = 0;
 		float moveZ = 0;
 		// 目標の方向に進む
-		moveX += direction.x * MOVE_SPEED * deltaTime;
-		moveZ += direction.z * MOVE_SPEED * deltaTime;
+		moveX += direction.x * moveSpeed * deltaTime;
+		moveZ += direction.z * moveSpeed * deltaTime;
 
 		enemy->position.x += moveX;
 		enemy->position.z += moveZ;

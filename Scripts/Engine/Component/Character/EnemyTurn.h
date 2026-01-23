@@ -6,6 +6,7 @@
 #define _ENEMYTURN_H_
 
 #include "EnemyState.h"
+#include "../AnimatorComponent.h"
 
  /*
   *	“G‚Ì‰ñ“]ˆ—ƒNƒ‰ƒX
@@ -13,6 +14,7 @@
 class EnemyTurn : public EnemyState {
 private:
 	std::shared_ptr<EnemyComponent> enemyComponent;
+	std::shared_ptr<AnimatorComponent> animator;
 	float targetAngle;		// ‰ñ“]‚·‚éÛ‚Ì‘ÎÛ‚ÌˆÊ’u
 
 private:

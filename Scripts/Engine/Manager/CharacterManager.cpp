@@ -99,6 +99,8 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 	const float& capsuleRadius) {
 	// 敵のベース作成
 	GameObjectPtr enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
+	// アニメーターコンポーネント追加
+	enemy->AddComponent<AnimatorComponent>();
 	// AABBコライダーコンポーネント追加
 	AABBColliderPtr aabbCollider = enemy->AddComponent<AABBCollider>();
 	aabbCollider->aabb = { AABBMin, AABBMax };
