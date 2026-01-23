@@ -71,6 +71,24 @@ void SelectDetail_Dungeon::Teardown() {
 	inputHandle = false;
 }
 /*
+ *	@brief		お宝イベント査定
+ */
+void SelectDetail_Dungeon::AssessmentTreasureEvent() {
+	auto& context = owner->GetOwner()->GetActionContext();
+	// 経過時間を取得
+	int elapsedDay = context.elapsedDay;
+	// ダンジョンデータのイベント開始日と照らし合わせる
+	for (int i = 0, max = dungeonDataList.size(); i < max; i++) {
+		DungeonData data = dungeonDataList[i];
+		if (elapsedDay > data.eventStartDay && elapsedDay <= data.eventEndDay) {
+			if (!data.isEventDay) data.isEventDay = true;
+		} else {
+			if (data.isEventDay) data.isEventDay = false;
+		}
+		dungeonDataList[i] = data;
+	}
+}
+/*
  *	@brief	ダンジョンステージデータの読み込み
  */
 void SelectDetail_Dungeon::StartDungeonDataLoad(int dungeonID) {

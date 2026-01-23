@@ -25,6 +25,14 @@
     },
     "1": {
       "2": "Res/Model/Treasure/Treasure03.mv1"
+    },
+    "EventTreasure": {
+      "0": {
+
+      },
+      "1": {
+
+      }
     }
   },
   "Audio": {

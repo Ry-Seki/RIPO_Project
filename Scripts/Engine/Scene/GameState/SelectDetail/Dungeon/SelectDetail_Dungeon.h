@@ -55,6 +55,10 @@ public:
 
 public:
 	/*
+	 *	@brief		お宝イベント査定
+	 */
+	void AssessmentTreasureEvent();
+	/*
 	 *	@brief		ダンジョンデータのロード開始
 	 */
 	void StartDungeonDataLoad(int dungeonID);
