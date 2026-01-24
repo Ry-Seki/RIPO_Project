@@ -67,7 +67,7 @@ void DebugScene::Initialize(Engine& engine) {
 			CharacterManager::GetInstance().SetModelHandle(player.get(), modelHandle);
 			player->position = StageManager::GetInstance().GetStartPos();
 			std::vector<int> enemySpawnIDList;
-			std::vector<Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpwanPos(enemySpawnIDList);
+			std::unordered_map<int,Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpwanPos(enemySpawnIDList);
 			int enemyModelHandle = enemyModel->GetHandle();
 			size_t enemySpawnCount = enemySpawnPos.size();
 			for (int i = 0; i < enemy.size(); i++) {
@@ -80,7 +80,7 @@ void DebugScene::Initialize(Engine& engine) {
 				enemy[i]->scale = { 4.5f,4.5f,4.5f };
 			}
 
-			std::vector<Vector3> treasureSpawnPos = StageManager::GetInstance().GetTreasureSpwanPos();
+			std::unordered_map<int, Vector3> treasureSpawnPos = StageManager::GetInstance().GetTreasureSpawnPos();
 			std::vector<std::shared_ptr<LoadModel>> treasureModels = { treasureModel1, treasureModel2 };
 			size_t treasureSpawnCount = treasureSpawnPos.size();
 
