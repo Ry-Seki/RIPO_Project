@@ -89,10 +89,8 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 	// モデルの設定
 	SetModelHandle(player.get(), playerHandle);
 
-	// 敵の生成ID
-	std::vector<int> enemySpawnIDList;
 	// 敵の生成位置の取得
-	std::unordered_map<int, Vector3> enemySpawnPos = GetEnemySpwanPos(enemySpawnIDList);
+	std::unordered_map<int, Vector3> enemySpawnPos = GetEnemySpwanPos();
 	// 敵の取得
 	std::vector<GameObjectPtr> enemyList = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
 	// モデルハンドルの取得
@@ -117,10 +115,8 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 		component->SetSpawnEnemyID(i);
 	}
 	if (bossCount > 0) {
-		// ボスの生成ID
-		std::vector<int> bossSpawnIDList;
 		// ボスの生成位置の取得
-		std::unordered_map<int, Vector3> bossSpawnPos = GetEnemySpwanPos(bossSpawnIDList);
+		std::unordered_map<int, Vector3> bossSpawnPos = GetEnemySpwanPos();
 		// ボスの取得
 		std::vector<GameObjectPtr> bossList = GetObjectByName("Boss");
 		// モデルハンドルの取得
@@ -139,7 +135,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 	}
 	if (treasureCount > 0) {
 		// お宝の生成位置の取得
-		std::unordered_map<int, Vector3> treasureSpawnPos = GetTreasureSpwanPos();
+		std::unordered_map<int, Vector3> treasureSpawnPos = GetTreasureSpwanPos(floorID);
 
 		// お宝オブジェクトの取得
 		GameObjectList treasureList = GetObjectByName(GameConst::_CREATE_POSNAME_TREASURE);
@@ -246,9 +242,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	player->position = respawnPos;
 
 	// 敵
-	// 敵の生成位置の取得
-	std::vector<int> tmpIDList;
-	std::unordered_map<int, Vector3> enemySpawnPos = GetEnemySpwanPos(tmpIDList);
+	std::unordered_map<int, Vector3> enemySpawnPos = GetEnemySpwanPos();
 	// 敵の取得
 	GameObjectList enemyList = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
 	// モデルハンドルの取得
@@ -278,10 +272,8 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 		component->SetSpawnEnemyID(spawnID);
 	}
 	if (bossCount > 0) {
-		// ボスの生成ID
-		std::vector<int> bossSpawnIDList;
 		// ボスの生成位置の取得
-		std::unordered_map<int, Vector3> bossSpawnPos = GetEnemySpwanPos(bossSpawnIDList);
+		std::unordered_map<int, Vector3> bossSpawnPos = GetEnemySpwanPos();
 		// ボスの取得
 		std::vector<GameObjectPtr> bossList = GetObjectByName("Boss");
 		// モデルハンドルの取得
@@ -301,7 +293,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	}
 	if (treasureCount > 0) {
 		// お宝の生成位置の取得
-		std::unordered_map<int, Vector3> treasureSpawnPos = GetTreasureSpwanPos();
+		std::unordered_map<int, Vector3> treasureSpawnPos = GetTreasureSpwanPos(floorID);
 		// お宝オブジェクトの取得
 		GameObjectList treasureList = GetObjectByName(GameConst::_CREATE_POSNAME_TREASURE);
 		// お宝の設定
