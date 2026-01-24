@@ -234,7 +234,7 @@ std::vector<Vector3> StageManager::GetBossSpwanPos(std::vector<int>& id) const {
 /*
  * ‚¨•ó‚Ì¶¬ˆÊ’u‚Ìæ“¾
  */
-std::unordered_map<int, Vector3> StageManager::GetTreasureSpawnPos()const {
+std::unordered_map<int, Vector3> StageManager::GetTreasureSpawnPos(int setValue)const {
 	// ‹ó‚Ì”z—ñ‚ğì¬
 	std::unordered_map<int, Vector3> treasureSpawnPositions;
 
@@ -248,10 +248,18 @@ std::unordered_map<int, Vector3> StageManager::GetTreasureSpawnPos()const {
 	if (!json.contains(GameConst::_CREATE_POSNAME_TREASURE)) return treasureSpawnPositions;
 	if (!json[GameConst::_CREATE_POSNAME_TREASURE].contains(GameConst::_CREATE_POSITION_SPAWN)) return treasureSpawnPositions;
 
-	// ‚¨•ó‚Ì¶¬ˆÊ’u
-	const auto& spawnObj =
+	const auto& spawnRoot =
 		json[GameConst::_CREATE_POSNAME_TREASURE]
 		[GameConst::_CREATE_POSITION_SPAWN];
+
+	// ŠK‘w‚ª‘¶İ‚·‚é‚©‚Ç‚¤‚©
+	// ˆø”‚ÌŠK‘wID‚ğ•¶š—ñ‚É•ÏŠ·
+	const std::string setKey = std::to_string(setValue);
+	if (!spawnRoot.contains(setKey)) return treasureSpawnPositions;
+
+	// ‚¨•ó‚Ì¶¬ˆÊ’u‚ğŠK‘w•Ê‚Éæ“¾
+	const auto& spawnObj = spawnRoot[setKey];
+
 
 	// ‚¨•ó–ˆ‚ÌƒtƒŒ[ƒ€‚ğ’T‚·
 	for (auto it = spawnObj.begin(); it != spawnObj.end(); ++it) {
