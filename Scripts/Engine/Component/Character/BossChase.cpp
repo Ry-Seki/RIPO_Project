@@ -22,16 +22,14 @@ BossChase::BossChase()
 	, modelHandle(-1)
 	, PLAYER_DISTANCE(1000.0)
 	, ROTATE_SPEED(3.0f)
-	, MOVE_SPEED(700.0f)
-{
+	, MOVE_SPEED(700.0f) {
 }
 
 /*
  *	更新処理の前に呼び出す処理
  *  param[in]	BossComponent&	boss
  */
-void BossChase::Start(GameObject* boss)
-{
+void BossChase::Start(GameObject* boss) {
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
 	animator = boss->GetComponent<AnimatorComponent>();
@@ -45,8 +43,7 @@ void BossChase::Start(GameObject* boss)
  *  param[in]	GameObject*	boss
  *  param[in]	float		deltaTime
  */
-void BossChase::Update(GameObject* boss, float deltaTime)
-{
+void BossChase::Update(GameObject* boss, float deltaTime) {
 	// モデルハンドルのセット
 	auto modelRenderer = boss->GetComponent<ModelRenderer>()->GetModelHandle();
 	if (modelRenderer == -1) return;
@@ -62,12 +59,12 @@ void BossChase::Update(GameObject* boss, float deltaTime)
 	// 状態遷移
 	if (!Vision(boss->position, -ForwardDir(boss->rotation), player->position, 30, 4000)) {
 		// ボスの生成ID
-		std::vector<int> bossSpawnIDList;
+		//std::vector<int> bossSpawnIDList;
 		// ボスの生成位置の取得
-		std::vector<Vector3> bossSpawnPos = GetEnemySpwanPos(bossSpawnIDList);
+		//std::unordered_map<int, Vector3> bossSpawnPos = GetEnemySpwanPos(bossSpawnIDList);
 
 		// 一旦初期位置に戻りきってからstandbyに遷移
-   		//ChaseWayPoint(boss, bossSpawnPos[0], deltaTime);
+		//ChaseWayPoint(boss, bossSpawnPos[0], deltaTime);
 		//bossComponent->SetState(new BossStandby());
 	}
 	// 射程距離判定
