@@ -183,48 +183,42 @@ std::vector<Vector3> StageManager::GetGoalPos() const {
 /*
  *	敵の初期生成位置の取得
  */
-std::vector<Vector3> StageManager::GetEnemySpwanPos(std::vector<int>& id) const {
-	std::vector<Vector3> result;
+std::unordered_map<int, Vector3> StageManager::GetEnemySpwanPos(std::vector<int>& id) const {
+	// 空の配列を作成
+	std::unordered_map<int, Vector3> enemySpawnPosition;
 
-	if (!loadedStage)return result;
+	if (!loadedStage) return enemySpawnPosition;
 
-	// ステージのモデルハンドルの取得
-	int modelHandle = loadedStage->GetStageModelHandle();
-	if (modelHandle == -1) return result;
+	// ステージのモデルハンドルを取得
+	const int modelHandle = loadedStage->GetStageModelHandle();
+	if (modelHandle == -1) return enemySpawnPosition;
 
-	// 敵の生成位置の取得
-	// jsonファイルの文字列がなかった場合のnullCheck
-	if (
-		!json.contains(GameConst::_CREATE_POSNAME_ENEMY) ||
-		!json[GameConst::_CREATE_POSNAME_ENEMY].contains("SpawnPos")
-		)
-		return result;
+	// JSONの中を検索
+	if (!json.contains(GameConst::_CREATE_POSNAME_ENEMY)) return enemySpawnPosition;
+	if (!json[GameConst::_CREATE_POSNAME_ENEMY].contains("SpawnPos")) return enemySpawnPosition;
 
-	// フレーム名の取得
-	auto spawnArray = json[GameConst::_CREATE_POSNAME_ENEMY]["SpawnPos"];
+	// 敵の生成位置
+	const auto& spawnObj = json[GameConst::_CREATE_POSNAME_ENEMY]["SpawnPos"];
 
-	// jsonファイルのテキストを配列で取得
-	for (int i = 0; i < spawnArray.size(); i++) {
-		// 敵スポーンデータを格納する構造体
-		EnemySpawnPoint eSpawnPos;
-		eSpawnPos.id = i;
-
+	// 敵の生成位置のフレームを検索
+	for (auto it = spawnObj.begin(); it != spawnObj.end(); ++it) {
+		// 敵のIDをint型に変換して取得
+		int enemyID = std::stoi(it.key());
 		// フレーム名を取得
-		std::string frameName = spawnArray[i].get<std::string>();
+		const std::string frameName = it.value().get<std::string>();
 
-		// フレームの番号を取得
+		// モデルにフレーム名があるか検索
 		int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
 		if (frameIndex == -1) continue;
 
-		// フレームの位置を取得
+		// フレームのワールド座標を取得
 		VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
-		eSpawnPos.pos = FromVECTOR(framePos);
-		result.push_back(FromVECTOR(framePos));
-		id.push_back(eSpawnPos.id);
+
+		// Vector3に変換して配列に追加
+		enemySpawnPosition.emplace(enemyID, FromVECTOR(framePos));
 	}
 
-
-	return result;
+	return enemySpawnPosition;
 
 }
 
@@ -232,43 +226,53 @@ std::vector<Vector3> StageManager::GetEnemySpwanPos(std::vector<int>& id) const 
  * ボスの生成位置の取得
  * @author	kuu
  */
-std::vector<Vector3> StageManager::GetBossSpwanPos(std::vector<int>& id) const
-{
-	//　のちに実装
+std::vector<Vector3> StageManager::GetBossSpwanPos(std::vector<int>& id) const {
+	//　のちに実装←後
 	return std::vector<Vector3>();
 }
 
 /*
  * お宝の生成位置の取得
  */
-std::unordered_map<int, Vector3> StageManager::GetTreasureSpwanPos()const {
+std::unordered_map<int, Vector3> StageManager::GetTreasureSpawnPos()const {
 	// 空の配列を作成
-	std::unordered_map<int, Vector3> result;
+	std::unordered_map<int, Vector3> treasureSpawnPositions;
 
-	if (!loadedStage)return result;
+	if (!loadedStage) return treasureSpawnPositions;
 
-	// ステージのモデルハンドルの取得
+	// ステージのモデルハンドルを取得
 	int modelHandle = loadedStage->GetStageModelHandle();
-	// モデルハンドルが空だったら、空の配列を返す
-	if (modelHandle == -1) return result;
+	if (modelHandle == -1) return treasureSpawnPositions;
 
-	// お宝の生成位置の取得
-	// jsonファイルの文字列がなかった場合のnullCheck
-	if (!json.contains(GameConst::_CREATE_POSNAME_TREASURE) || !json[GameConst::_CREATE_POSNAME_TREASURE].contains(GameConst::_CREATE_POSITION_SPAWN))
-		return result;
-	auto spawnArray = json[GameConst::_CREATE_POSNAME_TREASURE][GameConst::_CREATE_POSITION_SPAWN];
+	// jsonの中を検索
+	if (!json.contains(GameConst::_CREATE_POSNAME_TREASURE)) return treasureSpawnPositions;
+	if (!json[GameConst::_CREATE_POSNAME_TREASURE].contains(GameConst::_CREATE_POSITION_SPAWN)) return treasureSpawnPositions;
 
-	// jsonファイルのテキストを配列で取得
-	for (const auto& spawnName : spawnArray) {
-		int frameIndex = MV1SearchFrame(modelHandle, spawnName.get<std::string>().c_str());
-		if (frameIndex == -1)continue;
+	// お宝の生成位置
+	const auto& spawnObj =
+		json[GameConst::_CREATE_POSNAME_TREASURE]
+		[GameConst::_CREATE_POSITION_SPAWN];
 
+	// お宝毎のフレームを探す
+	for (auto it = spawnObj.begin(); it != spawnObj.end(); ++it) {
+
+		// お宝のIDをint型に変換して取得
+		int treasureID = std::stoi(it.key());
+		// フレーム名を取得
+		const std::string frameName = it.value().get<std::string>();
+
+		// モデルにフレーム名があるか検索
+		int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
+		if (frameIndex == -1) continue;
+
+		// フレームのワールド座標を取得
 		VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
-		result.emplace(FromVECTOR(framePos));
-	
+
+		// Vector3に変換して配列に追加
+		treasureSpawnPositions.emplace(treasureID, FromVECTOR(framePos));
 	}
 
-	return result;
+	return treasureSpawnPositions;
 
 }
 

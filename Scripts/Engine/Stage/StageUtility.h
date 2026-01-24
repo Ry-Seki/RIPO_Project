@@ -48,15 +48,15 @@ namespace StageUtility {
 	 *  @param[out]	std::vector<int>& IDList
 	 *	@return		std::vector<Vector3>
 	 */
-	inline std::vector<Vector3> GetEnemySpwanPos(std::vector<int>& IDList) {
+	inline std::unordered_map<int, Vector3> GetEnemySpwanPos(std::vector<int>& IDList) {
 		return StageManager::GetInstance().GetEnemySpwanPos(IDList);
 	}
 	/*
 	 *  お宝の生成位置の取得
 	 *  @return		std::vector<Vector3>
 	 */
-	inline std::vector<Vector3> GetTreasureSpwanPos() {
-		return StageManager::GetInstance().GetTreasureSpwanPos();
+	inline std::unordered_map<int, Vector3> GetTreasureSpwanPos() {
+		return StageManager::GetInstance().GetTreasureSpawnPos();
 	}
 	/*
 	 *	ポイントライト生成位置の取得

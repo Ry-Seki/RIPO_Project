@@ -147,7 +147,7 @@ public:
 	/*
 	 *	敵の初期生成位置の取得
 	 */
-	std::vector<Vector3> GetEnemySpwanPos(std::vector<int>& id)const;
+	std::unordered_map<int, Vector3> GetEnemySpwanPos(std::vector<int>& id)const;
 
 	/*
 	 *　ボスの初期生成位置の取得
@@ -158,7 +158,7 @@ public:
 	/*
 	 * お宝の生成位置の取得
 	 */
-	std::unordered_map<int, Vector3> GetTreasureSpwanPos()const;
+	std::unordered_map<int, Vector3> GetTreasureSpawnPos()const;
 
 	/*
 	 *	ポイントライト生成位置の取得
