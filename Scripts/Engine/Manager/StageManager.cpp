@@ -183,7 +183,7 @@ std::vector<Vector3> StageManager::GetGoalPos() const {
 /*
  *	“G‚Ì‰Šú¶¬ˆÊ’u‚Ìæ“¾
  */
-std::unordered_map<int, Vector3> StageManager::GetEnemySpwanPos(std::vector<int>& id) const {
+std::unordered_map<int, Vector3> StageManager::GetEnemySpwanPos() const {
 	// ‹ó‚Ì”z—ñ‚ğì¬
 	std::unordered_map<int, Vector3> enemySpawnPosition;
 
