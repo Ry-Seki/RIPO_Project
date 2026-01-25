@@ -9,6 +9,8 @@
 #include "EnemyAttack.h"
 #include "EnemyChase.h"
 #include "EnemyTurn.h"
+#include "EnemyDeath.h"
+#include "BulletComponent.h"
  /*
   *	コンストラクタ
   */
@@ -78,6 +80,8 @@ void EnemyComponent::Update(float deltaTime) {
 	StageManager::GetInstance().StageCollider(enemy, moveVec);
 
 	coolTime -= deltaTime;
+
+
 }
 
 /*
@@ -98,5 +102,12 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 	else if (coolTime <= 0) {
 		isTriger = false;
 		coolTime = 2;
+	}
+
+	// 死亡判定
+	if (other->GetOwner()->name == "bullet") {
+		if (state != nullptr)
+			state = new EnemyDeath();
+		state->Start(enemy);
 	}
 }

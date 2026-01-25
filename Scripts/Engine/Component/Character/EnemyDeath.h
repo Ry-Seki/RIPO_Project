@@ -7,17 +7,19 @@
 
 #include "EnemyState.h"
 #include "../AnimatorComponent.h"
+#include "EnemyComponent.h"
 
 /*
  *	€–Só‘Ôˆ—
  */
-class EnemyDeath : EnemyState {
+class EnemyDeath : public EnemyState {
 public:
 	EnemyDeath();
 	~EnemyDeath() = default;
 
 private:
 	std::shared_ptr<AnimatorComponent> animator;
+	float animationTime;
 
 public:
 	/*
