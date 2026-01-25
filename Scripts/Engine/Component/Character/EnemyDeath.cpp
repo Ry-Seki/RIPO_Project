@@ -4,24 +4,27 @@
  *　コンストラクタ
  */
 EnemyDeath::EnemyDeath()
+	: animator(nullptr)
 {
 }
 
 /*
  *	更新処理の前に呼び出す処理
- *  param[in]	BossComponent&	boss
+ *  param[in]	EnemyComponent&	enemy
  */
-void EnemyDeath::Start(GameObject* boss)
+void EnemyDeath::Start(GameObject* enemy)
 {
-
+	animator = enemy->GetComponent<AnimatorComponent>();
+	if (animator == nullptr) return;
 }
 
 /*
  *	更新処理
- *  param[in]	GameObject*	boss
+ *  param[in]	GameObject*	enemy
  *  param[in]	float		deltaTime
  */
-void EnemyDeath::Update(GameObject* boss, float deltaTime)
+void EnemyDeath::Update(GameObject* enemy, float deltaTime)
 {
-
 }
+
+

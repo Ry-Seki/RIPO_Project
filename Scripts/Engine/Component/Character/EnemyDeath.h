@@ -6,6 +6,7 @@
 #define _ENEMYDEATH_H_
 
 #include "EnemyState.h"
+#include "../AnimatorComponent.h"
 
 /*
  *	死亡状態処理
@@ -16,21 +17,21 @@ public:
 	~EnemyDeath() = default;
 
 private:
+	std::shared_ptr<AnimatorComponent> animator;
 
 public:
 	/*
 	 *	更新処理の前に呼び出す処理
-	 *  param[in]	BossComponent&	boss
+	 *  param[in]	EnemyComponent&	enemy
 	 */
-	virtual void Start(GameObject* boss) override;
+	virtual void Start(GameObject* enemy) override;
 
 	/*
 	 *	更新処理
-	 *  param[in]	GameObject*	boss
+	 *  param[in]	GameObject*	enemy
 	 *  param[in]	float		deltaTime
 	 */
-	virtual void Update(GameObject* boss, float deltaTime) override;
-
+	virtual void Update(GameObject* enemy, float deltaTime) override;
 
 };
 
