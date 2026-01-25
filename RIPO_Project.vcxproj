@@ -175,6 +175,7 @@
     <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
+    <ClCompile Include="Scripts\Engine\Input\ActionMapBase.cpp" />
     <ClCompile Include="Scripts\Engine\Input\InputManager.cpp" />
     <ClCompile Include="Scripts\Engine\Input\PlayerActionMap.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.cpp" />

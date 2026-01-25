@@ -43,9 +43,9 @@ void InputManager::Update() {
 	// 各アクションマップの更新処理
 	for (auto [actionMap, state] : actionMaps) {
 		// まず入力状態のリセット
-		state.actionMap->InputReset();
+		state->InputReset();
 		// 有効なら更新処理
-		if (state.isActive)
-			state.actionMap->InputUpdate();
+		if (state->isActive)
+			state->InputUpdate();
 	}
 }
