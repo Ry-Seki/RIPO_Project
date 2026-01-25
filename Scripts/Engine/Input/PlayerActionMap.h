@@ -12,35 +12,16 @@
 /*
  *	@brief	プレイヤー操作のActionMap
  */
-class PlayerActionMap : ActionMapBase {
-public:
-	// プレイヤーの行動
-	enum class PlayerAction {
-		ForwardMove,	// 前移動
-		RightMove,		// 右移動
-		Run,			// ダッシュ
-		Avoid,			// 回避
-		Jump,			// ジャンプ
-		Shot,			// 射撃
-		Lift,			// お宝持ち上げ
-	};
-
-	// プレイヤーの行動の状態
-	struct PlayerActionState {
-		std::unordered_map<PlayerAction, float> axis;
-		std::unordered_map<PlayerAction, bool> button;
-	};
-	PlayerActionState state;
-
+class PlayerActionMap : public ActionMapBase {
 public:
 	PlayerActionMap() = default;
 	~PlayerActionMap() = default;
 
 public:
 	/*
-	 *	入力の更新
+	 *	初期化処理
 	 */
-	void InputUpdate() override;
+	void Initialize() override;
 };
 
 #endif // !_PLAYER_ACTION_MAP_H_

@@ -1,19 +1,10 @@
 #include "PlayerActionMap.h"
+#include "InputManager.h"
 
 /*
- *	入力の更新
+ *	初期化処理
  */
-void PlayerActionMap::InputUpdate() {
-	state.axis.clear();
-	state.button.clear();
+void PlayerActionMap::Initialize() {
+	isActive = false;
 
-	// 入力のタイプ別で入力判定
-	for (auto binding : bindings) {
-		switch (binding.type){
-		case InputManager::BindingType::Axis:
-			break;
-		case InputManager::BindingType::Button:
-			break;
-		}
-	}
 }

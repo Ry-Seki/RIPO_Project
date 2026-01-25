@@ -1,7 +1,12 @@
 #pragma once
 #include "../Singleton.h"
 
+#include "ActionMapBase.h"
+#include "../GameEnum.h"
+
 #include <DxLib.h>
+#include <unordered_map>
+#include <memory>
 
 /*
  *	@brief	マウスのボタン
@@ -26,34 +31,8 @@ private:	//メンバ変数
 	int anyKeyState;
 	int mouseInput[static_cast<int>(MouseInput::MouseInputMax)];
 	bool nowMouseInput[static_cast<int>(MouseInput::MouseInputMax)], prevInput[static_cast<int>(MouseInput::MouseInputMax)];
-
-public:
-	// 入力機の種類 
-	enum class InputType {
-		Key,	// キーボード
-		Mouse,	// マウス
-	};
-
-	// 入力
-	struct Input {
-		InputType type;
-		int input;
-	};
-
-	// 入力の種類
-	enum class BindingType {
-		Axis,	// 軸入力
-		Button,	// ボタン入力
-	};
-
-	// 入力の設定
-	struct Binding {
-		int action;			// 入力に対する行動
-		BindingType type;	// 入力の種類
-		Input positive;		// 入力を確認するボタン
-		Input negative;		// 入力を確認するボタン(positiveと対をなすもの)
-	};
-
+	
+	std::unordered_map<GameEnum::ActionMap, std::shared_ptr<ActionMapBase>> actionMaps;		// 各アクションマップ
 private:	    //コンストラクタとデストラクタ
 	/*
 	 *	コンストラクタ
@@ -130,42 +109,55 @@ public:		//マウス用入力管理
 public: // マウスとキーの両方入力
 	/*
 	 *	ボタンが押されたかどうか
-	 *  @param[in]	Input _mouseButton		入力
+	 *  @param[in]	ActionMapBase::Input _mouseButton	入力
 	 *	@return		bool
 	 */
-	inline bool IsInputDown(Input _button) const {
+	inline bool IsInputDown(ActionMapBase::Input _button) const {
 		switch (_button.type) {
-		case InputType::Key:
+		case ActionMapBase::InputType::Key:
 			return IsKeyDown(_button.input);
-		case InputType::Mouse:
+		case ActionMapBase::InputType::Mouse:
 			return IsMouseDown(_button.input);
 		}
 	}
 	/*
 	 *	ボタンが押されているかどうか
-	 *  @param[in]	Input _button		入力
+	 *  @param[in]	ActionMapBase::Input _button		入力
 	 *	@return		bool
 	 */
-	inline bool IsInput(Input _button) const {
+	inline bool IsInput(ActionMapBase::Input _button) const {
 		switch (_button.type) {
-		case InputType::Key:
+		case ActionMapBase::InputType::Key:
 			return IsKey(_button.input);
-		case InputType::Mouse:
+		case ActionMapBase::InputType::Mouse:
 			return IsMouse(_button.input);
 		}
 	}
 	/*
 	 *	ボタンが押されたかどうか
-	 *  @param[in]	Input _button		入力
+	 *  @param[in]	ActionMapBase::Input _button		入力
 	 *	@return		bool
 	 */
-	inline bool IsInputUp(Input _button) const {
+	inline bool IsInputUp(ActionMapBase::Input _button) const {
 		switch (_button.type) {
-		case InputType::Key:
+		case ActionMapBase::InputType::Key:
 			return IsKeyUp(_button.input);
-		case InputType::Mouse:
+		case ActionMapBase::InputType::Mouse:
 			return IsMouseUp(_button.input);
 		}
+	}
+public: // アクションマップ関連
+	/*
+	 *	アクションマップの有効状態切り替え
+	 */
+	inline void SetActionMapIsActive(GameEnum::ActionMap map, bool setActive) {
+		actionMaps[map]->isActive = setActive;
+	}
+	/*
+	 *	各アクションマップの入力状態取得
+	 */
+	inline ActionMapBase::ActionState GetInputState(GameEnum::ActionMap map) {
+		return actionMaps[map]->state;
 	}
 
 };

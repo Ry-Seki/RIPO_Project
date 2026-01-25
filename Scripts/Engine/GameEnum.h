@@ -74,5 +74,27 @@ namespace GameEnum {
 		Hard,
 		Max
 	};
+
+	/*
+	 *  @brief	アクションマップ
+	 */
+	enum class ActionMap {
+		Incalid = -1,
+		PlayerAction,
+	};
+
+	/*
+	 *	@brief	プレイヤーの行動
+	 */
+	enum class PlayerAction {
+		Invalid,
+		ForwardMove,	// 前移動
+		RightMove,		// 右移動
+		Run,			// ダッシュ
+		Avoid,			// 回避
+		Jump,			// ジャンプ
+		Shot,			// 射撃
+		Lift,			// お宝持ち上げ
+	};
 }
 #endif // !_GAME_ENUM_H_
