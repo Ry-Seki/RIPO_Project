@@ -29,7 +29,8 @@ EnemyComponent::EnemyComponent(EnemyState* initState)
 	, wayPointDistance(1000.0f)
 	, chaseTargetChangeFrag(false)
 	, closePlayer(false)
-	, isTriger(false)
+	, attackIsTriger(false)
+	, damageIsTriger(false)
 	, turnDelay(0.0f)
 	, modelHandle(0)
 	, coolTime(2.0f)
@@ -89,7 +90,7 @@ void EnemyComponent::Update(float deltaTime) {
  */
 void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other)
 {
-	if (!isTriger && other->GetOwner()->name == "Player") {
+	if (!attackIsTriger && other->GetOwner()->name == "Player") {
 		// 当たったらダメージを与える
 		auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
 		// 今はとりあえず適当なダメージ
@@ -97,15 +98,16 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 		// ダメージを反映
 		player->GetComponent<PlayerComponent>()->SetPlayerStatus(playerStatus);
 
-		isTriger = true;
+		attackIsTriger = true;
 	}
 	else if (coolTime <= 0) {
-		isTriger = false;
+		attackIsTriger = false;
 		coolTime = 2;
 	}
 
 	// 死亡判定
-	if (other->GetOwner()->name == "bullet") {
+	if (!damageIsTriger && other->GetOwner()->name == "bullet") {
+		damageIsTriger = true;
 		if (state != nullptr)
 			state = new EnemyDeath();
 		state->Start(enemy);

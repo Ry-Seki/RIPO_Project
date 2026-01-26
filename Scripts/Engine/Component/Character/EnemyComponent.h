@@ -26,8 +26,10 @@ private:
 	bool chaseTargetChangeFrag;
 	// プレイヤーの距離判定フラグ
 	bool closePlayer;
-	// 衝突判定フラグ
-	bool isTriger;
+	// 攻撃衝突判定フラグ
+	bool attackIsTriger;
+	// ダメージ衝突判定フラグ
+	bool damageIsTriger;
 	// 方向転換時のディレイ
 	float turnDelay;
 	// スポーンID

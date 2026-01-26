@@ -45,15 +45,15 @@ void BulletComponent::OnCollision(const std::shared_ptr<Component>& self, const 
 	auto isBullet = otherOwner->GetComponent<BulletComponent>();
 	if (otherOwner == playerOwner || isBullet)return;
 	ResetObject(bullet);
-	if (otherOwner->name == GameConst::_CREATE_POSNAME_ENEMY) {
-		//RemoveCharacter(otherOwner);
-		//// ­—Ê‚Ì‚¨‹à‚ğ“üè
-		//MoneyManager::GetInstance().AddMoney(5);
-	}
-	// ƒ{ƒX‚É“–‚½‚Á‚½‚ç“G‚à”jŠü
-	else if (otherOwner->name == GameConst::_CREATE_POSNAME_BOSS) {
-		RemoveCharacter(otherOwner);
-		// ­—Ê‚Ì‚¨‹à‚ğ“üè
-		MoneyManager::GetInstance().AddMoney(50);
-	}
+	//if (otherOwner->name == GameConst::_CREATE_POSNAME_ENEMY) {
+	//	RemoveCharacter(otherOwner);
+	//	// ­—Ê‚Ì‚¨‹à‚ğ“üè
+	//	MoneyManager::GetInstance().AddMoney(5);
+	//}
+	//// ƒ{ƒX‚É“–‚½‚Á‚½‚ç“G‚à”jŠü
+	//else if (otherOwner->name == GameConst::_CREATE_POSNAME_BOSS) {
+	//	RemoveCharacter(otherOwner);
+	//	// ­—Ê‚Ì‚¨‹à‚ğ“üè
+	//	MoneyManager::GetInstance().AddMoney(50);
+	//}
 }

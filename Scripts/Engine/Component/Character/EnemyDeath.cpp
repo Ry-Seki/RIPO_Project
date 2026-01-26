@@ -39,8 +39,10 @@ void EnemyDeath::Update(GameObject* enemy, float deltaTime)
 	auto modelRenderer = enemy->GetComponent<ModelRenderer>()->GetModelHandle();
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
+	// アニメーションを再生
 	animator->Play(2, 30);
 	animationTime += deltaTime;
+	// アニメーションが終わるまで待つ
 	if (animationTime >= 1.0f) {
 		// 少量のお金を入手
 		MoneyManager::GetInstance().AddMoney(5);
