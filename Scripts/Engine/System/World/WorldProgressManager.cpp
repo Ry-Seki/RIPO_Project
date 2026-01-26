@@ -41,6 +41,16 @@ DungeonProgressData& WorldProgressManager::GetDungeonProgressData(int dungeonID)
     return it->second;
 }
 /*
+ *	@brief		獲得したお宝リストに追加
+ *	@param[in]	int treasureID
+ */
+void WorldProgressManager::SetProcureTreasureList(int treasureID) {
+    assert(worldData && "ワールド進行データが見つかりませんでした");
+    if (!worldData) return;
+
+    worldData->getTreasureIDList.push_back(treasureID);
+}
+/*
  *	@brief		ボス討伐判定
  *  @param[in]	int dungeonID
  *	@return		bool
@@ -49,11 +59,11 @@ bool WorldProgressManager::IsBossDefeated(int dungeonID) const {
     assert(worldData && "ワールド進行データが見つかりませんでした");
     if (!worldData) return false;
 
-    auto it = worldData->dungeonProgress.find(dungeonID);
-    if (it == worldData->dungeonProgress.end()) {
+    auto itr = worldData->dungeonProgress.find(dungeonID);
+    if (itr == worldData->dungeonProgress.end()) {
         return false;
     }
-    return it->second.isBossDefeated;
+    return itr->second.isBossDefeated;
 }
 /*
  *	@brief		ボス討伐フラグの変更
@@ -107,6 +117,7 @@ void WorldProgressManager::ProcureNewTreasure(int dungeonID, int treasureID) {
     if (dungeon.treasureFlagMap[treasureID]) return;
 
     dungeon.treasureFlagMap[treasureID] = true;
+    SetProcureTreasureList(treasureID);
 }
 /*
  *	@brief		イベントお宝獲得処理
@@ -118,4 +129,5 @@ void WorldProgressManager::ProcureEventTreasure(int dungeonID, int treasureID) {
     if (dungeon.eventTreasureFlagMap[treasureID]) return;
 
     dungeon.eventTreasureFlagMap[treasureID] = true;
+    SetProcureTreasureList(treasureID);
 }

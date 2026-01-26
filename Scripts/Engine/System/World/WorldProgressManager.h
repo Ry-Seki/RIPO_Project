@@ -45,6 +45,11 @@ public:
 	 */
 	DungeonProgressData& GetDungeonProgressData(int dungeonID);
 	/*
+	 *	@brief		獲得したお宝リストに追加
+	 *	@param[in]	int treasureID
+	 */
+	void SetProcureTreasureList(int treasureID);
+	/*
 	 *	@brief		ボス討伐判定
 	 *  @param[in]	int dungeonID
 	 *	@return		bool
