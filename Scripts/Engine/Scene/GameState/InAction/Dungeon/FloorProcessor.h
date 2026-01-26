@@ -23,6 +23,7 @@ private:
 	int nextFloor = -1;								// 移動先のフロア
 	int holdTreasureObjectID = -1;					// プレイヤーが所持しているお宝のオブジェクトID
 	int holdTreasureID = -1;						// プレイヤーが所持しているお宝ID
+	bool isEventDay = false;						// イベント中か判定
 	DungeonCreater dungeonCreater;					// ダンジョン生成クラス
 	DungeonResourceData resourceData;				// ダンジョンリソースデータ
 	DungeonFloorData floorData;						// ダンジョンフロアデータ
@@ -55,9 +56,10 @@ public:
 	/*
 	 *	@brief		フロアの生成
 	 *  @param[in]	ActionContext setContext
-	 *  @param[in]	bool& isStart
+	 *  @param[out]	bool& isStart
+	 *  @param[out]	std::vector<std::vector<int>>& treasureIDList
 	 */
-	void CreateFloor(ActionContext setContext, bool& isStart);
+	void CreateFloor(ActionContext setContext, bool& isStart, std::vector<std::vector<int>>& treasureIDList);
 	/*
 	 *	@brief	フロアの変更処理
 	 */
@@ -70,25 +72,35 @@ public:
 
 private:
 	/*
-	 *	@brief		フロア関係なしのお宝ID一覧を取得
-	 *  @return		std::vector<int>
+	 *	@brief		フロア、イベント関係なしの全てのお宝ID一覧を取得
+	 *  @return		std::vector<std::vector<int>>
 	 */
-	std::vector<int> GetAllTreasureIDTable();
+	std::vector<std::vector<int>> GetAllTreasureIDTable();
 	/*
-	 *	@brief		フロア関係なしの生成するお宝ID一覧の取得
-	 *  @return		std::vector<int>
+	 *	@brief		フロア、イベント関係なしの生成する全てのお宝ID一覧の取得
+	 *  @return		std::vector<std::vector<int>>
 	 */
-	std::vector<int> GetAllSpawnTreasureIDTable();
+	std::vector<std::vector<int>> GetAllSpawnTreasureIDTable();
 	/*
-	 *	@brief		フロアごとのお宝ID一覧を取得
+	 *	@brief		フロアごとの通常お宝ID一覧を取得
 	 *	@return		std::vector<int>
 	 */
-	std::vector<int> GetTreasureIDTable();
+	std::vector<int> GetNormalTreasureIDTable();
+	/*
+	 *	@brief		フロアごとのイベントお宝ID一覧を取得
+	 *	@return		std::vector<int>
+	 */
+	std::vector<int> GetEventTreasureIDTable();
 	/*
 	 *	@brief		フロアごとに生成するお宝IDのみを渡す
 	 *	@return		std::vector<int>
 	 */
-	std::vector<int> GetSpawnTreasureIDTable();
+	std::vector<std::vector<int>> GetSpawnTreasureIDTable();
+	/*
+	 *	@brief		フロアごとの生成する全てのお宝の数を取得
+	 *	@return		int
+	 */
+	int GetSpawnTreasureCount();
 
 public:
 	/*

@@ -32,21 +32,21 @@ public:
 	/*
 	 *	@brief		ダンジョン生成
 	 *	@param[in]	int floorID
-	 *  @param[in]	const std::vector<int>& treasureIDList
+	 *  @param[in]	const std::vector<std::vector<int>>& treasureIDList
 	 *  @param[out]	int& stairID
 	 */
-	void GenerateDungeon(int floorID, const std::vector<int>& treasureIDList, int& stairID);
+	void GenerateDungeon(int floorID, const std::vector<std::vector<int>>& treasureIDList, int& stairID);
 	/*
 	 *	@brief		ダンジョンの再生成
 	 *	@param[in]	int floorID
 	 *  @param[in]	const std::vector<int>& enemySpawnIDList
 	 *	@param[in]	const int holdTreasureID
 	 *  @param[in]	GameObjectPtr& holdTreasure
-	 *  @param[in]	const std::vector<int>& treasureIDList
+	 *  @param[in]	const std::vector<std::vector<int>>& treasureIDList
 	 *  @param[out]	int& stairID
 	 */
 	void RegenerateDungeon(int floorID, const std::vector<int>& enemySpawnIDList, const int holdTreasureID,
-						   const std::vector<int>& treasureIDList, int& stairID);
+						   const std::vector<std::vector<int>>& treasureIDList, int& stairID);
 
 public:
 	/*

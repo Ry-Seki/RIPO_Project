@@ -97,7 +97,6 @@ int Engine::Initialize() {
 void Engine::Teardown() {
 	if (initialized) {
 		initialized = false;
-		SaveDataManager::GetInstance().SaveCurrentSlot();
 		DxLibResourcesManager::GetInstance().Teardown();
 		currentScene->Finalize(*this);
 	}

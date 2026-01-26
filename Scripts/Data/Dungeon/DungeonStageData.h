@@ -102,9 +102,13 @@ public:
     std::unordered_map<std::string, std::string> GetCategory(const std::string& categoryName) const {
         std::unordered_map<std::string, std::string> result;
         for (const auto& [key, value] : dungeonDataList) {
-            if (key.rfind(categoryName + ".", 0) == 0) { // prefix一致
-                result[key.substr(categoryName.size() + 1)] = value;
-            }
+            auto pos = key.find('.');
+            // .がないキーは飛ばす
+            if (pos == std::string::npos) continue;
+            // 先頭カテゴリ名が完全一致しているか
+            if (key.substr(0, pos) != categoryName) continue;
+            // pos + 1 は.の直後
+            result[key.substr(pos + 1)] = value;
         }
         return result;
     }

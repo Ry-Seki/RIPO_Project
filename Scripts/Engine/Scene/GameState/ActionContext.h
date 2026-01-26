@@ -25,6 +25,7 @@ struct ActionContext {
 	int currentIncome = 0;					// 今回の稼ぎ
 	bool isPlayerDead = false;				// プレイヤーの死亡判定
 	bool isHalf = false;					// 半日かどうか
+	bool isCurrentEvent = false;			// イベント中かどうか				
 
 	DungeonStageData dungeonStageData;			// ダンジョンステージデータ
 	DungeonFloorData dungeonFloorData;			// ダンジョンフロアデータ

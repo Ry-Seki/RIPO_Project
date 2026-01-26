@@ -62,19 +62,22 @@ public:
 	//----------------------------------------------------
 	//				オブジェクト名関連の定数
 	//----------------------------------------------------
-	static constexpr const char* _CREATE_POSNAME_ENEMY = "Enemy";		// 敵の生成位置の名前
-	static constexpr const char* _CREATE_POSNAME_BOSS = "Boss";
-	static constexpr const char* _CREATE_POSNAME_PLAYER = "Player";		// プレイヤーの生成位置の名前
-	static constexpr const char* _CREATE_POSNAME_TREASURE = "Treasure";	// お宝の生成位置の名前
-	static constexpr const char* _CREATE_POSNAME_LIGHT = "PointLight";	// ポイントライトの生成位置の名前
-	static constexpr const char* _CREATE_POSITION_SPAWN = "SpawnPos";	// スポーンポジションの名前
-
+	static constexpr const char* _CREATE_POSNAME_ENEMY = "Enemy";					// 敵の生成位置の名前
+	static constexpr const char* _CREATE_POSNAME_BOSS = "Boss";						// ボスの生成位置の名前
+	static constexpr const char* _CREATE_POSNAME_PLAYER = "Player";					// プレイヤーの生成位置の名前
+	static constexpr const char* _CREATE_POSNAME_TREASURE = "Treasure";				// お宝の生成位置の名前
+	static constexpr const char* _CREATE_POSNAME_EVENT_TREASURE = "EventTreasure";	// イベントお宝の生成位置の名前
+	static constexpr const char* _CREATE_POSNAME_LIGHT = "PointLight";				// ポイントライトの生成位置の名前
+	static constexpr const char* _CREATE_POSITION_SPAWN = "SpawnPos";				// スポーンポジションの名前
 
 	//----------------------------------------------------
 	//					お宝の名前
 	//----------------------------------------------------
 	static constexpr const char* _TREASURE_JAR = "jar";				// お宝の名前 : 壺
 	static constexpr const char* _TREASURE_LION = "LionStatue";		// お宝の名前 : ライオンの像
+	static constexpr int NORMAL_TREASURE_INDEX = 0;					// 通常お宝要素数
+	static constexpr int EVENT_TREASURE_INDEX = 1;					// イベントお宝要素数
+	static constexpr int TREASURE_TYPE_INDEX = 2;					// お宝の種類
 
 };
 #endif // !_GAMECONST_H_

@@ -110,7 +110,7 @@ void FloorProcessor::SetupNextFloor() {
 	// ボス生成フラグ
 	if (dungeonProgressData.isBossDefeated) setFloorData.bossSpawnCount = 0;
 	//　お宝生成数の設定
-	setFloorData.treasureSpawnCount = GetSpawnTreasureIDTable().size();
+	setFloorData.treasureSpawnCount = GetSpawnTreasureCount();
 	// ダンジョンクリエイターに情報を設定
 	dungeonCreater.SetFloorData(setFloorData);
 	// フロアを再生成
@@ -130,18 +130,21 @@ void FloorProcessor::SetupNextFloor() {
  *  @param[in]	ActionContext setContext
  *  @param[in]	bool& isStart
  */
-void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart) {
+void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart, std::vector<std::vector<int>>& treasureIDList) {
 	currentFloor = 0;
 	enemyFloorList.resize(16);
 	// データの取得
 	stageData = setContext.dungeonStageData;
 	floorData = setContext.dungeonFloorData;
+	isEventDay = setContext.isCurrentEvent;
 	dungeonProgressData = WorldProgressManager::GetInstance().GetDungeonProgressData(setContext.dungeonID);
 	LoadManager& load = LoadManager::GetInstance();
+	treasureIDList = GetAllSpawnTreasureIDTable();
 	// リソースの読み込み
 	resourceData.LoadResourcesFromStageData(stageData, 
 											dungeonProgressData.isBossDefeated,
-											GetAllSpawnTreasureIDTable());
+											isEventDay,
+											treasureIDList);
 
 	// ロード完了時のコールバック登録
 	load.SetOnComplete([this, &isStart]() {
@@ -153,7 +156,7 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart) {
 		// ボスを生成するか判定
 		if (dungeonProgressData.isBossDefeated) setFloorData.bossSpawnCount = 0;
 		//　お宝生成数の設定
-		setFloorData.treasureSpawnCount = GetSpawnTreasureIDTable().size();
+		setFloorData.treasureSpawnCount = GetSpawnTreasureCount();
 		// ダンジョン生成クラスに必要なデータを設定
 		dungeonCreater.SetDungeonData(setFloorData, resourceData);
 		// ダンジョンの生成
@@ -193,11 +196,11 @@ void FloorProcessor::EndDungeon() {
 	CameraManager::GetInstance().ResetCamera();
 }
 /*
- *	@brief		フロア関係なしのお宝ID一覧を取得
- *  @return		std::vector<int>
+ *	@brief		フロア、イベント関係なしの全てのお宝ID一覧を取得
+ *  @return		std::vector<std::vector<int>>
  */
-std::vector<int> FloorProcessor::GetAllTreasureIDTable() {
-	std::vector<int> result;
+std::vector<std::vector<int>> FloorProcessor::GetAllTreasureIDTable() {
+	std::vector<std::vector<int>> result(GameConst::TREASURE_TYPE_INDEX);
 	// お宝情報を取得
 	auto treasureMap = stageData.GetCategory("Treasure");
 	for (const auto& [key, value] : treasureMap) {
@@ -207,40 +210,67 @@ std::vector<int> FloorProcessor::GetAllTreasureIDTable() {
 
 		int treasureID = std::stoi(parts[1]);
 		// お宝IDを追加
-		result.push_back(treasureID);
+		result[GameConst::NORMAL_TREASURE_INDEX].push_back(treasureID);
+	}
+
+	// イベントお宝情報を取得
+	if (!isEventDay) return result;
+
+	auto eventTreasureMap = stageData.GetCategory("EventTreasure");
+	for (const auto& [key, value] : eventTreasureMap) {
+		// .で文字列を切り分ける
+		auto parts = StringUtility::Split(key, '.');
+		if (parts.size() != 2) continue;
+
+		int treasureID = std::stoi(parts[1]);
+		// お宝IDを追加
+		result[GameConst::EVENT_TREASURE_INDEX].push_back(treasureID);
 	}
 	return result;
 }
 /*
- *	@brief		フロア関係なしの生成するお宝ID一覧の取得
- *  @return		std::vector<int>
+ *	@brief		フロア関係なしの生成する全てのお宝ID一覧の取得
+ *  @return		std::vector<std::vector<int>>
  */
-std::vector<int> FloorProcessor::GetAllSpawnTreasureIDTable() {
+std::vector<std::vector<int>> FloorProcessor::GetAllSpawnTreasureIDTable() {
 	// 生成するお宝IDリストを取得
-	std::vector<int> treasureIDList = GetAllTreasureIDTable();
-	// お宝獲得状況マップを取得
-	auto& getTreasureIDMap = dungeonProgressData.treasureFlagMap;
-	if (getTreasureIDMap.empty()) return treasureIDList;
+	std::vector<std::vector<int>> treasureIDList = GetAllTreasureIDTable();
+	// 通常お宝獲得状況マップの取得
+	auto& normalIDList = treasureIDList[GameConst::NORMAL_TREASURE_INDEX];
+	auto& normalTreasureIDMap = dungeonProgressData.treasureFlagMap;
+	if (normalTreasureIDMap.empty()) return treasureIDList;
 	// 取得済みIDを生成候補から除外
-	treasureIDList.erase(
-		std::remove_if(treasureIDList.begin(), treasureIDList.end(),
+	normalIDList.erase(
+		std::remove_if(normalIDList.begin(), normalIDList.end(),
 		[&](int treasureID) {
-		auto itr = getTreasureIDMap.find(treasureID);
-		return itr != getTreasureIDMap.end() && itr->second;
-	}), treasureIDList.end());
+		auto itr = normalTreasureIDMap.find(treasureID);
+		return itr != normalTreasureIDMap.end() && itr->second;
+	}), normalIDList.end());
+
+	if (!isEventDay) return treasureIDList;
+
+	// イベントお宝獲得状況マップの取得
+	auto& eventIDList = treasureIDList[GameConst::EVENT_TREASURE_INDEX];
+	auto& eventTreasureIDMap = dungeonProgressData.eventTreasureFlagMap;
+	eventIDList.erase(
+		std::remove_if(eventIDList.begin(), eventIDList.end(),
+		[&](int treasureID) {
+		auto itr = eventTreasureIDMap.find(treasureID);
+		return itr != eventTreasureIDMap.end() && itr->second;
+	}),eventIDList.end());
 
 	return treasureIDList;	// 結果を反映した物を返す
 }
 /*
- *	@brief		フロアごとのTreasureID一覧を取得
+ *	@brief		フロアごとの通常お宝ID一覧を取得
  *	@return		std::vector<int>
  */
-std::vector<int> FloorProcessor::GetTreasureIDTable() {
+std::vector<int> FloorProcessor::GetNormalTreasureIDTable() {
 	std::vector<std::vector<int>> result;
 
-	auto treasureMap = stageData.GetCategory("Treasure");
+	auto normalTreasureMap = stageData.GetCategory("Treasure");
 	// JSONのキーから数字を取り出す
-	for (const auto& [key, value] : treasureMap) {
+	for (const auto& [key, value] : normalTreasureMap) {
 		// .で文字列を切り分ける
 		auto parts = StringUtility::Split(key, '.');
 		if (parts.size() != 2) continue;
@@ -256,24 +286,79 @@ std::vector<int> FloorProcessor::GetTreasureIDTable() {
 	return result[currentFloor];
 }
 /*
- *	@brief		フロアごとに生成するお宝IDデータのみを渡す
+ *	@brief		フロアごとのイベントお宝ID一覧を取得
  *	@return		std::vector<int>
  */
-std::vector<int> FloorProcessor::GetSpawnTreasureIDTable() {
-	// 生成するお宝IDリストを取得
-	std::vector<int> treasureIDList = GetTreasureIDTable();
+std::vector<int> FloorProcessor::GetEventTreasureIDTable() {
+	std::vector<std::vector<int>> result;
+
+	auto eventTreasureMap = stageData.GetCategory("EventTreasure");
+	// JSONのキーから数字を取り出す
+	for (const auto& [key, value] : eventTreasureMap) {
+		// .で文字列を切り分ける
+		auto parts = StringUtility::Split(key, '.');
+		if (parts.size() != 2) continue;
+		// 一つ目はフロア数
+		int floor = std::stoi(parts[0]);
+		// 二つ目はお宝ID
+		int treasureID = std::stoi(parts[1]);
+		// floor 番目の要素が存在しないか判定
+		if (result.size() <= static_cast<size_t>(floor)) result.resize(floor + 1);
+
+		result[floor].push_back(treasureID);
+	}
+	return result[currentFloor];
+
+}
+/*
+ *	@brief		フロアごとに生成するお宝IDデータのみを渡す
+ *	@return		std::vector<std::vector<int>>
+ */
+std::vector<std::vector<int>> FloorProcessor::GetSpawnTreasureIDTable() {
+	std::vector<std::vector<int>> result(GameConst::TREASURE_TYPE_INDEX);
+	// 生成する通常お宝IDリストを取得
+	int normal = GameConst::NORMAL_TREASURE_INDEX;
+	result[normal] = GetNormalTreasureIDTable();
 	// お宝獲得状況マップを取得
 	auto& getTreasureIDMap = dungeonProgressData.treasureFlagMap;
-	if(getTreasureIDMap.empty()) return treasureIDList;
+	if(getTreasureIDMap.empty()) return result;
 	// 取得済みIDを生成候補から除外
-	treasureIDList.erase(
-		std::remove_if(treasureIDList.begin(),treasureIDList.end(),
+	result[normal].erase(
+		std::remove_if(result[normal].begin(), result[normal].end(),
 		[&](int treasureID) {
 		auto itr = getTreasureIDMap.find(treasureID);
 		return itr != getTreasureIDMap.end() && itr->second;
-		}), treasureIDList.end());
+		}), result[normal].end());
 
-	return treasureIDList;	// 結果を反映した物を返す
+	if (!isEventDay) return result;
+
+	// 生成する通常お宝IDリストを取得
+	int event = GameConst::EVENT_TREASURE_INDEX;
+	result[event] = GetEventTreasureIDTable();
+	// お宝獲得状況マップを取得
+	auto& eventTreasureIDMap = dungeonProgressData.eventTreasureFlagMap;
+	if(eventTreasureIDMap.empty()) return result;
+	// 取得済みIDを生成候補から除外
+	result[event].erase(
+		std::remove_if(result[event].begin(), result[event].end(),
+		[&](int treasureID) {
+		auto itr = eventTreasureIDMap.find(treasureID);
+		return itr != eventTreasureIDMap.end() && itr->second;
+		}), result[event].end());
+
+	return result;	// 結果を反映した物を返す
+}
+/*
+ *	@brief		フロアごとの生成する全てのお宝の数を取得
+ *	@return		int
+ */
+int FloorProcessor::GetSpawnTreasureCount(){
+	int normalCount = GetNormalTreasureIDTable().size();
+
+	if (!isEventDay) return normalCount;
+	int eventCount = GetEventTreasureIDTable().size();
+
+	return normalCount + eventCount;
 }
 /*
  *	@brief		プレイヤーが所持しているお宝IDの取得

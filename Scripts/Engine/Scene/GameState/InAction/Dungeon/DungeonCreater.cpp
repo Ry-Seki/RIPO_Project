@@ -32,10 +32,10 @@ void DungeonCreater::Setup() {
 /*
  *	@brief		ダンジョン生成
  *	@param[in]	int floorID
- *  @param[in]	const std::vector<int>& treasureIDList
+ *  @param[in]	const std::vector<std::vector<int>>& treasureIDList
  *  @param[out]	int& stairID
  */
-void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasureIDList, int& stairID) {
+void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<int>>& treasureIDList, int& stairID) {
 	// オブジェクトの生成
 	int enemyCount = floorData.enemySpawnCount;
 	int bossCount = floorData.bossSpawnCount;
@@ -56,8 +56,15 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
 		GenerateBoss(GameConst::_CREATE_POSNAME_BOSS, V_ZERO, { 0, 180 * Deg2Rad, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 100, 0 }, { 0,  500,  0 }, 300);
 	}
 	// お宝の生成処理
-	for (int i = 0; i < treasureCount; i++) {
-		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO, { -100,0,-100 }, { 100,300,100 }, treasureIDList[i]);
+	int normalIndex = GameConst::NORMAL_TREASURE_INDEX;
+	for (int i = 0, max = treasureIDList[normalIndex].size(); i < max; i++) {
+		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO, 
+						 { -100,0,-100 }, { 100,300,100 }, treasureIDList[normalIndex][i]);
+	}
+	int eventIndex = GameConst::EVENT_TREASURE_INDEX;
+	for (int i = 0, max = treasureIDList[eventIndex].size(); i < max; i++) {
+		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO, 
+						 { -100,0,-100 }, { 100,300,100 }, treasureIDList[eventIndex][i]);
 	}
 	// 階段の生成処理
 	for (int i = 0; i < stairCount; i++) {
@@ -200,11 +207,11 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<int>& treasu
  *  @param[in]	const std::vector<int>& enemySpawnIDList
  *	@param[in]	const int holdTreasureID
  *  @param[in]	GameObjectPtr& holdTreasure
- *  @param[in]	const std::vector<int>& treasureIDList
+ *  @param[in]	const std::vector<std::vector<int>>& treasureIDList
  *  @param[out]	int& stairID
  */
 void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enemySpawnIDList, const int holdTreasureID,
-	const std::vector<int>& treasureIDList, int& stairID) {
+	const std::vector<std::vector<int>>& treasureIDList, int& stairID) {
 	// オブジェクトの再生成
 	int enemyCount = floorData.enemySpawnCount;
 	int bossCount = floorData.bossSpawnCount;
@@ -221,9 +228,18 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 		GenerateBoss(GameConst::_CREATE_POSNAME_BOSS, V_ZERO, { 0, 180 * Deg2Rad, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 100, 0 }, { 0,  500,  0 }, 300);
 	}
 	// お宝の生成処理
-	for (int i = 0; i < treasureCount; i++) {
-		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO, { -100,0,-100 }, { 100,300,100 }, treasureIDList[i]);
+	int normalIndex = GameConst::NORMAL_TREASURE_INDEX;
+	for (int i = 0, max = treasureIDList[normalIndex].size(); i < max; i++) {
+		if(treasureIDList[normalIndex][i] != holdTreasureID)
+		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO,
+						 { -100,0,-100 }, { 100,300,100 }, treasureIDList[normalIndex][i]);
 	}
+	int eventIndex = GameConst::EVENT_TREASURE_INDEX;
+	for (int i = 0, max = treasureIDList[eventIndex].size(); i < max; i++) {
+		if (treasureIDList[eventIndex][i] != holdTreasureID)
+		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO,
+						 { -100,0,-100 }, { 100,300,100 }, treasureIDList[eventIndex][i]);
+	}	
 	// 階段の生成処理
 	for (int i = 0; i < stairCount; i++) {
 		GenerateStair("Stair", V_ZERO, V_ZERO, { -500,-500,-10 }, { 500,800,10 });
