@@ -19,6 +19,7 @@
 #include "Menu/MenuManager.h"
 #include "Save/SaveDataManager.h"
 #include "../Data/DxLibResourcesManager.h"
+#include "Input/InputManager.h"
 
 #include <DxLib.h>
 #include <EffekseerForDXLib.h>
@@ -87,6 +88,8 @@ int Engine::Initialize() {
 	Time::Init();
 	// セーブ管理クラスの初期化
 	SaveDataManager::GetInstance().Initialize();
+	// 入力管理クラスの初期化
+	InputManager::GetInstance().Initialize();
 	// 初期化フラグの変更
 	initialized = true;
 	return 0;
@@ -147,6 +150,9 @@ void Engine::Update() {
 
 	// フェードモードを確認
 	bool isFadeStop = FadeManager::GetInstance().GetMode() == FadeMode::Stop;
+
+	// 入力の更新
+	InputManager::GetInstance().Update();
 
 	// シーンの更新処理
 	if (currentScene && !isLoading && !isFadeStop) currentScene->Update(*this, Time::deltaTime);
