@@ -23,23 +23,33 @@ void PlayerStatusManager::Initialize() {
  *  @param[in]	const JSON& setJSON	設定するJSONデータ
  */
 void PlayerStatusManager::SetupData(const JSON& setJSON) {
-
 	for (int i = 0, max = playerStatus->base.Length(); i < max; i++) {
 		playerStatus->base[i] = setJSON[GameConst::_STATUS_KEY][GameConst::STATUS_PART[i]];
 	}
 	for (int i = 0, max = playerStatus->rise.Length(); i < max; i++) {
 		playerStatus->rise[i] = setJSON[GameConst::_RASE_KEY][GameConst::STATUS_PART[i]];
 	}
+	ApplyPlayerStatus();
+}
+/*
+ *	@brief		レベル指定のプレイヤーステータス設定
+ *	@param[in]	int statusPart
+ *	@param[in]	int setLevel
+ */
+void PlayerStatusManager::SetPlayerStatus(int statusPart, int setLevel) {
+	if (setLevel == 0) return;
+	playerStatus->lv[statusPart] = setLevel;
+	playerStatus->base[statusPart] += playerStatus->rise[statusPart] * setLevel;
 }
 /*
  *	@brief		レベル指定のプレイヤーのステータス上昇
- *  @param[in]	const int statusPart	上昇するステータス
- *  @param[in]	int setValue			上がった回数
+ *  @param[in]	int statusPart	上昇するステータス
+ *  @param[in]	int setLevel	上がった回数
  */
-void PlayerStatusManager::AddPlayerStatus(const int statusPart, int setValue) {
-	if (setValue == 0) return;
-	playerStatus->lv[statusPart] += setValue;
-	playerStatus->base[statusPart] += playerStatus->rise[statusPart] * setValue;
+void PlayerStatusManager::AddPlayerStatus(int statusPart, int setLevel) {
+	if (setLevel == 0) return;
+	playerStatus->lv[statusPart] += setLevel;
+	playerStatus->base[statusPart] += playerStatus->rise[statusPart] * setLevel;
 }
 /*
  *	@brief		セーブ用ステータスレベルデータの収集
@@ -62,13 +72,12 @@ void PlayerStatusManager::ApplyLoadData(const PlayerStatusLevelData& data) {
 	playerStatus->lv.stamina = data.staminaLevel;
 	playerStatus->lv.strength = data.strengthLevel;
 	playerStatus->lv.resistTime = data.resistTimeLevel;
-	ApplyPlayerStatus();
 }
 /*
  *	@brief		セーブデータからステータスレベルを設定
  */
 void PlayerStatusManager::ApplyPlayerStatus() {
 	for (int i = 0, max = playerStatus->base.Length(); i < max; i++) {
-		AddPlayerStatus(i, playerStatus->lv[i]);
+		SetPlayerStatus(i, playerStatus->lv[i]);
 	}
 }

@@ -2,10 +2,12 @@
  *	@file	SaveDataManager.cpp
  *	@author	Seki
  */
+
 #include "SaveDataManager.h"
 #include "../../Data/Dungeon/DungeonProgressData.h"
 #include "../System/Status/PlayerStatusManager.h"
 #include "../System/Money/MoneyManager.h"
+#include "../System/World/WorldProgressManager.h"
 #include "../Scene/GameState/ActionContext.h"
 
 /*
@@ -207,7 +209,7 @@ Orderd_JSON SaveDataManager::ToJSON(const WorldProgressData& data) {
     Orderd_JSON json;
     json["getTreasureIDList"] = data.getTreasureIDList;
     // ダンジョン進行
-    JSON dungeonJSON;
+    Orderd_JSON dungeonJSON = Orderd_JSON::object();
     for (const auto& [dungeonID, progress] : data.dungeonProgress) {
         dungeonJSON[std::to_string(dungeonID)] = ToJSON(progress);
     }
@@ -330,7 +332,8 @@ void SaveDataManager::CollectSaveData(const ActionContext& context) {
     currentSaveData.player
         = PlayerStatusManager::GetInstance().GetSaveData();
     // World
-
+    currentSaveData.world
+        = WorldProgressManager::GetInstance().GetSaveData();
     // Settings
 
 }
@@ -345,6 +348,7 @@ void SaveDataManager::ApplyLoadData(ActionContext& context) {
     // Player
     PlayerStatusManager::GetInstance().ApplyLoadData(currentSaveData.player);
     // World
-
+    WorldProgressManager::GetInstance().SetWorldProgressData(currentSaveData.world);
     // Settings
+
 }

@@ -9,9 +9,6 @@
 #include "../InActionBase.h"
 #include "FloorProcessor.h"
 
-// 前方宣言
-class DungeonResourceData;
-
 /*
  *	@brief	ダンジョン行動実行クラス
  */
@@ -53,6 +50,11 @@ public:
 	 *	@brief	ダンジョン終了処理
 	 */
 	void EndDungeon();
+	/*
+	 *	@brief		ダンジョン終了集計
+	 *  @param[in]	int dungeonID
+	 */
+	void CalculationDungeon(int dungeonID);
 };
 
 #endif // !_IN_ACTION_DUNGEON_H_

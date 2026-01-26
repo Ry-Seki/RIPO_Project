@@ -8,6 +8,7 @@
 
 #include "../../../../../Data/Dungeon/DungeonFloorData.h"
 #include "../../../../../Data/Dungeon/DungeonResourceData.h"
+#include "../../../../../Data/Dungeon/DungeonProgressData.h"
 
 /*
  *	@brief	ダンジョン生成クラス
@@ -16,6 +17,8 @@ class DungeonCreater {
 private:
 	FloorData floorData;
 	DungeonResourceData resourceData;
+
+private:
 
 public:
 	/*

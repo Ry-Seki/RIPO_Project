@@ -6,7 +6,7 @@
     "1": {
       "StageData": "Res/Model/Stage/StageModel_1_TwoLayer.mv1"
     },
-    "StageBoneData": "Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json",
+    "StageBoneData": "Data/Dungeon/Stage1/Stage1DungeonCreatePos.json",
     "StageFloorData": "Data/Dungeon/Stage1/Stage1DungeonFloorData.json"
   },
   "Character": {
@@ -25,6 +25,14 @@
     },
     "1": {
       "2": "Res/Model/Treasure/Treasure03.mv1"
+    },
+    "EventTreasure": {
+      "0": {
+
+      },
+      "1": {
+
+      }
     }
   },
   "Audio": {

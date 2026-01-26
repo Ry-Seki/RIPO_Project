@@ -1,3 +1,3 @@
-﻿ID,Name,OpenDay,EventStartDay,EventEndDay,DungeonPath
-0,Tutorial,0,0,0,Data/Dungeon/Tutorial/TutorialDungeonResourcesData.json
-1,Stage1,0,0,5,Data/Dungeon/Stage1/Stage1DungeonResourcesData.json
+﻿ID,Name,EventStartDay,EventEndDay,LevelOfDanger,NecessaryStrength,DungeonPath
+0,Tutorial,0,0,0,0,Data/Dungeon/Tutorial/TutorialDungeonResourcesData.json
+1,Stage1,2,5,1,1,Data/Dungeon/Stage1/Stage1DungeonResourcesData.json

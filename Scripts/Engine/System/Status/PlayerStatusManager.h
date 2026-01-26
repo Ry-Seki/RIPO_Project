@@ -53,11 +53,17 @@ public:
 	 */
 	void Initialize();
 	/*
-	 *	@brief		レベル指定のプレイヤーのステータス上昇
-	 *  @param[in]	const int statusPart	上昇するステータス
-	 *  @param[in]	int setValue = 1		上がった回数
+	 *	@brief		レベル指定のプレイヤーステータス設定
+	 *	@param[in]	int statusPart
+	 *	@param[in]	int setLevel
 	 */
-	void AddPlayerStatus(const int statusPart, int setValue = 1);
+	void SetPlayerStatus(int statusPart, int setLevel);
+	/*
+	 *	@brief		レベル指定のプレイヤーのステータス上昇
+	 *  @param[in]	int statusPart		上昇するステータス
+	 *  @param[in]	int setLevel = 1	上がった回数
+	 */
+	void AddPlayerStatus(int statusPart, int setLevel = 1);
 	/*
 	 *	@brief		セーブ用ステータスレベルデータの収集
 	 *	@return		PlayerStatusLevelData

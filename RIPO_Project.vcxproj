@@ -237,6 +237,7 @@
     <ClCompile Include="Scripts\Engine\StringUtility.cpp" />
     <ClCompile Include="Scripts\Engine\System\Item\ItemManager.cpp" />
     <ClCompile Include="Scripts\Engine\System\Status\PlayerStatusManager.cpp" />
+    <ClCompile Include="Scripts\Engine\System\World\WorldProgressManager.cpp" />
     <ClCompile Include="Scripts\Engine\Time.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
@@ -335,6 +336,7 @@
     <ClInclude Include="Scripts\Engine\Save\SaveDataManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\DebugScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\GameState\ActionContext.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\DungeonContext.h" />
     <ClInclude Include="Scripts\Engine\Scene\GameState\GameStateBase.h" />
     <ClInclude Include="Scripts\Engine\Scene\GameState\GameStateMachine.h" />
     <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\DungeonCreater.h" />
@@ -386,6 +388,7 @@
     <ClInclude Include="Scripts\Engine\System\Item\ItemManager.h" />
     <ClInclude Include="Scripts\Engine\System\Money\MoneyManager.h" />
     <ClInclude Include="Scripts\Engine\System\Status\PlayerStatusManager.h" />
+    <ClInclude Include="Scripts\Engine\System\World\WorldProgressManager.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
     <ClInclude Include="Scripts\Engine\Vision.h" />

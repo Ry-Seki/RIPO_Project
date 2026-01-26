@@ -17,6 +17,7 @@
 #include "../../../../Audio/AudioUtility.h"
 #include "../../../../Fade/FadeFactory.h"
 #include "../../../../Fade/FadeManager.h"
+#include "../../../../System/World/WorldProgressManager.h"
 
 /*
  *	@brief	初期化処理
@@ -181,7 +182,19 @@ bool InAction_Dungeon::IsPlayerDead() {
 void InAction_Dungeon::EndDungeon() {
 	isStart = false;
 	auto& context = owner->GetOwner()->GetActionContext();
+	CalculationDungeon(context.dungeonID);
 	context.isPlayerDead = IsPlayerDead();
 	floorProcessor.EndDungeon();
 	owner->GetOwner()->ChageState(GameEnum::GameState::ResultAction);
+}
+/*
+ *	@brief	ダンジョン終了集計
+ */
+void InAction_Dungeon::CalculationDungeon(int dungeonID) {
+	auto& world = WorldProgressManager::GetInstance();
+	// お宝IDの取得
+	int treasureID = floorProcessor.GetHoldTreasureID();
+	if (treasureID != -1) world.GetNewTreasure(dungeonID, treasureID);
+
+	// TODO : イベントお宝とボス討伐フラグの反映
 }
