@@ -82,13 +82,15 @@ namespace GameEnum {
 	enum class ActionMap {
 		Incalid = -1,
 		PlayerAction,
+
+		Max,
 	};
 
 	/*
 	 *	@brief	プレイヤーの行動
 	 */
 	enum class PlayerAction {
-		Invalid,
+		Invalid = -1,
 		ForwardMove,	// 前移動
 		RightMove,		// 右移動
 		Run,			// ダッシュ
@@ -96,6 +98,8 @@ namespace GameEnum {
 		Jump,			// ジャンプ
 		Shot,			// 射撃
 		Lift,			// お宝持ち上げ
+
+		Max,
 	};
 }
 #endif // !_GAME_ENUM_H_

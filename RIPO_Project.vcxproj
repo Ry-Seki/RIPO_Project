@@ -308,6 +308,7 @@
     <ClInclude Include="Scripts\Engine\GameObject\GameObjectUtility.h" />
     <ClInclude Include="Scripts\Engine\Input\ActionMapBase.h" />
     <ClInclude Include="Scripts\Engine\Input\InputManager.h" />
+    <ClInclude Include="Scripts\Engine\Input\InputUtility.h" />
     <ClInclude Include="Scripts\Engine\Input\PlayerActionMap.h" />
     <ClInclude Include="Scripts\Engine\JSON.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimationBase.h" />

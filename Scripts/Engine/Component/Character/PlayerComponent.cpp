@@ -11,7 +11,10 @@
 #include "../../Manager/StageManager.h"
 #include "../GravityComponent.h"
 #include "../../System/Status/PlayerStatusManager.h"
+#include "../../Input/InputUtility.h"
 #include "DxLib.h"
+
+using namespace InputUtility;
 
 PlayerComponent::PlayerComponent()
 	: moveSpeed(0.0f)
@@ -49,12 +52,16 @@ PlayerComponent::PlayerComponent()
 void PlayerComponent::Start() {
 	// プレイヤーの基礎ステータスを受け取る
 	status = PlayerStatusManager::GetInstance().GetPlayerStatusData()->base;
+	// プレイヤーのアクションマップをアクティブ化
+	InputManager::GetInstance().SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, true);
 }
 
 void PlayerComponent::Update(float deltaTime) {
 	GameObject* player = GetOwner();
 	// プレイヤーの基礎ステータス
 	PlayerStatusValue baseStatus = PlayerStatusManager::GetInstance().GetPlayerStatusData()->base;
+	// プレイヤーの入力情報
+	action = GetInputState(GameEnum::ActionMap::PlayerAction);
 
 	// 初期接地判定
 	if (!hasResolvedInitialGrounding) {
@@ -118,10 +125,12 @@ void PlayerComponent::Update(float deltaTime) {
 	if (playerArm->GetLiftObject())
 		return;
 	// 右クリックでウデアクションをハンドに設定
-	if (GetMouseInput() & MOUSE_INPUT_RIGHT)
+	int lift = static_cast<int>(GameEnum::PlayerAction::Lift);
+	if (action.button[lift])
 		playerArm->SetCurrentArm<HandArm>();
+	int shot = static_cast<int>(GameEnum::PlayerAction::Shot);
 	// 左クリックでウデアクションを銃に設定
-	if (GetMouseInput() & MOUSE_INPUT_LEFT)
+	if (action.button[shot])
 		playerArm->SetCurrentArm<RevolverArm>();
 }
 
@@ -130,6 +139,7 @@ void PlayerComponent::Update(float deltaTime) {
  */
 void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
+
 	// 重力コンポーネントの取得by oorui
 	auto gravity = player->GetComponent<GravityComponent>();
 	// カメラの角度のsin,cos
@@ -139,25 +149,21 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	float moveX = 0;
 	float moveZ = 0;
 
-	// カメラから見て左の移動
-	if (CheckHitKey(KEY_INPUT_A)) {
-		moveX -= moveSpeed * cameraCos * deltaTime;
-		moveZ -= moveSpeed * -cameraSin * deltaTime;
+	float right = action.axis[static_cast<int>(GameEnum::PlayerAction::RightMove)];
+	float forward = action.axis[static_cast<int>(GameEnum::PlayerAction::ForwardMove)];
+	// 2方向に入力されていたらスピード半減
+	if (fabs(right + forward) == 2 || (right + forward == 0 && (right != 0 || forward != 0))) {
+		moveSpeed *= 0.5f;
 	}
 	// カメラから見て右の移動
-	if (CheckHitKey(KEY_INPUT_D)) {
-		moveX += moveSpeed * cameraCos * deltaTime;
-		moveZ += moveSpeed * -cameraSin * deltaTime;
-	}
-	// カメラから見て後ろの移動
-	if (CheckHitKey(KEY_INPUT_S)) {
-		moveX -= moveSpeed * cameraSin * deltaTime;
-		moveZ -= moveSpeed * cameraCos * deltaTime;
+	if (right != 0) {
+		moveX += right * moveSpeed * cameraCos * deltaTime;
+		moveZ += right * moveSpeed * -cameraSin * deltaTime;
 	}
 	// カメラから見て前の移動
-	if (CheckHitKey(KEY_INPUT_W)) {
-		moveX += moveSpeed * cameraSin * deltaTime;
-		moveZ += moveSpeed * cameraCos * deltaTime;
+	if (forward != 0) {
+		moveX += forward * moveSpeed * cameraSin * deltaTime;
+		moveZ += forward * moveSpeed * cameraCos * deltaTime;
 	}
 	player->position.x += moveX;
 	player->position.z += moveZ;
@@ -170,15 +176,9 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	// 角度を補正
 	player->rotation.y += PLAYER_MODEL_ANGLE_CORRECTION * Deg2Rad;
 
-	// デバッグ用Y軸移動
-	{
-		if (CheckHitKey(KEY_INPUT_TAB)) {
-			player->position.y -= moveSpeed * deltaTime;
-		}
-	}
-
 	// ジャンプ
-	if (CheckHitKey(KEY_INPUT_SPACE) && gravity->GetGroundingFrag()) {
+	int jump = static_cast<int>(GameEnum::PlayerAction::Jump);
+	if (action.button[jump] && gravity->GetGroundingFrag()) {
 		gravity->AddFallSpeed(-JUMP_POWER);
 	}
 
@@ -206,21 +206,23 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	}
 
 	// アニメーション再生
-	if (CheckHitKey(KEY_INPUT_W)) {
-		// 前移動
-		animator->Play(4, moveSpeed * 0.066f);
-	}
-	else if (CheckHitKey(KEY_INPUT_S)) {
-		// 後ろ移動
-		animator->Play(5, moveSpeed * 0.066f);
-	}
-	else if (CheckHitKey(KEY_INPUT_A)) {
-		// 左移動
-		animator->Play(6, moveSpeed * 0.066f);
-	}
-	else if (CheckHitKey(KEY_INPUT_D)) {
-		// 右移動
-		animator->Play(7, moveSpeed * 0.066f);
+	if (moveVec == V_ZERO) {
+		if (action.axis[forward] == 1.0f) {
+			// 前移動
+			animator->Play(4, moveSpeed * 0.066f);
+		}
+		else if (action.axis[forward] == -1.0f) {
+			// 後ろ移動
+			animator->Play(5, moveSpeed * 0.066f);
+		}
+		else if (action.axis[right] == 1.0f) {
+			// 左移動
+			animator->Play(6, moveSpeed * 0.066f);
+		}
+		else if (action.axis[right] == -1.0f) {
+			// 右移動
+			animator->Play(7, moveSpeed * 0.066f);
+		}
 	}
 	else  {
 		// 待機
@@ -233,7 +235,9 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
  */
 void PlayerComponent::SpeedControl(float deltaTime) {
 	// ダッシュ
-	if (CheckHitKey(KEY_INPUT_LSHIFT) && CheckHitKey(KEY_INPUT_W) && status.stamina > 0) {
+	int run = static_cast<int>(GameEnum::PlayerAction::Run);
+	int forwardMove = static_cast<int>(GameEnum::PlayerAction::ForwardMove);
+	if (action.button[run] && action.axis[forwardMove] == 1.0f && status.stamina > 0) {
 		// なめらかな加速
 		if (acceleration < RUN_ACCELERATION_MAX)
 			acceleration += sinf(Deg2Rad * deltaTime * ACCELERATION_RATE);
@@ -258,7 +262,7 @@ void PlayerComponent::SpeedControl(float deltaTime) {
 			acceleration = 1;
 	}
 	// 後ろ歩きは少し遅くする
-	if (CheckHitKey(KEY_INPUT_S)) {
+	if (action.axis[forwardMove] == -1.0f) {
 		acceleration = BACK_ACCELERATION;
 	}
 	moveSpeed = DEFAULT_MOVE_SPEED * acceleration;
@@ -269,7 +273,8 @@ void PlayerComponent::SpeedControl(float deltaTime) {
  */
 void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 	// 回避開始
-	if (CheckHitKey(KEY_INPUT_LCONTROL) && canAvoid && status.stamina > STAMINA_AVOID_COST) {
+	int avoid = static_cast<int>(GameEnum::PlayerAction::Avoid);
+	if (action.button[avoid] && canAvoid && status.stamina > STAMINA_AVOID_COST) {
 		canAvoid = false;
 		isAvoid = true;
 		moveSpeed = DEFAULT_MOVE_SPEED * AVOID_ACCELERATION_MAX;

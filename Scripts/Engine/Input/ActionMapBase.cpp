@@ -1,3 +1,8 @@
+/*
+ *	@file	ActionMapBase.cpp
+ *  @author Riku
+ */
+
 #include "ActionMapBase.h"
 #include "InputManager.h"
 
@@ -7,17 +12,17 @@ void ActionMapBase::InputUpdate() {
 		switch (b.type) {
 		case BindingType::Axis:
 			// Ž²“ü—Í‚Ì+‘¤
-			if (InputManager::GetInstance().IsInputDown(b.positive)) {
+			if (InputManager::GetInstance().IsInput(b.positive)) {
 				state.axis[b.action] += 1.0f;
 			}
 			// Ž²“ü—Í‚Ì-‘¤
-			if (InputManager::GetInstance().IsInputDown(b.negative)) {
+			if (InputManager::GetInstance().IsInput(b.negative)) {
 				state.axis[b.action] -= 1.0f;
 			}
 			break;
 		case BindingType::Button:
 			// ƒ{ƒ^ƒ““ü—Í
-			if (InputManager::GetInstance().IsInputDown(b.positive)) {
+			if (InputManager::GetInstance().IsInput(b.positive)) {
 				state.button[b.action] = true;
 			}
 			break;

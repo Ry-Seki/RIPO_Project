@@ -23,6 +23,10 @@ void InputManager::Initialize() {
 	mouseInput[static_cast<int>(MouseInput::MiddleClick)] = MOUSE_INPUT_MIDDLE;
 
 	actionMaps[GameEnum::ActionMap::PlayerAction] = std::make_shared<PlayerActionMap>();
+	for (auto [mapNum, actionMap] : actionMaps) {
+		// 全アクションマップの初期化
+		actionMap->Initialize();
+	}
 }
 /*
  *	更新処理
@@ -40,12 +44,13 @@ void InputManager::Update() {
 	for (int i = 0; i < static_cast<int>(MouseInput::MouseInputMax); i++) {
 		nowMouseInput[i] = GetMouseInput() & mouseInput[i];
 	}
+
 	// 各アクションマップの更新処理
-	for (auto [actionMap, state] : actionMaps) {
+	for (auto [mapNum, actionMap] : actionMaps) {
 		// まず入力状態のリセット
-		state->InputReset();
+		actionMap->InputReset();
 		// 有効なら更新処理
-		if (state->isActive)
-			state->InputUpdate();
+		if (actionMap->isActive)
+			actionMap->InputUpdate();
 	}
 }

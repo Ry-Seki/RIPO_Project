@@ -46,7 +46,7 @@ public:
 
 	std::vector<Binding> bindings;	// アクションマップの入力設定
 	ActionState state;				// 各アクションマップの入力状態
-	bool isActive;					// アクションマップの有効状態
+	bool isActive = false;			// アクションマップの有効状態
 
 
 public:
@@ -83,8 +83,12 @@ public:
 	 *	入力状態のリセット
 	 */
 	void InputReset() {
-		state.axis.clear();
-		state.button.clear();
+		for (auto& [action, actionState] : state.axis) {
+			actionState = 0.0f;
+		}
+		for (auto& [action, actionState] : state.button) {
+			actionState = false;
+		}
 	}
 
 public:

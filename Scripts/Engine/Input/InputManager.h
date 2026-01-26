@@ -111,6 +111,7 @@ public: // マウスとキーの両方入力
 	 *	ボタンが押されたかどうか
 	 *  @param[in]	ActionMapBase::Input _mouseButton	入力
 	 *	@return		bool
+	 *  @outhor Riku
 	 */
 	inline bool IsInputDown(ActionMapBase::Input _button) const {
 		switch (_button.type) {
@@ -124,6 +125,7 @@ public: // マウスとキーの両方入力
 	 *	ボタンが押されているかどうか
 	 *  @param[in]	ActionMapBase::Input _button		入力
 	 *	@return		bool
+	 *  @outhor Riku
 	 */
 	inline bool IsInput(ActionMapBase::Input _button) const {
 		switch (_button.type) {
@@ -137,6 +139,7 @@ public: // マウスとキーの両方入力
 	 *	ボタンが押されたかどうか
 	 *  @param[in]	ActionMapBase::Input _button		入力
 	 *	@return		bool
+	 *  @outhor Riku
 	 */
 	inline bool IsInputUp(ActionMapBase::Input _button) const {
 		switch (_button.type) {
@@ -148,13 +151,19 @@ public: // マウスとキーの両方入力
 	}
 public: // アクションマップ関連
 	/*
-	 *	アクションマップの有効状態切り替え
+	 *	各アクションマップの有効状態切り替え
+	 *	@param[in]	GameEnum::ActionMap map	切り替えるアクションマップ
+	 *  @param[in]	bool setActive			切り替え値
+	 *  @outhor Riku
 	 */
 	inline void SetActionMapIsActive(GameEnum::ActionMap map, bool setActive) {
 		actionMaps[map]->isActive = setActive;
 	}
 	/*
 	 *	各アクションマップの入力状態取得
+	 *	@param[in]	GameEnum::ActionMap map	取得するアクションマップ
+	 *	@return		ActionMapBase::ActionState
+	 *  @outhor Riku
 	 */
 	inline ActionMapBase::ActionState GetInputState(GameEnum::ActionMap map) {
 		return actionMaps[map]->state;

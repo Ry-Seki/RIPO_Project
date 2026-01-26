@@ -1,3 +1,8 @@
+/*
+ *	@file	PlayerActionMap.cpp
+ *  @author Riku
+ */
+
 #include "PlayerActionMap.h"
 #include "InputManager.h"
 
@@ -5,8 +10,6 @@
  *	‰Šú‰»ˆ—
  */
 void PlayerActionMap::Initialize() {
-	isActive = false;
-
 	// “ü—Íİ’è
 	// ‘OˆÚ“®
 	AddAxis(
@@ -38,4 +41,15 @@ void PlayerActionMap::Initialize() {
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::Lift),
 		{ InputType::Mouse, MOUSE_INPUT_LEFT });
+
+	// ’l‚Ì‰Šú‰»
+	state.axis[static_cast<int>(GameEnum::PlayerAction::ForwardMove)] = 0.0f;
+	state.axis[static_cast<int>(GameEnum::PlayerAction::RightMove)] = 0.0f;
+	state.button[static_cast<int>(GameEnum::PlayerAction::Run)] = false;
+	state.button[static_cast<int>(GameEnum::PlayerAction::Avoid)] = false;
+	state.button[static_cast<int>(GameEnum::PlayerAction::Jump)] = false;
+	state.button[static_cast<int>(GameEnum::PlayerAction::Shot)] = false;
+	state.button[static_cast<int>(GameEnum::PlayerAction::Lift)] = false;
+
+	isActive = false;
 }
