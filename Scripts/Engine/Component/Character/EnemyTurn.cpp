@@ -12,7 +12,6 @@ using namespace CharacterUtility;
 
 EnemyTurn::EnemyTurn()
 	: enemyComponent(nullptr)
-	, animator(nullptr)
 	, ROTATE_SPEED(3.0f)
 	, targetAngle(0.0f) {
 }
@@ -23,9 +22,6 @@ EnemyTurn::EnemyTurn()
  */
 void EnemyTurn::Start(GameObject* enemy) {
 	enemyComponent = enemy->GetComponent<EnemyComponent>();
-
-	animator = enemy->GetComponent<AnimatorComponent>();
-	if (animator == nullptr) return;
 
 	// 回転の目標位置
 	Vector3 targetPos;
@@ -60,13 +56,6 @@ void EnemyTurn::Update(GameObject* enemy, float deltaTime) {
 
 	// 敵のコンポーネントを取得
 	auto enemyComponent = enemy->GetComponent<EnemyComponent>();
-
-	// モデルハンドルのセット
-	auto modelRenderer = enemy->GetComponent<ModelRenderer>()->GetModelHandle();
-	if (modelRenderer == -1) return;
-	animator->SetModelHandle(modelRenderer);
-	// アニメーションを再生
-	//animator->Play(3, 50);
 
 	// 角度を正規化
 	while (targetAngle > Pi)  targetAngle -= Pi * 2;
