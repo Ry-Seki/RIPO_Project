@@ -18,7 +18,7 @@ public:
 	EnemyState() = default;
 	virtual ~EnemyState() = default;
 
-	virtual void Start(EnemyComponent& enemy) {};
+	virtual void Start(GameObject* enemy) {};
 	virtual void Update(GameObject* enemy, float deltaTime) = 0;
 	virtual void Execute(EnemyComponent& enemy) {};
 

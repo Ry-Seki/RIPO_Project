@@ -11,7 +11,9 @@
 using namespace CharacterUtility;
 
 EnemyTurn::EnemyTurn()
-	: ROTATE_SPEED(3.0f)
+	: enemyComponent(nullptr)
+	, animator(nullptr)
+	, ROTATE_SPEED(3.0f)
 	, targetAngle(0.0f) {
 }
 
@@ -19,28 +21,33 @@ EnemyTurn::EnemyTurn()
  *	更新処理の前に呼び出す処理
  *  param[in]	EnemyComponent&	enemy
  */
-void EnemyTurn::Start(EnemyComponent& enemy) {
+void EnemyTurn::Start(GameObject* enemy) {
+	enemyComponent = enemy->GetComponent<EnemyComponent>();
+
+	animator = enemy->GetComponent<AnimatorComponent>();
+	if (animator == nullptr) return;
 
 	// 回転の目標位置
 	Vector3 targetPos;
 	// 移動位置が+の場合
-	if (!enemy.GetChaseTargetChangeFrag()) {
+	if (!enemyComponent->GetChaseTargetChangeFrag()) {
 		// 通常のWayPointを向く
-		targetPos = enemy.GetWayPoint();
+		targetPos = enemyComponent->GetWayPoint();
 	}
 	// 移動位置が-の場合
 	else {
 		// 反対側のWayPointを向く
-		targetPos = enemy.GetNextWayPoint();
+		targetPos = enemyComponent->GetNextWayPoint();
 	}
 
 	// 自身から目標への方向ベクトルを計算
-	Vector3 direction = Direction(enemy.GetEnemyPosition(), targetPos);
+	Vector3 direction = Direction(enemyComponent->GetEnemyPosition(), targetPos);
 
 	// Y軸回転の目標角度をだす
 	targetAngle = atan2(direction.x, direction.z);
 	// 反対モデル用に補正
 	targetAngle += Pi;
+
 }
 
 /*
@@ -53,6 +60,13 @@ void EnemyTurn::Update(GameObject* enemy, float deltaTime) {
 
 	// 敵のコンポーネントを取得
 	auto enemyComponent = enemy->GetComponent<EnemyComponent>();
+
+	// モデルハンドルのセット
+	auto modelRenderer = enemy->GetComponent<ModelRenderer>()->GetModelHandle();
+	if (modelRenderer == -1) return;
+	animator->SetModelHandle(modelRenderer);
+	// アニメーションを再生
+	//animator->Play(3, 50);
 
 	// 角度を正規化
 	while (targetAngle > Pi)  targetAngle -= Pi * 2;

@@ -7,6 +7,7 @@
 
 #include "EnemyComponent.h"
 #include "EnemyState.h"
+#include "../AnimatorComponent.h"
 
 /*
  *	敵の追従処理クラス
@@ -15,19 +16,20 @@ class EnemyChase : public EnemyState {
 private:
 	GameObjectPtr player;
 	std::shared_ptr<AnimatorComponent> animator;
+	std::shared_ptr<EnemyComponent> enemyComponent;
 	// ウェイポイント
 	Vector3 wayPoint;
 	// 目先のウェイポイント予定地
 	Vector3 nextWayPoint;
 	// ウェイポイント間の距離
 	float wayPointDistance;
+	// 移動スピード
+	float moveSpeed;
 	// プレイヤーの距離判定フラグ
 	bool closePlayer;
 	// 移動量
 	Vector3 moveVec;
 
-	// 移動スピード
-	const float MOVE_SPEED;
 	// 回転スピード
 	const float ROTATE_SPEED;
 	// プレイヤーの距離
@@ -45,7 +47,7 @@ public:
 	 *	更新処理の前に呼び出す処理
 	 *  param[in]	EnemyComponent&	enemy
 	 */
-	virtual void Start(EnemyComponent& enemy) override;
+	virtual void Start(GameObject* enemy) override;
 
 	/*
 	 *	更新処理

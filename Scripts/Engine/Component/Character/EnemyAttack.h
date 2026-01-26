@@ -7,6 +7,7 @@
 
 #include "EnemyComponent.h"
 #include "EnemyState.h"
+#include "../AnimatorComponent.h"
 
 /*
  *	敵の攻撃処理クラス
@@ -14,6 +15,8 @@
 class EnemyAttack : public EnemyState {
 private:
 	GameObjectPtr player;
+	std::shared_ptr<AnimatorComponent> animator;
+	std::shared_ptr<EnemyComponent> enemyComponent;
 	// クールタイム
 	float coolTime;
 
@@ -32,7 +35,7 @@ public:
 	 *	更新処理の前に呼び出す処理
 	 *  param[in]	EnemyComponent&	enemy
 	 */
-	virtual void Start(EnemyComponent& enemy) override;
+	virtual void Start(GameObject* enemy) override;
 
 	/*
 	 *	更新処理

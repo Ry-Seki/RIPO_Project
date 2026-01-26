@@ -7,6 +7,7 @@
 #include "BossStandby.h"
 #include "PlayerComponent.h"
 #include "../../Manager/CameraManager.h"
+#include "BossDeath.h"
 
 /*
  *	コンストラクタ
@@ -19,13 +20,12 @@ BossComponent::BossComponent()
 BossComponent::BossComponent(BossState* initState)
 	: boss(nullptr)
 	, player(nullptr)
-	//, modelRenderer(nullptr)
 	, animator(nullptr)
 	, state(initState)
-	, animationHandle(-1)
 	, modelHandle(-1)
 	, coolTime(3)
-	, isTriger(false)
+	, attackIsTriger(false)
+	, damageIsTriger(false)
 	, moveFrag(false)
 	, homePosition(Vector3::zero)
 {
@@ -76,7 +76,7 @@ void BossComponent::Update(float deltaTime)
  */
 void BossComponent::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other)
 {
-	if (!isTriger && other->GetOwner()->name == "Player") {
+	if (!attackIsTriger && other->GetOwner()->name == "Player") {
 		// 当たったらダメージを与える
 		auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
 		// 今はとりあえず適当なダメージ
@@ -84,10 +84,18 @@ void BossComponent::OnCollision(const std::shared_ptr<Component>& self, const st
 		// ダメージを反映
 		player->GetComponent<PlayerComponent>()->SetPlayerStatus(playerStatus);
 
-		isTriger = true;
+		attackIsTriger = true;
 	}
 	else if (coolTime <= 0) {
-		isTriger = false;
+		attackIsTriger = false;
 		coolTime = 2;
+	}
+
+	// 死亡判定
+	if (!damageIsTriger && other->GetOwner()->name == "bullet") {
+		damageIsTriger = true;
+		if (state != nullptr)
+			state = new BossDeath();
+		state->Start(boss);
 	}
 }

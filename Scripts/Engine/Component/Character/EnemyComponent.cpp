@@ -9,6 +9,8 @@
 #include "EnemyAttack.h"
 #include "EnemyChase.h"
 #include "EnemyTurn.h"
+#include "EnemyDeath.h"
+#include "BulletComponent.h"
  /*
   *	コンストラクタ
   */
@@ -27,7 +29,8 @@ EnemyComponent::EnemyComponent(EnemyState* initState)
 	, wayPointDistance(1000.0f)
 	, chaseTargetChangeFrag(false)
 	, closePlayer(false)
-	, isTriger(false)
+	, attackIsTriger(false)
+	, damageIsTriger(false)
 	, turnDelay(0.0f)
 	, modelHandle(0)
 	, coolTime(2.0f)
@@ -47,13 +50,15 @@ void EnemyComponent::Start() {
 
 	if (state == nullptr)
 		state = new EnemyChase();
-	state->Start(*this);
+	state->Start(enemy);
 
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
 
 	animator = enemy->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
+	// 仮モデルハンドルの読み込み
+	modelHandle = MV1LoadModel("Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1");
 	// モデルハンドルのセット
 	animator->SetModelHandle(modelHandle);
 
@@ -76,6 +81,8 @@ void EnemyComponent::Update(float deltaTime) {
 	StageManager::GetInstance().StageCollider(enemy, moveVec);
 
 	coolTime -= deltaTime;
+
+
 }
 
 /*
@@ -83,7 +90,7 @@ void EnemyComponent::Update(float deltaTime) {
  */
 void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other)
 {
-	if (!isTriger && other->GetOwner()->name == "Player") {
+	if (!attackIsTriger && other->GetOwner()->name == "Player") {
 		// 当たったらダメージを与える
 		auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
 		// 今はとりあえず適当なダメージ
@@ -91,10 +98,18 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 		// ダメージを反映
 		player->GetComponent<PlayerComponent>()->SetPlayerStatus(playerStatus);
 
-		isTriger = true;
+		attackIsTriger = true;
 	}
 	else if (coolTime <= 0) {
-		isTriger = false;
+		attackIsTriger = false;
 		coolTime = 2;
+	}
+
+	// 死亡判定
+	if (!damageIsTriger && other->GetOwner()->name == "bullet") {
+		damageIsTriger = true;
+		if (state != nullptr)
+			state = new EnemyDeath();
+		state->Start(enemy);
 	}
 }

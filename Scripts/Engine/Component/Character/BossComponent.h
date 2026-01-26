@@ -14,13 +14,16 @@ class BossComponent : public CharacterBase {
 private:
 	GameObject* boss;
 	GameObjectPtr player;
-	//GameObject* modelRenderer;
 	std::shared_ptr<AnimatorComponent> animator;
 	BossState* state;
-	int animationHandle;
+	// モデルハンドル
 	int modelHandle;
+	// クールタイム
 	float coolTime;
-	bool isTriger;
+	// 攻撃衝突判定フラグ
+	bool attackIsTriger;
+	// ダメージ衝突判定フラグ
+	bool damageIsTriger;
 	// 行動フラグ
 	bool moveFrag;
 	// 定位置
