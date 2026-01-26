@@ -48,7 +48,7 @@ void MenuManager::CloseTopMenu() {
 	useMenuList.back()->Open();
 }
 /*
- *	@brief		現在開かれている全てのリストを削除する
+ *	@brief	現在開かれている全てのリストを削除する
  */
 void MenuManager::CloseAllMenu() {
 	if (useMenuList.empty()) return;

@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scripts\Data\DxLibResourcesManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\AudioManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMSource.cpp" />
@@ -198,7 +199,9 @@
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuNewGame.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuSystem.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuTitle.cpp" />
+    <ClCompile Include="Scripts\Engine\Save\SaveDataManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DebugScene.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\ActionContext.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\GameState\GameStateMachine.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\DungeonCreater.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\FloorProcessor.cpp" />
@@ -235,6 +238,7 @@
     <ClCompile Include="Scripts\Engine\StringUtility.cpp" />
     <ClCompile Include="Scripts\Engine\System\Item\ItemManager.cpp" />
     <ClCompile Include="Scripts\Engine\System\Status\PlayerStatusManager.cpp" />
+    <ClCompile Include="Scripts\Engine\System\World\WorldProgressManager.cpp" />
     <ClCompile Include="Scripts\Engine\Time.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
@@ -244,8 +248,10 @@
   <ItemGroup>
     <ClInclude Include="Scripts\Data\Dungeon\DungeonData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonFloorData.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonProgressData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonResourceData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonStageData.h" />
+    <ClInclude Include="Scripts\Data\DxLibResourcesManager.h" />
     <ClInclude Include="Scripts\Data\ItemCatalogData.h" />
     <ClInclude Include="Scripts\Data\PlayerStatusData.h" />
     <ClInclude Include="Scripts\Data\SaveData.h" />
@@ -332,6 +338,7 @@
     <ClInclude Include="Scripts\Engine\Save\SaveDataManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\DebugScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\GameState\ActionContext.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\DungeonContext.h" />
     <ClInclude Include="Scripts\Engine\Scene\GameState\GameStateBase.h" />
     <ClInclude Include="Scripts\Engine\Scene\GameState\GameStateMachine.h" />
     <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\DungeonCreater.h" />
@@ -383,6 +390,7 @@
     <ClInclude Include="Scripts\Engine\System\Item\ItemManager.h" />
     <ClInclude Include="Scripts\Engine\System\Money\MoneyManager.h" />
     <ClInclude Include="Scripts\Engine\System\Status\PlayerStatusManager.h" />
+    <ClInclude Include="Scripts\Engine\System\World\WorldProgressManager.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
     <ClInclude Include="Scripts\Engine\Vision.h" />

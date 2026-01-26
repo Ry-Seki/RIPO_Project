@@ -16,12 +16,9 @@
 #include "Fade/FadeManager.h"
 #include "Audio/AudioManager.h"
 #include "Load/LoadManager.h"
-#include "Manager/StageObjectManager.h"
-#include "Manager/StageManager.h"
-#include "Manager/GameObjectManager.h"
-#include "Manager/BulletManager.h"
-#include "Manager/CharacterManager.h"
 #include "Menu/MenuManager.h"
+#include "Save/SaveDataManager.h"
+#include "../Data/DxLibResourcesManager.h"
 
 #include <DxLib.h>
 #include <EffekseerForDXLib.h>
@@ -88,23 +85,8 @@ int Engine::Initialize() {
 
 	// タイムクラスの初期化
 	Time::Init();
-	//// シーンの初期化
-	//sceneList.resize(static_cast<int>(GameEnum::SceneType::Max));
-	//// 各シーンの生成
-	//sceneList[static_cast<int>(GameEnum::SceneType::Standby)]
-	//	= std::make_shared<StandbyScene>();
-	//sceneList[static_cast<int>(GameEnum::SceneType::Title)]
-	//	= std::make_shared<TitleScene>();
-	//sceneList[static_cast<int>(GameEnum::SceneType::MainGame)]
-	//	= std::make_shared<MainGameScene>();
-	//sceneList[static_cast<int>(GameEnum::SceneType::Result)]
-	//	= std::make_shared<ResultScene>();
-	//// 各シーンの初期化
-	//for (auto& scene : sceneList) {
-	//	if (!scene) continue;
-
-	//	scene->Initialize(*this);
-	//}
+	// セーブ管理クラスの初期化
+	SaveDataManager::GetInstance().Initialize();
 	// 初期化フラグの変更
 	initialized = true;
 	return 0;
@@ -115,13 +97,8 @@ int Engine::Initialize() {
 void Engine::Teardown() {
 	if (initialized) {
 		initialized = false;
-		BulletManager::GetInstance().DestroyInstance();
-		AudioManager::GetInstance().DestroyInstance();
-		StageObjectManager::GetInstance().DestroyInstance();
-		StageManager::GetInstance().DestroyInstance();
-		LoadManager::GetInstance().DestroyInstance();
-		GameObjectManager::GetInstance().DestroyInstance();
-		CharacterManager::GetInstance().DestroyInstance();
+		SaveDataManager::GetInstance().SaveCurrentSlot();
+		DxLibResourcesManager::GetInstance().Teardown();
 		currentScene->Finalize(*this);
 	}
 	if (effekseerInitialized) { Effkseer_End(); effekseerInitialized = false; }

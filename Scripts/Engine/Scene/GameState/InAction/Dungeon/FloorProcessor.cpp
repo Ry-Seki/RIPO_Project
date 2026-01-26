@@ -15,6 +15,7 @@
 #include "../../../../Manager/StageObjectManager.h"
 #include "../../../../Fade/FadeFactory.h"
 #include "../../../../Fade/FadeManager.h"
+#include "../../../../System/World/WorldProgressManager.h"
 
 /*
  *	@brief	現在のフロアの片付け処理
@@ -104,14 +105,17 @@ void FloorProcessor::SetupNextFloor() {
 	if (setFloorData.isFirst) {
 		setFloorData.isFirst = false;
 	}else {
-		// 敵の数が0より大きければ、フロアデータ更新
-		if (enemyFloorList[currentFloor].size() > 0) setFloorData.enemySpawnCount = enemyFloorList[currentFloor].size();
+		setFloorData.enemySpawnCount = enemyFloorList[currentFloor].size();
 	}
+	// ボス生成フラグ
+	if (dungeonProgressData.isBossDefeated) setFloorData.bossSpawnCount = 0;
+	//　お宝生成数の設定
+	setFloorData.treasureSpawnCount = GetSpawnTreasureIDTable().size();
 	// ダンジョンクリエイターに情報を設定
 	dungeonCreater.SetFloorData(setFloorData);
 	// フロアを再生成
 	dungeonCreater.RegenerateDungeon(
-		currentFloor, enemyFloorList[currentFloor], holdTreasureID, GetTreasureIDTable(currentFloor), nextFloor
+		currentFloor, enemyFloorList[currentFloor], holdTreasureObjectID, GetSpawnTreasureIDTable(), nextFloor
 	);
 	// フロアデータの更新
 	floorData.TrySetFloorData(currentFloor, setFloorData);
@@ -132,9 +136,13 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart) {
 	// データの取得
 	stageData = setContext.dungeonStageData;
 	floorData = setContext.dungeonFloorData;
+	dungeonProgressData = WorldProgressManager::GetInstance().GetDungeonProgressData(setContext.dungeonID);
 	LoadManager& load = LoadManager::GetInstance();
 	// リソースの読み込み
-	resourceData.LoadResourcesFromStageData(stageData);
+	resourceData.LoadResourcesFromStageData(stageData, 
+											dungeonProgressData.isBossDefeated,
+											GetAllSpawnTreasureIDTable());
+
 	// ロード完了時のコールバック登録
 	load.SetOnComplete([this, &isStart]() {
 		// フロアデータの作成
@@ -142,10 +150,14 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart) {
 		// フロアデータの変更
 		floorData.TryGetFloorData(currentFloor, setFloorData);
 		setFloorData.isFirst = false;
+		// ボスを生成するか判定
+		if (dungeonProgressData.isBossDefeated) setFloorData.bossSpawnCount = 0;
+		//　お宝生成数の設定
+		setFloorData.treasureSpawnCount = GetSpawnTreasureIDTable().size();
 		// ダンジョン生成クラスに必要なデータを設定
 		dungeonCreater.SetDungeonData(setFloorData, resourceData);
 		// ダンジョンの生成
-		dungeonCreater.GenerateDungeon(currentFloor, GetTreasureIDTable(currentFloor), nextFloor);
+		dungeonCreater.GenerateDungeon(currentFloor, GetSpawnTreasureIDTable(), nextFloor);
 		// フロアデータの更新
 		floorData.TrySetFloorData(currentFloor, setFloorData);
 		// 重力
@@ -173,7 +185,7 @@ void FloorProcessor::ChangeFloor() {
  *	@brief	ダンジョン終了処理
  */
 void FloorProcessor::EndDungeon() {
-	holdTreasureID = -1;
+	holdTreasureObjectID = -1;
 	GameObjectUtility::SetUseObjectColliderFlag(false);
 	CharacterUtility::RemoveAllCharacter();
 	StageManager::GetInstance().Execute();
@@ -181,16 +193,55 @@ void FloorProcessor::EndDungeon() {
 	CameraManager::GetInstance().ResetCamera();
 }
 /*
- *	@brief		FloorごとのTreasureID一覧を取得
- *  @param[in]	int floorID
+ *	@brief		フロア関係なしのお宝ID一覧を取得
+ *  @return		std::vector<int>
+ */
+std::vector<int> FloorProcessor::GetAllTreasureIDTable() {
+	std::vector<int> result;
+	// お宝情報を取得
+	auto treasureMap = stageData.GetCategory("Treasure");
+	for (const auto& [key, value] : treasureMap) {
+		// .で文字列を切り分ける
+		auto parts = StringUtility::Split(key, '.');
+		if (parts.size() != 2) continue;
+
+		int treasureID = std::stoi(parts[1]);
+		// お宝IDを追加
+		result.push_back(treasureID);
+	}
+	return result;
+}
+/*
+ *	@brief		フロア関係なしの生成するお宝ID一覧の取得
+ *  @return		std::vector<int>
+ */
+std::vector<int> FloorProcessor::GetAllSpawnTreasureIDTable() {
+	// 生成するお宝IDリストを取得
+	std::vector<int> treasureIDList = GetAllTreasureIDTable();
+	// お宝獲得状況マップを取得
+	auto& getTreasureIDMap = dungeonProgressData.treasureFlagMap;
+	if (getTreasureIDMap.empty()) return treasureIDList;
+	// 取得済みIDを生成候補から除外
+	treasureIDList.erase(
+		std::remove_if(treasureIDList.begin(), treasureIDList.end(),
+		[&](int treasureID) {
+		auto itr = getTreasureIDMap.find(treasureID);
+		return itr != getTreasureIDMap.end() && itr->second;
+	}), treasureIDList.end());
+
+	return treasureIDList;	// 結果を反映した物を返す
+}
+/*
+ *	@brief		フロアごとのTreasureID一覧を取得
  *	@return		std::vector<int>
  */
-std::vector<int> FloorProcessor::GetTreasureIDTable(int floorID) {
+std::vector<int> FloorProcessor::GetTreasureIDTable() {
 	std::vector<std::vector<int>> result;
 
 	auto treasureMap = stageData.GetCategory("Treasure");
 	// JSONのキーから数字を取り出す
 	for (const auto& [key, value] : treasureMap) {
+		// .で文字列を切り分ける
 		auto parts = StringUtility::Split(key, '.');
 		if (parts.size() != 2) continue;
 		// 一つ目はフロア数
@@ -198,11 +249,43 @@ std::vector<int> FloorProcessor::GetTreasureIDTable(int floorID) {
 		// 二つ目はお宝ID
 		int treasureID = std::stoi(parts[1]);
 		// floor 番目の要素が存在しないか判定
-		if (result.size() <= static_cast<size_t>(floor)) {
-			result.resize(floor + 1);
-		}
+		if (result.size() <= static_cast<size_t>(floor)) result.resize(floor + 1);
 
 		result[floor].push_back(treasureID);
 	}
-	return result[floorID];
+	return result[currentFloor];
+}
+/*
+ *	@brief		フロアごとに生成するお宝IDデータのみを渡す
+ *	@return		std::vector<int>
+ */
+std::vector<int> FloorProcessor::GetSpawnTreasureIDTable() {
+	// 生成するお宝IDリストを取得
+	std::vector<int> treasureIDList = GetTreasureIDTable();
+	// お宝獲得状況マップを取得
+	auto& getTreasureIDMap = dungeonProgressData.treasureFlagMap;
+	if(getTreasureIDMap.empty()) return treasureIDList;
+	// 取得済みIDを生成候補から除外
+	treasureIDList.erase(
+		std::remove_if(treasureIDList.begin(),treasureIDList.end(),
+		[&](int treasureID) {
+		auto itr = getTreasureIDMap.find(treasureID);
+		return itr != getTreasureIDMap.end() && itr->second;
+		}), treasureIDList.end());
+
+	return treasureIDList;	// 結果を反映した物を返す
+}
+/*
+ *	@brief		プレイヤーが所持しているお宝IDの取得
+ *	@return		int
+ */
+int FloorProcessor::GetHoldTreasureID() const {
+	// プレイヤーが所持しているお宝を取得
+	auto holdTreasure = StageManager::GetInstance().GetLiftObject();
+	if (!holdTreasure) return -1;
+
+	auto component = holdTreasure->GetComponent<StageObjectBase>();
+	if (!component) return -1;
+
+	return component->GetTreasureID();
 }

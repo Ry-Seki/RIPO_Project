@@ -12,7 +12,6 @@
   */
 class EnemyTurn : public EnemyState {
 private:
-	GameObject* enemy;		// “G
 	float targetAngle;		// ‰ñ“]‚·‚éÛ‚Ì‘ÎÛ‚ÌˆÊ’u
 
 private:

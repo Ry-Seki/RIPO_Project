@@ -11,9 +11,10 @@
 
 #include <vector>
 #include <string>
+#include <cassert>
 
 /*
- *  ダンジョン概要データ読み込みクラス
+ *  @brief  ダンジョン概要データ読み込みクラス
  */
 class DungeonDataLoader : public LoadBase { // ← LoadBase を継承
 private:
@@ -22,23 +23,26 @@ private:
 public:
     std::vector<DungeonData> dungeonList;
 
+public:
+    /*
+     *  @brief  コンストラクタ
+     */
     DungeonDataLoader(const std::string& setFilePath)
         : LoadBase(setFilePath), csvLoader(setFilePath) {}
 
-    void Load() override { // ← LoadBase の仮想関数をオーバーライド
-        std::cout << "[DungeonDataLoader] Loading CSV: " << filePath << std::endl;
+public:
+    /*
+     *  @brief  ロード処理
+     */
+    void Load() override { 
         csvLoader.Load();
         if (!csvLoader.IsLoaded()) {
-            std::cout << "[DungeonDataLoader] CSV load failed!" << std::endl;
+            assert(false && "DungeonData.csvが読み込めませんでした");
+            return;
         }
-        else {
-            std::cout << "[DungeonDataLoader] CSV loaded successfully" << std::endl;
-        }
-        if (!csvLoader.IsLoaded()) return;
-
         const auto& csvData = csvLoader.GetData();
 
-        // ヘッダ行をスキップして CSV を変換
+        // ヘッダ行をスキップしてCSVを変換
         for (size_t i = 1; i < csvData.size(); ++i) {
             const auto& row = csvData[i];
             if (row.size() < 6) continue;
@@ -46,16 +50,21 @@ public:
             DungeonData data;
             data.dungeonID = std::stoi(row[0]);
             data.name = row[1];
-            data.openDay = std::stoi(row[2]);
-            data.eventStartDay = std::stoi(row[3]);
-            data.eventEndDay = std::stoi(row[4]);
-            data.dungeonPath = row[5];
+            data.eventStartDay = std::stoi(row[2]);
+            data.eventEndDay = std::stoi(row[3]);
+            data.levelOfDanger = std::stoi(row[4]);
+            data.necessaryStrength = std::stoi(row[5]);
+            data.dungeonPath = row[6];
 
             dungeonList.push_back(data);
         }
     }
 
 public:
+    /*
+     *  @brief      ロード状況の取得
+     *  @return     bool
+     */
     inline bool IsLoaded() const override {
         return csvLoader.IsLoaded();
     }

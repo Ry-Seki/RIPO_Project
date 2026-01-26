@@ -6,17 +6,22 @@
     "RespawnPos": "Col_RespownPos"
   },
   "Enemy": {
-    "SpawnPos": [
-      "Sponer_0",
-      "Sponer_1",
-      "Sponer_2"
-    ]
+    "SpawnPos": {
+      "0": "Sponer_0",
+      "1": "Sponer_1",
+      "2": "Sponer_2"
+    }
   },
   "Treasure": {
-    "SpawnPos": [
-      "TreasureSponer_0",
-      "TreasureSponer_1"
-    ]
+    "SpawnPos": {
+      "0": {
+        "0": "TreasureSponer_0",
+        "1": "TreasureSponer_1"
+      },
+      "1": {
+        "2": "TreasureSponer_0"
+      }
+    }
   },
   "PointLight": {
     "LightPos": [

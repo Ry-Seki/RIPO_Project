@@ -23,7 +23,7 @@
  */
 void SelectDetail_Dungeon::Initialize() {
 	LoadManager& load = LoadManager::GetInstance();
-	dungeonDataLoader = load.LoadResource<DungeonDataLoader>("Data/Dungeon/DungeonList.csv");
+	dungeonDataLoader = load.LoadResource<DungeonDataLoader>(_DUNGEON_LIST_PATH);
 	load.SetOnComplete([this]() { SetupData(); });
 }
 /*
@@ -71,6 +71,24 @@ void SelectDetail_Dungeon::Teardown() {
 	inputHandle = false;
 }
 /*
+ *	@brief		お宝イベント査定
+ */
+void SelectDetail_Dungeon::AssessmentTreasureEvent() {
+	auto& context = owner->GetOwner()->GetActionContext();
+	// 経過時間を取得
+	int elapsedDay = context.elapsedDay;
+	// ダンジョンデータのイベント開始日と照らし合わせる
+	for (int i = 0, max = dungeonDataList.size(); i < max; i++) {
+		DungeonData data = dungeonDataList[i];
+		if (elapsedDay > data.eventStartDay && elapsedDay <= data.eventEndDay) {
+			if (!data.isEventDay) data.isEventDay = true;
+		} else {
+			if (data.isEventDay) data.isEventDay = false;
+		}
+		dungeonDataList[i] = data;
+	}
+}
+/*
  *	@brief	ダンジョンステージデータの読み込み
  */
 void SelectDetail_Dungeon::StartDungeonDataLoad(int dungeonID) {
@@ -96,11 +114,11 @@ void SelectDetail_Dungeon::SetDungeonData(const std::vector<std::shared_ptr<Load
 	JSON dungeonfloorData = setDataList[1]->GetData();
 	if (dungeonData.empty() || dungeonfloorData.empty()) return;
 
-	auto& ctx = owner->GetOwner()->GetActionContext();
+	auto& context = owner->GetOwner()->GetActionContext();
 	// それぞれのデータを初期化
-	ctx.dungeonStageData.LoadFromJSON(dungeonData);
-	// TODO : ここ治す
-	ctx.dungeonFloorData.LoadFromJSON(dungeonfloorData, dungeonID);
+	context.dungeonID = dungeonID;
+	context.dungeonStageData.LoadFromJSON(dungeonData);
+	context.dungeonFloorData.LoadFromJSON(dungeonfloorData, dungeonID);
 	// ステートの切り替え
 	owner->GetOwner()->ChageState(GameEnum::GameState::InAction);
 }

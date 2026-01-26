@@ -13,6 +13,7 @@
   */
 EnemyChase::EnemyChase()
 	: player(nullptr)
+	, animator(nullptr)
 	, wayPoint(0.0f, 0.0f, 0.0f)
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(1000.0f)
@@ -27,6 +28,8 @@ void EnemyChase::Start(EnemyComponent& enemy) {
 	if (player == nullptr) return;
 	wayPoint = enemy.GetWayPoint();
 	nextWayPoint = enemy.GetNextWayPoint();
+	//animator = enemy.GetComponent<AnimatorComponent>();
+	if (animator == nullptr) return;
 }
 
 /*
@@ -40,7 +43,7 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime) {
 
 	auto enemyComponent = enemy->GetComponent<EnemyComponent>();
 
-	if (player && Vision(enemy->position, ForwardDir(enemy->rotation), player->position, 30, 2000)) {
+	if (player && Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, 30, 2000)) {
 		ChaseWayPoint(enemy, player->position, true, deltaTime);
 	}
 	else {
@@ -77,7 +80,7 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 	// –Ú•W‚Ì•ûŒü
 	Vector3 direction = Direction(enemy->position, wayPoint);
 	float goalAngle = atan2(direction.x, direction.z);
-	//goalAngle += 180 * Deg2Rad;
+	goalAngle = goalAngle + 180 * Deg2Rad;
 	// ³‹K‰»‚µ‚½Šp“x‚ÌˆÚ“®—Ê
 	float angleDirection = fmod((goalAngle - enemy->rotation.y) * Rad2Deg, 360);
 	angleDirection = angleDirection * Deg2Rad;

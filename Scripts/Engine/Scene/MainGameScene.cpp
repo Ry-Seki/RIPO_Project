@@ -13,6 +13,7 @@
 #include "../System/Money/MoneyManager.h"
 #include "../System/Status/PlayerStatusManager.h"
 #include "../Component/CapsuleCollider.h"
+#include "../Save/SaveDataManager.h"
 
 /*
  *  @brief  デストラクタ
@@ -29,8 +30,9 @@ void MainGameScene::Initialize(Engine& engine) {
     gameState->ChageState(GameEnum::GameState::SelectAction);
     auto treasureData = LoadManager::GetInstance().LoadResource<LoadJSON>(_TREASURE_DATA_PATH);
     auto itemData = LoadManager::GetInstance().LoadResource<LoadJSON>(_ITEM_DATA_PATH);
-    LoadManager::GetInstance().SetOnComplete([treasureData, itemData]() {
+    LoadManager::GetInstance().SetOnComplete([this, &engine, treasureData, itemData]() {
         MoneyManager::GetInstance().LoadFromJSON(treasureData->GetData(), itemData->GetData());
+        Setup(engine);
     });
     PlayerStatusManager::GetInstance().Initialize();
 }
@@ -38,6 +40,11 @@ void MainGameScene::Initialize(Engine& engine) {
  *  @brief  準備前処理
  */
 void MainGameScene::Setup(Engine& engine) {
+    auto& save = SaveDataManager::GetInstance();
+    save.AutoSaveLoad();
+
+    auto& context = gameState->GetActionContext();
+    save.ApplyLoadData(context);
 }
 /*
  *  更新処理
@@ -83,8 +90,12 @@ void MainGameScene::Render() {
  */
 void MainGameScene::EndMainGameScene(Engine& engine) {
     auto& context = gameState->GetActionContext();
+    auto& save = SaveDataManager::GetInstance();
     // アクション終了フラグの変更
     gameState->SetIsActionEnd(false);
+    // オートセーブにセーブ
+    save.CollectSaveData(context);
+    save.AutoSave();
     // シーン遷移条件
     if (context.elapsedDay > _END_DAY) {
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);

@@ -253,6 +253,48 @@
     <Filter Include="ヘッダー ファイル\Engine\System\Save">
       <UniqueIdentifier>{aac63f5d-d861-4147-a38d-8e51a32c3cb0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\SceneState">
+      <UniqueIdentifier>{dd3fbd29-e0d8-4c47-bfdf-01e02431907a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\SceneState\Standby">
+      <UniqueIdentifier>{550145f3-1df6-4cdf-ba6c-3106e2f67386}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\SceneState\Title">
+      <UniqueIdentifier>{a505d185-7035-4873-9dfa-51d1a6da9a46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\SceneState\Tutorial">
+      <UniqueIdentifier>{f75b569b-f298-41cc-8186-3eecc562e0e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\SceneState\MainGame">
+      <UniqueIdentifier>{586ae321-74c1-4a94-aea2-b1864c091483}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Scene\SceneState\Result">
+      <UniqueIdentifier>{831b1b94-607a-48a4-a322-58fe239fdac4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\Standby">
+      <UniqueIdentifier>{2d7ce63c-2de8-499d-a014-8386a9caf991}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\Title">
+      <UniqueIdentifier>{fbb655bf-360d-47be-a7f5-320165b2b86f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\Tutorial">
+      <UniqueIdentifier>{53f3ff99-da7a-41a7-8154-fff79632532a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\MainGame">
+      <UniqueIdentifier>{07da5422-2cb1-4c46-a163-369e1b34e4d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\Result">
+      <UniqueIdentifier>{f9631148-fda3-47fc-ac53-748e627f4314}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\System\World">
+      <UniqueIdentifier>{a2860f3b-903e-423c-9960-2de6dadcbcc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\System\World">
+      <UniqueIdentifier>{89a44cb6-af30-4525-b0a0-b0ab8012b2d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\System\Save">
+      <UniqueIdentifier>{a26aeb35-6ccd-4ae2-9ccb-addca59519f7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -528,8 +570,17 @@
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuSystem.cpp">
       <Filter>ソース ファイル\Engine\Menu\Title</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Input\PlayerActionMap.cpp">
+    <ClCompile Include="Scripts\Data\DxLibResourcesManager.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\ActionContext.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\System\World\WorldProgressManager.cpp">
+      <Filter>ソース ファイル\Engine\System\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Save\SaveDataManager.cpp">
+      <Filter>ソース ファイル\Engine\System\Save</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -959,11 +1010,17 @@
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuSystem.h">
       <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Input\ActionMapBase.h">
-      <Filter>ヘッダー ファイル\Engine\Input</Filter>
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonProgressData.h">
+      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Input\PlayerActionMap.h">
-      <Filter>ヘッダー ファイル\Engine\Input</Filter>
+    <ClInclude Include="Scripts\Data\DxLibResourcesManager.h">
+      <Filter>ヘッダー ファイル\Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\System\World\WorldProgressManager.h">
+      <Filter>ヘッダー ファイル\Engine\System\World</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Scene\GameState\DungeonContext.h">
+      <Filter>ヘッダー ファイル\Engine\Scene\GameState</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
