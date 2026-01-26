@@ -9,6 +9,8 @@
 #include "../AnimatorComponent.h"
 #include "../../System/Status/PlayerStatusManager.h"
 #include "../../Engine.h"
+#include "../../GameEnum.h"
+#include "../../Input/ActionMapBase.h"
 
 class PlayerComponent : public CharacterBase {
 private:
@@ -27,6 +29,7 @@ private:
 	bool isDead;									// 死亡しているか否か
 	std::shared_ptr<AnimatorComponent> animator;	// アニメーターコンポーネント
 	PlayerStatusValue status;						// プレイヤーのステータス
+	ActionMapBase::ActionState action;				// プレイヤーのアクション状態
 
 	const float PLAYER_MODEL_ANGLE_CORRECTION;	// プレイヤーのモデル角度を補正する値
 	const float DEFAULT_MOVE_SPEED;				// デフォルトの移動速度

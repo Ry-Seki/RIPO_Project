@@ -43,7 +43,7 @@ private:
 	 *  @param	AABBMax			AABBの各軸に置ける最大値
 	 *  @param	capsuleStart	カプセルの下端
 	 *  @param	capsuleEnd		カプセルの上端
-	 *  @param	capsukeRadius	カプセルの半径
+	 *  @param	capsuleRadius	カプセルの半径
 	 */
 	template <typename T>
 	GameObjectPtr CreateCharacter(
@@ -67,7 +67,7 @@ public:
 	 *  @param	AABBMax			AABBの各軸に置ける最大値
 	 *  @param	capsuleStart	カプセルの下端
 	 *  @param	capsuleEnd		カプセルの上端
-	 *  @param	capsukeRadius	カプセルの半径
+	 *  @param	capsuleRadius	カプセルの半径
 	 */
 	GameObjectPtr GeneratePlayer(
 		const std::string& name,
