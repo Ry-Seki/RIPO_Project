@@ -91,7 +91,7 @@ namespace GameEnum {
 		Hover,			// 触れている状態
 		Pressed,		// 押された状態
 		Selected,		// 選択状態
-		Disable,		// 操作不可能状態
+		Disable,		// 選択不可能状態
 		Max
 	};
 	/*
