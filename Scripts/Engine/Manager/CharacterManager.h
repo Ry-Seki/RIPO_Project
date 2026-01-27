@@ -24,7 +24,7 @@ private:;
 	   GameObjectList createCharacterList;
 	   GameObjectPtr player;
 
-	   bool bossDeathFrag = false;					// ボスの死亡フラグ
+	   bool bossDeathFlag = false;					// ボスの死亡フラグ
 
 	   const size_t CREATE_CHARACTER_COUNT = 16;	// 事前に生成する数
 
@@ -154,7 +154,12 @@ public:
 	 *	ボスの死亡フラグ変更
 	 *	@author	kuu
 	 */
-	inline void SetBossDeathFrag(bool setValue) { bossDeathFrag = setValue; }
+	inline void SetBossDeathFlag(bool setValue) { bossDeathFlag = setValue; }
+	/*
+	 *	ボスの死亡フラグ取得
+	 *	@author kuu
+	 */
+	inline bool GetBossDeathFlag() { return bossDeathFlag; }
 
 };
 

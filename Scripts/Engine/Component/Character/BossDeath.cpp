@@ -47,7 +47,7 @@ void BossDeath::Update(GameObject* boss, float deltaTime)
 		// ­—Ê‚Ì‚¨‹à‚ğ“üè
 		MoneyManager::GetInstance().AddMoney(50);
 		// €–S
-		CharacterManager::GetInstance().SetBossDeathFrag(true);
+		CharacterManager::GetInstance().SetBossDeathFlag(true);
 		// ”jŠü
 		RemoveCharacter(boss);
 	}
