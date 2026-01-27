@@ -38,7 +38,9 @@ void SelectDetail_Dungeon::SetupData() {
  */
 void SelectDetail_Dungeon::Setup() {
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fade);
+	FadeManager::GetInstance().StartFade(fade, [this]() {
+		AssessmentTreasureEvent();
+	});
 }
 /*
  *	@brief	更新処理
@@ -62,7 +64,7 @@ void SelectDetail_Dungeon::Update(float deltaTime) {
  *	@brief	描画処理
  */
 void SelectDetail_Dungeon::Render() {
-	DrawFormatString(50, 50, GetColor(0, 0, 0), "1: TutorialDungeon");
+	DrawFormatString(50, 50, GetColor(0, 0, 0), "1: Stage1Dungeon");
 }
 /*
  *	@brief	片付け処理
@@ -80,7 +82,7 @@ void SelectDetail_Dungeon::AssessmentTreasureEvent() {
 	// ダンジョンデータのイベント開始日と照らし合わせる
 	for (int i = 0, max = dungeonDataList.size(); i < max; i++) {
 		DungeonData data = dungeonDataList[i];
-		if (elapsedDay > data.eventStartDay && elapsedDay <= data.eventEndDay) {
+		if (elapsedDay >= data.eventStartDay && elapsedDay <= data.eventEndDay) {
 			if (!data.isEventDay) data.isEventDay = true;
 		} else {
 			if (data.isEventDay) data.isEventDay = false;
@@ -117,6 +119,7 @@ void SelectDetail_Dungeon::SetDungeonData(const std::vector<std::shared_ptr<Load
 	auto& context = owner->GetOwner()->GetActionContext();
 	// それぞれのデータを初期化
 	context.dungeonID = dungeonID;
+	context.isCurrentEvent = dungeonDataList[dungeonID].isEventDay;
 	context.dungeonStageData.LoadFromJSON(dungeonData);
 	context.dungeonFloorData.LoadFromJSON(dungeonfloorData, dungeonID);
 	// ステートの切り替え

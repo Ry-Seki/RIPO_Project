@@ -45,6 +45,11 @@ public:
 	 */
 	DungeonProgressData& GetDungeonProgressData(int dungeonID);
 	/*
+	 *	@brief		獲得したお宝リストに追加
+	 *	@param[in]	int treasureID
+	 */
+	void SetProcureTreasureList(int treasureID);
+	/*
 	 *	@brief		ボス討伐判定
 	 *  @param[in]	int dungeonID
 	 *	@return		bool
@@ -61,13 +66,26 @@ public:
 	 *	@param[in]	int treasureID
 	 *  @return		bool
 	 */
-	bool IsTreasureGet(int dungeonID, int treasureID) const;
+	bool IsTreasureProcure(int dungeonID, int treasureID) const;
+	/*
+	 *	@brief		イベントお宝獲得判定
+	 *	@param[in]	int dungeonID
+	 *	@param[in]	int treasureID
+	 *	@return		bool
+	 */
+	bool IsEventTreasureProcure(int dungeonID, int treasureID) const;
 	/*
 	 *	@brief		お宝獲得処理
 	 *  @param[in]	int dungeonID
 	 *	@param[in]	int treasureID
 	 */
-	void GetNewTreasure(int dungeonID, int treasureID);
+	void ProcureNewTreasure(int dungeonID, int treasureID);
+	/*
+	 *	@brief		イベントお宝獲得処理
+	 *	@param[in]	int dungeonID
+	 *	@param[in]	int treasureID
+	 */
+	void ProcureEventTreasure(int dungeonID, int treasureID);
 	/*
 	 *	@brief		ワールド進行データの取得
 	 *  @return		WorldProgressData&

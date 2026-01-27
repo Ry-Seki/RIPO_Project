@@ -178,7 +178,9 @@
     <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
+    <ClCompile Include="Scripts\Engine\Input\ActionMapBase.cpp" />
     <ClCompile Include="Scripts\Engine\Input\InputManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Input\PlayerActionMap.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Audio\LoadAudio.cpp" />
@@ -308,7 +310,10 @@
     <ClInclude Include="Scripts\Engine\GameEnum.h" />
     <ClInclude Include="Scripts\Engine\GameObject.h" />
     <ClInclude Include="Scripts\Engine\GameObject\GameObjectUtility.h" />
+    <ClInclude Include="Scripts\Engine\Input\ActionMapBase.h" />
     <ClInclude Include="Scripts\Engine\Input\InputManager.h" />
+    <ClInclude Include="Scripts\Engine\Input\InputUtility.h" />
+    <ClInclude Include="Scripts\Engine\Input\PlayerActionMap.h" />
     <ClInclude Include="Scripts\Engine\JSON.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimationBase.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.h" />

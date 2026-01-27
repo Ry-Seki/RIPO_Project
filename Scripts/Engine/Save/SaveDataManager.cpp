@@ -324,17 +324,22 @@ SettingsData SaveDataManager::SettingsDataFromJSON(const JSON& json) {
  *	@param[in]	const ActionContext& context
  */
 void SaveDataManager::CollectSaveData(const ActionContext& context) {
+    // World
+    currentSaveData.world
+        = WorldProgressManager::GetInstance().GetSaveData();
+
     // Game
     currentSaveData.game = context.GetSaveData();
     currentSaveData.game.currentMoney
         = MoneyManager::GetInstance().GetCurrentMoney();
+    currentSaveData.game.totalTreasureCount =
+        currentSaveData.world.getTreasureIDList.size();
+
     // Player
     currentSaveData.player
         = PlayerStatusManager::GetInstance().GetSaveData();
-    // World
-    currentSaveData.world
-        = WorldProgressManager::GetInstance().GetSaveData();
     // Settings
+
 
 }
 /*

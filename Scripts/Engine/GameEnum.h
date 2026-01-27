@@ -9,6 +9,7 @@
 namespace GameEnum {
 	/*
 	 *	@brief	シーンの種類
+	 *  @author	Seki
 	 */
 	enum class SceneType {
 		Invalid = -1,
@@ -21,6 +22,7 @@ namespace GameEnum {
 	};
 	/*
 	 *	@brief	ゲームモード
+	 *  @author	Seki
 	 */
 	enum class GameMode {
 		Invalid = -1,
@@ -31,6 +33,7 @@ namespace GameEnum {
 	};
 	/*
 	 *	@brief	メインゲーム状態
+	 *  @author	Seki
 	 */
 	enum class GameState {
 		Invalid = -1,
@@ -44,6 +47,7 @@ namespace GameEnum {
 	};
 	/*
 	 *	@brief	行動の種類
+	 *  @author	Seki
 	 */
 	enum class ActionType {
 		Invalid = -1,
@@ -56,6 +60,7 @@ namespace GameEnum {
 	};
 	/*
 	 *	@brief	プレイヤーのステータスの種類
+	 *  @author	Seki
 	 */
 	enum class PlayerStatusType {
 		Invalid = -1,
@@ -67,6 +72,7 @@ namespace GameEnum {
 	};
 	/*
 	 *	@brief	ミニゲーム難易度
+	 *  @author	Seki
 	 */
 	enum class MiniGameLevel {
 		Invalid = -1,
@@ -74,6 +80,44 @@ namespace GameEnum {
 		Normal,			// 普通
 		Hard,			// 難しい
 		Max
+	};
+	/*
+	 *	@brief	ボタンの状態
+	 *	@author	Seki
+	 */
+	enum class ButtonState {
+		Invalid = -1,
+		Idle,			// 通常状態
+		Hover,			// 触れている状態
+		Pressed,		// 押された瞬間
+		Max
+	};
+	/*
+	 *  @brief	アクションマップ
+	 *  @author	Riku
+	 */
+	enum class ActionMap {
+		Incalid = -1,
+		PlayerAction,
+
+		Max,
+	};
+
+	/*
+	 *	@brief	プレイヤーの行動
+	 *	@author	Riku
+	 */
+	enum class PlayerAction {
+		Invalid = -1,
+		ForwardMove,	// 前移動
+		RightMove,		// 右移動
+		Run,			// ダッシュ
+		Avoid,			// 回避
+		Jump,			// ジャンプ
+		Shot,			// 射撃
+		Lift,			// お宝持ち上げ
+
+		Max,
 	};
 }
 #endif // !_GAME_ENUM_H_

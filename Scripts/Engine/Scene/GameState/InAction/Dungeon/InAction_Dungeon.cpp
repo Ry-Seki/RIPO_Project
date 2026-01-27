@@ -36,7 +36,7 @@ void InAction_Dungeon::Initialize(Engine& engine) {
 void InAction_Dungeon::Setup() {
 	isStart = false;
 	auto& context = owner->GetOwner()->GetActionContext();
-	floorProcessor.CreateFloor(context, isStart);
+	floorProcessor.CreateFloor(context, isStart, treasureIDList);
 }
 /*
  *	@brief	更新処理
@@ -182,19 +182,29 @@ bool InAction_Dungeon::IsPlayerDead() {
 void InAction_Dungeon::EndDungeon() {
 	isStart = false;
 	auto& context = owner->GetOwner()->GetActionContext();
-	CalculationDungeon(context.dungeonID);
+	CalculationDungeon(context.dungeonID, context.isCurrentEvent);
 	context.isPlayerDead = IsPlayerDead();
+	context.isCurrentEvent = false;
 	floorProcessor.EndDungeon();
 	owner->GetOwner()->ChageState(GameEnum::GameState::ResultAction);
 }
 /*
- *	@brief	ダンジョン終了集計
+ *	@brief		ダンジョン終了集計
+ *  @param[in]	int dungeonID
+ *  @param[in]	bool isEventDay
  */
-void InAction_Dungeon::CalculationDungeon(int dungeonID) {
+void InAction_Dungeon::CalculationDungeon(int dungeonID, bool isEventDay) {
 	auto& world = WorldProgressManager::GetInstance();
 	// お宝IDの取得
 	int treasureID = floorProcessor.GetHoldTreasureID();
-	if (treasureID != -1) world.GetNewTreasure(dungeonID, treasureID);
+	if (isEventDay) {
+		for (auto& eventID : treasureIDList[GameConst::EVENT_TREASURE_INDEX]) {
+			if (treasureID != eventID) continue;
 
-	// TODO : イベントお宝とボス討伐フラグの反映
+			if (treasureID != -1) world.ProcureEventTreasure(dungeonID, treasureID);
+		}
+	} else {
+		if (treasureID != -1) world.ProcureNewTreasure(dungeonID, treasureID);
+	}
+	// TODO : ボス討伐フラグの反映
 }

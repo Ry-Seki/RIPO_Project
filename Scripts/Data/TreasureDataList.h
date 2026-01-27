@@ -15,7 +15,7 @@
 /*
  *	お宝構造体
  */
-struct TreasureData {
+struct TreasureValueData {
 	int ID;
 	int value;
 };
@@ -23,16 +23,16 @@ struct TreasureData {
 /*
  *	お宝の価値データクラス
  */
-class TreasureDataList {
+class TreasureValueDataList {
 private:
-	std::unordered_map<std::string, TreasureData> nameToData;	// 名前->IDのお宝データのマップ
-	std::unordered_map<int, std::string> IDToName;				// ID->名前のお宝データのマップ
+	std::unordered_map<std::string, TreasureValueData> nameToData;	// 名前->IDのお宝データのマップ
+	std::unordered_map<int, std::string> IDToName;					// ID->名前のお宝データのマップ
 
 public:
 	/*
 	 *	コンストラクタ
 	 */
-	TreasureDataList() = default;
+	TreasureValueDataList() = default;
 
 public:
 	/*
@@ -41,7 +41,7 @@ public:
 	 */
 	void LoadFromJson(const JSON& setJSON) {
 		for (auto& entry : setJSON.items()) {
-			TreasureData data;
+			TreasureValueData data;
 			data.ID = entry.value()["ID"].get<int>();
 			data.value = entry.value()["Value"].get<int>();
 

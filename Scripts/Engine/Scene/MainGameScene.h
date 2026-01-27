@@ -25,7 +25,7 @@ private:
     static constexpr const char* _TREASURE_DATA_PATH = "Data/Treasure/TreasureDataList.json";
     static constexpr const char* _ITEM_DATA_PATH = "Data/Item/ItemCatalogData.json";
 
-    const int _END_DAY = 7;
+    const int _END_DAY = 31;
 
 public:
     /*

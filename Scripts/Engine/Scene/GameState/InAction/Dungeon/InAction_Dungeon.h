@@ -9,12 +9,15 @@
 #include "../InActionBase.h"
 #include "FloorProcessor.h"
 
+#include <vector>
+
 /*
  *	@brief	ダンジョン行動実行クラス
  */
 class InAction_Dungeon : public InActionBase {
 private:
 	FloorProcessor floorProcessor;
+	std::vector<std::vector<int>> treasureIDList;
 
 public:
 	/*
@@ -53,8 +56,9 @@ public:
 	/*
 	 *	@brief		ダンジョン終了集計
 	 *  @param[in]	int dungeonID
+	 *  @param[in]	bool isEventDay
 	 */
-	void CalculationDungeon(int dungeonID);
+	void CalculationDungeon(int dungeonID, bool isEventDay);
 };
 
 #endif // !_IN_ACTION_DUNGEON_H_

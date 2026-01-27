@@ -22,7 +22,7 @@ class MoneyManager : public Singleton<MoneyManager>{
 	friend class Singleton<MoneyManager>;
 
 private:
-	TreasureDataList treasureDataList;	// お宝の価値データクラス
+	TreasureValueDataList treasureDataList;	// お宝の価値データクラス
 	ItemCatalogData itemCatalogData;	// アイテムカタログデータ
 
 	int currentMoney = 0;				// 現在の所持金
