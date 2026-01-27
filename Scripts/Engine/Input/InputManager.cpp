@@ -1,5 +1,11 @@
+/*
+ *	@file	InputManager.cpp
+ *	@author	Riku
+ */
+
 #include "InputManager.h"
 #include "PlayerActionMap.h"
+#include "MenuActionMap.h"
 
 /*
  *	コンストラクタ
@@ -20,7 +26,9 @@ InputManager::~InputManager() {
  *	初期化処理
  */
 void InputManager::Initialize() {
+	// 全ての入力受付の生成
 	actionMaps[GameEnum::ActionMap::PlayerAction] = std::make_shared<PlayerActionMap>();
+	actionMaps[GameEnum::ActionMap::MenuAction] = std::make_shared<MenuActionMap>();
 	for (auto [mapNum, actionMap] : actionMaps) {
 		// 全アクションマップの初期化
 		actionMap->Initialize();

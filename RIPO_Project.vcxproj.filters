@@ -298,6 +298,15 @@
     <Filter Include="ヘッダー ファイル\Engine\UI">
       <UniqueIdentifier>{49b8f422-3391-475d-86e9-57aee797154d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\UI\Button">
+      <UniqueIdentifier>{db5d91ef-fc24-479a-ab49-755e61292c41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Input">
+      <UniqueIdentifier>{8c08fc70-fa43-487b-8244-c1fcd2fb04b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\UI">
+      <UniqueIdentifier>{3b3e0b9f-aa6d-4356-b949-8258517b6ec8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -368,9 +377,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Input\InputManager.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp">
       <Filter>ソース ファイル</Filter>
@@ -592,10 +598,22 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Input\ActionMapBase.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Engine\Input</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Input\PlayerActionMap.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\EventSystem.cpp">
+      <Filter>ソース ファイル\Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Button\UIButton.cpp">
+      <Filter>ソース ファイル\Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Input\InputManager.cpp">
+      <Filter>ソース ファイル\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Input\MenuActionMap.cpp">
+      <Filter>ソース ファイル\Engine\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1044,16 +1062,28 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Input\ActionMapBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Input\InputUtility.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engine\Input</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Input\PlayerActionMap.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Input\InputUtility.h">
+      <Filter>ヘッダー ファイル\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Rect.h">
+      <Filter>ヘッダー ファイル\Engine\UI</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\Button\UIButton.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\EventSystem.h">
       <Filter>ヘッダー ファイル\Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Input\MenuActionMap.h">
+      <Filter>ヘッダー ファイル\Engine\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
