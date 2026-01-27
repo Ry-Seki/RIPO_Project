@@ -169,6 +169,7 @@
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyChase.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyDeath.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyStandby.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyTurn.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
@@ -286,6 +287,7 @@
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyChase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyDeath.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyStandby.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyState.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyTurn.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h" />

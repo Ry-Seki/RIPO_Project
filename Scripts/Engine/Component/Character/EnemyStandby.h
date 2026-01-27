@@ -1,25 +1,31 @@
 /*
- *	@file	EnemyDeath.h
+ *	@file	EnemyStandby.h
  *	@author	kuu
  */
-#ifndef _ENEMYDEATH_H_
-#define _ENEMYDEATH_H_
+#ifndef _ENEMYSTANDBY_H_
+#define _ENEMYSTANDBY_H_
 
 #include "EnemyState.h"
 #include "../AnimatorComponent.h"
 #include "EnemyComponent.h"
 
-/*
- *	死亡状態処理
- */
-class EnemyDeath : public EnemyState {
+class EnemyStandby : public EnemyState {
 private:
 	std::shared_ptr<AnimatorComponent> animator;
-	float animationTime;
+	// ランダムなスタンバイ時間
+	int randStandby;
+	// 経過時間
+	float elapsedTime;
+
+	// ランダム数の最大値
+	const int RANDOM_MAX;
 
 public:
-	EnemyDeath();
-	~EnemyDeath() = default;
+	/*
+	 *	コンストラクタ
+	 */
+	EnemyStandby();
+	~EnemyStandby() = default;
 
 public:
 	/*
@@ -34,7 +40,6 @@ public:
 	 *  param[in]	float		deltaTime
 	 */
 	virtual void Update(GameObject* enemy, float deltaTime) override;
-
 };
 
-#endif // !_ENEMYDEATH_H_
+#endif // !_ENEMYSTANDBY_H_
