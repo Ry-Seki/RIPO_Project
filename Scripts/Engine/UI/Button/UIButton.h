@@ -6,9 +6,9 @@
 #ifndef _UI_BUTTON_H_
 #define _UI_BUTTON_H_
 
+#include "IButtonStateRenderer.h"
 #include "../Rect.h"
 #include "../../GameEnum.h"
-#include "IButtonStateRenderer.h"
 
 #include <string>
 #include <memory>
@@ -18,9 +18,11 @@
  *	@brief	UIボタンクラス
  */
 class UIButton {
+public:		// 別名定義
+	using IButtonStateRendererPtr = std::shared_ptr<IButtonStateRenderer>;
 private:
-	GameEnum::ButtonState buttonState = GameEnum::ButtonState::Invalid;
-
+	bool isEnable = false;
+	bool isSelected = false;
 	bool isHovered = false;
 	bool isPressed = false;
 
@@ -28,7 +30,8 @@ private:
 	std::string name = "";
 
 	std::vector<int> buttonHandleList;
-	std::vector<std::unique_ptr<IButtonStateRenderer>> rendererList;
+	std::vector<IButtonStateRendererPtr> rendererList;
+	IButtonStateRendererPtr currentRenderer = nullptr;
 
 	std::function<void()> onClick = nullptr;
 
@@ -65,6 +68,13 @@ public:
 
 public:
 	/*
+	 *	@brief		ボタン状態の取得
+	 *	@return		GameEnum::ButtonState
+	 */
+	GameEnum::ButtonState GetButtonState() const;
+
+public:
+	/*
 	 *	@brief		名前の設定
 	 *	@param[in]	const std::string& setName
 	 */
@@ -86,6 +96,18 @@ public:
 	 */
 	inline void SetOnClick(std::function<void()> setOnClick) {
 		onClick = setOnClick;
+	}
+	/*
+	 *	@brief		選択判定
+	 *	@return		bool
+	 */
+	inline bool IsSelected() const { return isSelected; }
+	/*
+	 *	@brief		選択判定の設定
+	 *	@param[in]	bool setFlag
+	 */
+	inline void SetIsSelected(bool setFlag) {
+		isSelected = setFlag;
 	}
 };
 
