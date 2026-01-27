@@ -27,7 +27,8 @@ void HandArm::OnCollision(
 
 void HandArm::ArmUpdate(float deltaTime, GameObject* player, Engine* engine) {
 	// 右クリックでお宝持ち上げ
-	if (GetMouseInput() & MOUSE_INPUT_RIGHT)
+	int lift = static_cast<int>(GameEnum::PlayerAction::Lift);
+	if (action.button[lift])
 		LiftTreasure(player, engine);
 	CarryTreasur(player);
 }

@@ -1,3 +1,8 @@
+/*
+ *	@file	InputManager.h
+ *  @author	Seki
+ */
+
 #pragma once
 #include "../Singleton.h"
 
@@ -9,17 +14,6 @@
 #include <memory>
 
 /*
- *	@brief	マウスのボタン
- */
-enum class MouseInput {
-	LeftClick,		//左クリック
-	RightClick,		//右クリック
-	MiddleClick,	//中央クリック
-
-	MouseInputMax,					//MouseInputの要素数
-};
-
-/*
  *	入力管理クラス
  */
 class InputManager : public Singleton<InputManager>{
@@ -28,9 +22,8 @@ class InputManager : public Singleton<InputManager>{
 private:	//メンバ変数
 	char keyState[256];
 	char prevKeyState[256];
-	int anyKeyState;
-	int mouseInput[static_cast<int>(MouseInput::MouseInputMax)];
-	bool nowMouseInput[static_cast<int>(MouseInput::MouseInputMax)], prevInput[static_cast<int>(MouseInput::MouseInputMax)];
+	int nowMouseInput;
+	int prevMouseInput;
 	
 	std::unordered_map<GameEnum::ActionMap, std::shared_ptr<ActionMapBase>> actionMaps;		// 各アクションマップ
 private:	    //コンストラクタとデストラクタ
@@ -88,7 +81,8 @@ public:		//マウス用入力管理
 	 *	@return		bool
 	 */
 	inline bool IsMouseDown(int _mouseButton) const {
-		return !prevInput[_mouseButton] && nowMouseInput[_mouseButton]; 
+		return !static_cast<bool>(prevMouseInput & _mouseButton) && 
+			static_cast<bool>(nowMouseInput & _mouseButton);
 	}
 	/*
 	 *	ボタンが押されているかどうか
@@ -96,7 +90,7 @@ public:		//マウス用入力管理
 	 *	@return		bool
 	 */
 	inline bool IsMouse(int _mouseButton) const {
-		return nowMouseInput[_mouseButton]; 
+		return static_cast<bool>(nowMouseInput & _mouseButton);
 	}
 	/*
 	 *	ボタンが押されたかどうか
@@ -104,7 +98,8 @@ public:		//マウス用入力管理
 	 *	@return		bool
 	 */
 	inline bool IsMouseUp(int _mouseButton) const {
-		return prevInput[_mouseButton] && !nowMouseInput[_mouseButton];
+		return static_cast<bool>(prevMouseInput & _mouseButton) && 
+			!static_cast<bool>(nowMouseInput & _mouseButton);
 	}
 public: // マウスとキーの両方入力
 	/*

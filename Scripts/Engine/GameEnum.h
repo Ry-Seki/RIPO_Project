@@ -89,7 +89,9 @@ namespace GameEnum {
 		Invalid = -1,
 		Idle,			// ’Êíó‘Ô
 		Hover,			// G‚ê‚Ä‚¢‚éó‘Ô
-		Pressed,		// ‰Ÿ‚³‚ê‚½uŠÔ
+		Pressed,		// ‰Ÿ‚³‚ê‚½ó‘Ô
+		Selected,		// ‘I‘ğó‘Ô
+		Disable,		// ‘€ì•s‰Â”\ó‘Ô
 		Max
 	};
 	/*
