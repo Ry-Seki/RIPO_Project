@@ -128,8 +128,9 @@ namespace GameEnum {
 		Jump,			// ジャンプ
 		Shot,			// 射撃
 		Lift,			// お宝持ち上げ
+		OpenMenu,		// メニューを開く
 
-		Max,
+		Max
 	};
 	/*
 	 *	@brief	メニューでの入力
@@ -137,12 +138,10 @@ namespace GameEnum {
 	 */
 	enum class MenuAction {
 		Invalid = -1,
-		Left,
-		Right,
-		Up,
-		Down,
-		Decide,
-		Cancel,
+		Vertical,	// 垂直方向
+		Horizontal,	// 水平方向
+		Decide,		// 決定
+		Cancel,		// キャンセル
 		Max
 	};
 }
