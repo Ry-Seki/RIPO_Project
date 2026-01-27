@@ -1,6 +1,6 @@
 {
   "Stage": {
-    "StageData": "Res/Model/Stage/StageModel_1.mv1",
+    "StageData": "Res/Model/Stage/Stage_1/StageModel_1.mv1",
     "StageBoneData": "Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json"
   },
   "Character": {
