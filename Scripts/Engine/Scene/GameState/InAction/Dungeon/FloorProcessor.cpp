@@ -283,6 +283,11 @@ std::vector<int> FloorProcessor::GetNormalTreasureIDTable() {
 
 		result[floor].push_back(treasureID);
 	}
+	// ŠK‘w‚ª‚È‚¢ê‡‚Í‹ó‚ğ•Ô‚·
+	if (currentFloor < 0 || result.size() <= static_cast<size_t>(currentFloor)) {
+		return {};
+	}
+
 	return result[currentFloor];
 }
 /*
@@ -307,8 +312,12 @@ std::vector<int> FloorProcessor::GetEventTreasureIDTable() {
 
 		result[floor].push_back(treasureID);
 	}
-	return result[currentFloor];
+	// ŠK‘w‚ª‚È‚¢ê‡‚Í‹ó‚ğ•Ô‚·
+	if (currentFloor < 0 || result.size() <= static_cast<size_t>(currentFloor)) {
+		return {};  
+	}
 
+	return result[currentFloor];
 }
 /*
  *	@brief		ƒtƒƒA‚²‚Æ‚É¶¬‚·‚é‚¨•óIDƒf[ƒ^‚Ì‚İ‚ğ“n‚·

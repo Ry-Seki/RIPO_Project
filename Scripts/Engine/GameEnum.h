@@ -89,7 +89,9 @@ namespace GameEnum {
 		Invalid = -1,
 		Idle,			// 通常状態
 		Hover,			// 触れている状態
-		Pressed,		// 押された瞬間
+		Pressed,		// 押された状態
+		Selected,		// 選択状態
+		Disable,		// 選択不可能状態
 		Max
 	};
 	/*

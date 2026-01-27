@@ -34,7 +34,7 @@ struct Vector3 {
 		return { x == v.x && y == v.y && z == v.z };
 	};
 	bool operator!=(const Vector3& v)const {
-		return { x != v.x && y != v.y && z != v.z };
+		return { x != v.x || y != v.y || z != v.z };
 	};
 
 	Vector3 operator+(const Vector3& v)const {

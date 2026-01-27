@@ -1,0 +1,37 @@
+{
+  "Stage": {
+    "0": {
+      "StageData": "Res/Model/Stage/Stage_2/StageModel_2.mv1"
+    },
+    "StageBoneData": "Data/Dungeon/Stage2/Stage2DungeonCreatePos.json",
+    "StageFloorData": "Data/Dungeon/Stage2/Stage2DungeonFloorData.json"
+  },
+  "Character": {
+    "PlayerData": "Res/Model/Plater/RIPO_Model.mv1",
+    "EnemyData": {
+      "0": {
+        "1": "",
+      }
+    },
+    "BossData": ""
+  },
+  "Treasure": {
+    "0": {
+      "0": "",
+      "1": ""
+    }
+  },
+  "EventTreasure": {
+    "0": {
+      "1": ""
+    }
+  },
+  "Audio": {
+    "BGM": {
+
+    },
+    "SE": {
+
+    }
+  }
+}

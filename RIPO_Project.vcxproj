@@ -397,6 +397,7 @@
     <ClInclude Include="Scripts\Engine\System\Status\PlayerStatusManager.h" />
     <ClInclude Include="Scripts\Engine\System\World\WorldProgressManager.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
+    <ClInclude Include="Scripts\Engine\UI\Button\UIButton.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
     <ClInclude Include="Scripts\Engine\Vision.h" />
   </ItemGroup>

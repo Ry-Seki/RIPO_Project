@@ -295,6 +295,9 @@
     <Filter Include="ソース ファイル\Engine\System\Save">
       <UniqueIdentifier>{a26aeb35-6ccd-4ae2-9ccb-addca59519f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\UI">
+      <UniqueIdentifier>{49b8f422-3391-475d-86e9-57aee797154d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -581,6 +584,18 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Save\SaveDataManager.cpp">
       <Filter>ソース ファイル\Engine\System\Save</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\BossDeath.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyDeath.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Input\ActionMapBase.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Input\PlayerActionMap.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1021,6 +1036,24 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\GameState\DungeonContext.h">
       <Filter>ヘッダー ファイル\Engine\Scene\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\BossDeath.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyDeath.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Input\ActionMapBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Input\InputUtility.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Input\PlayerActionMap.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Button\UIButton.h">
+      <Filter>ヘッダー ファイル\Engine\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
