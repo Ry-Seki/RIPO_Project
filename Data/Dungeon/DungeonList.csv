@@ -1,3 +1,4 @@
 ﻿ID,Name,EventStartDay,EventEndDay,LevelOfDanger,NecessaryStrength,DungeonPath
 0,Tutorial,0,0,0,0,Data/Dungeon/Tutorial/TutorialDungeonResourcesData.json
 1,Stage1,2,5,1,1,Data/Dungeon/Stage1/Stage1DungeonResourcesData.json
+2,Stage2,6,9,2,2,Data/Dungeon/Stage2/Stage2DungeonResourcesData.json
