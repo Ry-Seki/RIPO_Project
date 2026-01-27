@@ -11,6 +11,8 @@
 
 // 限りなく0に近いしきい値(指数表記)
 const float EPSILON = 1e-6f;
+// 判定用の最長距離
+const float MAX_DISTANCE = 2e5f;
 
 /*
  *	軸並行境界ボックス

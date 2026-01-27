@@ -197,7 +197,7 @@ std::vector<Scene::WorldColliderList> Scene::ChangeGameObjectWorldColliders() {
  *  @return bool    ヒットしたかどうか
  *  @author Riku
  */
-bool Scene::Raycast(const Ray& ray, RaycastHit& hitInfo, const RaycastPredicate& pred) {
+bool Scene::RayCast(const Ray& ray, RayCastHit& hitInfo, const RayCastPredicate& pred) {
 	hitInfo.collider = nullptr;
 	hitInfo.distance = FLT_MAX;
 	// 全てのワールド座標系コライダー

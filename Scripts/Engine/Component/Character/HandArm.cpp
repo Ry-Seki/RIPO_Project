@@ -8,12 +8,14 @@
 #include "../../VecMath.h"
 #include "../../GameConst.h"
 #include "../../Scene/Scene.h"
-
 #include "../../Stage/StageObject/StageObjectUtility.h"
 #include "../../Component/Character/CharacterUtility.h"
+
 using namespace StageObjectUtility;
 using namespace CharacterUtility;
 
+#include "../../GameObject/GameObjectUtility.h"
+using namespace GameObjectUtility;
 HandArm::HandArm()
 	: liftObject(nullptr)
 	
@@ -42,8 +44,8 @@ void HandArm::LiftTreasure(GameObject* player, Engine* engine) {
 	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
 	// レイキャストで持ち上げ対象があるか探す
 	Ray ray = { camera->position, ForwardDir(camera->rotation) };
-	Scene::RaycastHit hitInfo;
-	bool hit = engine->GetCurrentScene()->Raycast(
+	Scene::RayCastHit hitInfo;
+	bool hit = engine->GetCurrentScene()->RayCast(
 		ray, hitInfo,
 		[this](const ColliderBasePtr& col, float distance) {
 			// 交点が指定値以内かつプレイヤー以外の宝オブジェクト
@@ -80,8 +82,23 @@ void HandArm::LiftTreasure(GameObject* player, Engine* engine) {
 				liftObject = hitInfo.collider->GetOwner();
 			}
 		}
-			
-		//liftObject = hitInfo.collider->GetOwner();
+	}
+
+	// レイキャストお試し
+	Ray rayQ = { camera->position, ForwardDir(camera->rotation) };
+	Scene::RayCastHit hitInfoQ;
+	bool hitQ = engine->GetCurrentScene()->RayCast(
+		rayQ, hitInfoQ,
+		[this](const ColliderBasePtr& col, float distance) {
+			// 交点が指定値以内かつプレイヤー以外の宝オブジェクト
+			auto hitName = col->GetOwner()->name;
+			return distance < LEFTABLE_DISTANCE &&
+				hitName != GameConst::_CREATE_POSNAME_PLAYER &&
+				hitName == GameConst::_CREATE_POSNAME_ENEMY;
+		}
+	);
+	if (hitQ) {
+		hitInfoQ.collider->isHit = true;
 	}
 }
 
