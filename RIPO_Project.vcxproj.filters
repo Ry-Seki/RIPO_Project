@@ -612,6 +612,9 @@
     <ClCompile Include="Scripts\Engine\Input\InputManager.cpp">
       <Filter>ソース ファイル\Engine\Input</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Input\MenuActionMap.cpp">
+      <Filter>ソース ファイル\Engine\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -1078,6 +1081,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\EventSystem.h">
       <Filter>ヘッダー ファイル\Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Input\MenuActionMap.h">
+      <Filter>ヘッダー ファイル\Engine\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
