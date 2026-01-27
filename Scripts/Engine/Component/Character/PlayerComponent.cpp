@@ -146,31 +146,29 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	const float cameraSin = sinf(camera->rotation.y);
 	const float cameraCos = cosf(camera->rotation.y);
 
-	float moveX = 0;
-	float moveZ = 0;
-
+	// 移動
+	moveVec = V_ZERO;
 	float right = action.axis[static_cast<int>(GameEnum::PlayerAction::RightMove)];
 	float forward = action.axis[static_cast<int>(GameEnum::PlayerAction::ForwardMove)];
-	// 2方向に入力されていたらスピード半減
-	if (fabs(right + forward) == 2 || (right + forward == 0 && (right != 0 || forward != 0))) {
-		moveSpeed *= 0.5f;
-	}
 	// カメラから見て右の移動
 	if (right != 0) {
-		moveX += right * moveSpeed * cameraCos * deltaTime;
-		moveZ += right * moveSpeed * -cameraSin * deltaTime;
+		moveVec.x += right * moveSpeed * cameraCos * deltaTime;
+		moveVec.z += right * moveSpeed * -cameraSin * deltaTime;
 	}
 	// カメラから見て前の移動
 	if (forward != 0) {
-		moveX += forward * moveSpeed * cameraSin * deltaTime;
-		moveZ += forward * moveSpeed * cameraCos * deltaTime;
+		moveVec.x += forward * moveSpeed * cameraSin * deltaTime;
+		moveVec.z += forward * moveSpeed * cameraCos * deltaTime;
 	}
-	player->position.x += moveX;
-	player->position.z += moveZ;
-	moveVec = { moveX, 0.0f, moveZ };
+	// 2方向に入力されていたら移動量半減
+	if (fabs(right) + fabs(forward) == 2) {
+		moveVec *= 0.5f;
+	}
+	player->position.x += moveVec.x;
+	player->position.z += moveVec.z;
 	// 移動方向を保存
-	if (moveX && moveZ)
-		moveDirectionY = atan2f(moveX, moveZ);
+	if (moveVec.x && moveVec.z)
+		moveDirectionY = atan2f(moveVec.x, moveVec.z);
 	// プレイヤーの向きはカメラに合わせる
 	player->rotation.y = camera->rotation.y;
 	// 角度を補正
@@ -195,6 +193,29 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	// モデルハンドルのセット
 	animator->SetModelHandle(modelHandle);
 	animator->LoadIndex(true);
+	// アニメーション再生
+ 	if (moveVec != V_ZERO) {
+		if (forward == 1.0f) {
+			// 前移動
+			animator->Play(4, moveSpeed * 0.066f);
+		}
+		else if (forward == -1.0f) {
+			// 後ろ移動
+			animator->Play(5, moveSpeed * 0.066f);
+		}
+		else if (right == 1.0f) {
+			// 左移動
+			animator->Play(6, moveSpeed * 0.066f);
+		}
+		else if (right == -1.0f) {
+			// 右移動
+			animator->Play(7, moveSpeed * 0.066f);
+		}
+	}
+	else  {
+		// 待機
+		animator->Play(3, 1);
+	}
 
 	// モデルの透明度の調整
 	auto handArm = player->GetComponent<ArmActionComponent>();
@@ -205,29 +226,6 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 		MV1SetOpacityRate(modelHandle, 1);
 	}
 
-	// アニメーション再生
-	if (moveVec == V_ZERO) {
-		if (action.axis[forward] == 1.0f) {
-			// 前移動
-			animator->Play(4, moveSpeed * 0.066f);
-		}
-		else if (action.axis[forward] == -1.0f) {
-			// 後ろ移動
-			animator->Play(5, moveSpeed * 0.066f);
-		}
-		else if (action.axis[right] == 1.0f) {
-			// 左移動
-			animator->Play(6, moveSpeed * 0.066f);
-		}
-		else if (action.axis[right] == -1.0f) {
-			// 右移動
-			animator->Play(7, moveSpeed * 0.066f);
-		}
-	}
-	else  {
-		// 待機
-		animator->Play(3, 1);
-	}
 }
 
 /*
