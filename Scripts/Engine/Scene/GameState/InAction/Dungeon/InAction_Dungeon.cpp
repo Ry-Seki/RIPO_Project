@@ -206,5 +206,6 @@ void InAction_Dungeon::CalculationDungeon(int dungeonID, bool isEventDay) {
 	} else {
 		if (treasureID != -1) world.ProcureNewTreasure(dungeonID, treasureID);
 	}
-	// TODO : ボス討伐フラグの反映
+	// ボスの討伐フラグ
+	if (CharacterManager::GetInstance().GetBossDeathFlag()) world.SetIsBossDefeated(dungeonID);
 }
