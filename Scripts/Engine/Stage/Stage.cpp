@@ -282,7 +282,7 @@ void Stage::ProcessWallCollision(
 		Vector3 pushDir = Normalized(diff);
 
 		// …•½•ûŒü‚Ì‚Ý‰Ÿ‚µo‚·
-		pushDir.y = 0.0f;
+		//pushDir.y = 0.0f;
 
 		// …•½•ûŒü‚Ì‚Ý‚Å‰Ÿ‚µ–ß‚·
 		if (Magnitude(pushDir) > 0.0f) {
