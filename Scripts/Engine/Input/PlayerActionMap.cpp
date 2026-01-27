@@ -36,11 +36,11 @@ void PlayerActionMap::Initialize() {
 	// ËŒ‚
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::Shot),
-		{ InputType::Mouse, MOUSE_INPUT_RIGHT });
+		{ InputType::Mouse, MOUSE_INPUT_LEFT });
 	// ‚¨•ó‚¿ã‚°
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::Lift),
-		{ InputType::Mouse, MOUSE_INPUT_LEFT });
+		{ InputType::Mouse, MOUSE_INPUT_RIGHT });
 
 	// ’l‚Ì‰Šú‰»
 	state.axis[static_cast<int>(GameEnum::PlayerAction::ForwardMove)] = 0.0f;

@@ -7,6 +7,8 @@
 #include "../../GameConst.h"
 #include "HandArm.h"
 
+using namespace InputUtility;
+
 ArmActionComponent::ArmActionComponent() 
 	: currentArm(nullptr)
 {}
@@ -17,6 +19,7 @@ void ArmActionComponent::Start() {
 }
 
 void ArmActionComponent::Update(float deltaTime) {
+	action = GetInputState(GameEnum::ActionMap::PlayerAction);
 	if (currentArm == nullptr)
 		return;
 	currentArm->ArmUpdate(deltaTime, player, engine);

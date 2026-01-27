@@ -7,6 +7,9 @@
 #define _ARMACTIONCOMPONENT_H_
 
 #include "../../Component/Component.h"
+#include "../../Input/ActionMapBase.h"
+#include "../../GameEnum.h"
+#include "../../Input/InputUtility.h"
 #include "../../Engine.h"
 #include <vector>
 
@@ -20,6 +23,7 @@ private:
 protected:
 	GameObject* player;
 	Engine* engine;
+	inline static ActionMapBase::ActionState action;
 
 public:
 	ArmActionComponent();
