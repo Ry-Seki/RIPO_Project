@@ -21,13 +21,11 @@ class UIButton {
 public:		// •Ê–¼’è‹`
 	using IButtonStateRendererPtr = std::shared_ptr<IButtonStateRenderer>;
 private:
-	bool isEnable = false;
-	bool isSelected = false;
-	bool isHovered = false;
-	bool isPressed = false;
+	GameEnum::ButtonState buttonState = GameEnum::ButtonState::Invalid;
 
 	Rect rect;
 	std::string name = "";
+
 
 	std::vector<int> buttonHandleList;
 	std::vector<IButtonStateRendererPtr> rendererList;
@@ -106,18 +104,6 @@ public:
 	 */
 	inline void SetOnClick(std::function<void()> setOnClick) {
 		onClick = setOnClick;
-	}
-	/*
-	 *	@brief		‘I‘ğ”»’è
-	 *	@return		bool
-	 */
-	inline bool IsSelected() const { return isSelected; }
-	/*
-	 *	@brief		‘I‘ğ”»’è‚Ìİ’è
-	 *	@param[in]	bool setFlag
-	 */
-	inline void SetIsSelected(bool setFlag) {
-		isSelected = setFlag;
 	}
 };
 

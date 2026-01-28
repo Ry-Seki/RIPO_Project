@@ -19,10 +19,7 @@ void UIButton::Initialize() {
  *	@brief	準備前処理
  */
 void UIButton::Setup() {
-	isEnable = true;
-	isHovered = false;
-	isPressed = false;
-	isSelected = false;
+	buttonState = GameEnum::ButtonState::Idle;
 }
 /*
  *	@brief	更新処理
@@ -34,22 +31,19 @@ void UIButton::Update(float deltaTime) {
 	// マウスポインタの取得
 	GetMousePoint(&mouseX, &mouseY);
 	// 触れているか判定
-	isHovered = rect.IsHovered(mouseX, mouseY);
+	if (rect.IsHovered(mouseX, mouseY)) buttonState = GameEnum::ButtonState::Hovered;
 	// 触れている状態でクリック判定
-	// TODO : ここの入力はのちにInputManager経由にする
-	if (isHovered && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Click)]) {
-		isPressed = true;
+	if (buttonState == GameEnum::ButtonState::Hovered && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Click)]) {
+		buttonState = GameEnum::ButtonState::Pressed;
 		Execute();
-	} else {
-		isPressed = false;
 	}
 }
 /*
  *	@brief	実行処理
  */
 void UIButton::Execute() {
-	if (!onClick) return;
 	// 登録された関数実行
+	if (!onClick) return;
 	onClick();
 }
 /*
@@ -62,7 +56,7 @@ void UIButton::Render() {
 		index >= 0 &&
 		index < rendererList.size() &&
 		index < buttonHandleList.size() &&
-		rendererList[index] != nullptr &&
+		rendererList[index] &&
 		buttonHandleList[index] >= 0;
 
 	if (canDrawNormal) {
@@ -118,10 +112,5 @@ void UIButton::DebugRender() {
  *	@return		GameEnum::ButtonState
  */
 GameEnum::ButtonState UIButton::GetButtonState() const {
-	if (!isEnable)  return GameEnum::ButtonState::Disable;
-	if (isSelected) return GameEnum::ButtonState::Selected;
-	if (isPressed)  return GameEnum::ButtonState::Pressed;
-	if (isHovered)  return GameEnum::ButtonState::Hovered;
-
-	return GameEnum::ButtonState::Idle;
+	return buttonState;
 }
