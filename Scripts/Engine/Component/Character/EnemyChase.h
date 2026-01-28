@@ -27,6 +27,8 @@ private:
 	float moveSpeed;
 	// プレイヤーの距離判定フラグ
 	bool closePlayer;
+	// プレイヤー追跡判定
+	bool chasePlayer;
 	// 移動量
 	Vector3 moveVec;
 

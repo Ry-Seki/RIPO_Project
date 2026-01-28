@@ -30,6 +30,8 @@ private:
 	bool attackIsTriger;
 	// ダメージ衝突判定フラグ
 	bool damageIsTriger;
+	// 攻撃判定フラグ
+	bool attackFlag = false;
 	// 方向転換時のディレイ
 	float turnDelay;
 	// スポーンID
@@ -122,6 +124,16 @@ public:
 	inline void SetChaseTargetChangeFrag(bool setValue) {
 		chaseTargetChangeFrag = setValue;
 	}
+
+	/*
+	 *	攻撃判定フラグの取得
+	 */
+	inline bool GetAttackFlag() const { return attackFlag; }
+
+	/*
+	 *	攻撃判定フラグの変更
+	 */
+	inline void SetAttackFlag(bool setValue) { attackFlag = setValue; }
 
 	/*
 	 *	位置の取得

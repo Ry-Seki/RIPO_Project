@@ -22,6 +22,7 @@ EnemyChase::EnemyChase()
 	, wayPointDistance(1000.0f)
 	, moveSpeed(700.0f)
 	, closePlayer(false)
+	, chasePlayer(true)
 	, ROTATE_SPEED(3.0f)
 	, DIFFERENCE_PLAYER(700) {
 }
@@ -35,6 +36,12 @@ void EnemyChase::Start(GameObject* enemy) {
 
 	animator = enemy->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
+
+	// 攻撃処理から帰ってくる時にtrueにしておく
+	if (enemyComponent->GetAttackFlag()) {
+		chasePlayer = true;
+		enemyComponent->SetAttackFlag(false);
+	}
 }
 
 /*
@@ -106,29 +113,33 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 
 	Vector3 enemyForward = ForwardDir(enemy->rotation);
 
-	// -の状態
-	if (angleDirection < 0) {
-		if (enemyDirection > goalAngle) {
-			enemy->rotation.y -= ROTATE_SPEED * deltaTime;
+	// プレイヤー追跡～wayPoint到着までの間だけ処理する
+	if (chasePlayer) {
+		// -の状態
+		if (angleDirection < 0) {
+			if (enemyDirection > goalAngle) {
+				enemy->rotation.y -= ROTATE_SPEED * deltaTime;
+			}
+			else {
+				// 目標の方向に補正
+				enemy->rotation.y = goalAngle;
+			}
 		}
-		else {
-			// 目標の方向に補正
-			enemy->rotation.y = goalAngle;
-		}
-	}
-	// +の状態
-	else if (angleDirection > 0) {
-		if (enemyDirection < goalAngle) {
-			enemy->rotation.y += ROTATE_SPEED * deltaTime;
-		}
-		else {
-			enemy->rotation.y = goalAngle;
+		// +の状態
+		else if (angleDirection > 0) {
+			if (enemyDirection < goalAngle) {
+				enemy->rotation.y += ROTATE_SPEED * deltaTime;
+			}
+			else {
+				enemy->rotation.y = goalAngle;
+			}
 		}
 	}
 
 	auto distance = Distance(wayPoint, enemy->position);
 	// 標的判定
 	if (player && wayPoint == player->position) {
+		chasePlayer = true;
 		// 攻撃射程判定
 		if (distance > DIFFERENCE_PLAYER) {
 			enemy->position.x += direction.x * moveSpeed * deltaTime;
@@ -136,7 +147,7 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 		}
 		else {
 			// 攻撃状態遷移
-			enemyComponent->SetState(new EnemyAttack());
+			//enemyComponent->SetState(new EnemyAttack());
 		}
 	}
 	else {
@@ -151,10 +162,11 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 
 		// 移動量を更新
 		moveVec = { moveX,0.0f,moveZ };
-	}
-	// 目標地点についたらターゲットを変える
-	if (distance < differenceTarget) {
-		enemyComponent->SetChaseTargetChangeFrag(targetChange);
-		enemyComponent->SetState(new EnemyStandby());
+		// 目標地点についたらターゲットを変える
+		if (distance < differenceTarget) {
+			chasePlayer = false;
+			enemyComponent->SetChaseTargetChangeFrag(targetChange);
+			enemyComponent->SetState(new EnemyStandby());
+		}
 	}
 }
