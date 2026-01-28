@@ -148,6 +148,7 @@ namespace GameEnum {
 		Vertical,	// 垂直方向
 		Horizontal,	// 水平方向
 		Decide,		// 決定
+		Click,		// クリック
 		Cancel,		// キャンセル
 		Max
 	};

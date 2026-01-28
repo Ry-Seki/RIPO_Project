@@ -37,7 +37,7 @@ void UIButton::Update(float deltaTime) {
 	isHovered = rect.IsHovered(mouseX, mouseY);
 	// 触れている状態でクリック判定
 	// TODO : ここの入力はのちにInputManager経由にする
-	if (isHovered && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+	if (isHovered && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Click)]) {
 		isPressed = true;
 		Execute();
 	} else {
@@ -119,9 +119,9 @@ void UIButton::DebugRender() {
  */
 GameEnum::ButtonState UIButton::GetButtonState() const {
 	if (!isEnable)  return GameEnum::ButtonState::Disable;
+	if (isSelected) return GameEnum::ButtonState::Selected;
 	if (isPressed)  return GameEnum::ButtonState::Pressed;
 	if (isHovered)  return GameEnum::ButtonState::Hovered;
-	if (isSelected) return GameEnum::ButtonState::Selected;
 
 	return GameEnum::ButtonState::Idle;
 }

@@ -24,11 +24,17 @@ void ActionMapBase::InputUpdate() {
 			// ƒ{ƒ^ƒ““ü—Í
 			auto& input = InputManager::GetInstance();
 			// ‰Ÿ‚µ‚½uŠÔ
-			state.buttonDown[bind.action] = input.IsInputDown(bind.positive);
+			if (input.IsInputDown(bind.positive)) {
+				state.buttonDown[bind.action] = true;
+			}
 			// ‰Ÿ‚µ‚Ä‚¢‚éŠÔ
-			state.button[bind.action] = input.IsInput(bind.positive);
+			if (input.IsInput(bind.positive)) {
+				state.button[bind.action] = true;
+			}
 			// —£‚µ‚½uŠÔ
-			state.buttonUp[bind.action] = input.IsInputUp(bind.positive);
+			if (input.IsInputUp(bind.positive)) {
+				state.buttonUp[bind.action] = true;
+			}
 			break;
 		}
 		}

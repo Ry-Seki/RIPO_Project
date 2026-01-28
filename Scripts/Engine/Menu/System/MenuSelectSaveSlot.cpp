@@ -37,9 +37,9 @@ void MenuSelectSaveSlot::Initialize () {
             if (!button) continue;
 
             button->RegisterButtonHandle(buttonHandle->GetHandle());
-            button->SetOnClick([this, i]() {
-                SelectButtonExecute(i);
-            });
+            //button->SetOnClick([this, i]() {
+            //    SelectButtonExecute(i);
+            //});
         }
         eventSystem.LoadNavigation(navigation->GetData());
     });

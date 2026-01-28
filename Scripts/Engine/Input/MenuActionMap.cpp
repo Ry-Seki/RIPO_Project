@@ -16,6 +16,11 @@ void MenuActionMap::Initialize() {
 	// 上下移動
 	AddAxis(
 		static_cast<int>(GameEnum::MenuAction::Vertical),
+		{ InputType::Key, KEY_INPUT_UP },
+		{ InputType::Key, KEY_INPUT_DOWN }
+	);
+	AddAxis(
+		static_cast<int>(GameEnum::MenuAction::Vertical),
 		{ InputType::Key, KEY_INPUT_W },
 		{ InputType::Key, KEY_INPUT_S }
 	);
@@ -24,6 +29,11 @@ void MenuActionMap::Initialize() {
 		static_cast<int>(GameEnum::MenuAction::Horizontal),
 		{ InputType::Key, KEY_INPUT_D },
 		{ InputType::Key, KEY_INPUT_A }
+	);
+	AddAxis(
+		static_cast<int>(GameEnum::MenuAction::Horizontal),
+		{ InputType::Key, KEY_INPUT_RIGHT },
+		{ InputType::Key, KEY_INPUT_LEFT }
 	);
 	// 決定
 	AddButton(
@@ -34,8 +44,9 @@ void MenuActionMap::Initialize() {
 		static_cast<int>(GameEnum::MenuAction::Decide),
 		{ InputType::Key, KEY_INPUT_RETURN }
 	);
+	// クリック
 	AddButton(
-		static_cast<int>(GameEnum::MenuAction::Decide),
+		static_cast<int>(GameEnum::MenuAction::Click),
 		{ InputType::Mouse, MOUSE_INPUT_LEFT }
 	);
 	// キャンセル
@@ -48,6 +59,7 @@ void MenuActionMap::Initialize() {
 	state.axis[static_cast<int>(GameEnum::MenuAction::Vertical)] = 0.0f;
 	state.axis[static_cast<int>(GameEnum::MenuAction::Horizontal)] = 0.0f;
 	state.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)] = false;
+	state.buttonDown[static_cast<int>(GameEnum::MenuAction::Click)] = false;
 	state.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)] = false;
 
 	isActive = false;
