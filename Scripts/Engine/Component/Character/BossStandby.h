@@ -12,19 +12,19 @@
  *	‘Ò‹@ó‘Ôˆ—
  */
 class BossStandby : public BossState {
-private:
-	GameObjectPtr player;
-	std::shared_ptr<AnimatorComponent> animator;
-	int modelHandle;
-	// ‹–ìŠp‚Ì”¼Œa
-	float viewAngle;
-
 public:
 	/*
 	 *	ƒRƒ“ƒXƒgƒ‰ƒNƒ^
 	 */
 	BossStandby();
 	~BossStandby() = default;
+
+private:
+	GameObjectPtr player;
+	std::shared_ptr<AnimatorComponent> animator;
+	int modelHandle;
+	// ‹–ìŠp‚Ì”¼Œa
+	float viewAngle;
 
 public:
 	/*

@@ -295,6 +295,24 @@
     <Filter Include="ソース ファイル\Engine\System\Save">
       <UniqueIdentifier>{a26aeb35-6ccd-4ae2-9ccb-addca59519f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\UI">
+      <UniqueIdentifier>{49b8f422-3391-475d-86e9-57aee797154d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\UI\Button">
+      <UniqueIdentifier>{db5d91ef-fc24-479a-ab49-755e61292c41}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Input">
+      <UniqueIdentifier>{8c08fc70-fa43-487b-8244-c1fcd2fb04b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\UI">
+      <UniqueIdentifier>{3b3e0b9f-aa6d-4356-b949-8258517b6ec8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Menu\System">
+      <UniqueIdentifier>{132b202d-1468-4a07-8cc6-ba58b51fd1cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Menu\System">
+      <UniqueIdentifier>{672ba505-2710-4874-b710-d73b61ceab5c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -365,9 +383,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Input\InputManager.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp">
       <Filter>ソース ファイル</Filter>
@@ -581,6 +596,33 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Save\SaveDataManager.cpp">
       <Filter>ソース ファイル\Engine\System\Save</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\BossDeath.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyDeath.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Input\ActionMapBase.cpp">
+      <Filter>ソース ファイル\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Input\PlayerActionMap.cpp">
+      <Filter>ソース ファイル\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\EventSystem.cpp">
+      <Filter>ソース ファイル\Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Button\UIButton.cpp">
+      <Filter>ソース ファイル\Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Input\InputManager.cpp">
+      <Filter>ソース ファイル\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Input\MenuActionMap.cpp">
+      <Filter>ソース ファイル\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.cpp">
+      <Filter>ソース ファイル\Engine\Menu\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1021,6 +1063,39 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Scene\GameState\DungeonContext.h">
       <Filter>ヘッダー ファイル\Engine\Scene\GameState</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\BossDeath.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyDeath.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Input\ActionMapBase.h">
+      <Filter>ヘッダー ファイル\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Input\PlayerActionMap.h">
+      <Filter>ヘッダー ファイル\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Input\InputUtility.h">
+      <Filter>ヘッダー ファイル\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Rect.h">
+      <Filter>ヘッダー ファイル\Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Button\UIButton.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\EventSystem.h">
+      <Filter>ヘッダー ファイル\Engine\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Input\MenuActionMap.h">
+      <Filter>ヘッダー ファイル\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

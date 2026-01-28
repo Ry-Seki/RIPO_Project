@@ -8,6 +8,7 @@
 #include "../../Manager/CameraManager.h"
 #include "EnemyAttack.h"
 #include "../ModelRenderer.h"
+#include "EnemyStandby.h"
 
  /*
   *	コンストラクタ
@@ -126,7 +127,7 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 	}
 
 	auto distance = Distance(wayPoint, enemy->position);
-	// プレイヤーの手前で止まる
+	// 標的判定
 	if (player && wayPoint == player->position) {
 		// 攻撃射程判定
 		if (distance > DIFFERENCE_PLAYER) {
@@ -154,6 +155,6 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 	// 目標地点についたらターゲットを変える
 	if (distance < differenceTarget) {
 		enemyComponent->SetChaseTargetChangeFrag(targetChange);
-		enemyComponent->SetState(new EnemyTurn());
+		enemyComponent->SetState(new EnemyStandby());
 	}
 }

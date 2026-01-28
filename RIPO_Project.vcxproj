@@ -169,6 +169,7 @@
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyChase.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyDeath.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyStandby.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyTurn.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
@@ -180,6 +181,7 @@
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Engine\Input\ActionMapBase.cpp" />
     <ClCompile Include="Scripts\Engine\Input\InputManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Input\MenuActionMap.cpp" />
     <ClCompile Include="Scripts\Engine\Input\PlayerActionMap.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.cpp" />
@@ -196,6 +198,7 @@
     <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuGameModeSelect.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuLoadGame.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuNewGame.cpp" />
@@ -243,6 +246,8 @@
     <ClCompile Include="Scripts\Engine\System\World\WorldProgressManager.cpp" />
     <ClCompile Include="Scripts\Engine\Time.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Button\UIButton.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\EventSystem.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
     <ClCompile Include="Scripts\Engine\Vision.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
@@ -286,6 +291,7 @@
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyChase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyDeath.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyStandby.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyState.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyTurn.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h" />
@@ -313,6 +319,7 @@
     <ClInclude Include="Scripts\Engine\Input\ActionMapBase.h" />
     <ClInclude Include="Scripts\Engine\Input\InputManager.h" />
     <ClInclude Include="Scripts\Engine\Input\InputUtility.h" />
+    <ClInclude Include="Scripts\Engine\Input\MenuActionMap.h" />
     <ClInclude Include="Scripts\Engine\Input\PlayerActionMap.h" />
     <ClInclude Include="Scripts\Engine\JSON.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimationBase.h" />
@@ -335,6 +342,7 @@
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuBase.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h" />
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.h" />
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuGameModeSelect.h" />
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuLoadGame.h" />
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuNewGame.h" />
@@ -397,6 +405,10 @@
     <ClInclude Include="Scripts\Engine\System\Status\PlayerStatusManager.h" />
     <ClInclude Include="Scripts\Engine\System\World\WorldProgressManager.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
+    <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer.h" />
+    <ClInclude Include="Scripts\Engine\UI\Button\UIButton.h" />
+    <ClInclude Include="Scripts\Engine\UI\EventSystem.h" />
+    <ClInclude Include="Scripts\Engine\UI\Rect.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
     <ClInclude Include="Scripts\Engine\Vision.h" />
   </ItemGroup>

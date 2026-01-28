@@ -1,10 +1,10 @@
 {
   "Stage": {
     "0": {
-      "StageData": "Res/Model/Stage/StageModel_1.mv1"
+      "StageData": "Res/Model/Stage/Stage_1/StageModel_1.mv1"
     },
     "1": {
-      "StageData": "Res/Model/Stage/StageModel_1_TwoLayer.mv1"
+      "StageData": "Res/Model/Stage/Stage_1/StageModel_1_TwoLayer.mv1"
     },
     "StageBoneData": "Data/Dungeon/Stage1/Stage1DungeonCreatePos.json",
     "StageFloorData": "Data/Dungeon/Stage1/Stage1DungeonFloorData.json"

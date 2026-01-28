@@ -15,7 +15,7 @@
 class PlayerActionMap : public ActionMapBase {
 public:
 	PlayerActionMap() = default;
-	~PlayerActionMap() = default;
+	~PlayerActionMap() override  = default;
 
 public:
 	/*

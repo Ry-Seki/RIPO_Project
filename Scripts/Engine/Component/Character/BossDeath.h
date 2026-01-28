@@ -10,17 +10,17 @@
 #include "BossComponent.h"
 
 class BossDeath : public BossState {
+private:
+	std::shared_ptr<AnimatorComponent> animator;
+	// アニメーション経過時間
+	float animationTime;
+
 public:
 	/*
 	 *	コンストラクタ
 	 */
 	BossDeath();
 	~BossDeath() = default;
-
-private:
-	std::shared_ptr<AnimatorComponent> animator;
-	// アニメーション経過時間
-	float animationTime;
 
 public:
 	/*

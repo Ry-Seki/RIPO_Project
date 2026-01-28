@@ -16,6 +16,7 @@
 #include "../../../../Fade/FadeFactory.h"
 #include "../../../../Fade/FadeManager.h"
 #include "../../../../System/World/WorldProgressManager.h"
+#include "../../../../Input/InputUtility.h"
 
 /*
  *	@brief	現在のフロアの片付け処理
@@ -121,7 +122,9 @@ void FloorProcessor::SetupNextFloor() {
 	floorData.TrySetFloorData(currentFloor, setFloorData);
 	// フェードイン
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop);
-	FadeManager::GetInstance().StartFade(fade);
+	FadeManager::GetInstance().StartFade(fade, []() {
+		InputUtility::SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, true);
+	});
 	// 当たり判定の有効化
 	GameObjectUtility::SetUseObjectColliderFlag(true);
 }
@@ -163,11 +166,17 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart, std::v
 		dungeonCreater.GenerateDungeon(currentFloor, GetSpawnTreasureIDTable(), nextFloor);
 		// フロアデータの更新
 		floorData.TrySetFloorData(currentFloor, setFloorData);
-		// 重力
-		auto player = CharacterManager::GetInstance().GetPlayer();
-		GameObjectManager::GetInstance().SetObjectColliderFlag(true);
-		player->GetComponent<GravityComponent>()->SetGravity(true);
 		isStart = true;
+		// フェードイン
+		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop);
+		FadeManager::GetInstance().StartFade(fade, [&isStart]() {
+			// 重力
+			auto player = CharacterManager::GetInstance().GetPlayer();
+			GameObjectManager::GetInstance().SetObjectColliderFlag(true);
+			player->GetComponent<GravityComponent>()->SetGravity(true);
+			// プレイヤーのアクションマップをアクティブ化
+			InputUtility::SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, true);
+		});
 	});
 }
 /*
@@ -176,6 +185,7 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart, std::v
 void FloorProcessor::ChangeFloor() {
 	// 当たり判定の解除
 	GameObjectUtility::SetUseObjectColliderFlag(false);
+	InputUtility::SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, false);
 	// 現在のフロアの片付け処理
 	TeardownCurrentFloor();
 	// フロアの変更
@@ -283,6 +293,11 @@ std::vector<int> FloorProcessor::GetNormalTreasureIDTable() {
 
 		result[floor].push_back(treasureID);
 	}
+	// 階層がない場合は空を返す
+	if (currentFloor < 0 || result.size() <= static_cast<size_t>(currentFloor)) {
+		return {};
+	}
+
 	return result[currentFloor];
 }
 /*
@@ -307,8 +322,12 @@ std::vector<int> FloorProcessor::GetEventTreasureIDTable() {
 
 		result[floor].push_back(treasureID);
 	}
-	return result[currentFloor];
+	// 階層がない場合は空を返す
+	if (currentFloor < 0 || result.size() <= static_cast<size_t>(currentFloor)) {
+		return {};  
+	}
 
+	return result[currentFloor];
 }
 /*
  *	@brief		フロアごとに生成するお宝IDデータのみを渡す

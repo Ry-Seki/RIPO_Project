@@ -18,6 +18,7 @@
 #include "../../../../Fade/FadeFactory.h"
 #include "../../../../Fade/FadeManager.h"
 #include "../../../../System/World/WorldProgressManager.h"
+#include "../../../../Input/InputUtility.h"
 
 /*
  *	@brief	初期化処理
@@ -181,6 +182,7 @@ bool InAction_Dungeon::IsPlayerDead() {
  */
 void InAction_Dungeon::EndDungeon() {
 	isStart = false;
+	InputUtility::SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, false);
 	auto& context = owner->GetOwner()->GetActionContext();
 	CalculationDungeon(context.dungeonID, context.isCurrentEvent);
 	context.isPlayerDead = IsPlayerDead();
@@ -195,16 +197,21 @@ void InAction_Dungeon::EndDungeon() {
  */
 void InAction_Dungeon::CalculationDungeon(int dungeonID, bool isEventDay) {
 	auto& world = WorldProgressManager::GetInstance();
+	// ボスの討伐フラグ
+	if (CharacterManager::GetInstance().GetBossDeathFlag()) world.SetIsBossDefeated(dungeonID);
 	// お宝IDの取得
 	int treasureID = floorProcessor.GetHoldTreasureID();
+	if (treasureID == -1) return;
+
 	if (isEventDay) {
 		for (auto& eventID : treasureIDList[GameConst::EVENT_TREASURE_INDEX]) {
 			if (treasureID != eventID) continue;
 
-			if (treasureID != -1) world.ProcureEventTreasure(dungeonID, treasureID);
+			world.ProcureEventTreasure(dungeonID, treasureID);
+			return;
 		}
+		world.ProcureNewTreasure(dungeonID, treasureID);
 	} else {
-		if (treasureID != -1) world.ProcureNewTreasure(dungeonID, treasureID);
+		world.ProcureNewTreasure(dungeonID, treasureID);
 	}
-	// TODO : ボス討伐フラグの反映
 }

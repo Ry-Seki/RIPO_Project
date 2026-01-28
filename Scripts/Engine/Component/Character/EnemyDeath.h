@@ -13,13 +13,13 @@
  *	€–Só‘Ôˆ—
  */
 class EnemyDeath : public EnemyState {
-public:
-	EnemyDeath();
-	~EnemyDeath() = default;
-
 private:
 	std::shared_ptr<AnimatorComponent> animator;
 	float animationTime;
+
+public:
+	EnemyDeath();
+	~EnemyDeath() = default;
 
 public:
 	/*

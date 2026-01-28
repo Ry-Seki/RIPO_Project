@@ -7,14 +7,24 @@
 #define _MENU_NEW_GAME_H_
 
 #include "../MenuBase.h"
+#include "../../UI/EventSystem.h"
+
+#include <vector>
+#include <memory>
 
 // 前方宣言
 class Engine;
+class UIButton;
 
 /*
  *	@brief	ニューゲームメニュー
  */
 class MenuNewGame : public MenuBase {
+private:
+	std::vector<std::shared_ptr<UIButton>> buttonList;
+	EventSystem eventSystem;
+
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/SaveSlotNavigation.json";
 
 public:
 	/*
