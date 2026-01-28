@@ -49,6 +49,7 @@ struct SettingsData {
  *	@brief	セーブデータ
  */
 struct SaveData {
+	bool isUsed = false;
 	GameProgressData game;
 	PlayerStatusLevelData player;
 	WorldProgressData world;

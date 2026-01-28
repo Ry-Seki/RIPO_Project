@@ -16,11 +16,6 @@ void MenuManager::Update(Engine& engine, float unscaledDeltaTime) {
 	if (topMenu->IsInteractive()) topMenu->Update(engine, unscaledDeltaTime);
 
 	// メニューの更新(操作以外)
-	for (auto& menu : useMenuList) {
-		if (menu->IsInteractive()) continue;
-
-		menu->Update(engine, unscaledDeltaTime);
-	}
 }
 /*
  *	@brief	描画処理

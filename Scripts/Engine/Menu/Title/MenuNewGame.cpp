@@ -12,6 +12,7 @@
 #include "../../Scene/MainGameScene.h"
 #include "../../Load/JSON/LoadJSON.h"
 #include "../../Load/LoadManager.h"
+#include "../System/MenuSelectSaveSlot.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -26,6 +27,7 @@ void MenuNewGame::Open() {
 	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
 		isStart = true;
+		MenuManager::GetInstance().OpenMenu<MenuSelectSaveSlot>();
 	});
 }
 /*

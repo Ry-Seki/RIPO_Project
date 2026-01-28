@@ -32,17 +32,6 @@ void SaveDataManager::Initialize() {
     LoadCurrentSlot();
 }
 /*
- *	@brief		スロット選択
- *	@param[in]	int selectSlot
- */
-void SaveDataManager::SelectSlot(int selectSlot) {
-    if (selectSlot >= 1 && selectSlot <= 3) {
-        currentSlot = "Slot" + std::to_string(selectSlot);
-    } else {
-        currentSlot = _AUTO_SAVE;
-    }
-}
-/*
  *	@brief		セーブ処理
  *  @param[in]	const SaveData& data
  *  @param[in]	const std::string& slotPath
@@ -63,20 +52,6 @@ bool SaveDataManager::Save(const SaveData& data, const std::string& slotPath) {
         return false;
     }
     return true;
-}
-/*
- *	@brief		選択されたスロットにセーブ
- *  @return		bool
- */
-bool SaveDataManager::SaveCurrentSlot() {
-    return Save(currentSaveData, currentSlot);
-}
-/*
- *	@brief		オートセーブスロットにセーブ
- *	@return		bool
- */
-bool SaveDataManager::AutoSave() {
-    return Save(currentSaveData, _AUTO_SAVE);
 }
 /*
  *	@brief		ロード処理
@@ -106,20 +81,6 @@ bool SaveDataManager::Load(SaveData& outData, const std::string& slotPath) {
     return true;
 }
 /*
- *	@brief		選択されたスロットにロード
- *	@return		bool
- */
-bool SaveDataManager::LoadCurrentSlot() {
-    return Load(currentSaveData, currentSlot);
-}
-/*
- *	@brief		オートセーブスロットからロード
- *	@return		bool
- */
-bool SaveDataManager::AutoSaveLoad() {
-    return Load(currentSaveData, _AUTO_SAVE);
-}
-/*
  *	@brief		SaveData->JSONへ変換
  *	@param[in]	const SaveData& data
  *	@return		JSON
@@ -127,6 +88,7 @@ bool SaveDataManager::AutoSaveLoad() {
 Orderd_JSON SaveDataManager::ToJSON(const SaveData& data) {
     Orderd_JSON json;
     json["Version"] = _SAVE_VERSION;
+    json["IsUsed"] = data.isUsed;
     json["Game"] = ToJSON(data.game);
     json["Player"] = ToJSON(data.player);
     json["World"] = ToJSON(data.world);
@@ -140,6 +102,7 @@ Orderd_JSON SaveDataManager::ToJSON(const SaveData& data) {
  */
 SaveData SaveDataManager::SaveDataFromJSON(const JSON& json) {
     SaveData data{};
+    data.isUsed = json.value("IsUsed", false);
     data.game = GameDataFromJSON(json["Game"]);
     data.player = PlayerDataFromJSON(json["Player"]);
     data.world = WorldDataFromJSON(json["World"]);
@@ -254,7 +217,7 @@ Orderd_JSON SaveDataManager::ToJSON(const DungeonProgressData& data) {
     JSON eventJSON;
     for (const auto& [eventID, flag] : data.eventTreasureFlagMap) {
         if (!flag) continue;
-        
+
         eventJSON[std::to_string(eventID)] = true;
     }
     json["eventTreasureFlags"] = eventJSON;
@@ -318,6 +281,67 @@ SettingsData SaveDataManager::SettingsDataFromJSON(const JSON& json) {
     data.bgmVolume = json.value("bgmVolume", 0.0f);
     data.seVolume = json.value("seVolume", 0.0f);
     return data;
+}
+/*
+ *	@brief		選択されたスロットにセーブ
+ *  @return		bool
+ */
+bool SaveDataManager::SaveCurrentSlot() {
+    currentSaveData.isUsed = true;
+    return Save(currentSaveData, currentSlot);
+}
+/*
+ *	@brief		オートセーブスロットにセーブ
+ *	@return		bool
+ */
+bool SaveDataManager::AutoSave() {
+    return Save(currentSaveData, _AUTO_SAVE);
+}
+/*
+ *	@brief		選択されたスロットにロード
+ *	@return		bool
+ */
+bool SaveDataManager::LoadCurrentSlot() {
+    return Load(currentSaveData, currentSlot);
+}
+/*
+ *	@brief		オートセーブスロットからロード
+ *	@return		bool
+ */
+bool SaveDataManager::AutoSaveLoad() {
+    return Load(currentSaveData, _AUTO_SAVE);
+}
+/*
+ *	@brief		スロット選択
+ *	@param[in]	int selectSlot
+ */
+void SaveDataManager::SelectSlot(int selectSlot) {
+    if (selectSlot >= 1 && selectSlot <= 3) {
+        currentSlot = "Slot" + std::to_string(selectSlot);
+    } else {
+        currentSlot = _AUTO_SAVE;
+    }
+}
+/*
+ *	@brief		そのデータが存在している(使用済み)か判定
+ *  @param[in]	int selectSlot
+ *	@return		bool
+ */
+bool SaveDataManager::Exists(int selectSlot) {
+    SaveData data{};
+    std::string slot = "";
+    // スロット番号が有効か判定
+    if (selectSlot >= 1 && selectSlot <= 3) {
+        slot = "Slot" + std::to_string(selectSlot);
+    } else {
+        slot = _AUTO_SAVE;
+    }
+    // ロード出来なかった場合、中止
+    if (!Load(data, slot)) {
+        assert(false && "セーブスロットがありませんでした");
+        return false;
+    }
+    return data.isUsed;
 }
 /*
  *	@brief		セーブに必要なデータを集める

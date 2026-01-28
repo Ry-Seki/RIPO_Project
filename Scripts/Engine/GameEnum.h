@@ -82,6 +82,13 @@ namespace GameEnum {
 		Max
 	};
 	/*
+	 *	@brief	セーブスロットメニューでのモード
+	 */
+	enum class SaveSlotMenuMode {
+		Save,
+		Load
+	};
+	/*
 	 *	@brief	ボタンの状態
 	 *	@author	Seki
 	 */
