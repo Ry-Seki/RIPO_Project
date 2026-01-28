@@ -88,10 +88,21 @@ namespace GameEnum {
 	enum class ButtonState {
 		Invalid = -1,
 		Idle,			// 通常状態
-		Hover,			// 触れている状態
+		Hovered,		// 触れている状態
 		Pressed,		// 押された状態
 		Selected,		// 選択状態
 		Disable,		// 選択不可能状態
+		Max
+	};
+	/*
+	 *	@brief	移動の道筋
+	 */
+	enum class NavigationDir {
+		Invalid = -1,
+		Left,
+		Right,
+		Up,
+		Down,
 		Max
 	};
 	/*
@@ -101,10 +112,9 @@ namespace GameEnum {
 	enum class ActionMap {
 		Incalid = -1,
 		PlayerAction,
-
-		Max,
+		MenuAction,
+		Max
 	};
-
 	/*
 	 *	@brief	プレイヤーの行動
 	 *	@author	Riku
@@ -118,8 +128,21 @@ namespace GameEnum {
 		Jump,			// ジャンプ
 		Shot,			// 射撃
 		Lift,			// お宝持ち上げ
+		OpenMenu,		// メニューを開く
 
-		Max,
+		Max
+	};
+	/*
+	 *	@brief	メニューでの入力
+	 *	@author	Seki
+	 */
+	enum class MenuAction {
+		Invalid = -1,
+		Vertical,	// 垂直方向
+		Horizontal,	// 水平方向
+		Decide,		// 決定
+		Cancel,		// キャンセル
+		Max
 	};
 }
 #endif // !_GAME_ENUM_H_

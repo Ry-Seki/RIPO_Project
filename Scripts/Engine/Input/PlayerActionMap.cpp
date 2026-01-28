@@ -41,6 +41,10 @@ void PlayerActionMap::Initialize() {
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::Lift),
 		{ InputType::Mouse, MOUSE_INPUT_RIGHT });
+	// メニューを開く
+	AddButton(
+		static_cast<int>(GameEnum::PlayerAction::OpenMenu),
+		{ InputType::Key, KEY_INPUT_ESCAPE });
 
 	// 値の初期化
 	state.axis[static_cast<int>(GameEnum::PlayerAction::ForwardMove)] = 0.0f;
@@ -50,6 +54,7 @@ void PlayerActionMap::Initialize() {
 	state.button[static_cast<int>(GameEnum::PlayerAction::Jump)] = false;
 	state.button[static_cast<int>(GameEnum::PlayerAction::Shot)] = false;
 	state.button[static_cast<int>(GameEnum::PlayerAction::Lift)] = false;
+	state.button[static_cast<int>(GameEnum::PlayerAction::OpenMenu)] = false;
 
 	isActive = false;
 }

@@ -30,8 +30,36 @@ struct Navigation {
  */
 class EventSystem {
 private:
+	int currentIndex = -1;
 	std::vector<UIButton*> buttonList;
 	std::unordered_map<int, Navigation> navigationMap;
+
+public:
+	/*
+	 *	@brief	コンストラクタ
+	 */
+	EventSystem() = default;
+	/*
+	 *	@brief	デストラクタ
+	 */
+	~EventSystem() = default;
+
+public:
+	/*
+	 *	@brief	初期化処理
+	 */
+	void Initialize();
+	/*
+	 *	@brief	更新処理
+	 */
+	void Update(float deltaTime);
+
+public:
+	/*
+	 *	@brief		移動の道筋データの設定
+	 *  @param[in]	const JSON& json
+	 */
+	void LoadNavigation(const JSON& json);
 
 public:
 	/*
@@ -39,6 +67,8 @@ public:
 	 *  @param[in]	UIButton* setButton
 	 */
 	inline void RegisterButton(UIButton* setButton) {
+		if (!setButton) return;
+
 		buttonList.push_back(setButton);
 	}
 };

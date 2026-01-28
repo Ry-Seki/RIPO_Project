@@ -181,6 +181,7 @@
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Engine\Input\ActionMapBase.cpp" />
     <ClCompile Include="Scripts\Engine\Input\InputManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Input\MenuActionMap.cpp" />
     <ClCompile Include="Scripts\Engine\Input\PlayerActionMap.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.cpp" />
@@ -244,6 +245,8 @@
     <ClCompile Include="Scripts\Engine\System\World\WorldProgressManager.cpp" />
     <ClCompile Include="Scripts\Engine\Time.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Button\UIButton.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\EventSystem.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
     <ClCompile Include="Scripts\Engine\Vision.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
@@ -315,6 +318,7 @@
     <ClInclude Include="Scripts\Engine\Input\ActionMapBase.h" />
     <ClInclude Include="Scripts\Engine\Input\InputManager.h" />
     <ClInclude Include="Scripts\Engine\Input\InputUtility.h" />
+    <ClInclude Include="Scripts\Engine\Input\MenuActionMap.h" />
     <ClInclude Include="Scripts\Engine\Input\PlayerActionMap.h" />
     <ClInclude Include="Scripts\Engine\JSON.h" />
     <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimationBase.h" />
@@ -399,7 +403,10 @@
     <ClInclude Include="Scripts\Engine\System\Status\PlayerStatusManager.h" />
     <ClInclude Include="Scripts\Engine\System\World\WorldProgressManager.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
+    <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer.h" />
     <ClInclude Include="Scripts\Engine\UI\Button\UIButton.h" />
+    <ClInclude Include="Scripts\Engine\UI\EventSystem.h" />
+    <ClInclude Include="Scripts\Engine\UI\Rect.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
     <ClInclude Include="Scripts\Engine\Vision.h" />
   </ItemGroup>

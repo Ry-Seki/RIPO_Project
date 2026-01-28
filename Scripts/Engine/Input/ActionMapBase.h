@@ -51,7 +51,7 @@ public:
 
 public:
 	ActionMapBase() = default;
-	~ActionMapBase() = default;
+	virtual ~ActionMapBase() = default;
 
 public:
 	/*
