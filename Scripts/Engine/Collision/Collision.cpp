@@ -653,11 +653,9 @@ bool RayIntersect(const Ray& ray, const Capsule& capsule, float& distance) {
 	// 交点までの距離を求める
 	// レイの開始点から最近接点までの距離
 	float rayMinDistance = aMinRatio * MAX_DISTANCE;
-	// 半径から最近接点間の長さを引いた距離
+	// レイの最近接点からカプセルの侵入点までの距離(三平方)
 	float offset = std::sqrt(radiusSquare - lengthSquare);
-	// カプセルの半径から最近接点間の距離を引いた値を半径とし、中心点をレイの最近接点とする円上には
-	// レイの侵入点と脱出点、最近接点間を線で結んだときにレイの後ろ側にあるカプセルの表面点の3点が存在する
-	// なのでレイの開始点から最近接点までの距離から半径から最近接点間の長さを引いた距離を引いた値がレイの侵入点となる
+	// レイの最近接点までの距離から侵入した分だけ戻せばそこが交点までの距離となる
 	distance = rayMinDistance - offset;
 	if (distance < 0.0f) distance = 0;
 
