@@ -10,6 +10,8 @@
 #include "../../Audio/AudioUtility.h"
 #include "../../Engine.h"
 #include "../../Scene/MainGameScene.h"
+#include "../../Load/JSON/LoadJSON.h"
+#include "../../Load/LoadManager.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
