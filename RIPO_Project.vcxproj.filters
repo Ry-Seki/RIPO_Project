@@ -307,6 +307,12 @@
     <Filter Include="ソース ファイル\Engine\UI">
       <UniqueIdentifier>{3b3e0b9f-aa6d-4356-b949-8258517b6ec8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Menu\System">
+      <UniqueIdentifier>{132b202d-1468-4a07-8cc6-ba58b51fd1cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Menu\System">
+      <UniqueIdentifier>{672ba505-2710-4874-b710-d73b61ceab5c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -614,6 +620,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Input\MenuActionMap.cpp">
       <Filter>ソース ファイル\Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.cpp">
+      <Filter>ソース ファイル\Engine\Menu\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1084,6 +1093,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Input\MenuActionMap.h">
       <Filter>ヘッダー ファイル\Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -52,8 +52,6 @@ PlayerComponent::PlayerComponent()
 void PlayerComponent::Start() {
 	// プレイヤーの基礎ステータスを受け取る
 	status = PlayerStatusManager::GetInstance().GetPlayerStatusData()->base;
-	// プレイヤーのアクションマップをアクティブ化
-	InputManager::GetInstance().SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, true);
 }
 
 void PlayerComponent::Update(float deltaTime) {
