@@ -690,6 +690,9 @@ bool RayIntersect(const Ray& ray, const int modelHandle, float& distance) {
 	MV1SetupCollInfo(modelHandle);
 	// ƒ‚ƒfƒ‹‚Æ‚ÌŒğ·”»’è
 	auto hitInfo = MV1CollCheck_Line(modelHandle, -1, ToVECTOR(raySeg.startPoint), ToVECTOR(raySeg.endPoint));
-	
-	return false;
+	// Œğ“_‚Ü‚Å‚Ì‹——£‚ğŒvZ
+	Vector3 distanceLength = ray.start - FromVECTOR(hitInfo.HitPosition);
+	distance = sqrt(Dot(distanceLength, distanceLength));
+
+	return hitInfo.HitFlag;
 }
