@@ -11,9 +11,10 @@
  */
 EnemyStandby::EnemyStandby()
 	: animator(nullptr)
-	, randStandby(0)
-	, elapsedTime(0)
-	, RANDOM_MAX(3)
+	, randStandby(0.0f)
+	, elapsedTime(0.0f)
+	, randMax(0.0f)
+	, RANDOM_MAX(5)
 {
 }
 
@@ -26,7 +27,10 @@ void EnemyStandby::Start(GameObject* enemy)
 	animator = enemy->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
 
-	randStandby = GetRand(RANDOM_MAX);
+	// ランダム挙動を細かくするための二重乱数
+	randMax = GetRand(RANDOM_MAX);
+	randStandby = GetRand(randMax * 1000000);
+	randStandby = randStandby / 1000000;
 }
 
 /*
@@ -49,6 +53,7 @@ void EnemyStandby::Update(GameObject* enemy, float deltaTime)
 	elapsedTime += deltaTime;
 	// 状況に応じた状態分岐
 
+	// ランダム待機
 	if (elapsedTime > randStandby) {
 		// 移動状態へ遷移
 		enemyComponent->SetState(new EnemyTurn());

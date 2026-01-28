@@ -13,11 +13,13 @@ class EnemyStandby : public EnemyState {
 private:
 	std::shared_ptr<AnimatorComponent> animator;
 	// ランダムなスタンバイ時間
-	int randStandby;
+	float randStandby;
 	// 経過時間
 	float elapsedTime;
+	// randStandbyの最大値として設定される乱数
+	float randMax;
 
-	// ランダム数の最大値
+	// 乱数の最大値
 	const int RANDOM_MAX;
 
 public:
