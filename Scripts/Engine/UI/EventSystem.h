@@ -33,7 +33,6 @@ struct Navigation {
 class EventSystem {
 private:
 	int currentIndex = -1;
-	bool inputHandle = false;
 	std::vector<UIButton*> buttonList;
 	std::unordered_map<int, Navigation> navigationMap;
 

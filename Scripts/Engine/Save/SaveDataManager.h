@@ -41,33 +41,14 @@ private:
 	 */
 	~SaveDataManager() override {}
 
-public:
+private:
 	/*
-	 *	@brief		初期化処理
-	 */
-	void Initialize();
-	/*
-	 *	@brief		スロット選択
-	 *	@param[in]	int selectSlot
-	 */
-	void SelectSlot(int selectSlot);
-	/*
-	 *	@brief		セーブ処理
-	 *  @param[in]	const SaveData& data
-	 *  @param[in]	const std::string& slotPath
-	 *  @return		bool
-	 */
+ *	@brief		セーブ処理
+ *  @param[in]	const SaveData& data
+ *  @param[in]	const std::string& slotPath
+ *  @return		bool
+ */
 	bool Save(const SaveData& data, const std::string& slotPath);
-	/*
-	 *	@brief		選択されたスロットにセーブ
-	 *  @return		bool
-	 */
-	bool SaveCurrentSlot();
-	/*
-	 *	@brief		オートセーブスロットにセーブ
-	 *	@return		bool
-	 */
-	bool AutoSave();
 	/*
 	 *	@brief		ロード処理
 	 *  @param[out]	SaveData& outData
@@ -75,16 +56,6 @@ public:
 	 *  @return		bool
 	 */
 	bool Load(SaveData& outData, const std::string& slotPath);
-	/*
-	 *	@brief		選択されたスロットにロード
-	 *	@return		bool
-	 */
-	bool LoadCurrentSlot();
-	/*
-	 *	@brief		オートセーブスロットからロード
-	 *	@return		bool
-	 */
-	bool AutoSaveLoad();
 	/*
 	 *	@brief		SaveData->JSONへ変換
 	 *	@param[in]	const SaveData& data
@@ -158,6 +129,43 @@ public:
 	 *	@return		SettingsData
 	 */
 	SettingsData SettingsDataFromJSON(const JSON& json);
+
+public:
+	/*
+	 *	@brief		初期化処理
+	 */
+	void Initialize();
+	/*
+	 *	@brief		選択されたスロットにセーブ
+	 *  @return		bool
+	 */
+	bool SaveCurrentSlot();
+	/*
+	 *	@brief		選択されたスロットにロード
+	 *	@return		bool
+	 */
+	bool LoadCurrentSlot();
+	/*
+	 *	@brief		オートセーブスロットにセーブ
+	 *	@return		bool
+	 */
+	bool AutoSave();
+	/*
+	 *	@brief		オートセーブスロットからロード
+	 *	@return		bool
+	 */
+	bool AutoSaveLoad();
+	/*
+	 *	@brief		スロット選択
+	 *	@param[in]	int selectSlot
+	 */
+	void SelectSlot(int selectSlot);
+	/*
+	 *	@brief		そのデータが存在している(使用済み)か判定
+	 *  @param[in]	int selectSlot
+	 *	@return		bool
+	 */
+	bool Exists(int selectSlot);
 	/*
 	 *	@brief		セーブに必要なデータを集める
 	 *	@param[in]	const ActionContext& context

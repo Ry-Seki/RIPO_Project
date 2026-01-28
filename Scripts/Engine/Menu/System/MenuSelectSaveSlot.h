@@ -8,6 +8,7 @@
 
 #include "../MenuBase.h"
 #include "../../UI/EventSystem.h"
+#include "../../GameEnum.h"
 
 #include <vector>
 #include <memory>
@@ -20,8 +21,11 @@ class UIButton;
  */
 class MenuSelectSaveSlot : public MenuBase {
 private:
-	std::vector<std::shared_ptr<UIButton>> buttonList;
+	int currentSlot = -1;
+	GameEnum::SaveSlotMenuMode saveMode;
 	EventSystem eventSystem;
+
+	std::vector<std::shared_ptr<UIButton>> buttonList;
 
 	static constexpr const char* _BUTTON_IMAGE_PATH = "Res/Menu/System/Trealine_SaveSlot.png";
 	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/SaveSlotNavigation.json";
@@ -49,6 +53,20 @@ public:
 	void Close () override;
 
 public:
+	/*
+	 *	@brief		ボタンのコールバック登録
+	 *	@param[in]	int slotIndex
+	 */
+	void SelectButtonExecute(int slotIndex);
+
+public:
+	/*
+	 *	@brief		セーブモードの設定
+	 *	@param[in]	GameEnum::SaveSlotMenuMode setSaveMode
+	 */
+	inline void SetSaveMode(GameEnum::SaveSlotMenuMode setSaveMode) {
+		saveMode = setSaveMode;
+	}
 };
 
 #endif // !_MENU_SELECT_SAVE_SLOT_H_

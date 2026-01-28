@@ -16,6 +16,7 @@
 #include "../Menu/MenuManager.h"
 #include "../Menu/Title/MenuTitle.h"
 #include "../Menu/Title/MenuGameModeSelect.h"
+#include "../Menu/System/MenuSelectSaveSlot.h"
 
 #include <DxLib.h>
 
@@ -31,6 +32,7 @@ void TitleScene::Initialize(Engine& engine) {
 	FadeManager::GetInstance().StartFade(fadeIn);
 	SetBGMVolume(100);
 	SetSEVolume(100);
+	MenuManager::GetInstance().GetMenu<MenuSelectSaveSlot>();
 	MenuManager::GetInstance().GetMenu<MenuTitle>();
 	MenuManager::GetInstance().GetMenu<MenuGameModeSelect>();
 	auto debugSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/ButtonPush_Debug.mp3");
