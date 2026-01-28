@@ -66,6 +66,8 @@ bool Intersect(const std::variant<AABB, Capsule>& a, const std::variant<AABB, Ca
 bool RayIntersect(const Ray& ray, const AABB& box, float& distance);
 bool RayIntersect(const Ray& ray, const Capsule& capsule, float& distance);
 bool RayIntersect(const Ray& ray, const std::variant<AABB, Capsule>& collider, float& distance);
+// DxLib‚ÌŠÖ”‚ğg‚Á‚½ƒŒƒC‚Æƒ‚ƒfƒ‹‚ÌÕ“Ë”»’è
+bool RayIntersect(const Ray& ray, const int modelHandle, float& distance);
 
 
 #endif // !_COLLISION_H_

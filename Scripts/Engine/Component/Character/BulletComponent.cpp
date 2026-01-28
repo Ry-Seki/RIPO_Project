@@ -10,6 +10,7 @@
 #include "../../GameObject/GameObjectUtility.h"
 #include "../../Manager/CameraManager.h"
 #include "../../System/Money/MoneyManager.h"
+#include "../../Scene/Scene.h"
 
 using namespace GameObjectUtility;
 using namespace CharacterUtility;
@@ -23,13 +24,30 @@ BulletComponent::BulletComponent()
 
 void BulletComponent::Start() {
 	bullet = GetOwner();
+	// 着弾地点を確認
+	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
+	Ray ray = { bullet->position, ForwardDir(camera->rotation) };
+	Scene::RayCastHit hitInfo;
+	bool hit = bullet->GetEngine()->GetCurrentScene()->RayCast(
+		ray, hitInfo,
+		[this](const ColliderBasePtr& col, float distance) {
+			// プレイヤーと自分以外のオブジェクト
+			auto hitName = col->GetOwner()->name;
+			return hitName != GameConst::_CREATE_POSNAME_PLAYER &&
+				hitName != "bullet";
+		}
+	);
+	hitDirection = Direction(bullet->position, hitInfo.point);
 }
 
 void BulletComponent::Update(float deltaTime) {
 	if (!bullet) return;
-	// 前に進む
-	Vector3 forward = ForwardDir(bullet->rotation);
-	bullet->position += forward * SHOT_SPEED * deltaTime;
+	//// 前に進む
+	//Vector3 forward = ForwardDir(bullet->rotation);
+	//bullet->position += forward * SHOT_SPEED * deltaTime;
+	
+	// 着弾地点に進む
+	bullet->position += hitDirection * SHOT_SPEED * deltaTime;
 
 	// 破棄カウントダウン
 	destroyTimeCount -= deltaTime;

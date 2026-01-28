@@ -21,7 +21,8 @@ void RevolverArm::ArmUpdate(float deltaTime, GameObject* player, Engine* engine)
 		auto camera = CameraManager::GetInstance().GetCamera();
 		int shot = static_cast<int>(GameEnum::PlayerAction::Shot);
 		if (action.button[shot] || isShot) {
-			ShotBullet(camera->position, camera->rotation);
+			Vector3 t = { 0,0,100 };
+			ShotBullet(camera->position + t, camera->rotation);
 			shotCoolTime = SHOT_COOL_TIME_MAX;
 			isShot = false;
 		}

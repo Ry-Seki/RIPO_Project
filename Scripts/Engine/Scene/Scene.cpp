@@ -222,6 +222,8 @@ bool Scene::RayCast(const Ray& ray, RayCastHit& hitInfo, const RayCastPredicate&
 		}
 	}
 
+	
+
 	// 交差するコライダーがある場合
 	if (hitInfo.collider) {
 		// 交差の座標を計算
