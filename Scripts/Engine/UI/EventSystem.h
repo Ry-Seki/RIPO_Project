@@ -14,6 +14,8 @@
 
 // 前方宣言
 class UIButton;
+class ActionMapBase;
+struct ActionState;
 
 /*
  *	@brief	移動の道筋構造体
@@ -31,6 +33,7 @@ struct Navigation {
 class EventSystem {
 private:
 	int currentIndex = -1;
+	bool inputHandle = false;
 	std::vector<UIButton*> buttonList;
 	std::unordered_map<int, Navigation> navigationMap;
 
@@ -46,13 +49,20 @@ public:
 
 public:
 	/*
-	 *	@brief	初期化処理
+	 *	@brief		初期化処理
+	 *  @param[in]	int startIndex
 	 */
-	void Initialize();
+	void Initialize(int startIndex);
 	/*
 	 *	@brief	更新処理
 	 */
 	void Update(float deltaTime);
+
+private:
+	/*
+	 *	@brief	選択状態の反映
+	 */
+	void ApplySelection();
 
 public:
 	/*

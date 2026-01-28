@@ -8,23 +8,28 @@
 
 void ActionMapBase::InputUpdate() {
 	// 入力のタイプ別で入力判定
-	for (auto b : bindings) {
-		switch (b.type) {
+	for (auto& bind : bindings) {
+		switch (bind.type) {
 		case BindingType::Axis:
 			// 軸入力の+側
-			if (InputManager::GetInstance().IsInput(b.positive)) {
-				state.axis[b.action] += 1.0f;
+			if (InputManager::GetInstance().IsInput(bind.positive)) {
+				state.axis[bind.action] += 1.0f;
 			}
 			// 軸入力の-側
-			if (InputManager::GetInstance().IsInput(b.negative)) {
-				state.axis[b.action] -= 1.0f;
+			if (InputManager::GetInstance().IsInput(bind.negative)) {
+				state.axis[bind.action] -= 1.0f;
 			}
 			break;
 		case BindingType::Button:
 			// ボタン入力
-			if (InputManager::GetInstance().IsInput(b.positive)) {
-				state.button[b.action] = true;
-			}
+			auto& input = InputManager::GetInstance();
+
+			if (input.IsInput(bind.positive)) state.button[bind.action] = true;
+
+			if (input.IsInputDown(bind.positive))state.buttonDown[bind.action] = true;
+
+			if (input.IsInputUp(bind.positive)) state.buttonUp[bind.action] = true;
+
 			break;
 		}
 	}
