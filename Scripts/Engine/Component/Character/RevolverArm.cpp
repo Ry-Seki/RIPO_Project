@@ -4,24 +4,24 @@
  */
 
 #include "RevolverArm.h"
-#include "../../Manager/CameraManager.h"
 
 RevolverArm::RevolverArm()
 	: isShot(true)
 	, shotCoolTime(0.0f)
 
-	, SHOT_COOL_TIME_MAX(1.0f) 
-{}
+	, SHOT_COOL_TIME_MAX(1.0f) {
+	ammoCountMax = 6;
+	reloadingTimeMax = 3.0f;
+}
 
 void RevolverArm::ArmUpdate(float deltaTime, GameObject* player, Engine* engine) {
 	// クールタイム
 	if (shotCoolTime < 0) {
 		shotCoolTime = 0;
 		// 左クリックで射撃
-		auto camera = CameraManager::GetInstance().GetCamera();
 		int shot = static_cast<int>(GameEnum::PlayerAction::Shot);
 		if (action.button[shot] || isShot) {
-			ShotBullet(camera->position, camera->rotation);
+			ShotBullet();
 			shotCoolTime = SHOT_COOL_TIME_MAX;
 			isShot = false;
 		}

@@ -16,9 +16,9 @@ protected:
 	int ammoCount;					// 残弾数
 	int ammoCountMax;				// 弾の最大数
 	float reloadingTime;			// リロードの残り時間
+	float reloadingTimeMax;			// リロードに掛かる時間
 
 	const std::string BULLET_NAME;	// 弾の名前
-	const float RELOADING_TIME_MAX;	// リロードに掛かる時間
 	const Vector3 BULLET_AABB_MIN;	// 弾のAABBMin
 	const Vector3 BULLET_AABB_MAX;	// 弾のAABBMax
 
@@ -30,7 +30,12 @@ public:
 	/*
 	 *	銃を撃つ処理
 	 */
-	void ShotBullet(Vector3 position, Vector3 rotation);
+	void ShotBullet();
+
+	/*
+	 *	リロード
+	 */
+	void BulletReload();
 	
 };
 

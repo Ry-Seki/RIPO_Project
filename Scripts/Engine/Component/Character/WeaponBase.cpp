@@ -5,14 +5,15 @@
 
 #include "WeaponBase.h"
 #include "../../Manager/BulletManager.h"
+#include "../../Manager/CameraManager.h"
 
 WeaponBase::WeaponBase()
 	: ammoCount(0)
-	, ammoCountMax(6)
+	, ammoCountMax(0)
 	, reloadingTime(0.0f)
+	, reloadingTimeMax(0)
 
 	, BULLET_NAME("bullet")
-	, RELOADING_TIME_MAX(3.0f)
 	, BULLET_AABB_MIN({ -10, 0, -10 })
 	, BULLET_AABB_MAX({ 10, 20, 10 })
 {}
@@ -20,9 +21,17 @@ WeaponBase::WeaponBase()
 /*
  *	èeÇåÇÇ¬èàóù
  */
-void WeaponBase::ShotBullet(Vector3 position, Vector3 rotation) {
+void WeaponBase::ShotBullet() {
+	auto camera = CameraManager::GetInstance().GetCamera();
 	BulletManager::GetInstance().GenerateBullet(
-		BULLET_NAME, position, rotation, 
+		BULLET_NAME, camera->position, camera->rotation,
 		BULLET_AABB_MIN, BULLET_AABB_MAX);
+}
+
+/*
+ *	ÉäÉçÅ[Éh
+ */
+void WeaponBase::BulletReload() {
+	ammoCount = ammoCountMax;
 }
 
