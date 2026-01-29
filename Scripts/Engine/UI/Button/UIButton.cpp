@@ -11,58 +11,64 @@
 /*
  *	@brief	初期化処理
  */
-void UIButton::Initialize() {
+void SinglePressButton::Initialize() {
 	// TODO : 各描画処理を生成、初期化する
 
 }
 /*
  *	@brief	準備前処理
  */
-void UIButton::Setup() {
-	isEnable = true;
-	isHovered = false;
-	isPressed = false;
-	isSelected = false;
+void SinglePressButton::Setup() {
+	isPress = false;
+	buttonState = GameEnum::ButtonState::Idle;
 }
 /*
  *	@brief	更新処理
  */
-void UIButton::Update(float deltaTime) {
+void SinglePressButton::Update(float deltaTime) {
 	auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
 
 	int mouseX = 0, mouseY = 0;
 	// マウスポインタの取得
 	GetMousePoint(&mouseX, &mouseY);
-	// 触れているか判定
-	isHovered = rect.IsHovered(mouseX, mouseY);
+	// ボタン状態の更新ｎ
+	UpdateButtonState(mouseX, mouseY);
+
 	// 触れている状態でクリック判定
-	// TODO : ここの入力はのちにInputManager経由にする
-	if (isHovered && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Click)]) {
-		isPressed = true;
+	if (buttonState == GameEnum::ButtonState::Hovered 
+		&& input.buttonDown[static_cast<int>(GameEnum::MenuAction::Click)]) {
+		isPress = true;
+		buttonState = GameEnum::ButtonState::Pressed;
+	}
+
+	if (isPress) buttonState = GameEnum::ButtonState::Pressed;
+
+	// 押されている状態でクリック判定
+	// TODO : まだ、マウスポインタが範囲内だったら実行
+	if (isPress && input.buttonUp[static_cast<int>(GameEnum::MenuAction::Click)]) {
+		isPress = false;
 		Execute();
-	} else {
-		isPressed = false;
 	}
 }
 /*
  *	@brief	実行処理
  */
-void UIButton::Execute() {
-	if (!onClick) return;
+void SinglePressButton::Execute() {
 	// 登録された関数実行
+	if (!onClick) return;
 	onClick();
 }
 /*
  *	@brief	描画処理
  */
-void UIButton::Render() {
+void SinglePressButton::Render() {
 	GameEnum::ButtonState state = GetButtonState();
 	int index = static_cast<int>(state);
 	const bool canDrawNormal =
 		index >= 0 &&
 		index < rendererList.size() &&
 		index < buttonHandleList.size() &&
-		rendererList[index] != nullptr &&
+		rendererList[index] &&
 		buttonHandleList[index] >= 0;
 
 	if (canDrawNormal) {
@@ -74,12 +80,28 @@ void UIButton::Render() {
 	DebugRender();
 }
 /*
+ *	@brief		ボタン状態の更新
+ *	@param[in]	int mouseX, mouseY
+ */
+void SinglePressButton::UpdateButtonState(int mouseX, int mouseY) {
+	if (buttonState == GameEnum::ButtonState::Selected) return;
+
+	// 触れているか判定(このゲームの状態の優先順位的にSelect状態を優先)
+	if (buttonState != GameEnum::ButtonState::Selected) {
+		if (rect.IsHovered(mouseX, mouseY)) {
+			buttonState = GameEnum::ButtonState::Hovered;
+		} else {
+			buttonState = GameEnum::ButtonState::Idle;
+		}
+	}
+}
+/*
  *	@brief	デバック用描画
  */
-void UIButton::DebugRender() {
+void SinglePressButton::DebugRender() {
 	int color = GetColor(255, 255, 255);
 
-	switch (GetButtonState()) {
+	switch (buttonState) {
 		case GameEnum::ButtonState::Hovered:
 			color = GetColor(255, 255, 0);
 			break;
@@ -112,16 +134,4 @@ void UIButton::DebugRender() {
 		name.c_str(),
 		color
 	);
-}
-/*
- *	@brief		ボタン状態の取得
- *	@return		GameEnum::ButtonState
- */
-GameEnum::ButtonState UIButton::GetButtonState() const {
-	if (!isEnable)  return GameEnum::ButtonState::Disable;
-	if (isSelected) return GameEnum::ButtonState::Selected;
-	if (isPressed)  return GameEnum::ButtonState::Pressed;
-	if (isHovered)  return GameEnum::ButtonState::Hovered;
-
-	return GameEnum::ButtonState::Idle;
 }

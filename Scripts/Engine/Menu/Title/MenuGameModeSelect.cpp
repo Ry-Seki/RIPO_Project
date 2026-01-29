@@ -34,7 +34,7 @@ void MenuGameModeSelect::Open() {
 /*
  *	@brief	XVˆ—
  */
-void MenuGameModeSelect::Update(Engine& engine, float deltaTime) {
+void MenuGameModeSelect::Update(Engine& engine, float unscaledDeltaTime) {
 	if (!isStart) return;
 
 	MenuManager& menu = MenuManager::GetInstance();

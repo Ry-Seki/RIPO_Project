@@ -4,7 +4,7 @@
 
 #include "EventSystem.h"
 #include "../Input/InputUtility.h"
-#include "Button/UIButton.h"
+#include "Button/UIButtonBase.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -55,9 +55,10 @@ void EventSystem::Update(float deltaTime) {
 
 	// Œˆ’è
 	if (action.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
-		if (buttonList[currentIndex]) {
-			buttonList[currentIndex]->Execute();
-		}
+		auto& currentButton = buttonList[currentIndex];
+		if (!currentButton) return;
+		
+		//currentButton->Execute();
 	}
 }
 /*
@@ -67,7 +68,7 @@ void EventSystem::ApplySelection() {
     for (int i = 0, max = buttonList.size(); i < max; ++i) {
         if (!buttonList[i]) continue;
 
-        buttonList[i]->SetIsSelected(static_cast<int>(i) == currentIndex);
+       // buttonList[i]->SetSelected(i == currentIndex);
     }
 }
 /*

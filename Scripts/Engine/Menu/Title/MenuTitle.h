@@ -38,7 +38,7 @@ public:
 	/*
 	 *	@brief	XVˆ—
 	 */
-	void Update(Engine& engine, float deltaTime) override;
+	void Update(Engine& engine, float unscaledDeltaTime) override;
 	/*
 	 *	@brief	•`‰æˆ—
 	 */

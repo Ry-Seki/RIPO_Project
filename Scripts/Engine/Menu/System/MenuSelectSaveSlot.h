@@ -14,7 +14,7 @@
 #include <memory>
 
 // 前方宣言
-class UIButton;
+class UIButtonBase;
 
 /*
  *	@brief	セーブスロットを選択するメニュー
@@ -25,7 +25,7 @@ private:
 	GameEnum::SaveSlotMenuMode saveMode;
 	EventSystem eventSystem;
 
-	std::vector<std::shared_ptr<UIButton>> buttonList;
+	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 
 	static constexpr const char* _BUTTON_IMAGE_PATH = "Res/Menu/System/Trealine_SaveSlot.png";
 	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/SaveSlotNavigation.json";
@@ -42,7 +42,7 @@ public:
 	/*
 	 *	@brief	更新処理
 	 */
-	void Update (Engine& engine, float deltaTime) override;
+	void Update (Engine& engine, float unscaledDeltaTime) override;
 	/*
 	 *	@brief	描画処理
 	 */

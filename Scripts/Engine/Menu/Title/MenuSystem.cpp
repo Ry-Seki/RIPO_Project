@@ -29,7 +29,7 @@ void MenuSystem::Open() {
 /*
  *	@brief	XVˆ—
  */
-void MenuSystem::Update(Engine& engine, float deltaTime) {
+void MenuSystem::Update(Engine& engine, float unscaledDeltaTime) {
 	if (!isStart) return;
 
 	if (!inputHandle) {

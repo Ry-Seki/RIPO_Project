@@ -13,7 +13,7 @@
 #include <unordered_map>
 
 // ‘O•ûéŒ¾
-class UIButton;
+class UIButtonBase;
 class ActionMapBase;
 struct ActionState;
 
@@ -33,7 +33,7 @@ struct Navigation {
 class EventSystem {
 private:
 	int currentIndex = -1;
-	std::vector<UIButton*> buttonList;
+	std::vector<UIButtonBase*> buttonList;
 	std::unordered_map<int, Navigation> navigationMap;
 
 public:
@@ -73,9 +73,9 @@ public:
 public:
 	/*
 	 *	@brief		ƒ{ƒ^ƒ“‚Ì“o˜^
-	 *  @param[in]	UIButton* setButton
+	 *  @param[in]	UIButtonBase* setButton
 	 */
-	inline void RegisterButton(UIButton* setButton) {
+	inline void RegisterButton(UIButtonBase* setButton) {
 		if (!setButton) return;
 
 		buttonList.push_back(setButton);
