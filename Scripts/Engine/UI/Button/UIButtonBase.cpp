@@ -17,7 +17,6 @@ void UIButtonBase::Initialize() {
  *	@brief	€”õ‘Oˆ—
  */
 void UIButtonBase::Setup() {
-	isHover = false;
 	isEnable = true;
 	inputState = GameEnum::ButtonInputState::Idle;
 	selectState = GameEnum::ButtonSelectState::Invalid;
