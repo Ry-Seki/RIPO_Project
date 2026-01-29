@@ -141,7 +141,7 @@ void PlayerComponent::Update(float deltaTime) {
 void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
 
-	// 重力コンポーネントの取得by oorui
+	// 重力コンポーネントの取得
 	auto gravity = player->GetComponent<GravityComponent>();
 	// カメラの角度のsin,cos
 	const float cameraSin = sinf(camera->rotation.y);
@@ -218,7 +218,7 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 		animator->Play(3, 1);
 	}
 
-	// モデルの透明度の調整
+	// モデルの変更
 	auto handArm = player->GetComponent<ArmActionComponent>();
 	if (!handArm->GetLiftObject()) {
 		modelRenderer->SetModelHandle(armModelHandle);

@@ -1,5 +1,5 @@
 /*
- *	@file	WeaopnBase.cpp
+ *	@file	WeaponBase.cpp
  *  @author Riku
  */
 
