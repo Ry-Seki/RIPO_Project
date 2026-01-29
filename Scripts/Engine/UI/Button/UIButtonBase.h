@@ -109,6 +109,13 @@ public:
 		isEnable = setFlag;
 	}
 	/*
+	 *	@brief		ボタン状態の取得
+	 *	@return		GameEnum::ButtonInputState
+	 */
+	inline GameEnum::ButtonInputState GetInputState() const {
+		return inputState;
+	}
+	/*
 	 *	@brief		名前の設定
 	 *	@param[in]	const std::string& setName
 	 */
@@ -130,6 +137,13 @@ public:
 	 */
 	inline void SetOnClick(std::function<void()> setOnClick) {
 		if (setOnClick) onClick = setOnClick;
+	}
+	/*
+	 *	@brief		選択状態か判定
+	 *	@return		bool
+	 */
+	inline bool IsSelect() const {
+		return selectState == GameEnum::ButtonSelectState::Select;
 	}
 	/*
 	 *	@brief		選択状態の設定

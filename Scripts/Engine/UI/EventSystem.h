@@ -28,12 +28,14 @@ struct Navigation {
 };
 
 /*
- *	@brief	入力によって選択を動かすクラス
+ *	@brief	入力によって選択を動かすクラス(Menu派生クラス内、ボタンクラス限定)
  */
 class EventSystem {
 private:
 	int currentIndex = -1;
+	int decideInputNum = -1;
 	std::vector<UIButtonBase*> buttonList;
+	UIButtonBase* currentButton = nullptr;
 	std::unordered_map<int, Navigation> navigationMap;
 
 public:
@@ -55,7 +57,7 @@ public:
 	/*
 	 *	@brief	更新処理
 	 */
-	void Update(float deltaTime);
+	void Update(float unscaledDeltaTime);
 
 private:
 	/*
@@ -71,6 +73,11 @@ public:
 	void LoadNavigation(const JSON& json);
 
 public:
+	/*
+	 *	@brief		現在選択されているボタンを取得
+	 *	@return		UIButtonBase*
+	 */
+	inline UIButtonBase* GetCurrentSelectButton() const{ return currentButton; }
 	/*
 	 *	@brief		ボタンの登録
 	 *  @param[in]	UIButtonBase* setButton

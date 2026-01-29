@@ -39,6 +39,7 @@ void UIButtonBase::Update(float unscaledDeltaTime) {
 			inputState = GameEnum::ButtonInputState::Idle;
 		}
 	}
+	// “ü—Í‰ğœ
 	if (inputState == GameEnum::ButtonInputState::Press && !isHover) {
 		inputState = GameEnum::ButtonInputState::Idle;
 	}
