@@ -38,12 +38,9 @@ void LongPressButton::Update(float unscaledDeltaTime) {
 	if (inputState == GameEnum::ButtonInputState::Press) {
 		pressTime += unscaledDeltaTime;
 		OnPress(unscaledDeltaTime);
-	}
 
-	if (inputState == GameEnum::ButtonInputState::Press &&
-		input.buttonUp[static_cast<int>(GameEnum::MenuAction::Click)]) {
-		OnPressUp();
-	}
+		if(input.buttonUp[static_cast<int>(GameEnum::MenuAction::Click)]) OnPressUp();
+	}	
 }
 /*
  *	@brief	•`‰æˆ—
