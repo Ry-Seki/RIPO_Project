@@ -42,6 +42,8 @@ public:
 	struct ActionState {
 		std::unordered_map<int, float> axis;
 		std::unordered_map<int, bool> button;
+		std::unordered_map<int, bool> buttonDown;
+		std::unordered_map<int, bool> buttonUp;
 	};
 
 	std::vector<Binding> bindings;	// アクションマップの入力設定
@@ -83,12 +85,10 @@ public:
 	 *	入力状態のリセット
 	 */
 	void InputReset() {
-		for (auto& [action, actionState] : state.axis) {
-			actionState = 0.0f;
-		}
-		for (auto& [action, actionState] : state.button) {
-			actionState = false;
-		}
+		for (auto& [key, vaule] : state.axis)		vaule = 0.0f;
+		for (auto& [key, vaule] : state.button)     vaule = false;
+		for (auto& [key, vaule] : state.buttonDown) vaule = false;
+		for (auto& [key, vaule] : state.buttonUp)   vaule = false;
 	}
 
 public:

@@ -18,6 +18,7 @@
 #include "../../../../Fade/FadeFactory.h"
 #include "../../../../Fade/FadeManager.h"
 #include "../../../../System/World/WorldProgressManager.h"
+#include "../../../../Input/InputUtility.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -181,6 +182,7 @@ bool InAction_Dungeon::IsPlayerDead() {
  */
 void InAction_Dungeon::EndDungeon() {
 	isStart = false;
+	InputUtility::SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, false);
 	auto& context = owner->GetOwner()->GetActionContext();
 	CalculationDungeon(context.dungeonID, context.isCurrentEvent);
 	context.isPlayerDead = IsPlayerDead();

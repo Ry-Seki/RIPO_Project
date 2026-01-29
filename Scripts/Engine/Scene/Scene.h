@@ -29,7 +29,7 @@ public:
     using WorldColliderList = std::vector<WorldColliderPtr>;
 
     // レイキャストの判定結果
-    struct RaycastHit {
+    struct RayCastHit {
         ColliderBasePtr collider;   // 最初にレイと交差したコライダー
         Vector3 point;              // 最初のレイの座標
         float distance;             // 最初の交点までの距離
@@ -41,7 +41,7 @@ public:
      *  @param  distance
      *  @return bool
      */
-    using RaycastPredicate = std::function<bool(const ColliderBasePtr& collider, float distance)>;
+    using RayCastPredicate = std::function<bool(const ColliderBasePtr& collider, float distance)>;
 
 protected:
     std::vector<GameObjectPtr> gameObjects;     // ゲームオブジェクト配列
@@ -118,7 +118,7 @@ public:
      *  @return bool    ヒットしたかどうか
      *  @author Riku
      */
-    bool Raycast(const Ray& ray, RaycastHit& hitInfo, const RaycastPredicate& pred);
+    bool RayCast(const Ray& ray, RayCastHit& hitInfo, const RayCastPredicate& pred);
 
 };
 // 別名定義

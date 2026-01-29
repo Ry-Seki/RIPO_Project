@@ -48,11 +48,21 @@ public:
 	 */
 	~UIButton() = default;
 
+private:
+	/*
+	 *	@brief	デバック用描画
+	 */
+	void DebugRender();
+
 public:
 	/*
 	 *	@brief	初期化処理
 	 */
 	void Initialize();
+	/*
+	 *	@brief	準備前処理
+	 */
+	void Setup();
 	/*
 	 *	@brief	更新処理
 	 */

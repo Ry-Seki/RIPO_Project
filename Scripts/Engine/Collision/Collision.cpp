@@ -240,7 +240,7 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB& box, Vector3& se
 	// 線分の方向ベクトル(非正規化)
 	Vector3 segDir = segEnd - segStart;
 	// より小さい値を探していくため初期値は最大
-	minLengthSq = FLT_MAX;
+	minLengthSq = MAX_DISTANCE;
 
 	// 線分がAABB内に入っているか
 
@@ -565,7 +565,12 @@ bool Intersect(const Capsule& capsule, const AABB& box, Vector3& penetration) {
 	penetration = direction * depth;
 	return true;
 }
-
+/*
+ *  AABB対カプセルの交差判定
+ *  @param[in]  AABB	box			判定対象1
+ *  @param[in]  Capsule cap			判定対象2
+ *  @param[out] Vector3 penetration 貫通ベクトル
+ */
 bool Intersect(const AABB& box, const Capsule& capsule, Vector3& penetration) {
 	return Intersect(capsule, box, penetration);
 }
@@ -600,11 +605,11 @@ bool Intersect(const std::variant<AABB, Capsule>& a, const std::variant<AABB, Ca
  *  レイとAABBの交差判定
  *  @param[in]  Ray		ray			判定対象1
  *  @param[in]  AABB	box			判定対象2
- *  @param[out] float	distance	貫通ベクトル
+ *  @param[out] float	distance	交点までの距離
  */
 bool RayIntersect(const Ray& ray, const AABB& box, float& distance) {
 	float segMinRatio = 0;
-	float segMaxRatio = FLT_MAX;
+	float segMaxRatio = MAX_DISTANCE;
 
 	// xスラブ
 	if (!IntersectSlab(ray.start.x, ray.direction.x, box.min.x, box.max.x, segMinRatio, segMaxRatio))
@@ -627,17 +632,41 @@ bool RayIntersect(const Ray& ray, const AABB& box, float& distance) {
  *  レイとカプセルの交差判定
  *  @param[in]	Ray		ray			判定対象1
  *  @param[in]	Capsule	capsule		判定対象2
- *	@param[out]	float	distance	貫通ベクトル
+ *	@param[out]	float	distance	交点までの距離
  */
 bool RayIntersect(const Ray& ray, const Capsule& capsule, float& distance) {
-	return false;
+	Vector3 aMinPoint, bMinPoint;
+	float aMinRatio, bMinRatio;
+	Segment raySeg = { ray.start, ray.start + ray.direction * MAX_DISTANCE };
+	// レイとカプセルの線分の最近接点を求める
+	SegmentBetweenMinLength(raySeg, capsule.segment, aMinPoint, bMinPoint, aMinRatio, bMinRatio);
+	// 2つの最近接点の差ベクトル
+	Vector3 difference = aMinPoint - bMinPoint;
+	// 最近接点間の長さの2乗(比較の時点では2乗で十分なので今はsqrtしない)
+	float lengthSquare = Dot(difference, difference);
+	// カプセルの半径の2乗
+	float radiusSquare = capsule.radius * capsule.radius;
+
+	// 最近接点間の長さがカプセルの半径の合計以上なら衝突はしていない
+	if (lengthSquare >= radiusSquare) return false;
+
+	// 交点までの距離を求める
+	// レイの開始点から最近接点までの距離
+	float rayMinDistance = aMinRatio * MAX_DISTANCE;
+	// レイの最近接点からカプセルの侵入点までの距離(三平方)
+	float offset = std::sqrt(radiusSquare - lengthSquare);
+	// レイの最近接点までの距離から侵入した分だけ戻せばそこが交点までの距離となる
+	distance = rayMinDistance - offset;
+	if (distance < 0.0f) distance = 0;
+
+	return true;
 }
 
 /*
  *  レイとコライダーの交差判定
  *  @param[in]	Ray							ray			判定対象1
  *  @param[in]	std::variant<AABB, Capsule>	collider	判定対象2
- *	@param[out]	float						distance	貫通ベクトル
+ *	@param[out]	float						distance	交点までの距離
  */
 bool RayIntersect(const Ray& ray, const std::variant<AABB, Capsule>& collider, float& distance) {
 	// 各対象のコライダーを判別し、それに合った交差判定を呼ぶ
