@@ -31,6 +31,8 @@ void EnemyAttack::Start(GameObject* enemy)
 	coolTime = MAX_COOL_TIME;
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
+
+	enemy->GetComponent<EnemyComponent>()->SetAttackFlag(true);
 }
 
 /*

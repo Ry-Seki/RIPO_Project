@@ -25,8 +25,12 @@ private:
 	float wayPointDistance;
 	// 移動スピード
 	float moveSpeed;
+	// 視界判定の視野角
+	float viewAngle;
 	// プレイヤーの距離判定フラグ
 	bool closePlayer;
+	// プレイヤー追跡判定
+	bool chasePlayer;
 	// 移動量
 	Vector3 moveVec;
 
@@ -66,6 +70,14 @@ private:
 	 */
 	void ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetChange, float deltaTime);
 
+	/*
+	 *	角度差を正規化
+	 */
+	float NormalizeAngle(float angle) {
+		while (angle > Pi) angle -= 2.0f * Pi;
+		while (angle < -Pi) angle += 2.0f * Pi;
+		return angle;
+	}
 public:
 
 };

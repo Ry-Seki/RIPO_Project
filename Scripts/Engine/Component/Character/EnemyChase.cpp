@@ -21,8 +21,10 @@ EnemyChase::EnemyChase()
 	, nextWayPoint(0.0f, 0.0f, 0.0f)
 	, wayPointDistance(1000.0f)
 	, moveSpeed(700.0f)
+	, viewAngle(30)
 	, closePlayer(false)
-	, ROTATE_SPEED(3.0f)
+	, chasePlayer(false)
+	, ROTATE_SPEED(13.0f)
 	, DIFFERENCE_PLAYER(700) {
 }
 
@@ -35,6 +37,14 @@ void EnemyChase::Start(GameObject* enemy) {
 
 	animator = enemy->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
+
+	// 攻撃処理から帰ってくる時にtrueにしておく
+	if (enemyComponent->GetAttackFlag()) {
+		chasePlayer = true;
+		// 視野角を360度にする
+		viewAngle = 180;
+		enemyComponent->SetAttackFlag(false);
+	}
 }
 
 /*
@@ -52,7 +62,9 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime) {
 	animator->SetModelHandle(modelRenderer);
 
 	// 目標判定
-	if (player && Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, 30, 2000)) {
+	if (player && Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, viewAngle, 2000)) {
+		// 視野角を360度にする
+		viewAngle = 180;
 		// 足を早くする
 		moveSpeed = 1000;
 		// アニメーションを再生
@@ -95,40 +107,28 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 	// 目標の方向
 	Vector3 direction = Direction(enemy->position, wayPoint);
 	float goalAngle = atan2(direction.x, direction.z);
-	goalAngle = goalAngle + 180 * Deg2Rad;
-	// 正規化した角度の移動量
-	float angleDirection = fmod((goalAngle - enemy->rotation.y) * Rad2Deg, 360);
-	angleDirection = angleDirection * Deg2Rad;
 
-	// 正規化したエネミーの角度
-	float enemyDirection = fmod(enemy->rotation.y * Rad2Deg, 360);
-	enemyDirection = enemyDirection * Deg2Rad;
+	// プレイヤー追跡～wayPoint到着までの間だけ処理する
+	if (chasePlayer) {
+		// 反転モデル用
+		goalAngle += Pi;
+		// 最短の角度
+		float angleDiff = NormalizeAngle(goalAngle - enemy->rotation.y);
 
-	Vector3 enemyForward = ForwardDir(enemy->rotation);
+		float rotateStep = ROTATE_SPEED * deltaTime;
 
-	// -の状態
-	if (angleDirection < 0) {
-		if (enemyDirection > goalAngle) {
-			enemy->rotation.y -= ROTATE_SPEED * deltaTime;
-		}
-		else {
-			// 目標の方向に補正
+		if (fabs(angleDiff) < rotateStep) {
 			enemy->rotation.y = goalAngle;
 		}
-	}
-	// +の状態
-	else if (angleDirection > 0) {
-		if (enemyDirection < goalAngle) {
-			enemy->rotation.y += ROTATE_SPEED * deltaTime;
-		}
 		else {
-			enemy->rotation.y = goalAngle;
+			enemy->rotation.y += (angleDiff > 0 ? rotateStep : -rotateStep);
 		}
 	}
 
 	auto distance = Distance(wayPoint, enemy->position);
 	// 標的判定
 	if (player && wayPoint == player->position) {
+		chasePlayer = true;
 		// 攻撃射程判定
 		if (distance > DIFFERENCE_PLAYER) {
 			enemy->position.x += direction.x * moveSpeed * deltaTime;
@@ -151,10 +151,11 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 
 		// 移動量を更新
 		moveVec = { moveX,0.0f,moveZ };
-	}
-	// 目標地点についたらターゲットを変える
-	if (distance < differenceTarget) {
-		enemyComponent->SetChaseTargetChangeFrag(targetChange);
-		enemyComponent->SetState(new EnemyStandby());
+		// 目標地点についたらターゲットを変える
+		if (distance < differenceTarget) {
+			chasePlayer = false;
+			enemyComponent->SetChaseTargetChangeFrag(targetChange);
+			enemyComponent->SetState(new EnemyStandby());
+		}
 	}
 }
