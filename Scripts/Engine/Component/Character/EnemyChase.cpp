@@ -140,6 +140,7 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 		}
 	}
 	else {
+		viewAngle = 30;
 		float moveX = 0;
 		float moveZ = 0;
 		// –Ú•W‚Ì•ûŒü‚Éi‚Ş

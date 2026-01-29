@@ -5,12 +5,16 @@
 #include "EnemyStandby.h"
 #include "../ModelRenderer.h"
 #include "EnemyTurn.h"
+#include "../../Vision.h"
+#include "../../Manager/CameraManager.h"
+#include "EnemyChase.h"
 
 /*
  *	コンストラクタ
  */
 EnemyStandby::EnemyStandby()
 	: animator(nullptr)
+	, player(nullptr)
 	, randStandby(0.0f)
 	, elapsedTime(0.0f)
 	, randMax(0.0f)
@@ -26,6 +30,9 @@ void EnemyStandby::Start(GameObject* enemy)
 {
 	animator = enemy->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
+
+	player = CameraManager::GetInstance().GetTarget();
+	if (player == nullptr) return;
 
 	// ランダム挙動を細かくするための二重乱数
 	randMax = GetRand(RANDOM_MAX);
@@ -57,5 +64,10 @@ void EnemyStandby::Update(GameObject* enemy, float deltaTime)
 	if (elapsedTime > randStandby) {
 		// 移動状態へ遷移
 		enemyComponent->SetState(new EnemyTurn());
+	}
+
+	// 視界判定
+	if (player && Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, 30, 2000)) {
+		enemyComponent->SetState(new EnemyChase());
 	}
 }

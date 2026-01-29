@@ -7,11 +7,14 @@
 #include "../../Manager/CharacterManager.h"
 #include "CharacterUtility.h"
 #include "EnemyAttack.h"
+#include "../../Vision.h"
+#include "../../Manager/CameraManager.h"
 
 using namespace CharacterUtility;
 
 EnemyTurn::EnemyTurn()
 	: enemyComponent(nullptr)
+	, player(nullptr)
 	, ROTATE_SPEED(3.0f)
 	, targetAngle(0.0f) {
 }
@@ -22,6 +25,9 @@ EnemyTurn::EnemyTurn()
  */
 void EnemyTurn::Start(GameObject* enemy) {
 	enemyComponent = enemy->GetComponent<EnemyComponent>();
+
+	player = CameraManager::GetInstance().GetTarget();
+	if (player == nullptr) return;
 
 	// ‰ñ“]‚Ì–Ú•WˆÊ’u
 	Vector3 targetPos;
@@ -79,6 +85,11 @@ void EnemyTurn::Update(GameObject* enemy, float deltaTime) {
 		enemy->rotation.y = targetAngle;
 
 		// ˆÚ“®ó‘Ô‚Ö‘JˆÚ
+		enemyComponent->SetState(new EnemyChase());
+	}
+
+	// Ž‹ŠE”»’è
+	if (player && Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, 30, 2000)) {
 		enemyComponent->SetState(new EnemyChase());
 	}
 }

@@ -12,6 +12,7 @@
 class EnemyStandby : public EnemyState {
 private:
 	std::shared_ptr<AnimatorComponent> animator;
+	GameObjectPtr player;
 	// ランダムなスタンバイ時間
 	float randStandby;
 	// 経過時間
