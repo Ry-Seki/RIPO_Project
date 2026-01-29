@@ -8,6 +8,7 @@
 
 #include "../Singleton.h"
 #include "../Engine.h"
+#include "../Load/Model/LoadModel.h"
 
 /*
  *	’e‚ÌŠÇ—ƒNƒ‰ƒX
@@ -18,11 +19,11 @@ class BulletManager : public Singleton<BulletManager> {
 
 private:
 	Engine* engine;
-	int bulletHandle = -1;
+	std::shared_ptr<LoadModel> bulletModel;
 
 private:
 	BulletManager();
-	~BulletManager() { MV1DeleteModel(bulletHandle); };
+	~BulletManager() = default;
 
 public:
 	void Initialize(Engine& setEngine);

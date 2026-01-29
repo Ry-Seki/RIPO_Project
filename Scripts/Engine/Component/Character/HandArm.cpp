@@ -49,10 +49,10 @@ void HandArm::LiftTreasure(GameObject* player, Engine* engine) {
 		ray, hitInfo,
 		[this](const ColliderBasePtr& col, float distance) {
 			// 交点が指定値以内かつプレイヤー以外の宝オブジェクト
-			auto hitName = col->GetOwner()->name;
 			return distance < LEFTABLE_DISTANCE &&
-				hitName != GameConst::_CREATE_POSNAME_PLAYER &&
-				hitName == GameConst::_CREATE_POSNAME_TREASURE;
+				col &&
+				col->GetOwner()->name != GameConst::_CREATE_POSNAME_PLAYER &&
+				col->GetOwner()->name == GameConst::_CREATE_POSNAME_TREASURE;
 		}
 	);
 	// 条件内でヒットすればそのオブジェクトを保存
@@ -82,23 +82,6 @@ void HandArm::LiftTreasure(GameObject* player, Engine* engine) {
 				liftObject = hitInfo.collider->GetOwner();
 			}
 		}
-	}
-
-	// レイキャストお試し
-	Ray rayQ = { camera->position, ForwardDir(camera->rotation) };
-	Scene::RayCastHit hitInfoQ;
-	bool hitQ = engine->GetCurrentScene()->RayCast(
-		rayQ, hitInfoQ,
-		[this](const ColliderBasePtr& col, float distance) {
-			// 交点が指定値以内かつプレイヤー以外の宝オブジェクト
-			auto hitName = col->GetOwner()->name;
-			return distance < LEFTABLE_DISTANCE &&
-				hitName != GameConst::_CREATE_POSNAME_PLAYER &&
-				hitName == GameConst::_CREATE_POSNAME_ENEMY;
-		}
-	);
-	if (hitQ) {
-		hitInfoQ.collider->isHit = true;
 	}
 }
 

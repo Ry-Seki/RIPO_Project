@@ -32,9 +32,9 @@ void BulletComponent::Start() {
 		ray, hitInfo,
 		[this](const ColliderBasePtr& col, float distance) {
 			// プレイヤーと自分以外のオブジェクト
-			auto hitName = col->GetOwner()->name;
-			return hitName != GameConst::_CREATE_POSNAME_PLAYER &&
-				hitName != "bullet";
+			return !col ||
+				(col->GetOwner()->name != GameConst::_CREATE_POSNAME_PLAYER &&
+				col->GetOwner()->name != "bullet");
 		}
 	);
 	hitDirection = Direction(bullet->position, hitInfo.point);

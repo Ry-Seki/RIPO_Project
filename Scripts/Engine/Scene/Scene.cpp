@@ -227,6 +227,9 @@ bool Scene::RayCast(const Ray& ray, RayCastHit& hitInfo, const RayCastPredicate&
 	int stageModelHandle = StageManager::GetInstance().GetCurrentStageHandle();
 	float stageDistance;
 	bool stageHit = RayIntersect(ray, stageModelHandle, stageDistance);
+	// Œğ·”»’è‘ÎÛ‚©‚Ç‚¤‚©
+	if (!pred(nullptr, stageDistance))
+		stageHit = false;
 
 	// —¼•ûƒqƒbƒg‚µ‚Ä‚¢‚éê‡‚Í‹ß‚¢•û‚ğÌ—p
 	if (hitInfo.collider && stageHit) {

@@ -31,6 +31,9 @@ private:
 	PlayerStatusValue status;						// プレイヤーのステータス
 	ActionMapBase::ActionState action;				// プレイヤーのアクション状態
 
+	int armModelHandle;
+	int playerModelHandle;
+
 	const float PLAYER_MODEL_ANGLE_CORRECTION;	// プレイヤーのモデル角度を補正する値
 	const float DEFAULT_MOVE_SPEED;				// デフォルトの移動速度
 	const float ACCELERATION_RATE;				// 加速度倍率

@@ -52,6 +52,9 @@ PlayerComponent::PlayerComponent()
 void PlayerComponent::Start() {
 	// プレイヤーの基礎ステータスを受け取る
 	status = PlayerStatusManager::GetInstance().GetPlayerStatusData()->base;
+
+	armModelHandle = MV1LoadModel("Res/Model/Player/BeamRifle.mv1");
+	playerModelHandle = MV1LoadModel("Res/Model/Player/RIPO_Model.mv1");
 }
 
 void PlayerComponent::Update(float deltaTime) {
@@ -218,10 +221,12 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	// モデルの透明度の調整
 	auto handArm = player->GetComponent<ArmActionComponent>();
 	if (!handArm->GetLiftObject()) {
-		MV1SetOpacityRate(modelHandle, 0);
+		modelRenderer->SetModelHandle(armModelHandle);
+		//MV1SetOpacityRate(modelHandle, 0);
 	}
 	else {
-		MV1SetOpacityRate(modelHandle, 1);
+		modelRenderer->SetModelHandle(playerModelHandle);
+		//MV1SetOpacityRate(modelHandle, 1);
 	}
 
 }

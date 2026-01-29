@@ -56,7 +56,7 @@ void EventSystem::Update(float deltaTime) {
 	// Œˆ’è
 	if (action.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
 		if (buttonList[currentIndex]) {
-			buttonList[currentIndex]->Execute();
+ 			buttonList[currentIndex]->Execute();
 		}
 	}
 }
