@@ -246,7 +246,9 @@
     <ClCompile Include="Scripts\Engine\System\World\WorldProgressManager.cpp" />
     <ClCompile Include="Scripts\Engine\Time.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
-    <ClCompile Include="Scripts\Engine\UI\Button\UIButton.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Button\LongPressButton.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Button\SinglePressButton.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Button\UIButtonBase.cpp" />
     <ClCompile Include="Scripts\Engine\UI\EventSystem.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
     <ClCompile Include="Scripts\Engine\Vision.cpp" />
@@ -407,7 +409,9 @@
     <ClInclude Include="Scripts\Engine\Time.h" />
     <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer.h" />
     <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer_Idle.h" />
-    <ClInclude Include="Scripts\Engine\UI\Button\UIButton.h" />
+    <ClInclude Include="Scripts\Engine\UI\Button\LongPressButton.h" />
+    <ClInclude Include="Scripts\Engine\UI\Button\SinglePressButton.h" />
+    <ClInclude Include="Scripts\Engine\UI\Button\UIButtonBase.h" />
     <ClInclude Include="Scripts\Engine\UI\EventSystem.h" />
     <ClInclude Include="Scripts\Engine\UI\Rect.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />

@@ -7,7 +7,7 @@
 #include "../../Load/LoadManager.h"
 #include "../../Load/JSON/LoadJSON.h"
 #include "../../Load/Sprite/LoadSprite.h"
-#include "../../UI/Button/UIButton.h"
+#include "../../UI/Button/UIButtonBase.h"
 #include "../../Input/InputUtility.h"
 #include "../../Save/SaveDataManager.h"
 
@@ -18,8 +18,8 @@ void MenuSelectSaveSlot::Initialize () {
     buttonList.resize(4);
     for (int i = 0; i < 4; i++) {
         // buttonList[i] = std::make_shared<UIButton>(Rect(0, 200 * i, 920, 180 + 200 * i));
-        buttonList[i] = std::make_shared<UIButton>(Rect(200, 100 * i, 700, 80));
-        buttonList[i]->SetName("SaveSlot");
+        // buttonList[i] = std::make_shared<UIButtonBase>(Rect(200, 100 * i, 700, 80));
+        // buttonList[i]->SetName("SaveSlot");
 
         // ƒ{ƒ^ƒ“‚Ì“o˜^
         eventSystem.RegisterButton(buttonList[i].get());
@@ -36,7 +36,7 @@ void MenuSelectSaveSlot::Initialize () {
             auto button = buttonList[i];
             if (!button) continue;
 
-            button->RegisterButtonHandle(buttonHandle->GetHandle());
+            //button->RegisterButtonHandle(buttonHandle->GetHandle());
             //button->SetOnClick([this, i]() {
             //    SelectButtonExecute(i);
             //});
@@ -58,21 +58,21 @@ void MenuSelectSaveSlot::Open () {
 /*
  *	@brief	XVˆ—
  */
-void MenuSelectSaveSlot::Update (Engine& engine, float deltaTime) {
+void MenuSelectSaveSlot::Update (Engine& engine, float unscaledDeltaTime) {
     if (!IsInteractive()) return;
 
-    eventSystem.Update(deltaTime);
-
     for (auto& button : buttonList) {
-        if (button) button->Update(deltaTime);
+        if (button) button->Update(unscaledDeltaTime);
     }
+
+    eventSystem.Update(unscaledDeltaTime);
 }
 /*
  *	@brief	•`‰æˆ—
  */
 void MenuSelectSaveSlot::Render () {
     for (auto& button : buttonList) {
-        button->Render();
+        //button->Render();
     }
     DrawFormatString(100, 50, GetColor(255, 255, 255), "MenuSelectSaveSlot");
 }

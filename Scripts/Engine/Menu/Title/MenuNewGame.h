@@ -14,14 +14,14 @@
 
 // 前方宣言
 class Engine;
-class UIButton;
+class SinglePressButton;
 
 /*
  *	@brief	ニューゲームメニュー
  */
 class MenuNewGame : public MenuBase {
 private:
-	std::vector<std::shared_ptr<UIButton>> buttonList;
+	std::vector<std::shared_ptr<SinglePressButton>> buttonList;
 	EventSystem eventSystem;
 
 	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/SaveSlotNavigation.json";
@@ -44,7 +44,7 @@ public:
 	/*
 	 *	@brief	更新処理
 	 */
-	void Update(Engine& engine, float deltaTime) override;
+	void Update(Engine& engine, float unscaledDeltaTime) override;
 	/*
 	 *	@brief	描画処理
 	 */

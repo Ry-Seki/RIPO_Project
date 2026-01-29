@@ -10,6 +10,7 @@
 #include "../../Menu/MenuManager.h"
 #include "../../Engine.h"
 #include "../../Scene/MainGameScene.h"
+#include "../System/MenuSelectSaveSlot.h"
 
 #include <DxLib.h>
 
@@ -27,12 +28,13 @@ void MenuLoadGame::Open() {
 	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
 		isStart = true;
+		MenuManager::GetInstance().OpenMenu<MenuSelectSaveSlot>();
 	});
 }
 /*
  *	@brief	更新処理
  */
-void MenuLoadGame::Update(Engine& engine, float deltaTime) {
+void MenuLoadGame::Update(Engine& engine, float unscaledDeltaTime) {
 	if (!isStart) return;
 	// TODO : セーブデータとの同期を完了させる
 	MenuManager& menu = MenuManager::GetInstance();

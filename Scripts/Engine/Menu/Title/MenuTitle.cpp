@@ -35,7 +35,7 @@ void MenuTitle::Open() {
 /*
  *	@brief	XVˆ—
  */
-void MenuTitle::Update(Engine& engine, float deltaTime) {
+void MenuTitle::Update(Engine& engine, float unscaledDeltaTime) {
 	if (!isStart) return;
 
 	if (!inputHandle) {

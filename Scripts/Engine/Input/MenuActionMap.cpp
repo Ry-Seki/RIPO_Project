@@ -59,8 +59,11 @@ void MenuActionMap::Initialize() {
 	state.axis[static_cast<int>(GameEnum::MenuAction::Vertical)] = 0.0f;
 	state.axis[static_cast<int>(GameEnum::MenuAction::Horizontal)] = 0.0f;
 	state.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)] = false;
+	state.buttonUp[static_cast<int>(GameEnum::MenuAction::Decide)] = false;
 	state.buttonDown[static_cast<int>(GameEnum::MenuAction::Click)] = false;
+	state.buttonUp[static_cast<int>(GameEnum::MenuAction::Click)] = false;
 	state.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)] = false;
+	state.buttonUp[static_cast<int>(GameEnum::MenuAction::Cancel)] = false;
 
 	isActive = false;
 }
