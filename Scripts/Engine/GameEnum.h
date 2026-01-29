@@ -83,26 +83,47 @@ namespace GameEnum {
 	};
 	/*
 	 *	@brief	セーブスロットメニューでのモード
+	 *	@author	Seki
 	 */
 	enum class SaveSlotMenuMode {
 		Save,
 		Load
 	};
 	/*
-	 *	@brief	ボタンの状態
+	 *	@brief	ボタンの入力状態
 	 *	@author	Seki
 	 */
-	enum class ButtonState {
+	enum class ButtonInputState {
 		Invalid = -1,
 		Idle,			// 通常状態
-		Hovered,		// 触れている状態
-		Pressed,		// 押された状態
-		Selected,		// 選択状態
-		Disable,		// 選択不可能状態
+		Hover,		// 触れている状態
+		Press,		// 押下中状態
+		Max
+	};
+	/*
+	 *	@brief	ボタンの選択状態
+	 *  @author	Seki
+	 */
+	enum class ButtonSelectState {
+		Invalid = -1,
+		Select,			// 選択状態
+		Max
+	};
+	/*
+	 *	@brief	ボタンの描画状態
+	 */
+	enum class ButtonRendererState {
+		Invalid = -1,
+		Idle,
+		Hover,
+		Press,
+		Select,
+		Disable,
 		Max
 	};
 	/*
 	 *	@brief	移動の道筋
+	 *  @author Seki
 	 */
 	enum class NavigationDir {
 		Invalid = -1,

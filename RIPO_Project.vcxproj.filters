@@ -612,9 +612,6 @@
     <ClCompile Include="Scripts\Engine\UI\EventSystem.cpp">
       <Filter>ソース ファイル\Engine\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Button\UIButton.cpp">
-      <Filter>ソース ファイル\Engine\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Input\InputManager.cpp">
       <Filter>ソース ファイル\Engine\Input</Filter>
     </ClCompile>
@@ -623,6 +620,18 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.cpp">
       <Filter>ソース ファイル\Engine\Menu\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyStandby.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Button\SinglePressButton.cpp">
+      <Filter>ソース ファイル\Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Button\UIButtonBase.cpp">
+      <Filter>ソース ファイル\Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Button\LongPressButton.cpp">
+      <Filter>ソース ファイル\Engine\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1082,9 +1091,6 @@
     <ClInclude Include="Scripts\Engine\UI\Rect.h">
       <Filter>ヘッダー ファイル\Engine\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Button\UIButton.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer.h">
       <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
     </ClInclude>
@@ -1096,6 +1102,21 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.h">
       <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyStandby.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer_Idle.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Button\UIButtonBase.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Button\SinglePressButton.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Button\LongPressButton.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
