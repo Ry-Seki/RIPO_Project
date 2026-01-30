@@ -62,5 +62,5 @@ void SinglePressButton::OnPressUp() {
 
 	inputState = GameEnum::ButtonInputState::Idle;
 
-	OnClick();
+	OnClickEvent();
 }

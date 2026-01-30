@@ -62,6 +62,20 @@ public:
 		isStart = false;
 		inputHandle = false;
 	}
+	/*
+	 *	@brief	メニューが中断されたときの処理
+	 */
+	virtual void Suspend() {
+		isInteractive = false;
+	}
+	/*
+	 *	@brief	メニューが再開されたときの処理
+	 */
+	virtual void Resume() {
+		isVisible = true;
+		isInteractive = false;
+		isStart = true;
+	}
 
 public:
 	/*

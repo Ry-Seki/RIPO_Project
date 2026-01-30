@@ -633,6 +633,9 @@
     <ClCompile Include="Scripts\Engine\UI\Button\LongPressButton.cpp">
       <Filter>ソース ファイル\Engine\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuSettings.cpp">
+      <Filter>ソース ファイル\Engine\Menu\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -1118,8 +1121,8 @@
     <ClInclude Include="Scripts\Engine\UI\Button\LongPressButton.h">
       <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\ArmBase.h">
-      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuSettings.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
