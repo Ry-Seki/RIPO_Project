@@ -14,6 +14,7 @@
 class EnemyTurn : public EnemyState {
 private:
 	std::shared_ptr<EnemyComponent> enemyComponent;
+	GameObjectPtr player;
 	float targetAngle;		// ‰ñ“]‚·‚éÛ‚Ì‘ÎÛ‚ÌˆÊ’u
 
 private:
