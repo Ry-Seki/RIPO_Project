@@ -11,6 +11,7 @@
 #include "EnemyTurn.h"
 #include "EnemyDeath.h"
 #include "BulletComponent.h"
+#include "HPBarComponent.h"
  /*
   *	コンストラクタ
   */
@@ -82,7 +83,11 @@ void EnemyComponent::Update(float deltaTime) {
 
 	coolTime -= deltaTime;
 
-
+	VECTOR position;
+	position.x = enemy->position.x;
+	position.y = enemy->position.y;
+	position.z = enemy->position.z;
+	enemy->GetComponent<HPBarComponent>()->ShowHPBar(position);
 }
 
 /*

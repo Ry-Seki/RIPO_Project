@@ -172,6 +172,7 @@
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyStandby.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyTurn.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\HPBarComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\RevolverArm.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\WeaponBase.cpp" />
@@ -297,6 +298,7 @@
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyState.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyTurn.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\HPBarComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\RevolverArm.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\WeaponBase.h" />
