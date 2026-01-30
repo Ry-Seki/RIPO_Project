@@ -1118,5 +1118,8 @@
     <ClInclude Include="Scripts\Engine\UI\Button\LongPressButton.h">
       <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\ArmBase.h">
+      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

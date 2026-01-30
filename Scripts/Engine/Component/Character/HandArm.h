@@ -6,13 +6,13 @@
 #ifndef _HANDARM_H_
 #define _HANDARM_H_
 
-#include "ArmActionComponent.h"
+#include "ArmBase.h"
 #include "../../Engine.h"
 
 /*
  *	持ち運びができるウデクラス
  */
-class HandArm : public ArmActionComponent {
+class HandArm : public ArmBase {
 private:
 	GameObject* liftObject;			// 運ぶオブジェクト
 
@@ -23,19 +23,21 @@ public:
 	~HandArm() = default;
 
 public:
-	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other);
-	void ArmUpdate(float deltaTime, GameObject* player, Engine* engine) override;
+	/*
+	 *	更新処理
+	 */
+	void ArmUpdate(float deltaTime, ActionMapBase::ActionState action) override;
 
 private:
 	/*
 	 *	お宝持ち上げ処理
 	 */
-	void LiftTreasure(GameObject* player, Engine* engine);
+	void LiftTreasure(GameObjectPtr player, Engine* engine);
 
 	/*
 	 *	お宝運び処理
 	 */
-	void CarryTreasur(GameObject* player);
+	void CarryTreasure(GameObjectPtr player);
 
 public:
 	inline GameObject* GetLiftObject() const { return liftObject; }

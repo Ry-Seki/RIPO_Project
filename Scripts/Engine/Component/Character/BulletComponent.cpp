@@ -19,11 +19,12 @@ BulletComponent::BulletComponent()
 	: destroyTimeCount(3)
 	, bullet(nullptr)
 
-	, SHOT_SPEED(10000)
-{}
+	, SHOT_SPEED(10000) {
+}
 
 void BulletComponent::Start() {
 	bullet = GetOwner();
+	GetOwner()->scale = { 0.5f, 0.5f, 0.5f, };
 	// 着弾地点を確認
 	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
 	Ray ray = { bullet->position, ForwardDir(camera->rotation) };

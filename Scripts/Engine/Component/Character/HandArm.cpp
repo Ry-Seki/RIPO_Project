@@ -14,31 +14,26 @@
 using namespace StageObjectUtility;
 using namespace CharacterUtility;
 
-#include "../../GameObject/GameObjectUtility.h"
-using namespace GameObjectUtility;
 HandArm::HandArm()
 	: liftObject(nullptr)
 	
 	, LEFTABLE_DISTANCE(1000)
 {}
 
-void HandArm::OnCollision(
-	const std::shared_ptr<Component>& self,
-	const std::shared_ptr<Component>& other) {
-}
-
-void HandArm::ArmUpdate(float deltaTime, GameObject* player, Engine* engine) {
+void HandArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) {
+	GameObjectPtr player = GetPlayer();
+	Engine* engine = player->GetEngine();
 	// 右クリックでお宝持ち上げ
 	int lift = static_cast<int>(GameEnum::PlayerAction::Lift);
 	if (action.button[lift])
 		LiftTreasure(player, engine);
-	CarryTreasur(player);
+	CarryTreasure(player);
 }
 
 /*
  *	お宝持ち上げ処理
  */
-void HandArm::LiftTreasure(GameObject* player, Engine* engine) {
+void HandArm::LiftTreasure(GameObjectPtr player, Engine* engine) {
 	// 正面にオブジェクトがあるか
 	float hitLength = 0;
 	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
@@ -58,7 +53,6 @@ void HandArm::LiftTreasure(GameObject* player, Engine* engine) {
 	// 条件内でヒットすればそのオブジェクトを保存
 	if (hit) {
 		// 仮でパワーを反映する(IDで宝を判定して無理やり制限を掛ける)
-		auto player = GetPlayer()->GetComponent<PlayerComponent>();
 		int ID1 = -1;
 		int ID2 = -1;
 		auto objectList = GetCreateObjectList();
@@ -78,7 +72,7 @@ void HandArm::LiftTreasure(GameObject* player, Engine* engine) {
 			liftObject = hitInfo.collider->GetOwner();
 		}
 		else if (hitInfo.collider->GetOwner()->ID == ID2) {
-			if (player->GetPlayerStatus().strength > 2) {
+			if (player->GetComponent<PlayerComponent>()->GetPlayerStatus().strength > 2) {
 				liftObject = hitInfo.collider->GetOwner();
 			}
 		}
@@ -88,7 +82,7 @@ void HandArm::LiftTreasure(GameObject* player, Engine* engine) {
 /*
  *	お宝運び処理
  */
-void HandArm::CarryTreasur(GameObject* player) {
+void HandArm::CarryTreasure(GameObjectPtr player) {
 	if (liftObject == nullptr) return;
 
 	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();

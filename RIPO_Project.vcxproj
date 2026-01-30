@@ -280,6 +280,7 @@
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\CapsuleCollider.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\ArmBase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossAttack.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossChase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossComponent.h" />

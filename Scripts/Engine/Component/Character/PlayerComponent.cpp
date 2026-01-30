@@ -6,8 +6,6 @@
 #include "PlayerComponent.h"
 #include "../../Manager/CameraManager.h"
 #include "../../GameConst.h"
-#include "HandArm.h"
-#include "RevolverArm.h"
 #include "../../Manager/StageManager.h"
 #include "../GravityComponent.h"
 #include "../../System/Status/PlayerStatusManager.h"
@@ -128,11 +126,11 @@ void PlayerComponent::Update(float deltaTime) {
 	// 右クリックでウデアクションをハンドに設定
 	int lift = static_cast<int>(GameEnum::PlayerAction::Lift);
 	if (action.button[lift])
-		playerArm->SetCurrentArm<HandArm>();
+		playerArm->SetCurrentArm(GameEnum::Arm::Hand);
 	int shot = static_cast<int>(GameEnum::PlayerAction::Shot);
 	// 左クリックでウデアクションを銃に設定
 	if (action.button[shot])
-		playerArm->SetCurrentArm<RevolverArm>();
+		playerArm->SetCurrentArm(GameEnum::Arm::Weapon);
 }
 
 /*

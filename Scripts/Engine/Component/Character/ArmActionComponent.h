@@ -11,45 +11,56 @@
 #include "../../GameEnum.h"
 #include "../../Input/InputUtility.h"
 #include "../../Engine.h"
+#include "ArmBase.h"
+#include "HandArm.h"
 #include <vector>
+#include <unordered_map>
 
 /*
  *	ウデアクションクラス
  */
 class ArmActionComponent : public Component {
 private:
-	std::shared_ptr<ArmActionComponent> currentArm;
-
-protected:
-	GameObject* player;
-	Engine* engine;
-	inline static ActionMapBase::ActionState action;
+	ArmBasePtr currentArm;								// 現在使っているウデ
+	std::unordered_map<GameEnum::Arm, ArmBasePtr> arms;	// 使用可能なウデ達
+	ActionMapBase::ActionState action;					// 入力状態
 
 public:
 	ArmActionComponent();
 	virtual ~ArmActionComponent() = default;
 
 public:
-	virtual void Start() override;
-	virtual void Update(float deltaTime) override;
-	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
-
-private:
-	virtual void ArmUpdate(float deltaTime, GameObject* player, Engine* engine){}
+	/*
+	 *	最初のUpdateの直前に呼び出される処理
+	 */
+	void Start() override;
+	/*
+	 *	更新処理
+	 */
+	void Update(float deltaTime) override;
 
 public:
 	/*
 	 *	使用するウデをセット
 	 */
-	template <class T>
-	void SetCurrentArm() {
-		currentArm = std::make_shared<T>();
+	inline void SetCurrentArm(GameEnum::Arm setArm) {
+		if (currentArm == arms[setArm])
+			return;
+		currentArm = arms[setArm];
+		currentArm->Initialize();
 	}
 
-	GameObject* GetLiftObject();
+	/*
+	 *	運んでいるオブジェクトを取得
+	 */
+	inline GameObject* GetLiftObject() {
+		// currentArmがHandArm型でないならnullptrが代入される(dynamic_pointer_castの仕様)
+		if (auto arm = std::dynamic_pointer_cast<HandArm>(currentArm))
+			return arm->GetLiftObject();
+		return nullptr;
+	}
 };
 // 別名定義
 using ArmActionComponentPtr = std::shared_ptr<ArmActionComponent>;
-using ArmActionComponentList = std::vector<ArmActionComponentPtr>;
 
 #endif // !_ARMACTIONBASE_H_
