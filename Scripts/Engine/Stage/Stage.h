@@ -9,17 +9,23 @@
 #include "StageBase.h"
 #include <string>
 #include <vector>
-#include "../Load/LoadManager.h"
 #include "../VecMath.h"
-#include "../GameConst.h"
-#include "../Manager/StageManager.h"
- /*
-  *  ステージクラス
-  */
+#include "../GameObject.h"
+
+ // 前方宣言
+// class GameObject;
+class StageCollision;
+
+
+
+/*
+ *  ステージクラス
+ */
 class Stage : public StageBase {
 private:
-	std::string modelPath;				// モデルのパス
-	Vector3 lightDirection;				// ライトの距離
+	std::string modelPath;						// モデルのパス
+	Vector3 lightDirection;						// ライトの距離
+	std::unique_ptr<StageCollision> collision;	// 当たり判定管理クラス
 
 	Vector3 pointLightColor;			// 色
 	std::vector<Vector3>pointLightPos;	// 位置
@@ -27,22 +33,18 @@ private:
 
 	GameObjectPtr player;				// プレイヤー
 
-	static constexpr DxLib::COLOR_F _MAP_DIF_COLOR = { 1.5f, 1.5f, 1.3f, 1.0f };	// マップ全体のライト ディフューズカラー
-	static constexpr DxLib::COLOR_F _MAP_AMB_COLOR = { 0.2f, 0.25f, 0.3f, 1 };		// マップ全体のライト アンビエントカラー
-	static constexpr DxLib::COLOR_F _MAP_SPC_COLOR = { 0.2f, 0.2f, 0.2f, 1 };		// マップ全体のライト スペキュラーカラー
-
 	struct Attenuation {
 		float Atten0;
 		float Atten1;
 		float Atten2;
 	};
+	static constexpr DxLib::COLOR_F _MAP_DIF_COLOR = { 1.5f, 1.5f, 1.3f, 1.0f };	// マップ全体のライト ディフューズカラー
+	static constexpr DxLib::COLOR_F _MAP_AMB_COLOR = { 0.2f, 0.25f, 0.3f, 1 };		// マップ全体のライト アンビエントカラー
+	static constexpr DxLib::COLOR_F _MAP_SPC_COLOR = { 0.2f, 0.2f, 0.2f, 1 };		// マップ全体のライト スペキュラーカラー
+
 	static constexpr Attenuation _POINT_ATTAN = { 0.0f, 0.0005f, 0.0f };
 	static constexpr DxLib::COLOR_F _POINT_SPC_COLOR = { 0.1f, 0.1f, 0.1f, 1.0f };	// ポイントライト スペキュラーカラー
 
-	static constexpr float _CHARACTER_MOVEVEC_MIN = 0.01f;		// キャラクターの移動量の最小値
-	static constexpr float _HALF = 0.5f;						// 半分
-	static constexpr float _POLYGON_HEIGHT = 0.9f;
-	static constexpr float FLOOR_LIMIT = 0.5f;
 
 
 public:
@@ -55,19 +57,20 @@ public:
 	 */
 	void SetModelHandle(const int modelHandleBase)override;
 
-	// 更新
+	/*
+	 *	更新
+	 */
 	void Update() override;
 
-	// 描画
+	/*
+	 *	描画
+	 */
 	void Render() override;
 
-	// ステージの当たり判定の描画
-	void StageColliderRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos) override;
-
-	// 終了処理
+	/*
+	 *	終了処理
+	 */
 	void Execute() override;
-
-
 
 	/*
 	 * @brief ステージの当たり判定を更新
@@ -76,71 +79,11 @@ public:
 	 */
 	void UpdateCollision(GameObject* other, Vector3 MoveVec) override;
 
-private:
-
-	/*
-	 * @brief 周囲ポリゴンの当たり判定を実行し、結果を返す
-	 * @param position  プレイヤー位置
-	 * @param MoveVec   移動ベクトル
-	 * @return std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> コリジョン結果構造体
-	 */
-	std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> SetupCollision(GameObject* other, Vector3 MoveVec);
-
-
-	/**
-	 * @brief 壁ポリゴン／床ポリゴンの振り分け
-	 * @param hitDim   コリジョン結果構造体
-	 * @param walls    壁ポリゴン格納先
-	 * @param floors   床ポリゴン格納先
-	 */
-	void ClassifyPolygons(
-		const MV1_COLL_RESULT_POLY_DIM& hitDim,
-		std::vector<MV1_COLL_RESULT_POLY*>& walls,
-		std::vector<MV1_COLL_RESULT_POLY*>& floors,
-		const Vector3& prevPos
-	);
-
-	/**
-	 * @brief 壁ポリゴンとの衝突・スライド・押し出し処理
-	 * @param nowPos      現在座標（処理結果として更新）
-	 * @param prevPos     移動前座標
-	 * @param polyOffset  カプセル縦方向のオフセット
-	 * @param MoveVec     移動ベクトル
-	 * @param walls       壁ポリゴン配列
-	 * @param moveFlag    水平移動しているかどうか
-	 */
-	void ProcessWallCollision(
-		Vector3& nowPos,
-		const Vector3& prevPos,
-		float polyOffset,
-		const Vector3& MoveVec,
-		const std::vector<MV1_COLL_RESULT_POLY*>& walls,
-		bool moveFlag,
-		GameObject* other
-	);
-
-	/**
-	 * @brief 床ポリゴンとの衝突処理
-	 * @param nowPos      現在座標
-	 * @param polyOffset  カプセル縦方向のオフセット
-	 * @param floors      床ポリゴン配列
-	 */
-	void ProcessFloorCollision(
-		Vector3& nowPos,
-		float polyOffset,
-		const std::vector<MV1_COLL_RESULT_POLY*>& floors,
-		GameObject* other,
-		Vector3 moveVec
-	);
-
 public:
 	/*
 	 * ステージのライトの設定
 	 */
 	void LightSettings();
-
-
-
 public:
 	/*
 	 *	モデルハンドルの取得
