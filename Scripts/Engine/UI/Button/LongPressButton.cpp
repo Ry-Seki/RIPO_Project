@@ -69,5 +69,4 @@ void LongPressButton::OnPress(float unscaledDeltaTime) {
  */
 void LongPressButton::OnPressUp() {
 	inputState = GameEnum::ButtonInputState::Idle;
-	selectState = GameEnum::ButtonSelectState::Select;
 }

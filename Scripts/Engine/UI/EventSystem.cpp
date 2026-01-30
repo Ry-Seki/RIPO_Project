@@ -1,5 +1,6 @@
 /*
  *	@file	EventSystem.cpp
+ *	@author	Seki
  */
 
 #include "EventSystem.h"
@@ -12,6 +13,7 @@
 void EventSystem::Initialize(int startIndex) {
 	if (buttonList.empty()) return;
 
+	decideInputNum = static_cast<int>(GameEnum::MenuAction::Decide);
 	if (startIndex < 0 || startIndex >= buttonList.size()) {
 		currentIndex = 0;
 	} else {
@@ -22,13 +24,13 @@ void EventSystem::Initialize(int startIndex) {
 /*
  *	@brief	更新処理
  */
-void EventSystem::Update(float deltaTime) {
+void EventSystem::Update(float unscaledDeltaTime) {
 	if (currentIndex < 0) return;
 
 	int nextIndex = currentIndex;
-	auto action = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
-	float vertical = action.axis[static_cast<int>(GameEnum::MenuAction::Vertical)];
-	float horizontal = action.axis[static_cast<int>(GameEnum::MenuAction::Horizontal)];
+	auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
+	float vertical = input.axis[static_cast<int>(GameEnum::MenuAction::Vertical)];
+	float horizontal = input.axis[static_cast<int>(GameEnum::MenuAction::Horizontal)];
 
 	auto itr = navigationMap.find(currentIndex);
 	if (itr == navigationMap.end()) return; 
@@ -52,24 +54,25 @@ void EventSystem::Update(float deltaTime) {
 		currentIndex = nextIndex;
 		ApplySelection();
 	}
-
-	// 決定
-	if (action.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
-		auto& currentButton = buttonList[currentIndex];
-		if (!currentButton) return;
-		
-		//currentButton->Execute();
-	}
 }
 /*
  *	@brief	選択状態の反映
  */
 void EventSystem::ApplySelection() {
-    for (int i = 0, max = buttonList.size(); i < max; ++i) {
-        if (!buttonList[i]) continue;
+	// 一旦空にする
+	currentButton = nullptr;
 
-       // buttonList[i]->SetSelected(i == currentIndex);
-    }
+	for (int i = 0; i < buttonList.size(); ++i) {
+		auto& button = buttonList[i];
+		if (!button) continue;
+
+		bool isSelect = (i == currentIndex) && button->IsEnable();
+		button->SetSelectState(isSelect);
+
+		if (isSelect) {
+			currentButton = button;
+		}
+	}
 }
 /*
  *	@brief		移動の道筋データの設定

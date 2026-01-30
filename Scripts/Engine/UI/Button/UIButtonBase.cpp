@@ -4,6 +4,7 @@
  */
 
 #include "UIButtonBase.h"
+#include "../../Input/InputUtility.h"
 
 #include <DxLib.h>
 
@@ -39,9 +40,10 @@ void UIButtonBase::Update(float unscaledDeltaTime) {
 			inputState = GameEnum::ButtonInputState::Idle;
 		}
 	}
-	if (inputState == GameEnum::ButtonInputState::Press && !isHover) {
-		inputState = GameEnum::ButtonInputState::Idle;
-	}
+	// “ü—Í‰ğœ
+	// if (inputState == GameEnum::ButtonInputState::Press && !IsFocus()) {
+	// 	inputState = GameEnum::ButtonInputState::Idle;
+	// }
 }
 /*
  *	@brief	”­‰ÎƒCƒxƒ“ƒg
@@ -93,11 +95,23 @@ GameEnum::ButtonRendererState UIButtonBase::GetRendererState() const {
 	if (inputState == GameEnum::ButtonInputState::Press)
 		return GameEnum::ButtonRendererState::Press;
 
-	if (selectState == GameEnum::ButtonSelectState::Select)
+	bool isSelect = selectState == GameEnum::ButtonSelectState::Select;
+
+	if (isSelect)
 		return GameEnum::ButtonRendererState::Select;
 
-	if (inputState == GameEnum::ButtonInputState::Hover)
+	if (!isSelect && inputState == GameEnum::ButtonInputState::Hover)
 		return GameEnum::ButtonRendererState::Hover;
 
 	return GameEnum::ButtonRendererState::Idle;
+}
+/*
+ *	@brief		‰Ÿ‚µ‚Ä‚¢‚½‚à‚Ì‚ª—£‚ê‚½uŠÔ‚ğ”»’è
+ *	@return		bool
+ */
+bool UIButtonBase::OnReleasedUp() const {
+	auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
+
+	return input.buttonUp[static_cast<int>(GameEnum::MenuAction::Click)]
+		|| input.buttonUp[static_cast<int>(GameEnum::MenuAction::Decide)];
 }

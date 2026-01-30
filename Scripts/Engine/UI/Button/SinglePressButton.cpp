@@ -29,8 +29,8 @@ void SinglePressButton::Update(float unscaledDeltaTime) {
 
     if (inputState == GameEnum::ButtonInputState::Press) {
         OnPress(unscaledDeltaTime);
-
-        if (input.buttonUp[inputClickNum]) OnPressUp();
+		// TODO : Ç±Ç±Çé°Ç∑(ç≈å„Ç…ì¸óÕÇ≥ÇÍÇΩEnum)
+        if (OnReleasedUp()) OnPressUp();
     }
 }
 /*
@@ -63,5 +63,4 @@ void SinglePressButton::OnPressUp() {
 	inputState = GameEnum::ButtonInputState::Idle;
 
 	OnClick();
-	selectState = GameEnum::ButtonSelectState::Select;
 }
