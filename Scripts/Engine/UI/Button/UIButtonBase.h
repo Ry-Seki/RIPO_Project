@@ -62,6 +62,11 @@ protected:
 	 *	@return		GameEnum::ButtonRendererState
 	 */
 	GameEnum::ButtonRendererState GetRendererState() const;
+	/*
+	 *	@brief		押していたものが離れた瞬間を判定
+	 *	@return		bool
+	 */
+	bool OnReleasedUp() const;
 
 public:
 	/*
@@ -97,6 +102,14 @@ public:
 
 public:
 	/*
+	 *	@brief		操作対象か判定
+	 *	@return		bool
+	 */
+	inline bool IsFocus() const {
+		return inputState == GameEnum::ButtonInputState::Hover
+			|| selectState == GameEnum::ButtonSelectState::Select;
+	}
+	/*
 	 *	@brief		操作可能判定
 	 *	@return		bool
 	 */
@@ -107,6 +120,13 @@ public:
 	 */
 	inline void SetIsEnable(bool setFlag) {
 		isEnable = setFlag;
+	}
+	/*
+	 *	@brief		ボタン状態の取得
+	 *	@return		GameEnum::ButtonInputState
+	 */
+	inline GameEnum::ButtonInputState GetInputState() const {
+		return inputState;
 	}
 	/*
 	 *	@brief		名前の設定
@@ -130,6 +150,13 @@ public:
 	 */
 	inline void SetOnClick(std::function<void()> setOnClick) {
 		if (setOnClick) onClick = setOnClick;
+	}
+	/*
+	 *	@brief		選択状態か判定
+	 *	@return		bool
+	 */
+	inline bool IsSelect() const {
+		return selectState == GameEnum::ButtonSelectState::Select;
 	}
 	/*
 	 *	@brief		選択状態の設定

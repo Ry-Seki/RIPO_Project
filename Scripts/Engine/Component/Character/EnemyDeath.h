@@ -15,6 +15,7 @@
 class EnemyDeath : public EnemyState {
 private:
 	std::shared_ptr<AnimatorComponent> animator;
+	// アニメーションの再生されている時間
 	float animationTime;
 
 public:
