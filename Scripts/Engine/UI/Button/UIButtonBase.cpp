@@ -12,6 +12,9 @@
  *	@brief	初期化処理
  */
 void UIButtonBase::Initialize() {
+	isEnable = true;
+	inputState = GameEnum::ButtonInputState::Idle;
+	selectState = GameEnum::ButtonSelectState::Invalid;
 	inputClickNum = static_cast<int>(GameEnum::MenuAction::Click);
 }
 /*
@@ -20,7 +23,6 @@ void UIButtonBase::Initialize() {
 void UIButtonBase::Setup() {
 	isEnable = true;
 	inputState = GameEnum::ButtonInputState::Idle;
-	selectState = GameEnum::ButtonSelectState::Invalid;
 }
 /*
  *	@brief	更新処理
@@ -40,16 +42,13 @@ void UIButtonBase::Update(float unscaledDeltaTime) {
 			inputState = GameEnum::ButtonInputState::Idle;
 		}
 	}
-	// 入力解除
-	// if (inputState == GameEnum::ButtonInputState::Press && !IsFocus()) {
-	// 	inputState = GameEnum::ButtonInputState::Idle;
-	// }
 }
 /*
  *	@brief	発火イベント
  */
-void UIButtonBase::OnClick() {
-	if (onClick) onClick();
+void UIButtonBase::OnClickEvent() {
+	if (UpdateSelectButton) UpdateSelectButton();
+	if (OnClick) OnClick();
 }
 /*
  *	@brief	デバック用描画処理
@@ -95,12 +94,10 @@ GameEnum::ButtonRendererState UIButtonBase::GetRendererState() const {
 	if (inputState == GameEnum::ButtonInputState::Press)
 		return GameEnum::ButtonRendererState::Press;
 
-	bool isSelect = selectState == GameEnum::ButtonSelectState::Select;
-
-	if (isSelect)
+	if (selectState == GameEnum::ButtonSelectState::Select)
 		return GameEnum::ButtonRendererState::Select;
 
-	if (!isSelect && inputState == GameEnum::ButtonInputState::Hover)
+	if (inputState == GameEnum::ButtonInputState::Hover)
 		return GameEnum::ButtonRendererState::Hover;
 
 	return GameEnum::ButtonRendererState::Idle;

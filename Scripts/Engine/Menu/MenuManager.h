@@ -95,15 +95,18 @@ public:
 		auto menu = GetMenu<T>();
 		if (!menu) return;
 
-		if (!useMenuList.empty()) {
-			// すでにオープンしていたら、それを削除して再びオープンする
-			useMenuList.erase(std::remove(useMenuList.begin(), useMenuList.end(), menu), useMenuList.end());
-			// ひとつ前のメニューを操作不可能にする
-			useMenuList.back()->SetIsInteractive(false);
+		if (!useMenuList.empty()) useMenuList.back()->Suspend();
+
+		// すでに使用中リストにあるか判定
+		auto itr = std::find(useMenuList.begin(), useMenuList.end(), menu);
+		if (itr != useMenuList.end()) {
+			// 既存メニューの場合は再開
+			menu->Resume();
+			useMenuList.erase(itr);
+		} else {
+			// 初回表示
+			menu->Open();
 		}
-		// メニューをオープンする
-		menu->Open();
-		// 使用リストに登録する
 		useMenuList.push_back(menu);
 	}
 };

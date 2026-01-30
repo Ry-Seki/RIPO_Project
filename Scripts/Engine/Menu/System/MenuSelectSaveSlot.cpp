@@ -20,7 +20,6 @@ void MenuSelectSaveSlot::Initialize () {
     for (int i = 0; i < 4; i++) {
         buttonList[i] = std::make_shared<SinglePressButton>(Rect(200, 100 * i, 700, 80));
         buttonList[i]->SetName("SaveSlot");
-
         // ƒ{ƒ^ƒ“‚Ì“o˜^
         eventSystem.RegisterButton(buttonList[i].get());
     }
@@ -37,6 +36,9 @@ void MenuSelectSaveSlot::Initialize () {
             if (!button) continue;
 
             button->Initialize();
+            button->RegisterUpdateSelectButton([this, button]() {
+                eventSystem.UpdateSelectButton(button.get());
+            });
             // TODO : ‚Ì‚¿‚É“o˜^‚·‚é
             //button->RegisterButtonHandle(buttonHandle->GetHandle());
             //button->SetOnClick([this, i]() {
@@ -44,6 +46,7 @@ void MenuSelectSaveSlot::Initialize () {
             //});
         }
         eventSystem.LoadNavigation(navigation->GetData());
+        eventSystem.ApplySelection();
     });
 }
 /*

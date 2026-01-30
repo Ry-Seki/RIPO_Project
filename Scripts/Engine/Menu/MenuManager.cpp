@@ -37,10 +37,10 @@ void MenuManager::CloseTopMenu() {
 	auto topMenu = useMenuList.back();
 	if (!topMenu) return;
 	// 一番後ろの要素を削除する
-	useMenuList.pop_back();
 	topMenu->Close();
-	// 現在一番後ろのメニューを開く
-	useMenuList.back()->Open();
+	useMenuList.pop_back();
+	// 現在一番後ろのメニューの再開
+	useMenuList.back()->Resume();
 }
 /*
  *	@brief	現在開かれている全てのリストを削除する

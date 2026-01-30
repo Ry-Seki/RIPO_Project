@@ -61,7 +61,7 @@ void LongPressButton::OnPressDown() {
 void LongPressButton::OnPress(float unscaledDeltaTime) {
 	if (!isHoldCompleted && pressTime >= holdDuration) {
 		isHoldCompleted = true;
-		OnClick();
+		OnClickEvent();
 	}
 }
 /*

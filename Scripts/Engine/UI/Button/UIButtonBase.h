@@ -33,7 +33,8 @@ protected:
 	std::vector<int> handleList;
 	std::vector<IButtonStateRendererPtr> rendererList;	// TODO : そのうち追加
 
-	std::function<void()> onClick = nullptr;
+	std::function<void()> OnClick = nullptr;
+	std::function<void()> UpdateSelectButton = nullptr;
 
 public:
 	/*
@@ -52,7 +53,7 @@ protected:
 	/*
 	 *	@brief	発火イベント
 	 */
-	virtual void OnClick();
+	virtual void OnClickEvent();
 	/*
 	 *	@brief	デバック用描画
 	 */
@@ -99,6 +100,10 @@ public:
 	 *	@brief	離した瞬間
 	 */
 	virtual void OnPressUp() = 0;
+	/*
+	 *	@brief	キャンセル
+	 */
+	virtual void OnPressCancel(){}
 
 public:
 	/*
@@ -146,10 +151,17 @@ public:
 	}
 	/*
 	 *	@brief		発火イベントの登録
-	 *	@param[in]	std::function<void()> setOnClick
+	 *	@param[in]	std::function<void()> setFunction
 	 */
-	inline void SetOnClick(std::function<void()> setOnClick) {
-		if (setOnClick) onClick = setOnClick;
+	inline void RegisterOnClick(std::function<void()> setFunction) {
+		if (setFunction) OnClick = setFunction;
+	}
+	/*
+	 *	@brief		選択状態更新処理の設定
+	 *  @param[in]	std::function<void()> setFunction
+	 */
+	inline void RegisterUpdateSelectButton(std::function<void()> setFunction) {
+		if (setFunction) UpdateSelectButton = setFunction;
 	}
 	/*
 	 *	@brief		選択状態か判定

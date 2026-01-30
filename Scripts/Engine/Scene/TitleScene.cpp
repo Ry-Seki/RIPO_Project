@@ -32,9 +32,9 @@ void TitleScene::Initialize(Engine& engine) {
 	FadeManager::GetInstance().StartFade(fadeIn);
 	SetBGMVolume(100);
 	SetSEVolume(100);
-	MenuManager::GetInstance().GetMenu<MenuSelectSaveSlot>();
 	MenuManager::GetInstance().GetMenu<MenuTitle>();
 	MenuManager::GetInstance().GetMenu<MenuGameModeSelect>();
+	MenuManager::GetInstance().GetMenu<MenuSelectSaveSlot>();
 	auto debugSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/ButtonPush_Debug.mp3");
 	auto goalSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/GoalSE.mp3");
 	std::vector<std::shared_ptr<LoadSprite>> loadBGList;

@@ -1,30 +1,17 @@
 /*
- *	@file	MenuLoadGame.h
+ *	@file	MenuSettings.h
  *	@author	Seki
  */
 
-#ifndef _MENU_LOAD_GAME_H_
-#define _MENU_LOAD_GAME_H_
+#ifndef _MENU_SETTINGS_H_
+#define _MENU_SETTINGS_H_
 
 #include "../MenuBase.h"
-#include "../../GameEnum.h"
-
-// 前方宣言
-class Engine;
 
 /*
- *	@brief	ロードメニュー
+ *	@brief	設定メニュー
  */
-class MenuLoadGame : public MenuBase {
-private:
-	GameEnum::SaveSlotMenuMode mode = GameEnum::SaveSlotMenuMode::Load;
-
-public:
-	/*
-	 *	@brief	デストラクタ
-	 */
-	~MenuLoadGame() override {};
-
+class MenuSettings : public MenuBase {
 public:
 	/*
 	 *	@brief	初期化処理
@@ -54,7 +41,6 @@ public:
 	 *	@brief	メニューを再開
 	 */
 	void Resume() override;
-
 };
 
-#endif // !_MENU_LOAD_GAME_H_
+#endif // !_MENU_SETTINGS_H_
