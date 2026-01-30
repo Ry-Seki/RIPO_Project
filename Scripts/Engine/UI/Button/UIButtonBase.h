@@ -62,6 +62,11 @@ protected:
 	 *	@return		GameEnum::ButtonRendererState
 	 */
 	GameEnum::ButtonRendererState GetRendererState() const;
+	/*
+	 *	@brief		‰Ÿ‚µ‚Ä‚¢‚½‚à‚Ì‚ª—£‚ê‚½uŠÔ‚ğ”»’è
+	 *	@return		bool
+	 */
+	bool OnReleasedUp() const;
 
 public:
 	/*
@@ -96,6 +101,14 @@ public:
 	virtual void OnPressUp() = 0;
 
 public:
+	/*
+	 *	@brief		‘€ì‘ÎÛ‚©”»’è
+	 *	@return		bool
+	 */
+	inline bool IsFocus() const {
+		return inputState == GameEnum::ButtonInputState::Hover
+			|| selectState == GameEnum::ButtonSelectState::Select;
+	}
 	/*
 	 *	@brief		‘€ì‰Â”\”»’è
 	 *	@return		bool

@@ -96,8 +96,8 @@ namespace GameEnum {
 	enum class ButtonInputState {
 		Invalid = -1,
 		Idle,			// ’Êíó‘Ô
-		Hover,		// G‚ê‚Ä‚¢‚éó‘Ô
-		Press,		// ‰Ÿ‰º’†ó‘Ô
+		Hover,			// G‚ê‚Ä‚¢‚éó‘Ô
+		Press,			// ‰Ÿ‰º’†ó‘Ô
 		Max
 	};
 	/*

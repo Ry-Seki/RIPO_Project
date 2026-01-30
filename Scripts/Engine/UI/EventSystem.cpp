@@ -54,20 +54,24 @@ void EventSystem::Update(float unscaledDeltaTime) {
 		currentIndex = nextIndex;
 		ApplySelection();
 	}
-
-	// “ü—Í”»’è
-	
 }
 /*
  *	@brief	‘I‘ğó‘Ô‚Ì”½‰f
  */
 void EventSystem::ApplySelection() {
-	for (int i = 0, max = buttonList.size(); i < max; ++i) {
+	// ˆê’U‹ó‚É‚·‚é
+	currentButton = nullptr;
+
+	for (int i = 0; i < buttonList.size(); ++i) {
 		auto& button = buttonList[i];
 		if (!button) continue;
 
-		button->SetSelectState(i == currentIndex);
-		if (button->IsSelect()) currentButton = button;
+		bool isSelect = (i == currentIndex) && button->IsEnable();
+		button->SetSelectState(isSelect);
+
+		if (isSelect) {
+			currentButton = button;
+		}
 	}
 }
 /*
