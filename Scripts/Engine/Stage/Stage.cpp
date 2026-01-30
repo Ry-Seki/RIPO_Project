@@ -68,7 +68,8 @@ void Stage::Render() {
 		player = GetPlayer();
 		if (player != nullptr) {
 			// ステージの当たり判定の描画
-			StageColliderRenderer(player.get(), player->GetComponent<PlayerComponent>()->GetMoveVec());
+			Vector3 prevPos = player->GetComponent<PlayerComponent>()->GetOwner()->position - player->GetComponent<PlayerComponent>()->GetMoveVec();
+			StageColliderRenderer(player.get(), player->GetComponent<PlayerComponent>()->GetMoveVec(), prevPos);
 
 		}
 
@@ -124,13 +125,14 @@ void Stage::UpdateCollision(GameObject* other, Vector3 MoveVec) {
 	// 壁床ポリゴン分類
 	std::vector<MV1_COLL_RESULT_POLY*> walls, floors;
 	// 壁か床か振り分ける
-	ClassifyPolygons(*hitDim, walls, floors);
+	ClassifyPolygons(*hitDim, walls, floors, prevPos);
+
+	// 床衝突処理
+	ProcessFloorCollision(nowPos, polyOffset, floors, other, MoveVec);
 
 	// 壁衝突処理
 	ProcessWallCollision(nowPos, prevPos, polyOffset, MoveVec, walls, moveFlag, other);
 
-	// 床衝突処理
-	ProcessFloorCollision(nowPos, polyOffset, floors, other, MoveVec.y);
 
 	// 結果反映
 	other->position = nowPos;
@@ -159,7 +161,9 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(GameObject* othe
 		effectiveMove = Vector3::zero;
 	}
 
+	// 移動方向の単位ベクトル
 	Vector3 forward = Vector3::zero;
+	// 移動距離の長さ
 	float moveLen = effectiveMove.Magnitude();
 	if (moveLen > 0.0f) {
 		forward = Normalized(effectiveMove);
@@ -168,6 +172,8 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(GameObject* othe
 	// カプセルの取得
 	auto capsule = other->GetComponent<CapsuleCollider>();
 	if (!capsule)return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
+
+	// カプセルの要素をワールド座標に変換
 
 	// 下端
 	Vector3 capLower = other->position + capsule->capsule.segment.startPoint;
@@ -182,7 +188,7 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(GameObject* othe
 	Vector3 sphereCenter = capCenter + forward * (moveLen * _HALF);
 
 	// 球の半径
-	float sphereRadius = sphereRadius = radius + moveLen * _HALF;
+	float sphereRadius = radius + moveLen * _HALF;
 
 	auto hitDim = std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
 	*hitDim = MV1CollCheck_Sphere(modelHandle, -1, ToVECTOR(sphereCenter), sphereRadius);
@@ -200,22 +206,28 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> Stage::SetupCollision(GameObject* othe
 void Stage::ClassifyPolygons(
 	const MV1_COLL_RESULT_POLY_DIM& hitDim,
 	std::vector<MV1_COLL_RESULT_POLY*>& walls,
-	std::vector<MV1_COLL_RESULT_POLY*>& floors) {
+	std::vector<MV1_COLL_RESULT_POLY*>& floors,
+	const Vector3& prevPos
+) {
 
 	// 全ポリゴンをチェック
 	for (int i = 0; i < hitDim.HitNum; i++) {
+		// ヒットしたポリゴンの配列
 		const auto& poly = hitDim.Dim[i];
-		// 壁か床かの判断を行う
-		bool isWall = (poly.Normal.y < _POLYGON_HEIGHT && poly.Normal.y > -_POLYGON_HEIGHT);
 
+		// 壁
+		bool isWall = (poly.Normal.y < _POLYGON_HEIGHT);
+		// 床
+		bool isFloor = (poly.Normal.y >= FLOOR_LIMIT);
 		// 壁かどうか
-		if (isWall) {
+		if (isFloor) {
 			// 壁ポリゴン配列に追加する
-			walls.push_back(const_cast<MV1_COLL_RESULT_POLY*>(&poly));
-		}
-		else {
-			// 床ポリゴン配列に追加する
 			floors.push_back(const_cast<MV1_COLL_RESULT_POLY*>(&poly));
+		}
+
+		if (isWall) {
+			// 床ポリゴン配列に追加する
+			walls.push_back(const_cast<MV1_COLL_RESULT_POLY*>(&poly));
 		}
 	}
 
@@ -262,7 +274,7 @@ void Stage::ProcessWallCollision(
 		Vector3 p0 = FromVECTOR(poly->Position[0]);
 		Vector3 p1 = FromVECTOR(poly->Position[1]);
 		Vector3 p2 = FromVECTOR(poly->Position[2]);
-		
+
 
 		// カプセル中心点
 		Vector3 capCenter = (capLower + capTop) * _HALF;
@@ -282,7 +294,10 @@ void Stage::ProcessWallCollision(
 		Vector3 pushDir = Normalized(diff);
 
 		// 水平方向のみ押し出す
-		//pushDir.y = 0.0f;
+		if (poly->HitPosition.y > prevPos.y + _POLYGON_HEIGHT) {
+			pushDir.y = 0.0f;
+
+		}
 
 		// 水平方向のみで押し戻す
 		if (Magnitude(pushDir) > 0.0f) {
@@ -330,7 +345,7 @@ void Stage::ProcessFloorCollision(
 	float polyOffset,
 	const std::vector<MV1_COLL_RESULT_POLY*>& floors,
 	GameObject* other,
-	float moveVec
+	Vector3 moveVec
 ) {
 	// 床がなければ落下
 	if (floors.empty()) {
@@ -359,6 +374,8 @@ void Stage::ProcessFloorCollision(
 	auto capsule = other->GetComponent<CapsuleCollider>();
 	if (!capsule) return;
 
+	float prevY = nowPos.y - moveVec.y;
+
 	// ワールド座標での下端
 	Vector3 capStart = nowPos + capsule->capsule.segment.startPoint;
 	// ワールド座標での上端
@@ -368,6 +385,9 @@ void Stage::ProcessFloorCollision(
 	// カプセルの半径
 	float capsuleRadius = capsule->capsule.radius;
 
+	Vector3 checkPos = capStart + Vector3(moveVec.x, 0.0f, moveVec.z);
+
+
 	// 貫通しているかどうかを見る
 	for (auto* poly : floors) {
 		// 三角形の 3 頂点
@@ -376,12 +396,15 @@ void Stage::ProcessFloorCollision(
 		Vector3 p2 = FromVECTOR(poly->Position[2]);
 
 		// 中心点と三角形の最近接点を求める
-		Vector3 nearest = Nearest(capStart, p0, p1, p2);
+		Vector3 nearest = Nearest(checkPos, p0, p1, p2);
 
 		// 最近接点との差分と距離
-		Vector3 diff = capStart - nearest;
+		Vector3 diff = checkPos - nearest;
 		float dist = Magnitude(diff);
-
+		// 「前フレームより極端に高い床」は無視
+		if (nearest.y > prevY + GameConst::PLAYER_HIT_HEIGHT * 0.1f) {
+			continue;
+		}
 		// カプセルの半径以下なら接地
 		const float EPS = _HALF;
 		if (dist <= capsuleRadius) {
@@ -402,11 +425,11 @@ void Stage::ProcessFloorCollision(
 	// 接地しているかどうかの判定を重力コンポーネントに渡す
 	if (isGround) {
 		// 対象がいなければいけない位置
-		float desiredY = MaxY - capsule->capsule.segment.startPoint.y;
+		float desiredY = (MaxY + (capsuleRadius - capsule->capsule.segment.startPoint.y));
 
 		// 壁から押し出されたとき対策
 		// 床よりもしたに押し出された場合、押し戻す
-		if (nowPos.y < desiredY) {
+		if (nowPos.y < MaxY) {
 			nowPos.y = desiredY;
 		}
 		// 接地している
@@ -453,7 +476,7 @@ void Stage::LightSettings() {
 /*
  *	ステージの当たり判定の描画
  */
-void Stage::StageColliderRenderer(GameObject* other, Vector3 MoveVec) {
+void Stage::StageColliderRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos) {
 	// モデルハンドルが無効な場合は処理を中止
 	if (modelHandle < 0) return;
 
@@ -468,9 +491,22 @@ void Stage::StageColliderRenderer(GameObject* other, Vector3 MoveVec) {
 	for (int i = 0; i < hitDim->HitNum; i++) {
 		const auto& poly = hitDim->Dim[i];
 
-		// 壁／床を判定
-		bool isWall = (poly.Normal.y < _POLYGON_HEIGHT && poly.Normal.y > -_POLYGON_HEIGHT);
-		unsigned int drawColor = isWall ? wallColor : floorColor;
+		// 壁
+		bool isWall = (poly.Normal.y < _POLYGON_HEIGHT);
+		// 床
+		bool isFloor = (poly.Normal.y >= FLOOR_LIMIT);
+		unsigned int drawColor;
+
+		// 壁かどうか
+		if (isFloor) {
+			// 壁ポリゴン配列に追加する
+			drawColor = floorColor;
+		}
+
+		if (isWall) {
+			// 床ポリゴン配列に追加する
+			drawColor = wallColor;
+		}
 
 		// ポリゴンを半透明で描画
 		DrawTriangle3D(poly.Position[0], poly.Position[1], poly.Position[2], drawColor, TRUE);

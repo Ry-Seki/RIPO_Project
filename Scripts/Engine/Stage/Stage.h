@@ -42,6 +42,7 @@ private:
 	static constexpr float _CHARACTER_MOVEVEC_MIN = 0.01f;		// キャラクターの移動量の最小値
 	static constexpr float _HALF = 0.5f;						// 半分
 	static constexpr float _POLYGON_HEIGHT = 0.9f;
+	static constexpr float FLOOR_LIMIT = 0.5f;
 
 
 public:
@@ -61,7 +62,7 @@ public:
 	void Render() override;
 
 	// ステージの当たり判定の描画
-	void StageColliderRenderer(GameObject* other, Vector3 MoveVec) override;
+	void StageColliderRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos) override;
 
 	// 終了処理
 	void Execute() override;
@@ -95,7 +96,8 @@ private:
 	void ClassifyPolygons(
 		const MV1_COLL_RESULT_POLY_DIM& hitDim,
 		std::vector<MV1_COLL_RESULT_POLY*>& walls,
-		std::vector<MV1_COLL_RESULT_POLY*>& floors
+		std::vector<MV1_COLL_RESULT_POLY*>& floors,
+		const Vector3& prevPos
 	);
 
 	/**
@@ -128,7 +130,7 @@ private:
 		float polyOffset,
 		const std::vector<MV1_COLL_RESULT_POLY*>& floors,
 		GameObject* other,
-		float moveVec
+		Vector3 moveVec
 	);
 
 public:
