@@ -633,6 +633,9 @@
     <ClCompile Include="Scripts\Engine\UI\Button\LongPressButton.cpp">
       <Filter>ソース ファイル\Engine\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Stage\StageCollision.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -1117,6 +1120,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\Button\LongPressButton.h">
       <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Stage\StageCollision.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
