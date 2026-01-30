@@ -6,6 +6,7 @@
 #include "ArmActionComponent.h"
 #include "../../GameConst.h"
 #include "HandArm.h"
+#include "WeaponBase.h"
 
 using namespace InputUtility;
 
@@ -13,30 +14,23 @@ ArmActionComponent::ArmActionComponent()
 	: currentArm(nullptr)
 {}
 
+/*
+ *	最初のUpdateの直前に呼び出される処理
+ */
 void ArmActionComponent::Start() {
-	player = GetOwner();
-	engine = player->GetEngine();
+	arms[GameEnum::Arm::Hand] = std::make_shared<HandArm>();
+	arms[GameEnum::Arm::Weapon] = std::make_shared<WeaponBase>();
+	arms[GameEnum::Arm::Weapon]->Start();
 }
 
+/*
+ *	更新処理
+ */
 void ArmActionComponent::Update(float deltaTime) {
 	action = GetInputState(GameEnum::ActionMap::PlayerAction);
 	if (currentArm == nullptr)
 		return;
-	currentArm->ArmUpdate(deltaTime, player, engine);
+	currentArm->ArmUpdate(deltaTime, action);
 }
 
-void ArmActionComponent::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
-	if (currentArm == nullptr) 
-		return;
-	currentArm->OnCollision(self, other);
-}
 
-/*
- *	運んでいるオブジェクトを取得
- */
-GameObject* ArmActionComponent::GetLiftObject() {
-	// currentArmがHandArm型でないならnullptrが代入される(dynamic_pointer_castの仕様)
-	if (auto arm = std::dynamic_pointer_cast<HandArm>(currentArm))
-		return arm->GetLiftObject();
-	return nullptr;
-}

@@ -7,11 +7,13 @@
 #define _BULLETCOMPONENT_H_
 
 #include "../Component.h"
+#include "../../VecMath.h"
 
 class BulletComponent : public Component {
 private:
 	GameObject* bullet;
 	float destroyTimeCount;			// ’e‚ª”jŠü‚³‚ê‚éŽžŠÔ
+	Vector3 hitDirection;			// ’…’e’n“_•ûŒü
 
 	const float SHOT_SPEED;			// ’e‚Ì‘¬‚³
 
