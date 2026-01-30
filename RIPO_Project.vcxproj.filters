@@ -313,6 +313,12 @@
     <Filter Include="ソース ファイル\Engine\Menu\System">
       <UniqueIdentifier>{672ba505-2710-4874-b710-d73b61ceab5c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\System\System">
+      <UniqueIdentifier>{a29d9118-1768-4dbf-a7c6-af09e87fe34f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\System\Settings">
+      <UniqueIdentifier>{5fc2d27f-b4e0-4b73-8356-1966acfd99c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -585,12 +591,6 @@
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuSystem.cpp">
       <Filter>ソース ファイル\Engine\Menu\Title</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Data\DxLibResourcesManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\ActionContext.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\System\World\WorldProgressManager.cpp">
       <Filter>ソース ファイル\Engine\System\World</Filter>
     </ClCompile>
@@ -635,6 +635,15 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\System\MenuSettings.cpp">
       <Filter>ソース ファイル\Engine\Menu\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Scene\GameState\ActionContext.cpp">
+      <Filter>ソース ファイル\Engine\Scene\GameState</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Data\DxLibResourcesManager.cpp">
+      <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\System\Settings\SettingsManager.cpp">
+      <Filter>ソース ファイル\Engine\System\Settings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1123,6 +1132,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\System\MenuSettings.h">
       <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\System\Settings\SettingsManager.h">
+      <Filter>ヘッダー ファイル\Engine\System\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

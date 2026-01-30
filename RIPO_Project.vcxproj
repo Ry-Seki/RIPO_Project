@@ -243,6 +243,7 @@
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.cpp" />
     <ClCompile Include="Scripts\Engine\StringUtility.cpp" />
     <ClCompile Include="Scripts\Engine\System\Item\ItemManager.cpp" />
+    <ClCompile Include="Scripts\Engine\System\Settings\SettingsManager.cpp" />
     <ClCompile Include="Scripts\Engine\System\Status\PlayerStatusManager.cpp" />
     <ClCompile Include="Scripts\Engine\System\World\WorldProgressManager.cpp" />
     <ClCompile Include="Scripts\Engine\Time.cpp" />
@@ -406,6 +407,7 @@
     <ClInclude Include="Scripts\Engine\StringUtility.h" />
     <ClInclude Include="Scripts\Engine\System\Item\ItemManager.h" />
     <ClInclude Include="Scripts\Engine\System\Money\MoneyManager.h" />
+    <ClInclude Include="Scripts\Engine\System\Settings\SettingsManager.h" />
     <ClInclude Include="Scripts\Engine\System\Status\PlayerStatusManager.h" />
     <ClInclude Include="Scripts\Engine\System\World\WorldProgressManager.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />

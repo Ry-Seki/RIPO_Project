@@ -276,10 +276,10 @@ Orderd_JSON SaveDataManager::ToJSON(const SettingsData& data) {
  */
 SettingsData SaveDataManager::SettingsDataFromJSON(const JSON& json) {
     SettingsData data{};
-    data.mouseSensitivity = json.value("mouseSensitivity", 0.0f);
-    data.masterVolume = json.value("masterVolume", 0.0f);
-    data.bgmVolume = json.value("bgmVolume", 0.0f);
-    data.seVolume = json.value("seVolume", 0.0f);
+    data.mouseSensitivity = json.value("mouseSensitivity", 1.0f);
+    data.masterVolume = json.value("masterVolume", 1.0f);
+    data.bgmVolume = json.value("bgmVolume", 1.0f);
+    data.seVolume = json.value("seVolume", 1.0f);
     return data;
 }
 /*

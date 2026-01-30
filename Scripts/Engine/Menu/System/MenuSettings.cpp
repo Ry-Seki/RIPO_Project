@@ -9,6 +9,7 @@
  *	@brief	‰Šú‰»ˆ—
  */
 void MenuSettings::Initialize() {
+
 }
 /*
  *	@brief	ƒƒjƒ…[‚ğŠJ‚­

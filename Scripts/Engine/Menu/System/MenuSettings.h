@@ -7,11 +7,20 @@
 #define _MENU_SETTINGS_H_
 
 #include "../MenuBase.h"
+#include "../../UI/Button/UIButtonBase.h"
+#include "../../UI/EventSystem.h"
+
+#include <vector>
+#include <memory>
 
 /*
  *	@brief	İ’èƒƒjƒ…[
  */
 class MenuSettings : public MenuBase {
+private:
+	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
+	EventSystem eventSystem;
+
 public:
 	/*
 	 *	@brief	‰Šú‰»ˆ—
