@@ -402,3 +402,4 @@ FodyWeavers.xsd
 
 enc_temp_folder/
 /SaveData
+Data/Dungeon/DungeonMemory/DungeonMemoryProfiler.csv

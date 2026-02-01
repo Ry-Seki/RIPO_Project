@@ -645,6 +645,12 @@
     <ClCompile Include="Scripts\Engine\System\Settings\SettingsManager.cpp">
       <Filter>ソース ファイル\Engine\System\Settings</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Stage\StageCollision.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Stage\StageMemoryProfiler.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -1135,6 +1141,15 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\System\Settings\SettingsManager.h">
       <Filter>ヘッダー ファイル\Engine\System\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\ArmBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Stage\StageCollision.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Stage\StageMemoryProfiler.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
