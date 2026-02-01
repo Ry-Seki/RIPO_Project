@@ -111,12 +111,12 @@ void StageManager::Render() {
  *  終了
  */
 void StageManager::Execute() {
-	stageState.ResetStageModelHandle();
 #if _DEBUG
 	StageMemoryProfiler::Log("ゲーム終了");
 	StageMemoryProfiler::LogPeak(); // 最大使用量
 	StageMemoryProfiler::Execute();	// 計測終了
 #endif
+	stageState.ResetStageModelHandle();
 }
 
 /*
