@@ -660,6 +660,12 @@
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuSelectLoadGame.cpp">
       <Filter>ソース ファイル\Engine\Menu\Title</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuSaveMode.cpp">
+      <Filter>ソース ファイル\Engine\Menu\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuLoadMode.cpp">
+      <Filter>ソース ファイル\Engine\Menu\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -1162,6 +1168,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuSelectLoadGame.h">
       <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuSaveMode.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuLoadMode.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
