@@ -41,10 +41,6 @@ public:
 	 */
 	void Initialize();
 	/*
-	 *	ロード済みのデータの設定
-	 */
-	void SetupData();
-	/*
 	 *	更新処理
 	 */
 	void Update();

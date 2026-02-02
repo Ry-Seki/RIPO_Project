@@ -23,12 +23,14 @@ void MenuLoadGame::Initialize() {
  *	@brief	メニューを開く
  */
 void MenuLoadGame::Open() {
-	// TODO : セーブデータとの同期を完了させる
+	auto& menu = MenuManager::GetInstance();
+	auto saveMenu = menu.GetMenu<MenuSelectSaveSlot>();
+	saveMenu->SetSaveMode(mode);
 	MenuBase::Open();
 	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
+	FadeManager::GetInstance().StartFade(fadeIn, [this, &menu]() {
 		isStart = true;
-		MenuManager::GetInstance().OpenMenu<MenuSelectSaveSlot>();
+		menu.OpenMenu<MenuSelectSaveSlot>();
 	});
 }
 /*
@@ -69,4 +71,15 @@ void MenuLoadGame::Render() {
  */
 void MenuLoadGame::Close() {
 	MenuBase::Close();
+}
+/*
+ *	@brief	メニューを中断
+ */
+void MenuLoadGame::Suspend() {
+
+}
+/*
+ *	@brief	メニューを再開
+ */
+void MenuLoadGame::Resume() {
 }

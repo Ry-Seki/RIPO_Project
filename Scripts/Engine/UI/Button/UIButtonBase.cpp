@@ -4,6 +4,7 @@
  */
 
 #include "UIButtonBase.h"
+#include "../../Input/InputUtility.h"
 
 #include <DxLib.h>
 
@@ -11,6 +12,9 @@
  *	@brief	初期化処理
  */
 void UIButtonBase::Initialize() {
+	isEnable = true;
+	inputState = GameEnum::ButtonInputState::Idle;
+	selectState = GameEnum::ButtonSelectState::Invalid;
 	inputClickNum = static_cast<int>(GameEnum::MenuAction::Click);
 }
 /*
@@ -19,7 +23,6 @@ void UIButtonBase::Initialize() {
 void UIButtonBase::Setup() {
 	isEnable = true;
 	inputState = GameEnum::ButtonInputState::Idle;
-	selectState = GameEnum::ButtonSelectState::Invalid;
 }
 /*
  *	@brief	更新処理
@@ -39,15 +42,13 @@ void UIButtonBase::Update(float unscaledDeltaTime) {
 			inputState = GameEnum::ButtonInputState::Idle;
 		}
 	}
-	if (inputState == GameEnum::ButtonInputState::Press && !isHover) {
-		inputState = GameEnum::ButtonInputState::Idle;
-	}
 }
 /*
  *	@brief	発火イベント
  */
-void UIButtonBase::OnClick() {
-	if (onClick) onClick();
+void UIButtonBase::OnClickEvent() {
+	if (UpdateSelectButton) UpdateSelectButton();
+	if (OnClick) OnClick();
 }
 /*
  *	@brief	デバック用描画処理
@@ -100,4 +101,14 @@ GameEnum::ButtonRendererState UIButtonBase::GetRendererState() const {
 		return GameEnum::ButtonRendererState::Hover;
 
 	return GameEnum::ButtonRendererState::Idle;
+}
+/*
+ *	@brief		押していたものが離れた瞬間を判定
+ *	@return		bool
+ */
+bool UIButtonBase::OnReleasedUp() const {
+	auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
+
+	return input.buttonUp[static_cast<int>(GameEnum::MenuAction::Click)]
+		|| input.buttonUp[static_cast<int>(GameEnum::MenuAction::Decide)];
 }

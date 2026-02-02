@@ -96,8 +96,8 @@ namespace GameEnum {
 	enum class ButtonInputState {
 		Invalid = -1,
 		Idle,			// 通常状態
-		Hover,		// 触れている状態
-		Press,		// 押下中状態
+		Hover,			// 触れている状態
+		Press,			// 押下中状態
 		Max
 	};
 	/*
@@ -157,6 +157,7 @@ namespace GameEnum {
 		Shot,			// 射撃
 		Lift,			// お宝持ち上げ
 		OpenMenu,		// メニューを開く
+		BulletReload,	// 銃のリロード
 
 		Max
 	};
@@ -171,6 +172,29 @@ namespace GameEnum {
 		Decide,		// 決定
 		Click,		// クリック
 		Cancel,		// キャンセル
+		Max
+	};
+
+	/*
+	 *	@brief	ウデの種類
+	 *	@author	Riku
+	 */
+	enum class Arm {
+		Invalid = -1,
+		Hand,	// 手
+		Weapon,	// 武器
+
+		Max
+	};
+	/*
+	 *	@brief	銃の種類
+	 *	@author Riku
+	 */
+	enum class Weapon {
+		Invalid = -1,
+		Revolver,	// リボルバー(単発銃)
+		SMG,		// サブマシンガン(連射銃)
+
 		Max
 	};
 }

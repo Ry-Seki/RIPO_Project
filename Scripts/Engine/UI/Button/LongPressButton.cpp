@@ -61,7 +61,7 @@ void LongPressButton::OnPressDown() {
 void LongPressButton::OnPress(float unscaledDeltaTime) {
 	if (!isHoldCompleted && pressTime >= holdDuration) {
 		isHoldCompleted = true;
-		OnClick();
+		OnClickEvent();
 	}
 }
 /*
@@ -69,5 +69,4 @@ void LongPressButton::OnPress(float unscaledDeltaTime) {
  */
 void LongPressButton::OnPressUp() {
 	inputState = GameEnum::ButtonInputState::Idle;
-	selectState = GameEnum::ButtonSelectState::Select;
 }

@@ -7,14 +7,12 @@
 #define _MENU_SELECT_SAVE_SLOT_H_
 
 #include "../MenuBase.h"
+#include "../../UI/Button/UIButtonBase.h"
 #include "../../UI/EventSystem.h"
 #include "../../GameEnum.h"
 
 #include <vector>
 #include <memory>
-
-// 前方宣言
-class UIButtonBase;
 
 /*
  *	@brief	セーブスロットを選択するメニュー
@@ -28,7 +26,7 @@ private:
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 
 	static constexpr const char* _BUTTON_IMAGE_PATH = "Res/Menu/System/Trealine_SaveSlot.png";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/SaveSlotNavigation.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/SaveLoad/SaveSlotNavigation.json";
 
 public:
 	/*

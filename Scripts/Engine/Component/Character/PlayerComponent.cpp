@@ -6,8 +6,6 @@
 #include "PlayerComponent.h"
 #include "../../Manager/CameraManager.h"
 #include "../../GameConst.h"
-#include "HandArm.h"
-#include "RevolverArm.h"
 #include "../../Manager/StageManager.h"
 #include "../GravityComponent.h"
 #include "../../System/Status/PlayerStatusManager.h"
@@ -52,6 +50,9 @@ PlayerComponent::PlayerComponent()
 void PlayerComponent::Start() {
 	// プレイヤーの基礎ステータスを受け取る
 	status = PlayerStatusManager::GetInstance().GetPlayerStatusData()->base;
+
+	armModelHandle = MV1LoadModel("Res/Model/Player/BeamRifle.mv1");
+	playerModelHandle = MV1LoadModel("Res/Model/Player/RIPO_Model.mv1");
 }
 
 void PlayerComponent::Update(float deltaTime) {
@@ -125,11 +126,11 @@ void PlayerComponent::Update(float deltaTime) {
 	// 右クリックでウデアクションをハンドに設定
 	int lift = static_cast<int>(GameEnum::PlayerAction::Lift);
 	if (action.button[lift])
-		playerArm->SetCurrentArm<HandArm>();
+		playerArm->SetCurrentArm(GameEnum::Arm::Hand);
 	int shot = static_cast<int>(GameEnum::PlayerAction::Shot);
 	// 左クリックでウデアクションを銃に設定
 	if (action.button[shot])
-		playerArm->SetCurrentArm<RevolverArm>();
+		playerArm->SetCurrentArm(GameEnum::Arm::Weapon);
 }
 
 /*
@@ -138,7 +139,7 @@ void PlayerComponent::Update(float deltaTime) {
 void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
 
-	// 重力コンポーネントの取得by oorui
+	// 重力コンポーネントの取得
 	auto gravity = player->GetComponent<GravityComponent>();
 	// カメラの角度のsin,cos
 	const float cameraSin = sinf(camera->rotation.y);
@@ -215,13 +216,15 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 		animator->Play(3, 1);
 	}
 
-	// モデルの透明度の調整
+	// モデルの変更
 	auto handArm = player->GetComponent<ArmActionComponent>();
 	if (!handArm->GetLiftObject()) {
-		MV1SetOpacityRate(modelHandle, 0);
+		modelRenderer->SetModelHandle(armModelHandle);
+		//MV1SetOpacityRate(modelHandle, 0);
 	}
 	else {
-		MV1SetOpacityRate(modelHandle, 1);
+		modelRenderer->SetModelHandle(playerModelHandle);
+		//MV1SetOpacityRate(modelHandle, 1);
 	}
 
 }

@@ -1,5 +1,6 @@
 /*
  *	@file	EventSystem.cpp
+ *	@author	Seki
  */
 
 #include "EventSystem.h"
@@ -17,59 +18,97 @@ void EventSystem::Initialize(int startIndex) {
 	} else {
 		currentIndex = startIndex;
 	}
-	ApplySelection();
 }
 /*
  *	@brief	更新処理
  */
-void EventSystem::Update(float deltaTime) {
-	if (currentIndex < 0) return;
+void EventSystem::Update(float unscaledDeltaTime) {
+	auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
+	float vertical = input.axis[static_cast<int>(GameEnum::MenuAction::Vertical)];
+	float horizontal = input.axis[static_cast<int>(GameEnum::MenuAction::Horizontal)];
 
 	int nextIndex = currentIndex;
-	auto action = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
-	float vertical = action.axis[static_cast<int>(GameEnum::MenuAction::Vertical)];
-	float horizontal = action.axis[static_cast<int>(GameEnum::MenuAction::Horizontal)];
 
-	auto itr = navigationMap.find(currentIndex);
-	if (itr == navigationMap.end()) return; 
-
-	const Navigation& navigation = itr->second;
-	// 入力取得
-	if (horizontal < 0.0f) {
-		nextIndex = navigation.left;
-	} else if (horizontal > 0.0f) {
-		nextIndex = navigation.right;
-	} else if (vertical > 0.0f) {
-		nextIndex = navigation.up;
-	} else if (vertical < 0.0f) {
-		nextIndex = navigation.down;
+	// 入力処理
+#pragma region	入力管理は別クラスがすべき
+	if (isInput) {
+		elapsedTime += unscaledDeltaTime;
+		if (elapsedTime > _DURATION_TIME) {
+			isInput = false;
+			elapsedTime = 0.0f;
+		}
+	} else {
+		if (horizontal < 0.0f) {
+			isInput = true;
+			nextIndex = FindNextEnableButton(currentIndex, GameEnum::NavigationDir::Left);
+		} else if (horizontal > 0.0f) {
+			isInput = true;
+			nextIndex = FindNextEnableButton(currentIndex, GameEnum::NavigationDir::Right);
+		} else if (vertical > 0.0f) {
+			isInput = true;
+			nextIndex = FindNextEnableButton(currentIndex, GameEnum::NavigationDir::Up);
+		} else if (vertical < 0.0f) {
+			isInput = true;
+			nextIndex = FindNextEnableButton(currentIndex, GameEnum::NavigationDir::Down);
+		}
 	}
-
-	// 移動があった場合のみ反映
-	if (nextIndex != currentIndex &&
-		nextIndex >= 0 &&
-		nextIndex < static_cast<int>(buttonList.size())) {
+#pragma endregion
+	// 適応
+	if (nextIndex != currentIndex) {
 		currentIndex = nextIndex;
 		ApplySelection();
 	}
+}
+/*
+ *	@brief		選択状態の反映
+ */
+void EventSystem::ApplySelection() {
+	currentButton = nullptr;
 
-	// 決定
-	if (action.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
-		auto& currentButton = buttonList[currentIndex];
-		if (!currentButton) return;
-		
-		//currentButton->Execute();
+	for (int i = 0; i < buttonList.size(); ++i) {
+		auto& button = buttonList[i];
+		if (!button) continue;
+
+		bool isSelect = (i == currentIndex) && button->IsEnable();
+		button->SetSelectState(isSelect);
+
+		if (isSelect) currentButton = button;
 	}
 }
 /*
- *	@brief	選択状態の反映
+ *	@brief		選択状態のボタンを探す処理
+ *	@param[in]	int fromIndex
+ *	@param[in]	GameEnum::NavigationDir dir
+ *	@return		bool
  */
-void EventSystem::ApplySelection() {
-    for (int i = 0, max = buttonList.size(); i < max; ++i) {
-        if (!buttonList[i]) continue;
+int EventSystem::FindNextEnableButton(int fromIndex, GameEnum::NavigationDir dir) {
+	int current = fromIndex;
+	int safety = 0;
+	// 無限ループ対策
+	while (safety < buttonList.size()) {
+		auto itr = navigationMap.find(current);
+		if (itr == navigationMap.end()) break;
 
-       // buttonList[i]->SetSelected(i == currentIndex);
-    }
+		const Navigation& navigation = itr->second;
+
+		int next = -1;
+		// 方向によって行き先を決定
+		switch (dir) {
+			case GameEnum::NavigationDir::Left:  next = navigation.left;  break;
+			case GameEnum::NavigationDir::Right: next = navigation.right; break;
+			case GameEnum::NavigationDir::Up:    next = navigation.up;    break;
+			case GameEnum::NavigationDir::Down:  next = navigation.down;  break;
+		}
+		// 方向が無効な数字の場合、抜ける
+		if (next < 0 || next >= buttonList.size()) break;
+		// 有効状態ならそれを返す
+		if (buttonList[next]->IsEnable()) return next;
+
+		current = next;
+		safety++;
+	}
+
+	return fromIndex;
 }
 /*
  *	@brief		移動の道筋データの設定
@@ -92,4 +131,19 @@ void EventSystem::LoadNavigation(const JSON& json) {
 
         navigationMap.emplace(index, navigation);
     }
+}
+/*
+ *	@brief		選択状態の更新処理
+ *  @param[in]	UIButtonBase* setButton
+ */
+void EventSystem::UpdateSelectButton(UIButtonBase* setButton) {
+	if (!setButton || !setButton->IsEnable()) return;
+
+	for (int i = 0; i < buttonList.size(); ++i) {
+		if (buttonList[i] == setButton) {
+			currentIndex = i;
+			ApplySelection();
+			break;
+		}
+	}
 }

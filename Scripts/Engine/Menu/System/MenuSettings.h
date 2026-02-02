@@ -1,29 +1,25 @@
 /*
- *	@file	MenuLoadGame.h
+ *	@file	MenuSettings.h
  *	@author	Seki
  */
 
-#ifndef _MENU_LOAD_GAME_H_
-#define _MENU_LOAD_GAME_H_
+#ifndef _MENU_SETTINGS_H_
+#define _MENU_SETTINGS_H_
 
 #include "../MenuBase.h"
-#include "../../GameEnum.h"
+#include "../../UI/Button/UIButtonBase.h"
+#include "../../UI/EventSystem.h"
 
-// 前方宣言
-class Engine;
+#include <vector>
+#include <memory>
 
 /*
- *	@brief	ロードメニュー
+ *	@brief	設定メニュー
  */
-class MenuLoadGame : public MenuBase {
+class MenuSettings : public MenuBase {
 private:
-	GameEnum::SaveSlotMenuMode mode = GameEnum::SaveSlotMenuMode::Load;
-
-public:
-	/*
-	 *	@brief	デストラクタ
-	 */
-	~MenuLoadGame() override {};
+	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
+	EventSystem eventSystem;
 
 public:
 	/*
@@ -54,7 +50,6 @@ public:
 	 *	@brief	メニューを再開
 	 */
 	void Resume() override;
-
 };
 
-#endif // !_MENU_LOAD_GAME_H_
+#endif // !_MENU_SETTINGS_H_

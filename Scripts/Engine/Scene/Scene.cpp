@@ -9,6 +9,7 @@
 #include "../Component/SpriteRenderer.h"
 #include "../Component/AABBCollider.h"
 #include "../Component/CapsuleCollider.h"
+#include "../Manager/StageManager.h"
 #include <algorithm>
 
  /*
@@ -200,9 +201,9 @@ std::vector<Scene::WorldColliderList> Scene::ChangeGameObjectWorldColliders() {
 bool Scene::RayCast(const Ray& ray, RayCastHit& hitInfo, const RayCastPredicate& pred) {
 	hitInfo.collider = nullptr;
 	hitInfo.distance = FLT_MAX;
+	// 全コライダーとレイの判定
 	// 全てのワールド座標系コライダー
 	std::vector<WorldColliderList> colliders = ChangeGameObjectWorldColliders();
-
 	for (const auto& colList : colliders) {
 		for (const auto& col : colList) {
 			// レイとの交差判定
@@ -222,10 +223,41 @@ bool Scene::RayCast(const Ray& ray, RayCastHit& hitInfo, const RayCastPredicate&
 		}
 	}
 
-	// 交差するコライダーがある場合
-	if (hitInfo.collider) {
+	// ステージとレイの判定
+	int stageModelHandle = StageManager::GetInstance().GetCurrentStageHandle();
+	float stageDistance;
+	bool stageHit = RayIntersect(ray, stageModelHandle, stageDistance);
+	// 交差判定対象かどうか
+	if (!pred(nullptr, stageDistance))
+		stageHit = false;
+
+	// 両方ヒットしている場合は近い方を採用
+	if (hitInfo.collider && stageHit) {
+		if (hitInfo.distance < stageDistance) {
+			// 交差の座標を計算
+			hitInfo.point = ray.start + ray.direction * hitInfo.distance;
+			return true;
+		}
+		else {
+			// ヒット情報を入れていく
+			hitInfo.collider = nullptr;
+			hitInfo.distance = stageDistance;
+			// 交差の座標を計算
+			hitInfo.point = ray.start + ray.direction * stageDistance;
+			return true;
+		}
+	}
+	else if (hitInfo.collider) {
 		// 交差の座標を計算
 		hitInfo.point = ray.start + ray.direction * hitInfo.distance;
+		return true;
+	}
+	else if (stageHit) {
+		// ヒット情報を入れていく
+		hitInfo.collider = nullptr;
+		hitInfo.distance = stageDistance;
+		// 交差の座標を計算
+		hitInfo.point = ray.start + ray.direction * stageDistance;
 		return true;
 	}
 	

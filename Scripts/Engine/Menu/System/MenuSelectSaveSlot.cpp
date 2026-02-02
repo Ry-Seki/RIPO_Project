@@ -10,6 +10,7 @@
 #include "../../UI/Button/UIButtonBase.h"
 #include "../../Input/InputUtility.h"
 #include "../../Save/SaveDataManager.h"
+#include "../../UI/Button/SinglePressButton.h"
 
 /*
  *	@brief	初期化処理
@@ -17,10 +18,8 @@
 void MenuSelectSaveSlot::Initialize () {
     buttonList.resize(4);
     for (int i = 0; i < 4; i++) {
-        // buttonList[i] = std::make_shared<UIButton>(Rect(0, 200 * i, 920, 180 + 200 * i));
-        // buttonList[i] = std::make_shared<UIButtonBase>(Rect(200, 100 * i, 700, 80));
-        // buttonList[i]->SetName("SaveSlot");
-
+        buttonList[i] = std::make_shared<SinglePressButton>(Rect(200, 100 * i, 700, 80));
+        buttonList[i]->SetName("SaveSlot");
         // ボタンの登録
         eventSystem.RegisterButton(buttonList[i].get());
     }
@@ -36,12 +35,18 @@ void MenuSelectSaveSlot::Initialize () {
             auto button = buttonList[i];
             if (!button) continue;
 
+            button->Initialize();
+            button->RegisterUpdateSelectButton([this, button]() {
+                eventSystem.UpdateSelectButton(button.get());
+            });
+            // TODO : のちに登録する
             //button->RegisterButtonHandle(buttonHandle->GetHandle());
             //button->SetOnClick([this, i]() {
             //    SelectButtonExecute(i);
             //});
         }
         eventSystem.LoadNavigation(navigation->GetData());
+        eventSystem.ApplySelection();
     });
 }
 /*
@@ -60,19 +65,27 @@ void MenuSelectSaveSlot::Open () {
  */
 void MenuSelectSaveSlot::Update (Engine& engine, float unscaledDeltaTime) {
     if (!IsInteractive()) return;
-
+    auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
+    // イベントシステムの更新
+    eventSystem.Update(unscaledDeltaTime);
+    // ボタンの更新
     for (auto& button : buttonList) {
         if (button) button->Update(unscaledDeltaTime);
     }
+    // 現在選択されているボタンの取得
+    auto button = eventSystem.GetCurrentSelectButton();
+    if (!button) return;
 
-    eventSystem.Update(unscaledDeltaTime);
+    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+        button->OnPressDown();
+    }
 }
 /*
  *	@brief	描画処理
  */
 void MenuSelectSaveSlot::Render () {
     for (auto& button : buttonList) {
-        //button->Render();
+        button->Render();
     }
     DrawFormatString(100, 50, GetColor(255, 255, 255), "MenuSelectSaveSlot");
 }

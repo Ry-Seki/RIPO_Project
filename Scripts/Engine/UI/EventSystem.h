@@ -28,13 +28,21 @@ struct Navigation {
 };
 
 /*
- *	@brief	入力によって選択を動かすクラス
+ *	@brief	入力によって選択を動かすクラス(Menu派生クラス内、ボタンクラス限定)
+ *  @tips	一旦、現時点では選択入力をここにしているが、
+ *			いずれかに入力管理部分を分離して選択状態の管理のみにする予定
+ *			また、ゲームの規模次第ではボタンだけではなくUnityみたく、Seletableクラスを作る必要がある。
  */
 class EventSystem {
 private:
 	int currentIndex = -1;
+	float elapsedTime = 0.0f;
+	bool isInput = false;
 	std::vector<UIButtonBase*> buttonList;
+	UIButtonBase* currentButton = nullptr;
 	std::unordered_map<int, Navigation> navigationMap;
+
+	const float _DURATION_TIME = 0.2f;
 
 public:
 	/*
@@ -55,22 +63,39 @@ public:
 	/*
 	 *	@brief	更新処理
 	 */
-	void Update(float deltaTime);
+	void Update(float unscaledDeltaTime);
 
 private:
 	/*
-	 *	@brief	選択状態の反映
+	 *	@brief		選択状態のボタンを探す処理
+	 *	@param[in]	int fromIndex
+	 *	@param[in]	GameEnum::NavigationDir dir
+	 *	@return		bool
 	 */
-	void ApplySelection();
+	int FindNextEnableButton(int index, GameEnum::NavigationDir dir);
 
 public:
+	/*
+	 *	@brief		選択状態の反映
+	 */
+	void ApplySelection();
 	/*
 	 *	@brief		移動の道筋データの設定
 	 *  @param[in]	const JSON& json
 	 */
 	void LoadNavigation(const JSON& json);
+	/*
+	 *	@brief		選択状態の更新処理
+	 *  @param[in]	UIButtonBase* setButton
+	 */
+	void UpdateSelectButton(UIButtonBase* setButton);
 
 public:
+	/*
+	 *	@brief		現在選択されているボタンを取得
+	 *	@return		UIButtonBase*
+	 */
+	inline UIButtonBase* GetCurrentSelectButton() const{ return currentButton; }
 	/*
 	 *	@brief		ボタンの登録
 	 *  @param[in]	UIButtonBase* setButton

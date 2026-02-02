@@ -45,6 +45,10 @@ void PlayerActionMap::Initialize() {
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::OpenMenu),
 		{ InputType::Key, KEY_INPUT_ESCAPE });
+	// e‚ÌƒŠƒ[ƒh
+	AddButton(
+		static_cast<int>(GameEnum::PlayerAction::BulletReload),
+		{ InputType::Key, KEY_INPUT_R });
 
 	// ’l‚Ì‰Šú‰»
 	state.axis[static_cast<int>(GameEnum::PlayerAction::ForwardMove)] = 0.0f;
@@ -55,6 +59,8 @@ void PlayerActionMap::Initialize() {
 	state.button[static_cast<int>(GameEnum::PlayerAction::Shot)] = false;
 	state.button[static_cast<int>(GameEnum::PlayerAction::Lift)] = false;
 	state.button[static_cast<int>(GameEnum::PlayerAction::OpenMenu)] = false;
+	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::Shot)] = false;
+	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::BulletReload)] = false;
 
 	isActive = false;
 }

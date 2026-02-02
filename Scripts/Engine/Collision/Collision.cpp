@@ -677,3 +677,22 @@ bool RayIntersect(const Ray& ray, const std::variant<AABB, Capsule>& collider, f
 		return RayIntersect(ray, *capsule, distance);
 	}
 }
+
+/*
+ *  レイとモデルの交差判定
+ *  @param[in]	Ray		ray			判定対象1
+ *  @param[in]	int		modelHandle	判定対象2のモデルハンドル
+ *	@param[out]	float	distance	交点までの距離
+ */
+bool RayIntersect(const Ray& ray, const int modelHandle, float& distance) {
+	Segment raySeg = { ray.start, ray.start + ray.direction * MAX_DISTANCE };
+	// モデルのコリジョン情報構築
+	MV1SetupCollInfo(modelHandle);
+	// モデルとの交差判定
+	auto hitInfo = MV1CollCheck_Line(modelHandle, -1, ToVECTOR(raySeg.startPoint), ToVECTOR(raySeg.endPoint));
+	// 交点までの距離を計算
+	Vector3 distanceLength = ray.start - FromVECTOR(hitInfo.HitPosition);
+	distance = sqrt(Dot(distanceLength, distanceLength));
+
+	return hitInfo.HitFlag;
+}
