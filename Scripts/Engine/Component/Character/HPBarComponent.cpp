@@ -35,7 +35,11 @@ void HPBarComponent::ShowHPBar(VECTOR selfPos)
 		screenPos.x, screenPos.y, screenPos.z);
 
 	int BoxX = screenPos.x;
-	int BoxY = screenPos.y;
+	int BoxY = screenPos.y + 100;
+
+	/*if (BoxX > 0 && BoxY > 0) {
+
+	}*/
 
 	DrawBox(BoxX, BoxY, BoxX + 40, BoxY + 6, GetColor(50, 50, 50), true);
 }

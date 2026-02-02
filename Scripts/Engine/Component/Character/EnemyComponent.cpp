@@ -65,6 +65,7 @@ void EnemyComponent::Start() {
 
 
 	animator->LoadIndex(true);
+
 }
 
 /*
@@ -84,6 +85,8 @@ void EnemyComponent::Update(float deltaTime) {
 	coolTime -= deltaTime;
 
 	VECTOR position = ToVECTOR(enemy->position);
+
+
 	enemy->GetComponent<HPBarComponent>()->ShowHPBar(position);
 }
 
