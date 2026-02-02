@@ -11,11 +11,11 @@
 #include <filesystem>
 unsigned __int64 StageMemoryProfiler::peakWorkingSet = 0;
 std::ofstream StageMemoryProfiler::file;
- /*
-  *	初期化
-  *  @param	const std::string& ファイルパス
-  *  @tips	csvファイルを指定場所に作成、あれば中身をクリアしてうわガキ
-  */
+/*
+ *	初期化
+ *  @param	const std::string& ファイルパス
+ *  @tips	csvファイルを指定場所に作成、あれば中身をクリアしてうわガキ
+ */
 void StageMemoryProfiler::Initialize(const std::string& filePath) {
 	// CSVを出力するフォルダが存在しない場合は作成する
 	std::filesystem::create_directories(
@@ -24,7 +24,7 @@ void StageMemoryProfiler::Initialize(const std::string& filePath) {
 
 	// CSVファイルを新規作成、すでにあったら中身をクリアする
 	file.open(filePath, std::ios::out);
-	file << "計測箇所,メモリ使用量(KB),メモリ使用量(B)\n";
+	file << "計測箇所,メモリ使用量(MB),メモリ使用量(B)\n";
 }
 
 
@@ -44,7 +44,7 @@ void StageMemoryProfiler::Log(const std::string& label) {
 	if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc))) {
 		// ラベルとメモリ使用量をCSV形式で出力
 		file << label << ","
-			<< pmc.WorkingSetSize / 1024 << ","
+			<< (pmc.WorkingSetSize / 1024) / 1024 << ","
 			<< pmc.WorkingSetSize << "\n";
 	}
 }
@@ -72,10 +72,8 @@ void StageMemoryProfiler::LogPeak() {
 	if (!file.is_open()) return;
 
 	// KB / B 表記の両方を出力
-	file << "最大使用量(KB),"
-		<< peakWorkingSet / 1024 << "\n";
-
-	file << "最大使用量(B),"
+	file << "最大使用量,"
+		<< (peakWorkingSet / 1024) / 1024 << ","
 		<< peakWorkingSet << "\n";
 }
 
