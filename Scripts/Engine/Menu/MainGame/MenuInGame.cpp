@@ -6,6 +6,8 @@
 #include "MenuInGame.h"
 #include "../MenuManager.h"
 #include "../System/MenuSettings.h"
+#include "../System/MenuSaveMode.h"
+#include "../System/MenuLoadMode.h"
 #include "../../UI/Button/SinglePressButton.h"
 #include "../../Fade/FadeFactory.h"
 #include "../../Fade/FadeManager.h"
@@ -16,7 +18,7 @@
 /*
  *	@brief	初期化処理
  */
-void MenuInGame::Initialize() {
+void MenuInGame::Initialize(Engine& engine) {
 	buttonList.resize(_BUTTON_INDEX);
 	for (int i = 0; i < _BUTTON_INDEX; i++) {
 		buttonList[i] = std::make_shared<SinglePressButton>(Rect(200, 100 * i, 700, 80));
@@ -94,8 +96,8 @@ void MenuInGame::Render() {
 /*
  *	@brief	メニューを閉じる
  */
-void MenuInGame::Close() {
-    MenuBase::Close();
+void MenuInGame::Close(Engine& engine) {
+    MenuBase::Close(engine);
     InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
 }
 /*
@@ -110,4 +112,27 @@ void MenuInGame::Suspend() {
 void MenuInGame::Resume() {
     MenuBase::Resume();
     eventSystem.ApplySelection();
+}
+/*
+ *	@brief		ボタンの押された時の処理
+ *	@param[in]	int buttonIndex
+ */
+void MenuInGame::SelectButtonExecute(int buttonIndex) {
+    auto& menu = MenuManager::GetInstance();
+    if (buttonIndex == 0) {
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+            menu.OpenMenu<MenuLoadMode>();
+        });
+    } else if (buttonIndex == 1) {
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+            menu.OpenMenu<MenuSaveMode>();
+        });
+    } else if (buttonIndex == 2) {
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+            menu.OpenMenu<MenuSettings>();
+        });
+    }
 }

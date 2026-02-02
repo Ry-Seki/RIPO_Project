@@ -30,7 +30,7 @@ public:
 	/*
 	 *	@brief	初期化処理
 	 */
-	void Initialize() override;
+	void Initialize(Engine& engine) override;
 	/*
 	 *	@brief	メニューを開く
 	 */
@@ -46,7 +46,7 @@ public:
 	/*
 	 *	@brief	メニューを閉じる
 	 */
-	void Close() override;
+	void Close(Engine& engine) override;
 
 public:
 	/*

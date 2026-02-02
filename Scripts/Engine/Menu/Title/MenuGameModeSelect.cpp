@@ -19,7 +19,7 @@
 /*
  *	@brief	初期化処理
  */
-void MenuGameModeSelect::Initialize() {
+void MenuGameModeSelect::Initialize(Engine& engine) {
 }
 /*
  *	@brief	メニューを開く
@@ -87,8 +87,8 @@ void MenuGameModeSelect::Render() {
 /*
  *	@brief	メニューを閉じる
  */
-void MenuGameModeSelect::Close() {
-	MenuBase::Close();
+void MenuGameModeSelect::Close(Engine& engine) {
+	MenuBase::Close(engine);
 }
 /*
  *	@brief	メニューを再開

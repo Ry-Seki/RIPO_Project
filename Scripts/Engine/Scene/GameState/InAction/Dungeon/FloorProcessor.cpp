@@ -64,6 +64,9 @@ void FloorProcessor::TeardownEnemy() {
 		int deleteID = boss->ID;
 		CharacterUtility::RemoveCharacter(deleteID);
 	}
+	if (CharacterManager::GetInstance().GetBossDeathFlag()) {
+		dungeonProgressData.isBossDefeated = true;
+	}
 }
 /*
  *	@brief	ステージオブジェクトの片付け処理
