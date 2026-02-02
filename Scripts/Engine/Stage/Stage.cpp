@@ -13,6 +13,7 @@
 #include "../Component/CapsuleCollider.h"    
 #include "../Component/GravityComponent.h"   
 #include "../Component/Character/CharacterUtility.h"
+#include "StageMemoryProfiler.h"
 
 using namespace CharacterUtility;
 
@@ -45,6 +46,11 @@ void Stage::SetModelHandle(const int modelHandleBase) {
 
 	// 当たり判定クラスの生成
 	collision = std::make_unique<StageCollision>(modelHandle);
+
+#if _DEBUG
+	// メモリログに書き込む
+	StageMemoryProfiler::Log("当たり判定生成後");
+#endif
 }
 
 /*
@@ -84,6 +90,9 @@ void Stage::Render() {
  *	終了処理
  */
 void Stage::Execute() {
+#if _DEBUG
+	StageMemoryProfiler::Log("ステージ破棄前");
+#endif
 	if (modelHandle >= 0) {
 		// モデルを非表示
 		Clean(modelHandle);
@@ -92,6 +101,10 @@ void Stage::Execute() {
 		// モデルをnull
 		modelHandle = -1;
 	}
+
+#if _DEBUG
+	StageMemoryProfiler::Log("ステージ破棄後");
+#endif
 }
 
 /*

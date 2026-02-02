@@ -239,6 +239,7 @@
     <ClCompile Include="Scripts\Engine\Scene\TutorialScene.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\Stage.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageCollision.cpp" />
+    <ClCompile Include="Scripts\Engine\Stage\StageMemoryProfiler.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\ExitPoint.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Stair.cpp" />
     <ClCompile Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.cpp" />
@@ -400,6 +401,7 @@
     <ClInclude Include="Scripts\Engine\Stage\Stage.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageBase.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageCollision.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageMemoryProfiler.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\ExitPoint.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectUtility.h" />
