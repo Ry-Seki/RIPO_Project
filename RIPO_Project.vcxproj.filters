@@ -319,6 +319,12 @@
     <Filter Include="ソース ファイル\Engine\System\Settings">
       <UniqueIdentifier>{5fc2d27f-b4e0-4b73-8356-1966acfd99c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\Menu\MainGame">
+      <UniqueIdentifier>{bf2dded6-3e80-405e-8d1d-73c19f809445}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Menu\MainGame">
+      <UniqueIdentifier>{5ea80fcf-06ba-4ebe-8f55-eb01f475a23b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -582,10 +588,7 @@
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuGameModeSelect.cpp">
       <Filter>ソース ファイル\Engine\Menu\Title</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\Title\MenuLoadGame.cpp">
-      <Filter>ソース ファイル\Engine\Menu\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\Title\MenuNewGame.cpp">
+    <ClCompile Include="Scripts\Engine\Menu\Title\MenuSelectNewGame.cpp">
       <Filter>ソース ファイル\Engine\Menu\Title</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuSystem.cpp">
@@ -650,6 +653,18 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Stage\StageMemoryProfiler.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuInGame.cpp">
+      <Filter>ソース ファイル\Engine\Menu\MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\Title\MenuSelectLoadGame.cpp">
+      <Filter>ソース ファイル\Engine\Menu\Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuSaveMode.cpp">
+      <Filter>ソース ファイル\Engine\Menu\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuLoadMode.cpp">
+      <Filter>ソース ファイル\Engine\Menu\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1070,10 +1085,7 @@
     <ClInclude Include="Scripts\Engine\Save\SaveDataManager.h">
       <Filter>ヘッダー ファイル\Engine\System\Save</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\Title\MenuLoadGame.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\Title\MenuNewGame.h">
+    <ClInclude Include="Scripts\Engine\Menu\Title\MenuSelectNewGame.h">
       <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuSystem.h">
@@ -1150,6 +1162,18 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Stage\StageMemoryProfiler.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuInGame.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\Title\MenuSelectLoadGame.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuSaveMode.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuLoadMode.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

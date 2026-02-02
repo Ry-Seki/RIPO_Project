@@ -1,26 +1,20 @@
 /*
- *	@file	MenuGameModeSelect.h
+ *	@file	MenuSaveMode.h
  *	@author	Seki
  */
 
-#ifndef _MENU_GAME_MODE_SELECT_H_
-#define _MENU_GAME_MODE_SELECT_H_
+#ifndef _MENU_SAVE_MODE_H_
+#define _MENU_SAVE_MODE_H_
 
 #include "../MenuBase.h"
-
-// 前方宣言
-class Engine;
+#include "../../GameEnum.h"
 
 /*
- *	@brief	ゲームモードを選択するメニュー
+ *	@brief	セーブメニュー
  */
-class MenuGameModeSelect : public MenuBase {
-
-public:
-	/*
-	 *	@brief	デストラクタ
-	 */
-	~MenuGameModeSelect() override {};
+class MenuSaveMode : public MenuBase {
+private:
+	GameEnum::SaveSlotMenuMode mode = GameEnum::SaveSlotMenuMode::Save;
 
 public:
 	/*
@@ -44,9 +38,14 @@ public:
 	 */
 	void Close() override;
 	/*
+	 *	@brief	メニューを中断
+	 */
+	void Suspend() override;
+	/*
 	 *	@brief	メニューを再開
 	 */
 	void Resume() override;
+
 };
 
-#endif // !_MENU_GAME_MODE_SELECT_H_
+#endif // !_MENU_SAVE_MODE_H_

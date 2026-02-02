@@ -73,7 +73,7 @@ public:
 	 */
 	virtual void Resume() {
 		isVisible = true;
-		isInteractive = false;
+		isInteractive = true;
 		isStart = true;
 	}
 
