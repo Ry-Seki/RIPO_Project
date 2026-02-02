@@ -1,0 +1,56 @@
+{
+  "Player": {
+    "StartPos": "Col_StartPos",
+    "GoalPos": "Col_GoalPos",
+    "StairsPos": [
+      "Col_StairsPos_0",
+      "Col_StairsPos_1"
+    ],
+    "RespawnPos": [
+      "Col_RespownPos_0",
+      "Col_RespownPos_1"
+    ]
+  },
+  "Enemy": {
+    "SpawnPos": {
+      "0": "Sponer_0",
+      "1": "Sponer_1",
+      "2": "Sponer_2"
+    },
+    "Treasure": {
+      "SpawnPos": {
+        "0": {
+          "0": "",
+          "1": ""
+        },
+        "1": {
+          "0": "",
+          "1": ""
+        },
+        "2": {
+          "0": ""
+        },
+        "3": {
+          "0": ""
+        }
+      }
+    },
+    "PointLight": {
+      "LightPos": [
+
+      ]
+    },
+    "Stair": {
+      "0": 1,
+      "1": 0,
+      "2": 3,
+      "3": 2,
+      "4": 5,
+      "5": 4
+    }
+  }
+
+
+
+
+}
