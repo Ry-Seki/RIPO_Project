@@ -8,6 +8,9 @@
 #include "../GameStateMachine.h"
 #include "../../../Fade/FadeFactory.h"
 #include "../../../Fade/FadeManager.h"
+#include "../../../Input/InputUtility.h"
+#include "../../../Menu/MenuManager.h"
+#include "../../../Menu/MainGame/MenuInGame.h"
 
 #include <DxLib.h>
 
@@ -19,12 +22,22 @@ void GameState_SelectAction::Setup() {
     auto& context = owner->GetActionContext();
     context.actionType = GameEnum::ActionType::Invalid;
     FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
-    FadeManager::GetInstance().StartFade(fade);
+    FadeManager::GetInstance().StartFade(fade, [this]() {
+        InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+    });
 }
 /*
  *	@brief	更新処理
  */
 void GameState_SelectAction::Update(float deltaTime) {
+    auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
+    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)]) {
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this]() {
+            MenuManager::GetInstance().OpenMenu<MenuInGame>();
+        });
+    }
+
     // TODO : 現在は決め打ちのため、ここをメニューの更新にする
     if (!inputHandle) {
         auto& context = owner->GetActionContext();

@@ -8,6 +8,10 @@
 #include "../Engine.h"
 #include "../Fade/FadeManager.h"
 #include "../Fade/FadeFactory.h"
+#include "../Menu/MenuManager.h"
+#include "../Menu/System/MenuLoadMode.h"
+#include "../Menu/System/MenuSaveMode.h"
+#include "../Menu/System/MenuSettings.h"
 
 /*
  *	コンストラクタ
@@ -23,6 +27,10 @@ StandbyScene::~StandbyScene() {
  *	初期化処理
  */
 void StandbyScene::Initialize(Engine& engine) {
+	auto& menu = MenuManager::GetInstance();
+	menu.GetMenu<MenuLoadMode>();
+	menu.GetMenu<MenuSaveMode>();
+	menu.GetMenu<MenuSettings>();
 	auto fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeOut, [&engine]() {
 		engine.SetNextScene(std::make_shared<TitleScene>());
