@@ -20,19 +20,22 @@ void HPBarComponent::Start()
  */
 void HPBarComponent::Update(float deltaTime)
 {
+	
 }
 
 /*
  *	HPバーを表示させる
  *	param[in]	VECTOR	selfPos		自分自身のポジション
  */
-void ShowHPBar(VECTOR selfPos)
+void HPBarComponent::ShowHPBar(VECTOR selfPos)
 {
 	// ワールド座標からスクリーン座標に変換
 	Vector3 screenPos = ConvWorldPosToScreenPos(selfPos);
+	DrawFormatString(0, 130, GetColor(255, 255, 255), "screenPos(%f,%f,%f)",
+		screenPos.x, screenPos.y, screenPos.z);
 
 	int BoxX = screenPos.x;
-	int BoxY = screenPos.y + 30;
+	int BoxY = screenPos.y;
 
-	DrawBox(BoxX, BoxY, BoxX + 400, BoxY + 60, GetColor(50, 50, 50), true);
+	DrawBox(BoxX, BoxY, BoxX + 40, BoxY + 6, GetColor(50, 50, 50), true);
 }

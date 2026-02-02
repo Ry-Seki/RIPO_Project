@@ -83,10 +83,7 @@ void EnemyComponent::Update(float deltaTime) {
 
 	coolTime -= deltaTime;
 
-	VECTOR position;
-	position.x = enemy->position.x;
-	position.y = enemy->position.y;
-	position.z = enemy->position.z;
+	VECTOR position = ToVECTOR(enemy->position);
 	enemy->GetComponent<HPBarComponent>()->ShowHPBar(position);
 }
 
