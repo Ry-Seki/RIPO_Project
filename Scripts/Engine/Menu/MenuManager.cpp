@@ -45,6 +45,8 @@ void MenuManager::CloseTopMenu() {
 	// 一番後ろの要素を削除する
 	topMenu->Close(*engine);
 	useMenuList.pop_back();
+
+	if (useMenuList.empty()) return;
 	// 現在一番後ろのメニューの再開
 	useMenuList.back()->Resume();
 }

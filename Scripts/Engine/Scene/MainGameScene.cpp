@@ -14,6 +14,8 @@
 #include "../System/Status/PlayerStatusManager.h"
 #include "../Component/CapsuleCollider.h"
 #include "../Save/SaveDataManager.h"
+#include "../Menu/MenuManager.h"
+#include "../Menu/MainGame/MenuInGame.h"
 
 /*
  *  @brief  デストラクタ
@@ -28,6 +30,7 @@ void MainGameScene::Initialize(Engine& engine) {
     gameState = std::make_unique<GameStateMachine>();
     gameState->Initialize(engine);
     gameState->ChageState(GameEnum::GameState::SelectAction);
+    MenuManager::GetInstance().GetMenu<MenuInGame>();
     auto treasureData = LoadManager::GetInstance().LoadResource<LoadJSON>(_TREASURE_DATA_PATH);
     auto itemData = LoadManager::GetInstance().LoadResource<LoadJSON>(_ITEM_DATA_PATH);
     LoadManager::GetInstance().SetOnComplete([this, &engine, treasureData, itemData]() {
