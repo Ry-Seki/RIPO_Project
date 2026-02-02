@@ -14,6 +14,8 @@
 #include "../../Load/JSON/LoadJSON.h"
 #include "../../Load/LoadManager.h"
 #include "../../Input/InputUtility.h"
+#include "../../Engine.h"
+#include "../../Scene/TitleScene.h"
 
 /*
  *	@brief	èâä˙âªèàóù
@@ -29,7 +31,7 @@ void MenuInGame::Initialize(Engine& engine) {
 	eventSystem.Initialize(0);
 	auto& load = LoadManager::GetInstance();
 	auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
-    load.SetOnComplete([this, navigation]() {
+    load.SetOnComplete([this, &engine, navigation]() {
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             auto button = buttonList[i];
             if (!button) continue;
@@ -40,9 +42,9 @@ void MenuInGame::Initialize(Engine& engine) {
             });
             // TODO : ÇÃÇøÇ…ìoò^Ç∑ÇÈ
             //button->RegisterButtonHandle(buttonHandle->GetHandle());
-            //button->SetOnClick([this, i]() {
-            //    SelectButtonExecute(i);
-            //});
+            button->RegisterOnClick([this, &engine, i]() {
+                SelectButtonExecute(engine, i);
+            });
         }
         eventSystem.LoadNavigation(navigation->GetData());
         eventSystem.ApplySelection();
@@ -117,22 +119,31 @@ void MenuInGame::Resume() {
  *	@brief		É{É^ÉìÇÃâüÇ≥ÇÍÇΩéûÇÃèàóù
  *	@param[in]	int buttonIndex
  */
-void MenuInGame::SelectButtonExecute(int buttonIndex) {
+void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
     auto& menu = MenuManager::GetInstance();
     if (buttonIndex == 0) {
-        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+            menu.CloseTopMenu();
             menu.OpenMenu<MenuLoadMode>();
         });
     } else if (buttonIndex == 1) {
-        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+            menu.CloseTopMenu();
             menu.OpenMenu<MenuSaveMode>();
         });
     } else if (buttonIndex == 2) {
-        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+            menu.CloseTopMenu();
             menu.OpenMenu<MenuSettings>();
+        });
+    } else if (buttonIndex == 3) {
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
+            menu.CloseTopMenu();
+            engine.SetNextScene(std::make_shared<TitleScene>());
         });
     }
 }

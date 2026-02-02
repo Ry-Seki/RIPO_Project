@@ -72,7 +72,7 @@ private:
 	 *	@brief		ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—
 	 *	@param[in]	int buttonIndex
 	 */
-	void SelectButtonExecute(int buttonIndex);
+	void SelectButtonExecute(Engine& engine, int buttonIndex);
 
 };
 
