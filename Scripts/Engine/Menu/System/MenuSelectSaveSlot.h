@@ -14,6 +14,9 @@
 #include <vector>
 #include <memory>
 
+// 前方宣言
+class Engine;
+
 /*
  *	@brief	セーブスロットを選択するメニュー
  */
@@ -32,7 +35,7 @@ public:
 	/*
 	 *	@brief	初期化処理
 	 */
-	void Initialize () override;
+	void Initialize (Engine& engine) override;
 	/*
 	 *	@brief	メニューを開く
 	 */
@@ -48,7 +51,7 @@ public:
 	/*
 	 *	@brief	メニューを閉じる
 	 */
-	void Close () override;
+	void Close (Engine& engine) override;
 
 public:
 	/*

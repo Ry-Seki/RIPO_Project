@@ -26,6 +26,7 @@ public:		// 別名定義
 	using MenuBasePtr = std::shared_ptr<MenuBase>;
 
 private:
+	Engine* engine = nullptr;
 	std::vector<MenuBasePtr> unuseMenuList;		// 未使用メニューリスト
 	std::vector<MenuBasePtr> useMenuList;		// 使用中メニューリスト
 
@@ -41,9 +42,13 @@ private:
 
 public:
 	/*
+	 *	@brief	初期化処理
+	 */
+	void Initialize(Engine& engine);
+	/*
 	 *	@brief	更新処理
 	 */
-	void Update(Engine& engine, float unscaledDeltaTime);
+	void Update(float unscaledDeltaTime);
 	/*
 	 *	@brief	描画処理
 	 */
@@ -67,7 +72,7 @@ private:
 		auto createMenu = std::make_shared<T>();
 		if (!createMenu) return nullptr;
 
-		createMenu->Initialize();
+		createMenu->Initialize(*engine);
 		unuseMenuList.push_back(createMenu);
 		return createMenu;
 	}

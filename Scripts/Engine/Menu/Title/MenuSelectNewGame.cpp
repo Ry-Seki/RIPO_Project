@@ -16,7 +16,7 @@
 /*
  *	@brief	初期化処理
  */
-void MenuSelectNewGame::Initialize() {
+void MenuSelectNewGame::Initialize(Engine& engine) {
 }
 /*
  *	@brief	メニューを開く
@@ -64,6 +64,6 @@ void MenuSelectNewGame::Render() {
 /*
  *	@brief	メニューを閉じる
  */
-void MenuSelectNewGame::Close() {
-	MenuBase::Close();
+void MenuSelectNewGame::Close(Engine& engine) {
+	MenuBase::Close(engine);
 }

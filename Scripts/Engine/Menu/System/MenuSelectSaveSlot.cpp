@@ -14,7 +14,7 @@
 /*
  *	@brief	初期化処理
  */
-void MenuSelectSaveSlot::Initialize () {
+void MenuSelectSaveSlot::Initialize (Engine& engine) {
     buttonList.resize(4);
     for (int i = 0; i < 4; i++) {
         buttonList[i] = std::make_shared<SinglePressButton>(Rect(200, 100 * i, 700, 80));
@@ -85,13 +85,13 @@ void MenuSelectSaveSlot::Render () {
     for (auto& button : buttonList) {
         button->Render();
     }
-    DrawFormatString(100, 50, GetColor(255, 255, 255), "MenuSelectSaveSlot");
+    DrawFormatString(50, 125, GetColor(255, 255, 255), "MenuSelectSaveSlot");
 }
 /*
  *	@brief	メニューを閉じる
  */
-void MenuSelectSaveSlot::Close () {
-    MenuBase::Close();
+void MenuSelectSaveSlot::Close (Engine& engine) {
+    MenuBase::Close(engine);
 }
 /*
  *	@brief		ボタンの押された時の処理

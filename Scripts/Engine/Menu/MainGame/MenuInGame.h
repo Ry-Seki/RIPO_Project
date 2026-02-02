@@ -14,6 +14,9 @@
 #include <vector>
 #include <memory>
 
+// 前方宣言
+class Engine;
+
 /*
  *	@brief	インゲームメニュー
  */
@@ -30,9 +33,15 @@ private:
 
 public:
 	/*
+	 *	@brief	デストラクタ
+	 */
+	~MenuInGame() override{}
+
+public:
+	/*
 	 *	@brief	初期化処理
 	 */
-	void Initialize() override;
+	void Initialize(Engine& engine) override;
 	/*
 	 *	@brief	メニューを開く
 	 */
@@ -48,7 +57,7 @@ public:
 	/*
 	 *	@brief	メニューを閉じる
 	 */
-	void Close() override;
+	void Close(Engine& engine) override;
 	/*
 	 *	@brief	メニューを中断
 	 */
@@ -57,6 +66,14 @@ public:
 	 *	@brief	メニューを再開
 	 */
 	void Resume() override;
+
+private:
+	/*
+	 *	@brief		ボタンの押された時の処理
+	 *	@param[in]	int buttonIndex
+	 */
+	void SelectButtonExecute(int buttonIndex);
+
 };
 
 #endif // !_MENU_IN_GAME_H_
