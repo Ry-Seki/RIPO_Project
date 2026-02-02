@@ -6,6 +6,7 @@
 #include "WeaponBase.h"
 #include "../../Manager/BulletManager.h"
 #include "../../Manager/CameraManager.h"
+#include "../../Load/LoadManager.h"
 #include "RevolverArm.h"
 
 WeaponBase::WeaponBase()
@@ -24,6 +25,7 @@ WeaponBase::WeaponBase()
  *	最初のUpdateの直前に呼び出される処理
  */
 void WeaponBase::Start() {
+	json = LoadManager::GetInstance().LoadResource<LoadJSON>(WEAPON_DATA_PATH)->GetData();
 	weapons[GameEnum::Weapon::Revolver] = std::make_shared<RevolverArm>();
 	// 初期設定はリボルバー
 	currentWeapon = weapons[GameEnum::Weapon::Revolver];

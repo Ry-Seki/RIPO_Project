@@ -14,8 +14,7 @@
 class RevolverArm : public WeaponBase {
 private:
 	float shotCoolTime;					// 射撃のクールタイム
-
-	float const SHOT_COOL_TIME_MAX;		// 射撃のクールタイムの最大
+	float shotCoolTimeMax;				// 射撃のクールタイムの最大
 
 public:
 	RevolverArm();

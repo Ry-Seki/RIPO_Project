@@ -9,6 +9,7 @@
 #include "ArmBase.h"
 #include "../../GameEnum.h"
 #include "../../VecMath.h"
+#include "../../Load/JSON/LoadJSON.h"
 #include <string>
 
  // 別名定義
@@ -18,6 +19,8 @@ using WeaponBasePtr = std::shared_ptr<WeaponBase>;
  *	銃のウデの基底クラス
  */
 class WeaponBase : public ArmBase {
+private :
+	JSON json;
 protected:
 	WeaponBasePtr currentWeapon;									// 現在設定されている銃
 	std::unordered_map<GameEnum::Weapon, WeaponBasePtr> weapons;	// 設定可能な銃達
@@ -30,6 +33,7 @@ protected:
 	const Vector3 BULLET_AABB_MIN;	// 弾のAABBMin
 	const Vector3 BULLET_AABB_MAX;	// 弾のAABBMax
 
+	static constexpr const char* WEAPON_DATA_PATH = "Data/Player/Weapon/WeaponData.json";
 public:
 	WeaponBase();
 	virtual ~WeaponBase() = default;
@@ -70,6 +74,11 @@ protected:
 	 */
 	void BulletReload();
 	
+protected:
+	/*
+	 *	銃データの取得
+	 */
+	inline JSON GetData() { return json; }
 };
 
 #endif // !_WEAPONBASE_H_

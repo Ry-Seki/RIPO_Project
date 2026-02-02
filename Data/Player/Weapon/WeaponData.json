@@ -1,0 +1,14 @@
+{
+  "Revolver": {
+    "DefaultDamage": 100,
+    "MagazineCapacity": 6,
+    "ShotCoolTime": 0.7,
+    "ReloadingTime": 3.0
+  },
+  "SubmachineGun": {
+    "DefaultDamage": 40,
+    "MagazineCapacity": 30,
+    "ShotCoolTime": 0.15,
+    "ReloadingTime": 4.0
+  }
+}

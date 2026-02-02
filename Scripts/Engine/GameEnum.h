@@ -192,8 +192,8 @@ namespace GameEnum {
 	 */
 	enum class Weapon {
 		Invalid = -1,
-		Revolver,	// リボルバー(単発銃)
-		SMG,		// サブマシンガン(連射銃)
+		Revolver,		// リボルバー(単発銃)
+		SubmachineGun,	// サブマシンガン(連射銃)
 
 		Max
 	};

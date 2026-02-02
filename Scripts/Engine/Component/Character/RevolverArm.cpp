@@ -7,16 +7,17 @@
 
 RevolverArm::RevolverArm()
 	: shotCoolTime(0.0f)
-
-	, SHOT_COOL_TIME_MAX(0.5f) {
-	ammoCountMax = 6;
-	reloadingTimeMax = 3.0f;
+	, shotCoolTimeMax(0.0f) {
 }
 
 /*
  *	‰Šú‰»ˆ—
  */
 void RevolverArm::Initialize() {
+	JSON json = GetData();
+	shotCoolTimeMax = json["Revolver"]["ShotCoolTime"];
+	reloadingTimeMax = json["Revolver"]["ReloadingTime"];
+	ammoCountMax = json["Revolver"]["MagazineCapacity"];
 	ammoCount = ammoCountMax;
 	shotCoolTime = 0.0f;
 }
@@ -33,7 +34,7 @@ void RevolverArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) 
 		if (action.buttonDown[shot]) {
 			if (ammoCount > 0) {
 				ShotBullet();
-				shotCoolTime = SHOT_COOL_TIME_MAX;
+				shotCoolTime = shotCoolTimeMax;
 				ammoCount -= 1;
 			}
 			// ’e‚ª‚È‚©‚Á‚½‚çƒŠƒ[ƒh
