@@ -43,7 +43,10 @@ public:
 	 *	@brief	メニューを閉じる
 	 */
 	void Close() override;
-
+	/*
+	 *	@brief	メニューを再開
+	 */
+	void Resume() override;
 };
 
 #endif // !_MENU_GAME_MODE_SELECT_H_

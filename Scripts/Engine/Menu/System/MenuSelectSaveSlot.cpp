@@ -7,7 +7,6 @@
 #include "../../Load/LoadManager.h"
 #include "../../Load/JSON/LoadJSON.h"
 #include "../../Load/Sprite/LoadSprite.h"
-#include "../../UI/Button/UIButtonBase.h"
 #include "../../Input/InputUtility.h"
 #include "../../Save/SaveDataManager.h"
 #include "../../UI/Button/SinglePressButton.h"
@@ -64,7 +63,6 @@ void MenuSelectSaveSlot::Open () {
  *	@brief	更新処理
  */
 void MenuSelectSaveSlot::Update (Engine& engine, float unscaledDeltaTime) {
-    if (!IsInteractive()) return;
     auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
     // イベントシステムの更新
     eventSystem.Update(unscaledDeltaTime);

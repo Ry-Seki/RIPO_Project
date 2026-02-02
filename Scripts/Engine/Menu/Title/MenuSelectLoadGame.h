@@ -1,36 +1,29 @@
 /*
- *	@file	MenuNewGame.h
+ *	@file	MenuSelectLoadGame.h
  *	@author	Seki
  */
 
-#ifndef _MENU_NEW_GAME_H_
-#define _MENU_NEW_GAME_H_
+#ifndef _MENU_SELECT_LOAD_GAME_H_
+#define _MENU_SELECT_LOAD_GAME_H_
 
 #include "../MenuBase.h"
-#include "../../UI/EventSystem.h"
-
-#include <vector>
-#include <memory>
+#include "../../GameEnum.h"
 
 // 前方宣言
 class Engine;
-class SinglePressButton;
 
 /*
- *	@brief	ニューゲームメニュー
+ *	@brief	ロードメニュー
  */
-class MenuNewGame : public MenuBase {
+class MenuSelectLoadGame : public MenuBase {
 private:
-	std::vector<std::shared_ptr<SinglePressButton>> buttonList;
-	EventSystem eventSystem;
-
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/SaveSlotNavigation.json";
+	GameEnum::SaveSlotMenuMode mode = GameEnum::SaveSlotMenuMode::Load;
 
 public:
 	/*
 	 *	@brief	デストラクタ
 	 */
-	~MenuNewGame() override {};
+	~MenuSelectLoadGame() override {};
 
 public:
 	/*
@@ -53,7 +46,15 @@ public:
 	 *	@brief	メニューを閉じる
 	 */
 	void Close() override;
+	/*
+	 *	@brief	メニューを中断
+	 */
+	void Suspend() override;
+	/*
+	 *	@brief	メニューを再開
+	 */
+	void Resume() override;
 
 };
 
-#endif // !_MENU_NEW_GAME_H_
+#endif // !_MENU_SELECT_LOAD_GAME_H_

@@ -588,10 +588,7 @@
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuGameModeSelect.cpp">
       <Filter>ソース ファイル\Engine\Menu\Title</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\Title\MenuLoadGame.cpp">
-      <Filter>ソース ファイル\Engine\Menu\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\Title\MenuNewGame.cpp">
+    <ClCompile Include="Scripts\Engine\Menu\Title\MenuSelectNewGame.cpp">
       <Filter>ソース ファイル\Engine\Menu\Title</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuSystem.cpp">
@@ -659,6 +656,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuInGame.cpp">
       <Filter>ソース ファイル\Engine\Menu\MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\Title\MenuSelectLoadGame.cpp">
+      <Filter>ソース ファイル\Engine\Menu\Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1079,10 +1079,7 @@
     <ClInclude Include="Scripts\Engine\Save\SaveDataManager.h">
       <Filter>ヘッダー ファイル\Engine\System\Save</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\Title\MenuLoadGame.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\Title\MenuNewGame.h">
+    <ClInclude Include="Scripts\Engine\Menu\Title\MenuSelectNewGame.h">
       <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuSystem.h">
@@ -1162,6 +1159,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuInGame.h">
       <Filter>ヘッダー ファイル\Engine\Menu\MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\Title\MenuSelectLoadGame.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
