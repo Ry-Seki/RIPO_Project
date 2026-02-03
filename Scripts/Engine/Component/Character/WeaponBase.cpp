@@ -6,6 +6,7 @@
 #include "WeaponBase.h"
 #include "../../Manager/BulletManager.h"
 #include "../../Manager/CameraManager.h"
+#include "../../Load/LoadManager.h"
 #include "RevolverArm.h"
 
 WeaponBase::WeaponBase()

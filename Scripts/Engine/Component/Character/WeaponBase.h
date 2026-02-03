@@ -9,6 +9,8 @@
 #include "ArmBase.h"
 #include "../../GameEnum.h"
 #include "../../VecMath.h"
+#include "../../Load/JSON/LoadJSON.h"
+#include "../../../Data/WeaponDataManager.h"
 #include <string>
 
  // 別名定義
@@ -25,11 +27,14 @@ protected:
 	int ammoCountMax;				// 弾の最大数
 	float reloadingTime;			// リロードの残り時間
 	float reloadingTimeMax;			// リロードに掛かる時間
+	float shotCoolTime;				// 射撃のクールタイム
+	float shotCoolTimeMax;			// 射撃のクールタイムの最大
 
 	const std::string BULLET_NAME;	// 弾の名前
 	const Vector3 BULLET_AABB_MIN;	// 弾のAABBMin
 	const Vector3 BULLET_AABB_MAX;	// 弾のAABBMax
 
+	static constexpr const char* WEAPON_DATA_PATH = "Data/Player/Weapon/WeaponData.json";
 public:
 	WeaponBase();
 	virtual ~WeaponBase() = default;

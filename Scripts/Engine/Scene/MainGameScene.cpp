@@ -17,6 +17,7 @@
 #include "../Menu/MenuManager.h"
 #include "../Menu/MainGame/MenuInGame.h"
 #include "../Scripts/Engine/Manager/EffectManager.h"
+#include "../../Data/WeaponDataManager.h"
 
  /*
   *  @brief  デストラクタ
@@ -42,6 +43,7 @@ void MainGameScene::Initialize(Engine& engine) {
 		Setup(engine);
 		});
 	PlayerStatusManager::GetInstance().Initialize();
+	WeaponDataManager::GetInstance().Initialize();
 }
 /*
  *  @brief  準備前処理
