@@ -104,25 +104,29 @@ void EnemyComponent::Update(float deltaTime) {
 	dot = std::clamp(dot, -1.0f, 1.0f);
 	float angle = acosf(dot) * 180.0f / Pi;
 
-	DxLib_Log("Angle: %.2f", angle);
+	MATRIX viewMat = /* あなたが直したView行列 */;
+	MATRIX projMat = /* 使用しているProjection行列 */;
+
+	SetCameraViewMatrix(viewMat);
+	SetCameraProjectionMatrix(projMat);
 
 	// 線
-	VECTOR camPos = ToVECTOR(cameraObj->position);
-	DrawLine3D(
-		camPos,
-		VAdd(camPos, VScale(OBcamera, 50.0f)),
-		GetColor(255, 0, 0) // 赤
-	);
+	//VECTOR camPos = ToVECTOR(cameraObj->position);
+	//DrawLine3D(
+	//	camPos,
+	//	VAdd(camPos, VScale(OBcamera, 50.0f)),
+	//	GetColor(255, 0, 0) // 赤
+	//);
 
-	VECTOR pos = GetCameraPosition();
-	VECTOR target = GetCameraTarget();
+	//VECTOR pos = GetCameraPosition();
+	//VECTOR target = GetCameraTarget();
 
-	VECTOR DxForward = VNorm(VSub(target, pos));
-	DrawLine3D(
-		pos,
-		VAdd(pos, VScale(forward, 50.0f)),
-		GetColor(0, 255, 0) // 緑
-	);
+	//VECTOR DxForward = VNorm(VSub(target, pos));
+	//DrawLine3D(
+	//	pos,
+	//	VAdd(pos, VScale(forward, 50.0f)),
+	//	GetColor(0, 255, 0) // 緑
+	//);
 
 	enemy->GetComponent<HPBarComponent>()->ShowHPBar(position);
 }
