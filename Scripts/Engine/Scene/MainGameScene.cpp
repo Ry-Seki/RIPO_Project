@@ -73,6 +73,7 @@ void MainGameScene::Update(Engine& engine, float deltaTime) {
 void MainGameScene::Render() {
 	gameState->Render();
 	Scene::Render();
+	EffectManager::GetInstance().Render();
 	DrawFormatString(50, 400, GetColor(255, 255, 255), "Money : %d", MoneyManager::GetInstance().GetCurrentMoney());
 
 #if _DEBUG
