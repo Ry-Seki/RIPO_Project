@@ -64,6 +64,14 @@ public:
 		currentWeapon->Initialize();
 	}
 
+	/*
+	 *	g—p’†•Ší‚Ìæ“¾
+	 */
+	inline WeaponBasePtr GetCurrentWeapon() {
+		if (!currentWeapon) return nullptr;
+		return currentWeapon;
+	}
+		 
 protected:
 	/*
 	 *	e‚ğŒ‚‚Âˆ—

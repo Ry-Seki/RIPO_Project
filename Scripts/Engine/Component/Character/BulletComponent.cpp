@@ -7,10 +7,14 @@
 #include "CharacterUtility.h"
 #include "../../GameObject.h"
 #include "../../GameConst.h"
+#include "../../GameEnum.h"
 #include "../../GameObject/GameObjectUtility.h"
 #include "../../Manager/CameraManager.h"
 #include "../../System/Money/MoneyManager.h"
 #include "../../Scene/Scene.h"
+#include "../../../Data/WeaponDataManager.h"
+#include "../Character/ArmActionComponent.h"
+#include "../Character/WeaponBase.h"
 
 using namespace GameObjectUtility;
 using namespace CharacterUtility;
@@ -39,6 +43,14 @@ void BulletComponent::Start() {
 		}
 	);
 	hitDirection = Direction(bullet->position, hitInfo.point);
+
+	// ƒ_ƒ[ƒWÝ’è
+	float playerStrength = GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus().strength;
+	auto weapon = GetPlayer()->GetComponent<ArmActionComponent>()->GetCurrentArm();
+	if (auto arm = std::dynamic_pointer_cast<WeaponBase>(weapon)) {
+		float defaultDamage = WeaponDataManager::GetInstance().GetWeaponData().defaultDamage;
+		hitDamage = ;
+	}
 }
 
 void BulletComponent::Update(float deltaTime) {

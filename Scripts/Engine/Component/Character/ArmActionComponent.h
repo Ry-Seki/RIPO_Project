@@ -51,6 +51,18 @@ public:
 	}
 
 	/*
+	 *	使用しているウデを取得
+	 */
+	inline ArmBasePtr GetCurrentArm() {
+		if (!currentArm) return nullptr;
+		// currentArmがWeaponBase型でないならnullptrが代入される(dynamic_pointer_castの仕様)
+		if (auto arm = std::dynamic_pointer_cast<WeaponBase>(currentArm)) {
+			return arm->GetCurrentWeapon();
+		}
+		return currentArm;
+	}
+
+	/*
 	 *	運んでいるオブジェクトを取得
 	 */
 	inline GameObject* GetLiftObject() {
