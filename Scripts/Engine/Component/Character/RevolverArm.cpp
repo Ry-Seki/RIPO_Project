@@ -5,21 +5,19 @@
 
 #include "RevolverArm.h"
 
-RevolverArm::RevolverArm()
-	: shotCoolTime(0.0f)
-	, shotCoolTimeMax(0.0f) {
-}
-
 /*
  *	初期化処理
  */
 void RevolverArm::Initialize() {
-	JSON json = GetData();
-	shotCoolTimeMax = json["Revolver"]["ShotCoolTime"];
-	reloadingTimeMax = json["Revolver"]["ReloadingTime"];
-	ammoCountMax = json["Revolver"]["MagazineCapacity"];
-	ammoCount = ammoCountMax;
+	// リボルバーのデータ取得
+	auto data = WeaponDataManager::GetInstance().GetWeaponData(GameEnum::Weapon::Revolver);
+
+	shotCoolTimeMax = data.shotCoolTime;
 	shotCoolTime = 0.0f;
+	reloadingTimeMax = data.reloadingTime;
+	reloadingTime = 0.0f;
+	ammoCountMax = data.magazineCapacity;
+	ammoCount = ammoCountMax;
 }
 
 /*

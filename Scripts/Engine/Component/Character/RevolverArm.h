@@ -12,12 +12,8 @@
  *	リボルバーのウデクラス
  */
 class RevolverArm : public WeaponBase {
-private:
-	float shotCoolTime;					// 射撃のクールタイム
-	float shotCoolTimeMax;				// 射撃のクールタイムの最大
-
 public:
-	RevolverArm();
+	RevolverArm() = default;
 	~RevolverArm() = default;
 
 public:

@@ -10,6 +10,7 @@
 #include "../../GameEnum.h"
 #include "../../VecMath.h"
 #include "../../Load/JSON/LoadJSON.h"
+#include "../../../Data/WeaponDataManager.h"
 #include <string>
 
  // 別名定義
@@ -19,8 +20,6 @@ using WeaponBasePtr = std::shared_ptr<WeaponBase>;
  *	銃のウデの基底クラス
  */
 class WeaponBase : public ArmBase {
-private :
-	JSON json;
 protected:
 	WeaponBasePtr currentWeapon;									// 現在設定されている銃
 	std::unordered_map<GameEnum::Weapon, WeaponBasePtr> weapons;	// 設定可能な銃達
@@ -28,6 +27,8 @@ protected:
 	int ammoCountMax;				// 弾の最大数
 	float reloadingTime;			// リロードの残り時間
 	float reloadingTimeMax;			// リロードに掛かる時間
+	float shotCoolTime;				// 射撃のクールタイム
+	float shotCoolTimeMax;			// 射撃のクールタイムの最大
 
 	const std::string BULLET_NAME;	// 弾の名前
 	const Vector3 BULLET_AABB_MIN;	// 弾のAABBMin
@@ -74,11 +75,6 @@ protected:
 	 */
 	void BulletReload();
 	
-protected:
-	/*
-	 *	銃データの取得
-	 */
-	inline JSON GetData() { return json; }
 };
 
 #endif // !_WEAPONBASE_H_

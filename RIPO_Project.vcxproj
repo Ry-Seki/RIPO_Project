@@ -267,6 +267,7 @@
     <ClInclude Include="Scripts\Data\PlayerStatusData.h" />
     <ClInclude Include="Scripts\Data\SaveData.h" />
     <ClInclude Include="Scripts\Data\TreasureDataList.h" />
+    <ClInclude Include="Scripts\Data\WeaponDataManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioSource.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioUtility.h" />

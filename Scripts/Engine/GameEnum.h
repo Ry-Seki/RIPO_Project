@@ -197,5 +197,18 @@ namespace GameEnum {
 
 		Max
 	};
+	/*
+	 *	@brief	銃のデータ
+	 *	@author	Riku
+	 */
+	enum class WeaponData {
+		Invalid = -1,
+		DefaultDamage,		// 基礎攻撃力
+		MagazineCapacity,	// 装填弾数
+		ShotCoolTime,		// 射撃のクールタイム
+		ReloadingTime,		// リロードの長さ
+
+		Max
+	};
 }
 #endif // !_GAME_ENUM_H_
