@@ -43,9 +43,6 @@ void BulletComponent::Start() {
 
 void BulletComponent::Update(float deltaTime) {
 	if (!bullet) return;
-	//// 前に進む
-	//Vector3 forward = ForwardDir(bullet->rotation);
-	//bullet->position += forward * SHOT_SPEED * deltaTime;
 	
 	// 着弾地点に進む
 	bullet->position += hitDirection * SHOT_SPEED * deltaTime;
