@@ -4,18 +4,19 @@
  */
 
 #include "MenuTitle.h"
+#include "../MenuManager.h"
+#include "MenuGameModeSelect.h"
 #include "../../Load/LoadManager.h"
 #include "../../Load/Sprite/LoadSprite.h"
 #include "../../Fade/FadeFactory.h"
 #include "../../Fade/FadeManager.h"
 #include "../../Audio/AudioUtility.h"
-#include "../MenuManager.h"
-#include "MenuGameModeSelect.h"
+#include "../../Input/InputUtility.h"
 
 /*
  *	@brief	初期化処理
  */
-void MenuTitle::Initialize() {
+void MenuTitle::Initialize(Engine& engine) {
 	LoadManager& load = LoadManager::GetInstance();
 	auto menuTitleHandle = load.LoadResource<LoadSprite>(_TITLE_LOGO_PATH);
 	load.SetOnComplete([this, menuTitleHandle]() {
@@ -30,6 +31,7 @@ void MenuTitle::Open() {
 	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
 		isStart = true;
+		InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
 	});
 }
 /*
@@ -38,16 +40,17 @@ void MenuTitle::Open() {
 void MenuTitle::Update(Engine& engine, float unscaledDeltaTime) {
 	if (!isStart) return;
 
-	if (!inputHandle) {
-		if (CheckHitKey(KEY_INPUT_SPACE)) {
-			AudioUtility::PlaySE("DebugSE");
-			inputHandle = true;
-			FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.2f, FadeDirection::Out, FadeMode::Stop);
-			FadeManager::GetInstance().StartFade(fadeOut, [this]() {
-				isVisible = false;
-				MenuManager::GetInstance().OpenMenu<MenuGameModeSelect>();
-			});
-		}
+	auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
+
+	if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]
+		|| input.buttonDown[static_cast<int>(GameEnum::MenuAction::Click)]) {
+		AudioUtility::PlaySE("DebugSE");
+		inputHandle = true;
+		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.2f, FadeDirection::Out, FadeMode::Stop);
+		FadeManager::GetInstance().StartFade(fadeOut, [this]() {
+			isVisible = false;
+			MenuManager::GetInstance().OpenMenu<MenuGameModeSelect>();
+		});
 	}
 }
 /*
@@ -60,8 +63,14 @@ void MenuTitle::Render() {
 /*
  *	@brief	メニューを閉じる処理
  */
-void MenuTitle::Close() {
-	MenuBase::Close();
+void MenuTitle::Close(Engine& engine) {
+	MenuBase::Close(engine);
+}
+/*
+ *	@brief	メニューを再開
+ */
+void MenuTitle::Resume() {
+	MenuBase::Resume();
 }
 /*
  *	@brief		ロード済みデータのセット

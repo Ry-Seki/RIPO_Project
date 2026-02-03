@@ -6,14 +6,20 @@
 #include "MenuManager.h"
 
 /*
+ *	@brief	初期化処理
+ */
+void MenuManager::Initialize(Engine& engine) {
+	this->engine = &engine;
+}
+/*
  *	@brief	更新処理
  */
-void MenuManager::Update(Engine& engine, float unscaledDeltaTime) {
+void MenuManager::Update(float unscaledDeltaTime) {
 	if (useMenuList.empty()) return;
 
 	// 一番上のメニューのみ操作可能
 	auto topMenu = useMenuList.back();
-	if (topMenu->IsInteractive()) topMenu->Update(engine, unscaledDeltaTime);
+	if (topMenu->IsInteractive()) topMenu->Update(*engine, unscaledDeltaTime);
 
 	// メニューの更新(操作以外)
 }
@@ -37,8 +43,10 @@ void MenuManager::CloseTopMenu() {
 	auto topMenu = useMenuList.back();
 	if (!topMenu) return;
 	// 一番後ろの要素を削除する
-	topMenu->Close();
+	topMenu->Close(*engine);
 	useMenuList.pop_back();
+
+	if (useMenuList.empty()) return;
 	// 現在一番後ろのメニューの再開
 	useMenuList.back()->Resume();
 }
@@ -50,7 +58,7 @@ void MenuManager::CloseAllMenu() {
 
 	for (auto& menu : useMenuList) {
 		if (!menu) continue;
-		menu->Close();
+		menu->Close(*engine);
 	}
 
 	useMenuList.clear();

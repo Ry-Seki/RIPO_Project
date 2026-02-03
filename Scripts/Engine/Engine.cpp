@@ -90,6 +90,8 @@ int Engine::Initialize() {
 	SaveDataManager::GetInstance().Initialize();
 	// 入力管理クラスの初期化
 	InputManager::GetInstance().Initialize();
+	// メニュークラスの初期化
+	MenuManager::GetInstance().Initialize(*this);
 	// 初期化フラグの変更
 	initialized = true;
 	return 0;
@@ -158,7 +160,7 @@ void Engine::Update() {
 	if (currentScene && !isLoading && !isFadeStop) currentScene->Update(*this, Time::deltaTime);
 
 	// メニューの更新処理
-	MenuManager::GetInstance().Update(*this, Time::unscaledDeltaTime);
+	MenuManager::GetInstance().Update(Time::unscaledDeltaTime);
 
 	// 音源の更新
 	AudioManager::GetInstance().Update();

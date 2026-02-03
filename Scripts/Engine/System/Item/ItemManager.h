@@ -22,7 +22,7 @@ private:
 	std::vector<std::shared_ptr<ItemData>> playerWeaponList;	// 武器の種類
 	std::vector<std::shared_ptr<ItemData>> mapList;				// 地図の種類
 
-public:
+private:
 	/*
 	 *	@brief	コンストラクタ
 	 */

@@ -276,10 +276,10 @@ Orderd_JSON SaveDataManager::ToJSON(const SettingsData& data) {
  */
 SettingsData SaveDataManager::SettingsDataFromJSON(const JSON& json) {
     SettingsData data{};
-    data.mouseSensitivity = json.value("mouseSensitivity", 0.0f);
-    data.masterVolume = json.value("masterVolume", 0.0f);
-    data.bgmVolume = json.value("bgmVolume", 0.0f);
-    data.seVolume = json.value("seVolume", 0.0f);
+    data.mouseSensitivity = json.value("mouseSensitivity", 1.0f);
+    data.masterVolume = json.value("masterVolume", 1.0f);
+    data.bgmVolume = json.value("bgmVolume", 1.0f);
+    data.seVolume = json.value("seVolume", 1.0f);
     return data;
 }
 /*
@@ -288,13 +288,14 @@ SettingsData SaveDataManager::SettingsDataFromJSON(const JSON& json) {
  */
 bool SaveDataManager::SaveCurrentSlot() {
     currentSaveData.isUsed = true;
-    return Save(currentSaveData, currentSlot);
+    return Save(currentSaveData, currentSlotPath);
 }
 /*
  *	@brief		オートセーブスロットにセーブ
  *	@return		bool
  */
 bool SaveDataManager::AutoSave() {
+    currentSaveData.isUsed = true;
     return Save(currentSaveData, _AUTO_SAVE);
 }
 /*
@@ -302,7 +303,7 @@ bool SaveDataManager::AutoSave() {
  *	@return		bool
  */
 bool SaveDataManager::LoadCurrentSlot() {
-    return Load(currentSaveData, currentSlot);
+    return Load(currentSaveData, currentSlotPath);
 }
 /*
  *	@brief		オートセーブスロットからロード
@@ -317,9 +318,11 @@ bool SaveDataManager::AutoSaveLoad() {
  */
 void SaveDataManager::SelectSlot(int selectSlot) {
     if (selectSlot >= 1 && selectSlot <= 3) {
-        currentSlot = "Slot" + std::to_string(selectSlot);
+        currentSlotIndex = selectSlot;
+        currentSlotPath = "Slot" + std::to_string(selectSlot);
     } else {
-        currentSlot = _AUTO_SAVE;
+        currentSlotIndex = 0;
+        currentSlotPath = _AUTO_SAVE;
     }
 }
 /*
@@ -331,7 +334,7 @@ bool SaveDataManager::Exists(int selectSlot) {
     SaveData data{};
     std::string slot = "";
     // スロット番号が有効か判定
-    if (selectSlot >= 1 && selectSlot <= 3) {
+    if (selectSlot >= GameConst::SELECT_SAVE_SLOT_MIN && selectSlot <= GameConst:: SELECT_SAVE_SLOT_MAX) {
         slot = "Slot" + std::to_string(selectSlot);
     } else {
         slot = _AUTO_SAVE;
@@ -380,4 +383,15 @@ void SaveDataManager::ApplyLoadData(ActionContext& context) {
     WorldProgressManager::GetInstance().SetWorldProgressData(currentSaveData.world);
     // Settings
 
+}
+/*
+ *	@brief		全てのセーブスロットの使用状態の確認
+ *	@return		std::vector<bool>
+ */
+std::vector<bool> SaveDataManager::GetAllSlotIsUsed() {
+    std::vector<bool> result;
+    for (int i = 0; i <= GameConst::SELECT_SAVE_SLOT_MAX; ++i) {
+        result.push_back(Exists(i));
+    }
+    return result;
 }

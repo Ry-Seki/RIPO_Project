@@ -23,7 +23,7 @@ class WorldProgressManager : public Singleton<WorldProgressManager> {
 private:
 	WorldProgressData* worldData = nullptr;
 
-public:
+private:
 	/*
 	 *	@brief	コンストラクタ
 	 */

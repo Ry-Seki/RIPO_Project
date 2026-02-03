@@ -7,6 +7,7 @@
 #include <DxLib.h>
 #include "../Load/Model/LoadModel.h"
 #include "../GameConst.h"
+#include "../Stage/StageMemoryProfiler.h"
 
  /*
   *  コンストラクタ
@@ -28,6 +29,12 @@ void StageManager::Initialize(Engine& setEngine) {
  *	ステージの読み込み
  */
 void StageManager::LoadStage(const std::vector<int> modelHandleBase) {
+
+#if _DEBUG
+	StageMemoryProfiler::Initialize("Data/Dungeon/DungeonMemory/DungeonMemoryProfiler.csv");
+	StageMemoryProfiler::Log("ステージ読み込み開始");
+#endif
+
 	// モデルハンドルの追加、複製
 	for (auto model : modelHandleBase) {
 		// モデルハンドルを複製
@@ -80,11 +87,15 @@ void StageManager::PrevStage() {
  */
 void StageManager::StageCollider(GameObject* other, Vector3 MoveVec) {
 	WithCurrentStage([&](StageBase& stage) { stage.UpdateCollision(other, MoveVec); });
+#if _DEBUG
+	StageMemoryProfiler::UpdatePeak();
+#endif
 }
 /*
  *  更新
  */
 void StageManager::Update() {
+
 	WithCurrentStage([](StageBase& stage) { stage.Update(); });
 }
 
@@ -100,6 +111,11 @@ void StageManager::Render() {
  *  終了
  */
 void StageManager::Execute() {
+#if _DEBUG
+	StageMemoryProfiler::Log("ゲーム終了");
+	StageMemoryProfiler::LogPeak(); // 最大使用量
+	StageMemoryProfiler::Execute();	// 計測終了
+#endif
 	stageState.ResetStageModelHandle();
 }
 

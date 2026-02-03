@@ -8,7 +8,8 @@
 /*
  *	@brief	初期化処理
  */
-void MenuSettings::Initialize() {
+void MenuSettings::Initialize(Engine& engine) {
+
 }
 /*
  *	@brief	メニューを開く
@@ -28,7 +29,7 @@ void MenuSettings::Render() {
 /*
  *	@brief	メニューを閉じる
  */
-void MenuSettings::Close() {
+void MenuSettings::Close(Engine& engine) {
 }
 /*
  *	@brief	メニューを中断

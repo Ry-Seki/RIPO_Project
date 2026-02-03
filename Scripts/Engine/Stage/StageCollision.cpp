@@ -271,13 +271,7 @@ void StageCollision::ProcessFloorCollision(
 	if (floors.empty()) {
 		auto gravity = other->GetComponent<GravityComponent>();
 		if (gravity) {
-			// ‰‰ñƒtƒŒ[ƒ€‚Ì‚ÝÚ’n
-			if (gravity->GetFirstFrame()) {
-				gravity->SetGroundingFrag(true);
-			}
-			else {
-				gravity->SetGroundingFrag(false);
-			}
+			gravity->SetGroundingFrag(false);
 		}
 		return;
 	}

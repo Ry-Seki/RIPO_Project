@@ -7,14 +7,16 @@
 #define _MENU_SELECT_SAVE_SLOT_H_
 
 #include "../MenuBase.h"
+#include "../../UI/Button/UIButtonBase.h"
 #include "../../UI/EventSystem.h"
 #include "../../GameEnum.h"
+#include "../../GameConst.h"
 
 #include <vector>
 #include <memory>
 
 // 前方宣言
-class UIButtonBase;
+class Engine;
 
 /*
  *	@brief	セーブスロットを選択するメニュー
@@ -28,13 +30,13 @@ private:
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 
 	static constexpr const char* _BUTTON_IMAGE_PATH = "Res/Menu/System/Trealine_SaveSlot.png";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/SaveSlotNavigation.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/SaveLoad/SaveSlotNavigation.json";
 
 public:
 	/*
 	 *	@brief	初期化処理
 	 */
-	void Initialize () override;
+	void Initialize (Engine& engine) override;
 	/*
 	 *	@brief	メニューを開く
 	 */
@@ -50,14 +52,14 @@ public:
 	/*
 	 *	@brief	メニューを閉じる
 	 */
-	void Close () override;
+	void Close (Engine& engine) override;
 
 public:
 	/*
 	 *	@brief		ボタンのコールバック登録
 	 *	@param[in]	int slotIndex
 	 */
-	void SelectButtonExecute(int slotIndex);
+	void SelectButtonExecute(Engine& engine, int slotIndex);
 
 public:
 	/*

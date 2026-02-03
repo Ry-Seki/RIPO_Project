@@ -1,0 +1,156 @@
+/*
+ *	@file	MenuInGame.cpp
+ *	@author	Seki
+ */
+
+#include "MenuInGame.h"
+#include "../MenuManager.h"
+#include "../System/MenuSettings.h"
+#include "../System/MenuSaveMode.h"
+#include "../System/MenuLoadMode.h"
+#include "../../UI/Button/SinglePressButton.h"
+#include "../../Fade/FadeFactory.h"
+#include "../../Fade/FadeManager.h"
+#include "../../Load/JSON/LoadJSON.h"
+#include "../../Load/LoadManager.h"
+#include "../../Input/InputUtility.h"
+#include "../../Engine.h"
+#include "../../Scene/TitleScene.h"
+
+/*
+ *	@brief	初期化処理
+ */
+void MenuInGame::Initialize(Engine& engine) {
+	buttonList.resize(_BUTTON_INDEX);
+	for (int i = 0; i < _BUTTON_INDEX; i++) {
+		buttonList[i] = std::make_shared<SinglePressButton>(Rect(200, 100 * i, 700, 80));
+		// ボタンの登録
+		eventSystem.RegisterButton(buttonList[i].get());
+	}
+	// イベントシステムの初期化
+	eventSystem.Initialize(0);
+	auto& load = LoadManager::GetInstance();
+	auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
+    load.SetOnComplete([this, &engine, navigation]() {
+        for (int i = 0, max = buttonList.size(); i < max; i++) {
+            auto button = buttonList[i];
+            if (!button) continue;
+
+            button->Initialize();
+            button->RegisterUpdateSelectButton([this, button]() {
+                eventSystem.UpdateSelectButton(button.get());
+            });
+            // TODO : のちに登録する
+            //button->RegisterButtonHandle(buttonHandle->GetHandle());
+            button->RegisterOnClick([this, &engine, i]() {
+                SelectButtonExecute(engine, i);
+            });
+        }
+        eventSystem.LoadNavigation(navigation->GetData());
+    });
+}
+/*
+ *	@brief	メニューを開く
+ */
+void MenuInGame::Open() {
+    MenuBase::Open();
+    currentSlot = -1;
+    InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
+    eventSystem.ApplySelection();
+}
+/*
+ *	@brief	更新処理
+ */
+void MenuInGame::Update(Engine& engine, float unscaledDeltaTime) {
+    auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
+
+    auto& cancelInputDown = input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)];
+    if (cancelInputDown) {
+        cancelInputDown = false;
+        MenuManager::GetInstance().CloseTopMenu();
+        return;
+    }
+
+    // イベントシステムの更新
+    eventSystem.Update(unscaledDeltaTime);
+    // ボタンの更新
+    for (auto& button : buttonList) {
+        if (button) button->Update(unscaledDeltaTime);
+    }
+    // 現在選択されているボタンの取得
+    auto button = eventSystem.GetCurrentSelectButton();
+    if (!button) return;
+
+    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+        button->OnPressDown();
+    }
+}
+/*
+ *	@brief	描画処理
+ */
+void MenuInGame::Render() {
+    for (auto& button : buttonList) {
+        button->Render();
+    }
+    DrawFormatString(50, 250, GetColor(255, 255, 255), "InGameMenu");
+}
+/*
+ *	@brief	メニューを閉じる
+ */
+void MenuInGame::Close(Engine& engine) {
+    MenuBase::Close(engine);
+    InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+}
+/*
+ *	@brief	メニューを中断
+ */
+void MenuInGame::Suspend() {
+    MenuBase::Suspend();
+}
+/*
+ *	@brief	メニューを再開
+ */
+void MenuInGame::Resume() {
+    MenuBase::Resume();
+    eventSystem.ApplySelection();
+}
+/*
+ *	@brief		ボタンの押された時の処理
+ *	@param[in]	int buttonIndex
+ */
+void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
+    auto& menu = MenuManager::GetInstance();
+    if (buttonIndex == 0) {
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+            menu.CloseTopMenu();
+            menu.OpenMenu<MenuLoadMode>();
+        });
+    } else if (buttonIndex == 1) {
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+            menu.CloseTopMenu();
+            menu.OpenMenu<MenuSaveMode>();
+        });
+    } else if (buttonIndex == 2) {
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+            menu.CloseTopMenu();
+            menu.OpenMenu<MenuSettings>();
+        });
+    } else if (buttonIndex == 3) {
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
+            menu.CloseTopMenu();
+            engine.SetNextScene(std::make_shared<TitleScene>());
+        });
+    } else {
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+            menu.CloseTopMenu();
+        });
+    }
+}

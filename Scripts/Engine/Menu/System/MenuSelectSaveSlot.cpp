@@ -4,20 +4,22 @@
  */
 
 #include "MenuSelectSaveSlot.h"
+#include "../MenuManager.h"
 #include "../../Load/LoadManager.h"
 #include "../../Load/JSON/LoadJSON.h"
 #include "../../Load/Sprite/LoadSprite.h"
-#include "../../UI/Button/UIButtonBase.h"
 #include "../../Input/InputUtility.h"
 #include "../../Save/SaveDataManager.h"
 #include "../../UI/Button/SinglePressButton.h"
+#include "../../Engine.h"
+#include "../../Scene/MainGameScene.h"
 
 /*
  *	@brief	初期化処理
  */
-void MenuSelectSaveSlot::Initialize () {
-    buttonList.resize(4);
-    for (int i = 0; i < 4; i++) {
+void MenuSelectSaveSlot::Initialize (Engine& engine) {
+    buttonList.resize(5);
+    for (int i = 0; i < 5; i++) {
         buttonList[i] = std::make_shared<SinglePressButton>(Rect(200, 100 * i, 700, 80));
         buttonList[i]->SetName("SaveSlot");
         // ボタンの登録
@@ -30,7 +32,7 @@ void MenuSelectSaveSlot::Initialize () {
     auto buttonHandle = load.LoadResource<LoadSprite>(_BUTTON_IMAGE_PATH);
     auto navigation   = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
 
-    load.SetOnComplete([this, navigation, buttonHandle]() {
+    load.SetOnComplete([this, &engine, navigation, buttonHandle]() {
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             auto button = buttonList[i];
             if (!button) continue;
@@ -41,12 +43,11 @@ void MenuSelectSaveSlot::Initialize () {
             });
             // TODO : のちに登録する
             //button->RegisterButtonHandle(buttonHandle->GetHandle());
-            //button->SetOnClick([this, i]() {
-            //    SelectButtonExecute(i);
-            //});
+            button->RegisterOnClick([this, &engine, i]() {
+                SelectButtonExecute(engine, i);
+            });
         }
         eventSystem.LoadNavigation(navigation->GetData());
-        eventSystem.ApplySelection();
     });
 }
 /*
@@ -55,17 +56,38 @@ void MenuSelectSaveSlot::Initialize () {
 void MenuSelectSaveSlot::Open () {
     MenuBase::Open();
 	currentSlot = -1;
-	InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+    // ボタンの準備処理
     for (auto& button : buttonList) {
         button->Setup();
     }
+    // ロード時、セーブスロットが未使用だった場合選択不可にする
+    if (saveMode == GameEnum::SaveSlotMenuMode::Load) {
+        // セーブスロットの使用状態の取得
+        auto& save = SaveDataManager::GetInstance();
+        std::vector<bool> isUsedList = save.GetAllSlotIsUsed();
+        for (int i = 0, max = buttonList.size(); i < max; i++) {
+            auto button = buttonList[i];
+            if (!button) continue;
+
+            if (button == buttonList.back()) continue;
+
+            if (!isUsedList[i]) button->SetIsEnable(false);
+        }
+    }
+    eventSystem.ApplySelection();
+	InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
 }
 /*
  *	@brief	更新処理
  */
 void MenuSelectSaveSlot::Update (Engine& engine, float unscaledDeltaTime) {
-    if (!IsInteractive()) return;
     auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
+
+    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)]) {
+        MenuManager::GetInstance().CloseTopMenu();
+        return;
+    }
+
     // イベントシステムの更新
     eventSystem.Update(unscaledDeltaTime);
     // ボタンの更新
@@ -87,22 +109,29 @@ void MenuSelectSaveSlot::Render () {
     for (auto& button : buttonList) {
         button->Render();
     }
-    DrawFormatString(100, 50, GetColor(255, 255, 255), "MenuSelectSaveSlot");
+    DrawFormatString(50, 125, GetColor(255, 255, 255), "MenuSelectSaveSlot");
 }
 /*
  *	@brief	メニューを閉じる
  */
-void MenuSelectSaveSlot::Close () {
-    MenuBase::Close();
+void MenuSelectSaveSlot::Close (Engine& engine) {
+    MenuBase::Close(engine);
 }
 /*
  *	@brief		ボタンの押された時の処理
  *	@param[in]	int slotIndex
  */
-void MenuSelectSaveSlot::SelectButtonExecute(int slotIndex) {
+void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
     currentSlot = slotIndex;
 
     auto& save = SaveDataManager::GetInstance();
+    auto& menu = MenuManager::GetInstance();
+
+    // もし一番下のボタンの場合、それは戻るボタン
+    if (currentSlot > GameConst::SELECT_SAVE_SLOT_MAX) {
+        menu.CloseTopMenu();
+        return;
+    }
 
     switch (saveMode) {
         case GameEnum::SaveSlotMenuMode::Save:
@@ -117,6 +146,8 @@ void MenuSelectSaveSlot::SelectButtonExecute(int slotIndex) {
 			save.SelectSlot(currentSlot);
 			save.LoadCurrentSlot();
 			// TODO : 読み込むー＞シーンの読み込み
+            engine.SetNextScene(std::make_shared<MainGameScene>());
+            MenuManager::GetInstance().CloseAllMenu();
 			break;
     }
 }

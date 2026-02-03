@@ -6,6 +6,7 @@
 #include "Treasure.h"
 #include "../Scripts/Engine/GameConst.h"
 #include "../Scripts/Engine/VecMath.h"
+#include "../Scripts/Engine/Manager/EffectManager.h"
  /*
   *	コンストラクタ
   */
@@ -26,6 +27,7 @@ Treasure::~Treasure() {
  */
 void Treasure::Update(float deltaTime) {
 	if (isCollected) return;
+	EffectManager::GetInstance().Instantiate("treasureViewing", position);
 }
 /*
  *	衝突が起きたときに呼び出される処理

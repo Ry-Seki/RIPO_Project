@@ -2,3 +2,5 @@
 0,Tutorial,0,0,0,0,Data/Dungeon/Tutorial/TutorialDungeonResourcesData.json
 1,Stage1,2,5,1,1,Data/Dungeon/Stage1/Stage1DungeonResourcesData.json
 2,Stage2,6,9,2,2,Data/Dungeon/Stage2/Stage2DungeonResourcesData.json
+3,Stage3,10,12,3,3,Data/Dungeon/Stage3/Stage3DungeonResourcesData.json
+4,Stage4,14,17,4,4,Data/Dungeon/Stage4/Stage4DungeonResourcesdata.json
