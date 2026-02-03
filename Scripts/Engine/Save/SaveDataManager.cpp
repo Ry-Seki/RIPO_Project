@@ -334,7 +334,7 @@ bool SaveDataManager::Exists(int selectSlot) {
     SaveData data{};
     std::string slot = "";
     // スロット番号が有効か判定
-    if (selectSlot >= _SELECT_SLOT_MIN && selectSlot <= _SELECT_SLOT_MAX) {
+    if (selectSlot >= GameConst::SELECT_SAVE_SLOT_MIN && selectSlot <= GameConst:: SELECT_SAVE_SLOT_MAX) {
         slot = "Slot" + std::to_string(selectSlot);
     } else {
         slot = _AUTO_SAVE;
@@ -390,7 +390,7 @@ void SaveDataManager::ApplyLoadData(ActionContext& context) {
  */
 std::vector<bool> SaveDataManager::GetAllSlotIsUsed() {
     std::vector<bool> result;
-    for (int i = 0; i <= _SELECT_SLOT_MAX; ++i) {
+    for (int i = 0; i <= GameConst::SELECT_SAVE_SLOT_MAX; ++i) {
         result.push_back(Exists(i));
     }
     return result;

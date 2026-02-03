@@ -42,12 +42,14 @@ public:
 	static constexpr int RIGHT_ANGLE = 90;
 	static constexpr int LEFT_ANGLE = -90;
 	static constexpr int BACK_ANGLE = 180;
-	static constexpr float _MAX_DXLIB_VOLUME = 255.0f;
-	static constexpr float _MIN_VOLUME = 0.0f;
-	static constexpr float _MAX_VOLUME = 100.0f;
-	static constexpr int _MAX_SE_INDEX = 16;
+	static constexpr float MAX_DXLIB_VOLUME = 255.0f;
+	static constexpr float MIN_VOLUME = 0.0f;
+	static constexpr float MAX_VOLUME = 100.0f;
+	static constexpr int MAX_SE_INDEX = 16;
 	static constexpr float FPS = 60.0f;
 	static constexpr float frameTime = 1.0f / FPS;
+	static constexpr int SELECT_SAVE_SLOT_MIN = 1;
+	static constexpr int SELECT_SAVE_SLOT_MAX = 3;
 
 	//----------------------------------------------------
 	//				ステージ関連の定数

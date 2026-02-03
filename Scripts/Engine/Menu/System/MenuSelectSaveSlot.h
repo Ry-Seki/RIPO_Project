@@ -10,6 +10,7 @@
 #include "../../UI/Button/UIButtonBase.h"
 #include "../../UI/EventSystem.h"
 #include "../../GameEnum.h"
+#include "../../GameConst.h"
 
 #include <vector>
 #include <memory>

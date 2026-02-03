@@ -75,6 +75,7 @@ public:
 		isVisible = true;
 		isInteractive = true;
 		isStart = true;
+		inputHandle = false;
 	}
 
 public:

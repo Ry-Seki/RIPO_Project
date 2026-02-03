@@ -18,8 +18,8 @@
  *	@brief	初期化処理
  */
 void MenuSelectSaveSlot::Initialize (Engine& engine) {
-    buttonList.resize(4);
-    for (int i = 0; i < 4; i++) {
+    buttonList.resize(5);
+    for (int i = 0; i < 5; i++) {
         buttonList[i] = std::make_shared<SinglePressButton>(Rect(200, 100 * i, 700, 80));
         buttonList[i]->SetName("SaveSlot");
         // ボタンの登録
@@ -68,6 +68,8 @@ void MenuSelectSaveSlot::Open () {
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             auto button = buttonList[i];
             if (!button) continue;
+
+            if (button == buttonList.back()) continue;
 
             if (!isUsedList[i]) button->SetIsEnable(false);
         }
@@ -123,6 +125,13 @@ void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
     currentSlot = slotIndex;
 
     auto& save = SaveDataManager::GetInstance();
+    auto& menu = MenuManager::GetInstance();
+
+    // もし一番下のボタンの場合、それは戻るボタン
+    if (currentSlot > GameConst::SELECT_SAVE_SLOT_MAX) {
+        menu.CloseTopMenu();
+        return;
+    }
 
     switch (saveMode) {
         case GameEnum::SaveSlotMenuMode::Save:

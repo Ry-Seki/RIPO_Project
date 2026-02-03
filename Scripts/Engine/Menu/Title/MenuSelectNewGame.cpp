@@ -38,23 +38,25 @@ void MenuSelectNewGame::Update(Engine& engine, float unscaledDeltaTime) {
 	auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
 	MenuManager& menu = MenuManager::GetInstance();
 
-	if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)]) {
-		AudioUtility::PlaySE("DebugSE");
-		inputHandle = true;
-		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-			menu.CloseTopMenu();
-		});
-	}
-	// TODO : チュートリアルに行くようにする
-	if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]
-		|| input.buttonDown[static_cast<int>(GameEnum::MenuAction::Click)]) {
-		AudioUtility::PlaySE("DebugSE");
-		inputHandle = true;
-		engine.StartFadeOutIn(0.5f, 0.5f, [&engine, &menu]() {
-			menu.CloseAllMenu();
-			engine.SetNextScene(std::make_shared<MainGameScene>());
-		});
+	if (!inputHandle) {
+		if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)]) {
+			AudioUtility::PlaySE("DebugSE");
+			inputHandle = true;
+			FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
+			FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+				menu.CloseTopMenu();
+			});
+		}
+		// TODO : チュートリアルに行くようにする
+		if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]
+			|| input.buttonDown[static_cast<int>(GameEnum::MenuAction::Click)]) {
+			AudioUtility::PlaySE("DebugSE");
+			inputHandle = true;
+			engine.StartFadeOutIn(0.5f, 0.5f, [&engine, &menu]() {
+				menu.CloseAllMenu();
+				engine.SetNextScene(std::make_shared<MainGameScene>());
+			});
+		}
 	}
 }
 /*

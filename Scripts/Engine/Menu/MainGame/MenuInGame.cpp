@@ -47,9 +47,7 @@ void MenuInGame::Initialize(Engine& engine) {
             });
         }
         eventSystem.LoadNavigation(navigation->GetData());
-        eventSystem.ApplySelection();
     });
-
 }
 /*
  *	@brief	メニューを開く
@@ -61,6 +59,7 @@ void MenuInGame::Open() {
     for (auto& button : buttonList) {
         button->Setup();
     }
+    eventSystem.ApplySelection();
 }
 /*
  *	@brief	更新処理
@@ -68,7 +67,9 @@ void MenuInGame::Open() {
 void MenuInGame::Update(Engine& engine, float unscaledDeltaTime) {
     auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
 
-    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)]) {
+    auto& cancelInputDown = input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)];
+    if (cancelInputDown) {
+        cancelInputDown = false;
         MenuManager::GetInstance().CloseTopMenu();
         return;
     }
@@ -94,7 +95,7 @@ void MenuInGame::Render() {
     for (auto& button : buttonList) {
         button->Render();
     }
-    DrawFormatString(100, 50, GetColor(255, 255, 255), "InGameMenu");
+    DrawFormatString(50, 250, GetColor(255, 255, 255), "InGameMenu");
 }
 /*
  *	@brief	メニューを閉じる
@@ -145,6 +146,11 @@ void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
             menu.CloseTopMenu();
             engine.SetNextScene(std::make_shared<TitleScene>());
+        });
+    } else {
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+            menu.CloseTopMenu();
         });
     }
 }

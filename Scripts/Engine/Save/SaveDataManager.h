@@ -9,6 +9,7 @@
 #include "../Singleton.h"
 #include "../JSON.h"
 #include "../../Data/SaveData.h"
+#include "../GameConst.h"
 
 #include <string>
 #include <fstream>
@@ -33,8 +34,6 @@ private:
 	const std::string _AUTO_SAVE = "AutoSave";			// オートセーブ
 
 	const int _SAVE_VERSION = 1;						// 将来のバージョン管理用
-	const int _SELECT_SLOT_MIN = 1;
-	const int _SELECT_SLOT_MAX = 3;
 
 private:
 	/*

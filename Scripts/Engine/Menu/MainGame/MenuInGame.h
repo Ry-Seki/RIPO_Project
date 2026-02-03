@@ -28,7 +28,7 @@ private:
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	EventSystem eventSystem;
 
-	const int _BUTTON_INDEX = 4;
+	const int _BUTTON_INDEX = 5;
 	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/SaveLoad/SaveSlotNavigation.json";
 
 public:

@@ -41,7 +41,8 @@ void MenuTitle::Update(Engine& engine, float unscaledDeltaTime) {
 	if (!isStart) return;
 
 	auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
-	if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]
+
+	if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]
 		|| input.buttonDown[static_cast<int>(GameEnum::MenuAction::Click)]) {
 		AudioUtility::PlaySE("DebugSE");
 		inputHandle = true;
