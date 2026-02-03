@@ -353,6 +353,7 @@
     <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuInGame.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuBase.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MenuResourcesFactory.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuLoadMode.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuSaveMode.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.h" />

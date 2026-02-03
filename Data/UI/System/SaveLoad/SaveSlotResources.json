@@ -1,0 +1,86 @@
+{
+  "BackGround": {
+    "0": ""
+  },
+  "Button": {
+    "0": {
+      "Type": 0,
+      "Rect": {
+        "0": 200,
+        "1": 100,
+        "2": 700,
+        "3": 80
+      },
+      "Resources": {
+        "0": "Res/Menu/System/Trealine_SaveSlot.png",
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "Res/Menu/System/Trealine_InitSaveSlot.png"
+      }
+    },
+    "1": {
+      "Type": 0,
+      "Rect": {
+        "0": 200,
+        "1": 100,
+        "2": 700,
+        "3": 80
+      },
+      "Resources": {
+        "0": "Res/Menu/System/Trealine_SaveSlot.png",
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "Res/Menu/System/Trealine_InitSaveSlot.png"
+      }
+    },
+    "2": {
+      "Type": 0,
+      "Rect": {
+        "0": 200,
+        "1": 100,
+        "2": 700,
+        "3": 80
+      },
+      "Resources": {
+        "0": "Res/Menu/System/Trealine_SaveSlot.png",
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "Res/Menu/System/Trealine_InitSaveSlot.png"
+      }
+    },
+    "3": {
+      "Type": 0,
+      "Rect": {
+        "0": 200,
+        "1": 100,
+        "2": 700,
+        "3": 80
+      },
+      "Resources": {
+        "0": "Res/Menu/System/Trealine_SaveSlot.png",
+        "1": "",
+        "2": "",
+        "3": "",
+        "4": "Res/Menu/System/Trealine_InitSaveSlot.png"
+      }
+    },
+    "4": {
+      "Type": 0,
+      "Rect": {
+        "0": 200,
+        "1": 100,
+        "2": 700,
+        "3": 80
+      },
+      "Resources": {
+        "0": "Res/Menu/System/Trealine_SaveSlot.png",
+        "1": "",
+        "2": "",
+        "3": ""
+      }
+    }
+  }
+}

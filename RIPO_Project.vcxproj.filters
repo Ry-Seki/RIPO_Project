@@ -1175,5 +1175,8 @@
     <ClInclude Include="Scripts\Engine\Menu\System\MenuLoadMode.h">
       <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\MenuResourcesFactory.h">
+      <Filter>ヘッダー ファイル\Engine\Menu</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
