@@ -26,6 +26,12 @@ private:
 	~EffectManager() = default;
 
 public:
+
+	/*
+	 *  初期化
+	 */
+	void Initialize(Engine& setEngine);
+
 	/*
 	 *	エフェクトの読み込み
 	 *  @param	filePath				ファイルパス
@@ -64,7 +70,7 @@ public:
 	/*
 	 *	jsonの変更
 	 */
-	void SetStageJSONData(JSON setJSON) { json = setJSON; }
+	void SetEffectJSONData(JSON setJSON) { json = setJSON; }
 
 };
 

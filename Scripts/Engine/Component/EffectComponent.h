@@ -59,6 +59,11 @@ public:
 	 */
 	inline bool IsVisile() const { return isVisible; }
 
+	/*
+	 *
+	 */
+	void SetPlayingHandle(int setPlayingHandle) { playingHandle == setPlayingHandle; }
+
 };
 
 #endif // !_EFFECT_COMPONENT_H_

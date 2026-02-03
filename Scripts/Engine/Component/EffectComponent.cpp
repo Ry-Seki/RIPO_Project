@@ -11,7 +11,8 @@
 EffectComponent::EffectComponent(int& _resourceHandle)
 	:resourceHandle(_resourceHandle)
 	, playingHandle(-1)
-	, isLoop(false) {
+	, isLoop(false)
+	, isVisible(false) {
 }
 
 /*
