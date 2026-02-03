@@ -61,13 +61,19 @@ void EffectManager::Load(std::string filePath, std::string name, float magnifica
  *	エフェクトの発生
  */
 EffectComponent* EffectManager::Instantiate(std::string name, Vector3 _pos) {
-	int effectResouceHandle = effectResourceMap[name];
-	EffectComponent* pEffect = new EffectComponent(effectResouceHandle);
-	// 座標を指定
-	pEffect->SetPosition(_pos);
-	// 一元配列に追加
-	pEffectList.push_back(pEffect);
+	// 登録されているか検索
+	auto itr = effectResourceMap.find(name);
+	if (itr == effectResourceMap.end()) {
+		return nullptr;
+	}
 
+	int effectResouceHandle = itr->second;
+
+	EffectComponent* pEffect = new EffectComponent(effectResouceHandle);
+	pEffect->SetPosition(_pos);
+	pEffect->SetVisible(true);
+	pEffectList.push_back(pEffect);
+	
 	return pEffect;
 }
 
@@ -87,7 +93,8 @@ void EffectManager::Update() {
 		[](EffectComponent* _pE) {return !_pE->IsVisile(); }
 	);
 
-
+	
+	
 	UpdateEffekseer3D();
 }
 
@@ -96,11 +103,11 @@ void EffectManager::Update() {
  */
 void EffectManager::Render() {
 	for (auto pEffe : pEffectList) {
-		if (pEffe == nullptr || !pEffe->IsVisile())continue;
+		if (pEffe == nullptr || !pEffe->IsVisile())
+			continue;
 
-
+		pEffe->Render();
 	}
-
 	DrawEffekseer3D();
 }
 

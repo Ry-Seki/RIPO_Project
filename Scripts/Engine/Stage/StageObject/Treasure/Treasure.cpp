@@ -27,7 +27,9 @@ Treasure::~Treasure() {
  */
 void Treasure::Update(float deltaTime) {
 	if (isCollected) return;
-	EffectManager::GetInstance().Instantiate("treasureViewing", position);
+
+	auto ownerPosition = GetOwner()->position;
+	EffectManager::GetInstance().Instantiate("Beam",ownerPosition );
 }
 /*
  *	Õ“Ë‚ª‹N‚«‚½‚Æ‚«‚ÉŒÄ‚Ño‚³‚ê‚éˆ—

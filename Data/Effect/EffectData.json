@@ -3,12 +3,12 @@
     {
       "file": "Res/Effect/Treasure/TreasureViewEffect.efk",
       "name": "treasureViewing",
-      "magnification": 1.0
+      "magnification": 5000.0
     },
     {
-      "file": "",
-      "name": "",
-      "magnification": 1.2
+      "file": "Res/Effect/Test/BeamEffect.efk",
+      "name": "Beam",
+      "magnification": 5000.0
     }
   ]
 }
