@@ -73,6 +73,10 @@ public:
 	 */
 	virtual void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
 
+private:
+	// Œã‚ÅVecMath‚É‚à‚Á‚Ä‚¢‚­‚©‚à
+	Vector3 DxForwardDir(const Vector3& rotation);
+
 public:
 	/*
 	 *	ó‘Ô‚Ì•ÏX

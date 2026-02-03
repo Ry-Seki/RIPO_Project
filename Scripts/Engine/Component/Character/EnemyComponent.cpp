@@ -12,6 +12,7 @@
 #include "EnemyDeath.h"
 #include "BulletComponent.h"
 #include "HPBarComponent.h"
+#include "../CameraComponent.h"
  /*
   *	コンストラクタ
   */
@@ -86,6 +87,42 @@ void EnemyComponent::Update(float deltaTime) {
 
 	VECTOR position = ToVECTOR(enemy->position);
 
+	auto camera = GetCameraViewMatrix();
+	VECTOR forward;
+	forward.x = -camera.m[2][0];
+	forward.y = -camera.m[2][1];
+	forward.z = -camera.m[2][2];
+	forward = VNorm(forward);
+
+	GameObjectPtr cameraObj = CameraManager::GetInstance().GetCamera();
+	float pitch = cameraObj->rotation.x;
+	float yaw = cameraObj->rotation.y;
+	VECTOR OBcamera = ToVECTOR(DxForwardDir(cameraObj->rotation));
+	OBcamera = VNorm(OBcamera);
+
+	float dot = VDot(OBcamera, forward);
+	dot = std::clamp(dot, -1.0f, 1.0f);
+	float angle = acosf(dot) * 180.0f / Pi;
+
+	DxLib_Log("Angle: %.2f", angle);
+
+	// 線
+	VECTOR camPos = ToVECTOR(cameraObj->position);
+	DrawLine3D(
+		camPos,
+		VAdd(camPos, VScale(OBcamera, 50.0f)),
+		GetColor(255, 0, 0) // 赤
+	);
+
+	VECTOR pos = GetCameraPosition();
+	VECTOR target = GetCameraTarget();
+
+	VECTOR DxForward = VNorm(VSub(target, pos));
+	DrawLine3D(
+		pos,
+		VAdd(pos, VScale(forward, 50.0f)),
+		GetColor(0, 255, 0) // 緑
+	);
 
 	enemy->GetComponent<HPBarComponent>()->ShowHPBar(position);
 }
@@ -117,4 +154,16 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 			state = new EnemyDeath();
 		state->Start(enemy);
 	}
+}
+
+Vector3 EnemyComponent::DxForwardDir(const Vector3& rotation)
+{
+	float pitch = rotation.x; // rad
+	float yaw = rotation.y; // rad
+
+	Vector3 dir;
+	dir.x = -sinf(yaw) * cosf(pitch);
+	dir.y = sinf(pitch);
+	dir.z = -cosf(yaw) * cosf(pitch);
+	return dir.Normalized();
 }
