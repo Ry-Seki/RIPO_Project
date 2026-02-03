@@ -15,7 +15,7 @@
 /*
  *	@brief	初期化処理
  */
-void MenuTitle::Initialize() {
+void MenuTitle::Initialize(Engine& engine) {
 	LoadManager& load = LoadManager::GetInstance();
 	auto menuTitleHandle = load.LoadResource<LoadSprite>(_TITLE_LOGO_PATH);
 	load.SetOnComplete([this, menuTitleHandle]() {
@@ -60,8 +60,8 @@ void MenuTitle::Render() {
 /*
  *	@brief	メニューを閉じる処理
  */
-void MenuTitle::Close() {
-	MenuBase::Close();
+void MenuTitle::Close(Engine& engine) {
+	MenuBase::Close(engine);
 }
 /*
  *	@brief		ロード済みデータのセット

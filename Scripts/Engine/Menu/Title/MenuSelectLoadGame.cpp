@@ -1,9 +1,9 @@
 /*
- *	@file	MenuLoadGame.cpp
+ *	@file	MenuSelectLoadGame.cpp
  *	@author	Seki
  */
 
-#include "MenuLoadGame.h"
+#include "MenuSelectLoadGame.h"
 #include "../../Fade/FadeFactory.h"
 #include "../../Fade/FadeManager.h"
 #include "../../Audio/AudioUtility.h"
@@ -17,12 +17,12 @@
 /*
  *	@brief	初期化処理
  */
-void MenuLoadGame::Initialize() {
+void MenuSelectLoadGame::Initialize(Engine& engine) {
 }
 /*
  *	@brief	メニューを開く
  */
-void MenuLoadGame::Open() {
+void MenuSelectLoadGame::Open() {
 	auto& menu = MenuManager::GetInstance();
 	auto saveMenu = menu.GetMenu<MenuSelectSaveSlot>();
 	saveMenu->SetSaveMode(mode);
@@ -36,7 +36,7 @@ void MenuLoadGame::Open() {
 /*
  *	@brief	更新処理
  */
-void MenuLoadGame::Update(Engine& engine, float unscaledDeltaTime) {
+void MenuSelectLoadGame::Update(Engine& engine, float unscaledDeltaTime) {
 	if (!isStart) return;
 	// TODO : セーブデータとの同期を完了させる
 	MenuManager& menu = MenuManager::GetInstance();
@@ -61,7 +61,7 @@ void MenuLoadGame::Update(Engine& engine, float unscaledDeltaTime) {
 /*
  *	@biref	描画処理
  */
-void MenuLoadGame::Render() {
+void MenuSelectLoadGame::Render() {
 	DrawFormatString(50, 70, GetColor(255, 255, 255), "LoadGame");
 	DrawFormatString(300, 400, GetColor(255, 255, 255), "Play->SpaceKey");
 	DrawFormatString(300, 450, GetColor(255, 255, 255), "Return->EnterKey");
@@ -69,17 +69,17 @@ void MenuLoadGame::Render() {
 /*
  *	@brief	メニューを閉じる
  */
-void MenuLoadGame::Close() {
-	MenuBase::Close();
+void MenuSelectLoadGame::Close(Engine& engine) {
+	MenuBase::Close(engine);
 }
 /*
  *	@brief	メニューを中断
  */
-void MenuLoadGame::Suspend() {
+void MenuSelectLoadGame::Suspend() {
 
 }
 /*
  *	@brief	メニューを再開
  */
-void MenuLoadGame::Resume() {
+void MenuSelectLoadGame::Resume() {
 }

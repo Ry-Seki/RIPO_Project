@@ -31,7 +31,7 @@ public:
 	/*
 	 *	@brief	‰Šú‰»ˆ—
 	 */
-	virtual void Initialize() = 0;
+	virtual void Initialize(Engine& engine) = 0;
 	/*
 	 *	@brief	€”õ‘Oˆ—
 	 */
@@ -56,7 +56,7 @@ public:
 	/*
 	 *	@brief	ƒƒjƒ…[‚ğ•Â‚¶‚½‚Æ‚«‚Ìˆ—
 	 */
-	virtual void Close() {
+	virtual void Close(Engine& engine) {
 		isVisible = false;
 		isInteractive = false;
 		isStart = false;
@@ -73,7 +73,7 @@ public:
 	 */
 	virtual void Resume() {
 		isVisible = true;
-		isInteractive = false;
+		isInteractive = true;
 		isStart = true;
 	}
 

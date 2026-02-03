@@ -1,9 +1,9 @@
 /*
- *	@file	MenuNewGame.cpp
+ *	@file	MenuSelectNewGame.cpp
  *	@author	Seki
  */
 
-#include "MenuNewGame.h"
+#include "MenuSelectNewGame.h"
 #include "../MenuManager.h"
 #include "../../Fade/FadeFactory.h"
 #include "../../Fade/FadeManager.h"
@@ -16,12 +16,12 @@
 /*
  *	@brief	初期化処理
  */
-void MenuNewGame::Initialize() {
+void MenuSelectNewGame::Initialize(Engine& engine) {
 }
 /*
  *	@brief	メニューを開く
  */
-void MenuNewGame::Open() {
+void MenuSelectNewGame::Open() {
 	MenuBase::Open();
 	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
@@ -31,7 +31,7 @@ void MenuNewGame::Open() {
 /*
  *	@brief	更新処理
  */
-void MenuNewGame::Update(Engine& engine, float unscaledDeltaTime) {
+void MenuSelectNewGame::Update(Engine& engine, float unscaledDeltaTime) {
 	if (!isStart) return;
 
 	MenuManager& menu = MenuManager::GetInstance();
@@ -56,7 +56,7 @@ void MenuNewGame::Update(Engine& engine, float unscaledDeltaTime) {
 /*
  *	@brief	描画処理
  */
-void MenuNewGame::Render() {
+void MenuSelectNewGame::Render() {
 	DrawFormatString(50, 70, GetColor(255, 255, 255), "NewGame");
 	DrawFormatString(300, 400, GetColor(255, 255, 255), "Play->SpaceKey");
 	DrawFormatString(300, 450, GetColor(255, 255, 255), "Return->EnterKey");
@@ -64,6 +64,6 @@ void MenuNewGame::Render() {
 /*
  *	@brief	メニューを閉じる
  */
-void MenuNewGame::Close() {
-	MenuBase::Close();
+void MenuSelectNewGame::Close(Engine& engine) {
+	MenuBase::Close(engine);
 }

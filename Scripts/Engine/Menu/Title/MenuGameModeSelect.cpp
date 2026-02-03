@@ -10,8 +10,8 @@
 #include "../../../Engine/Engine.h"
 #include "../../Scene/MainGameScene.h"
 #include "../../Menu/MenuManager.h"
-#include "../../Menu/Title/MenuNewGame.h"
-#include "../../Menu/Title/MenuLoadGame.h"
+#include "../../Menu/Title/MenuSelectNewGame.h"
+#include "../../Menu/Title/MenuSelectLoadGame.h"
 #include "../../Menu/Title/MenuSystem.h"
 
 #include <DxLib.h>
@@ -19,7 +19,7 @@
 /*
  *	@brief	初期化処理
  */
-void MenuGameModeSelect::Initialize() {
+void MenuGameModeSelect::Initialize(Engine& engine) {
 }
 /*
  *	@brief	メニューを開く
@@ -46,7 +46,7 @@ void MenuGameModeSelect::Update(Engine& engine, float unscaledDeltaTime) {
 			FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.0f, FadeDirection::Out, FadeMode::Stop);
 			FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
 				isVisible = false;
-				menu.OpenMenu<MenuNewGame>();
+				menu.OpenMenu<MenuSelectNewGame>();
 			});
 		} else if (CheckHitKey(KEY_INPUT_2)) {
 			AudioUtility::PlaySE("DebugSE");
@@ -54,7 +54,7 @@ void MenuGameModeSelect::Update(Engine& engine, float unscaledDeltaTime) {
 			FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.0f, FadeDirection::Out, FadeMode::Stop);
 			FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
 				isVisible = false;
-				menu.OpenMenu<MenuLoadGame>();
+				menu.OpenMenu<MenuSelectLoadGame>();
 			});
 		} else if (CheckHitKey(KEY_INPUT_3)) {
 			AudioUtility::PlaySE("DebugSE");
@@ -87,6 +87,18 @@ void MenuGameModeSelect::Render() {
 /*
  *	@brief	メニューを閉じる
  */
-void MenuGameModeSelect::Close() {
-	MenuBase::Close();
+void MenuGameModeSelect::Close(Engine& engine) {
+	MenuBase::Close(engine);
+}
+/*
+ *	@brief	メニューを再開
+ */
+void MenuGameModeSelect::Resume() {
+	MenuBase::Resume();
+	isStart = false;
+	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
+		isStart = true;
+		inputHandle = false;
+	});
 }

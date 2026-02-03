@@ -1,10 +1,10 @@
 /*
- *	@file	MenuNewGame.h
+ *	@file	MenuSelectNewGame.h
  *	@author	Seki
  */
 
-#ifndef _MENU_NEW_GAME_H_
-#define _MENU_NEW_GAME_H_
+#ifndef _MENU_SELECT_NEW_GAME_H_
+#define _MENU_SELECT_NEW_GAME_H_
 
 #include "../MenuBase.h"
 #include "../../UI/EventSystem.h"
@@ -19,7 +19,7 @@ class SinglePressButton;
 /*
  *	@brief	ニューゲームメニュー
  */
-class MenuNewGame : public MenuBase {
+class MenuSelectNewGame : public MenuBase {
 private:
 	std::vector<std::shared_ptr<SinglePressButton>> buttonList;
 	EventSystem eventSystem;
@@ -30,13 +30,13 @@ public:
 	/*
 	 *	@brief	デストラクタ
 	 */
-	~MenuNewGame() override {};
+	~MenuSelectNewGame() override {};
 
 public:
 	/*
 	 *	@brief	初期化処理
 	 */
-	void Initialize() override;
+	void Initialize(Engine& engine) override;
 	/*
 	 *	@brief	メニューを開く
 	 */
@@ -52,8 +52,8 @@ public:
 	/*
 	 *	@brief	メニューを閉じる
 	 */
-	void Close() override;
+	void Close(Engine& engine) override;
 
 };
 
-#endif // !_MENU_NEW_GAME_H_
+#endif // !_MENU_SELECT_NEW_GAME_H_

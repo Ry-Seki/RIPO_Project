@@ -1,14 +1,15 @@
 /*
- *	@file	MenuSettings.h
+ *	@file	MenuInGame.h
  *	@author	Seki
  */
 
-#ifndef _MENU_SETTINGS_H_
-#define _MENU_SETTINGS_H_
+#ifndef _MENU_IN_GAME_H_
+#define _MENU_IN_GAME_H_
 
 #include "../MenuBase.h"
 #include "../../UI/Button/UIButtonBase.h"
 #include "../../UI/EventSystem.h"
+#include "../../GameEnum.h"
 
 #include <vector>
 #include <memory>
@@ -17,12 +18,24 @@
 class Engine;
 
 /*
- *	@brief	設定メニュー
+ *	@brief	インゲームメニュー
  */
-class MenuSettings : public MenuBase {
+class MenuInGame : public MenuBase {
 private:
+	int currentSlot = -1;
+	GameEnum::SaveSlotMenuMode saveMode;
+
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	EventSystem eventSystem;
+
+	const int _BUTTON_INDEX = 4;
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/SaveLoad/SaveSlotNavigation.json";
+
+public:
+	/*
+	 *	@brief	デストラクタ
+	 */
+	~MenuInGame() override{}
 
 public:
 	/*
@@ -53,6 +66,14 @@ public:
 	 *	@brief	メニューを再開
 	 */
 	void Resume() override;
+
+private:
+	/*
+	 *	@brief		ボタンの押された時の処理
+	 *	@param[in]	int buttonIndex
+	 */
+	void SelectButtonExecute(Engine& engine, int buttonIndex);
+
 };
 
-#endif // !_MENU_SETTINGS_H_
+#endif // !_MENU_IN_GAME_H_

@@ -14,7 +14,7 @@
 /*
  *	@brief	初期化処理
  */
-void MenuSystem::Initialize() {
+void MenuSystem::Initialize(Engine& engine) {
 }
 /*
  *	@brief	メニューを開く
@@ -53,6 +53,6 @@ void MenuSystem::Render() {
 /*
  *	@brief	メニューを閉じる
  */
-void MenuSystem::Close() {
-	MenuBase::Close();
+void MenuSystem::Close(Engine& engine) {
+	MenuBase::Close(engine);
 }
