@@ -6,6 +6,7 @@
 #include "EffectManager.h"
 #include "EffekseerForDXLib.h"
 #include "../Component/EffectComponent.h"
+#include "../Load/JSON/LoadJSON.h"
 
  /*
   *	コンストラクタ
@@ -17,6 +18,20 @@ EffectManager::EffectManager()
 }
 
 /*
+ *	初期化
+ */
+void EffectManager::Initialize(Engine& setEngine) {
+	engine = &setEngine;
+
+	if (json.empty()) {
+		return;
+	}
+
+	// エフェクトをまとめてロード
+	LoadEffects();
+}
+
+/*
  *	エフェクトの読み込み
  *  @param	filePath				ファイルパス
  *  @param	name					エフェクトに設定する名前
@@ -24,28 +39,30 @@ EffectManager::EffectManager()
  */
 void EffectManager::Load(std::string filePath, std::string name, float magnification) {
 
-	// 読み込み
-	int res = LoadEffekseerEffect(filePath.c_str(), magnification);
-
-	// リソースの管理
-#if 0
-	effectResourceMap[_filePath.c_str()] = res;
-#else
-	// 既に登録されているか、検索をする
-	auto itr = effectResourceMap.find(filePath.c_str());
-	if (itr == effectResourceMap.end()) {
-		// 登録
-		effectResourceMap.emplace(name.c_str(), res);
+	// すでに登録済みなら何もしない
+	if (effectResourceMap.contains(name)) {
+		return;
 	}
 
-#endif
+	// エフェクト読み込み
+	int res = LoadEffekseerEffect(filePath.c_str(), magnification);
+
+	// 読み込み失敗チェック
+	if (res < 0) {
+		return;
+	}
+
+	// 名前をキーに登録
+	effectResourceMap.emplace(name, res);
+
 }
 
 /*
  *	エフェクトの発生
  */
 EffectComponent* EffectManager::Instantiate(std::string name, Vector3 _pos) {
-	EffectComponent* pEffect = new EffectComponent(effectResourceMap[name]);
+	int effectResouceHandle = effectResourceMap[name];
+	EffectComponent* pEffect = new EffectComponent(effectResouceHandle);
 	// 座標を指定
 	pEffect->SetPosition(_pos);
 	// 一元配列に追加
