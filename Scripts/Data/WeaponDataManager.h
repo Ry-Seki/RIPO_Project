@@ -11,6 +11,7 @@
 #include "../Engine/GameEnum.h"
 #include "../Engine/Load/LoadManager.h"
 #include <unordered_map>
+#include <string>
 
 /*
  *	銃のデータ管理クラス
@@ -29,7 +30,16 @@ private:
 	std::unordered_map<int, WeaponData> weaponsData;
 
 	// jsonデータのファイルパス
-	static constexpr const char* WEAPON_DATA_PATH = "Data/Player/Weapon/WeaponData.json";
+	const std::string WEAPON_DATA_PATH = "Data/Player/Weapon/WeaponData.json";
+	// json内の文字列
+	const std::string REVOLVER = "Revolver";
+	const std::string SMG = "SubmachineGun";
+	const std::string DAMAGE = "DefaultDamage";
+	const std::string MAGAZINE = "MagazineCapacity";
+	const std::string COOL_TIME = "ShotCoolTime";
+	const std::string RELOADING = "ReloadingTime";
+	// enum指定用map
+	std::unordered_map<GameEnum::Weapon, std::string> weaponsName;
 
 public:
 	WeaponDataManager() = default;
@@ -40,16 +50,13 @@ private:
 	 *	jsonデータをマップに登録
 	 */
 	void SetMapJsonData(const JSON& setData) {
-		auto damage = static_cast<char>(GameEnum::WeaponData::DefaultDamage);
-		auto magazine = static_cast<char>(GameEnum::WeaponData::MagazineCapacity);
-		auto coolTime = static_cast<char>(GameEnum::WeaponData::ShotCoolTime);
-		auto reloading = static_cast<char>(GameEnum::WeaponData::ReloadingTime);
-
 		for (int i = 0; i < static_cast<int>(GameEnum::Weapon::Max); i++) {
-			weaponsData[i].defaultDamage = setData[static_cast<char>(i)][damage].get<float>();
-			weaponsData[i].magazineCapacity = setData[static_cast<char>(i)][magazine].get<int>();
-			weaponsData[i].shotCoolTime = setData[static_cast<char>(i)][coolTime].get<float>();
-			weaponsData[i].reloadingTime = setData[static_cast<char>(i)][reloading].get<float>();
+			auto weaponName = weaponsName[static_cast<GameEnum::Weapon>(i)];
+
+			weaponsData[i].defaultDamage = setData[weaponName][DAMAGE].get<float>();
+			weaponsData[i].magazineCapacity = setData[weaponName][MAGAZINE].get<int>();
+			weaponsData[i].shotCoolTime = setData[weaponName][COOL_TIME].get<float>();
+			weaponsData[i].reloadingTime = setData[weaponName][RELOADING].get<float>();
 		}
 	}
 
@@ -58,6 +65,8 @@ public:
 	 *	初期化
 	 */
 	void Initialize() {
+		weaponsName[GameEnum::Weapon::Revolver] = REVOLVER;
+		weaponsName[GameEnum::Weapon::SubmachineGun] = SMG;
 		auto json = LoadManager::GetInstance().LoadResource<LoadJSON>(WEAPON_DATA_PATH);
 		LoadManager::GetInstance().SetOnComplete([this, json]() {
 			SetMapJsonData(json->GetData());
