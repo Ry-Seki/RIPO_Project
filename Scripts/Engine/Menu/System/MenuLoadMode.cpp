@@ -23,11 +23,10 @@ void MenuLoadMode::Open() {
 	MenuBase::Open();
 	auto& menu = MenuManager::GetInstance();
 	auto saveMenu = menu.GetMenu<MenuSelectSaveSlot>();
-	menu.OpenMenu<MenuSelectSaveSlot>();
 	saveMenu->SetSaveMode(mode);
 	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fadeIn, [this, &menu]() {
-		isStart = true;
+	FadeManager::GetInstance().StartFade(fadeIn, [&menu]() {
+		menu.OpenMenu<MenuSelectSaveSlot>();
 	});
 }
 /*

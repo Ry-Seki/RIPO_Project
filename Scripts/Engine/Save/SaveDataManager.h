@@ -1,5 +1,6 @@
 /*
  *	@file	SaveDataManager.h
+ *	@author	Seki
  */
 
 #ifndef _SAVE_DATA_MANAGER_H_
@@ -12,7 +13,7 @@
 #include <string>
 #include <fstream>
 #include <filesystem>
-#include <iostream>
+#include <vector>
 #include <cassert>
 
 // 前方宣言
@@ -22,14 +23,18 @@ class SaveDataManager : public Singleton<SaveDataManager> {
 	friend class Singleton<SaveDataManager>;
 
 private:
+	int currentSlotIndex = -1;							// 現在のスロット番号
+	std::string currentSlotPath;							// 現在のスロット
 	SaveData currentSaveData;							// 現在プレイ中のスロット
 	SaveData autoSaveData;								// オートセーブ専用
-	std::string currentSlot;							// 現在のスロット
 
 	const std::string _SAVE_FILE_PATH = "SaveData/";	// ファイルパス
 	const std::string _JSON_PATH = ".json";				// JSON拡張子
 	const std::string _AUTO_SAVE = "AutoSave";			// オートセーブ
+
 	const int _SAVE_VERSION = 1;						// 将来のバージョン管理用
+	const int _SELECT_SLOT_MIN = 1;
+	const int _SELECT_SLOT_MAX = 3;
 
 private:
 	/*
@@ -176,8 +181,18 @@ public:
 	 *	@param[in]	ActionContext& context
 	 */
 	void ApplyLoadData(ActionContext& context);
+	/*
+	 *	@brief		全てのセーブスロットの使用状態の確認
+	 *	@return		std::vector<bool>
+	 */
+	std::vector<bool> GetAllSlotIsUsed();
 
 public:
+	/*
+	 *	@brief		スロットの取得
+	 *	@return		int
+	 */
+	inline int GetCurrentSlot() const { return currentSlotIndex; }
 	/*
 	 *	@brief		ファイルパスを生成
 	 *	@param[in]	const std::string& slotPath

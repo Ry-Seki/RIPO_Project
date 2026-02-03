@@ -16,8 +16,6 @@ class Engine;
  *	@brief	ロードメニュー
  */
 class MenuSelectLoadGame : public MenuBase {
-private:
-	GameEnum::SaveSlotMenuMode mode = GameEnum::SaveSlotMenuMode::Load;
 
 public:
 	/*

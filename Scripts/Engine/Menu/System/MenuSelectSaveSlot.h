@@ -58,7 +58,7 @@ public:
 	 *	@brief		ボタンのコールバック登録
 	 *	@param[in]	int slotIndex
 	 */
-	void SelectButtonExecute(int slotIndex);
+	void SelectButtonExecute(Engine& engine, int slotIndex);
 
 public:
 	/*
