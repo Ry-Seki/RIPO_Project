@@ -70,6 +70,7 @@ void MenuInGame::Update(Engine& engine, float unscaledDeltaTime) {
 
     if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)]) {
         MenuManager::GetInstance().CloseTopMenu();
+        return;
     }
 
     // イベントシステムの更新
@@ -93,7 +94,7 @@ void MenuInGame::Render() {
     for (auto& button : buttonList) {
         button->Render();
     }
-    DrawFormatString(100, 50, GetColor(255, 255, 255), "MenuSelectSaveSlot");
+    DrawFormatString(100, 50, GetColor(255, 255, 255), "InGameMenu");
 }
 /*
  *	@brief	メニューを閉じる

@@ -64,7 +64,7 @@ void MenuGameModeSelect::Update(Engine& engine, float unscaledDeltaTime) {
 				isVisible = false;
 				menu.OpenMenu<MenuSystem>();
 			});
-		} else if (CheckHitKey(KEY_INPUT_RETURN)) {
+		} else if (CheckHitKey(KEY_INPUT_ESCAPE)) {
 			AudioUtility::PlaySE("DebugSE");
 			inputHandle = true;
 			FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.0f, FadeDirection::Out, FadeMode::Stop);
@@ -82,7 +82,7 @@ void MenuGameModeSelect::Render() {
 	DrawFormatString(50, 100, GetColor(0, 255, 0), "1: NewGame");
 	DrawFormatString(50, 120, GetColor(0, 255, 0), "2: LoadGame");
 	DrawFormatString(50, 140, GetColor(0, 255, 0), "3: System");
-	DrawFormatString(300, 450, GetColor(255, 255, 255), "Return->EnterKey");
+	DrawFormatString(300, 450, GetColor(255, 255, 255), "Return->EscapeKey");
 }
 /*
  *	@brief	ƒƒjƒ…[‚ğ•Â‚¶‚é

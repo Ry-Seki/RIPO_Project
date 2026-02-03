@@ -47,6 +47,10 @@ public:
 	 *	@brief	メニューを閉じる
 	 */
 	void Close(Engine& engine) override;
+	/*
+	 *	@brief	メニューを再開
+	 */
+	void Resume() override;
 
 public:
 	/*

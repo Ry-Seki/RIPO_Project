@@ -44,7 +44,7 @@ void MainGameScene::Initialize(Engine& engine) {
  */
 void MainGameScene::Setup(Engine& engine) {
     auto& save = SaveDataManager::GetInstance();
-    save.AutoSaveLoad();
+    save.LoadCurrentSlot();
 
     auto& context = gameState->GetActionContext();
     save.ApplyLoadData(context);
@@ -96,9 +96,11 @@ void MainGameScene::EndMainGameScene(Engine& engine) {
     auto& save = SaveDataManager::GetInstance();
     // アクション終了フラグの変更
     gameState->SetIsActionEnd(false);
-    // オートセーブにセーブ
+    // 現在選択されているスロットにセーブ
     save.CollectSaveData(context);
-    save.AutoSave();
+    save.SaveCurrentSlot();
+    // 現在選択されているスロットがオートセーブでなければオートセーブする
+    if(save.GetCurrentSlot() != 0) save.AutoSave();
     // シーン遷移条件
     if (context.elapsedDay > _END_DAY) {
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
