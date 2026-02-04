@@ -11,7 +11,8 @@
 #include "RevolverArm.h"
 
 WeaponBase::WeaponBase()
-	: ammoCount(0)
+	: number(GameEnum::Weapon::Invalid)
+	, ammoCount(0)
 	, ammoCountMax(0)
 	, reloadingTime(0.0f)
 	, reloadingTimeMax(0)

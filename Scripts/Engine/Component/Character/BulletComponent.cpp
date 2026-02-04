@@ -23,6 +23,7 @@ using namespace CharacterUtility;
 BulletComponent::BulletComponent()
 	: destroyTimeCount(3)
 	, bullet(nullptr)
+	, hitDamage(0.0f)
 
 	, SHOT_SPEED(10000) {
 }

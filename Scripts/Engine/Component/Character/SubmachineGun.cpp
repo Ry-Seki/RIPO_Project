@@ -1,16 +1,16 @@
 /*
- *	@file	RevolverArm.cpp
- *  @author Riku
+ *	@file	SubmachineGun.cpp
+ *	@author Riku
  */
 
-#include "RevolverArm.h"
+#include "SubmachineGun.h"
 
 /*
  *	初期化処理
  */
-void RevolverArm::Initialize() {
-	number = GameEnum::Weapon::Revolver;
-	// リボルバーのデータ取得
+void SubmachineGun::Initialize() {
+	number = GameEnum::Weapon::SubmachineGun;
+	// サブマシンガンのデータ取得
 	auto data = WeaponDataManager::GetInstance().GetWeaponData(number);
 
 	shotCoolTimeMax = data.shotCoolTime;
@@ -24,13 +24,13 @@ void RevolverArm::Initialize() {
 /*
  *	更新処理
  */
-void RevolverArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) {
+void SubmachineGun::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) {
 	// クールタイム
 	if (shotCoolTime <= 0) {
 		shotCoolTime = 0;
 		// 左クリックで射撃
 		int shot = static_cast<int>(GameEnum::PlayerAction::Shot);
-		if (action.buttonDown[shot]) {
+		if (action.button[shot]) {
 			if (ammoCount > 0) {
 				ShotBullet();
 				shotCoolTime = shotCoolTimeMax;
