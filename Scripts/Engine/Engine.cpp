@@ -156,11 +156,11 @@ void Engine::Update() {
 	// 入力の更新
 	InputManager::GetInstance().Update();
 
-	// シーンの更新処理
-	if (currentScene && !isLoading && !isFadeStop) currentScene->Update(*this, Time::deltaTime);
-
 	// メニューの更新処理
 	MenuManager::GetInstance().Update(Time::unscaledDeltaTime);
+
+	// シーンの更新処理
+	if (currentScene && !isLoading && !isFadeStop) currentScene->Update(*this, Time::deltaTime);
 
 	// 音源の更新
 	AudioManager::GetInstance().Update();

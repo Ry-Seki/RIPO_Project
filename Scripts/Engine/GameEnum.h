@@ -90,6 +90,17 @@ namespace GameEnum {
 		Load
 	};
 	/*
+	 *	@brief	ボタンの種類
+	 *	@author	Seki
+	 */
+	enum class ButtonType {
+		Invalid = -1,
+		SinglePressButton,
+		LongPressButton,
+
+		Max
+	};
+	/*
 	 *	@brief	ボタンの入力状態
 	 *	@author	Seki
 	 */

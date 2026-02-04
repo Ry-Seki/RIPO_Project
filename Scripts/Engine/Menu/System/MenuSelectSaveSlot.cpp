@@ -13,36 +13,34 @@
 #include "../../UI/Button/SinglePressButton.h"
 #include "../../Engine.h"
 #include "../../Scene/MainGameScene.h"
+#include "../MenuResourcesFactory.h"
+#include "../../../Data/UI/MenuInfo.h"
 
 /*
  *	@brief	初期化処理
  */
 void MenuSelectSaveSlot::Initialize (Engine& engine) {
-    buttonList.resize(5);
-    for (int i = 0; i < 5; i++) {
-        buttonList[i] = std::make_shared<SinglePressButton>(Rect(200, 100 * i, 700, 80));
-        buttonList[i]->SetName("SaveSlot");
-        // ボタンの登録
-        eventSystem.RegisterButton(buttonList[i].get());
-    }
-    // イベントシステムの初期化
-    eventSystem.Initialize(0);
-
     auto& load = LoadManager::GetInstance();
-    auto buttonHandle = load.LoadResource<LoadSprite>(_BUTTON_IMAGE_PATH);
-    auto navigation   = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
+    auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
+    auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
 
-    load.SetOnComplete([this, &engine, navigation, buttonHandle]() {
-        for (int i = 0, max = buttonList.size(); i < max; i++) {
-            auto button = buttonList[i];
+    load.SetOnComplete([this, &engine, menuJSON, navigation]() {
+        MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
+        for (auto& button : result.buttonList) {
             if (!button) continue;
 
-            button->Initialize();
+            eventSystem.RegisterButton(button.get());
+        }
+        eventSystem.Initialize(0);
+        buttonList = std::move(result.buttonList);
+        for (int i = 0, max = buttonList.size(); i < max; i++) {
+            UIButtonBase* button = buttonList[i].get();
+            if (!button) continue;
+
             button->RegisterUpdateSelectButton([this, button]() {
-                eventSystem.UpdateSelectButton(button.get());
+                eventSystem.UpdateSelectButton(button);
             });
-            // TODO : のちに登録する
-            //button->RegisterButtonHandle(buttonHandle->GetHandle());
+
             button->RegisterOnClick([this, &engine, i]() {
                 SelectButtonExecute(engine, i);
             });

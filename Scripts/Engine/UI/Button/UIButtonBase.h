@@ -14,6 +14,7 @@
 #include <vector>
 #include <memory>
 #include <functional>
+#include <unordered_map>
 
 /*
  *	@brief	UIボタンの基底クラス
@@ -30,7 +31,7 @@ protected:
 
 	Rect rect;
 	std::string name = "";
-	std::vector<int> handleList;
+	std::vector<int> handleList;							
 	std::vector<IButtonStateRendererPtr> rendererList;	// TODO : そのうち追加
 
 	std::function<void()> OnClick = nullptr;
@@ -142,12 +143,13 @@ public:
 	}
 	/*
 	 *	@brief		画像ハンドルの登録
+	 *	@param[in]	int index
 	 *	@param[in]	int setHandle
 	 */
-	inline void RegisterButtonHandle(int setHandle) {
-		if (setHandle == -1) return;
+	inline void RegisterButtonHandle(int index, int setHandle) {
+		if (setHandle == -1 || index > handleList.size()) return;
 
-		handleList.push_back(setHandle);
+		handleList[index] = setHandle;
 	}
 	/*
 	 *	@brief		発火イベントの登録

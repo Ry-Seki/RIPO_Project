@@ -1,0 +1,78 @@
+{
+  "BackGround": {
+    "Resources": [
+
+    ]
+  },
+  "Buttons": [
+    {
+      "Name": "AutoSaveSlot",
+      "Type": "Single",
+      "Rect": {
+        "X": 200,
+        "Y": 50,
+        "Width": 700,
+        "Height": 80
+      },
+      "Resources": {
+        "Idle": "Res/Menu/System/Trealine_SaveSlot.png",
+        "Disable": "Res/Menu/System/Trealine_InitSaveSlot.png"
+      }
+    },
+    {
+      "Name": "SaveSlot1",
+      "Type": "Single",
+      "Rect": {
+        "X": 200,
+        "Y": 150,
+        "Width": 700,
+        "Height": 80
+      },
+      "Resources": {
+        "Idle": "Res/Menu/System/Trealine_SaveSlot.png",
+        "Disable": "Res/Menu/System/Trealine_InitSaveSlot.png"
+      }
+    },
+    {
+      "Name": "SaveSlot2",
+      "Type": "Single",
+      "Rect": {
+        "X": 200,
+        "Y": 250,
+        "Width": 700,
+        "Height": 80
+      },
+      "Resources": {
+        "Idle": "Res/Menu/System/Trealine_SaveSlot.png",
+        "Disable": "Res/Menu/System/Trealine_InitSaveSlot.png"
+      }
+    },
+    {
+      "Name": "SaveSlot3",
+      "Type": "Single",
+      "Rect": {
+        "X": 200,
+        "Y": 350,
+        "Width": 700,
+        "Height": 80
+      },
+      "Resources": {
+        "Idle": "Res/Menu/System/Trealine_SaveSlot.png",
+        "Disable": "Res/Menu/System/Trealine_InitSaveSlot.png"
+      }
+    },
+    {
+      "Name": "Back",
+      "Type": "Single",
+      "Rect": {
+        "X": 500,
+        "Y": 450,
+        "Width": 700,
+        "Height": 80
+      },
+      "Resources": {
+
+      }
+    }
+  ]
+}
