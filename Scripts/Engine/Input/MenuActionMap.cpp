@@ -47,7 +47,7 @@ void MenuActionMap::Initialize() {
 	// クリック
 	AddButton(
 		static_cast<int>(GameEnum::MenuAction::Click),
-		{ InputType::Mouse, MOUSE_INPUT_LEFT }
+		{ InputType::MouseButton, MOUSE_INPUT_LEFT }
 	);
 	// キャンセル
 	AddButton(

@@ -36,11 +36,11 @@ void PlayerActionMap::Initialize() {
 	// ËŒ‚
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::Shot),
-		{ InputType::Mouse, MOUSE_INPUT_LEFT });
+		{ InputType::MouseButton, MOUSE_INPUT_LEFT });
 	// ‚¨•ó‚¿ã‚°
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::Lift),
-		{ InputType::Mouse, MOUSE_INPUT_RIGHT });
+		{ InputType::MouseButton, MOUSE_INPUT_RIGHT });
 	// ƒƒjƒ…[‚ğŠJ‚­
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::OpenMenu),
