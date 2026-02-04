@@ -6,6 +6,7 @@
 #include "WeaponBase.h"
 #include "../../Manager/BulletManager.h"
 #include "../../Manager/CameraManager.h"
+#include "../../Manager/WeaponManager.h"
 #include "../../Load/LoadManager.h"
 #include "RevolverArm.h"
 
@@ -14,6 +15,8 @@ WeaponBase::WeaponBase()
 	, ammoCountMax(0)
 	, reloadingTime(0.0f)
 	, reloadingTimeMax(0)
+	, shotCoolTime(0)
+    , shotCoolTimeMax(0)
 
 	, BULLET_NAME("bullet")
 	, BULLET_AABB_MIN({ -10, 0, -10 })
@@ -22,31 +25,23 @@ WeaponBase::WeaponBase()
 }
 
 /*
- *	最初のUpdateの直前に呼び出される処理
- */
-void WeaponBase::Start() {
-	weapons[GameEnum::Weapon::Revolver] = std::make_shared<RevolverArm>();
-	// 初期設定はリボルバー
-	currentWeapon = weapons[GameEnum::Weapon::Revolver];
-}
-
-/*
  *	初期化処理
  */
 void WeaponBase::Initialize() {
-	currentWeapon->Initialize();
+	WeaponManager::GetInstance().GetCurrentWeapon()->Initialize();
 }
 
 /*
  *	更新処理
  */
 void WeaponBase::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) {
-	currentWeapon->ArmUpdate(deltaTime, action);
+	WeaponBasePtr weapon = WeaponManager::GetInstance().GetCurrentWeapon();
+	weapon->ArmUpdate(deltaTime, action);
 	int reload = static_cast<int>(GameEnum::PlayerAction::BulletReload);
 	
 	// 手動リロード
 	if (action.buttonDown[reload])
-		currentWeapon->BulletReload();
+		weapon->BulletReload();
 }
 
 /*
@@ -64,4 +59,11 @@ void WeaponBase::ShotBullet() {
  */
 void WeaponBase::BulletReload() {
 	ammoCount = ammoCountMax;
+}
+
+/*
+ *	番号取得
+ */
+GameEnum::Weapon WeaponBase::GetNumber() {
+	return number;
 }

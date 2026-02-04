@@ -7,10 +7,15 @@
 #include "CharacterUtility.h"
 #include "../../GameObject.h"
 #include "../../GameConst.h"
+#include "../../GameEnum.h"
 #include "../../GameObject/GameObjectUtility.h"
 #include "../../Manager/CameraManager.h"
+#include "../../Manager/WeaponManager.h"
 #include "../../System/Money/MoneyManager.h"
 #include "../../Scene/Scene.h"
+#include "../../../Data/WeaponDataManager.h"
+#include "../Character/ArmActionComponent.h"
+#include "../Character/WeaponBase.h"
 
 using namespace GameObjectUtility;
 using namespace CharacterUtility;
@@ -39,13 +44,17 @@ void BulletComponent::Start() {
 		}
 	);
 	hitDirection = Direction(bullet->position, hitInfo.point);
+
+	// ダメージ設定
+	float playerStrength = GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus().strength;
+	auto weaponNumber = WeaponManager::GetInstance().GetCurrentWeaponNum();
+	float defaultDamage = WeaponDataManager::GetInstance().GetWeaponData(weaponNumber).defaultDamage;
+	hitDamage = defaultDamage + (defaultDamage * playerStrength * 0.1f);
+	
 }
 
 void BulletComponent::Update(float deltaTime) {
 	if (!bullet) return;
-	//// 前に進む
-	//Vector3 forward = ForwardDir(bullet->rotation);
-	//bullet->position += forward * SHOT_SPEED * deltaTime;
 	
 	// 着弾地点に進む
 	bullet->position += hitDirection * SHOT_SPEED * deltaTime;

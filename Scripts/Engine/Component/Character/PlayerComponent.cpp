@@ -128,7 +128,7 @@ void PlayerComponent::Update(float deltaTime) {
 	if (action.button[lift])
 		playerArm->SetCurrentArm(GameEnum::Arm::Hand);
 	int shot = static_cast<int>(GameEnum::PlayerAction::Shot);
-	// 左クリックでウデアクションを銃に設定
+	// 左クリックでウデアクションを武器に設定
 	if (action.button[shot])
 		playerArm->SetCurrentArm(GameEnum::Arm::Weapon);
 }
