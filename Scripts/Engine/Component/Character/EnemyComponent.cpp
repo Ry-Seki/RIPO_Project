@@ -87,28 +87,28 @@ void EnemyComponent::Update(float deltaTime) {
 
 	VECTOR position = ToVECTOR(enemy->position);
 
-	auto camera = GetCameraViewMatrix();
-	VECTOR forward;
-	forward.x = -camera.m[2][0];
-	forward.y = -camera.m[2][1];
-	forward.z = -camera.m[2][2];
-	forward = VNorm(forward);
+	//auto camera = GetCameraViewMatrix();
+	//VECTOR forward;
+	//forward.x = -camera.m[2][0];
+	//forward.y = -camera.m[2][1];
+	//forward.z = -camera.m[2][2];
+	//forward = VNorm(forward);
+	//
+	//GameObjectPtr cameraObj = CameraManager::GetInstance().GetCamera();
+	//float pitch = cameraObj->rotation.x;
+	//float yaw = cameraObj->rotation.y;
+	//VECTOR OBcamera = ToVECTOR(DxForwardDir(cameraObj->rotation));
+	//OBcamera = VNorm(OBcamera);
+	//
+	//float dot = VDot(OBcamera, forward);
+	//dot = std::clamp(dot, -1.0f, 1.0f);
+	//float angle = acosf(dot) * 180.0f / Pi;
 
-	GameObjectPtr cameraObj = CameraManager::GetInstance().GetCamera();
-	float pitch = cameraObj->rotation.x;
-	float yaw = cameraObj->rotation.y;
-	VECTOR OBcamera = ToVECTOR(DxForwardDir(cameraObj->rotation));
-	OBcamera = VNorm(OBcamera);
+	//MATRIX viewMat = /* あなたが直したView行列 */;
+	//MATRIX projMat = /* 使用しているProjection行列 */;
 
-	float dot = VDot(OBcamera, forward);
-	dot = std::clamp(dot, -1.0f, 1.0f);
-	float angle = acosf(dot) * 180.0f / Pi;
-
-	MATRIX viewMat = /* あなたが直したView行列 */;
-	MATRIX projMat = /* 使用しているProjection行列 */;
-
-	SetCameraViewMatrix(viewMat);
-	SetCameraProjectionMatrix(projMat);
+	//SetCameraViewMatrix(viewMat);
+	//SetCameraProjectionMatrix(projMat);
 
 	// 線
 	//VECTOR camPos = ToVECTOR(cameraObj->position);
@@ -128,7 +128,7 @@ void EnemyComponent::Update(float deltaTime) {
 	//	GetColor(0, 255, 0) // 緑
 	//);
 
-	enemy->GetComponent<HPBarComponent>()->ShowHPBar(position);
+	//enemy->GetComponent<HPBarComponent>()->ShowHPBar(position);
 }
 
 /*

@@ -34,7 +34,7 @@ public:
 	 *	HPバーを表示させる
 	 *	param[in]	Vector3	selfPos		自分自身のポジション
 	 */
-	void ShowHPBar(VECTOR selfPos);
+	void ShowHPBar();
 
 };
 

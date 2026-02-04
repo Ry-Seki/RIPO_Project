@@ -16,6 +16,7 @@
 #include "../Save/SaveDataManager.h"
 #include "../Menu/MenuManager.h"
 #include "../Menu/MainGame/MenuInGame.h"
+#include "../Component/Character/HPBarComponent.h"
 
 /*
  *  @brief  デストラクタ
@@ -86,6 +87,15 @@ void MainGameScene::Render() {
         auto aabb = obj->GetComponent<AABBCollider>();
         if (aabb != nullptr)
             aabb->DebugRender();
+    }
+
+    // HPゲージ
+    for (auto& obj : gameObjects) {
+        if (obj->name != GameConst::_CREATE_POSNAME_ENEMY)
+            continue;
+        auto HPBar = obj->GetComponent<HPBarComponent>();
+        if (HPBar != nullptr)
+            HPBar->ShowHPBar();
     }
 }
 /*

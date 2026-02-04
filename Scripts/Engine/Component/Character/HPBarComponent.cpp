@@ -27,19 +27,22 @@ void HPBarComponent::Update(float deltaTime)
  *	HPバーを表示させる
  *	param[in]	VECTOR	selfPos		自分自身のポジション
  */
-void HPBarComponent::ShowHPBar(VECTOR selfPos)
+void HPBarComponent::ShowHPBar()
 {
+	auto enemy = GetOwner();
+	VECTOR enemyPos = ToVECTOR(enemy->position);
 	// ワールド座標からスクリーン座標に変換
-	Vector3 screenPos = ConvWorldPosToScreenPos(selfPos);
+	Vector3 screenPos = DxLib::ConvWorldPosToScreenPos(enemyPos);
 	DrawFormatString(0, 130, GetColor(255, 255, 255), "screenPos(%f,%f,%f)",
 		screenPos.x, screenPos.y, screenPos.z);
 
+	// カメラ裏なら表示しない
+	if (screenPos.z > 1.0f) return;
+
 	int BoxX = screenPos.x;
-	int BoxY = screenPos.y + 100;
+	int BoxY = screenPos.y - 60;
 
-	/*if (BoxX > 0 && BoxY > 0) {
-
-	}*/
-
-	DrawBox(BoxX, BoxY, BoxX + 40, BoxY + 6, GetColor(50, 50, 50), true);
+	const float halfWidth = 40.0f;
+	const float halfHeight = 6.0f;
+	DrawBox(BoxX - halfWidth, BoxY - halfHeight, BoxX + halfWidth, BoxY + halfHeight, GetColor(0, 250, 0), true);
 }
