@@ -1,0 +1,33 @@
+{
+  "BackGround": {
+    "Resources": [
+
+    ]
+  },
+  "Buttons": [
+    {
+      "Name": "Confirm",
+      "Type": "Single",
+      "Rect": {
+        "X": 100,
+        "Y": 350,
+        "Width": 200,
+        "Height": 80
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "Cancel",
+      "Type": "Single",
+      "Rect": {
+        "X": 400,
+        "Y": 350,
+        "Width": 500,
+        "Height": 80
+      },
+      "Resources": {
+      }
+    }
+  ]
+}
