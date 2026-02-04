@@ -666,14 +666,17 @@
     <ClCompile Include="Scripts\Engine\Menu\System\MenuLoadMode.cpp">
       <Filter>ソース ファイル\Engine\Menu\System</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Button\ButtonFactory.cpp">
-      <Filter>ソース ファイル\Engine\UI</Filter>
+    <ClCompile Include="Scripts\Engine\Manager\WeaponManager.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\MenuResourcesFactory.cpp">
-      <Filter>ソース ファイル\Engine\Menu</Filter>
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\System\MenuConfirm.cpp">
-      <Filter>ソース ファイル\Engine\Menu\System</Filter>
+    <ClCompile Include="Scripts\Engine\UI\Button\ButtonFactory.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\SubmachineGun.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1196,11 +1199,14 @@
     <ClInclude Include="Scripts\Data\WeaponDataManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Engine\Manager\WeaponManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\Button\ButtonFactory.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\System\MenuConfirm.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
+    <ClInclude Include="Scripts\Engine\Component\Character\SubmachineGun.h">
+      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
