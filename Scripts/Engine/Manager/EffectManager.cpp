@@ -6,6 +6,7 @@
 #include "EffectManager.h"
 #include "EffekseerForDXLib.h"
 #include "../Component/EffectComponent.h"
+#include "../Load/JSON/LoadJSON.h"
 
  /*
   *	コンストラクタ
@@ -17,6 +18,20 @@ EffectManager::EffectManager()
 }
 
 /*
+ *	初期化
+ */
+void EffectManager::Initialize(Engine& setEngine) {
+	engine = &setEngine;
+
+	if (json.empty()) {
+		return;
+	}
+
+	// エフェクトをまとめてロード
+	LoadEffects();
+}
+
+/*
  *	エフェクトの読み込み
  *  @param	filePath				ファイルパス
  *  @param	name					エフェクトに設定する名前
@@ -24,33 +39,41 @@ EffectManager::EffectManager()
  */
 void EffectManager::Load(std::string filePath, std::string name, float magnification) {
 
-	// 読み込み
-	int res = LoadEffekseerEffect(filePath.c_str(), magnification);
-
-	// リソースの管理
-#if 0
-	effectResourceMap[_filePath.c_str()] = res;
-#else
-	// 既に登録されているか、検索をする
-	auto itr = effectResourceMap.find(filePath.c_str());
-	if (itr == effectResourceMap.end()) {
-		// 登録
-		effectResourceMap.emplace(name.c_str(), res);
+	// すでに登録済みなら何もしない
+	if (effectResourceMap.contains(name)) {
+		return;
 	}
 
-#endif
+	// エフェクト読み込み
+	int res = LoadEffekseerEffect(filePath.c_str(), magnification);
+
+	// 読み込み失敗チェック
+	if (res < 0) {
+		return;
+	}
+
+	// 名前をキーに登録
+	effectResourceMap.emplace(name, res);
+
 }
 
 /*
  *	エフェクトの発生
  */
 EffectComponent* EffectManager::Instantiate(std::string name, Vector3 _pos) {
-	EffectComponent* pEffect = new EffectComponent(effectResourceMap[name]);
-	// 座標を指定
-	pEffect->SetPosition(_pos);
-	// 一元配列に追加
-	pEffectList.push_back(pEffect);
+	// 登録されているか検索
+	auto itr = effectResourceMap.find(name);
+	if (itr == effectResourceMap.end()) {
+		return nullptr;
+	}
 
+	int effectResouceHandle = itr->second;
+
+	EffectComponent* pEffect = new EffectComponent(effectResouceHandle);
+	pEffect->SetPosition(_pos);
+	pEffect->SetVisible(true);
+	pEffectList.push_back(pEffect);
+	
 	return pEffect;
 }
 
@@ -70,7 +93,8 @@ void EffectManager::Update() {
 		[](EffectComponent* _pE) {return !_pE->IsVisile(); }
 	);
 
-
+	
+	
 	UpdateEffekseer3D();
 }
 
@@ -79,11 +103,11 @@ void EffectManager::Update() {
  */
 void EffectManager::Render() {
 	for (auto pEffe : pEffectList) {
-		if (pEffe == nullptr || !pEffe->IsVisile())continue;
+		if (pEffe == nullptr || !pEffe->IsVisile())
+			continue;
 
-
+		pEffe->Render();
 	}
-
 	DrawEffekseer3D();
 }
 
