@@ -13,6 +13,7 @@
 #include "../../UI/Button/SinglePressButton.h"
 #include "../../Engine.h"
 #include "../../Scene/MainGameScene.h"
+#include "../MenuResourcesFactory.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—

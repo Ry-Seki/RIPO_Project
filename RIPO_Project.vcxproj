@@ -199,6 +199,7 @@
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuInGame.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MenuResourcesFactory.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuLoadMode.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuSaveMode.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.cpp" />
@@ -253,6 +254,7 @@
     <ClCompile Include="Scripts\Engine\System\World\WorldProgressManager.cpp" />
     <ClCompile Include="Scripts\Engine\Time.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Button\ButtonFactory.cpp" />
     <ClCompile Include="Scripts\Engine\UI\Button\LongPressButton.cpp" />
     <ClCompile Include="Scripts\Engine\UI\Button\SinglePressButton.cpp" />
     <ClCompile Include="Scripts\Engine\UI\Button\UIButtonBase.cpp" />
@@ -272,6 +274,8 @@
     <ClInclude Include="Scripts\Data\PlayerStatusData.h" />
     <ClInclude Include="Scripts\Data\SaveData.h" />
     <ClInclude Include="Scripts\Data\TreasureDataList.h" />
+    <ClInclude Include="Scripts\Data\UI\Button\ButtonInfo.h" />
+    <ClInclude Include="Scripts\Data\UI\MenuInfo.h" />
     <ClInclude Include="Scripts\Data\WeaponDataManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioSource.h" />
@@ -424,6 +428,7 @@
     <ClInclude Include="Scripts\Engine\System\Status\PlayerStatusManager.h" />
     <ClInclude Include="Scripts\Engine\System\World\WorldProgressManager.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
+    <ClInclude Include="Scripts\Engine\UI\Button\ButtonFactory.h" />
     <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer.h" />
     <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer_Idle.h" />
     <ClInclude Include="Scripts\Engine\UI\Button\LongPressButton.h" />
