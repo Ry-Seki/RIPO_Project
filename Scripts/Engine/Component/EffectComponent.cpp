@@ -8,10 +8,10 @@
  /*
   * コンストラクタ
   */
-EffectComponent::EffectComponent(int& _resourceHandle)
+EffectComponent::EffectComponent(int& _resourceHandle, bool isLoop)
 	:resourceHandle(_resourceHandle)
 	, playingHandle(-1)
-	, isLoop(false)
+	, isLoop(isLoop)
 	, isVisible(false) {
 }
 
@@ -22,13 +22,28 @@ EffectComponent::EffectComponent(int& _resourceHandle)
 void EffectComponent::EffectRenderer() {
 	if (!isVisible)return;
 
-	// エフェクト再生
-	if (playingHandle == -1)
+	// まだ再生ハンドルを持っていなければ再生開始
+	if (playingHandle == -1) {
 		playingHandle = PlayEffekseer3DEffect(resourceHandle);
+		
+	}
 
-	// 再生が終わったら
-	if (!IsEffekseer3DEffectPlaying(playingHandle))
-		isVisible = false;
+	// 再生が終了していれば
+	if (!IsEffekseer3DEffectPlaying(playingHandle)) {
+
+		// ループ再生
+		if (isLoop) {
+			playingHandle = PlayEffekseer3DEffect(resourceHandle);
+		}
+		// ループしない
+		else {
+			isVisible = false;
+			// 再利用防止
+			playingHandle = -1;
+			return;
+		}
+	}
+
 
 	// エフェクトの座標を更新
 	SetPosPlayingEffekseer3DEffect(playingHandle, position.x, position.y, position.z);

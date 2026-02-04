@@ -24,7 +24,7 @@ public:
 	 *	コンストラクタ
 	 *  @param		resourcehandle	再生するエフェクトの本体
 	 */
-	EffectComponent(int& _resourceHandle);
+	EffectComponent(int& _resourceHandle, bool isLoop);
 	~EffectComponent() = default;
 
 public:

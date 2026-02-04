@@ -12,13 +12,20 @@
   */
 Treasure::Treasure()
 	: StageObjectBase()
-	, isCollected(false){
+	, isCollected(false)
+	, pViewingEffect(nullptr) {
 }
 /*
  *	デストラクタ
  */
 Treasure::~Treasure() {
 
+}
+void Treasure::Start() {
+	//EffectManager::GetInstance().Instantiate(
+	//	"treasureViewing",
+	//	GetOwner()->position
+	//);
 }
 /*
  *	@function	Update
@@ -28,8 +35,14 @@ Treasure::~Treasure() {
 void Treasure::Update(float deltaTime) {
 	if (isCollected) return;
 
-	auto ownerPosition = GetOwner()->position;
-	EffectManager::GetInstance().Instantiate("treasureViewing",ownerPosition );
+	// まだエフェクトを生成していなければ生成
+	if (pViewingEffect == nullptr) {
+		pViewingEffect = EffectManager::GetInstance().Instantiate(
+			"treasureViewing",
+			GetOwner()->position
+		);
+	}
+
 }
 /*
  *	衝突が起きたときに呼び出される処理

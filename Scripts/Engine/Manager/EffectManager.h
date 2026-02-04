@@ -18,6 +18,8 @@ private:
 	Engine* engine;										// ゲームエンジン参照
 	std::map<std::string, int>effectResourceMap;		// リソースの連想配列
 	std::list<class EffectComponent*> pEffectList;		// エフェクトの一元配列
+	bool isLoop;	// ループ可否
+
 
 	JSON json;		// jsonデータ
 
