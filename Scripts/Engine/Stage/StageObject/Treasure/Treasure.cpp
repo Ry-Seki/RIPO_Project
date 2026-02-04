@@ -7,6 +7,7 @@
 #include "../Scripts/Engine/GameConst.h"
 #include "../Scripts/Engine/VecMath.h"
 #include "../Scripts/Engine/Manager/EffectManager.h"
+#include "../Scripts/Engine/Component/EffectComponent.h"
  /*
   *	コンストラクタ
   */

@@ -1,9 +1,9 @@
 {
   "effects": [
     {
-      "file": "Res/Effect/Treasure/TreasureEffect.efk",
+      "file": "Res/Effect/Treasure/TreasureEff.efkefc",
       "name": "treasureViewing",
-      "magnification": 50.0,
+      "magnification": 30.0,
       "loop": true
     },
     {

@@ -23,16 +23,24 @@ void EffectComponent::EffectRenderer() {
 	if (!isVisible)return;
 
 	// まだ再生ハンドルを持っていなければ再生開始
-	if (playingHandle == -1) {
+	if (playingHandle == -1)
 		playingHandle = PlayEffekseer3DEffect(resourceHandle);
-		
-	}
+	// エフェクトの座標を更新
+	SetPosPlayingEffekseer3DEffect(playingHandle, position.x, position.y, position.z);
+
+}
+
+/*
+ *	エフェクト停止
+ */
+void EffectComponent::EffectStop() {
+	if (!isVisible)return;
 
 	// 再生が終了していれば
-	if (!IsEffekseer3DEffectPlaying(playingHandle)) {
-
+	if (IsEffekseer3DEffectPlaying(playingHandle) == -1) {
 		// ループ再生
 		if (isLoop) {
+			// StopEffekseer3DEffect(playingHandle);
 			playingHandle = PlayEffekseer3DEffect(resourceHandle);
 		}
 		// ループしない
@@ -43,10 +51,6 @@ void EffectComponent::EffectRenderer() {
 			return;
 		}
 	}
-
-
-	// エフェクトの座標を更新
-	SetPosPlayingEffekseer3DEffect(playingHandle, position.x, position.y, position.z);
 }
 
 /*
@@ -54,4 +58,6 @@ void EffectComponent::EffectRenderer() {
  */
 void EffectComponent::Render() {
 	if (!isVisible)return;
+
+	DrawEffekseer3D();
 }

@@ -35,6 +35,11 @@ public:
 	void EffectRenderer();
 
 	/*
+	 *	エフェクト停止
+	 */
+	void EffectStop();
+
+	/*
 	 * 描画処理
 	 */
 	void Render();
@@ -62,7 +67,7 @@ public:
 	/*
 	 *
 	 */
-	void SetPlayingHandle(int setPlayingHandle) { playingHandle == setPlayingHandle; }
+	void SetPlayingHandle(int setPlayingHandle) { playingHandle = setPlayingHandle; }
 
 };
 
