@@ -10,6 +10,7 @@
 #include "../../GameEnum.h"
 #include "../../GameObject/GameObjectUtility.h"
 #include "../../Manager/CameraManager.h"
+#include "../../Manager/WeaponManager.h"
 #include "../../System/Money/MoneyManager.h"
 #include "../../Scene/Scene.h"
 #include "../../../Data/WeaponDataManager.h"
@@ -46,11 +47,10 @@ void BulletComponent::Start() {
 
 	// ƒ_ƒ[ƒWÝ’è
 	float playerStrength = GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus().strength;
-	auto weapon = GetPlayer()->GetComponent<ArmActionComponent>()->GetCurrentArm();
-	if (auto arm = std::dynamic_pointer_cast<WeaponBase>(weapon)) {
-		float defaultDamage = WeaponDataManager::GetInstance().GetWeaponData().defaultDamage;
-		hitDamage = ;
-	}
+	auto weaponNumber = WeaponManager::GetInstance().GetCurrentWeaponNum();
+	float defaultDamage = WeaponDataManager::GetInstance().GetWeaponData(weaponNumber).defaultDamage;
+	hitDamage = defaultDamage + (defaultDamage * playerStrength * 0.1f);
+	
 }
 
 void BulletComponent::Update(float deltaTime) {

@@ -9,6 +9,7 @@
  *	初期化処理
  */
 void RevolverArm::Initialize() {
+	number = GameEnum::Weapon::Revolver;
 	// リボルバーのデータ取得
 	auto data = WeaponDataManager::GetInstance().GetWeaponData(GameEnum::Weapon::Revolver);
 

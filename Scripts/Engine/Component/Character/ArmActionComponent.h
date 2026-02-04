@@ -10,6 +10,7 @@
 #include "../../Input/ActionMapBase.h"
 #include "../../GameEnum.h"
 #include "../../Input/InputUtility.h"
+#include "../../Manager/WeaponManager.h"
 #include "../../Engine.h"
 #include "ArmBase.h"
 #include "HandArm.h"
@@ -56,8 +57,8 @@ public:
 	inline ArmBasePtr GetCurrentArm() {
 		if (!currentArm) return nullptr;
 		// currentArm‚ªWeaponBaseŒ^‚Å‚È‚¢‚È‚çnullptr‚ª‘ã“ü‚³‚ê‚é(dynamic_pointer_cast‚ÌŽd—l)
-		if (auto arm = std::dynamic_pointer_cast<WeaponBase>(currentArm)) {
-			return arm->GetCurrentWeapon();
+		if (std::dynamic_pointer_cast<WeaponBase>(currentArm)) {
+			return WeaponManager::GetInstance().GetCurrentWeapon();
 		}
 		return currentArm;
 	}

@@ -17,12 +17,11 @@
 class WeaponBase;
 using WeaponBasePtr = std::shared_ptr<WeaponBase>;
 /*
- *	銃のウデの基底クラス
+ *	武器のウデの基底クラス
  */
 class WeaponBase : public ArmBase {
 protected:
-	WeaponBasePtr currentWeapon;									// 現在設定されている銃
-	std::unordered_map<GameEnum::Weapon, WeaponBasePtr> weapons;	// 設定可能な銃達
+	GameEnum::Weapon number;		// 番号
 	int ammoCount;					// 残弾数
 	int ammoCountMax;				// 弾の最大数
 	float reloadingTime;			// リロードの残り時間
@@ -34,16 +33,11 @@ protected:
 	const Vector3 BULLET_AABB_MIN;	// 弾のAABBMin
 	const Vector3 BULLET_AABB_MAX;	// 弾のAABBMax
 
-	static constexpr const char* WEAPON_DATA_PATH = "Data/Player/Weapon/WeaponData.json";
 public:
 	WeaponBase();
 	virtual ~WeaponBase() = default;
 
 public:
-	/*
-	 *	最初のUpdateの直前に呼び出される処理
-	 */
-	void Start() override;
 	/*
 	 *	初期化処理
 	 */
@@ -52,25 +46,6 @@ public:
 	 *	更新処理
 	 */
 	virtual void ArmUpdate(float deltaTime, ActionMapBase::ActionState action) override;
-
-public:
-	/*
-	 *	使用する武器の設定
-	 */
-	inline void SetCurrentWeapon(GameEnum::Weapon setWeapon) {
-		if (currentWeapon == weapons[setWeapon])
-			return;
-		currentWeapon = weapons[setWeapon];
-		currentWeapon->Initialize();
-	}
-
-	/*
-	 *	使用中武器の取得
-	 */
-	inline WeaponBasePtr GetCurrentWeapon() {
-		if (!currentWeapon) return nullptr;
-		return currentWeapon;
-	}
 		 
 protected:
 	/*
@@ -82,6 +57,12 @@ protected:
 	 *	リロード
 	 */
 	void BulletReload();
+
+public:
+	/*
+	 *	番号取得
+	 */
+	GameEnum::Weapon GetNumber();
 	
 };
 
