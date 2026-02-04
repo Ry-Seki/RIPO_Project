@@ -30,6 +30,11 @@ std::shared_ptr<UIButtonBase> ButtonFactory::CreateButton(const ButtonInfo& butt
 		default:
 			return nullptr;
 	}
+	// ƒ{ƒ^ƒ“‚Ì‰Šú‰»ˆ—
+	button->Initialize();
+	// –¼‘O‚Ì“o˜^
+	button->SetName(buttonInfo.name);
+
 	// ƒŠƒ\[ƒX“o˜^
 	auto& load = LoadManager::GetInstance();
 

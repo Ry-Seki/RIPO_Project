@@ -16,6 +16,7 @@
  *	@brief	ƒ{ƒ^ƒ“î•ñ\‘¢‘Ì
  */
 struct ButtonInfo {
+	std::string name;
 	GameEnum::ButtonType type;
 	Rect rect;
 	std::vector<std::string> resourceList;

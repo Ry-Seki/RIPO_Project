@@ -16,6 +16,7 @@ void UIButtonBase::Initialize() {
 	inputState = GameEnum::ButtonInputState::Idle;
 	selectState = GameEnum::ButtonSelectState::Invalid;
 	inputClickNum = static_cast<int>(GameEnum::MenuAction::Click);
+	handleList.resize(static_cast<int>(GameEnum::ButtonRendererState::Max));
 }
 /*
  *	@brief	€”õ‘Oˆ—
@@ -82,6 +83,9 @@ void UIButtonBase::DebugRender() {
 		color,
 		FALSE
 	);
+	if (!name.empty()) {
+		DrawFormatString(rect.x + 50, rect.y + rect.height / 2, GetColor(255, 255, 255), name.c_str());
+	}
 }
 /*
  *	@brief		•`‰æó‘Ô‚Ìæ“¾

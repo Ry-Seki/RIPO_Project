@@ -28,8 +28,8 @@ private:
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	EventSystem eventSystem;
 
-	const int _BUTTON_INDEX = 5;
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/SaveLoad/SaveSlotNavigation.json";
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/InGame/InGameMenuResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/InGame/InGameMenuNavigation.json";
 
 public:
 	/*

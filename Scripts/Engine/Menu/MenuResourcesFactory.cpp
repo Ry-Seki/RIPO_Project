@@ -41,6 +41,7 @@ namespace {
      */
     ButtonInfo ParseButton(const JSON& json) {
         ButtonInfo info{};
+        info.name = json.value("Name", "");
         info.type = ParseButtonType(json.value("Type", "Invalid"));
         info.rect = ParseRect(json["Rect"]);
 
@@ -70,10 +71,11 @@ namespace {
 MenuInfo MenuResourcesFactory::Create(const JSON& json) {
     MenuInfo result{};
 
-    if (json.contains("Button")) {
+    if (json.contains("Buttons")) {
         for (const auto& button : json["Buttons"]) {
             auto buttonInfo = ParseButton(button);
             result.buttonList.push_back(ButtonFactory::CreateButton(buttonInfo));
         }
     }
+    return result;
 }
