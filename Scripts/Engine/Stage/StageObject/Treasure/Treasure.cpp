@@ -7,13 +7,20 @@
 #include "../Scripts/Engine/GameConst.h"
 #include "../Scripts/Engine/VecMath.h"
 #include "../Scripts/Engine/Manager/EffectManager.h"
- /*
-  *	コンストラクタ
-  */
+#include "../Scripts/Engine/Component/EffectComponent.h"
+#include "../../../Component/Character/ArmActionComponent.h"
+#include "../../../Component/Character/CharacterUtility.h"
+#include "UnTreasureState.h"
+
+using namespace CharacterUtility;
+/*
+ *	コンストラクタ
+ */
 Treasure::Treasure()
 	: StageObjectBase()
 	, isCollected(false)
-	, pViewingEffect(nullptr) {
+	, pViewingEffect(nullptr)
+	, state(std::make_unique<UnTreasureState>()) {
 }
 /*
  *	デストラクタ
@@ -22,10 +29,6 @@ Treasure::~Treasure() {
 
 }
 void Treasure::Start() {
-	//EffectManager::GetInstance().Instantiate(
-	//	"treasureViewing",
-	//	GetOwner()->position
-	//);
 }
 /*
  *	@function	Update
@@ -33,20 +36,55 @@ void Treasure::Start() {
  *  @param		float deltaTime
  */
 void Treasure::Update(float deltaTime) {
-	if (isCollected) return;
+	state->Update(*this, deltaTime);
+}
 
-	// まだエフェクトを生成していなければ生成
-	if (pViewingEffect == nullptr) {
-		pViewingEffect = EffectManager::GetInstance().Instantiate(
-			"treasureViewing",
-			GetOwner()->position
-		);
-	}
+
+/*
+ *	お宝が取られたかどうか
+ */
+bool Treasure::CollectedCheck() {
+	// プレイヤーを取得
+	auto player = GetPlayer();
+	if (!player) return false;
+
+	// プレイヤーの腕を取得
+	auto playerArm = player->GetComponent<ArmActionComponent>();
+	if (!playerArm) return false;
+
+	// プレイヤーがお宝を取得したかどうか
+	auto lifted = playerArm->GetLiftObject();
+	if (!lifted) return false;
+
+	// 自身のIDと一致していれば取得済み
+	return lifted->ID == GetOwner()->ID;
 
 }
+
 /*
- *	衝突が起きたときに呼び出される処理
+ *	お宝が取得されたときの処理
  */
-void Treasure::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
+void Treasure::OnCollected() {
+	// エフェクトが存在すれば停止
+	if (pViewingEffect) {
+		pViewingEffect->EffectStop();
+		pViewingEffect = nullptr;
+	}
+}
+
+/*
+ *	お宝が取得されていないときの処理
+ */
+void Treasure::UnCollected() {
+	// すでに生成されていれば何もしない
+	if (pViewingEffect) return;
+
+	// エフェクト再生
+	pViewingEffect = EffectManager::GetInstance().Instantiate(
+		"treasureViewing",
+		GetOwner()->position
+	);
+
+	// 必要筋力値表示
 }
 

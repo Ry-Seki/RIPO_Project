@@ -10,13 +10,19 @@
 #include "../JSON.h"
 #include <map>
 
+// エフェクトのリソース
+struct EffectResource {
+	int handle;		// エフェクトハンドル
+	bool loop;		// ループ可否
+};
+
 class EffectManager : public Singleton<EffectManager> {
 	// フレンド宣言
 	friend class Singleton<EffectManager>;
 
 private:
 	Engine* engine;										// ゲームエンジン参照
-	std::map<std::string, int>effectResourceMap;		// リソースの連想配列
+	std::map<std::string, EffectResource>effectResourceMap;		// リソースの連想配列
 	std::list<class EffectComponent*> pEffectList;		// エフェクトの一元配列
 	bool isLoop;	// ループ可否
 
@@ -40,7 +46,7 @@ public:
 	 *  @param	name					エフェクトに設定する名前
 	 *  @param  magnification = 1.0f	拡大率
 	 */
-	void Load(std::string filePath, std::string name, float magnification = 1.0f);
+	void Load(std::string filePath, std::string name, float magnification = 1.0f, bool loop = false);
 
 	/*
 	 *	エフェクトを一括で読み込む
@@ -67,6 +73,7 @@ public:
 	 *	描画処理
 	 */
 	void Render();
+
 
 public:
 	/*

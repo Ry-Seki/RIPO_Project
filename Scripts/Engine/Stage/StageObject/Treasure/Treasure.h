@@ -8,7 +8,7 @@
 
 #include "../StageObjectBase.h"
 #include "../Scripts/Engine/Component/EffectComponent.h"
-
+#include "TreasureState.h"
  /*
   *	お宝クラス
   */
@@ -18,8 +18,9 @@ private:
 	bool isCollected;			// 取得済みかどうか
 	float viewRadius;			// 取得範囲
 	EffectComponent* pViewingEffect; // 表示用エフェクト
-	
 
+	// お宝の状態
+	std::unique_ptr<TreasureState> state;
 public:
 	Treasure();
 	~Treasure() override;
@@ -27,7 +28,7 @@ public:
 public:
 
 	/*
-	 *	
+	 *
 	 */
 	void Start()override;
 
@@ -39,10 +40,27 @@ public:
 	void Update(float deltaTime)override;
 
 	/*
-	 *	衝突が起きたときに呼び出される処理
+	 *	お宝が取られたかどうか
 	 */
-	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
+	bool CollectedCheck();
 
+	/*
+	 *	お宝が取得された状態の時の処理
+	 */
+	void OnCollected();
+
+	/*
+	 *	お宝が取得されていないときの処理
+	 */
+	void UnCollected();
+	
+	/*
+	 *	状態を変更する
+	 *  @param	TreasureState* お宝の状態の変更先
+	 */
+	void ChangeState(TreasureState* newState) {
+		state.reset(newState);
+	}
 public:
 	/*
 	 *	@brief		取得済み判定
