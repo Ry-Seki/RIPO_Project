@@ -37,6 +37,11 @@ public:
 	/*
 	 *	エフェクト停止
 	 */
+	void EffectAllStop();
+
+	/*
+	 *	指定エフェクト停止
+	 */
 	void EffectStop();
 
 	/*

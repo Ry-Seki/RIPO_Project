@@ -33,14 +33,14 @@ void EffectComponent::EffectRenderer() {
 /*
  *	エフェクト停止
  */
-void EffectComponent::EffectStop() {
+void EffectComponent::EffectAllStop() {
 	if (!isVisible)return;
 
 	// 再生が終了していれば
 	if (IsEffekseer3DEffectPlaying(playingHandle) == -1) {
 		// ループ再生
 		if (isLoop) {
-			// StopEffekseer3DEffect(playingHandle);
+			//StopEffekseer3DEffect(playingHandle);
 			playingHandle = PlayEffekseer3DEffect(resourceHandle);
 		}
 		// ループしない
@@ -51,6 +51,23 @@ void EffectComponent::EffectStop() {
 			return;
 		}
 	}
+}
+
+/*
+ *	指定エフェクト停止
+ */
+void EffectComponent::EffectStop() {
+	// 再生中でなければ何もしない
+	if (playingHandle == -1)return;
+
+	// 再生を停止
+	StopEffekseer3DEffect(playingHandle);
+
+	// 表示をオフにする
+	isVisible = false;
+
+	// 再利用防止
+	playingHandle = -1;
 }
 
 /*
