@@ -49,6 +49,14 @@ void PlayerActionMap::Initialize() {
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::BulletReload),
 		{ InputType::Key, KEY_INPUT_R });
+	// ïêäÌ1
+	AddButton(
+		static_cast<int>(GameEnum::PlayerAction::FirstWeapon),
+		{ InputType::Key, KEY_INPUT_1 });
+	// ïêäÌ2
+	AddButton(
+		static_cast<int>(GameEnum::PlayerAction::SecondWeapon),
+		{ InputType::Key, KEY_INPUT_2 });
 
 	// ílÇÃèâä˙âª
 	state.axis[static_cast<int>(GameEnum::PlayerAction::ForwardMove)] = 0.0f;
@@ -57,10 +65,12 @@ void PlayerActionMap::Initialize() {
 	state.button[static_cast<int>(GameEnum::PlayerAction::Avoid)] = false;
 	state.button[static_cast<int>(GameEnum::PlayerAction::Jump)] = false;
 	state.button[static_cast<int>(GameEnum::PlayerAction::Shot)] = false;
+	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::Shot)] = false;
 	state.button[static_cast<int>(GameEnum::PlayerAction::Lift)] = false;
 	state.button[static_cast<int>(GameEnum::PlayerAction::OpenMenu)] = false;
-	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::Shot)] = false;
 	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::BulletReload)] = false;
+	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::FirstWeapon)] = false;
+	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::SecondWeapon)] = false;
 
 	isActive = false;
 }
