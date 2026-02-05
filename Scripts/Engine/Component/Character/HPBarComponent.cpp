@@ -103,7 +103,7 @@ void HPBarComponent::ShowHPBar()
 	float dx = screenRight.x - screenLeft.x;
 	float dy = screenRight.y - screenLeft.y;
 	float barWidth = sqrtf(dx * dx + dy * dy);
-	float barHeight = sqrtf(dx * dx + dy * dy) * 0.5f;
+	float barHeight = sqrtf(dx * dx + dy * dy) * 0.1f;
 
 	int BoxX = screenCenter.x;
 	int BoxY = screenCenter.y;
