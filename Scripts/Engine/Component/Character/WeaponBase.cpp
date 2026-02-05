@@ -38,9 +38,9 @@ void WeaponBase::Initialize() {
 void WeaponBase::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) {
 	WeaponBasePtr weapon = WeaponManager::GetInstance().GetCurrentWeapon();
 	weapon->ArmUpdate(deltaTime, action);
+
+	 // 手動リロード
 	int reload = static_cast<int>(GameEnum::PlayerAction::BulletReload);
-	
-	// 手動リロード
 	if (action.buttonDown[reload])
 		weapon->BulletReload();
 }

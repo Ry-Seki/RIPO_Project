@@ -24,6 +24,8 @@ private:	//メンバ変数
 	char prevKeyState[256];
 	int nowMouseInput;
 	int prevMouseInput;
+	int nowMouseWheel;
+	int prevMouseWheel;
 	
 	std::unordered_map<GameEnum::ActionMap, std::shared_ptr<ActionMapBase>> actionMaps;		// 各アクションマップ
 private:	    //コンストラクタとデストラクタ
@@ -49,58 +51,59 @@ public:		//メンバ関数
 public:		//キーボード用入力管理
 	/*
 	 *	キーが押されたかどうか
-	 *	@param[in]	int _key			　	キー番号
+	 *	@param[in]	int key			　	キー番号
 	 *	@return		bool
 	 */
-	inline bool IsKeyDown(int _key) const {
+	inline bool IsKeyDown(int key) const {
 		// !前 && 今
-		return !prevKeyState[_key] && keyState[_key];
+		return !prevKeyState[key] && keyState[key];
 	}
 	/*
 	 *	キーを押しているかどうか
-	 *	@param[in]	int _key				キー番号
+	 *	@param[in]	int key				キー番号
 	 *	@return		bool
 	 */
-	inline bool IsKey(int _key) const {
+	inline bool IsKey(int key) const {
 		// 今
-		return keyState[_key];
+		return keyState[key];
 	}
 	/*
 	 *	キーが押されたかどうか
-	 *	@param[in]	int _key				キー番号
+	 *	@param[in]	int key				キー番号
 	 *	@return		bool
 	 */
-	inline bool IsKeyUp(int _key) const {
+	inline bool IsKeyUp(int key) const {
 		// 前 && !今
-		return prevKeyState[_key] && !keyState[_key];
+		return prevKeyState[key] && !keyState[key];
 	}
 public:		//マウス用入力管理
 	/*
 	 *	ボタンが押されたかどうか
-	 *  @param[in]	int _mouseButton		マウスボタン番号
+	 *  @param[in]	int mouseButton		マウスボタン番号
 	 *	@return		bool
 	 */
-	inline bool IsMouseDown(int _mouseButton) const {
-		return !static_cast<bool>(prevMouseInput & _mouseButton) && 
-			static_cast<bool>(nowMouseInput & _mouseButton);
+	inline bool IsMouseDown(int mouseButton) const {
+		return !static_cast<bool>(prevMouseInput & mouseButton) && 
+			static_cast<bool>(nowMouseInput & mouseButton);
 	}
 	/*
 	 *	ボタンが押されているかどうか
-	 *  @param[in]	int _mouseButton		マウスボタン番号
+	 *  @param[in]	int mouseButton		マウスボタン番号
 	 *	@return		bool
 	 */
-	inline bool IsMouse(int _mouseButton) const {
-		return static_cast<bool>(nowMouseInput & _mouseButton);
+	inline bool IsMouse(int mouseButton) const {
+		return static_cast<bool>(nowMouseInput & mouseButton);
 	}
 	/*
 	 *	ボタンが押されたかどうか
-	 *  @param[in]	int _mouseButton		マウスボタン番号
+	 *  @param[in]	int mouseButton		マウスボタン番号
 	 *	@return		bool
 	 */
-	inline bool IsMouseUp(int _mouseButton) const {
-		return static_cast<bool>(prevMouseInput & _mouseButton) && 
-			!static_cast<bool>(nowMouseInput & _mouseButton);
+	inline bool IsMouseUp(int mouseButton) const {
+		return static_cast<bool>(prevMouseInput & mouseButton) && 
+			!static_cast<bool>(nowMouseInput & mouseButton);
 	}
+
 public: // マウスとキーの両方入力
 	/*
 	 *	ボタンが押されたかどうか
@@ -112,7 +115,7 @@ public: // マウスとキーの両方入力
 		switch (_button.type) {
 		case ActionMapBase::InputType::Key:
 			return IsKeyDown(_button.input);
-		case ActionMapBase::InputType::Mouse:
+		case ActionMapBase::InputType::MouseButton:
 			return IsMouseDown(_button.input);
 		}
 	}
@@ -126,7 +129,7 @@ public: // マウスとキーの両方入力
 		switch (_button.type) {
 		case ActionMapBase::InputType::Key:
 			return IsKey(_button.input);
-		case ActionMapBase::InputType::Mouse:
+		case ActionMapBase::InputType::MouseButton:
 			return IsMouse(_button.input);
 		}
 	}
@@ -140,7 +143,7 @@ public: // マウスとキーの両方入力
 		switch (_button.type) {
 		case ActionMapBase::InputType::Key:
 			return IsKeyUp(_button.input);
-		case ActionMapBase::InputType::Mouse:
+		case ActionMapBase::InputType::MouseButton:
 			return IsMouseUp(_button.input);
 		}
 	}

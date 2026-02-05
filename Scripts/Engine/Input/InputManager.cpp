@@ -14,7 +14,9 @@ InputManager::InputManager()
 	: keyState()
 	, prevKeyState()
 	, nowMouseInput()
-	, prevMouseInput() {
+	, prevMouseInput() 
+	, nowMouseWheel()
+	, prevMouseWheel(){
 }
 /*
  *	デストラクタ
@@ -47,6 +49,11 @@ void InputManager::Update() {
 	memcpy_s(prevKeyState, 256, keyState, 256);
 	//今のフレームのキー状態を取得
 	GetHitKeyStateAll(keyState);
+
+	// 1フレーム前のマウスホイールの回転量を保存
+	prevMouseWheel = nowMouseWheel;
+	// 現在のマウスホイールの回転量を取得
+	nowMouseWheel = GetMouseWheelRotVol();
 
 	// 各アクションマップの更新処理
 	for (auto [mapNum, actionMap] : actionMaps) {

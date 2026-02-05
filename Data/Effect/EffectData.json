@@ -1,16 +1,16 @@
 {
   "effects": [
     {
-      "file": "Res/Effect/Treasure/TreasureEffect.efk",
+      "file": "Res/Effect/Treasure/TreasureEff.efkefc",
       "name": "treasureViewing",
-      "magnification": 50.0,
+      "magnification": 30.0,
       "loop": true
     },
     {
       "file": "Res/Effect/Test/BeamEffect.efk",
       "name": "Beam",
-      "magnification": 5000.0,
-      "loop": true
+      "magnification": 30.0,
+      "loop": false
     }
   ]
 }

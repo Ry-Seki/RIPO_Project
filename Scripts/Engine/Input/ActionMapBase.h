@@ -15,8 +15,9 @@ class ActionMapBase {
 public:
 	// 入力機の種類 
 	enum class InputType {
-		Key,	// キーボード
-		Mouse,	// マウス
+		Key,			// キーボード
+		MouseButton,	// マウスのボタン
+		MouseWheel,		// マウスホイール
 	};
 
 	// 入力
