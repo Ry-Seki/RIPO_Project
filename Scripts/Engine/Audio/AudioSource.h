@@ -9,11 +9,11 @@
 #include "../VecMath.h"
 #include "../GameConst.h"
 
-#include <DxLib.h>
 #include <memory>
+#include <algorithm>
 
 /*
- *	音源の基底クラス
+ *	@brief	音源の基底クラス
  */
 class AudioSource {
 protected:
@@ -21,24 +21,41 @@ protected:
 	
 public:
 	/*
-	 *	デストラクタ
+	 *	@brief	デストラクタ
 	 */
 	virtual ~AudioSource() { Teardown(); }
 
 public:
 	/*
-	 *	音源の再生処理
-	 *  @param[in]	int setVolume	音量
+	 *	@brief		音源の再生処理
+	 *  @param[in]	float setVolume		音量
 	 */
-	virtual void Play(int setVolume) = 0;
+	virtual void Play(float setVolume) = 0;
 	/*
-	 *	音源の停止処理
+	 *	@brief		音源の停止処理
 	 */
 	virtual void Stop() = 0;
 	/*
-	 *	音源の破棄処理
+	 *	@brief		片付け処理
 	 */
-	virtual void Teardown() { if(audioHandle != -1) DeleteSoundMem(audioHandle); };
+	virtual void Teardown();
+
+public:
+	/*
+	 *	@brief		音源ハンドルの設定
+	 *  @param[in]	int setHandle	音源ハンドル
+	 */
+	void SetAudioHandle(int setHandle);
+	/*
+	 *	@brief		再生中かどうかを判別する
+	 *  @return		bool
+	 */
+	bool IsPlaying() const;
+	/*
+	 *	@brief		音量の変更
+	 *  @param[in]	float setVolume		設定する音量(0.0f～1.0f)
+	 */
+	void ChangeAudioVolume(float setVolume);
 
 public:
 	/*
@@ -46,37 +63,6 @@ public:
 	 *  @return		int
 	 */
 	inline int GetAudioHandle() const { return audioHandle; }
-	/*
-	 *	音源ハンドルの設定
-	 *  @param[in]	int setHandle	音源ハンドル
-	 */
-	inline virtual void SetAudioHandle(int setHandle) { audioHandle = DuplicateSoundMem(setHandle); }
-	/*
-	 *	再生中かどうかを判別する
-	 *  @return		bool
-	 */
-	inline bool IsPlaying() const { return CheckSoundMem(audioHandle); }
-	/*
-	 *	音量の設定
-	 *  @param[in]	int setVolume	設定する音量(0～100)
-	 */
-	inline void ChangeAudioVolume(int setVolume) { 
-		// 音量の数値の変換(0～100)->(0～255)
-		int volume = ChangeVolumeCorrection(setVolume);
-		ChangeVolumeSoundMem(volume, audioHandle);
-	}
-	/*
-	 *	音量の数値の変換(0～100)->(0～255)
-	 *  @param[in]	int setVolume	設定する音量(0～100)
-	 *  @return		int
-	 */
-	inline int ChangeVolumeCorrection(int setVolume) {
-		// 最大値、最小値を固定
-		int volume = Clamp(static_cast<float>(setVolume), GameConst::MIN_VOLUME, GameConst::MAX_DXLIB_VOLUME);
-		// 音量の数値の変換(0～100)->(0～255)
-		volume *= static_cast<int>(GameConst::MAX_DXLIB_VOLUME) / static_cast<int>(GameConst::MAX_VOLUME);
-		return volume;
-	}
 };
 // 別名定義
 using AudioSourcePtr = std::shared_ptr<AudioSource>;

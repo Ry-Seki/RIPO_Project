@@ -6,7 +6,7 @@
   },
   "Buttons": [
     {
-      "Name": "Confirm",
+      "Name": "Settings",
       "Type": "Single",
       "Rect": {
         "X": 100,
@@ -18,11 +18,23 @@
       }
     },
     {
-      "Name": "Cancel",
+      "Name": "Credit",
       "Type": "Single",
       "Rect": {
         "X": 400,
         "Y": 350,
+        "Width": 100,
+        "Height": 80
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "Back",
+      "Type": "Single",
+      "Rect": {
+        "X": 400,
+        "Y": 450,
         "Width": 100,
         "Height": 80
       },

@@ -18,6 +18,7 @@
 #include "Load/LoadManager.h"
 #include "Menu/MenuManager.h"
 #include "Save/SaveDataManager.h"
+#include "System/Settings/SettingsManager.h"
 #include "../Data/DxLibResourcesManager.h"
 #include "Input/InputManager.h"
 
@@ -88,6 +89,10 @@ int Engine::Initialize() {
 	Time::Init();
 	// セーブ管理クラスの初期化
 	SaveDataManager::GetInstance().Initialize();
+	// 音量管理クラスの初期化
+	AudioManager::GetInstance().Initialize();
+	// 設定管理クラスの初期化
+	SettingsManager::GetInstance().Initialize();
 	// 入力管理クラスの初期化
 	InputManager::GetInstance().Initialize();
 	// メニュークラスの初期化

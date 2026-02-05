@@ -690,6 +690,12 @@
     <ClCompile Include="Scripts\Engine\Menu\System\MenuConfirm.cpp">
       <Filter>ソース ファイル\Engine\Menu\System</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Audio\AudioSource.cpp">
+      <Filter>ソース ファイル\Engine\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuCredit.cpp">
+      <Filter>ソース ファイル\Engine\Menu\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -1222,6 +1228,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer_Idle.h">
       <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuCredit.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

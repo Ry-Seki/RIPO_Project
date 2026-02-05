@@ -6,56 +6,51 @@
 #include "BGMManager.h"
 
 /*
- *	デストラクタ
+ *	@brief	デストラクタ
  */
 BGMManager::~BGMManager() {
 	for (auto itr : bgmHandleMap) {
-		DeleteSoundMem(itr.second);
+		int handle = itr.second;
+		if(handle != -1) DeleteSoundMem(handle);
 	}
 	bgmHandleMap.clear();
 }
-
 /*
- *	初期化処理
+ *	@brief	初期化処理
  */
 void BGMManager::Initialize() {
 }
 /*
- *	ロード済みのデータの設定(コールバック)
+ *	@brief	ロード済みのデータの設定(コールバック)
  */
 void BGMManager::SetupData() {
 }
 /*
- *	更新処理
- */
-void BGMManager::Update() {
-}
-/*
- *	描画処理
+ *	@brief	描画処理
  */
 void BGMManager::Render() {
 }
 /*
- *	BGMの破棄処理
+ *	@brief	BGMの破棄処理
  */
 void BGMManager::Teardown() {
 	currentSource->Teardown();
 }
 /*
- *	BGMの再生処理
- *	@param[in]	int setVolume	音量 (0～100)
+ *	@brief		BGMの再生処理
+ *  @param[in]	float setVolume		音量
  */
-void BGMManager::PlayBGM(const int setVolume) {
+void BGMManager::PlayBGM(float setVolume) {
 	currentSource->Play(setVolume);
 }
 /*
- *	BGMの停止処理
+ *	@brief		BGMの停止処理
  */
 void BGMManager::StopBGM() {
 	currentSource->Stop();
 }
 /*
- *	BGMの変更処理
+ *	@brief		BGMの変更処理
  *	@param[in]	const std::string setBGMName	設定するBGM名
  */
 void BGMManager::ChangeBGM(const std::string setBGMName) {
@@ -69,7 +64,14 @@ void BGMManager::ChangeBGM(const std::string setBGMName) {
 	currentSource->SetAudioHandle(setHandle);
 }
 /*
- *	BGMハンドルの登録
+ *	@brief		音量の更新処理
+ *	@param[in]	float setVolume
+ */
+void BGMManager::UpdateVolume(float setVolume) {
+	if(currentSource) currentSource->ChangeAudioVolume(setVolume);
+}
+/*
+ *	@brief		BGMハンドルの登録
  *	@param[in]	const std::string&	setKeyName	登録するBGM名
  *	@param[in]	const int setHandle				登録する音源ハンドル
  */
@@ -79,7 +81,7 @@ void BGMManager::RegisterBGMHandle(const std::string& setKeyName, const int setH
 	bgmHandleMap[setKeyName] = setHandle;
 }
 /*
- *	BGMハンドルが登録済みか判定
+ *	@brief		BGMハンドルが登録済みか判定
  *  @param[in]	const std::string& setKeyName	 調べるBGM名
  *  @return		bool
  */
@@ -88,7 +90,7 @@ bool BGMManager::ExistBGMHandle(const std::string& setKeyName) const {
 	return bgmHandleMap.find(setKeyName) != bgmHandleMap.end();
 }
 /*
- *	BGMハンドルの取得
+ *	@brief		BGMハンドルの取得
  *	@param[in]	const std::string& setKeyName	調べるBGM名
  *	@return		int
  */

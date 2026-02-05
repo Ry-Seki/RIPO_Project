@@ -18,10 +18,10 @@
 #include "../Menu/Title/MenuGameModeSelect.h"
 #include "../Menu/System/MenuSelectSaveSlot.h"
 #include "../Menu/System/MenuConfirm.h"
+#include "../Menu/Title/MenuSystem.h"
+#include "../Menu/System/MenuCredit.h"
 
 #include <DxLib.h>
-
-using namespace AudioUtility;
 
  /*
   *  èâä˙âªèàóù
@@ -31,10 +31,9 @@ void TitleScene::Initialize(Engine& engine) {
 	inputHandle = false;
 	auto fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn);
-	SetBGMVolume(100);
-	SetSEVolume(100);
 	MenuManager::GetInstance().GetMenu<MenuTitle>();
 	MenuManager::GetInstance().GetMenu<MenuGameModeSelect>();
+	MenuManager::GetInstance().GetMenu<MenuSystem>();
 	MenuManager::GetInstance().GetMenu<MenuSelectSaveSlot>();
 	MenuManager::GetInstance().GetMenu<MenuConfirm>();
 	auto debugSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/ButtonPush_Debug.mp3");
@@ -44,8 +43,8 @@ void TitleScene::Initialize(Engine& engine) {
 	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black2.jpg"));
 	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black3.jpg"));
 	LoadManager::GetInstance().SetOnComplete([&engine, this, debugSE, goalSE, loadBGList]() {
-		RegisterSEHandle("DebugSE", debugSE->GetHandle());
-		RegisterSEHandle("GoalSE", goalSE->GetHandle());
+		AudioUtility::RegisterSEHandle("DebugSE", debugSE->GetHandle());
+		AudioUtility::RegisterSEHandle("GoalSE", goalSE->GetHandle());
 		auto loadBG = std::make_shared<LoadAnimation_ChangeBackground>();
 		std::vector<int> BGHandleList;
 		for (int i = 0, max = loadBGList.size(); i < max; i++) {

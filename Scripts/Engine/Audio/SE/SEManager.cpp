@@ -5,18 +5,18 @@
 
 #include "SEManager.h"
 
- /*
-  *	デストラクタ
-  */
+/*
+ *	@brief	デストラクタ
+ */
 SEManager::~SEManager() {
 	for (auto itr : seHandleMap) {
-		DeleteSoundMem(itr.second);
+		int handle = itr.second;
+		if(handle != -1) DeleteSoundMem(handle);
 	}
 	seHandleMap.clear();
 }
-
 /*
- *	初期化処理
+ *	@brief	初期化処理
  */
 void SEManager::Initialize() {
 	// 未使用リストの初期化
@@ -25,12 +25,12 @@ void SEManager::Initialize() {
 	}
 }
 /*
- *	ロード済みのデータの設定 (コールバック)
+ *	@brief	ロード済みのデータの設定 (コールバック)
  */
 void SEManager::SetupData() {
 }
 /*
- *	更新処理
+ *	@brief	更新処理
  */
 void SEManager::Update() {
 	// 使用リストの再生中フラグを取得
@@ -48,11 +48,11 @@ void SEManager::Update() {
 	}
 }
 /*
- *	SE再生処理
+ *	@brief		SE再生処理
  *  @param[in]	const std::string& setKeyName	再生するSE名
- *  @param[in]	const int setVolume				音量 (0～100)
+ *  @param[in]	float setVolume					音量
  */
-void SEManager::PlaySE(const std::string& setKeyName, const int setVolume) {
+void SEManager::PlaySE(const std::string& setKeyName, float setVolume) {
 	// 未使用リストの中身が空なら新たに生成
 	if (unuseSEList.empty()) {
 		unuseSEList.push_back(std::make_shared<SESource>());
@@ -68,11 +68,12 @@ void SEManager::PlaySE(const std::string& setKeyName, const int setVolume) {
 	unuseSEList.pop_front();
 	// 使用リストに追加
 	useSEList.push_back(useSE);
+
 	// SEの再生
 	useSE->Play(setVolume);
 }
 /*
- *	SE破棄処理
+ *	@brief		SE破棄処理
  *  @param[in]	std::shared_ptr<SESource> destroySE
  */
 void SEManager::TeardownSE(std::shared_ptr<SESource> destroySE) {
@@ -81,7 +82,7 @@ void SEManager::TeardownSE(std::shared_ptr<SESource> destroySE) {
 	destroySE->Teardown();
 }
 /*
- *	SEハンドルの登録
+ *	@brief		SEハンドルの登録
  *	@param[in]	const std::string&	setKeyName	登録するSE名
  *	@param[in]	const int setHandle				登録する音源ハンドル
  */
@@ -91,7 +92,7 @@ void SEManager::RegisterSEHandle(const std::string& setKeyName, const int setHan
 	seHandleMap[setKeyName] = setHandle;
 }
 /*
- *	SEハンドルが登録済みか判定
+ *	@brief		SEハンドルが登録済みか判定
  *  @param[in]	const std::string& setKeyName	調べるSE名
  *  @return		bool
  */
@@ -100,7 +101,7 @@ bool SEManager::ExistSEHandle(const std::string& setKeyName) const {
 	return seHandleMap.find(setKeyName) != seHandleMap.end();
 }
 /*
- *	SEハンドルの取得
+ *	@brief		SEハンドルの取得
  *	@param[in]	const std::string& setKeyName	調べるSE名
  *	@return		int
  */

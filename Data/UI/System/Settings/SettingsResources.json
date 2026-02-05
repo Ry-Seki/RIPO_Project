@@ -1,0 +1,118 @@
+{
+  "BackGround": {
+    "Resources": [
+
+    ]
+  },
+  "Buttons": [
+    {
+      "Name": "SubSensitivity",
+      "Type": "LongPress",
+      "Rect": {
+        "X": 200,
+        "Y": 50,
+        "Width": 50,
+        "Height": 50
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "AddSensitivity",
+      "Type": "LongPress",
+      "Rect": {
+        "X": 400,
+        "Y": 50,
+        "Width": 50,
+        "Height": 50
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "SubMasterVolume",
+      "Type": "LongPress",
+      "Rect": {
+        "X": 200,
+        "Y": 150,
+        "Width": 50,
+        "Height": 50
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "AddMasterVolume",
+      "Type": "LongPress",
+      "Rect": {
+        "X": 400,
+        "Y": 150,
+        "Width": 50,
+        "Height": 50
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "SubBGMVolume",
+      "Type": "LongPress",
+      "Rect": {
+        "X": 200,
+        "Y": 250,
+        "Width": 50,
+        "Height": 50
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "AddBGMVolume",
+      "Type": "LongPress",
+      "Rect": {
+        "X": 400,
+        "Y": 250,
+        "Width": 50,
+        "Height": 50
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "SubSEVolume",
+      "Type": "LongPress",
+      "Rect": {
+        "X": 200,
+        "Y": 350,
+        "Width": 50,
+        "Height": 50
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "AddSEVolume",
+      "Type": "LongPress",
+      "Rect": {
+        "X": 400,
+        "Y": 350,
+        "Width": 50,
+        "Height": 50
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "Back",
+      "Type": "Single",
+      "Rect": {
+        "X": 500,
+        "Y": 450,
+        "Width": 200,
+        "Height": 80
+      },
+      "Resources": {
+
+      }
+    }
+  ]
+}
