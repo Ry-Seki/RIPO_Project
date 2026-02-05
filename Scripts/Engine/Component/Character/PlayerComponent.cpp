@@ -107,6 +107,14 @@ void PlayerComponent::Update(float deltaTime) {
 		isDead = true;
 	}
 
+	// •Ší•ÏX
+	int first = static_cast<int>(GameEnum::PlayerAction::FirstWeapon);
+	int second = static_cast<int>(GameEnum::PlayerAction::SecondWeapon);
+	if (action.buttonDown[first])
+		WeaponManager::GetInstance().SetCurrentWeapon(GameEnum::Weapon::Revolver);
+	if (action.buttonDown[second])
+		WeaponManager::GetInstance().SetCurrentWeapon(GameEnum::Weapon::SubmachineGun);
+
 	// ‰ñ”ğ
 	PlayerAvoid(player, deltaTime);
 	// ‰ñ”ğ’†‚Íˆ—‚µ‚È‚¢
