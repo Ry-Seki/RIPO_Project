@@ -4,6 +4,8 @@
  *	コンストラクタ
  */
 HPBarComponent::HPBarComponent()
+	: player(nullptr)
+	, camera(nullptr)
 {
 }
 
@@ -12,6 +14,10 @@ HPBarComponent::HPBarComponent()
  */
 void HPBarComponent::Start()
 {
+	player = CameraManager::GetInstance().GetTarget();
+	if (player == nullptr) return;
+	camera = CameraManager::GetInstance().GetCamera();
+	if (camera == nullptr) return;
 }
 
 /*
@@ -29,27 +35,86 @@ void HPBarComponent::Update(float deltaTime)
  */
 void HPBarComponent::ShowHPBar()
 {
+	//auto enemy = GetOwner();
+	//VECTOR enemyPos = ToVECTOR(enemy->position);
+
+	//// 敵の頭上
+	//VECTOR headPos = enemyPos;
+	//headPos.y += 700 + 10.0f;
+
+	//// ワールド座標からスクリーン座標に変換
+	//Vector3 screenPos = DxLib::ConvWorldPosToScreenPos(headPos);
+	//DrawFormatString(0, 130, GetColor(255, 255, 255), "screenPos(%f,%f,%f)",
+	//	screenPos.x, screenPos.y, screenPos.z);
+
+	//// カメラ裏なら表示しない
+	//if (screenPos.z > 1.0f) return;
+
+	//float scale = 1.0f / screenPos.z;
+	//scale = std::clamp(scale, 0.4f, 1.5f);
+
+	//int BoxX = static_cast<int>(screenPos.x);
+	//int BoxY = static_cast<int>(screenPos.y);
+
+	//float halfWidth = 40.0f * scale;
+	//float halfHeight = 6.0f * scale;
+	//DrawBox(BoxX - halfWidth, BoxY - halfHeight, BoxX + halfWidth, BoxY + halfHeight, GetColor(0, 250, 0), true);
+
+
+
 	auto enemy = GetOwner();
 	VECTOR enemyPos = ToVECTOR(enemy->position);
 
+	// 敵の頭上
 	VECTOR headPos = enemyPos;
 	headPos.y += 700 + 10.0f;
 
+	//VECTOR playerPos = ToVECTOR(player->position);
+	VECTOR cameraPos = ToVECTOR(camera->position);
+
+	// 視線ベクトル
+	VECTOR viewDir = VSub(headPos, cameraPos);
+	viewDir = VNorm(viewDir);
+
+	// 上方向（ワールドY）
+	VECTOR up = VGet(0.0f, 1.0f, 0.0f);
+
+	// カメラの右方向ベクトル
+	VECTOR rightDir = VCross(up, viewDir);
+	rightDir = VNorm(rightDir);
+
+	float worldHalfBar = 400.0f;
+
+	// 左右端をカメラ右方向に作る
+	VECTOR leftPos = VSub(headPos, VScale(rightDir, worldHalfBar));
+	VECTOR rightPos = VAdd(headPos, VScale(rightDir, worldHalfBar));
+
 	// ワールド座標からスクリーン座標に変換
-	Vector3 screenPos = DxLib::ConvWorldPosToScreenPos(headPos);
-	DrawFormatString(0, 130, GetColor(255, 255, 255), "screenPos(%f,%f,%f)",
-		screenPos.x, screenPos.y, screenPos.z);
+	VECTOR screenLeft = ConvWorldPosToScreenPos(leftPos);
+	VECTOR screenRight = ConvWorldPosToScreenPos(rightPos);
+	VECTOR screenCenter = ConvWorldPosToScreenPos(headPos);
 
 	// カメラ裏なら表示しない
-	if (screenPos.z > 1.0f) return;
+	if (screenCenter.z > 1.0f) return;
 
-	float scale = 1.0f / screenPos.z;
-	scale = std::clamp(scale, 0.4f, 1.5f);
+	// 画面上の長さ（距離で計算）
+	float dx = screenRight.x - screenLeft.x;
+	float dy = screenRight.y - screenLeft.y;
+	float barWidth = sqrtf(dx * dx + dy * dy);
+	float barHeight = sqrtf(dx * dx + dy * dy) * 0.05f;
 
-	int BoxX = static_cast<int>(screenPos.x);
-	int BoxY = static_cast<int>(screenPos.y);
+	int BoxX = screenCenter.x;
+	int BoxY = screenCenter.y;
 
-	float halfWidth = 40.0f * scale;
-	float halfHeight = 6.0f * scale;
-	DrawBox(BoxX - halfWidth, BoxY - halfHeight, BoxX + halfWidth, BoxY + halfHeight, GetColor(0, 250, 0), true);
+	/*float halfWidth = 40.0f * scale;
+	float halfHeight = 6.0f * scale;*/
+	const float halfValue = 0.5f;
+	DrawBox(
+		BoxX - barWidth * halfValue,
+		BoxY - barHeight * halfValue,
+		BoxX + barWidth * halfValue,
+		BoxY + barHeight * halfValue,
+		GetColor(0, 250, 0),
+		true
+	);
 }

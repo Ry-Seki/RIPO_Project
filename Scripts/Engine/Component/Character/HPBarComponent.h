@@ -7,9 +7,12 @@
 
 #include "../Component.h"
 #include "../../Engine.h"
+#include "../../Manager/CameraManager.h"
 
 class HPBarComponent : public Component {
 private:
+	GameObjectPtr player;
+	GameObjectPtr camera;
 
 public:
 	/*
