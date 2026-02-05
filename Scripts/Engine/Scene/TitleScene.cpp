@@ -23,8 +23,6 @@
 
 #include <DxLib.h>
 
-using namespace AudioUtility;
-
  /*
   *  ‰Šú‰»ˆ—
   */
@@ -33,8 +31,6 @@ void TitleScene::Initialize(Engine& engine) {
 	inputHandle = false;
 	auto fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn);
-	SetBGMVolume(100);
-	SetSEVolume(100);
 	MenuManager::GetInstance().GetMenu<MenuTitle>();
 	MenuManager::GetInstance().GetMenu<MenuGameModeSelect>();
 	MenuManager::GetInstance().GetMenu<MenuSystem>();
@@ -47,8 +43,8 @@ void TitleScene::Initialize(Engine& engine) {
 	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black2.jpg"));
 	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black3.jpg"));
 	LoadManager::GetInstance().SetOnComplete([&engine, this, debugSE, goalSE, loadBGList]() {
-		RegisterSEHandle("DebugSE", debugSE->GetHandle());
-		RegisterSEHandle("GoalSE", goalSE->GetHandle());
+		AudioUtility::RegisterSEHandle("DebugSE", debugSE->GetHandle());
+		AudioUtility::RegisterSEHandle("GoalSE", goalSE->GetHandle());
 		auto loadBG = std::make_shared<LoadAnimation_ChangeBackground>();
 		std::vector<int> BGHandleList;
 		for (int i = 0, max = loadBGList.size(); i < max; i++) {
