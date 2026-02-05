@@ -50,10 +50,10 @@ struct SettingsData {
  */
 struct SaveData {
 	bool isUsed = false;
+	bool isClear = false;
 	GameProgressData game;
 	PlayerStatusLevelData player;
 	WorldProgressData world;
-	SettingsData settings;
 };
 
 #endif // !_SAVE_DATA_H_

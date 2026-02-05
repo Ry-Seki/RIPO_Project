@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="Scripts\Data\DxLibResourcesManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\AudioManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Audio\AudioSource.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMSource.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\SE\SEManager.cpp" />
@@ -203,6 +204,7 @@
     <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuResourcesFactory.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuConfirm.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuCredit.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuLoadMode.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuSaveMode.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.cpp" />
@@ -365,6 +367,7 @@
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuResourcesFactory.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuConfirm.h" />
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuCredit.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuLoadMode.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuSaveMode.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.h" />

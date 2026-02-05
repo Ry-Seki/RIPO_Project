@@ -10,31 +10,31 @@
 #include <DxLib.h>
 
 /*
- *	SE音源クラス
+ *	@brief	SE音源クラス
  */
 class SESource : public AudioSource {
 public:
 	/*
-	 *	コンストラクタ
+	 *	@brief	コンストラクタ
 	 */
 	SESource() = default;
 	/*
-	 *	デストラクタ
+	 *	@brief	デストラクタ
 	 */
 	~SESource() override {}
 
 public:
 	/*
-	 *	音源の再生処理
-	 *  @param[in]	const int setVolume	音量
+	 *	@brief		音源の再生処理
+	 *  @param[in]	float setVolume		音量
 	 */
-	void Play(int setVolume) override;
+	void Play(float setVolume) override;
 	/*
-	 *	音源の停止処理
+	 *	@brief		音源の停止処理
 	 */
 	void Stop() override;
 	/*
-	 *	音源の破棄処理
+	 *	@brief		音源の破棄処理
 	 */
 	void Teardown() override;
 };

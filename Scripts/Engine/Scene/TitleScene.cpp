@@ -18,6 +18,8 @@
 #include "../Menu/Title/MenuGameModeSelect.h"
 #include "../Menu/System/MenuSelectSaveSlot.h"
 #include "../Menu/System/MenuConfirm.h"
+#include "../Menu/Title/MenuSystem.h"
+#include "../Menu/System/MenuCredit.h"
 
 #include <DxLib.h>
 
@@ -35,6 +37,7 @@ void TitleScene::Initialize(Engine& engine) {
 	SetSEVolume(100);
 	MenuManager::GetInstance().GetMenu<MenuTitle>();
 	MenuManager::GetInstance().GetMenu<MenuGameModeSelect>();
+	MenuManager::GetInstance().GetMenu<MenuSystem>();
 	MenuManager::GetInstance().GetMenu<MenuSelectSaveSlot>();
 	MenuManager::GetInstance().GetMenu<MenuConfirm>();
 	auto debugSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/ButtonPush_Debug.mp3");

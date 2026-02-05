@@ -21,8 +21,14 @@ class Engine;
  */
 class MenuSettings : public MenuBase {
 private:
+	int currentIndex = -1;
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	EventSystem eventSystem;
+
+	const float _MOVE_VALUE = 0.1f;
+
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/System/Settings/SettingsResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/Settings/SettingsNavigation.json";
 
 public:
 	/*
@@ -45,14 +51,14 @@ public:
 	 *	@brief	メニューを閉じる
 	 */
 	void Close(Engine& engine) override;
+
+private:
 	/*
-	 *	@brief	メニューを中断
+	 *	@brief		ボタンの押された時の処理
+	 *	@param[in]	int buttonIndex
 	 */
-	void Suspend() override;
-	/*
-	 *	@brief	メニューを再開
-	 */
-	void Resume() override;
+	void SelectButtonExecute(Engine& engine, int buttonIndex);
+
 };
 
 #endif // !_MENU_SETTINGS_H_

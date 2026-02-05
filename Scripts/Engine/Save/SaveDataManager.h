@@ -121,18 +121,6 @@ private:
 	 *	@return		DungeonProgressData
 	 */
 	DungeonProgressData DungeonDataFromJSON(const JSON& json, int dungeonID);
-	/*
-	 *	@brief		設定データ->JSONへ変換
-	 *	@param[in]	const GameProgressData& data
-	 *  @return		JSON
-	 */
-	Orderd_JSON ToJSON(const SettingsData& data);
-	/*
-	 *	@brief		JSON->設定データへ変換
-	 *	@param[in]	const JSON& json
-	 *	@return		SettingsData
-	 */
-	SettingsData SettingsDataFromJSON(const JSON& json);
 
 public:
 	/*

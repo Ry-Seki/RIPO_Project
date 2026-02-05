@@ -7,8 +7,13 @@
 #define _SETTINGS_MANAGER_H_
 
 #include "../../Singleton.h"
+#include "../../JSON.h"
+#include "../../Audio/AudioUtility.h"
 
 #include <algorithm>
+#include <fstream>
+#include <filesystem>
+#include <cassert>
 
 // 前方宣言
 struct SettingsData;
@@ -25,7 +30,31 @@ private:
     float bgmVolume = 0.0f;
     float seVolume = 0.0f;
 
+    static constexpr const char* _SETTING_DATA_PATH = "SaveData/Settings.json";
+
 public:
+    /*
+     *  @brief  初期化処理
+     */
+    void Initialize();
+    /*
+     *  @brief      セーブ処理
+     *  @return     bool
+     */
+    bool Save() const;
+    /*
+     *  @brief      ロード処理
+     *  @return     bool
+     */
+    bool Load();
+
+public:
+    /*
+     *  @brief      SettingData -> JSONへ変換
+     *  @param[in]  const SettingsData& data
+     *  @return     Orderd_JSON
+     */
+    Orderd_JSON ToJSON(const SettingsData& data);
     /*
      *  @brief      セーブ用設定データの収集
      *  @return     SettingsData
@@ -76,6 +105,7 @@ public:
      */
     inline void SetMasterVolume(float setValue) {
         masterVolume = std::clamp(setValue, 0.0f, 1.0f);
+        AudioUtility::SetMasterVolume(masterVolume);
     }
     /*
      *  @brief      マスター音量の上昇
@@ -88,7 +118,7 @@ public:
      *  @brief      マスター音量の低下
      *  @param[in]  float setValue
      */
-    inline void SubMasterVolue(float setValue) {
+    inline void SubMasterVolume(float setValue) {
         SetMasterVolume(masterVolume - setValue);
     }
     /*
@@ -102,6 +132,7 @@ public:
      */
     inline void SetBGMVolume(float setValue) {
         bgmVolume = std::clamp(setValue, 0.0f, 1.0f);
+        AudioUtility::SetBGMVolume(bgmVolume);
     }
     /*
      *  @brief      BGM音量の上昇
@@ -128,6 +159,7 @@ public:
      */
     inline void SetSEVolume(float setValue) {
         seVolume = std::clamp(setValue, 0.0f, 1.0f);
+        AudioUtility::SetSEVolume(seVolume);
     }
     /*
      *  @brief      SE音量の上昇

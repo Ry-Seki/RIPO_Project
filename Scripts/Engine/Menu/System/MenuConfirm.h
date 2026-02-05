@@ -35,8 +35,7 @@ public:
 	/*
 	 *	@brief	デストラクタ
 	 */
-	~MenuConfirm() override {
-	}
+	~MenuConfirm() override {}
 
 public:
 	/*

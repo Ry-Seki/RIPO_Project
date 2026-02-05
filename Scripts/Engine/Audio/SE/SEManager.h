@@ -18,7 +18,7 @@
 #include <unordered_map>
 
 /*
- *	SEの管理クラス
+ *	@brief	SEの管理クラス
  */
 class SEManager {
 private:
@@ -29,56 +29,56 @@ private:
 
 public:
 	/*
-	 *	コンストラクタ
+	 *	@brief	コンストラクタ
 	 */
 	SEManager() = default;
 	/*
-	 *	デストラクタ
+	 *	@brief	デストラクタ
 	 */
 	~SEManager();
 
 public:
 	/*
-	 *	初期化処理
+	 *	@brief	初期化処理
 	 */
 	void Initialize();
 	/*
-	 *	ロード済みのデータの設定 (コールバック)
+	 *	@brief	ロード済みのデータの設定 (コールバック)
 	 */
 	void SetupData();
 	/*
-	 *	更新処理
+	 *	@brief	更新処理
 	 */
 	void Update();
 
 public:
 	/*
-	 *	SE再生処理
+	 *	@brief		SE再生処理
 	 *  @param[in]	const std::string& setKeyName	再生するSE名
-	 *  @param[in]	const int setVolume				音量
+	 *  @param[in]	float setVolume					音量
 	 */
-	void PlaySE(const std::string& setKeyName, const int setVolume);
+	void PlaySE(const std::string& setKeyName, float setVolume);
 	/*
-	 *	SE破棄処理
+	 *	@brief		SE破棄処理
 	 *  @param[in]	std::shared_ptr<SESource> destroySE
 	 */
 	void TeardownSE(std::shared_ptr<SESource> destroySE);
 
 public:
 	/*
-	 *	SEハンドルの登録
+	 *	@brief		SEハンドルの登録
 	 *	@param[in]	const std::string&	setKeyName	登録するSE名
 	 *	@param[in]	const int setHandle				登録する音源ハンドル
 	 */
 	void RegisterSEHandle(const std::string& setKeyName, const int setHandle);
 	/*
-	 *	SEハンドルが登録済みか判定
+	 *	@brief		SEハンドルが登録済みか判定
 	 *  @param[in]	const std::string& setKeyName	調べるSE名
 	 *  @return		bool
 	 */
 	bool ExistSEHandle(const std::string& setKeyName) const;
 	/*
-	 *	SEハンドルの取得
+	 *	@brief		SEハンドルの取得
 	 *	@param[in]	const std::string& setKeyName	調べるSE名
 	 *	@return		int
 	 */
