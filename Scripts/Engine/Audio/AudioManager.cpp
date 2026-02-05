@@ -6,38 +6,41 @@
 #include "AudioManager.h"
 
 /*
- *	‰Šú‰»ˆ—
+ *	@brief	‰Šú‰»ˆ—
  */
 void AudioManager::Initialize() {
+	masterVolume = 1.0f;
+	bgmVolume = 1.0f;
+	seVolume = 1.0f;
 }
 /*
- *	XVˆ—
+ *	@brief	XVˆ—
  */
 void AudioManager::Update() {
-	bgmManager->Update();
 	seManager->Update();
 }
 /*
- *	BGM‚ÌÄ¶ˆ—
+ *	@brief	BGM‚ÌÄ¶ˆ—
  */
 void AudioManager::PlayBGM() {
-	bgmManager->PlayBGM(bgmVolume);
+	const float volume = masterVolume * bgmVolume;
+	bgmManager->PlayBGM(volume);
 }
 /*
- *	BGM‚Ì’âŽ~ˆ—
+ *	@brief	BGM‚Ì’âŽ~ˆ—
  */
 void AudioManager::StopBGM() {
 	bgmManager->StopBGM();
 }
 /*
- *	BGM‚Ì•ÏXˆ—
+ *	@brief		BGM‚Ì•ÏXˆ—
  *  @param[in]	const std::string& setKeyName	•ÏX‚·‚éBGM–¼
  */
 void AudioManager::ChangeBGM(const std::string& setKeyName) {
 	bgmManager->ChangeBGM(setKeyName);
 }
 /*
- *	BGMƒnƒ“ƒhƒ‹‚Ì“o˜^
+ *	@brief		BGMƒnƒ“ƒhƒ‹‚Ì“o˜^
  *	@param[in]	const std::string&	setKeyName	“o˜^‚·‚éBGM–¼
  *	@param[in]	const int setHandle				“o˜^‚·‚é‰¹Œ¹ƒnƒ“ƒhƒ‹
  */
@@ -45,14 +48,22 @@ void AudioManager::RegisterBGMHandle(const std::string& setKeyName, const int se
 	bgmManager->RegisterBGMHandle(setKeyName, setHandle);
 }
 /*
- *	SEÄ¶ˆ—
+ *	@brief		BGM‰¹—Ê•ÏX‚Ì“K‰ž
+ */
+void AudioManager::ApplyBGMVolume() {
+	const float finalVolume = masterVolume * bgmVolume;
+	bgmManager->UpdateVolume(finalVolume);
+}
+/*
+ *	@brief		SEÄ¶ˆ—
  *  @param[in]	const std::string& setKeyName	Ä¶‚·‚éSE–¼
  */
 void AudioManager::PlaySE(const std::string& setKeyName) {
-	seManager->PlaySE(setKeyName, seVolume);
+	const float volume = masterVolume * seVolume;
+	seManager->PlaySE(setKeyName, volume);
 }
 /*
- *	SEƒnƒ“ƒhƒ‹‚Ì“o˜^
+ *	@brief		SEƒnƒ“ƒhƒ‹‚Ì“o˜^
  *	@param[in]	const std::string&	setKeyName	“o˜^‚·‚éSE–¼
  *	@param[in]	const int setHandle				“o˜^‚·‚é‰¹Œ¹ƒnƒ“ƒhƒ‹
  */

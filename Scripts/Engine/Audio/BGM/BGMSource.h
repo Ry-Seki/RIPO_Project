@@ -9,31 +9,31 @@
 #include "../AudioSource.h"
 
 /*
- *	BGM音源クラス
+ *	@brief	BGM音源クラス
  */
 class BGMSource : public AudioSource {
 public:
 	/*
-	 *	コンストラクタ
+	 *	@brief	コンストラクタ
 	 */
 	BGMSource() = default;
 	/*
-	 *	デストラクタ
+	 *	@brief	デストラクタ
 	 */
 	~BGMSource() override {}
 
 public:
 	/*
-	 *	音源の再生処理
-	 *  @param[in]	int setVolume	音量
+	 *	@brief		音源の再生処理
+	 *  @param[in]	float setVolume		音量
 	 */
-	void Play(int setVolume) override;
+	void Play(float setVolume) override;
 	/*
-	 *	音源の停止処理
+	 *	@brief		音源の停止処理
 	 */
 	void Stop() override;
 	/*
-	 *	音源の破棄処理
+	 *	@brief		音源の破棄処理
 	 */
 	void Teardown() override;
 };

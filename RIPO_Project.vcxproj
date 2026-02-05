@@ -149,6 +149,7 @@
   <ItemGroup>
     <ClCompile Include="Scripts\Data\DxLibResourcesManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\AudioManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Audio\AudioSource.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMSource.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\SE\SEManager.cpp" />
@@ -172,9 +173,10 @@
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyStandby.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyTurn.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\HPBarComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\RevolverArm.cpp" />
-    <ClCompile Include="Scripts\Engine\Component\Character\SubmachineGunArm.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\SubmachineGun.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\WeaponBase.cpp" />
     <ClCompile Include="Scripts\Engine\Component\EffectComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp" />
@@ -196,7 +198,7 @@
     <ClCompile Include="Scripts\Engine\Manager\CameraManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\CharacterManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\EffectManager.cpp" />
-    <ClCompile Include="Scripts\Engine\Manager\PlayerUIManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\GaugeManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\WeaponManager.cpp" />
@@ -204,6 +206,7 @@
     <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuResourcesFactory.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuConfirm.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuCredit.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuLoadMode.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuSaveMode.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.cpp" />
@@ -263,7 +266,6 @@
     <ClCompile Include="Scripts\Engine\UI\Button\SinglePressButton.cpp" />
     <ClCompile Include="Scripts\Engine\UI\Button\UIButtonBase.cpp" />
     <ClCompile Include="Scripts\Engine\UI\EventSystem.cpp" />
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\ReticleUI.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
     <ClCompile Include="Scripts\Engine\Vision.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
@@ -315,12 +317,14 @@
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyState.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyTurn.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\HPBarComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\RevolverArm.h" />
-    <ClInclude Include="Scripts\Engine\Component\Character\SubmachineGunArm.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\SubmachineGun.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\WeaponBase.h" />
     <ClInclude Include="Scripts\Engine\Component\Component.h" />
     <ClInclude Include="Scripts\Engine\Component\EffectComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\GaugeBase.h" />
     <ClInclude Include="Scripts\Engine\Component\GravityComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h" />
     <ClInclude Include="Scripts\Engine\Component\RenderComponent.h" />
@@ -359,7 +363,7 @@
     <ClInclude Include="Scripts\Engine\Manager\BulletManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\CameraManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\CharacterManager.h" />
-    <ClInclude Include="Scripts\Engine\Manager\PlayerUIManager.h" />
+    <ClInclude Include="Scripts\Engine\Manager\GaugeManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\WeaponManager.h" />
@@ -368,6 +372,7 @@
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuResourcesFactory.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuConfirm.h" />
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuCredit.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuLoadMode.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuSaveMode.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.h" />
@@ -427,7 +432,10 @@
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectUtility.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Stair.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\OnTreasureState.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\TreasureState.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\UnTreasureState.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageState.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageUtility.h" />
     <ClInclude Include="Scripts\Engine\StringUtility.h" />
@@ -444,7 +452,6 @@
     <ClInclude Include="Scripts\Engine\UI\Button\SinglePressButton.h" />
     <ClInclude Include="Scripts\Engine\UI\Button\UIButtonBase.h" />
     <ClInclude Include="Scripts\Engine\UI\EventSystem.h" />
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReticleUI.h" />
     <ClInclude Include="Scripts\Engine\UI\Rect.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
     <ClInclude Include="Scripts\Engine\Vision.h" />

@@ -28,8 +28,9 @@ void SinglePressButton::Update(float unscaledDeltaTime) {
     }
 
     if (inputState == GameEnum::ButtonInputState::Press) {
+		// ‰Ÿ‚µ‚Ä‚¢‚éŠÔ‚Ìˆ—
         OnPress(unscaledDeltaTime);
-		// TODO : ‚±‚±‚ğ¡‚·(ÅŒã‚É“ü—Í‚³‚ê‚½Enum)
+		// —£‚³‚ê‚½uŠÔ
         if (OnReleasedUp()) OnPressUp();
     }
 }

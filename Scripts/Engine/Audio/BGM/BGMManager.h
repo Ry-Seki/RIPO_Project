@@ -15,7 +15,7 @@
 #include <unordered_map>
 #include <mutex>
 /*
- *	BGMを管理するクラス
+ *	@brief	BGMを管理するクラス
  */
 class BGMManager {
 private:
@@ -25,67 +25,67 @@ private:
 
 public:
 	/*
-	 *	コンストラクタ
+	 *	@brief	コンストラクタ
 	 */
 	BGMManager() : currentSource(std::make_unique<BGMSource>()) {}
 	/*
-	 *	デストラクタ
+	 *	@brief	デストラクタ
 	 */
 	~BGMManager();
 public:
 	/*
-	 *	初期化処理
+	 *	@brief	初期化処理
 	 */
 	void Initialize();
 	/*
-	 *	ロード済みのデータの設定(コールバック)
-	 *  @param[in]	
+	 *	@brief	ロード済みのデータの設定(コールバック)
 	 */
 	void SetupData();
 	/*
-	 *	更新処理
-	 */
-	void Update();
-	/*
-	 *	描画処理
+	 *	@brief	描画処理
 	 */
 	void Render();
 	/*
-	 *	BGMの破棄処理
+	 *	@brief	BGMの破棄処理
 	 */
 	void Teardown();
 
 public:
 	/*
-	 *	BGMの再生処理
-	 *  @param[in]	int setVolume	音量
+	 *	@brief		BGMの再生処理
+	 *  @param[in]	float setVolume		音量
 	 */
-	void PlayBGM(int setVolume);
+	void PlayBGM(float setVolume);
 	/*
-	 *	BGMの停止処理
+	 *	@brief		BGMの停止処理
 	 */
 	void StopBGM();
 	/*
-	 *	BGMの変更処理
+	 *	@brief		BGMの変更処理
 	 *  @param[in]	consst std::string	setBGMNama	変更先のBGM名
 	 */
 	void ChangeBGM(const std::string setBGMNama);
+	/*
+	 *	@brief		音量の更新処理
+	 *	@param[in]	float setVolume
+	 */
+	void UpdateVolume(float setVolume);
 
 public:
 	/*
-	 *	BGMハンドルの登録
+	 *	@brief		BGMハンドルの登録
 	 *	@param[in]	const std::string&	setKeyName	登録するBGM名
 	 *	@param[in]	const int setHandle				登録する音源ハンドル
 	 */
 	void RegisterBGMHandle(const std::string& setKeyName, const int setHandle);
 	/*
-	 *	BGMハンドルが登録済みか判定
+	 *	@brief		BGMハンドルが登録済みか判定
 	 *  @param[in]	const std::string& setKeyName	調べるBGM名
 	 *  @return		bool
 	 */
 	bool ExistBGMHandle(const std::string& setKeyName) const;
 	/*
-	 *	BGMハンドルの取得
+	 *	@brief		BGMハンドルの取得
 	 *	@param[in]	const std::string& setKeyName	調べるBGM名
 	 *	@return		int
 	 */
@@ -93,7 +93,7 @@ public:
 
 public:
 	/*
-	 *	現在のBGMの取得
+	 *	@brief		現在のBGMの取得
 	 *	@return		BGMSource& (常に持っている想定)
 	 */
 	inline BGMSource& GetCurrentSource() const { return *currentSource; }

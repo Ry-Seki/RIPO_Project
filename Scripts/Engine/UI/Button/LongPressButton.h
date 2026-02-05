@@ -13,9 +13,13 @@
  */
 class LongPressButton : public UIButtonBase {
 private:
-	float pressTime = 0.0f;
-	float holdDuration = 1.0f;
-	bool isHoldCompleted = false;
+	float holdElapsed = 0.0f;		  // ’·‰Ÿ‚µŒo‰ßŠÔ
+	float repeatElapsed = 0.0f;		  // ŒJ‚è•Ô‚µŒo‰ßŠÔ
+
+	float initialDelay = 0.5f;        // ‘¦Œã‚Ì‘Ò‹@
+	float repeatInterval = 0.3f;      // ‰ŠúŠÔŠu
+	float minRepeatInterval = 0.05f;  // ‰ºŒÀ
+	float accelerationRate = 0.15f;   // •b‚ ‚½‚è’Zk—Ê
 
 public:
 	/*

@@ -89,10 +89,10 @@ Orderd_JSON SaveDataManager::ToJSON(const SaveData& data) {
     Orderd_JSON json;
     json["Version"] = _SAVE_VERSION;
     json["IsUsed"] = data.isUsed;
+    json["IsClear"] = data.isClear;
     json["Game"] = ToJSON(data.game);
     json["Player"] = ToJSON(data.player);
     json["World"] = ToJSON(data.world);
-    json["Settings"] = ToJSON(data.settings);
     return json;
 }
 /*
@@ -103,10 +103,10 @@ Orderd_JSON SaveDataManager::ToJSON(const SaveData& data) {
 SaveData SaveDataManager::SaveDataFromJSON(const JSON& json) {
     SaveData data{};
     data.isUsed = json.value("IsUsed", false);
+    data.isClear = json.value("IsClear", false);
     data.game = GameDataFromJSON(json["Game"]);
     data.player = PlayerDataFromJSON(json["Player"]);
     data.world = WorldDataFromJSON(json["World"]);
-    data.settings = SettingsDataFromJSON(json["Settings"]);
     return data;
 }
 /*
@@ -257,32 +257,6 @@ DungeonProgressData SaveDataManager::DungeonDataFromJSON(const JSON& json, int d
     return data;
 }
 /*
- *	@brief		設定データ->JSONへ変換
- *	@param[in]	const GameProgressData& data
- *  @return		JSON
- */
-Orderd_JSON SaveDataManager::ToJSON(const SettingsData& data) {
-    Orderd_JSON json;
-    json["mouseSensitivity"] = data.mouseSensitivity;
-    json["masterVolume"] = data.masterVolume;
-    json["bgmVolume"] = data.bgmVolume;
-    json["seVolume"] = data.seVolume;
-    return json;
-}
-/*
- *	@brief		JSON->設定データへ変換
- *	@param[in]	const JSON& json
- *	@return		SettingsData
- */
-SettingsData SaveDataManager::SettingsDataFromJSON(const JSON& json) {
-    SettingsData data{};
-    data.mouseSensitivity = json.value("mouseSensitivity", 1.0f);
-    data.masterVolume = json.value("masterVolume", 1.0f);
-    data.bgmVolume = json.value("bgmVolume", 1.0f);
-    data.seVolume = json.value("seVolume", 1.0f);
-    return data;
-}
-/*
  *	@brief		選択されたスロットにセーブ
  *  @return		bool
  */
@@ -365,7 +339,6 @@ void SaveDataManager::CollectSaveData(const ActionContext& context) {
     // Player
     currentSaveData.player
         = PlayerStatusManager::GetInstance().GetSaveData();
-    // Settings
 
 
 }
@@ -381,7 +354,6 @@ void SaveDataManager::ApplyLoadData(ActionContext& context) {
     PlayerStatusManager::GetInstance().ApplyLoadData(currentSaveData.player);
     // World
     WorldProgressManager::GetInstance().SetWorldProgressData(currentSaveData.world);
-    // Settings
 
 }
 /*

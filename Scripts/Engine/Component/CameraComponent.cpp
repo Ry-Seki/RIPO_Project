@@ -102,4 +102,7 @@ void CameraComponent::Update(float deltaTime) {
 		camera->rotation.x,
 		camera->rotation.y,
 		camera->rotation.z);
+
+	// スクリーンの中心設定
+	SetCameraScreenCenter(GameConst::WINDOW_WIDTH * 0.5f, GameConst::WINDOW_HEIGHT * 0.5f);
 }

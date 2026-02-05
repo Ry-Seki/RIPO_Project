@@ -9,7 +9,7 @@
 #include "AudioManager.h"
 
 /*
- *	‰¹—ÊŠÖ˜AÀsˆ—
+ *	@brief	‰¹—ÊŠÖ˜AÀsˆ—
  *  @note	–¼‘O‹óŠÔ‚Å‚ÌÈ—ª‰Â”\	using namespace AudioUtility
  */
 namespace AudioUtility {
@@ -26,14 +26,14 @@ namespace AudioUtility {
 		AudioManager::GetInstance().StopBGM();
 	}
 	/*
-	 *	BGM‚Ì•ÏX
+	 *	@brief		BGM‚Ì•ÏX
 	 *  @param[in]	const std::string& setKeyName	•ÏXæBGM–¼
 	 */
 	inline void ChangeBGM(const std::string& setKeyName) {
 		AudioManager::GetInstance().ChangeBGM(setKeyName);
 	}
 	/*
-	 *	BGMƒnƒ“ƒhƒ‹‚Ì“o˜^
+	 *	@brief		BGMƒnƒ“ƒhƒ‹‚Ì“o˜^
 	 *	@param[in]	const std::string&	setKeyName	“o˜^‚·‚éBGM–¼
 	 *	@param[in]	const int setHandle				“o˜^‚·‚é‰¹Œ¹ƒnƒ“ƒhƒ‹
 	 */
@@ -42,14 +42,14 @@ namespace AudioUtility {
 	}
 
 	/*
-	 *	SEÄ¶ˆ—
+	 *	@brief		SEÄ¶ˆ—
 	 *  @param[in]	const std::string& setKeyName	Ä¶‚·‚éSE–¼
 	 */
 	inline void PlaySE(const std::string& setKeyName) {
 		AudioManager::GetInstance().PlaySE(setKeyName);
 	}
 	/*
-	 *	SEƒnƒ“ƒhƒ‹‚Ì“o˜^
+	 *	@brief		SEƒnƒ“ƒhƒ‹‚Ì“o˜^
 	 *	@param[in]	const std::string&	setKeyName	“o˜^‚·‚éSE–¼
 	 *	@param[in]	const int setHandle				“o˜^‚·‚é‰¹Œ¹ƒnƒ“ƒhƒ‹
 	 */
@@ -58,31 +58,45 @@ namespace AudioUtility {
 	}
 
 	/*
-	 *	BGM‰¹—Ê‚Ìæ“¾
-	 *  @return		int (0`100)
+	 *	@brief		ƒ}ƒXƒ^[‰¹—Ê‚Ìæ“¾
+	 *  @return		float (0.0f`1.0f)
 	 */
-	inline int GetBGMVolume() {
+	inline float GetMasterVolume() {
+		return AudioManager::GetInstance().GetMasterVolume();
+	}
+	/*
+	 *	@brief		ƒ}ƒXƒ^[‰¹—Ê‚Ìİ’è
+	 *  @param[in]	float setVolume		‰¹—Ê (0.0f`1.0f)
+	 */
+	inline void SetMasterVolume(float setVolume) {
+		return AudioManager::GetInstance().SetMasterVolume(setVolume);
+	}
+	/*
+	 *	@brief		BGM‰¹—Ê‚Ìæ“¾
+	 *  @return		float (0.0f`1.0f)
+	 */
+	inline float GetBGMVolume() {
 		return AudioManager::GetInstance().GetBGMVolume(); 
 	}
 	/*
-	 *	BGM‰¹—Ê‚Ìİ’è
-	 *  @param[in]	const int setVolume		‰¹—Ê (0`100)
+	 *	@brief		BGM‰¹—Ê‚Ìİ’è
+	 *  @param[in]	float setVolume		‰¹—Ê (0.0f`1.0f)
 	 */
-	inline void SetBGMVolume(const int setVolume) {
+	inline void SetBGMVolume(float setVolume) {
 		AudioManager::GetInstance().SetBGMVolume(setVolume); 
 	}
 	/*
-	 *	SE‰¹—Ê‚Ìæ“¾
-	 *	@return		int (0`100)
+	 *	@brief		SE‰¹—Ê‚Ìæ“¾
+	 *	@return		float (0.0f`1.0f)
 	 */
-	inline int GetSEVolume() {
+	inline float GetSEVolume() {
 		return AudioManager::GetInstance().GetSEVolume(); 
 	}
 	/*
-	 *	SE‰¹—Ê‚Ìİ’è
-	 *	@param[in]	const int setVolume		‰¹—Ê (0`100)
+	 *	@brief		SE‰¹—Ê‚Ìİ’è
+	 *	@param[in]	float setVolume		‰¹—Ê (0.0f`1.0f)
 	 */
-	inline void SetSEVolume(const int setVolume) { 
+	inline void SetSEVolume(float setVolume) { 
 		AudioManager::GetInstance().SetSEVolume(setVolume); 
 	}
 };
