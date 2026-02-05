@@ -83,7 +83,7 @@ void HPBarComponent::ShowHPBar()
 	VECTOR rightDir = VCross(up, viewDir);
 	rightDir = VNorm(rightDir);
 
-	float worldHalfBar = 400.0f;
+	float worldHalfBar = 200.0f;
 
 	// 左右端をカメラ右方向に作る
 	VECTOR leftPos = VSub(headPos, VScale(rightDir, worldHalfBar));
@@ -94,14 +94,16 @@ void HPBarComponent::ShowHPBar()
 	VECTOR screenRight = ConvWorldPosToScreenPos(rightPos);
 	VECTOR screenCenter = ConvWorldPosToScreenPos(headPos);
 
+	DrawFormatString(0, 130, GetColor(255, 255, 255), "screenCenter(%f,%f,%f)",
+		screenCenter.x, screenCenter.y, screenCenter.z);
 	// カメラ裏なら表示しない
-	if (screenCenter.z > 1.0f) return;
+	if (screenCenter.z > 0.999f || screenCenter.z < 0.9f) return;
 
 	// 画面上の長さ（距離で計算）
 	float dx = screenRight.x - screenLeft.x;
 	float dy = screenRight.y - screenLeft.y;
 	float barWidth = sqrtf(dx * dx + dy * dy);
-	float barHeight = sqrtf(dx * dx + dy * dy) * 0.05f;
+	float barHeight = sqrtf(dx * dx + dy * dy) * 0.5f;
 
 	int BoxX = screenCenter.x;
 	int BoxY = screenCenter.y;
