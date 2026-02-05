@@ -11,6 +11,7 @@
 #include "../Component/GravityComponent.h"
 #include "../Component/CapsuleCollider.h"
 #include "../Component/AnimatorComponent.h"
+#include "../Component/Character/HPBarComponent.h"
 
 CharacterManager::CharacterManager()
 	: engine(nullptr) {
@@ -101,6 +102,8 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 	GameObjectPtr enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	// アニメーターコンポーネント追加
 	enemy->AddComponent<AnimatorComponent>();
+	// HPバーコンポーネント追加
+	enemy->AddComponent<HPBarComponent>();
 	// AABBコライダーコンポーネント追加
 	AABBColliderPtr aabbCollider = enemy->AddComponent<AABBCollider>();
 	aabbCollider->aabb = { AABBMin, AABBMax };
