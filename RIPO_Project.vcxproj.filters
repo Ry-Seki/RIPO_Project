@@ -22,32 +22,8 @@
     <Filter Include="ソース ファイル\Engine\Scene">
       <UniqueIdentifier>{896ddef5-f230-4537-a264-dcffef2cc9c9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine">
-      <UniqueIdentifier>{a6e0d6dc-071b-401a-99ec-feec3b48933e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Fade">
-      <UniqueIdentifier>{5bc016e8-fe80-4132-b5c0-658df14ace1c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Character">
-      <UniqueIdentifier>{5242111f-caf1-446e-83f5-80cc00788ab9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Component">
-      <UniqueIdentifier>{54ab25f9-264c-4207-bf54-7a589ccba9ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene">
-      <UniqueIdentifier>{25cc718d-8285-4907-a65e-79be9d91df32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Stage">
-      <UniqueIdentifier>{82d1ef68-d248-4de4-b257-2d438a50a784}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Load">
-      <UniqueIdentifier>{69b3473c-6403-469e-9dea-31f1b2cbdcd7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engine\Load">
       <UniqueIdentifier>{533811ef-5a14-42b7-99a8-31b694d26cc7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Input">
-      <UniqueIdentifier>{1a45a64e-7fa7-4173-b945-25cddacebb7b}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Engine\Stage">
       <UniqueIdentifier>{d0570ce8-4016-4a87-a40b-25a42340f6e2}</UniqueIdentifier>
@@ -55,44 +31,14 @@
     <Filter Include="ソース ファイル\Engine\Load\Animation">
       <UniqueIdentifier>{bc742f61-1afc-40b4-914b-efe3763a7f05}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Load\Animation">
-      <UniqueIdentifier>{ffab97aa-c776-491b-834e-4773cbcd9620}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Audio">
-      <UniqueIdentifier>{8b99aa5f-c92f-410b-8364-5698a7ae6bfe}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engine\Audio">
       <UniqueIdentifier>{bef3dd9e-9d20-4c8f-8581-0e0f1902c486}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Utility">
-      <UniqueIdentifier>{2711ac87-a2b7-4672-910f-906a1dee5423}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Menu">
-      <UniqueIdentifier>{fa4e7175-a830-4183-bca5-efe2091cd4e9}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Data">
       <UniqueIdentifier>{891cb159-afb4-4a67-ae0d-15a8e9912cf3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\System">
-      <UniqueIdentifier>{64f747a7-ddd1-4bfc-8c39-8cbb5c510563}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\System\Money">
-      <UniqueIdentifier>{f2e7d909-1afd-44df-9645-61a68ddc5bf0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\System\Status">
-      <UniqueIdentifier>{020243a0-36cf-4eec-8ff4-8079e168b880}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Character\Player">
-      <UniqueIdentifier>{75a189b6-3745-4a0f-815c-45aeb67731df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Collision">
-      <UniqueIdentifier>{a14b27b8-e5d5-4065-9407-d4a3085a4c4e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engine\System">
       <UniqueIdentifier>{5c2a2461-e2cf-4d1a-9f3f-66f8ac6afd29}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\System\Item">
-      <UniqueIdentifier>{4de5ccba-ab5d-44b6-9b3e-93d3ce175d96}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Data\Dungeon">
       <UniqueIdentifier>{a2c6122f-53ba-45be-9960-7b5e94880d6f}</UniqueIdentifier>
@@ -118,35 +64,11 @@
     <Filter Include="ヘッダー ファイル\Data\Save">
       <UniqueIdentifier>{e75571c1-2bf6-45db-a66c-2429cc31db01}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState">
-      <UniqueIdentifier>{9fa58c1c-9f26-4d0b-afdb-33d6be497d74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction">
-      <UniqueIdentifier>{5bab4546-c784-4c80-9567-0bca72245ad3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail">
-      <UniqueIdentifier>{80d572c7-1307-4bce-86e8-062835dccd7b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectAction">
-      <UniqueIdentifier>{1c7e79d4-6074-449c-bdaa-92ec7996c080}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engine\Scene\GameState">
       <UniqueIdentifier>{bfedba27-bada-456c-96e5-0b9ec26cd09b}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Engine\Scene\GameState\SelectAction">
       <UniqueIdentifier>{b5847c31-305e-4bd9-8dee-c6d804d3c3a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Dungeon">
-      <UniqueIdentifier>{7d90da95-0d37-4069-8592-3130b7731ab2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Shop">
-      <UniqueIdentifier>{0d3ed3c0-02ec-4ee6-aaee-41c5abb98b3d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Training">
-      <UniqueIdentifier>{500abb44-b4d8-4e86-adb2-b942c77f28d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\PartTime">
-      <UniqueIdentifier>{cf99530e-db37-41ee-80ea-16a90cd616fb}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Engine\Scene\GameState\SelectDetail">
       <UniqueIdentifier>{f627e3c9-4436-47fd-8f84-e85510c5734b}</UniqueIdentifier>
@@ -178,33 +100,6 @@
     <Filter Include="ソース ファイル\Engine\Scene\GameState\InAction\PartTime">
       <UniqueIdentifier>{9ed3e088-36f2-46c3-84ab-dcc15666671e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\ResultAction">
-      <UniqueIdentifier>{e502c47b-3e6a-43ad-be03-72e45fc0e6a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\Dungeon">
-      <UniqueIdentifier>{249fa5e4-ad4f-4067-9d81-0243d862c0aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime">
-      <UniqueIdentifier>{896da2b7-d18f-45b3-839d-53a23db05321}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\Shop">
-      <UniqueIdentifier>{24fddcd5-86dd-4426-a49d-b645f3780e49}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\Training">
-      <UniqueIdentifier>{66b9f025-c755-4eac-aed4-c54ce7ddbca6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\ResultAction\Dungeon">
-      <UniqueIdentifier>{b42404ad-8448-4d28-b939-e1d187c08f81}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\ResultAction\PartTime">
-      <UniqueIdentifier>{04be1548-3c9a-4bef-96e3-13f2d0b85d06}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\ResultAction\Shop">
-      <UniqueIdentifier>{06ea7fef-bc5a-4c05-80da-b38edee1e271}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\ResultAction\Training">
-      <UniqueIdentifier>{73400c3c-4f39-4642-9cf5-f641c25b897a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engine\Scene\GameState\ResultAction">
       <UniqueIdentifier>{1412f007-4c82-45a1-a6bd-a82913aad37e}</UniqueIdentifier>
     </Filter>
@@ -220,38 +115,17 @@
     <Filter Include="ソース ファイル\Engine\Scene\GameState\ResultAction\Training">
       <UniqueIdentifier>{bca117c7-6023-4978-8002-c528ffd7ad59}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\Tutorial">
-      <UniqueIdentifier>{8c28f7c7-e0e7-4db2-9db9-7709241ae385}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\Pause">
-      <UniqueIdentifier>{32e4b197-a7e4-4862-82c8-cc775e1317f5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engine\Scene\GameState\Tutorial">
       <UniqueIdentifier>{307177be-ff08-459b-9dd7-44a5662de6ca}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Engine\Scene\GameState\Pause">
       <UniqueIdentifier>{51c6cbc7-eeb1-4f35-a525-b9d4064e6847}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame">
-      <UniqueIdentifier>{0d5c76b3-04e0-475d-9c8c-cba0c3a23856}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban">
-      <UniqueIdentifier>{53efc34b-f7f4-4a0c-906a-1f11166e0b7c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engine\Scene\GameState\InAction\PartTime\Sokoban">
       <UniqueIdentifier>{747895b9-7f46-4785-8fa1-549e76a3694e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState">
-      <UniqueIdentifier>{4a65e24f-a81a-4998-b9bd-367bc96d647d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Engine\Menu\Title">
       <UniqueIdentifier>{d8709769-542c-40c5-9045-1362e3755acc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Menu\Title">
-      <UniqueIdentifier>{3719c741-c797-4156-bbec-e7f11c27e9fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\System\Save">
-      <UniqueIdentifier>{aac63f5d-d861-4147-a38d-8e51a32c3cb0}</UniqueIdentifier>
     </Filter>
     <Filter Include="ソース ファイル\Engine\Scene\SceneState">
       <UniqueIdentifier>{dd3fbd29-e0d8-4c47-bfdf-01e02431907a}</UniqueIdentifier>
@@ -271,6 +145,117 @@
     <Filter Include="ソース ファイル\Engine\Scene\SceneState\Result">
       <UniqueIdentifier>{831b1b94-607a-48a4-a322-58fe239fdac4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\System\World">
+      <UniqueIdentifier>{89a44cb6-af30-4525-b0a0-b0ab8012b2d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\System\Save">
+      <UniqueIdentifier>{a26aeb35-6ccd-4ae2-9ccb-addca59519f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Input">
+      <UniqueIdentifier>{8c08fc70-fa43-487b-8244-c1fcd2fb04b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\UI">
+      <UniqueIdentifier>{3b3e0b9f-aa6d-4356-b949-8258517b6ec8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Menu\System">
+      <UniqueIdentifier>{672ba505-2710-4874-b710-d73b61ceab5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\System\Settings">
+      <UniqueIdentifier>{5fc2d27f-b4e0-4b73-8356-1966acfd99c9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Menu\MainGame">
+      <UniqueIdentifier>{bf2dded6-3e80-405e-8d1d-73c19f809445}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\UI\Button">
+      <UniqueIdentifier>{a88ec588-e67f-4bc2-9678-1247ccc5d9ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Data\Menu">
+      <UniqueIdentifier>{33b2fbd0-413e-44a5-a0e6-0f8a4fa37812}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine">
+      <UniqueIdentifier>{a6e0d6dc-071b-401a-99ec-feec3b48933e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Fade">
+      <UniqueIdentifier>{5bc016e8-fe80-4132-b5c0-658df14ace1c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Character">
+      <UniqueIdentifier>{5242111f-caf1-446e-83f5-80cc00788ab9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Character\Player">
+      <UniqueIdentifier>{75a189b6-3745-4a0f-815c-45aeb67731df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Component">
+      <UniqueIdentifier>{54ab25f9-264c-4207-bf54-7a589ccba9ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene">
+      <UniqueIdentifier>{25cc718d-8285-4907-a65e-79be9d91df32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState">
+      <UniqueIdentifier>{9fa58c1c-9f26-4d0b-afdb-33d6be497d74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction">
+      <UniqueIdentifier>{5bab4546-c784-4c80-9567-0bca72245ad3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\Dungeon">
+      <UniqueIdentifier>{249fa5e4-ad4f-4067-9d81-0243d862c0aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime">
+      <UniqueIdentifier>{896da2b7-d18f-45b3-839d-53a23db05321}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame">
+      <UniqueIdentifier>{0d5c76b3-04e0-475d-9c8c-cba0c3a23856}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban">
+      <UniqueIdentifier>{53efc34b-f7f4-4a0c-906a-1f11166e0b7c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\Shop">
+      <UniqueIdentifier>{24fddcd5-86dd-4426-a49d-b645f3780e49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\Training">
+      <UniqueIdentifier>{66b9f025-c755-4eac-aed4-c54ce7ddbca6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail">
+      <UniqueIdentifier>{80d572c7-1307-4bce-86e8-062835dccd7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Dungeon">
+      <UniqueIdentifier>{7d90da95-0d37-4069-8592-3130b7731ab2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Shop">
+      <UniqueIdentifier>{0d3ed3c0-02ec-4ee6-aaee-41c5abb98b3d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Training">
+      <UniqueIdentifier>{500abb44-b4d8-4e86-adb2-b942c77f28d5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\PartTime">
+      <UniqueIdentifier>{cf99530e-db37-41ee-80ea-16a90cd616fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectAction">
+      <UniqueIdentifier>{1c7e79d4-6074-449c-bdaa-92ec7996c080}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\ResultAction">
+      <UniqueIdentifier>{e502c47b-3e6a-43ad-be03-72e45fc0e6a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\ResultAction\Dungeon">
+      <UniqueIdentifier>{b42404ad-8448-4d28-b939-e1d187c08f81}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\ResultAction\PartTime">
+      <UniqueIdentifier>{04be1548-3c9a-4bef-96e3-13f2d0b85d06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\ResultAction\Shop">
+      <UniqueIdentifier>{06ea7fef-bc5a-4c05-80da-b38edee1e271}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\ResultAction\Training">
+      <UniqueIdentifier>{73400c3c-4f39-4642-9cf5-f641c25b897a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\Tutorial">
+      <UniqueIdentifier>{8c28f7c7-e0e7-4db2-9db9-7709241ae385}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\Pause">
+      <UniqueIdentifier>{32e4b197-a7e4-4862-82c8-cc775e1317f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState">
+      <UniqueIdentifier>{4a65e24f-a81a-4998-b9bd-367bc96d647d}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\Standby">
       <UniqueIdentifier>{2d7ce63c-2de8-499d-a014-8386a9caf991}</UniqueIdentifier>
     </Filter>
@@ -286,14 +271,59 @@
     <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\Result">
       <UniqueIdentifier>{f9631148-fda3-47fc-ac53-748e627f4314}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Stage">
+      <UniqueIdentifier>{82d1ef68-d248-4de4-b257-2d438a50a784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Load">
+      <UniqueIdentifier>{69b3473c-6403-469e-9dea-31f1b2cbdcd7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Load\Animation">
+      <UniqueIdentifier>{ffab97aa-c776-491b-834e-4773cbcd9620}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Input">
+      <UniqueIdentifier>{1a45a64e-7fa7-4173-b945-25cddacebb7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Audio">
+      <UniqueIdentifier>{8b99aa5f-c92f-410b-8364-5698a7ae6bfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Utility">
+      <UniqueIdentifier>{2711ac87-a2b7-4672-910f-906a1dee5423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Menu">
+      <UniqueIdentifier>{fa4e7175-a830-4183-bca5-efe2091cd4e9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Menu\Title">
+      <UniqueIdentifier>{3719c741-c797-4156-bbec-e7f11c27e9fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Menu\System">
+      <UniqueIdentifier>{132b202d-1468-4a07-8cc6-ba58b51fd1cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Menu\MainGame">
+      <UniqueIdentifier>{5ea80fcf-06ba-4ebe-8f55-eb01f475a23b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\System">
+      <UniqueIdentifier>{64f747a7-ddd1-4bfc-8c39-8cbb5c510563}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\System\Money">
+      <UniqueIdentifier>{f2e7d909-1afd-44df-9645-61a68ddc5bf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\System\Status">
+      <UniqueIdentifier>{020243a0-36cf-4eec-8ff4-8079e168b880}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\System\Item">
+      <UniqueIdentifier>{4de5ccba-ab5d-44b6-9b3e-93d3ce175d96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\System\Save">
+      <UniqueIdentifier>{aac63f5d-d861-4147-a38d-8e51a32c3cb0}</UniqueIdentifier>
+    </Filter>
     <Filter Include="ヘッダー ファイル\Engine\System\World">
       <UniqueIdentifier>{a2860f3b-903e-423c-9960-2de6dadcbcc9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Engine\System\World">
-      <UniqueIdentifier>{89a44cb6-af30-4525-b0a0-b0ab8012b2d1}</UniqueIdentifier>
+    <Filter Include="ヘッダー ファイル\Engine\System\System">
+      <UniqueIdentifier>{a29d9118-1768-4dbf-a7c6-af09e87fe34f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Engine\System\Save">
-      <UniqueIdentifier>{a26aeb35-6ccd-4ae2-9ccb-addca59519f7}</UniqueIdentifier>
+    <Filter Include="ヘッダー ファイル\Engine\Collision">
+      <UniqueIdentifier>{a14b27b8-e5d5-4065-9407-d4a3085a4c4e}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Engine\UI">
       <UniqueIdentifier>{49b8f422-3391-475d-86e9-57aee797154d}</UniqueIdentifier>
@@ -301,29 +331,8 @@
     <Filter Include="ヘッダー ファイル\Engine\UI\Button">
       <UniqueIdentifier>{db5d91ef-fc24-479a-ab49-755e61292c41}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Engine\Input">
-      <UniqueIdentifier>{8c08fc70-fa43-487b-8244-c1fcd2fb04b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\UI">
-      <UniqueIdentifier>{3b3e0b9f-aa6d-4356-b949-8258517b6ec8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Menu\System">
-      <UniqueIdentifier>{132b202d-1468-4a07-8cc6-ba58b51fd1cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Menu\System">
-      <UniqueIdentifier>{672ba505-2710-4874-b710-d73b61ceab5c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\System\System">
-      <UniqueIdentifier>{a29d9118-1768-4dbf-a7c6-af09e87fe34f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\System\Settings">
-      <UniqueIdentifier>{5fc2d27f-b4e0-4b73-8356-1966acfd99c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Menu\MainGame">
-      <UniqueIdentifier>{bf2dded6-3e80-405e-8d1d-73c19f809445}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Menu\MainGame">
-      <UniqueIdentifier>{5ea80fcf-06ba-4ebe-8f55-eb01f475a23b}</UniqueIdentifier>
+    <Filter Include="ヘッダー ファイル\Data\Menu\Button">
+      <UniqueIdentifier>{c8dce48c-7c19-4b3d-b5e1-8cc514cbe786}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -612,9 +621,6 @@
     <ClCompile Include="Scripts\Engine\Input\PlayerActionMap.cpp">
       <Filter>ソース ファイル\Engine\Input</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\EventSystem.cpp">
-      <Filter>ソース ファイル\Engine\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Input\InputManager.cpp">
       <Filter>ソース ファイル\Engine\Input</Filter>
     </ClCompile>
@@ -626,15 +632,6 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyStandby.cpp">
       <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Button\SinglePressButton.cpp">
-      <Filter>ソース ファイル\Engine\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Button\UIButtonBase.cpp">
-      <Filter>ソース ファイル\Engine\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Button\LongPressButton.cpp">
-      <Filter>ソース ファイル\Engine\UI</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\System\MenuSettings.cpp">
       <Filter>ソース ファイル\Engine\Menu\System</Filter>
@@ -666,11 +663,32 @@
     <ClCompile Include="Scripts\Engine\Menu\System\MenuLoadMode.cpp">
       <Filter>ソース ファイル\Engine\Menu\System</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MenuResourcesFactory.cpp">
+    <ClCompile Include="Scripts\Engine\Manager\WeaponManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Button\ButtonFactory.cpp">
+    <ClCompile Include="Scripts\Engine\Component\Character\SubmachineGun.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Button\LongPressButton.cpp">
+      <Filter>ソース ファイル\Engine\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Button\SinglePressButton.cpp">
+      <Filter>ソース ファイル\Engine\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Button\UIButtonBase.cpp">
+      <Filter>ソース ファイル\Engine\UI\Button</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\EventSystem.cpp">
+      <Filter>ソース ファイル\Engine\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Button\ButtonFactory.cpp">
+      <Filter>ソース ファイル\Engine\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\MenuResourcesFactory.cpp">
+      <Filter>ソース ファイル\Engine\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuConfirm.cpp">
+      <Filter>ソース ファイル\Engine\Menu\System</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1142,9 +1160,6 @@
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyStandby.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer_Idle.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\Button\UIButtonBase.h">
       <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
     </ClInclude>
@@ -1184,26 +1199,29 @@
     <ClInclude Include="Scripts\Engine\Menu\MenuResourcesFactory.h">
       <Filter>ヘッダー ファイル\Engine\Menu</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Data\UI\Button\ButtonInfo.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\UI\MenuInfo.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Data\WeaponDataManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Engine\Manager\WeaponManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\SubmachineGun.h">
+      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuConfirm.h">
+      <Filter>ヘッダー ファイル\Engine\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\UI\MenuInfo.h">
+      <Filter>ヘッダー ファイル\Data\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\UI\Button\ButtonInfo.h">
+      <Filter>ヘッダー ファイル\Data\Menu\Button</Filter>
+    </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\Button\ButtonFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\TreasureState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\OnTreasureState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\UnTreasureState.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer_Idle.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

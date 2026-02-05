@@ -4,6 +4,7 @@
  */
 
 #include "MenuSelectSaveSlot.h"
+#include "MenuConfirm.h"
 #include "../MenuManager.h"
 #include "../../Load/LoadManager.h"
 #include "../../Load/JSON/LoadJSON.h"
@@ -124,6 +125,7 @@ void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
 
     auto& save = SaveDataManager::GetInstance();
     auto& menu = MenuManager::GetInstance();
+    auto confirm = menu.GetMenu<MenuConfirm>();
 
     // もし一番下のボタンの場合、それは戻るボタン
     if (currentSlot > GameConst::SELECT_SAVE_SLOT_MAX) {
@@ -133,19 +135,32 @@ void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
 
     switch (saveMode) {
         case GameEnum::SaveSlotMenuMode::Save:
-			// TODO : 上書きをするか確認するメニュー表示
-			save.SelectSlot(currentSlot);
-			save.SaveCurrentSlot();
+            confirm->SetCallback([this, &save, &menu](GameEnum::ConfirmResult result) {
+                if (result == GameEnum::ConfirmResult::Yes) {
+                    save.SelectSlot(currentSlot);
+                    save.SaveCurrentSlot();
+                } else {
+                    menu.CloseTopMenu();
+                }
+            });
+            menu.OpenMenu<MenuConfirm>();
+
 			// TODO : 確定メニューを表示
             break;
 
         case GameEnum::SaveSlotMenuMode::Load:
 			// TODO : ロードをするか確認するメニュー表示
-			save.SelectSlot(currentSlot);
-			save.LoadCurrentSlot();
-			// TODO : 読み込むー＞シーンの読み込み
-            engine.SetNextScene(std::make_shared<MainGameScene>());
-            MenuManager::GetInstance().CloseAllMenu();
+            confirm->SetCallback([this, &engine, &save, &menu](GameEnum::ConfirmResult result) {
+                if (result == GameEnum::ConfirmResult::Yes) {
+                    save.SelectSlot(currentSlot);
+                    save.LoadCurrentSlot();
+                    engine.SetNextScene(std::make_shared<MainGameScene>());
+                    menu.CloseAllMenu();
+                } else {
+                    menu.CloseTopMenu();
+                }
+            });
+            menu.OpenMenu<MenuConfirm>();
 			break;
     }
 }

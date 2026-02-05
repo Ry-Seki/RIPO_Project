@@ -107,6 +107,14 @@ void PlayerComponent::Update(float deltaTime) {
 		isDead = true;
 	}
 
+	// 武器変更
+	int first = static_cast<int>(GameEnum::PlayerAction::FirstWeapon);
+	int second = static_cast<int>(GameEnum::PlayerAction::SecondWeapon);
+	if (action.buttonDown[first])
+		WeaponManager::GetInstance().SetCurrentWeapon(GameEnum::Weapon::Revolver);
+	if (action.buttonDown[second])
+		WeaponManager::GetInstance().SetCurrentWeapon(GameEnum::Weapon::SubmachineGun);
+
 	// 回避
 	PlayerAvoid(player, deltaTime);
 	// 回避中は処理しない
@@ -128,7 +136,7 @@ void PlayerComponent::Update(float deltaTime) {
 	if (action.button[lift])
 		playerArm->SetCurrentArm(GameEnum::Arm::Hand);
 	int shot = static_cast<int>(GameEnum::PlayerAction::Shot);
-	// 左クリックでウデアクションを銃に設定
+	// 左クリックでウデアクションを武器に設定
 	if (action.button[shot])
 		playerArm->SetCurrentArm(GameEnum::Arm::Weapon);
 }

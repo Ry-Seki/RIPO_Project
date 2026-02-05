@@ -3,8 +3,8 @@
  *	@author Riku
  */
 
-#ifndef _WEAPON_DATA_H_
-#define _WEAPON_DATA_H_
+#ifndef _WEAPONDATA_H_
+#define _WEAPONDATA_H_
 
 #include "../Engine/Singleton.h"
 #include "../Engine/Load/JSON/LoadJSON.h"
@@ -14,7 +14,7 @@
 #include <string>
 
 /*
- *	銃のデータ管理クラス
+ *	武器のデータ管理クラス
  */
 class WeaponDataManager : public Singleton<WeaponDataManager>{
 	friend class Singleton<WeaponDataManager>;
@@ -26,7 +26,7 @@ private:
 		float shotCoolTime;		// 射撃のクールタイム
 		float reloadingTime;	// リロードの長さ
 	};
-	// 全銃のデータ
+	// 全武器のデータ
 	std::unordered_map<int, WeaponData> weaponsData;
 
 	// jsonデータのファイルパス
@@ -41,7 +41,7 @@ private:
 	// enum指定用map
 	std::unordered_map<GameEnum::Weapon, std::string> weaponsName;
 
-public:
+private:
 	WeaponDataManager() = default;
 	~WeaponDataManager() = default;
 
@@ -75,7 +75,7 @@ public:
 
 public:
 	/*
-	 *	各銃のデータ取得
+	 *	各武器のデータ取得
 	 */
 	inline WeaponData GetWeaponData(GameEnum::Weapon weapon) { 
 		return weaponsData[static_cast<int>(weapon)];
@@ -83,4 +83,4 @@ public:
 
 };
 
-#endif // !_WEAPON_DATA_H_
+#endif // !_WEAPONDATA_H_

@@ -18,6 +18,7 @@
 #include "../../Scene/TitleScene.h"
 #include "../MenuResourcesFactory.h"
 #include "../../../Data/UI/MenuInfo.h"
+#include "../../Menu/System/MenuConfirm.h"
 
 /*
  *	@brief	初期化処理
@@ -147,7 +148,16 @@ void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
             menu.CloseTopMenu();
-            engine.SetNextScene(std::make_shared<TitleScene>());
+            // TODO : 確認メニューを出す
+            auto confirm = menu.GetMenu<MenuConfirm>();
+            confirm->SetCallback([&engine, &menu](GameEnum::ConfirmResult result) {
+                if (result == GameEnum::ConfirmResult::Yes) {
+                    engine.SetNextScene(std::make_shared<TitleScene>());
+                }else {
+                    menu.CloseTopMenu();
+                }
+            });
+            menu.OpenMenu<MenuConfirm>();
         });
     } else {
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);

@@ -145,6 +145,13 @@ namespace GameEnum {
 		Max
 	};
 	/*
+	 *	@brief	確認の種類
+	 */
+	enum class ConfirmResult {
+		Yes,
+		No
+	};
+	/*
 	 *  @brief	アクションマップ
 	 *  @author	Riku
 	 */
@@ -169,6 +176,8 @@ namespace GameEnum {
 		Lift,			// お宝持ち上げ
 		OpenMenu,		// メニューを開く
 		BulletReload,	// 銃のリロード
+		FirstWeapon,	// 武器1
+		SecondWeapon,	// 武器2
 
 		Max
 	};
@@ -205,19 +214,6 @@ namespace GameEnum {
 		Invalid = -1,
 		Revolver,		// リボルバー(単発銃)
 		SubmachineGun,	// サブマシンガン(連射銃)
-
-		Max
-	};
-	/*
-	 *	@brief	銃のデータ
-	 *	@author	Riku
-	 */
-	enum class WeaponData {
-		Invalid = -1,
-		DefaultDamage,		// 基礎攻撃力
-		MagazineCapacity,	// 装填弾数
-		ShotCoolTime,		// 射撃のクールタイム
-		ReloadingTime,		// リロードの長さ
 
 		Max
 	};

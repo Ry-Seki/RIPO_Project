@@ -27,13 +27,13 @@ void MenuActionMap::Initialize() {
 	// 左右移動
 	AddAxis(
 		static_cast<int>(GameEnum::MenuAction::Horizontal),
-		{ InputType::Key, KEY_INPUT_D },
-		{ InputType::Key, KEY_INPUT_A }
+		{ InputType::Key, KEY_INPUT_RIGHT },
+		{ InputType::Key, KEY_INPUT_LEFT }
 	);
 	AddAxis(
 		static_cast<int>(GameEnum::MenuAction::Horizontal),
-		{ InputType::Key, KEY_INPUT_RIGHT },
-		{ InputType::Key, KEY_INPUT_LEFT }
+		{ InputType::Key, KEY_INPUT_D },
+		{ InputType::Key, KEY_INPUT_A }
 	);
 	// 決定
 	AddButton(
@@ -47,7 +47,7 @@ void MenuActionMap::Initialize() {
 	// クリック
 	AddButton(
 		static_cast<int>(GameEnum::MenuAction::Click),
-		{ InputType::Mouse, MOUSE_INPUT_LEFT }
+		{ InputType::MouseButton, MOUSE_INPUT_LEFT }
 	);
 	// キャンセル
 	AddButton(

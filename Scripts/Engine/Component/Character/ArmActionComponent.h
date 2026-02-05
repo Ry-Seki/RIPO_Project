@@ -10,6 +10,7 @@
 #include "../../Input/ActionMapBase.h"
 #include "../../GameEnum.h"
 #include "../../Input/InputUtility.h"
+#include "../../Manager/WeaponManager.h"
 #include "../../Engine.h"
 #include "ArmBase.h"
 #include "HandArm.h"
@@ -48,6 +49,18 @@ public:
 			return;
 		currentArm = arms[setArm];
 		currentArm->Initialize();
+	}
+
+	/*
+	 *	使用しているウデを取得
+	 */
+	inline ArmBasePtr GetCurrentArm() {
+		if (!currentArm) return nullptr;
+		// currentArmがWeaponBase型でないならnullptrが代入される(dynamic_pointer_castの仕様)
+		if (std::dynamic_pointer_cast<WeaponBase>(currentArm)) {
+			return WeaponManager::GetInstance().GetCurrentWeapon();
+		}
+		return currentArm;
 	}
 
 	/*
