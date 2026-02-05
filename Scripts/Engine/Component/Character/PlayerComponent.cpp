@@ -106,7 +106,7 @@ void PlayerComponent::Update(float deltaTime) {
 	if (status.HP <= 0) {
 		isDead = true;
 	}
-
+	
 	// •Ší•ÏX
 	int first = static_cast<int>(GameEnum::PlayerAction::FirstWeapon);
 	int second = static_cast<int>(GameEnum::PlayerAction::SecondWeapon);

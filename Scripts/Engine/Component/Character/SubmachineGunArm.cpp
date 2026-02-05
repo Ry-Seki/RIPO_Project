@@ -1,14 +1,14 @@
 /*
- *	@file	SubmachineGun.cpp
+ *	@file	SubmachineGunArm.cpp
  *	@author Riku
  */
 
-#include "SubmachineGun.h"
+#include "SubmachineGunArm.h"
 
 /*
  *	初期化処理
  */
-void SubmachineGun::Initialize() {
+void SubmachineGunArm::Initialize() {
 	number = GameEnum::Weapon::SubmachineGun;
 	// サブマシンガンのデータ取得
 	auto data = WeaponDataManager::GetInstance().GetWeaponData(number);
@@ -24,7 +24,7 @@ void SubmachineGun::Initialize() {
 /*
  *	更新処理
  */
-void SubmachineGun::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) {
+void SubmachineGunArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) {
 	// クールタイム
 	if (shotCoolTime <= 0) {
 		shotCoolTime = 0;
