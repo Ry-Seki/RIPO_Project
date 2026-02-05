@@ -16,40 +16,41 @@
 #include "../../Input/InputUtility.h"
 #include "../../Engine.h"
 #include "../../Scene/TitleScene.h"
+#include "../MenuResourcesFactory.h"
+#include "../../../Data/UI/MenuInfo.h"
+#include "../../Menu/System/MenuConfirm.h"
 
 /*
  *	@brief	初期化処理
  */
 void MenuInGame::Initialize(Engine& engine) {
-	buttonList.resize(_BUTTON_INDEX);
-	for (int i = 0; i < _BUTTON_INDEX; i++) {
-		buttonList[i] = std::make_shared<SinglePressButton>(Rect(200, 100 * i, 700, 80));
-		// ボタンの登録
-		eventSystem.RegisterButton(buttonList[i].get());
-	}
-	// イベントシステムの初期化
-	eventSystem.Initialize(0);
-	auto& load = LoadManager::GetInstance();
-	auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
-    load.SetOnComplete([this, &engine, navigation]() {
-        for (int i = 0, max = buttonList.size(); i < max; i++) {
-            auto button = buttonList[i];
+    auto& load = LoadManager::GetInstance();
+    auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
+    auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
+
+    load.SetOnComplete([this, &engine, menuJSON, navigation]() {
+        MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
+        for (auto& button : result.buttonList) {
             if (!button) continue;
 
-            button->Initialize();
+            eventSystem.RegisterButton(button.get());
+        }
+        eventSystem.Initialize(0);
+        buttonList = std::move(result.buttonList);
+        for (int i = 0, max = buttonList.size(); i < max; i++) {
+            UIButtonBase* button = buttonList[i].get();
+            if (!button) continue;
+
             button->RegisterUpdateSelectButton([this, button]() {
-                eventSystem.UpdateSelectButton(button.get());
+                eventSystem.UpdateSelectButton(button);
             });
-            // TODO : のちに登録する
-            //button->RegisterButtonHandle(buttonHandle->GetHandle());
+
             button->RegisterOnClick([this, &engine, i]() {
                 SelectButtonExecute(engine, i);
             });
         }
         eventSystem.LoadNavigation(navigation->GetData());
-        eventSystem.ApplySelection();
     });
-
 }
 /*
  *	@brief	メニューを開く
@@ -61,6 +62,7 @@ void MenuInGame::Open() {
     for (auto& button : buttonList) {
         button->Setup();
     }
+    eventSystem.ApplySelection();
 }
 /*
  *	@brief	更新処理
@@ -68,8 +70,11 @@ void MenuInGame::Open() {
 void MenuInGame::Update(Engine& engine, float unscaledDeltaTime) {
     auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
 
-    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)]) {
+    auto& cancelInputDown = input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)];
+    if (cancelInputDown) {
+        cancelInputDown = false;
         MenuManager::GetInstance().CloseTopMenu();
+        return;
     }
 
     // イベントシステムの更新
@@ -93,7 +98,7 @@ void MenuInGame::Render() {
     for (auto& button : buttonList) {
         button->Render();
     }
-    DrawFormatString(100, 50, GetColor(255, 255, 255), "MenuSelectSaveSlot");
+    DrawFormatString(50, 250, GetColor(255, 255, 255), "InGameMenu");
 }
 /*
  *	@brief	メニューを閉じる
@@ -143,7 +148,21 @@ void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
             menu.CloseTopMenu();
-            engine.SetNextScene(std::make_shared<TitleScene>());
+            // TODO : 確認メニューを出す
+            auto confirm = menu.GetMenu<MenuConfirm>();
+            confirm->SetCallback([&engine, &menu](GameEnum::ConfirmResult result) {
+                if (result == GameEnum::ConfirmResult::Yes) {
+                    engine.SetNextScene(std::make_shared<TitleScene>());
+                }else {
+                    menu.CloseTopMenu();
+                }
+            });
+            menu.OpenMenu<MenuConfirm>();
+        });
+    } else {
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+            menu.CloseTopMenu();
         });
     }
 }

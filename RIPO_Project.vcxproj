@@ -175,6 +175,7 @@
     <ClCompile Include="Scripts\Engine\Component\Character\HPBarComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\RevolverArm.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\SubmachineGun.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\WeaponBase.cpp" />
     <ClCompile Include="Scripts\Engine\Component\EffectComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp" />
@@ -199,8 +200,11 @@
     <ClCompile Include="Scripts\Engine\Manager\GaugeManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\WeaponManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuInGame.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MenuResourcesFactory.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuConfirm.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuLoadMode.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuSaveMode.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.cpp" />
@@ -255,6 +259,7 @@
     <ClCompile Include="Scripts\Engine\System\World\WorldProgressManager.cpp" />
     <ClCompile Include="Scripts\Engine\Time.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Button\ButtonFactory.cpp" />
     <ClCompile Include="Scripts\Engine\UI\Button\LongPressButton.cpp" />
     <ClCompile Include="Scripts\Engine\UI\Button\SinglePressButton.cpp" />
     <ClCompile Include="Scripts\Engine\UI\Button\UIButtonBase.cpp" />
@@ -274,6 +279,9 @@
     <ClInclude Include="Scripts\Data\PlayerStatusData.h" />
     <ClInclude Include="Scripts\Data\SaveData.h" />
     <ClInclude Include="Scripts\Data\TreasureDataList.h" />
+    <ClInclude Include="Scripts\Data\UI\Button\ButtonInfo.h" />
+    <ClInclude Include="Scripts\Data\UI\MenuInfo.h" />
+    <ClInclude Include="Scripts\Data\WeaponDataManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioSource.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioUtility.h" />
@@ -310,6 +318,7 @@
     <ClInclude Include="Scripts\Engine\Component\Character\HPBarComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\RevolverArm.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\SubmachineGun.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\WeaponBase.h" />
     <ClInclude Include="Scripts\Engine\Component\Component.h" />
     <ClInclude Include="Scripts\Engine\Component\EffectComponent.h" />
@@ -355,9 +364,12 @@
     <ClInclude Include="Scripts\Engine\Manager\GaugeManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
+    <ClInclude Include="Scripts\Engine\Manager\WeaponManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuInGame.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuBase.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MenuResourcesFactory.h" />
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuConfirm.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuLoadMode.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuSaveMode.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.h" />
@@ -427,6 +439,7 @@
     <ClInclude Include="Scripts\Engine\System\Status\PlayerStatusManager.h" />
     <ClInclude Include="Scripts\Engine\System\World\WorldProgressManager.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
+    <ClInclude Include="Scripts\Engine\UI\Button\ButtonFactory.h" />
     <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer.h" />
     <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer_Idle.h" />
     <ClInclude Include="Scripts\Engine\UI\Button\LongPressButton.h" />

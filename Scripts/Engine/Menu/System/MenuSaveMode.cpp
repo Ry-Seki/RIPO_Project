@@ -25,8 +25,7 @@ void MenuSaveMode::Open() {
 	auto saveMenu = menu.GetMenu<MenuSelectSaveSlot>();
 	saveMenu->SetSaveMode(mode);
 	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fadeIn, [this, &menu]() {
-		isStart = true;
+	FadeManager::GetInstance().StartFade(fadeIn, [&menu]() {
 		menu.OpenMenu<MenuSelectSaveSlot>();
 	});
 }

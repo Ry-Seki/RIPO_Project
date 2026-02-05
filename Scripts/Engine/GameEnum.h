@@ -90,6 +90,17 @@ namespace GameEnum {
 		Load
 	};
 	/*
+	 *	@brief	ボタンの種類
+	 *	@author	Seki
+	 */
+	enum class ButtonType {
+		Invalid = -1,
+		SinglePressButton,
+		LongPressButton,
+
+		Max
+	};
+	/*
 	 *	@brief	ボタンの入力状態
 	 *	@author	Seki
 	 */
@@ -132,6 +143,13 @@ namespace GameEnum {
 		Up,
 		Down,
 		Max
+	};
+	/*
+	 *	@brief	確認の種類
+	 */
+	enum class ConfirmResult {
+		Yes,
+		No
 	};
 	/*
 	 *  @brief	アクションマップ
@@ -192,8 +210,21 @@ namespace GameEnum {
 	 */
 	enum class Weapon {
 		Invalid = -1,
-		Revolver,	// リボルバー(単発銃)
-		SMG,		// サブマシンガン(連射銃)
+		Revolver,		// リボルバー(単発銃)
+		SubmachineGun,	// サブマシンガン(連射銃)
+
+		Max
+	};
+	/*
+	 *	@brief	銃のデータ
+	 *	@author	Riku
+	 */
+	enum class WeaponData {
+		Invalid = -1,
+		DefaultDamage,		// 基礎攻撃力
+		MagazineCapacity,	// 装填弾数
+		ShotCoolTime,		// 射撃のクールタイム
+		ReloadingTime,		// リロードの長さ
 
 		Max
 	};

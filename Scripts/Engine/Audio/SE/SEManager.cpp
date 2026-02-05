@@ -20,7 +20,7 @@ SEManager::~SEManager() {
  */
 void SEManager::Initialize() {
 	// 未使用リストの初期化
-	for (int i = 0; i < GameConst::_MAX_SE_INDEX; i++) {
+	for (int i = 0; i < GameConst::MAX_SE_INDEX; i++) {
 		unuseSEList.push_back(std::make_shared<SESource>());
 	}
 }

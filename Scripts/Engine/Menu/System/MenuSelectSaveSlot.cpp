@@ -4,48 +4,49 @@
  */
 
 #include "MenuSelectSaveSlot.h"
+#include "MenuConfirm.h"
+#include "../MenuManager.h"
 #include "../../Load/LoadManager.h"
 #include "../../Load/JSON/LoadJSON.h"
 #include "../../Load/Sprite/LoadSprite.h"
 #include "../../Input/InputUtility.h"
 #include "../../Save/SaveDataManager.h"
 #include "../../UI/Button/SinglePressButton.h"
+#include "../../Engine.h"
+#include "../../Scene/MainGameScene.h"
+#include "../MenuResourcesFactory.h"
+#include "../../../Data/UI/MenuInfo.h"
 
 /*
  *	@brief	初期化処理
  */
 void MenuSelectSaveSlot::Initialize (Engine& engine) {
-    buttonList.resize(4);
-    for (int i = 0; i < 4; i++) {
-        buttonList[i] = std::make_shared<SinglePressButton>(Rect(200, 100 * i, 700, 80));
-        buttonList[i]->SetName("SaveSlot");
-        // ボタンの登録
-        eventSystem.RegisterButton(buttonList[i].get());
-    }
-    // イベントシステムの初期化
-    eventSystem.Initialize(0);
-
     auto& load = LoadManager::GetInstance();
-    auto buttonHandle = load.LoadResource<LoadSprite>(_BUTTON_IMAGE_PATH);
-    auto navigation   = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
+    auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
+    auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
 
-    load.SetOnComplete([this, navigation, buttonHandle]() {
-        for (int i = 0, max = buttonList.size(); i < max; i++) {
-            auto button = buttonList[i];
+    load.SetOnComplete([this, &engine, menuJSON, navigation]() {
+        MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
+        for (auto& button : result.buttonList) {
             if (!button) continue;
 
-            button->Initialize();
+            eventSystem.RegisterButton(button.get());
+        }
+        eventSystem.Initialize(0);
+        buttonList = std::move(result.buttonList);
+        for (int i = 0, max = buttonList.size(); i < max; i++) {
+            UIButtonBase* button = buttonList[i].get();
+            if (!button) continue;
+
             button->RegisterUpdateSelectButton([this, button]() {
-                eventSystem.UpdateSelectButton(button.get());
+                eventSystem.UpdateSelectButton(button);
             });
-            // TODO : のちに登録する
-            //button->RegisterButtonHandle(buttonHandle->GetHandle());
-            //button->SetOnClick([this, i]() {
-            //    SelectButtonExecute(i);
-            //});
+
+            button->RegisterOnClick([this, &engine, i]() {
+                SelectButtonExecute(engine, i);
+            });
         }
         eventSystem.LoadNavigation(navigation->GetData());
-        eventSystem.ApplySelection();
     });
 }
 /*
@@ -54,16 +55,38 @@ void MenuSelectSaveSlot::Initialize (Engine& engine) {
 void MenuSelectSaveSlot::Open () {
     MenuBase::Open();
 	currentSlot = -1;
-	InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+    // ボタンの準備処理
     for (auto& button : buttonList) {
         button->Setup();
     }
+    // ロード時、セーブスロットが未使用だった場合選択不可にする
+    if (saveMode == GameEnum::SaveSlotMenuMode::Load) {
+        // セーブスロットの使用状態の取得
+        auto& save = SaveDataManager::GetInstance();
+        std::vector<bool> isUsedList = save.GetAllSlotIsUsed();
+        for (int i = 0, max = buttonList.size(); i < max; i++) {
+            auto button = buttonList[i];
+            if (!button) continue;
+
+            if (button == buttonList.back()) continue;
+
+            if (!isUsedList[i]) button->SetIsEnable(false);
+        }
+    }
+    eventSystem.ApplySelection();
+	InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
 }
 /*
  *	@brief	更新処理
  */
 void MenuSelectSaveSlot::Update (Engine& engine, float unscaledDeltaTime) {
     auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
+
+    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)]) {
+        MenuManager::GetInstance().CloseTopMenu();
+        return;
+    }
+
     // イベントシステムの更新
     eventSystem.Update(unscaledDeltaTime);
     // ボタンの更新
@@ -97,24 +120,47 @@ void MenuSelectSaveSlot::Close (Engine& engine) {
  *	@brief		ボタンの押された時の処理
  *	@param[in]	int slotIndex
  */
-void MenuSelectSaveSlot::SelectButtonExecute(int slotIndex) {
+void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
     currentSlot = slotIndex;
 
     auto& save = SaveDataManager::GetInstance();
+    auto& menu = MenuManager::GetInstance();
+    auto confirm = menu.GetMenu<MenuConfirm>();
+
+    // もし一番下のボタンの場合、それは戻るボタン
+    if (currentSlot > GameConst::SELECT_SAVE_SLOT_MAX) {
+        menu.CloseTopMenu();
+        return;
+    }
 
     switch (saveMode) {
         case GameEnum::SaveSlotMenuMode::Save:
-			// TODO : 上書きをするか確認するメニュー表示
-			save.SelectSlot(currentSlot);
-			save.SaveCurrentSlot();
+            confirm->SetCallback([this, &save, &menu](GameEnum::ConfirmResult result) {
+                if (result == GameEnum::ConfirmResult::Yes) {
+                    save.SelectSlot(currentSlot);
+                    save.SaveCurrentSlot();
+                } else {
+                    menu.CloseTopMenu();
+                }
+            });
+            menu.OpenMenu<MenuConfirm>();
+
 			// TODO : 確定メニューを表示
             break;
 
         case GameEnum::SaveSlotMenuMode::Load:
 			// TODO : ロードをするか確認するメニュー表示
-			save.SelectSlot(currentSlot);
-			save.LoadCurrentSlot();
-			// TODO : 読み込むー＞シーンの読み込み
+            confirm->SetCallback([this, &engine, &save, &menu](GameEnum::ConfirmResult result) {
+                if (result == GameEnum::ConfirmResult::Yes) {
+                    save.SelectSlot(currentSlot);
+                    save.LoadCurrentSlot();
+                    engine.SetNextScene(std::make_shared<MainGameScene>());
+                    menu.CloseAllMenu();
+                } else {
+                    menu.CloseTopMenu();
+                }
+            });
+            menu.OpenMenu<MenuConfirm>();
 			break;
     }
 }

@@ -23,13 +23,12 @@ class Engine;
 class MenuInGame : public MenuBase {
 private:
 	int currentSlot = -1;
-	GameEnum::SaveSlotMenuMode saveMode;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	EventSystem eventSystem;
 
-	const int _BUTTON_INDEX = 4;
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/SaveLoad/SaveSlotNavigation.json";
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/InGame/InGameMenuResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/InGame/InGameMenuNavigation.json";
 
 public:
 	/*

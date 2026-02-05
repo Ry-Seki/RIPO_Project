@@ -6,6 +6,8 @@
 #include "EffectManager.h"
 #include "EffekseerForDXLib.h"
 #include "../Component/EffectComponent.h"
+#include "../Load/JSON/LoadJSON.h"
+#include "../Scripts/Data/DxLibResourcesManager.h"
 
  /*
   *	コンストラクタ
@@ -13,7 +15,23 @@
 EffectManager::EffectManager()
 	:engine(nullptr)
 	, effectResourceMap()
-	, pEffectList() {
+	, pEffectList()
+	, isLoop(true) {
+}
+
+/*
+ *	初期化
+ */
+void EffectManager::Initialize(Engine& setEngine) {
+	engine = &setEngine;
+
+	if (json.empty()) {
+		return;
+	}
+
+	// エフェクトをまとめてロード
+	LoadEffects();
+
 }
 
 /*
@@ -24,31 +42,41 @@ EffectManager::EffectManager()
  */
 void EffectManager::Load(std::string filePath, std::string name, float magnification) {
 
-	// 読み込み
-	int res = LoadEffekseerEffect(filePath.c_str(), magnification);
-
-	// リソースの管理
-#if 0
-	effectResourceMap[_filePath.c_str()] = res;
-#else
-	// 既に登録されているか、検索をする
-	auto itr = effectResourceMap.find(filePath.c_str());
-	if (itr == effectResourceMap.end()) {
-		// 登録
-		effectResourceMap.emplace(name.c_str(), res);
+	// すでに登録済みなら何もしない
+	if (effectResourceMap.contains(name)) {
+		return;
 	}
 
-#endif
+	// エフェクト読み込み
+	int res = LoadEffekseerEffect(filePath.c_str(), magnification);
+
+	// 読み込み失敗チェック
+	if (res < 0) {
+		return;
+	}
+
+	// 名前をキーに登録
+	effectResourceMap.emplace(name, res);
+
+	// エフェクトのハンドルをDxLibのリストに追加
+	DxLibResourcesManager::GetInstance().AddEffectHandle(res);
 }
 
 /*
  *	エフェクトの発生
  */
 EffectComponent* EffectManager::Instantiate(std::string name, Vector3 _pos) {
-	EffectComponent* pEffect = new EffectComponent(effectResourceMap[name]);
-	// 座標を指定
+	// 登録されているか検索
+	auto itr = effectResourceMap.find(name);
+	if (itr == effectResourceMap.end()) {
+		return nullptr;
+	}
+
+	int effectResouceHandle = itr->second;
+
+	EffectComponent* pEffect = new EffectComponent(effectResouceHandle, isLoop);
 	pEffect->SetPosition(_pos);
-	// 一元配列に追加
+	pEffect->SetVisible(true);
 	pEffectList.push_back(pEffect);
 
 	return pEffect;
@@ -64,11 +92,12 @@ void EffectManager::Update() {
 		pEffe->EffectRenderer();
 	}
 
-	// STLの要素を削除
+	// エフェクトのリストから再生されていないエフェクトを削除
 	std::erase_if(
 		pEffectList,
 		[](EffectComponent* _pE) {return !_pE->IsVisile(); }
 	);
+
 
 
 	UpdateEffekseer3D();
@@ -79,11 +108,11 @@ void EffectManager::Update() {
  */
 void EffectManager::Render() {
 	for (auto pEffe : pEffectList) {
-		if (pEffe == nullptr || !pEffe->IsVisile())continue;
+		if (pEffe == nullptr || !pEffe->IsVisile())
+			continue;
 
-
+		pEffe->Render();
 	}
-
 	DrawEffekseer3D();
 }
 
@@ -100,11 +129,13 @@ void EffectManager::LoadEffects() {
 		if (!eff.contains("file") || !eff.contains("name")) continue;
 
 		// 各要素をキャッシュ
-		std::string filePath = eff["file"].get<std::string>();
-		std::string name = eff["name"].get<std::string>();
-		float magnification = eff.value("magnification", 1.0f);
+		std::string filePath = eff["file"].get<std::string>();	// ファイルパス
+		std::string name = eff["name"].get<std::string>();		// エフェクトの名前
+		float magnification = eff.value("magnification", 1.0f);	// 拡大率
+		isLoop = eff["loop"].get<bool>();					// ループ可否
 
 		// エフェクトをすべてロード
 		Load(filePath, name, magnification);
+
 	}
 }

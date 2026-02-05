@@ -16,6 +16,8 @@ class StageMemoryProfiler {
 private:
 	static std::ofstream file;
 	static size_t peakWorkingSet;
+
+	static constexpr int MEMORY_NUM = 1024;
 public:
 
 	/*

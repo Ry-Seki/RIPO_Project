@@ -10,6 +10,7 @@
 #include "../../UI/Button/UIButtonBase.h"
 #include "../../UI/EventSystem.h"
 #include "../../GameEnum.h"
+#include "../../GameConst.h"
 
 #include <vector>
 #include <memory>
@@ -28,7 +29,7 @@ private:
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 
-	static constexpr const char* _BUTTON_IMAGE_PATH = "Res/Menu/System/Trealine_SaveSlot.png";
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/System/SaveLoad/SaveSlotResources.json";
 	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/SaveLoad/SaveSlotNavigation.json";
 
 public:
@@ -58,7 +59,7 @@ public:
 	 *	@brief		ボタンのコールバック登録
 	 *	@param[in]	int slotIndex
 	 */
-	void SelectButtonExecute(int slotIndex);
+	void SelectButtonExecute(Engine& engine, int slotIndex);
 
 public:
 	/*

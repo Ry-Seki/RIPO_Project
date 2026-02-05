@@ -6,18 +6,26 @@
 #include "Treasure.h"
 #include "../Scripts/Engine/GameConst.h"
 #include "../Scripts/Engine/VecMath.h"
+#include "../Scripts/Engine/Manager/EffectManager.h"
  /*
   *	コンストラクタ
   */
 Treasure::Treasure()
 	: StageObjectBase()
-	, isCollected(false){
+	, isCollected(false)
+	, pViewingEffect(nullptr) {
 }
 /*
  *	デストラクタ
  */
 Treasure::~Treasure() {
 
+}
+void Treasure::Start() {
+	//EffectManager::GetInstance().Instantiate(
+	//	"treasureViewing",
+	//	GetOwner()->position
+	//);
 }
 /*
  *	@function	Update
@@ -26,6 +34,15 @@ Treasure::~Treasure() {
  */
 void Treasure::Update(float deltaTime) {
 	if (isCollected) return;
+
+	// まだエフェクトを生成していなければ生成
+	if (pViewingEffect == nullptr) {
+		pViewingEffect = EffectManager::GetInstance().Instantiate(
+			"treasureViewing",
+			GetOwner()->position
+		);
+	}
+
 }
 /*
  *	衝突が起きたときに呼び出される処理

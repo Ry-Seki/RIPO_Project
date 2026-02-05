@@ -5,20 +5,20 @@
 
 #include "RevolverArm.h"
 
-RevolverArm::RevolverArm()
-	: shotCoolTime(0.0f)
-
-	, SHOT_COOL_TIME_MAX(0.5f) {
-	ammoCountMax = 6;
-	reloadingTimeMax = 3.0f;
-}
-
 /*
  *	初期化処理
  */
 void RevolverArm::Initialize() {
-	ammoCount = ammoCountMax;
+	number = GameEnum::Weapon::Revolver;
+	// リボルバーのデータ取得
+	auto data = WeaponDataManager::GetInstance().GetWeaponData(number);
+
+	shotCoolTimeMax = data.shotCoolTime;
 	shotCoolTime = 0.0f;
+	reloadingTimeMax = data.reloadingTime;
+	reloadingTime = 0.0f;
+	ammoCountMax = data.magazineCapacity;
+	ammoCount = ammoCountMax;
 }
 
 /*
@@ -33,7 +33,7 @@ void RevolverArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) 
 		if (action.buttonDown[shot]) {
 			if (ammoCount > 0) {
 				ShotBullet();
-				shotCoolTime = SHOT_COOL_TIME_MAX;
+				shotCoolTime = shotCoolTimeMax;
 				ammoCount -= 1;
 			}
 			// 弾がなかったらリロード

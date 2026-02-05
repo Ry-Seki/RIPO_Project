@@ -17,6 +17,7 @@
 #include "../Menu/Title/MenuTitle.h"
 #include "../Menu/Title/MenuGameModeSelect.h"
 #include "../Menu/System/MenuSelectSaveSlot.h"
+#include "../Menu/System/MenuConfirm.h"
 
 #include <DxLib.h>
 
@@ -35,6 +36,7 @@ void TitleScene::Initialize(Engine& engine) {
 	MenuManager::GetInstance().GetMenu<MenuTitle>();
 	MenuManager::GetInstance().GetMenu<MenuGameModeSelect>();
 	MenuManager::GetInstance().GetMenu<MenuSelectSaveSlot>();
+	MenuManager::GetInstance().GetMenu<MenuConfirm>();
 	auto debugSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/ButtonPush_Debug.mp3");
 	auto goalSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/GoalSE.mp3");
 	std::vector<std::shared_ptr<LoadSprite>> loadBGList;

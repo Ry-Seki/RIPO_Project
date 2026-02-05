@@ -24,7 +24,7 @@ public:
 	 *	コンストラクタ
 	 *  @param		resourcehandle	再生するエフェクトの本体
 	 */
-	EffectComponent(int& _resourceHandle);
+	EffectComponent(int& _resourceHandle, bool isLoop);
 	~EffectComponent() = default;
 
 public:
@@ -58,6 +58,11 @@ public:
 	 *	@return		bool
 	 */
 	inline bool IsVisile() const { return isVisible; }
+
+	/*
+	 *
+	 */
+	void SetPlayingHandle(int setPlayingHandle) { playingHandle == setPlayingHandle; }
 
 };
 

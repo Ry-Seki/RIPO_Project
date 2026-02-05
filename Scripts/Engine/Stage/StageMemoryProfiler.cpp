@@ -44,7 +44,7 @@ void StageMemoryProfiler::Log(const std::string& label) {
 	if (GetProcessMemoryInfo(GetCurrentProcess(), &pmc, sizeof(pmc))) {
 		// ラベルとメモリ使用量をCSV形式で出力
 		file << label << ","
-			<< (pmc.WorkingSetSize / 1024) / 1024 << ","
+			<< (pmc.WorkingSetSize / MEMORY_NUM) / MEMORY_NUM << ","
 			<< pmc.WorkingSetSize << "\n";
 	}
 }
@@ -73,7 +73,7 @@ void StageMemoryProfiler::LogPeak() {
 
 	// KB / B 表記の両方を出力
 	file << "最大使用量,"
-		<< (peakWorkingSet / 1024) / 1024 << ","
+		<< (peakWorkingSet / MEMORY_NUM) / MEMORY_NUM << ","
 		<< peakWorkingSet << "\n";
 }
 
