@@ -145,6 +145,13 @@ namespace GameEnum {
 		Max
 	};
 	/*
+	 *	@brief	確認の種類
+	 */
+	enum class ConfirmResult {
+		Yes,
+		No
+	};
+	/*
 	 *  @brief	アクションマップ
 	 *  @author	Riku
 	 */

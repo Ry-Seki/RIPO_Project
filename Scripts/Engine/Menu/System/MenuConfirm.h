@@ -1,40 +1,42 @@
 /*
- *	@file	MenuInGame.h
+ *	@file	MenuConfirm.h
  *	@author	Seki
  */
 
-#ifndef _MENU_IN_GAME_H_
-#define _MENU_IN_GAME_H_
+#ifndef _MENU_DIALOG_H_
+#define _MENU_DIALOG_H_
 
 #include "../MenuBase.h"
 #include "../../UI/Button/UIButtonBase.h"
 #include "../../UI/EventSystem.h"
 #include "../../GameEnum.h"
+#include "../../GameConst.h"
 
-#include <vector>
-#include <memory>
+#include <functional>
 
 // 前方宣言
 class Engine;
 
 /*
- *	@brief	インゲームメニュー
+ *	@brief	確認メニュー
  */
-class MenuInGame : public MenuBase {
+class MenuConfirm : public MenuBase {
 private:
 	int currentSlot = -1;
-
-	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	EventSystem eventSystem;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/InGame/InGameMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/InGame/InGameMenuNavigation.json";
+	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
+	std::function<void(GameEnum::ConfirmResult)> Callback = nullptr;
+
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/System/Confirm/ConfirmResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/Confirm/ConfirmNavigation.json";
 
 public:
 	/*
 	 *	@brief	デストラクタ
 	 */
-	~MenuInGame() override{}
+	~MenuConfirm() override {
+	}
 
 public:
 	/*
@@ -73,6 +75,16 @@ private:
 	 */
 	void SelectButtonExecute(Engine& engine, int buttonIndex);
 
+public:
+	/*
+	 *	@brief		コールバックの登録
+	 *	@param[in]	std::function<void()> setCallback
+	 */
+	inline void SetCallback(std::function<void(GameEnum::ConfirmResult)> setCallback) {
+		if (!setCallback) return;
+
+		Callback = setCallback;
+	}
 };
 
-#endif // !_MENU_IN_GAME_H_
+#endif // !_MENU_DIALOG_H_
