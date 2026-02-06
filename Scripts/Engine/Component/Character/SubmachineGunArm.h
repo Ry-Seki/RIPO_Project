@@ -1,20 +1,20 @@
 /*
- *	@file	SubmachineGun.h
+ *	@file	SubmachineGunArm.h
  *	@author Riku
  */
 
-#ifndef _SUBMACHINEGUN_H_
-#define _SUBMACHINEGUN_H_
+#ifndef _SUBMACHINEGUNARM_H_
+#define _SUBMACHINEGUNARM_H_
 
 #include "WeaponBase.h"
 
 /*
  *	サブマシンガンのウデクラス
  */
-class SubmachineGun : public WeaponBase {
+class SubmachineGunArm : public WeaponBase {
 public:
-	SubmachineGun() = default;
-	~SubmachineGun() = default;
+	SubmachineGunArm() = default;
+	~SubmachineGunArm() = default;
 
 public:
 	/*
@@ -27,4 +27,4 @@ public:
 	void ArmUpdate(float deltaTime, ActionMapBase::ActionState action) override;
 };
 
-#endif // !_SUBMACHINEGUN_H_
+#endif // !_SUBMACHINEGUNARM_H_

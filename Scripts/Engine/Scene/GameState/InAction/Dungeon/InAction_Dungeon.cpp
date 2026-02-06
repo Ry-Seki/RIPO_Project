@@ -13,6 +13,7 @@
 #include "../../../../Manager/WeaponManager.h"
 #include "../../../../Manager/StageManager.h"
 #include "../../../../Manager/StageObjectManager.h"
+#include "../../../../Menu/MenuManager.h"
 #include "../../../../Load/LoadManager.h"
 #include "../../../../Component/GravityComponent.h"
 #include "../../../../Audio/AudioUtility.h"
@@ -40,6 +41,7 @@ void InAction_Dungeon::Setup() {
 	isStart = false;
 	auto& context = owner->GetOwner()->GetActionContext();
 	floorProcessor.CreateFloor(context, isStart, treasureIDList);
+	SetMouseDispFlag(false);
 }
 /*
  *	@brief	更新処理
@@ -165,6 +167,8 @@ void InAction_Dungeon::Render() {
  *	@brief	片付け処理
  */
 void InAction_Dungeon::Teardown() {
+	SetMouseDispFlag(true);
+	MenuManager::GetInstance().CloseAllMenu();
 }
 /*
  *	@brief		プレイヤーの死亡判定
