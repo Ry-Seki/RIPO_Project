@@ -10,20 +10,20 @@
     "PlayerData": "Res/Model/Plater/RIPO_Model.mv1",
     "EnemyData": {
       "0": {
-        "1": "",
+        "0": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1"
       }
     },
-    "BossData": ""
+    "BossData": "Res/Model/Enemy/Boss/Boss.mv1"
   },
   "Treasure": {
     "0": {
-      "0": "",
-      "1": ""
+      "0": "Res/Model/Treasure/Stage2/Treasure01.mv1",
+      "1": "Res/Model/Treasure/Stage2/Treasire02.mv1"
     }
   },
   "EventTreasure": {
     "0": {
-      "1": ""
+      "1": "Res/Model/Treasure/Stage2/Treasure03.mv1"
     }
   },
   "Audio": {
