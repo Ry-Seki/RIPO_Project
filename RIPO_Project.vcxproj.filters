@@ -334,6 +334,12 @@
     <Filter Include="ヘッダー ファイル\Data\Menu\Button">
       <UniqueIdentifier>{c8dce48c-7c19-4b3d-b5e1-8cc514cbe786}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\Menu\Result">
+      <UniqueIdentifier>{7f52fea5-5734-4cbe-95ef-7ab7bce433ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Menu\Result">
+      <UniqueIdentifier>{a0acf34b-48a2-4142-b465-1fe006130abc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -695,6 +701,15 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\System\MenuCredit.cpp">
       <Filter>ソース ファイル\Engine\Menu\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\HPBarComponent.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Manager\GaugeManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\Result\MenuResultScore.cpp">
+      <Filter>ソース ファイル\Engine\Menu\Result</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1231,6 +1246,27 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\System\MenuCredit.h">
       <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\HPBarComponent.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\GaugeBase.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Manager\GaugeManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\OnTreasureState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\TreasureState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\UnTreasureState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\Result\MenuResultScore.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\Result</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

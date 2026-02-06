@@ -205,6 +205,7 @@
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuInGame.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuResourcesFactory.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\Result\MenuResultScore.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuConfirm.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuCredit.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuLoadMode.cpp" />
@@ -371,6 +372,7 @@
     <ClInclude Include="Scripts\Engine\Menu\MenuBase.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuResourcesFactory.h" />
+    <ClInclude Include="Scripts\Engine\Menu\Result\MenuResultScore.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuConfirm.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuCredit.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuLoadMode.h" />
