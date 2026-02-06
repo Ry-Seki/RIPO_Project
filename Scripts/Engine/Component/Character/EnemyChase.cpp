@@ -69,7 +69,7 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime) {
 		moveSpeed = 1000;
 		// アニメーションを再生
 		animator->Play(4, 50);
-		//ChaseWayPoint(enemy, player->position, true, deltaTime);
+		ChaseWayPoint(enemy, player->position, true, deltaTime);
 	}
 	else {
 		// アニメーションを再生
