@@ -23,17 +23,17 @@
   },
   "Treasure": {
     "0": {
-      "0": "Res/Model/Treasure/Stage3/Treasure01.mv1"
+      "6": "Res/Model/Treasure/Stage3/Treasure01.mv1"
     },
     "1": {
-      "1": "Res/Model/Treasure/Stage3/Treasure02.mv1"
+      "7": "Res/Model/Treasure/Stage3/Treasure02.mv1"
     },
     "2": {
-      "2": "Res/Model/Treasure/Stage3/Treasure03.mv1"
+      "8": "Res/Model/Treasure/Stage3/Treasure03.mv1"
     },
     "EventTreasure": {
       "0": {
-        "3": "Res/Model/Treasure/Stage3/Treasure04.mv1"
+        "9": "Res/Model/Treasure/Stage3/Treasure04.mv1"
       }
     }
   },

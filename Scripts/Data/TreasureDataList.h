@@ -12,12 +12,22 @@
 #include <unordered_map>
 #include <string>
 
-/*
- *	お宝構造体
- */
+ /*
+  *	お宝構造体
+  */
 struct TreasureValueData {
 	int ID;
 	int value;
+};
+
+/*
+ *	お宝ステータス構造体
+ *  @author oorui
+ */
+struct TreasureStatusData {
+	int ID;
+	std::string effectName;
+	int strength;
 };
 
 /*
@@ -27,6 +37,9 @@ class TreasureValueDataList {
 private:
 	std::unordered_map<std::string, TreasureValueData> nameToData;	// 名前->IDのお宝データのマップ
 	std::unordered_map<int, std::string> IDToName;					// ID->名前のお宝データのマップ
+
+public:
+	static std::unordered_map<int, TreasureStatusData >statusIDToData;		// ID->お宝ステータスデータ
 
 public:
 	/*
@@ -48,6 +61,13 @@ public:
 			std::string name = entry.key();
 			nameToData[name] = data;
 			IDToName[data.ID] = name;
+
+			TreasureStatusData statusData;
+			statusData.ID = entry.value()["ID"].get<int>();
+			statusData.effectName = entry.value()["Effect"].get < std::string >();
+			statusData.strength = entry.value()["Strength"].get<int>();
+
+			statusIDToData[statusData.ID] = statusData;
 		}
 	}
 
@@ -109,6 +129,57 @@ public:
 		value = itrData->second.value;
 		return true;
 	}
+	/*
+	 *  指定したIDからお宝ステータスを取得
+	 *  @param[in]  const int ID			検索するお宝名
+	 *  @param[out] TreasureStatusData& data
+	 *  @return bool
+	 *  @author oorui
+	 */
+	static bool TryGetTreasureStatus(const int ID, TreasureStatusData& data) {
+		// まず ID から名前を取得
+		auto itr = statusIDToData.find(ID);
+		if (itr == statusIDToData.end()) return false;
+		// エフェクトの名前を返す
+		data = itr->second;
+
+		return true;
+	}
+
+	/*
+	 *  指定したIDから使用するエフェクト名を取得
+	 *  @param[in]  const int ID			検索するお宝名
+	 *  @param[out] std::string& effect		お宝のエフェクト名
+	 *  @return bool
+	 *  @author oorui
+	 */
+	static bool TryGetEffectName(const int ID, std::string& effect) {
+		// まず ID から名前を取得
+		auto itr = statusIDToData.find(ID);
+		if (itr == statusIDToData.end()) return false;
+		// エフェクトの名前を返す
+		effect = itr->second.effectName;
+
+		return true;
+	}
+
+	/*
+	 *  指定したIDから使用する筋力値を取得
+	 *  @param[in]  const int ID			検索するお宝名
+	 *  @param[out] std::string& effect		お宝の筋力地
+	 *  @return bool
+	 *  @author oorui
+	 */
+	static bool TryGetStrength(const int ID, int& strength) {
+		// まず ID から名前を取得
+		auto itr = statusIDToData.find(ID);
+		if (itr == statusIDToData.end()) return false;
+		// エフェクトの名前を返す
+		strength = itr->second.strength;
+
+		return true;
+	}
+	
 };
 
 #endif // !_TREASURE_DATA_LIST_H_
