@@ -20,6 +20,7 @@
 #include "../../Data/WeaponDataManager.h"
 #include "../Component/Character/HPBarComponent.h"
 #include "../UI/PlayerUI/ReticleUI.h"
+#include "../Scripts/Engine/Manager/EnemyDataManager.h"
 
  /*
   *  @brief  デストラクタ
@@ -47,6 +48,8 @@ void MainGameScene::Initialize(Engine& engine) {
 		});
 	PlayerStatusManager::GetInstance().Initialize();
 	WeaponDataManager::GetInstance().Initialize();
+	EnemyDataManager::GetInstance().Initialize();
+
 }
 /*
  *  @brief  準備前処理
