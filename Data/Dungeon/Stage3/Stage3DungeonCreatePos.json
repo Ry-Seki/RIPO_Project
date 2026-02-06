@@ -34,13 +34,14 @@
   "Treasure": {
     "SpawnPos": {
       "0": {
-        "0": ""
+        "6": "TreasureSponer_0",
+        "9": "TreasureSponer_1"
       },
       "1": {
-        "1": ""
+        "7": "TreasureSponer_0"
       },
       "2": {
-        "2": ""
+        "8": "TreasureSponer_0"
       }
     }
   },
