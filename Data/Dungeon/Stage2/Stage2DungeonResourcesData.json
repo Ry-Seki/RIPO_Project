@@ -17,13 +17,13 @@
   },
   "Treasure": {
     "0": {
-      "0": "Res/Model/Treasure/Stage2/Treasure01.mv1",
-      "1": "Res/Model/Treasure/Stage2/Treasire02.mv1"
+      "3": "Res/Model/Treasure/Stage2/Treasure01.mv1",
+      "4": "Res/Model/Treasure/Stage2/Treasire02.mv1"
     }
   },
   "EventTreasure": {
     "0": {
-      "1": "Res/Model/Treasure/Stage2/Treasure03.mv1"
+      "5": "Res/Model/Treasure/Stage2/Treasure03.mv1"
     }
   },
   "Audio": {
