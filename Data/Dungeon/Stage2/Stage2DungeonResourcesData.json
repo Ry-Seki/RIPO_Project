@@ -7,7 +7,7 @@
     "StageFloorData": "Data/Dungeon/Stage2/Stage2DungeonFloorData.json"
   },
   "Character": {
-    "PlayerData": "Res/Model/Plater/RIPO_Model.mv1",
+    "PlayerData": "Res/Model/Player/RIPO_Model.mv1",
     "EnemyData": {
       "0": {
         "0": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1"
@@ -18,7 +18,7 @@
   "Treasure": {
     "0": {
       "3": "Res/Model/Treasure/Stage2/Treasure01.mv1",
-      "4": "Res/Model/Treasure/Stage2/Treasire02.mv1"
+      "4": "Res/Model/Treasure/Stage2/Treasure02.mv1"
     }
   },
   "EventTreasure": {
