@@ -267,6 +267,7 @@
     <ClCompile Include="Scripts\Engine\UI\Button\SinglePressButton.cpp" />
     <ClCompile Include="Scripts\Engine\UI\Button\UIButtonBase.cpp" />
     <ClCompile Include="Scripts\Engine\UI\EventSystem.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\AmmoCountUI.cpp" />
     <ClCompile Include="Scripts\Engine\UI\PlayerUI\ReticleUI.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
     <ClCompile Include="Scripts\Engine\Vision.cpp" />
@@ -455,6 +456,7 @@
     <ClInclude Include="Scripts\Engine\UI\Button\SinglePressButton.h" />
     <ClInclude Include="Scripts\Engine\UI\Button\UIButtonBase.h" />
     <ClInclude Include="Scripts\Engine\UI\EventSystem.h" />
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\AmmoCountUI.h" />
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReticleUI.h" />
     <ClInclude Include="Scripts\Engine\UI\Rect.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
