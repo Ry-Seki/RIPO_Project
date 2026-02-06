@@ -48,12 +48,7 @@ void ResultScene::Setup(Engine& engine) {
 void ResultScene::Update(Engine& engine, float deltaTime) {
 	if (!isStart) return;
 
-	if (!inputHandle && CheckHitKey(KEY_INPUT_SPACE)) {
-		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fade, [&engine, this]() {
-			engine.SetNextScene(std::make_shared<TitleScene>());
-		});
-	}
+	
 }
 /*
  *	@brief	•`‰æˆ—
