@@ -339,8 +339,6 @@ void SaveDataManager::CollectSaveData(const ActionContext& context) {
     // Player
     currentSaveData.player
         = PlayerStatusManager::GetInstance().GetSaveData();
-
-
 }
 /*
  *	@brief		セーブデータからデータを渡す
@@ -354,7 +352,6 @@ void SaveDataManager::ApplyLoadData(ActionContext& context) {
     PlayerStatusManager::GetInstance().ApplyLoadData(currentSaveData.player);
     // World
     WorldProgressManager::GetInstance().SetWorldProgressData(currentSaveData.world);
-
 }
 /*
  *	@brief		全てのセーブスロットの使用状態の確認

@@ -340,6 +340,9 @@
     <Filter Include="ヘッダー ファイル\Engine\Menu\Result">
       <UniqueIdentifier>{a0acf34b-48a2-4142-b465-1fe006130abc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Data\Result">
+      <UniqueIdentifier>{f73c8aca-033e-43ba-a243-fe9cb1a30fca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -1270,6 +1273,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\Result\MenuResultScore.h">
       <Filter>ヘッダー ファイル\Engine\Menu\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\Result\ResultScoreData.h">
+      <Filter>ヘッダー ファイル\Data\Result</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

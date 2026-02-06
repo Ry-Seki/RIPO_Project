@@ -39,6 +39,7 @@ void SelectDetail_Dungeon::SetupData() {
 void SelectDetail_Dungeon::Setup() {
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fade, [this]() {
+		inputHandle = false;
 		AssessmentTreasureEvent();
 	});
 }
@@ -58,13 +59,45 @@ void SelectDetail_Dungeon::Update(float deltaTime) {
 			StartDungeonDataLoad(dungeonID);
 		});
 	}
-	if (CheckHitKey(KEY_INPUT_1) == 0) inputHandle = false;
+	if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
+		// SEÇÃçƒê∂
+		AudioUtility::PlaySE("DebugSE");
+		dungeonID = 2;
+		inputHandle = true;
+		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
+		FadeManager::GetInstance().StartFade(fade, [this]() {
+			StartDungeonDataLoad(dungeonID);
+		});
+	}
+	if (!inputHandle && CheckHitKey(KEY_INPUT_3)) {
+		// SEÇÃçƒê∂
+		AudioUtility::PlaySE("DebugSE");
+		dungeonID = 3;
+		inputHandle = true;
+		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
+		FadeManager::GetInstance().StartFade(fade, [this]() {
+			StartDungeonDataLoad(dungeonID);
+		});
+	}
+	if (!inputHandle && CheckHitKey(KEY_INPUT_4)) {
+		// SEÇÃçƒê∂
+		AudioUtility::PlaySE("DebugSE");
+		dungeonID = 4;
+		inputHandle = true;
+		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
+		FadeManager::GetInstance().StartFade(fade, [this]() {
+			StartDungeonDataLoad(dungeonID);
+		});
+	}
 }
 /*
  *	@brief	ï`âÊèàóù
  */
 void SelectDetail_Dungeon::Render() {
 	DrawFormatString(50, 50, GetColor(0, 0, 0), "1: Stage1Dungeon");
+	DrawFormatString(50, 75, GetColor(0, 0, 0), "2: Stage2Dungeon");
+	DrawFormatString(50, 100, GetColor(0, 0, 0), "3: Stage3Dungeon");
+	DrawFormatString(50, 125, GetColor(0, 0, 0), "4: Stage4Dungeon");
 }
 /*
  *	@brief	ï–ïtÇØèàóù

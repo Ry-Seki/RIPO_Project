@@ -20,6 +20,7 @@
 #include "../../Data/WeaponDataManager.h"
 #include "../Component/Character/HPBarComponent.h"
 #include "../UI/PlayerUI/ReticleUI.h"
+#include "../Scripts/Engine/Manager/EnemyDataManager.h"
 
  /*
   *  @brief  デストラクタ
@@ -47,6 +48,8 @@ void MainGameScene::Initialize(Engine& engine) {
 		});
 	PlayerStatusManager::GetInstance().Initialize();
 	WeaponDataManager::GetInstance().Initialize();
+	EnemyDataManager::GetInstance().Initialize();
+
 }
 /*
  *  @brief  準備前処理
@@ -116,11 +119,9 @@ void MainGameScene::EndMainGameScene(Engine& engine) {
 	auto& save = SaveDataManager::GetInstance();
 	// アクション終了フラグの変更
 	gameState->SetIsActionEnd(false);
-	// 現在選択されているスロットにセーブ
+	// オートセーブ
 	save.CollectSaveData(context);
-	save.SaveCurrentSlot();
-	// 現在選択されているスロットがオートセーブでなければオートセーブする
-	if (save.GetCurrentSlot() != 0) save.AutoSave();
+	save.AutoSave();
 	// シーン遷移条件
 	if (context.elapsedDay > _END_DAY) {
 		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
