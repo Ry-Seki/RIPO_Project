@@ -102,22 +102,22 @@ void MenuResultScore::Render() {
     // TODO : それぞれの描画インターフェーズでの描画にする
     switch (rank) {
         case GameEnum::ResultRank::Invalid:
-            DrawFormatString(100, 70, GetColor(255, 255, 255), "無効");
+            DrawFormatString(200, 70, GetColor(255, 255, 255), "無効");
             break;
         case GameEnum::ResultRank::S:
-            DrawFormatString(50, 70, GetColor(255, 255, 255), "S ");
+            DrawFormatString(200, 70, GetColor(255, 255, 255), "S ");
             break;
         case GameEnum::ResultRank::A:
-            DrawFormatString(50, 70, GetColor(255, 255, 255), "A ");
+            DrawFormatString(200, 70, GetColor(255, 255, 255), "A ");
             break;
         case GameEnum::ResultRank::B:
-            DrawFormatString(50, 70, GetColor(255, 255, 255), "B ");
+            DrawFormatString(200, 70, GetColor(255, 255, 255), "B ");
             break;
         case GameEnum::ResultRank::C:
-            DrawFormatString(50, 70, GetColor(255, 255, 255), "C ");
+            DrawFormatString(200, 70, GetColor(255, 255, 255), "C ");
             break;
         case GameEnum::ResultRank::D:
-            DrawFormatString(50, 70, GetColor(255, 255, 255), "D ");
+            DrawFormatString(200, 70, GetColor(255, 255, 255), "D ");
             break;
     }
     for (auto& button : buttonList) {
@@ -151,8 +151,8 @@ void MenuResultScore::SelectButtonExecute(Engine& engine, int buttonIndex) {
     auto confirm = menu.GetMenu<MenuConfirm>();
     confirm->SetCallback([this, &menu, &engine](GameEnum::ConfirmResult result) {
         if (result == GameEnum::ConfirmResult::Yes) {
-            FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
-            FadeManager::GetInstance().StartFade(fadeIn, [this, &menu, &engine]() {
+            FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
+            FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
                 // TODO : お金のリセット
                 menu.CloseAllMenu();
                 engine.SetNextScene(std::make_shared<TitleScene>());

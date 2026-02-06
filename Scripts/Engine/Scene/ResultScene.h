@@ -7,9 +7,13 @@
 #define _RESULT_SCENE_H_
 
 #include "Scene.h"
+#include "../JSON.h"
+
+#include <cassert>
 
  // 前方宣言
 class Engine;
+struct ResultScoreData;
 
 /*
  *	@brief	リザルトシーン
@@ -19,7 +23,7 @@ private:
 	bool isStart = false;
 	bool inputHandle = false;
 
-	static constexpr const char* _RESULT_SCORE_PATH = "Data/Treasure/TreasureDataList.json";
+	static constexpr const char* _RESULT_SCORE_PATH = "Data/Scene/Result/ResultScoreData.json";
 
 public:
 	/*
@@ -39,7 +43,7 @@ public:
 	/*
 	 *	@brief	ロード済みデータのセット (コールバック)
 	 */
-	void SetupData(Engine& engine);
+	void SetupData(Engine& engine, const JSON& json);
 	/*
 	 *	@brief	準備前処理
 	 */
@@ -52,6 +56,15 @@ public:
 	 *	@brief	描画処理
 	 */
 	void Render() override;
+
+private:
+	/*
+	 *	@brief		読み込んだJSONデータを構造体に変換
+	 *  @param[in]	const JSON& json
+	 *	@return		ResultScoreData
+	 */
+	ResultScoreData ToScoreData(const JSON& json);
+
 };
 
 #endif // !_RESULT_SCENE_H_

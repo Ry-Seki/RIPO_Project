@@ -28,8 +28,8 @@ private:
 	ResultScoreData resultScore;
 	GameEnum::ResultRank rank = GameEnum::ResultRank::Invalid;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Result/ResultNavigation.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Result/ResultResources.json";
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Result/ResultResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Result/ResultNavigation.json";
 
 public:
 	/*
