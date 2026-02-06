@@ -58,6 +58,11 @@ public:
 	 */
 	void CloseTopMenu();
 	/*
+	 *	@brief		使用リストから特定のメニューを削除する
+	 *	@param[in]	MenuBasePtr closeMenu
+	 */
+	void CloseMenu(MenuBasePtr closeMenu);
+	/*
 	 *	@brief		現在開かれている全てのリストを削除する
 	 */
 	void CloseAllMenu();
