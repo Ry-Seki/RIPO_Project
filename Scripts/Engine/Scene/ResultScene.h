@@ -12,30 +12,32 @@
 class Engine;
 
 /*
- *	リザルトシーン
+ *	@brief	リザルトシーン
  */
 class ResultScene : public Scene {
 private:
 	bool isStart = false;
 	bool inputHandle = false;
 
-public:
-	/*
-	 *	コンストラクタ
-	 */
-	ResultScene();
-	/*
-	 *	デストラクタ
-	 */
-	~ResultScene();
+	static constexpr const char* _RESULT_SCORE_PATH = "Data/Treasure/TreasureDataList.json";
 
 public:
 	/*
-	 *	初期化処理
+	 *	@brief	コンストラクタ
+	 */
+	ResultScene(){}
+	/*
+	 *	@brief	デストラクタ
+	 */
+	~ResultScene() override {}
+
+public:
+	/*
+	 *	@brief	初期化処理
 	 */
 	void Initialize(Engine& engine) override;
 	/*
-	 *	ロード済みデータのセット (コールバック)
+	 *	@brief	ロード済みデータのセット (コールバック)
 	 */
 	void SetupData(Engine& engine);
 	/*
@@ -43,11 +45,11 @@ public:
 	 */
 	void Setup(Engine& engine) override;
 	/*
-	 *	更新処理
+	 *	@brief	更新処理
 	 */
 	void Update(Engine& engine, float deltaTime) override;
 	/*
-	 *	描画処理
+	 *	@brief	描画処理
 	 */
 	void Render() override;
 };

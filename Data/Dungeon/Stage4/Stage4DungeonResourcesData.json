@@ -19,37 +19,37 @@
     "PlayerData": "Res/Model/Player/RIPO_Model.mv1",
     "EnemyData": {
       "0": {
-        "0": ""
+        "0": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1"
       },
       "1": {
-        "0": ""
+        "0": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1"
       },
       "2": {
-        "0": ""
+        "0": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1"
       },
-      "BossData": ""
+      "BossData": "Res/Model/Enemy/Boss/Boss.mv1"
     }
   },
   "Treasure": {
     "0": {
-      "0": ""
+      "10": "Res/Model/Treasure/Stage4/Treasure01.mv1"
     },
     "1": {
-      "2": ""
+      "12": "Res/Model/Treasure/Stage4/Treasure02.mv1"
     },
     "2": {
-      "4": ""
+      "14": "Res/Model/Treasure/Stage4/Treasure03.mv1"
     },
     "3": {
-      "5": ""
+      "15": "Res/Model/Treasure/Stage4/Treasure04.mv1"
     }
   },
   "EventTreasure": {
     "0": {
-      "1": ""
+      "11": "Res/Model/Treasure/Stage4/Treasure05.mv1"
     },
     "1": {
-      "3": ""
+      "13": "Res/Model/Treasure/Stage4/Treasure06.mv1"
     }
   },
   "Audio": {

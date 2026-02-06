@@ -5,14 +5,14 @@
 
 #include "WeaponManager.h"
 #include "../Component/Character/RevolverArm.h"
-#include "../Component/Character/SubmachineGun.h"
+#include "../Component/Character/SubmachineGunArm.h"
 
 /*
  *　初期化
  */
 void WeaponManager::Initialize() {
 	weapons[GameEnum::Weapon::Revolver] = std::make_shared<RevolverArm>();
-	weapons[GameEnum::Weapon::SubmachineGun] = std::make_shared<SubmachineGun>();
+	weapons[GameEnum::Weapon::SubmachineGun] = std::make_shared<SubmachineGunArm>();
 	// 初期設定はリボルバー
 	currentWeapon = weapons[GameEnum::Weapon::Revolver];
 }

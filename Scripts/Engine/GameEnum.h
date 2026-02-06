@@ -82,6 +82,19 @@ namespace GameEnum {
 		Max
 	};
 	/*
+	 *	@brief	リザルトランク
+	 *	@author	Seki
+	 */
+	enum class ResultRank {
+		Invalid = -1,
+		S,
+		A,
+		B,
+		C,
+		D,
+		Max
+	};
+	/*
 	 *	@brief	セーブスロットメニューでのモード
 	 *	@author	Seki
 	 */
