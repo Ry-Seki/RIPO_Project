@@ -230,5 +230,24 @@ namespace GameEnum {
 
 		Max
 	};
+	/*
+	 *	@brief	敵の種類
+	 *	@author kuu
+	 */
+	enum class EnemyType {
+		Invalid = -1,
+
+		TutorialEnemy,	// チュートリアルの通常エネミー
+		Stage1Enemy,	// ステージ1の通常エネミー
+		Stage2Enemy,	// ステージ2の通常エネミー
+		Stage3Enemy,	// ステージ3の通常エネミー
+		Stage4Enemy,	// ステージ4の通常エネミー
+		Stage1Boss,		// ステージ1のボス
+		Stage2Boss,		// ステージ2のボス
+		Stage3Boss,		// ステージ3のボス
+		Stage4Boss,		// ステージ4のボス
+
+		Max
+	};
 }
 #endif // !_GAME_ENUM_H_

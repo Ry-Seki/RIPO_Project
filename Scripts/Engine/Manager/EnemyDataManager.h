@@ -8,30 +8,9 @@
 #include "../Singleton.h"
 #include "../Load/JSON/LoadJSON.h"
 #include "../Load/LoadManager.h"
+#include "../GameEnum.h"
 #include <unordered_map>
 #include <string>
-
- // 後でGameEnumに移す
- /*
-  *	@brief	銃の種類
-  *	@author kuu
-  */
-enum class Enemy {
-	Invalid = -1,
-
-	TutorialEnemy,	// チュートリアルの通常エネミー
-	Stage1Enemy,	// ステージ1の通常エネミー
-	Stage2Enemy,	// ステージ2の通常エネミー
-	Stage3Enemy,	// ステージ3の通常エネミー
-	Stage4Enemy,	// ステージ4の通常エネミー
-	Stage1Boss,		// ステージ1のボス
-	Stage2Boss,		// ステージ2のボス
-	Stage3Boss,		// ステージ3のボス
-	Stage4Boss,		// ステージ4のボス
-
-
-	Max
-};
 
 class EnemyDataManager : public Singleton<EnemyDataManager> {
 	friend class Singleton<EnemyDataManager>;
@@ -63,7 +42,7 @@ private:
 	const std::string ATTACK = "Attack";
 	const std::string BOUNTY = "Bounty";
 	// enum指定用map
-	std::unordered_map<Enemy, std::string> enemiesName;
+	std::unordered_map<GameEnum::EnemyType, std::string> enemiesName;
 
 private:
 	EnemyDataManager() = default;
@@ -74,8 +53,8 @@ private:
 	 *	jsonデータをマップに登録
 	 */
 	void SetMapJsonData(const JSON& setData) {
-		for (int i = 0; i < static_cast<int>(Enemy::Max); i++) {
-			auto enemyName = enemiesName[static_cast<Enemy>(i)];
+		for (int i = 0; i < static_cast<int>(GameEnum::EnemyType::Max); i++) {
+			auto enemyName = enemiesName[static_cast<GameEnum::EnemyType>(i)];
 
 			enemyStatus[i].ID = setData[enemyName][ID].get<int>();
 			enemyStatus[i].HP = setData[enemyName][HP].get<int>();
@@ -89,15 +68,15 @@ public:
 	 *	初期化
 	 */
 	void Initialize() {
-		enemiesName[Enemy::TutorialEnemy] = TUTORIAL_ENEMY;
-		enemiesName[Enemy::Stage1Enemy] = STAGE1_ENEMY;
-		enemiesName[Enemy::Stage2Enemy] = STAGE2_ENEMY;
-		enemiesName[Enemy::Stage3Enemy] = STAGE3_ENEMY;
-		enemiesName[Enemy::Stage4Enemy] = STAGE4_ENEMY;
-		enemiesName[Enemy::Stage1Boss] = STAGE1_BOSS;
-		enemiesName[Enemy::Stage2Boss] = STAGE2_BOSS;
-		enemiesName[Enemy::Stage3Boss] = STAGE3_BOSS;
-		enemiesName[Enemy::Stage4Boss] = STAGE4_BOSS;
+		enemiesName[GameEnum::EnemyType::TutorialEnemy] = TUTORIAL_ENEMY;
+		enemiesName[GameEnum::EnemyType::Stage1Enemy] = STAGE1_ENEMY;
+		enemiesName[GameEnum::EnemyType::Stage2Enemy] = STAGE2_ENEMY;
+		enemiesName[GameEnum::EnemyType::Stage3Enemy] = STAGE3_ENEMY;
+		enemiesName[GameEnum::EnemyType::Stage4Enemy] = STAGE4_ENEMY;
+		enemiesName[GameEnum::EnemyType::Stage1Boss] = STAGE1_BOSS;
+		enemiesName[GameEnum::EnemyType::Stage2Boss] = STAGE2_BOSS;
+		enemiesName[GameEnum::EnemyType::Stage3Boss] = STAGE3_BOSS;
+		enemiesName[GameEnum::EnemyType::Stage4Boss] = STAGE4_BOSS;
 		auto json = LoadManager::GetInstance().LoadResource<LoadJSON>(ENEMY_DATA_PATH);
 		LoadManager::GetInstance().SetOnComplete([this, json]() {
 			SetMapJsonData(json->GetData());
@@ -108,7 +87,7 @@ public:
 	/*
 	 *	各敵のデータ取得
 	 */
-	inline EnemyStatus GetWeaponData(Enemy enemy) {
+	inline EnemyStatus GetWeaponData(GameEnum::EnemyType enemy) {
 		return enemyStatus[static_cast<int>(enemy)];
 	}
 
