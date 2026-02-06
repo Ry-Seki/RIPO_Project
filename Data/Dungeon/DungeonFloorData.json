@@ -30,5 +30,16 @@
         "GoalSpawnCount": 0
       }
     ]
+  },
+  "2": {
+    "Floors": [
+      {
+        "FloorID": 0,
+        "EnemySpawnCount": 3,
+        "BossSpawnCount": 0,
+        "TreasureSpawnCount": 3,
+        "StairSpawnCount": 0,
+        "GoalSpawnCount": 1
+      }
   }
 }

@@ -16,41 +16,37 @@
       "0": "Sponer_0",
       "1": "Sponer_1",
       "2": "Sponer_2"
-    },
-    "Treasure": {
-      "SpawnPos": {
-        "0": {
-          "0": "",
-          "1": ""
-        },
-        "1": {
-          "0": "",
-          "1": ""
-        },
-        "2": {
-          "0": ""
-        },
-        "3": {
-          "0": ""
-        }
-      }
-    },
-    "PointLight": {
-      "LightPos": [
-
-      ]
-    },
-    "Stair": {
-      "0": 1,
-      "1": 0,
-      "2": 3,
-      "3": 2,
-      "4": 5,
-      "5": 4
     }
+  },
+  "Treasure": {
+    "SpawnPos": {
+      "0": {
+        "10": "TreasureSponer_0",
+        "11": "TreasureSponer_1"
+      },
+      "1": {
+        "12": "TreasureSponer_0",
+        "13": "TreasureSponer_1"
+      },
+      "2": {
+        "14": "TreasureSponer_0"
+      },
+      "3": {
+        "15": "TreasureSponer_0"
+      }
+    }
+  },
+  "PointLight": {
+    "LightPos": [
+
+    ]
+  },
+  "Stair": {
+    "0": 1,
+    "1": 0,
+    "2": 3,
+    "3": 2,
+    "4": 5,
+    "5": 4
   }
-
-
-
-
-}
+} }
