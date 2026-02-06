@@ -5,6 +5,7 @@
 
 #include "MenuResultScore.h"
 #include "../MenuResourcesFactory.h"
+#include "../MenuManager.h"
 #include "../System/MenuConfirm.h"
 #include "../../Fade/FadeManager.h"
 #include "../../Fade/FadeFactory.h"
@@ -13,6 +14,7 @@
 #include "../../System/Money/MoneyManager.h"
 #include "../../Input/InputUtility.h"
 #include "../../../Data/UI/MenuInfo.h"
+#include "../../Scene/TitleScene.h"
 
 #include <DxLib.h>
 
@@ -145,6 +147,21 @@ void MenuResultScore::Resume() {
  *	@param[in]	int buttonIndex
  */
 void MenuResultScore::SelectButtonExecute(Engine& engine, int buttonIndex) {
+    auto& menu = MenuManager::GetInstance();
+    auto confirm = menu.GetMenu<MenuConfirm>();
+    confirm->SetCallback([this, &menu, &engine](GameEnum::ConfirmResult result) {
+        if (result == GameEnum::ConfirmResult::Yes) {
+            FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
+            FadeManager::GetInstance().StartFade(fadeIn, [this, &menu, &engine]() {
+                // TODO : お金のリセット
+                menu.CloseAllMenu();
+                engine.SetNextScene(std::make_shared<TitleScene>());
+            });
+        } else {
+            menu.CloseTopMenu();
+        }
+    });
+    menu.OpenMenu<MenuConfirm>();
 }
 /*
  *	@brief		スコア->ランク判定
