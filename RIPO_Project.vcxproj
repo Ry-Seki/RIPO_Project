@@ -363,6 +363,7 @@
     <ClInclude Include="Scripts\Engine\Manager\BulletManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\CameraManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\CharacterManager.h" />
+    <ClInclude Include="Scripts\Engine\Manager\EnemyDataManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\GaugeManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
