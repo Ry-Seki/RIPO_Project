@@ -8,19 +8,24 @@
 #include "../../Load/Sprite/LoadSprite.h"
 #include "../../GameConst.h"
 
-ReticleUI::ReticleUI()
-	: reticleGraphHandle(-1) 
-{}
-
 /*
  * èâä˙âª
  */
-void ReticleUI::Initialize() {
+void ReticleUI::Initialize(Engine& engine) {
 	LoadManager& load = LoadManager::GetInstance();
 	auto reticleSprite = load.LoadResource<LoadSprite>(RETICLE_PATH);
 	load.SetOnComplete([this, reticleSprite]() {
 		SetGraphHandle(reticleSprite->GetHandle());
 		});
+}
+
+/*
+ *	@brief	ÉÅÉjÉÖÅ[ÇäJÇ≠
+ */
+void ReticleUI::Open() {
+	isVisible = true;
+	isInteractive = true;
+	isStart = false;
 }
 
 /*
@@ -32,6 +37,7 @@ void ReticleUI::Render() {
 	float centerHeight = GameConst::WINDOW_HEIGHT * 0.5f;
 	int graphSizeWidth;
 	int graphSizeHeight;
+	if (!reticleGraphHandle) return;
 	GetGraphSize(reticleGraphHandle, &graphSizeWidth, &graphSizeHeight);
 	float drawPosX = centerWidth - graphSizeWidth * 0.5f;
 	float drawPosY = centerHeight - graphSizeHeight * 0.5f;

@@ -2,32 +2,48 @@
  *	@file	ReticleUI.h
  *	@author Riku
  */
+
 #ifndef _RETICLEUI_H_
 #define _RETICLEUI_H_
+
+#include "../../Menu/MenuBase.h"
+
+ // 前方宣言
+class Engine;
 
 /*
  *	レティクルUIのクラス
  */
-class ReticleUI {
+class ReticleUI : public MenuBase{
 	int reticleGraphHandle = -1;
 
 	static constexpr const char* RETICLE_PATH = "Res/PlayerUI/reticle.png";
 
 public:
-	ReticleUI();
-	~ReticleUI() = default;
+	/*
+	 *	@brief	デストラクタ
+	 */
+	~ReticleUI() override {};
 
 public:
 	/*
-	 * 初期化
+	 *	@brief	初期化処理
 	 */
-	void Initialize();
-
+	void Initialize(Engine& engine) override;
 	/*
-	 *	描画
+	 *	@brief	更新処理
 	 */
-	void Render();
+	void Update(Engine& engine, float unscaledDeltaTime) override {}
+	/*
+	 *	@brief	メニューを開く
+	 */
+	void Open() override;
+	/*
+	 *	@brief	描画処理
+	 */
+	void Render() override;
 
+public:
 	/*
 	 *	グラフハンドルのセット
 	 */
