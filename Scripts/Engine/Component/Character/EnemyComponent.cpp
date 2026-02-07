@@ -13,6 +13,8 @@
 #include "BulletComponent.h"
 #include "HPBarComponent.h"
 #include "../CameraComponent.h"
+#include "../../Manager/EnemyDataManager.h"
+#include "../../GameEnum.h"
  /*
   *	コンストラクタ
   */
@@ -64,8 +66,10 @@ void EnemyComponent::Start() {
 	// モデルハンドルのセット
 	animator->SetModelHandle(modelHandle);
 
-
 	animator->LoadIndex(true);
+
+	// 敵のデータ取得
+	auto data = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::TutorialEnemy);
 
 }
 

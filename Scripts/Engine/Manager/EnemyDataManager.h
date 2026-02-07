@@ -87,7 +87,7 @@ public:
 	/*
 	 *	各敵のデータ取得
 	 */
-	inline EnemyStatus GetWeaponData(GameEnum::EnemyType enemy) {
+	inline EnemyStatus GetEnemyData(GameEnum::EnemyType enemy) {
 		return enemyStatus[static_cast<int>(enemy)];
 	}
 
