@@ -7,6 +7,7 @@
 #define _RESULT_ACTION_PART_TIME_H_
 
 #include "../ResultActionBase.h"
+#include "../../../../GameEnum.h"
 
 /*
  *	@brief	アルバイトアクションリザルト
@@ -14,6 +15,8 @@
 class ResultAction_PartTime : public ResultActionBase {
 private:
 	const int _INCOME = 50;
+	
+	static constexpr const char* _SOKOBAN_REWARD_PATH = "Data/MiniGame/Sokoban/SokobanReward.json";
 
 public:
 	/*

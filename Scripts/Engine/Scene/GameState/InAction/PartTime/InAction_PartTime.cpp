@@ -24,6 +24,8 @@ void InAction_PartTime::Setup() {
 	isStart = false;
 	// TODO : 難易度によってミニゲーム内容を変動させる
 	miniGame = miniGameList[0];
+	auto& context = owner->GetOwner()->GetActionContext();
+	miniGame->SetMiniGameLevel(context.miniGameLevel);
 	miniGame->Open();
 	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
