@@ -4,19 +4,31 @@
  */
 
 #include "PlayerUI.h"
-#include "../../Load/LoadManager.h"
-#include "../../Load/Sprite/LoadSprite.h"
-#include "../../GameConst.h"
+#include "ReticleUI.h"
+#include "AmmoCountUI.h"
 
 /*
  * 初期化
  */
 void PlayerUI::Initialize(Engine& engine) {
-	LoadManager& load = LoadManager::GetInstance();
-	auto reticleSprite = load.LoadResource<LoadSprite>(RETICLE_PATH);
-	load.SetOnComplete([this, reticleSprite]() {
-		SetReticleGraphHandle(reticleSprite->GetHandle());
-		});
+	// UIの数生成
+	UIs.push_back(std::make_shared<ReticleUI>());
+	UIs.push_back(std::make_shared<AmmoCountUI>());
+	
+	// UIの初期化
+	for (auto ui : UIs) {
+		ui->Initialize();
+	}
+}
+
+/*
+ *	@brief	更新処理
+ */
+void PlayerUI::Update(Engine& engine, float unscaledDeltaTime) {
+	// UIの更新
+	for (auto ui : UIs) {
+		ui->Update(unscaledDeltaTime);
+	}
 }
 
 /*
@@ -32,24 +44,8 @@ void PlayerUI::Open() {
  *	描画
  */
 void PlayerUI::Render() {
-	// レティクル画像
-	// 画像描画位置を計算
-	float centerWidth = GameConst::WINDOW_WIDTH * 0.5f;
-	float centerHeight = GameConst::WINDOW_HEIGHT * 0.5f;
-	int graphSizeWidth;
-	int graphSizeHeight;
-	if (!reticleGraphHandle) return;
-	GetGraphSize(reticleGraphHandle, &graphSizeWidth, &graphSizeHeight);
-	float drawPosX = centerWidth - graphSizeWidth * 0.5f;
-	float drawPosY = centerHeight - graphSizeHeight * 0.5f;
-	// 描画
-	DrawGraph(drawPosX, drawPosY, reticleGraphHandle, TRUE);
-
-}
-
-/*
- *	レティクルのグラフハンドルのセット
- */
-void PlayerUI::SetReticleGraphHandle(int setHandle) {
-	reticleGraphHandle = setHandle;
+	// UIの描画
+	for (auto ui : UIs) {
+		ui->Render();
+	}
 }
