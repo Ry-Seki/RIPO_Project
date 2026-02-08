@@ -73,10 +73,7 @@ void Treasure::OnCollected() {
 	}
 
 	// 画像が存在すれば消す
-	if (pUIObject) {
-		delete pUIObject;
-		pUIObject = nullptr;
-	}
+
 }
 
 /*
@@ -93,9 +90,7 @@ void Treasure::UnCollected() {
 	);
 
 	// 必要筋力値表示
-	if (!pUIObject) {
-		CreateUI();
-	}
+
 }
 
 /*
