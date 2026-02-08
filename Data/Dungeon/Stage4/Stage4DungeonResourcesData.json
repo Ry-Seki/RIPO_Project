@@ -32,24 +32,24 @@
   },
   "Treasure": {
     "0": {
-      "10": "Res/Model/Treasure/Stage4/Treasure01.mv1"
+      "0": "Res/Model/Treasure/Stage4/Treasure01.mv1"
     },
     "1": {
-      "12": "Res/Model/Treasure/Stage4/Treasure02.mv1"
+      "2": "Res/Model/Treasure/Stage4/Treasure02.mv1"
     },
     "2": {
-      "14": "Res/Model/Treasure/Stage4/Treasure03.mv1"
+      "4": "Res/Model/Treasure/Stage4/Treasure03.mv1"
     },
     "3": {
-      "15": "Res/Model/Treasure/Stage4/Treasure04.mv1"
+      "5": "Res/Model/Treasure/Stage4/Treasure04.mv1"
     }
   },
   "EventTreasure": {
     "0": {
-      "11": "Res/Model/Treasure/Stage4/Treasure05.mv1"
+      "1": "Res/Model/Treasure/Stage4/Treasure05.mv1"
     },
     "1": {
-      "13": "Res/Model/Treasure/Stage4/Treasure06.mv1"
+      "3": "Res/Model/Treasure/Stage4/Treasure06.mv1"
     }
   },
   "Audio": {

@@ -46,15 +46,11 @@ public:
 		inputHandle = false;
 	}
 	/*
-	 *	@brief	更新処理
+	 *	更新処理
 	 */
-	virtual void Update(Engine& engine, float unscaledDeltaTime){}
+	virtual void Update(Engine& engine, float unscaledDeltaTime) = 0;
 	/*
-	 *	@brief	アニメーション等の更新
-	 */
-	virtual void AnimUpdate(Engine& engine, float unscaledDeltaTime){}
-	/*
-	 *	@brief	描画処理
+	 *	描画処理
 	 */
 	virtual void Render() = 0;
 	/*

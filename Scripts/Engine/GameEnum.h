@@ -82,19 +82,6 @@ namespace GameEnum {
 		Max
 	};
 	/*
-	 *	@brief	リザルトランク
-	 *	@author	Seki
-	 */
-	enum class ResultRank {
-		Invalid = -1,
-		S,
-		A,
-		B,
-		C,
-		D,
-		Max
-	};
-	/*
 	 *	@brief	セーブスロットメニューでのモード
 	 *	@author	Seki
 	 */
@@ -227,25 +214,6 @@ namespace GameEnum {
 		Invalid = -1,
 		Revolver,		// リボルバー(単発銃)
 		SubmachineGun,	// サブマシンガン(連射銃)
-
-		Max
-	};
-	/*
-	 *	@brief	敵の種類
-	 *	@author kuu
-	 */
-	enum class EnemyType {
-		Invalid = -1,
-
-		TutorialEnemy,	// チュートリアルの通常エネミー
-		Stage1Enemy,	// ステージ1の通常エネミー
-		Stage2Enemy,	// ステージ2の通常エネミー
-		Stage3Enemy,	// ステージ3の通常エネミー
-		Stage4Enemy,	// ステージ4の通常エネミー
-		Stage1Boss,		// ステージ1のボス
-		Stage2Boss,		// ステージ2のボス
-		Stage3Boss,		// ステージ3のボス
-		Stage4Boss,		// ステージ4のボス
 
 		Max
 	};

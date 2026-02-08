@@ -148,7 +148,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Data\DxLibResourcesManager.cpp" />
-    <ClCompile Include="Scripts\Data\TreasureDataList.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\AudioManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\AudioSource.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMManager.cpp" />
@@ -268,7 +267,7 @@
     <ClCompile Include="Scripts\Engine\UI\Button\SinglePressButton.cpp" />
     <ClCompile Include="Scripts\Engine\UI\Button\UIButtonBase.cpp" />
     <ClCompile Include="Scripts\Engine\UI\EventSystem.cpp" />
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\ReticleUI.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\PlayerUI.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
     <ClCompile Include="Scripts\Engine\Vision.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
@@ -282,7 +281,6 @@
     <ClInclude Include="Scripts\Data\DxLibResourcesManager.h" />
     <ClInclude Include="Scripts\Data\ItemCatalogData.h" />
     <ClInclude Include="Scripts\Data\PlayerStatusData.h" />
-    <ClInclude Include="Scripts\Data\Result\ResultScoreData.h" />
     <ClInclude Include="Scripts\Data\SaveData.h" />
     <ClInclude Include="Scripts\Data\TreasureDataList.h" />
     <ClInclude Include="Scripts\Data\UI\Button\ButtonInfo.h" />
@@ -367,7 +365,6 @@
     <ClInclude Include="Scripts\Engine\Manager\BulletManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\CameraManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\CharacterManager.h" />
-    <ClInclude Include="Scripts\Engine\Manager\EnemyDataManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\GaugeManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
@@ -458,6 +455,7 @@
     <ClInclude Include="Scripts\Engine\UI\Button\SinglePressButton.h" />
     <ClInclude Include="Scripts\Engine\UI\Button\UIButtonBase.h" />
     <ClInclude Include="Scripts\Engine\UI\EventSystem.h" />
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUI.h" />
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReticleUI.h" />
     <ClInclude Include="Scripts\Engine\UI\Rect.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />

@@ -8,7 +8,6 @@
 #include "../Load/Model/LoadModel.h"
 #include "../GameConst.h"
 #include "../Stage/StageMemoryProfiler.h"
-#include "../StringUtility.h"
 
  /*
   *  コンストラクタ
@@ -335,58 +334,32 @@ std::vector<Vector3> StageManager::GetPointLightPos()const {
  */
 std::vector<Vector3> StageManager::GetStairsPos() const {
 	std::vector<Vector3> result;
-	// ステージがないときは空を返す
 	if (!loadedStage)return result;
 
-	// ステージモデルハンドルの取得
+	// ステージのモデルハンドルの取得
 	int modelHandle = loadedStage->GetStageModelHandle();
 	if (modelHandle == -1) return result;
 
-	// jsonにPlayer.StairsPosが存在するかチェック
-	if (!json.contains(GameConst::_CREATE_POSNAME_PLAYER) ||
-		!json[GameConst::_CREATE_POSNAME_PLAYER].contains("StairsPos")) {
+	// 階段位置の名前の取得
+	// jsonファイルの文字列がなかった場合のnullCheck
+	if (!json.contains(GameConst::_CREATE_POSNAME_PLAYER) || !json[GameConst::_CREATE_POSNAME_PLAYER].contains("StairsPos"))
 		return result;
-	}
+	std::string frameName = json[GameConst::_CREATE_POSNAME_PLAYER]["StairsPos"];
 
-	const auto& stairsJson = json[GameConst::_CREATE_POSNAME_PLAYER]["StairsPos"];
+	// string型→const char* 型への型変換
+	const char* cstr = frameName.c_str();
 
-	// フレーム名を格納する配列
-	std::vector<std::string>frameNames;
+	// 階段位置のフレーム番号を取得
+	int frameIndex = MV1SearchFrame(modelHandle, cstr);
+	if (frameIndex == -1)return result;
 
-	// StairsPosが文字列の場合
-	if (stairsJson.is_string()) {
-		frameNames.push_back(stairsJson.get<std::string>());
-	}
-	// StairsPosが配列の場合
-	else if (stairsJson.is_array()) {
-		for (const auto& elem : stairsJson) {
-			// 配列内が文字列であることを確認
-			if (elem.is_string()) {
-				frameNames.push_back(elem.get<std::string>());
-			}
-		}
-	}
+	// 階段位置の座標を取得
+	VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
 
-	// フレーム名が取得できなかった場合は空を返す
-	if (frameNames.empty()) return result;
-
-	// フレーム名ごとに座標を取得
-	for (const auto& name : frameNames) {
-		// string->const char*に変換
-		const char* cstr = name.c_str();
-
-		// フレーム番号を検索
-		int frameIndex = MV1SearchFrame(modelHandle, cstr);
-		if (frameIndex == -1) continue;
-
-		// フレーム座標を取得
-		VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
-
-		// VECTOR → Vector3 に変換して結果に追加
-		result.push_back(FromVECTOR(framePos));
-	}
-
-	// 階段座標一覧を返す
+	// VECTOR型をVector3型に変換
+	Vector3 stairsPos = FromVECTOR(framePos);
+	result.push_back(FromVECTOR(framePos));
+	// 座標を返す
 	return result;
 
 }
@@ -395,48 +368,35 @@ std::vector<Vector3> StageManager::GetStairsPos() const {
  *	階段手前のリスポーン位置の取得
  */
 Vector3 StageManager::GetRespawnPos() const {
-	// ステージ未ロード時はデフォルト値を返す
-	if (!loadedStage) return Vector3();
+	if (!loadedStage)return Vector3();
 
 	// ステージモデルハンドルの取得
 	int modelHandle = loadedStage->GetStageModelHandle();
 	if (modelHandle == -1) return Vector3();
 
-	// jsonにPlayer.RespawnPosが存在するかチェック
-	if (!json.contains(GameConst::_CREATE_POSNAME_PLAYER) ||
-		!json[GameConst::_CREATE_POSNAME_PLAYER].contains("RespawnPos")) {
+	// 開始位置の名前の取得
+	// jsonファイルの文字列のなかった場合のnullCheck
+	if (
+		!json.contains(GameConst::_CREATE_POSNAME_PLAYER) ||
+		!json[GameConst::_CREATE_POSNAME_PLAYER].contains("RespawnPos")
+		)
 		return Vector3();
-	}
 
-	const auto& respawnJson = json[GameConst::_CREATE_POSNAME_PLAYER]["RespawnPos"];
-
-	std::string frameName;
-
-	// RespawnPos が string の場合
-	if (respawnJson.is_string()) {
-		frameName = respawnJson.get<std::string>();
-	}
-	// RespawnPos が array の場合
-	else if (respawnJson.is_array() && !respawnJson.empty()) {
-		// 先頭のリスポーン位置を使用
-		if (respawnJson[0].is_string()) {
-			frameName = respawnJson[0].get<std::string>();
-		}
-	}
-
-	// フレーム名が取得できなかった場合
-	if (frameName.empty()) return Vector3();
-
-	// string型->const char* 型へ変換
+	std::string frameName = json[GameConst::_CREATE_POSNAME_PLAYER]["RespawnPos"];
+	// string型→const char* 型への型変換
 	const char* cstr = frameName.c_str();
 
-	// リスポーン位置のフレーム番号を取得
+	// スタート位置のフレーム番号を取得
 	int frameIndex = MV1SearchFrame(modelHandle, cstr);
-	if (frameIndex == -1) return Vector3();
+	if (frameIndex == -1)return Vector3();
 
-	// リスポーン位置の座標を取得
+	// スタート位置の座標を取得
 	VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
 
-	// VECTOR型->Vector3型へ変換して返す
-	return FromVECTOR(framePos);
+	// VECTOR型をVector3型に変換
+	Vector3 respawnPos = FromVECTOR(framePos);
+
+	// 座標を返す
+	return respawnPos;
+
 }

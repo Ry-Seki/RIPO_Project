@@ -81,7 +81,7 @@ void Treasure::UnCollected() {
 
 	// エフェクト再生
 	pViewingEffect = EffectManager::GetInstance().Instantiate(
-		effectName,
+		"treasureViewing",
 		GetOwner()->position
 	);
 

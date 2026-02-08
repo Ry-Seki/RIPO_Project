@@ -27,7 +27,6 @@ private:
 
 	int currentMoney = 0;				// 現在の所持金
 	int prevMoney = 0;					// ひとつ前の所持金
-	int highScoreMoney = 0;				// ハイスコアのお金 TODO : ハイスコア時の処理を行う
 
 private:
 	/*

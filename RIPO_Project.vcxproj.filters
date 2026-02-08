@@ -340,8 +340,8 @@
     <Filter Include="ヘッダー ファイル\Engine\Menu\Result">
       <UniqueIdentifier>{a0acf34b-48a2-4142-b465-1fe006130abc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Data\Result">
-      <UniqueIdentifier>{f73c8aca-033e-43ba-a243-fe9cb1a30fca}</UniqueIdentifier>
+    <Filter Include="ヘッダー ファイル\Engine\UI\Button\PlayerUI">
+      <UniqueIdentifier>{4a377cb4-b6a1-41cf-8ea4-71c1f2ff6190}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -675,9 +675,6 @@
     <ClCompile Include="Scripts\Engine\Manager\WeaponManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\SubmachineGun.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\UI\Button\LongPressButton.cpp">
       <Filter>ソース ファイル\Engine\UI\Button</Filter>
     </ClCompile>
@@ -714,7 +711,10 @@
     <ClCompile Include="Scripts\Engine\Menu\Result\MenuResultScore.cpp">
       <Filter>ソース ファイル\Engine\Menu\Result</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Data\TreasureDataList.cpp">
+    <ClCompile Include="Scripts\Engine\Component\Character\SubmachineGunArm.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\PlayerUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1274,8 +1274,11 @@
     <ClInclude Include="Scripts\Engine\Menu\Result\MenuResultScore.h">
       <Filter>ヘッダー ファイル\Engine\Menu\Result</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Data\Result\ResultScoreData.h">
-      <Filter>ヘッダー ファイル\Data\Result</Filter>
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUI.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReticleUI.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
