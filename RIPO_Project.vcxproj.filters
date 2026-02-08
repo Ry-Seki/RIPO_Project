@@ -343,6 +343,9 @@
     <Filter Include="ヘッダー ファイル\Engine\UI\PlayerUI">
       <UniqueIdentifier>{4a377cb4-b6a1-41cf-8ea4-71c1f2ff6190}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Data\Result">
+      <UniqueIdentifier>{efa82e4e-4707-44a5-bbc6-bd1d5bb83c85}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -1303,6 +1306,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.h">
       <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Manager\EnemyDataManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\ResultScoreData.h">
+      <Filter>ヘッダー ファイル\Data\Result</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

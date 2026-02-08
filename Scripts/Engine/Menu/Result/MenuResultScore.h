@@ -7,7 +7,7 @@
 #define _MENU_RESULT_SCORE_H_
 
 #include "../MenuBase.h"
-#include "../../../Data/Result/ResultScoreData.h"
+#include "../../../Data/ResultScoreData.h"
 #include "../../GameEnum.h"
 #include "../../UI/EventSystem.h"
 #include "../../UI/Button/UIButtonBase.h"

@@ -44,6 +44,9 @@ public:
 	 */
 	void AdvanceDay() override;
 
+private:
+
+
 };
 
 #endif // !_RESULT_ACTION_PART_TIME_H_

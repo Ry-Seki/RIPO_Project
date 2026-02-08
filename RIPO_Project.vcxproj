@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Data\DxLibResourcesManager.cpp" />
+    <ClCompile Include="Scripts\Data\TreasureDataList.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\AudioManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\AudioSource.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMManager.cpp" />
@@ -285,6 +286,7 @@
     <ClInclude Include="Scripts\Data\DxLibResourcesManager.h" />
     <ClInclude Include="Scripts\Data\ItemCatalogData.h" />
     <ClInclude Include="Scripts\Data\PlayerStatusData.h" />
+    <ClInclude Include="Scripts\Data\ResultScoreData.h" />
     <ClInclude Include="Scripts\Data\SaveData.h" />
     <ClInclude Include="Scripts\Data\TreasureDataList.h" />
     <ClInclude Include="Scripts\Data\UI\Button\ButtonInfo.h" />

@@ -13,7 +13,7 @@
 #include "../Load/JSON/LoadJSON.h"
 #include "../Menu/MenuManager.h"
 #include "../Menu/Result/MenuResultScore.h"
-#include "../../Data/Result/ResultScoreData.h"
+#include "../../Data/ResultScoreData.h"
 
 #include <DxLib.h>	
 
