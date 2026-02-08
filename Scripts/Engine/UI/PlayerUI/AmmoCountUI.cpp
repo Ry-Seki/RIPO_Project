@@ -7,6 +7,9 @@
 #include "../../Manager/WeaponManager.h"
 #include "../../GameConst.h"
 
+/*
+ *	•`‰æˆ—
+ */
 void AmmoCountUI::Render() {
 	auto weapon = WeaponManager::GetInstance().GetCurrentWeapon();
 	float posX = GameConst::WINDOW_WIDTH * 0.9f;

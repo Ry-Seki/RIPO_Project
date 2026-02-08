@@ -8,6 +8,7 @@
 #include "../../Load/Sprite/LoadSprite.h"
 #include "../../GameConst.h"
 #include "AmmoCountUI.h"
+#include "ReloadGaugeUI.h"
 
 void ReticleUI::Initialize() {
 	LoadManager& load = LoadManager::GetInstance();
