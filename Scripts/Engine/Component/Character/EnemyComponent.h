@@ -12,6 +12,16 @@
 
 class EnemyComponent : public CharacterBase {
 private:
+	/*
+	 *	エネミーのベースステータ構造体
+	 */
+	struct baseStatus {
+		const int ID;		// 識別ID
+		const int HP;		// 最大HP
+		const int ATTACK;	// 攻撃力
+		const int BOUNTY;	// 討伐金
+	};
+private:
 	GameObject* enemy;
 	EnemyState* state;
 	GameObjectPtr player;
@@ -38,6 +48,8 @@ private:
 	int enemySpawnID = 0;
 	// 仮モデルハンドル
 	int modelHandle;
+	// エネミーのHP
+	int HP;
 	// 疑似クールタイム(苦肉の策)
 	float coolTime;
 

@@ -71,6 +71,8 @@ void EnemyComponent::Start() {
 	// “G‚Ìƒf[ƒ^æ“¾
 	auto data = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::TutorialEnemy);
 
+
+
 }
 
 /*
