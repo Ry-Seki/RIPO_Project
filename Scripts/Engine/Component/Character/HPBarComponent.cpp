@@ -8,6 +8,10 @@ HPBarComponent::HPBarComponent()
 	: player(nullptr)
 	, camera(nullptr)
 	, enemy(nullptr)
+	, maxHP(0)
+	, currentHP(0.0f)
+	, displayHP(0.0f)
+	, halfValue(0.5f)
 {
 }
 
@@ -22,6 +26,10 @@ void HPBarComponent::Start()
 	if (camera == nullptr) return;
 	enemy = GetOwner();
 	if (enemy == nullptr) return;
+	currentHP = enemy->GetComponent<EnemyComponent>()->GetHP();
+	maxHP = enemy->GetComponent<EnemyComponent>()->GetMaxHP();
+
+	displayHP = currentHP;
 }
 
 /*
@@ -30,7 +38,16 @@ void HPBarComponent::Start()
  */
 void HPBarComponent::Update(float deltaTime)
 {
-	
+	// ダメージバーの速度
+	float speed = 100.0f;
+
+	// ダメージバーを減らす処理
+	if (displayHP > currentHP)
+	{
+		displayHP -= speed * deltaTime;
+		if (displayHP < currentHP)
+			displayHP = currentHP;
+	}
 }
 
 /*
@@ -39,8 +56,7 @@ void HPBarComponent::Update(float deltaTime)
  */
 void HPBarComponent::ShowHPBar()
 {
-	auto enemyHP = enemy->GetComponent<EnemyComponent>()->GetHP();
-	if (enemyHP > 0) {
+	if (currentHP > 0) {
 		VECTOR enemyPos = ToVECTOR(enemy->position);
 
 		// 敵の頭上
@@ -83,19 +99,40 @@ void HPBarComponent::ShowHPBar()
 		float barWidth = sqrtf(dx * dx + dy * dy);
 		float barHeight = sqrtf(dx * dx + dy * dy) * 0.1f;
 
+		float greenRate = currentHP / maxHP;
+		float redRate = displayHP / maxHP;
+
 		int BoxX = screenCenter.x;
 		int BoxY = screenCenter.y;
 
-		/*float halfWidth = 40.0f * scale;
-		float halfHeight = 6.0f * scale;*/
-		const float halfValue = 0.5f;
+		// ダメージバー(赤バー)
+		float redWidth = barWidth * redRate;
+		DrawBox(
+			BoxX - barWidth * halfValue,
+			BoxY - barHeight * halfValue,
+			BoxX - barWidth * halfValue + redWidth,
+			BoxY + barHeight * halfValue,
+			GetColor(255, 0, 0),
+			true
+		);
+		// HPバー(緑バー)
+		float greenWidth = barWidth * greenRate;
+		DrawBox(
+			BoxX - barWidth * halfValue,
+			BoxY - barHeight * halfValue,
+			BoxX - barWidth * halfValue + greenWidth,
+			BoxY + barHeight * halfValue,
+			GetColor(0, 250, 0),
+			true
+		);
+		// 枠
 		DrawBox(
 			BoxX - barWidth * halfValue,
 			BoxY - barHeight * halfValue,
 			BoxX + barWidth * halfValue,
 			BoxY + barHeight * halfValue,
-			GetColor(0, 250, 0),
-			true
+			GetColor(0, 0, 0),
+			false
 		);
 	}
 }

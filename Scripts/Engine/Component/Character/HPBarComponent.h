@@ -14,6 +14,14 @@ private:
 	GameObjectPtr player;
 	GameObjectPtr camera;
 	GameObject* enemy;
+	// Å‘åHP
+	int maxHP;
+	// ÀÛ‚ÌHP
+	float currentHP;
+	// ’x‚ê‚Ä‚­‚éHP
+	float displayHP;
+
+	const float halfValue;
 
 public:
 	/*

@@ -191,6 +191,11 @@ public:
 	 */
 	inline void SetEnemyHP(int setValue) { HP -= setValue; }
 
+	/*
+	 *	Å‘åHP‚Ìæ“¾
+	 */
+	inline int GetEnemyMaxHP() const { return status.HP; }
+
 
 
 	/*
