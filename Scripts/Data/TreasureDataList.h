@@ -12,12 +12,21 @@
 #include <unordered_map>
 #include <string>
 
-/*
- *	お宝構造体
- */
+ /*
+  *	お宝構造体
+  */
 struct TreasureValueData {
 	int ID;
 	int value;
+};
+
+/*
+ *	お宝のステータス構造体
+ */
+struct TreasureStatusData {
+	int ID;
+	std::string effectName;
+	int strength;
 };
 
 /*
@@ -28,6 +37,8 @@ private:
 	std::unordered_map<std::string, TreasureValueData> nameToData;	// 名前->IDのお宝データのマップ
 	std::unordered_map<int, std::string> IDToName;					// ID->名前のお宝データのマップ
 
+public:
+	static std::unordered_map<int, TreasureStatusData >statusIDToData;
 public:
 	/*
 	 *	コンストラクタ
@@ -48,6 +59,13 @@ public:
 			std::string name = entry.key();
 			nameToData[name] = data;
 			IDToName[data.ID] = name;
+
+			TreasureStatusData statusData;
+			statusData.ID = entry.value()["ID"].get<int>();
+			statusData.effectName = entry.value()["Effect"].get < std::string >();
+			statusData.strength = entry.value()["Strength"].get<int>();
+
+			statusIDToData[statusData.ID] = statusData;
 		}
 	}
 
@@ -107,6 +125,57 @@ public:
 
 		// value を返す
 		value = itrData->second.value;
+		return true;
+	}
+
+	/*
+	 *  指定したIDからお宝のステータスを取得する
+	 *  @param[in]  const int ID			検索するお宝のID
+	 *  @param[out] TreasureStatusData& data
+	 *  @return bool
+	 *  @author oorui
+	 */
+	static bool TryGetTreasureStatus(const int ID, TreasureStatusData& data) {
+		// IDからステータスを取得
+		auto itr = statusIDToData.find(ID);
+		if (itr == statusIDToData.end()) return false;
+		// ステータスを取得
+		data = itr->second;
+
+		return true;
+	}
+
+	/*
+	 *  IDからエフェクトの名前を取得
+	 *  @param[in]  const int ID			検索するお宝の名前
+	 *  @param[out] std::string& effect		エフェクトの名前の文字列
+	 *  @return bool
+	 *  @author oorui
+	 */
+	static bool TryGetEffectName(const int ID, std::string& effect) {
+		// IDからステータスを取得
+		auto itr = statusIDToData.find(ID);
+		if (itr == statusIDToData.end()) return false;
+		// エフェクトの名前を取得、返す
+		effect = itr->second.effectName;
+
+		return true;
+	}
+
+	/*
+	 *  IDからお宝の筋力値を取得
+	 *  @param[in]  const int ID			検索するお宝の名前
+	 *  @param[out] std::string& effect		金慮p口
+	 *  @return bool
+	 *  @author oorui
+	 */
+	static bool TryGetStrength(const int ID, int& strength) {
+		// IDからステータスを取得
+		auto itr = statusIDToData.find(ID);
+		if (itr == statusIDToData.end()) return false;
+		// 筋力値を取得
+		strength = itr->second.strength;
+
 		return true;
 	}
 };

@@ -81,10 +81,11 @@ void Treasure::UnCollected() {
 
 	// エフェクト再生
 	pViewingEffect = EffectManager::GetInstance().Instantiate(
-		"treasureViewing",
+		effectName,
 		GetOwner()->position
 	);
 
 	// 必要筋力値表示
+
 }
 
