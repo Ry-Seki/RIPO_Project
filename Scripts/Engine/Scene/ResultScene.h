@@ -23,7 +23,7 @@ private:
 	bool isStart = false;
 	bool inputHandle = false;
 
-	static constexpr const char* _RESULT_SCORE_PATH = "Data/Scene/Result/ResultScoreData.json";
+	static constexpr const char* _RESULT_SCORE_PATH = "Data/Scene/Result/ResultResourceData.json";
 
 public:
 	/*

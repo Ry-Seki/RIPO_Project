@@ -281,6 +281,7 @@
     <ClInclude Include="Scripts\Data\DxLibResourcesManager.h" />
     <ClInclude Include="Scripts\Data\ItemCatalogData.h" />
     <ClInclude Include="Scripts\Data\PlayerStatusData.h" />
+    <ClInclude Include="Scripts\Data\ResultScoreData.h" />
     <ClInclude Include="Scripts\Data\SaveData.h" />
     <ClInclude Include="Scripts\Data\TreasureDataList.h" />
     <ClInclude Include="Scripts\Data\UI\Button\ButtonInfo.h" />
