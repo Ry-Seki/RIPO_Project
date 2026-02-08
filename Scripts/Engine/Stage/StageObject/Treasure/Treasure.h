@@ -9,6 +9,7 @@
 #include "../StageObjectBase.h"
 #include "../Scripts/Engine/Component/EffectComponent.h"
 #include "TreasureState.h"
+#include "../Scripts/Engine/JSON.h"
 #include <string>
  /*
   *	お宝クラス
@@ -21,6 +22,11 @@ private:
 	float viewRadius;			// 取得範囲
 	std::string effectName;		// 再生するエフェクトの名前
 	EffectComponent* pViewingEffect; // 表示用エフェクト
+
+	std::string uiImagePath;	// UIのパス
+	GameObject* pUIObject;		// 3D空間UI
+
+	JSON json;					// jsonデータ
 
 	// お宝の状態
 	std::unique_ptr<TreasureState> state;
@@ -64,6 +70,17 @@ public:
 	void ChangeState(TreasureState* newState) {
 		state.reset(newState);
 	}
+	
+	/*
+	 *	お宝用のUIを一括で読み込む
+	 */
+	void LoadTreasureUI();
+
+	/*
+	 *	3D空間上でUIを出す
+	 */
+	void CreateUI();
+
 public:
 	/*
 	 *	@brief		取得済み判定

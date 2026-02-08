@@ -145,7 +145,7 @@ void EffectManager::LoadEffects() {
 		std::string filePath = eff["file"].get<std::string>();	// ファイルパス
 		std::string name = eff["name"].get<std::string>();		// エフェクトの名前
 		float magnification = eff.value("magnification", 1.0f);	// 拡大率
-		isLoop = eff["loop"].get<bool>();					// ループ可否
+		isLoop = eff["loop"].get<bool>();						// ループ可否
 
 		// エフェクトをすべてロード
 		Load(filePath, name, magnification, isLoop);

@@ -1,0 +1,52 @@
+{
+  "TreasureUI": {
+    "0": {
+      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+    },
+    "1": {
+      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+    },
+    "2": {
+      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+    },
+    "3": {
+      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+    },
+    "4": {
+      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+    },
+    "5": {
+      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+    },
+    "6": {
+      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+    },
+    "7": {
+      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+    },
+    "8": {
+      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+    },
+    "9": {
+      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+    },
+    "10": {
+      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+    },
+    "11": {
+      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+    },
+    "12": {
+      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+    },
+    "13": {
+      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+    },
+    "14": {
+      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+    },
+    "15": {
+      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+    }
+  }
+}
