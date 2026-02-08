@@ -7,6 +7,7 @@
 #include "ReticleUI.h"
 #include "AmmoCountUI.h"
 #include "ReloadGaugeUI.h"
+#include "ResistTimeGaugeUI.h"
 
 /*
  * ‰Šú‰»
@@ -16,6 +17,7 @@ void PlayerUI::Initialize(Engine& engine) {
 	UIs.push_back(std::make_shared<ReticleUI>());
 	UIs.push_back(std::make_shared<AmmoCountUI>());
 	UIs.push_back(std::make_shared<ReloadGaugeUI>());
+	UIs.push_back(std::make_shared<ResistTimeGaugeUI>());
 	
 	// UI‚Ì‰Šú‰»
 	for (auto ui : UIs) {

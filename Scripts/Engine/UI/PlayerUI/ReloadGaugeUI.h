@@ -26,12 +26,6 @@ public:
 	 *	描画処理
 	 */
 	void Render() override;
-
-public:
-	/*
-	 *	グラフハンドルのセット
-	 */
-	void SetGraphHandle(int setHandle);
 };
 
 #endif // !_RELOADGAUGEUI_H_

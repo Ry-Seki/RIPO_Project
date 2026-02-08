@@ -340,7 +340,7 @@
     <Filter Include="ヘッダー ファイル\Engine\Menu\Result">
       <UniqueIdentifier>{a0acf34b-48a2-4142-b465-1fe006130abc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\UI\Button\PlayerUI">
+    <Filter Include="ヘッダー ファイル\Engine\UI\PlayerUI">
       <UniqueIdentifier>{4a377cb4-b6a1-41cf-8ea4-71c1f2ff6190}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -724,6 +724,9 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1281,10 +1284,10 @@
       <Filter>ヘッダー ファイル\Engine\Menu\Result</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
+      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReticleUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
+      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Manager\EnemyDataManager.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -1296,7 +1299,10 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
+      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.h">
+      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

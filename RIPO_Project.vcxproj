@@ -270,6 +270,7 @@
     <ClCompile Include="Scripts\Engine\UI\PlayerUI\AmmoCountUI.cpp" />
     <ClCompile Include="Scripts\Engine\UI\PlayerUI\PlayerUI.cpp" />
     <ClCompile Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.cpp" />
     <ClCompile Include="Scripts\Engine\UI\PlayerUI\Reticle.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
     <ClCompile Include="Scripts\Engine\Vision.cpp" />
@@ -462,6 +463,7 @@
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUI.h" />
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUIBase.h" />
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.h" />
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.h" />
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReticleUI.h" />
     <ClInclude Include="Scripts\Engine\UI\Rect.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
