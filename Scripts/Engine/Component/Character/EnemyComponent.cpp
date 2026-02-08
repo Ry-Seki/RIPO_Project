@@ -13,8 +13,6 @@
 #include "BulletComponent.h"
 #include "HPBarComponent.h"
 #include "../CameraComponent.h"
-#include "../../Manager/EnemyDataManager.h"
-#include "../../GameEnum.h"
  /*
   *	コンストラクタ
   */
@@ -37,6 +35,7 @@ EnemyComponent::EnemyComponent(EnemyState* initState)
 	, damageIsTriger(false)
 	, turnDelay(0.0f)
 	, modelHandle(0)
+	, HP(0)
 	, coolTime(2.0f)
 	, TOP_VALUE(5000)
 	, RANDOM_RANGE(100)
@@ -69,8 +68,8 @@ void EnemyComponent::Start() {
 	animator->LoadIndex(true);
 
 	// 敵のデータ取得
-	auto data = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::TutorialEnemy);
-
+	status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::TutorialEnemy);
+	HP = status.HP;
 
 
 }
@@ -146,7 +145,7 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 		// 当たったらダメージを与える
 		auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
 		// 今はとりあえず適当なダメージ
-		playerStatus.HP = playerStatus.HP - 10;
+		playerStatus.HP = playerStatus.HP - status.attack;
 		// ダメージを反映
 		player->GetComponent<PlayerComponent>()->SetPlayerStatus(playerStatus);
 
@@ -157,10 +156,13 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 		coolTime = 2;
 	}
 
-	// 死亡判定
+	// ダメージ判定
 	if (!damageIsTriger && other->GetOwner()->name == "bullet") {
+		// ダメージを受ける
+		HP -= other->GetOwner()->GetComponent<BulletComponent>()->GetHitDamage();;
 		damageIsTriger = true;
-		if (state != nullptr)
+		// 死亡判定
+		if (HP < 0 && state != nullptr)
 			state = new EnemyDeath();
 		state->Start(enemy);
 	}

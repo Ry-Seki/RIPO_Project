@@ -1,4 +1,5 @@
 #include "HPBarComponent.h"
+#include "EnemyComponent.h"
 
 /*
  *	コンストラクタ
@@ -6,6 +7,7 @@
 HPBarComponent::HPBarComponent()
 	: player(nullptr)
 	, camera(nullptr)
+	, enemy(nullptr)
 {
 }
 
@@ -18,6 +20,8 @@ void HPBarComponent::Start()
 	if (player == nullptr) return;
 	camera = CameraManager::GetInstance().GetCamera();
 	if (camera == nullptr) return;
+	enemy = GetOwner();
+	if (enemy == nullptr) return;
 }
 
 /*
@@ -35,88 +39,63 @@ void HPBarComponent::Update(float deltaTime)
  */
 void HPBarComponent::ShowHPBar()
 {
-	//auto enemy = GetOwner();
-	//VECTOR enemyPos = ToVECTOR(enemy->position);
+	auto enemyHP = enemy->GetComponent<EnemyComponent>()->GetHP();
+	if (enemyHP > 0) {
+		VECTOR enemyPos = ToVECTOR(enemy->position);
 
-	//// 敵の頭上
-	//VECTOR headPos = enemyPos;
-	//headPos.y += 700 + 10.0f;
+		// 敵の頭上
+		VECTOR headPos = enemyPos;
+		headPos.y += 700 + 10.0f;
 
-	//// ワールド座標からスクリーン座標に変換
-	//Vector3 screenPos = DxLib::ConvWorldPosToScreenPos(headPos);
-	//DrawFormatString(0, 130, GetColor(255, 255, 255), "screenPos(%f,%f,%f)",
-	//	screenPos.x, screenPos.y, screenPos.z);
+		//VECTOR playerPos = ToVECTOR(player->position);
+		VECTOR cameraPos = ToVECTOR(camera->position);
 
-	//// カメラ裏なら表示しない
-	//if (screenPos.z > 1.0f) return;
+		// 視線ベクトル
+		VECTOR viewDir = VSub(headPos, cameraPos);
+		viewDir = VNorm(viewDir);
 
-	//float scale = 1.0f / screenPos.z;
-	//scale = std::clamp(scale, 0.4f, 1.5f);
+		// 上方向（ワールドY）
+		VECTOR up = VGet(0.0f, 1.0f, 0.0f);
 
-	//int BoxX = static_cast<int>(screenPos.x);
-	//int BoxY = static_cast<int>(screenPos.y);
+		// カメラの右方向ベクトル
+		VECTOR rightDir = VCross(up, viewDir);
+		rightDir = VNorm(rightDir);
 
-	//float halfWidth = 40.0f * scale;
-	//float halfHeight = 6.0f * scale;
-	//DrawBox(BoxX - halfWidth, BoxY - halfHeight, BoxX + halfWidth, BoxY + halfHeight, GetColor(0, 250, 0), true);
+		float worldHalfBar = 200.0f;
 
+		// 左右端をカメラ右方向に作る
+		VECTOR leftPos = VSub(headPos, VScale(rightDir, worldHalfBar));
+		VECTOR rightPos = VAdd(headPos, VScale(rightDir, worldHalfBar));
 
+		// ワールド座標からスクリーン座標に変換
+		VECTOR screenLeft = ConvWorldPosToScreenPos(leftPos);
+		VECTOR screenRight = ConvWorldPosToScreenPos(rightPos);
+		VECTOR screenCenter = ConvWorldPosToScreenPos(headPos);
 
-	auto enemy = GetOwner();
-	VECTOR enemyPos = ToVECTOR(enemy->position);
+		DrawFormatString(0, 130, GetColor(255, 255, 255), "screenCenter(%f,%f,%f)",
+			screenCenter.x, screenCenter.y, screenCenter.z);
+		// カメラ裏なら表示しない
+		if (screenCenter.z > 0.999f || screenCenter.z < 0.9f) return;
 
-	// 敵の頭上
-	VECTOR headPos = enemyPos;
-	headPos.y += 700 + 10.0f;
+		// 画面上の長さ（距離で計算）
+		float dx = screenRight.x - screenLeft.x;
+		float dy = screenRight.y - screenLeft.y;
+		float barWidth = sqrtf(dx * dx + dy * dy);
+		float barHeight = sqrtf(dx * dx + dy * dy) * 0.1f;
 
-	//VECTOR playerPos = ToVECTOR(player->position);
-	VECTOR cameraPos = ToVECTOR(camera->position);
+		int BoxX = screenCenter.x;
+		int BoxY = screenCenter.y;
 
-	// 視線ベクトル
-	VECTOR viewDir = VSub(headPos, cameraPos);
-	viewDir = VNorm(viewDir);
-
-	// 上方向（ワールドY）
-	VECTOR up = VGet(0.0f, 1.0f, 0.0f);
-
-	// カメラの右方向ベクトル
-	VECTOR rightDir = VCross(up, viewDir);
-	rightDir = VNorm(rightDir);
-
-	float worldHalfBar = 200.0f;
-
-	// 左右端をカメラ右方向に作る
-	VECTOR leftPos = VSub(headPos, VScale(rightDir, worldHalfBar));
-	VECTOR rightPos = VAdd(headPos, VScale(rightDir, worldHalfBar));
-
-	// ワールド座標からスクリーン座標に変換
-	VECTOR screenLeft = ConvWorldPosToScreenPos(leftPos);
-	VECTOR screenRight = ConvWorldPosToScreenPos(rightPos);
-	VECTOR screenCenter = ConvWorldPosToScreenPos(headPos);
-
-	DrawFormatString(0, 130, GetColor(255, 255, 255), "screenCenter(%f,%f,%f)",
-		screenCenter.x, screenCenter.y, screenCenter.z);
-	// カメラ裏なら表示しない
-	if (screenCenter.z > 0.999f || screenCenter.z < 0.9f) return;
-
-	// 画面上の長さ（距離で計算）
-	float dx = screenRight.x - screenLeft.x;
-	float dy = screenRight.y - screenLeft.y;
-	float barWidth = sqrtf(dx * dx + dy * dy);
-	float barHeight = sqrtf(dx * dx + dy * dy) * 0.1f;
-
-	int BoxX = screenCenter.x;
-	int BoxY = screenCenter.y;
-
-	/*float halfWidth = 40.0f * scale;
-	float halfHeight = 6.0f * scale;*/
-	const float halfValue = 0.5f;
-	DrawBox(
-		BoxX - barWidth * halfValue,
-		BoxY - barHeight * halfValue,
-		BoxX + barWidth * halfValue,
-		BoxY + barHeight * halfValue,
-		GetColor(0, 250, 0),
-		true
-	);
+		/*float halfWidth = 40.0f * scale;
+		float halfHeight = 6.0f * scale;*/
+		const float halfValue = 0.5f;
+		DrawBox(
+			BoxX - barWidth * halfValue,
+			BoxY - barHeight * halfValue,
+			BoxX + barWidth * halfValue,
+			BoxY + barHeight * halfValue,
+			GetColor(0, 250, 0),
+			true
+		);
+	}
 }

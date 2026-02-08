@@ -9,23 +9,26 @@
 #include "EnemyState.h"
 #include "../../Engine.h"
 #include "../AnimatorComponent.h"
+#include "../../Manager/EnemyDataManager.h"
+#include "../../GameEnum.h"
 
 class EnemyComponent : public CharacterBase {
-private:
-	/*
-	 *	エネミーのベースステータ構造体
-	 */
-	struct baseStatus {
-		const int ID;		// 識別ID
-		const int HP;		// 最大HP
-		const int ATTACK;	// 攻撃力
-		const int BOUNTY;	// 討伐金
-	};
+	//private:
+	//	/*
+	//	 *	エネミーのベースステータ構造体
+	//	 */
+	//	struct baseStatus {
+	//		int ID;		// 識別ID
+	//		int maxHP;		// 最大HP
+	//		int attack;	// 攻撃力
+	//		int bounty;	// 討伐金
+	//	};
 private:
 	GameObject* enemy;
 	EnemyState* state;
 	GameObjectPtr player;
 	std::shared_ptr<AnimatorComponent> animator;
+	struct EnemyDataManager::EnemyStatus status;
 	// ウェイポイント
 	Vector3 wayPoint;
 	// 目先のウェイポイント予定地
@@ -177,6 +180,16 @@ public:
 	inline void SetEnemyRotation(Vector3 setValue) {
 		enemy->rotation = setValue;
 	}
+
+	/*
+	 *	HPの取得
+	 */
+	inline int GetEnemyHP() const { return HP; }
+
+	/*
+	 *	HPの変更
+	 */
+	inline void SetEnemyHP(int setValue) { HP -= setValue; }
 
 
 

@@ -14,7 +14,7 @@
 
 class EnemyDataManager : public Singleton<EnemyDataManager> {
 	friend class Singleton<EnemyDataManager>;
-private:
+public:
 	struct EnemyStatus {
 		int ID;		// ¯•ÊID
 		int HP;		// Å‘åHP

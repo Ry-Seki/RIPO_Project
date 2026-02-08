@@ -13,6 +13,7 @@ class HPBarComponent : public Component {
 private:
 	GameObjectPtr player;
 	GameObjectPtr camera;
+	GameObject* enemy;
 
 public:
 	/*
