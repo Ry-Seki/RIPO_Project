@@ -10,11 +10,15 @@
 #include "../../../../Fade/FadeManager.h"
 #include "../../../../Audio/AudioUtility.h"
 #include "../../../../System/Money/MoneyManager.h"
+#include "../../../../Load/JSON/LoadJSON.h"
+#include "../../../../Load/LoadManager.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
  */
 void ResultAction_PartTime::Initialize() {
+	auto& load = LoadManager::GetInstance();
+	auto reward = load.LoadResource<LoadJSON>(_SOKOBAN_REWARD_PATH);
 }
 /*
  *	@brief	€”õ‘Oˆ—

@@ -7,9 +7,11 @@
 #define _IN_ACTION_PART_TIME_H_
 
 #include "../InActionBase.h"
+#include "../../../../GameEnum.h"
 
 #include <vector>
 #include <memory>
+#include <string>
 
 // ‘O•ûéŒ¾
 class MiniGameBase;
