@@ -18,7 +18,7 @@
 #include "../../../../System/World/WorldProgressManager.h"
 #include "../../../../Input/InputUtility.h"
 #include "../../../../Menu/MenuManager.h"
-#include "../../../../UI/PlayerUI/ReticleUI.h"
+#include "../../../../UI/PlayerUI/PlayerUI.h"
 
 /*
  *	@brief	現在のフロアの片付け処理
@@ -173,7 +173,7 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart, std::v
 		floorData.TrySetFloorData(currentFloor, setFloorData);
 		isStart = true;
 		// プレイヤーUI表示
-		MenuManager::GetInstance().OpenMenu<ReticleUI>();
+		MenuManager::GetInstance().OpenMenu<PlayerUI>();
 		// フェードイン
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop);
 		FadeManager::GetInstance().StartFade(fade, [&isStart]() {

@@ -1,9 +1,9 @@
 /*
- *	@file	ReticleUI.cpp
+ *	@file	PlayerUI.cpp
  *	@autor	Riku
  */
 
-#include "ReticleUI.h"
+#include "PlayerUI.h"
 #include "../../Load/LoadManager.h"
 #include "../../Load/Sprite/LoadSprite.h"
 #include "../../GameConst.h"
@@ -11,18 +11,18 @@
 /*
  * 初期化
  */
-void ReticleUI::Initialize(Engine& engine) {
+void PlayerUI::Initialize(Engine& engine) {
 	LoadManager& load = LoadManager::GetInstance();
 	auto reticleSprite = load.LoadResource<LoadSprite>(RETICLE_PATH);
 	load.SetOnComplete([this, reticleSprite]() {
-		SetGraphHandle(reticleSprite->GetHandle());
+		SetReticleGraphHandle(reticleSprite->GetHandle());
 		});
 }
 
 /*
  *	@brief	メニューを開く
  */
-void ReticleUI::Open() {
+void PlayerUI::Open() {
 	isVisible = true;
 	isInteractive = true;
 	isStart = false;
@@ -31,7 +31,8 @@ void ReticleUI::Open() {
 /*
  *	描画
  */
-void ReticleUI::Render() {
+void PlayerUI::Render() {
+	// レティクル画像
 	// 画像描画位置を計算
 	float centerWidth = GameConst::WINDOW_WIDTH * 0.5f;
 	float centerHeight = GameConst::WINDOW_HEIGHT * 0.5f;
@@ -41,15 +42,14 @@ void ReticleUI::Render() {
 	GetGraphSize(reticleGraphHandle, &graphSizeWidth, &graphSizeHeight);
 	float drawPosX = centerWidth - graphSizeWidth * 0.5f;
 	float drawPosY = centerHeight - graphSizeHeight * 0.5f;
-
 	// 描画
 	DrawGraph(drawPosX, drawPosY, reticleGraphHandle, TRUE);
 
 }
 
 /*
- *	グラフハンドルのセット
+ *	レティクルのグラフハンドルのセット
  */
-void ReticleUI::SetGraphHandle(int setHandle) {
+void PlayerUI::SetReticleGraphHandle(int setHandle) {
 	reticleGraphHandle = setHandle;
 }

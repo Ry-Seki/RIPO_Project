@@ -19,7 +19,7 @@
 #include "../Scripts/Engine/Manager/EffectManager.h"
 #include "../../Data/WeaponDataManager.h"
 #include "../Component/Character/HPBarComponent.h"
-#include "../UI/PlayerUI/ReticleUI.h"
+#include "../UI/PlayerUI/PlayerUI.h"
 
  /*
   *  @brief  デストラクタ
@@ -35,7 +35,7 @@ void MainGameScene::Initialize(Engine& engine) {
 	gameState->Initialize(engine);
 	gameState->ChageState(GameEnum::GameState::SelectAction);
 	MenuManager::GetInstance().GetMenu<MenuInGame>();
-	MenuManager::GetInstance().GetMenu<ReticleUI>();
+	MenuManager::GetInstance().GetMenu<PlayerUI>();
 	auto treasureData = LoadManager::GetInstance().LoadResource<LoadJSON>(_TREASURE_DATA_PATH);
 	auto itemData = LoadManager::GetInstance().LoadResource<LoadJSON>(_ITEM_DATA_PATH);
 	auto effectData = LoadManager::GetInstance().LoadResource<LoadJSON>(_EFFECT_DATA_PATH);

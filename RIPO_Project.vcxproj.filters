@@ -714,10 +714,7 @@
     <ClCompile Include="Scripts\Engine\Component\Character\SubmachineGunArm.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\ReticleUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\AmmoCountUI.cpp">
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\PlayerUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1277,10 +1274,10 @@
     <ClInclude Include="Scripts\Engine\Menu\Result\MenuResultScore.h">
       <Filter>ヘッダー ファイル\Engine\Menu\Result</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReticleUI.h">
-      <Filter>ヘッダー ファイル</Filter>
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUI.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\AmmoCountUI.h">
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReticleUI.h">
       <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
     </ClInclude>
   </ItemGroup>
