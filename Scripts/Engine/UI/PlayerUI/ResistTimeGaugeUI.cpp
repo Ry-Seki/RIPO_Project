@@ -19,9 +19,9 @@ void ResistTimeGaugeUI::Render() {
 	float baseResist = static_cast<float>(PlayerStatusManager::GetInstance().GetPlayerStatusData()->base.resistTime);
 	float posSX = GameConst::WINDOW_WIDTH * 0.2f;
 	float posSY = GameConst::WINDOW_HEIGHT * 0.93f;
-	float changeValue = 0.8f;
+	float changeValue = 0.2f;
 	if (playerResist > 0)
-		changeValue = (playerResist / baseResist) * 0.8f;
+		changeValue = 0.2f + (playerResist / baseResist) * 0.6f;
 	float posEX = GameConst::WINDOW_WIDTH * changeValue;
 	float posEY = GameConst::WINDOW_HEIGHT * 0.95f;
 	// •`‰æ

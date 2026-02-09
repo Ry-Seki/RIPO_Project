@@ -92,7 +92,6 @@ void MainGameScene::Render() {
 		if (capsule != nullptr)
 			capsule->DebugRender();
 	}
-#endif
 	// ìGÇÃçUåÇâºï`âÊ
 	for (auto& obj : gameObjects) {
 		if (obj->name != GameConst::_CREATE_POSNAME_ENEMY)
@@ -101,6 +100,7 @@ void MainGameScene::Render() {
 		if (aabb != nullptr)
 			aabb->DebugRender();
 	}
+#endif
 
 	// HPÉQÅ[ÉW
 	for (auto& obj : gameObjects) {
