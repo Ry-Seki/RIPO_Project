@@ -8,6 +8,7 @@
 
 #include "../MenuBase.h"
 #include "../../UI/Button/UIButtonBase.h"
+#include "../../UI/Sprite/Sprite.h"
 #include "../../UI/EventSystem.h"
 #include "../../GameEnum.h"
 
@@ -24,7 +25,11 @@ class MenuPurchaseCount : public MenuBase {
 private:
 	int currentSlot = -1;
 	int purchaseCount = 0;
+	int animFrame = 0;
+	float animTimer = 0.0f;
+
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
+	std::vector<std::shared_ptr<Sprite>> spriteList;
 	EventSystem eventSystem;
 
 	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/InGame/InGameMenuResources.json";
@@ -43,6 +48,10 @@ public:
 	 *	@brief	更新処理
 	 */
 	void Update(Engine& engine, float unscaledDeltaTime) override;
+	/*
+	 *	@brief	アニメーション等の更新
+	 */
+	void AnimUpdate(Engine& engine, float unscaledDeltaTime) override;
 	/*
 	 *	@brief	描画処理
 	 */

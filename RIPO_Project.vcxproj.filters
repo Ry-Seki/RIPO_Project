@@ -738,6 +738,18 @@
     <ClCompile Include="Scripts\Engine\UI\PlayerUI\PlayerStatusUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Sprite\Sprite.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuPurchaseCount.cpp">
+      <Filter>ソース ファイル\Engine\Menu\MainGame</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -1321,6 +1333,15 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerStatusUI.h">
       <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Sprite\Sprite.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Sprite\SpriteFactory.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuPurchaseCount.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\MainGame</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

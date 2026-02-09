@@ -36,6 +36,7 @@ void MenuPurchaseCount::Initialize(Engine& engine) {
         }
         eventSystem.Initialize(0);
         buttonList = std::move(result.buttonList);
+        spriteList = std::move(result.spriteList);
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             UIButtonBase* button = buttonList[i].get();
             if (!button) continue;
@@ -85,9 +86,31 @@ void MenuPurchaseCount::Update(Engine& engine, float unscaledDeltaTime) {
     }
 }
 /*
+ *	@brief	アニメーション等の更新
+ */
+void MenuPurchaseCount::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
+    animTimer += unscaledDeltaTime;
+
+    if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
+    animTimer -= GameConst::UI_ANIM_INTERVAL;
+
+    for (auto& sprite : spriteList) {
+        if (!sprite) continue;
+
+        int frameCount = sprite->GetFrameCount();
+        if (frameCount <= 1) continue;
+
+        animFrame = (animFrame + 1) % frameCount;
+        sprite->SetFrameIndex(animFrame);
+    }
+}
+/*
  *	@brief	描画処理
  */
 void MenuPurchaseCount::Render() {
+    for (auto& sprite : spriteList) {
+        sprite->Render();
+    }
     for (auto& button : buttonList) {
         button->Render();
     }
