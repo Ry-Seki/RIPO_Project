@@ -39,7 +39,7 @@ int Engine::Initialize() {
 	//ウィンドウのサイズを変更する
 	SetGraphMode(GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, 32, 0);
 	//起動時のウィンドウのモードの設定
-	ChangeWindowMode(TRUE);		// true : Windowモード, false : FullScreen
+	ChangeWindowMode(FALSE);			// true : Windowモード, false : FullScreen
 	//背景色の設定
 	SetBackgroundColor(196, 196, 196);
 
@@ -99,6 +99,7 @@ int Engine::Initialize() {
 	MenuManager::GetInstance().Initialize(*this);
 	// 初期化フラグの変更
 	initialized = true;
+	SetMouseDispFlag(TRUE);
 	return 0;
 }
 /*

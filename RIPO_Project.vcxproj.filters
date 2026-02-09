@@ -723,6 +723,21 @@
     <ClCompile Include="Scripts\Data\TreasureDataList.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\AmmoCountUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\Reticle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\PlayerStatusUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -1238,9 +1253,6 @@
     <ClInclude Include="Scripts\Engine\Manager\WeaponManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\SubmachineGun.h">
-      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\System\MenuConfirm.h">
       <Filter>ヘッダー ファイル\Engine\Menu</Filter>
     </ClInclude>
@@ -1294,6 +1306,21 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\AmmoCountUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUIBase.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerStatusUI.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

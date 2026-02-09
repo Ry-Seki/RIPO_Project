@@ -5,8 +5,10 @@
 
 #include "MenuResourcesFactory.h"
 #include "../UI/Button/ButtonFactory.h"
+#include "../UI/Sprite/SpriteFactory.h"
 #include "../../Data/UI/MenuInfo.h"
 #include "../../Data/UI/Button/ButtonInfo.h"
+#include "../../Data/UI/Sprite/SpriteInfo.h"
 #include "../UI/Rect.h"
 #include "../GameEnum.h"
 
@@ -61,6 +63,22 @@ namespace {
         }
         return info;
     }
+    /*
+     *  @brief      JSON->スプライト情報へ変換
+     *  @param[in]  const JSON& json
+     *  @return     SpriteInfo
+     */
+    SpriteInfo ParseSprite(const JSON& json) {
+        SpriteInfo info{};
+        info.name = json.value("Name", "");
+        info.rect = ParseRect(json["Rect"]);
+
+        if (json.contains("Resources")) {
+            info.resourcePathList = json["Resources"].get<std::vector<std::string>>();
+        }
+
+        return info;
+    }
 }
 
 /*
@@ -75,6 +93,13 @@ MenuInfo MenuResourcesFactory::Create(const JSON& json) {
         for (const auto& button : json["Buttons"]) {
             auto buttonInfo = ParseButton(button);
             result.buttonList.push_back(ButtonFactory::CreateButton(buttonInfo));
+        }
+    }
+    // スプライト生成
+    if (json.contains("Sprites")) {
+        for (const auto& sprite : json["Sprites"]) {
+            auto spriteInfo = ParseSprite(sprite);
+            result.spriteList.push_back(SpriteFactory::CreateSprite(spriteInfo));
         }
     }
     return result;

@@ -5,23 +5,48 @@
 
 #include "MenuTitle.h"
 #include "../MenuManager.h"
+#include "../MenuResourcesFactory.h"
 #include "MenuGameModeSelect.h"
+#include "../../../Data/UI/MenuInfo.h"
 #include "../../Load/LoadManager.h"
 #include "../../Load/Sprite/LoadSprite.h"
+#include "../../Load/JSON/LoadJSON.h"
 #include "../../Fade/FadeFactory.h"
 #include "../../Fade/FadeManager.h"
 #include "../../Audio/AudioUtility.h"
 #include "../../Input/InputUtility.h"
-
 /*
  *	@brief	初期化処理
  */
 void MenuTitle::Initialize(Engine& engine) {
-	LoadManager& load = LoadManager::GetInstance();
-	auto menuTitleHandle = load.LoadResource<LoadSprite>(_TITLE_LOGO_PATH);
-	load.SetOnComplete([this, menuTitleHandle]() {
-		SetupData(menuTitleHandle->GetHandle());
-	});
+	auto& load = LoadManager::GetInstance();
+	auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
+	auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
+
+	load.SetOnComplete([this, &engine, menuJSON, navigation]() {
+		MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
+		for (auto& button : result.buttonList) {
+			if (!button) continue;
+
+			eventSystem.RegisterButton(button.get());
+		}
+		eventSystem.Initialize(0);
+		buttonList = std::move(result.buttonList);
+		spriteList = std::move(result.spriteList);
+		for (int i = 0, max = buttonList.size(); i < max; i++) {
+			UIButtonBase* button = buttonList[i].get();
+			if (!button) continue;
+
+			button->RegisterUpdateSelectButton([this, button]() {
+				eventSystem.UpdateSelectButton(button);
+			});
+
+			button->RegisterOnClick([this, &engine, i]() {
+				SelectButtonExecute(engine, i);
+			});
+		}
+		eventSystem.LoadNavigation(navigation->GetData());
+	 });
 }
 /*
  *	@brief	メニューを開く処理
@@ -54,10 +79,34 @@ void MenuTitle::Update(Engine& engine, float unscaledDeltaTime) {
 	}
 }
 /*
+ *	@brief	アニメーション等の更新
+ */
+void MenuTitle::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
+	animTimer += unscaledDeltaTime;
+
+	if (animTimer < ANIM_INTERVAL) return;
+	animTimer -= ANIM_INTERVAL;
+
+	for (auto& sprite : spriteList) {
+		if (!sprite) continue;
+
+		int frameCount = sprite->GetFrameCount();
+		if (frameCount <= 1) continue;
+
+		animFrame = (animFrame + 1) % frameCount;
+		sprite->SetFrameIndex(animFrame);
+	}
+}
+/*
  *	@brief	描画処理
  */
 void MenuTitle::Render() {
-	DrawExtendGraph(150, 50, 900, 400, titleGraphHandle, TRUE);
+	for (auto& sprite : spriteList ) {
+		sprite->Render();
+	}
+	for (auto& button : buttonList) {
+		button->Render();
+	}
 	DrawFormatString(300, 400, GetColor(255, 255, 255), "Play->SpaceKey");
 }
 /*
@@ -77,5 +126,16 @@ void MenuTitle::Resume() {
  *  @prarm[in]	int setHandle
  */
 void MenuTitle::SetupData(int setHandle) {
-	titleGraphHandle = setHandle;
+}
+
+void MenuTitle::SelectButtonExecute(Engine& engine, int buttonIndex) {
+	if (buttonIndex == 0) {
+		AudioUtility::PlaySE("DebugSE");
+		inputHandle = true;
+		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.2f, FadeDirection::Out, FadeMode::Stop);
+		FadeManager::GetInstance().StartFade(fadeOut, [this]() {
+			isVisible = false;
+			MenuManager::GetInstance().OpenMenu<MenuGameModeSelect>();
+		});
+	}
 }

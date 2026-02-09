@@ -13,6 +13,18 @@
         "Res/BackGround/Trealine_LoadBackground_black2.jpg",
         "Res/BackGround/Trealine_LoadBackground_black3.jpg"
       ]
+    },
+    {
+      "Name": "TitleLogo",
+      "Rect": {
+        "X": 350,
+        "Y": 100,
+        "Width": 950,
+        "Height": 450
+      },
+      "Resources": [
+        "Res/Menu/Title/Trealine_NewTitle.png"
+      ]
     }
   ],
   "Buttons": [
