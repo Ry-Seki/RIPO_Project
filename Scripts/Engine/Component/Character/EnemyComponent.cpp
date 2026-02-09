@@ -171,6 +171,7 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 		// éÄÇ»Ç»Ç©Ç¡ÇΩèÍçá
 		else {
 			firstAttackFlag = true;
+			hitFlag = true;
 		}
 	}
 	coolTime = 2;

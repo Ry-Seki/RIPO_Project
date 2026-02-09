@@ -73,6 +73,12 @@ private:
 	void ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetChange, float deltaTime);
 
 	/*
+	 *	プレイヤーを目標に設定する
+	 *  param[in]	GameObject*	enemy
+	 */
+	void SetTargetPlayer(GameObject* enemy, float deltaTime);
+
+	/*
 	 *	角度差を正規化
 	 */
 	float NormalizeAngle(float angle) {

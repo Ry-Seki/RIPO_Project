@@ -47,6 +47,8 @@ private:
 	bool attackFlag = false;
 	// ファーストアタック判定フラグ
 	bool firstAttackFlag = false;
+	// 被ダメフラグ
+	bool hitFlag = false;
 	// 方向転換時のディレイ
 	float turnDelay;
 	// スポーンID
@@ -160,6 +162,16 @@ public:
 	 *	ファーストアタック判定フラグの取得
 	 */
 	inline bool GetFirstAttackFlag() const { return firstAttackFlag; }
+
+	/*
+	 *	被ダメフラグの取得
+	 */
+	inline bool GetHitFlag() const { return hitFlag; }
+
+	/*
+	 *	被ダメフラグの変更
+	 */
+	inline void SetHitFlag(bool setValue) { hitFlag = setValue; }
 
 	/*
 	 *	位置の取得
