@@ -6,6 +6,8 @@
 #ifndef _MINI_GAME_BASE_H_
 #define _MINI_GAME_BASE_H_
 
+#include "../../../../../GameEnum.h"
+
 #include <memory>
 
 // 前方宣言
@@ -18,6 +20,7 @@ class MiniGameBase {
 protected:
 	int score = 0;
 	bool isComplete = false;
+	GameEnum::MiniGameLevel gameLevel = GameEnum::MiniGameLevel::Invalid;
 
 public:
 	/*
@@ -55,6 +58,18 @@ public:
 	 *	@return		bool
 	 */
 	inline bool IsComplete() const { return isComplete; }
+	/*
+	 *	@brief		ミニゲーム難易度の取得
+	 *	@return		GameEnum::MiniGameLevel
+	 */
+	inline GameEnum::MiniGameLevel GetMiniGameLevel() const { return gameLevel; }
+	/*
+	 *	@brief		ミニゲーム難易度の設定
+	 *	@param[in]	GameEnum::MiniGameLevel setLevel
+	 */
+	inline void SetMiniGameLevel(GameEnum::MiniGameLevel setLevel) {
+		gameLevel = setLevel;
+	}
 };
 // 別名定義
 using MiniGameBasePtr = std::shared_ptr<MiniGameBase>;

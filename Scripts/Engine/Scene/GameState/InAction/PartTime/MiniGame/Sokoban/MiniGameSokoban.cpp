@@ -14,7 +14,7 @@ void MiniGameSokoban::Open() {
     MiniGameBase::Open();
     // マップ読み込み
     SokobanMapManager mapManager;
-    if(!mapManager.LoadMapList("Data/MiniGame/Sokoban/Map")) return;
+    if(!mapManager.LoadMapList(GetMiniGamePath())) return;
     // マップをランダムに取得する
     std::string mapFile = mapManager.GetRandomMap();
     if(!createMap.LoadMapFromFile(mapFile)) return;
@@ -275,6 +275,28 @@ void MiniGameSokoban::Render() {
 void MiniGameSokoban::Close() {
     MiniGameBase::Close();
     score = 25;
+}
+/*
+ *	@brief		難易度からフォルダのパスに変更
+ *	@param[in]	GameEnum::MiniGameLevel setLevel
+ *	@return		std::string
+ */
+std::string MiniGameSokoban::GetMiniGamePath() const {
+    std::string path;
+    switch (gameLevel) {
+        case GameEnum::MiniGameLevel::Easy:
+            path = "Easy";
+            break;
+        case GameEnum::MiniGameLevel::Normal:
+            path = "Normal";
+            break;
+        case GameEnum::MiniGameLevel::Hard:
+            path = "Hard";
+            break;
+        default:
+            return "";
+    }
+    return _SOKOBAN_PATH + path;
 }
 /*
  *  @brief      座標指定の箱の取得

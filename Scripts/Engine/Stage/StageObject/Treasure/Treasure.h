@@ -9,15 +9,24 @@
 #include "../StageObjectBase.h"
 #include "../Scripts/Engine/Component/EffectComponent.h"
 #include "TreasureState.h"
+#include "../Scripts/Engine/JSON.h"
+#include <string>
  /*
   *	お宝クラス
   */
 class Treasure : public StageObjectBase {
 private:
 	int spawnID;				// 生成位置のID
+	int strength;				// 筋力値
 	bool isCollected;			// 取得済みかどうか
 	float viewRadius;			// 取得範囲
+	std::string effectName;		// 再生するエフェクトの名前
 	EffectComponent* pViewingEffect; // 表示用エフェクト
+
+	std::string uiImagePath;	// UIのパス
+	GameObject* pUIObject;		// 3D空間UI
+
+	JSON json;					// jsonデータ
 
 	// お宝の状態
 	std::unique_ptr<TreasureState> state;
@@ -53,7 +62,7 @@ public:
 	 *	お宝が取得されていないときの処理
 	 */
 	void UnCollected();
-	
+
 	/*
 	 *	状態を変更する
 	 *  @param	TreasureState* お宝の状態の変更先
@@ -61,6 +70,8 @@ public:
 	void ChangeState(TreasureState* newState) {
 		state.reset(newState);
 	}
+
+
 public:
 	/*
 	 *	@brief		取得済み判定
@@ -77,6 +88,23 @@ public:
 	 *	@param[in]	const int setID
 	 */
 	inline void SetSpawnID(const int setID) { spawnID = setID; }
+
+	/*
+	 *	@brief		筋力値を取得
+	 *	@return		int
+	 */
+	inline int GetStrength() const { return strength; }
+	/*
+	 *	@brief		筋力値を設定
+	 *	@param[in]	int setValue
+	 */
+	inline void SetStrength(int setValue) { strength = setValue; }
+	/*
+	 *	@brief		エフェクトの名前を設定
+	 *  @param[in]	const std::string& setName
+	 */
+	inline void SetEffectName(const std::string& setName) { effectName = setName; }
+
 };
 
 #endif // !_TREASURE_H_

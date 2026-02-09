@@ -11,6 +11,8 @@
 #include "../../../Component/Character/ArmActionComponent.h"
 #include "../../../Component/Character/CharacterUtility.h"
 #include "UnTreasureState.h"
+#include "../../../../Engine/Menu/Dungeon/DungeonTreasureUI.h"
+#include "../../../Menu/MenuManager.h"
 
 using namespace CharacterUtility;
 /*
@@ -20,7 +22,8 @@ Treasure::Treasure()
 	: StageObjectBase()
 	, isCollected(false)
 	, pViewingEffect(nullptr)
-	, state(std::make_unique<UnTreasureState>()) {
+	, state(std::make_unique<UnTreasureState>())
+	, viewRadius(5000.0f) {
 }
 /*
  *	デストラクタ
@@ -70,21 +73,55 @@ void Treasure::OnCollected() {
 		pViewingEffect->EffectStop();
 		pViewingEffect = nullptr;
 	}
+
+	// UI削除
+	auto menu = MenuManager::GetInstance().GetMenu<DungeonTreasureUI>();
+	if (menu) {
+		menu->HideTreasureUI();
+
+	}
 }
 
 /*
  *	お宝が取得されていないときの処理
  */
 void Treasure::UnCollected() {
-	// すでに生成されていれば何もしない
-	if (pViewingEffect) return;
+	// Playerの取得
+	auto player = GetPlayer();
+	if (!player) return;
 
-	// エフェクト再生
-	pViewingEffect = EffectManager::GetInstance().Instantiate(
-		"treasureViewing",
-		GetOwner()->position
-	);
+	// プレイヤーとお宝の距離
+	float distance = Distance(player->position, GetOwner()->position);
 
-	// 必要筋力値表示
+	if (distance < viewRadius) {
+
+		// エフェクト再生
+		if (!pViewingEffect) {
+			pViewingEffect = EffectManager::GetInstance().Instantiate(
+				effectName,
+				GetOwner()->position
+			);
+		}
+
+		// UI表示
+		auto& menu = MenuManager::GetInstance();
+		auto treasureMenu = menu.GetMenu<DungeonTreasureUI>();
+		treasureMenu->ShowTreasureUI(GetOwner()->ID, GetOwner()->position);
+		menu.OpenMenu<DungeonTreasureUI>();
+	}
+	else {
+
+		// エフェクトが存在すれば停止
+		if (pViewingEffect) {
+			pViewingEffect->EffectStop();
+			pViewingEffect = nullptr;
+		}
+
+		auto& menu = MenuManager::GetInstance();
+		auto treasureMenu = menu.GetMenu<DungeonTreasureUI>();
+		treasureMenu->HideTreasureUI();
+		menu.CloseMenu(treasureMenu);
+	}
+
 }
 

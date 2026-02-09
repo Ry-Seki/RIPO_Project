@@ -21,6 +21,7 @@
 #include "../Component/Character/HPBarComponent.h"
 #include "../UI/PlayerUI/PlayerUI.h"
 #include "../Scripts/Engine/Manager/EnemyDataManager.h"
+#include "../Menu/Dungeon/DungeonTreasureUI.h"
 
  /*
   *  @brief  ÉfÉXÉgÉâÉNÉ^
@@ -37,6 +38,7 @@ void MainGameScene::Initialize(Engine& engine) {
 	gameState->ChageState(GameEnum::GameState::SelectAction);
 	MenuManager::GetInstance().GetMenu<MenuInGame>();
 	MenuManager::GetInstance().GetMenu<PlayerUI>();
+	MenuManager::GetInstance().GetMenu<DungeonTreasureUI>();
 	auto treasureData = LoadManager::GetInstance().LoadResource<LoadJSON>(_TREASURE_DATA_PATH);
 	auto itemData = LoadManager::GetInstance().LoadResource<LoadJSON>(_ITEM_DATA_PATH);
 	auto effectData = LoadManager::GetInstance().LoadResource<LoadJSON>(_EFFECT_DATA_PATH);
@@ -92,7 +94,6 @@ void MainGameScene::Render() {
 		if (capsule != nullptr)
 			capsule->DebugRender();
 	}
-#endif
 	// ìGÇÃçUåÇâºï`âÊ
 	for (auto& obj : gameObjects) {
 		if (obj->name != GameConst::_CREATE_POSNAME_ENEMY)
@@ -101,6 +102,7 @@ void MainGameScene::Render() {
 		if (aabb != nullptr)
 			aabb->DebugRender();
 	}
+#endif
 
 	// HPÉQÅ[ÉW
 	for (auto& obj : gameObjects) {

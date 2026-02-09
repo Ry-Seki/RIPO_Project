@@ -7,6 +7,7 @@
 #include "../Stage/StageObject/Treasure/Treasure.h"
 #include "../Stage/StageObject/StageObjectBase.h"
 #include "../Component/ModelRenderer.h"
+#include "../../Data/TreasureDataList.h"
 
 using namespace GameObjectUtility;
 
@@ -85,6 +86,15 @@ void StageObjectManager::GenerateTreasure(
 	// リストの空きに生成
 	CreateStageObject<Treasure>(name, position, rotation, AABBMin, AABBMax, treasure, setTreasureID);
 	treasure->AddComponent<ModelRenderer>();
+
+	auto component = treasure->GetComponent<Treasure>();
+	if (component) {
+		TreasureStatusData data{};
+		TreasureValueDataList::TryGetTreasureStatus(setTreasureID, data);
+		component->SetEffectName(data.effectName);
+		component->SetStrength(data.strength);
+	}
+
 	// オブジェクトのリストに保存
 	createStageObjectList.push_back(treasure);
 	// シーンが持つゲームオブジェクト配列に入れる

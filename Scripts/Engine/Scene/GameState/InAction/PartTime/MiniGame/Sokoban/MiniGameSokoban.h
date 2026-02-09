@@ -37,6 +37,8 @@ private:
 	const float _MOVE_DURATION = 0.15f;			// 補間時間
 	const int _TILE_SIZE = 32;					// タイルサイズ
 
+	static constexpr const char* _SOKOBAN_PATH = "Data/MiniGame/Sokoban/Map/";
+
 public:
 	/*
 	 *	@brief	コンストラクタ
@@ -97,6 +99,12 @@ private:
 
 private:
 	/*
+	 *	@brief		難易度からフォルダのパスに変更
+	 *	@param[in]	GameEnum::MiniGameLevel setLevel
+	 *	@return		std::string
+	 */
+	std::string GetMiniGamePath() const;
+	/*
 	 *  @brief      座標指定の箱の取得
 	 *  @param[in]	int x, y		箱の座標
 	 *  @return     SokobanBox*
@@ -112,6 +120,7 @@ private:
 	 *	@return		bool
 	 */
 	bool IsClear();
+
 
 public:
 	/*

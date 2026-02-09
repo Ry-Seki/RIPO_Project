@@ -1,14 +1,98 @@
 {
   "Jar": {
     "ID": 0,
-    "Value": 100
+    "Value": 100,
+    "Effect": "treasureViewing",
+    "Strength": 1
   },
   "LionStatue": {
     "ID": 1,
-    "Value": 150
+    "Value": 150,
+    "Effect": "treasureViewing",
+    "Strength": 1
   },
   "BrownTV": {
     "ID": 2,
-    "Value": 300
+    "Value": 300,
+    "Effect": "treasureViewing",
+    "Strength": 1
+  },
+  "BackLookUma": {
+    "ID": 3,
+    "Value": 303,
+    "Effect": "treasureViewing",
+    "Strength": 1
+  },
+  "Humanstatue_genzaburou": {
+    "ID": 4,
+    "Value": 304,
+    "Effect": "treasureViewing",
+    "Strength": 1
+  },
+  "LuxuryBox": {
+    "ID": 5,
+    "Value": 305,
+    "Effect": "treasureViewing",
+    "Strength": 1
+  },
+  "ThreeSticksWithPictures": {
+    "ID": 6,
+    "Value": 306,
+    "Effect": "treasureViewing",
+    "Strength": 1
+  },
+  "StatueWithRoundHead": {
+    "ID": 7,
+    "Value": 307,
+    "Effect": "treasureViewing",
+    "Strength": 1
+  },
+  "AhoBard": {
+    "ID": 8,
+    "Value": 308,
+    "Effect": "treasureViewing",
+    "Strength": 1
+  },
+  "StatueWithBrokenRoundHead": {
+    "ID": 9,
+    "Value": 309,
+    "Effect": "treasureViewing",
+    "Strength": 1
+  },
+  "Hukurou": {
+    "ID": 10,
+    "Value": 310,
+    "Effect": "treasureViewing",
+    "Strength": 1
+  },
+  "AhoDog": {
+    "ID": 11,
+    "Value": 311,
+    "Effect": "treasureViewing",
+    "Strength": 1
+  },
+  "HasStatue": {
+    "ID": 12,
+    "Value": 312,
+    "Effect": "treasureViewing",
+    "Strength": 1
+  },
+  "RapaStatue": {
+    "ID": 13,
+    "Value": 313,
+    "Effect": "treasureViewing",
+    "Strength": 1
+  },
+  "HumanStatue_kuu": {
+    "ID": 14,
+    "Value": 314,
+    "Effect": "treasureViewing",
+    "Strength": 1
+  },
+  "LightStatue": {
+    "ID": 15,
+    "Value": 315,
+    "Effect": "treasureViewing",
+    "Strength": 1
   }
 }

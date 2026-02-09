@@ -22,6 +22,9 @@ void MenuManager::Update(float unscaledDeltaTime) {
 	if (topMenu->IsInteractive()) topMenu->Update(*engine, unscaledDeltaTime);
 
 	// メニューの更新(操作以外)
+	for (auto& menu : useMenuList) {
+		if (menu->IsVisible()) menu->AnimUpdate(*engine, unscaledDeltaTime);
+	}
 }
 /*
  *	@brief	描画処理
@@ -31,7 +34,7 @@ void MenuManager::Render() {
 	for (auto& menu : useMenuList) {
 		if (!menu->IsVisible()) continue;
 
-		menu->Render();
+  		menu->Render();
 	}
 }
 /*
@@ -49,6 +52,28 @@ void MenuManager::CloseTopMenu() {
 	if (useMenuList.empty()) return;
 	// 現在一番後ろのメニューの再開
 	useMenuList.back()->Resume();
+}
+/*
+ *	@brief		使用リストから特定のメニューを削除する
+ *	@param[in]	MenuBasePtr closeMenu
+ */
+void MenuManager::CloseMenu(MenuBasePtr closeMenu) {
+	if (useMenuList.empty() || !closeMenu) return;
+	// 対象メニューを探す
+	auto itr = std::find(useMenuList.begin(), useMenuList.end(), closeMenu);
+	if (itr == useMenuList.end()) return;
+	// それが一番後ろのメニューかどうか判定
+	bool isTop = (itr == useMenuList.end() - 1);
+
+	// 閉じる
+	(*itr)->Close(*engine);
+	// リストから削除
+	useMenuList.erase(itr);
+
+	// 一番上を閉じた場合のみ、次のメニューを再開
+	if (isTop && !useMenuList.empty()) {
+		useMenuList.back()->Resume();
+	}
 }
 /*
  *	@brief	現在開かれている全てのリストを削除する

@@ -1,0 +1,29 @@
+/*
+ *	@file	ResistTimeGaugeUI.cpp
+ *	@author	Riku
+ */
+
+#include "ResistTimeGaugeUI.h"
+#include "../../Component/Character/CharacterUtility.h"
+#include "../../System/Status/PlayerStatusManager.h"
+#include "../../GameConst.h"
+
+using namespace CharacterUtility;
+
+/*
+ *	ï`âÊèàóù
+ */
+void ResistTimeGaugeUI::Render() {
+	// ï`âÊà íuåvéZ
+	float playerResist = static_cast<float>(GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus().resistTime);
+	float baseResist = static_cast<float>(PlayerStatusManager::GetInstance().GetPlayerStatusData()->base.resistTime);
+	float posSX = GameConst::WINDOW_WIDTH * 0.2f;
+	float posSY = GameConst::WINDOW_HEIGHT * 0.93f;
+	float changeValue = 0.2f;
+	if (playerResist > 0)
+		changeValue = 0.2f + (playerResist / baseResist) * 0.6f;
+	float posEX = GameConst::WINDOW_WIDTH * changeValue;
+	float posEY = GameConst::WINDOW_HEIGHT * 0.95f;
+	// ï`âÊ
+	DrawBox(posSX, posSY, posEX, posEY, GetColor(213, 255, 147), TRUE);
+}

@@ -70,13 +70,6 @@ void MenuInGame::Open() {
 void MenuInGame::Update(Engine& engine, float unscaledDeltaTime) {
     auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
 
-    auto& cancelInputDown = input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)];
-    if (cancelInputDown) {
-        cancelInputDown = false;
-        MenuManager::GetInstance().CloseTopMenu();
-        return;
-    }
-
     // イベントシステムの更新
     eventSystem.Update(unscaledDeltaTime);
     // ボタンの更新
@@ -105,7 +98,6 @@ void MenuInGame::Render() {
  */
 void MenuInGame::Close(Engine& engine) {
     MenuBase::Close(engine);
-    InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
 }
 /*
  *	@brief	メニューを中断

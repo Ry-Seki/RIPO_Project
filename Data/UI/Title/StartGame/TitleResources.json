@@ -1,0 +1,44 @@
+{
+  "Sprites": [
+    {
+      "Name": "BackGround",
+      "Rect": {
+        "X": 0,
+        "Y": 0,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/BackGround/Trealine_LoadBackground_black1.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black2.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black3.jpg"
+      ]
+    },
+    {
+      "Name": "TitleLogo",
+      "Rect": {
+        "X": 350,
+        "Y": 100,
+        "Width": 950,
+        "Height": 450
+      },
+      "Resources": [
+        "Res/Menu/Title/Trealine_NewTitle.png"
+      ]
+    }
+  ],
+  "Buttons": [
+    {
+      "Name": "Finish",
+      "Type": "Single",
+      "Rect": {
+        "X": 100,
+        "Y": 350,
+        "Width": 100,
+        "Height": 80
+      },
+      "Resources": {
+      }
+    }
+  ]
+}
