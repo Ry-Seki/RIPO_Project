@@ -29,6 +29,7 @@ Treasure::~Treasure() {
 
 }
 void Treasure::Start() {
+	// お宝のUIオブジェクトの一括読み込み
 	LoadTreasureUI();
 }
 /*
@@ -90,6 +91,7 @@ void Treasure::UnCollected() {
 	);
 
 	// 必要筋力値表示
+
 
 }
 
