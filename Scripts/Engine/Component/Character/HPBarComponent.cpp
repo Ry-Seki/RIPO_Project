@@ -26,10 +26,10 @@ void HPBarComponent::Start()
 	if (camera == nullptr) return;
 	enemy = GetOwner();
 	if (enemy == nullptr) return;
-	currentHP = enemy->GetComponent<EnemyComponent>()->GetHP();
-	maxHP = enemy->GetComponent<EnemyComponent>()->GetMaxHP();
+	maxHP = enemy->GetComponent<EnemyComponent>()->GetEnemyMaxHP();
+	currentHP = maxHP;
 
-	displayHP = currentHP;
+	displayHP = maxHP;
 }
 
 /*
@@ -38,6 +38,8 @@ void HPBarComponent::Start()
  */
 void HPBarComponent::Update(float deltaTime)
 {
+	currentHP = enemy->GetComponent<EnemyComponent>()->GetEnemyHP();
+
 	// ダメージバーの速度
 	float speed = 100.0f;
 
@@ -56,7 +58,8 @@ void HPBarComponent::Update(float deltaTime)
  */
 void HPBarComponent::ShowHPBar()
 {
-	if (currentHP > 0) {
+	// ダメージを受けるまで表示しない
+	if (enemy->GetComponent<EnemyComponent>()->GetFirstAttackFlag()) {
 		VECTOR enemyPos = ToVECTOR(enemy->position);
 
 		// 敵の頭上

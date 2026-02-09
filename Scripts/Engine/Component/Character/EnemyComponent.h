@@ -45,6 +45,8 @@ private:
 	bool damageIsTriger;
 	// 攻撃判定フラグ
 	bool attackFlag = false;
+	// ファーストアタック判定フラグ
+	bool firstAttackFlag = false;
 	// 方向転換時のディレイ
 	float turnDelay;
 	// スポーンID
@@ -153,6 +155,11 @@ public:
 	 *	攻撃判定フラグの変更
 	 */
 	inline void SetAttackFlag(bool setValue) { attackFlag = setValue; }
+
+	/*
+	 *	ファーストアタック判定フラグの取得
+	 */
+	inline bool GetFirstAttackFlag() const { return firstAttackFlag; }
 
 	/*
 	 *	位置の取得

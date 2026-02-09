@@ -22,6 +22,7 @@ EnemyChase::EnemyChase()
 	, wayPointDistance(1000.0f)
 	, moveSpeed(700.0f)
 	, viewAngle(30)
+	, viewDirection(2000)
 	, closePlayer(false)
 	, chasePlayer(false)
 	, ROTATE_SPEED(13.0f)
@@ -62,9 +63,11 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime) {
 	animator->SetModelHandle(modelRenderer);
 
 	// 目標判定
-	if (player && Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, viewAngle, 2000)) {
+	if (player && Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, viewAngle, viewDirection)) {
 		// 視野角を360度にする
 		viewAngle = 180;
+		// 判定距離を伸ばす
+		viewDirection = 3500;
 		// 足を早くする
 		moveSpeed = 1000;
 		// アニメーションを再生

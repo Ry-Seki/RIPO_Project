@@ -68,7 +68,7 @@ void EnemyComponent::Start() {
 	animator->LoadIndex(true);
 
 	// 敵のデータ取得
-	status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::TutorialEnemy);
+	status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage4Enemy);
 	HP = status.HP;
 
 
@@ -141,6 +141,9 @@ void EnemyComponent::Update(float deltaTime) {
  */
 void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other)
 {
+	if (coolTime <= 0) {
+		attackIsTriger = false;
+	}
 	if (!attackIsTriger && other->GetOwner()->name == "Player") {
 		// 当たったらダメージを与える
 		auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
@@ -151,21 +154,26 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 
 		attackIsTriger = true;
 	}
-	else if (coolTime <= 0) {
-		attackIsTriger = false;
-		coolTime = 2;
-	}
 
 	// ダメージ判定
 	if (!damageIsTriger && other->GetOwner()->name == "bullet") {
 		// ダメージを受ける
 		HP -= other->GetOwner()->GetComponent<BulletComponent>()->GetHitDamage();;
-		damageIsTriger = true;
+		if (HP <= 0) {
+			HP = 0;
+		}
 		// 死亡判定
-		if (HP < 0 && state != nullptr)
+		if (HP <= 0 && state != nullptr) {
+			damageIsTriger = true;
 			state = new EnemyDeath();
-		state->Start(enemy);
+			state->Start(enemy);
+		}
+		// 死ななかった場合
+		else {
+			firstAttackFlag = true;
+		}
 	}
+	coolTime = 2;
 }
 
 Vector3 EnemyComponent::DxForwardDir(const Vector3& rotation)
