@@ -5,9 +5,9 @@
 
 #include "SubmachineGunArm.h"
 
-/*
- *	初期化処理
- */
+ /*
+  *	初期化処理
+  */
 void SubmachineGunArm::Initialize() {
 	number = GameEnum::Weapon::SubmachineGun;
 	// サブマシンガンのデータ取得
@@ -30,16 +30,14 @@ void SubmachineGunArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState act
 		shotCoolTime = 0;
 		// 左クリックで射撃
 		int shot = static_cast<int>(GameEnum::PlayerAction::Shot);
-		if (action.button[shot]) {
-			if (ammoCount > 0) {
-				ShotBullet();
-				shotCoolTime = shotCoolTimeMax;
-				ammoCount -= 1;
-			}
+		if (action.button[shot] && ammoCount > 0) {
+			ShotBullet();
+			shotCoolTime = shotCoolTimeMax;
+			ammoCount -= 1;
+		}
+		else if (action.buttonDown[shot]) {
 			// 弾がなかったらリロード
-			else {
-				BulletReload();
-			}
+			reload = true;
 		}
 	}
 	else {

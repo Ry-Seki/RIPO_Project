@@ -18,6 +18,7 @@ WeaponBase::WeaponBase()
 	, reloadingTimeMax(0)
 	, shotCoolTime(0)
     , shotCoolTimeMax(0)
+	, reload(false)
 
 	, BULLET_NAME("bullet")
 	, BULLET_AABB_MIN({ -10, 0, -10 })
@@ -39,10 +40,13 @@ void WeaponBase::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) {
 	WeaponBasePtr weapon = WeaponManager::GetInstance().GetCurrentWeapon();
 	weapon->ArmUpdate(deltaTime, action);
 
-	 // 手動リロード
+	 // 手動リロード開始
 	int reload = static_cast<int>(GameEnum::PlayerAction::BulletReload);
 	if (action.buttonDown[reload])
-		weapon->BulletReload();
+		weapon->reload = true;
+
+	// リロード
+	weapon->BulletReload(deltaTime);
 }
 
 /*
@@ -58,8 +62,17 @@ void WeaponBase::ShotBullet() {
 /*
  *	リロード
  */
-void WeaponBase::BulletReload() {
-	ammoCount = ammoCountMax;
+void WeaponBase::BulletReload(float deltaTime) {
+	if (reload) {
+		if (reloadingTime <= reloadingTimeMax) {
+			reloadingTime += deltaTime;
+		}
+		else {
+			ammoCount = ammoCountMax;
+			reloadingTime = 0.0f;
+			reload = false;
+		}
+	}
 }
 
 /*

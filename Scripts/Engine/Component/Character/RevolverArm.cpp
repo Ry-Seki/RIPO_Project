@@ -38,7 +38,7 @@ void RevolverArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) 
 			}
 			// ’e‚ª‚È‚©‚Á‚½‚çƒŠƒ[ƒh
 			else {
-				BulletReload();
+				reload = true;
 			}
 		}
 	}

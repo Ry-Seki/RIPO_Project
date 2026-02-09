@@ -381,6 +381,7 @@ std::vector<Vector3> StageManager::GetStairsPos() const {
 		result.push_back(FromVECTOR(framePos));
 	}
 
+	return result;
 
 }
 

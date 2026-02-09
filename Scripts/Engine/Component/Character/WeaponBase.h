@@ -20,7 +20,7 @@ using WeaponBasePtr = std::shared_ptr<WeaponBase>;
  *	武器のウデの基底クラス
  */
 class WeaponBase : public ArmBase {
-protected:
+public:
 	GameEnum::Weapon number;		// 番号
 	int ammoCount;					// 残弾数
 	int ammoCountMax;				// 弾の最大数
@@ -28,6 +28,7 @@ protected:
 	float reloadingTimeMax;			// リロードに掛かる時間
 	float shotCoolTime;				// 射撃のクールタイム
 	float shotCoolTimeMax;			// 射撃のクールタイムの最大
+	bool reload;					// リロードフラグ
 
 	const std::string BULLET_NAME;	// 弾の名前
 	const Vector3 BULLET_AABB_MIN;	// 弾のAABBMin
@@ -56,14 +57,13 @@ protected:
 	/*
 	 *	リロード
 	 */
-	void BulletReload();
+	void BulletReload(float deltaTime);
 
 public:
 	/*
 	 *	番号取得
 	 */
 	GameEnum::Weapon GetNumber();
-	
 };
 
 #endif // !_WEAPONBASE_H_

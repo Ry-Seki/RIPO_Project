@@ -7,6 +7,8 @@
 #define _PLAYERUI_H_
 
 #include "../../Menu/MenuBase.h"
+#include "PlayerUIBase.h"
+#include <vector>
 
  // 前方宣言
 class Engine;
@@ -15,9 +17,8 @@ class Engine;
  *	プレイヤーUIのクラス
  */
 class PlayerUI : public MenuBase{
-	int reticleGraphHandle = -1;
-
-	static constexpr const char* RETICLE_PATH = "Res/PlayerUI/reticle.png";
+private:
+	std::vector<PlayerUIBasePtr> UIs;
 
 public:
 	/*
@@ -33,7 +34,7 @@ public:
 	/*
 	 *	@brief	更新処理
 	 */
-	void Update(Engine& engine, float unscaledDeltaTime) override {}
+	void Update(Engine& engine, float unscaledDeltaTime) override;
 	/*
 	 *	@brief	メニューを開く
 	 */
@@ -42,12 +43,6 @@ public:
 	 *	@brief	描画処理
 	 */
 	void Render() override;
-
-public:
-	/*
-	 *	レティクルのグラフハンドルのセット
-	 */
-	void SetReticleGraphHandle(int setHandle);
 };
 
 #endif // !_PLAYERUI_H_

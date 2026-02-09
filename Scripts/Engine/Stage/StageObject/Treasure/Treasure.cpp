@@ -91,7 +91,7 @@ void Treasure::UnCollected() {
 	);
 
 	// 必要筋力値表示
-
+	
 
 }
 

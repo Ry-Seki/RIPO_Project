@@ -346,15 +346,6 @@
     <Filter Include="ヘッダー ファイル\Data\Result">
       <UniqueIdentifier>{efa82e4e-4707-44a5-bbc6-bd1d5bb83c85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Data\Menu\Sprite">
-      <UniqueIdentifier>{9271711d-188a-4edd-9a81-3df62248b876}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\UI\Sprite">
-      <UniqueIdentifier>{41c189a7-02a8-4fdc-96aa-ad21fdee7a89}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\UI\Sprite">
-      <UniqueIdentifier>{7b109837-46d2-4162-b182-6af4dc32d7d9}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -732,14 +723,20 @@
     <ClCompile Include="Scripts\Data\TreasureDataList.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuPurchaseCount.cpp">
-      <Filter>ソース ファイル\Engine\Menu\MainGame</Filter>
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\AmmoCountUI.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Sprite\Sprite.cpp">
-      <Filter>ソース ファイル\Engine\UI\Sprite</Filter>
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp">
-      <Filter>ソース ファイル\Engine\UI\Sprite</Filter>
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\Reticle.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\PlayerStatusUI.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1256,9 +1253,6 @@
     <ClInclude Include="Scripts\Engine\Manager\WeaponManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\SubmachineGun.h">
-      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\System\MenuConfirm.h">
       <Filter>ヘッダー ファイル\Engine\Menu</Filter>
     </ClInclude>
@@ -1310,20 +1304,23 @@
     <ClInclude Include="Scripts\Data\ResultScoreData.h">
       <Filter>ヘッダー ファイル\Data\Result</Filter>
     </ClInclude>
-    <ClInclude Include="ScreenSize.h">
+    <ClInclude Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuPurchaseCount.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\MainGame</Filter>
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\AmmoCountUI.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Data\UI\Sprite\SpriteInfo.h">
-      <Filter>ヘッダー ファイル\Data\Menu\Sprite</Filter>
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUIBase.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Sprite\Sprite.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Sprite</Filter>
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Sprite\SpriteFactory.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Sprite</Filter>
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerStatusUI.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
