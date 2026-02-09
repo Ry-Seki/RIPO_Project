@@ -194,6 +194,7 @@ void InAction_Dungeon::EndDungeon() {
 	CalculationDungeon(context.dungeonID, context.isCurrentEvent);
 	context.isPlayerDead = IsPlayerDead();
 	context.isCurrentEvent = false;
+	context.dungeonStageData.ClearDungeonStageMap();
 	floorProcessor.EndDungeon();
 	owner->GetOwner()->ChageState(GameEnum::GameState::ResultAction);
 }

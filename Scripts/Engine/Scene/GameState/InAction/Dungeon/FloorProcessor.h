@@ -24,6 +24,7 @@ private:
 	int holdTreasureObjectID = -1;					// プレイヤーが所持しているお宝のオブジェクトID
 	int holdTreasureID = -1;						// プレイヤーが所持しているお宝ID
 	bool isEventDay = false;						// イベント中か判定
+	bool isDungeonStart = false;					// ダンジョンが開始したか(TODO:これに関してはフロア移動バグが治り次第削除)
 	DungeonCreater dungeonCreater;					// ダンジョン生成クラス
 	DungeonResourceData resourceData;				// ダンジョンリソースデータ
 	DungeonFloorData floorData;						// ダンジョンフロアデータ
