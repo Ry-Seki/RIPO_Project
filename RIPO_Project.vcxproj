@@ -205,7 +205,8 @@
     <ClCompile Include="Scripts\Engine\Manager\WeaponManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuInGame.cpp" />
-    <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuPurchaseCount.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuResourcesFactory.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Result\MenuResultScore.cpp" />
@@ -382,7 +383,8 @@
     <ClInclude Include="Scripts\Engine\Manager\WeaponManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuInGame.h" />
-    <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuPurchaseCount.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuBase.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuResourcesFactory.h" />

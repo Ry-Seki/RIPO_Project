@@ -3,21 +3,22 @@
  *	@author	Seki
  */
 #include "MenuPurchaseCount.h"
-#include "../MenuManager.h"
-#include "../System/MenuSettings.h"
-#include "../System/MenuSaveMode.h"
-#include "../System/MenuLoadMode.h"
-#include "../../UI/Button/SinglePressButton.h"
-#include "../../Fade/FadeFactory.h"
-#include "../../Fade/FadeManager.h"
-#include "../../Load/JSON/LoadJSON.h"
-#include "../../Load/LoadManager.h"
-#include "../../Input/InputUtility.h"
-#include "../../Engine.h"
-#include "../../Scene/TitleScene.h"
-#include "../MenuResourcesFactory.h"
-#include "../../../Data/UI/MenuInfo.h"
-#include "../../Menu/System/MenuConfirm.h"
+#include "../../MenuManager.h"
+#include "../../System/MenuSettings.h"
+#include "../../System/MenuSaveMode.h"
+#include "../../System/MenuLoadMode.h"
+#include "../../../UI/Button/SinglePressButton.h"
+#include "../../../Fade/FadeFactory.h"
+#include "../../../Fade/FadeManager.h"
+#include "../../../Load/JSON/LoadJSON.h"
+#include "../../../Load/LoadManager.h"
+#include "../../../Input/InputUtility.h"
+#include "../../../Engine.h"
+#include "../../../Scene/TitleScene.h"
+#include "../../MenuResourcesFactory.h"
+#include "../../../../Data/UI/MenuInfo.h"
+#include "../../../Menu/System/MenuConfirm.h"
+#include "../../../System/Money/MoneyManager.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -58,12 +59,16 @@ void MenuPurchaseCount::Initialize(Engine& engine) {
  */
 void MenuPurchaseCount::Open() {
     MenuBase::Open();
-    currentSlot = -1;
-    InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+    auto& money = MoneyManager::GetInstance();
+    // ƒAƒCƒeƒ€ƒf[ƒ^‚Ìİ’è
+    currentMoney = money.GetCurrentMoney();
+    catalogData = money.GetItemCatalogData();
+    bool getData = catalogData.TryGetItem(targetItemID, targetItemData);
     for (auto& button : buttonList) {
         button->Setup();
     }
     eventSystem.ApplySelection();
+    InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
 }
 /*
  *	@brief	XVˆ—
@@ -120,6 +125,10 @@ void MenuPurchaseCount::Render() {
  */
 void MenuPurchaseCount::Close(Engine& engine) {
     MenuBase::Close(engine);
+    purchaseCount = 0;
+    purchaseMoney = 0;
+    targetItemID = -1;
+    targetItemData = nullptr;
 }
 /*
  *	@brief	ƒƒjƒ…[‚ğ’†’f
@@ -138,21 +147,91 @@ void MenuPurchaseCount::Resume() {
  *	@param[in]	int buttonIndex
  */
 void MenuPurchaseCount::SelectButtonExecute(Engine& engine, int buttonIndex) {
+    auto& menu = MenuManager::GetInstance();
+    auto confirm = menu.GetMenu<MenuConfirm>();
+
+    if (buttonIndex == 0) {
+        SubPurchaseCount();
+    }
+    else if (buttonIndex == 1) {
+        AddPurchaseCount();
+    }
+    else if (buttonIndex == 2) {
+        confirm->SetCallback([this, &menu](GameEnum::ConfirmResult result) {
+            if (result == GameEnum::ConfirmResult::Yes) {
+                // w“üˆ—
+                ConfirmPurchaseItem();
+                // ƒƒjƒ…[‚ğ•Â‚¶‚é
+                menu.CloseTopMenu();
+            }
+            // “ñ‰ñ•Â‚¶‚é•K—v‚ª‚ ‚é‚½‚ß‚±‚±‚Å‚à•Â‚¶‚é
+            menu.CloseTopMenu();
+        });
+    }
+    else if (buttonIndex == 3) {
+        // ©g‚ğ•Â‚¶‚é
+        menu.CloseTopMenu();
+    }
 }
 /*
- *	@brief		w“üŒÂ”‚Ìİ’è
+ *	@brief		w“ü‚ÌŠm’è
  */
-void MenuPurchaseCount::SetPurchaseCount() {
+void MenuPurchaseCount::ConfirmPurchaseItem() {
+    MoneyManager::GetInstance().SubMoney(purchaseMoney);
+    if (Callback) Callback(targetItemID, purchaseCount);
 }
 /*
  *	@brief		ƒAƒCƒeƒ€‚Ìw“üŒÂ”‚ğˆê‚Â‘‰Á
  */
 void MenuPurchaseCount::AddPurchaseCount() {
-    // Œ»İ‚ÌŠ‹à‚ğæ“¾
+    if (!targetItemData) return;
+    if (currentMoney <= 0) return;
 
+    const int price = targetItemData->price;
+    if (price <= 0) return;
+
+    // Å‘åw“ü”‚Ìæ“¾
+    const int maxCount = currentMoney / price;
+    if (maxCount <= 0) {
+        purchaseCount = 0;
+        purchaseMoney = 0;
+        return;
+    }
+    // ‚à‚µAŒ»İ‚Ìw“ü”‚ªÅ‘å”‚Ì‚Í0‚É‚·‚é
+    if (purchaseCount >= maxCount) {
+        purchaseCount = 0;
+    } else {
+        // w“ü”‚ğˆê‚Â‘‚â‚·
+        purchaseCount++;
+    }
+    // w“ü‹àŠz
+    purchaseMoney = price * purchaseCount;
 }
 /*
  *	@brief		ƒAƒCƒeƒ€‚Ìw“üŒÂ”‚ğˆê‚ÂŒ¸­
  */
 void MenuPurchaseCount::SubPurchaseCount() {
+    if (!targetItemData) return;
+    if (currentMoney <= 0) return;
+
+    const int price = targetItemData->price;
+    if (price <= 0) return;
+
+    // Å‘åw“ü”‚Ìæ“¾
+    const int maxCount = currentMoney / price;
+    if (maxCount <= 0) {
+        purchaseCount = 0;
+        purchaseMoney = 0;
+        return;
+    }
+    // ‚à‚µAŒ»İ‚Ìw“ü”‚ª0‚Ì‚Í”ƒ‚¦‚éÅ‘å”‚É‚·‚é
+    if (purchaseCount <= 0) {
+        purchaseCount = maxCount;
+    }
+    else {    
+        // w“ü”‚ğˆê‚ÂŒ¸‚ç‚·
+        purchaseCount--;
+    }
+    // w“ü‹àŠz
+    purchaseMoney = price * purchaseCount;
 }

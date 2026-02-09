@@ -6,14 +6,16 @@
 #ifndef _MENU_PURCHASE_COUNT_H_
 #define _MENU_PURCHASE_COUNT_H_
 
-#include "../MenuBase.h"
-#include "../../UI/Button/UIButtonBase.h"
-#include "../../UI/Sprite/Sprite.h"
-#include "../../UI/EventSystem.h"
-#include "../../GameEnum.h"
+#include "../../MenuBase.h"
+#include "../../../UI/Button/UIButtonBase.h"
+#include "../../../UI/Sprite/Sprite.h"
+#include "../../../UI/EventSystem.h"
+#include "../../../GameEnum.h"
+#include "../../../../Data/ItemCatalogData.h"
 
 #include <vector>
 #include <memory>
+#include <functional>
 
  // 前方宣言
 class Engine;
@@ -23,17 +25,21 @@ class Engine;
  */
 class MenuPurchaseCount : public MenuBase {
 private:
-	int currentSlot = -1;
 	int purchaseCount = 0;
+	int currentMoney = -1;
+	int purchaseMoney = -1;
+	int targetItemID = -1;
 	int animFrame = 0;
 	float animTimer = 0.0f;
-
+	ItemCatalogData catalogData;
+	ItemData* targetItemData;
+	EventSystem eventSystem;
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
-	EventSystem eventSystem;
+	std::function<void(int, int)> Callback = nullptr;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/InGame/InGameMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/InGame/InGameMenuNavigation.json";
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/ShopMenuResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Shop/ShopMenuNavigation.json";
 
 public:
 	/*
@@ -76,9 +82,9 @@ private:
 	 */
 	void SelectButtonExecute(Engine& engine, int buttonIndex);
 	/*
-	 *	@brief		購入個数の設定
+	 *	@brief		購入の確定
 	 */
-	void SetPurchaseCount();
+	void ConfirmPurchaseItem();
 	/*
 	 *	@brief		アイテムの購入個数を一つ増加
 	 */
@@ -87,6 +93,22 @@ private:
 	 *	@brief		アイテムの購入個数を一つ減少
 	 */
 	void SubPurchaseCount();
+
+public:
+	/*
+	 *	@brief		アイテムIDの設定
+	 *	@param[in]	int setID
+	 */
+	inline void SetItemID(int setID) {
+		targetItemID = setID;
+	}
+	/*
+	 *	@brief		コールバックの設定
+	 *	@param[in]	std::function<void(int, int)> setCallBack
+	 */
+	inline void SetCallBack(std::function<void(int, int)> setCallback) {
+		Callback = setCallback;
+	}
 };
 
 #endif // !_MENU_PURCHASE_COUNT_H_
