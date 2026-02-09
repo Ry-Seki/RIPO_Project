@@ -10,9 +10,9 @@
 
 using namespace CharacterUtility;
 
- /*
-  *	•`‰æˆ—
-  */
+/*
+ *	•`‰æˆ—
+ */
 void ResistTimeGaugeUI::Render() {
 	// •`‰æˆÊ’uŒvZ
 	float playerResist = static_cast<float>(GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus().resistTime);
