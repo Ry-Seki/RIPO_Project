@@ -340,7 +340,7 @@
     <Filter Include="ヘッダー ファイル\Engine\Menu\Result">
       <UniqueIdentifier>{a0acf34b-48a2-4142-b465-1fe006130abc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\UI\PlayerUI">
+    <Filter Include="ヘッダー ファイル\Engine\UI\Button\PlayerUI">
       <UniqueIdentifier>{4a377cb4-b6a1-41cf-8ea4-71c1f2ff6190}</UniqueIdentifier>
     </Filter>
     <Filter Include="ヘッダー ファイル\Data\Result">
@@ -720,16 +720,7 @@
     <ClCompile Include="Scripts\Engine\UI\PlayerUI\PlayerUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\Reticle.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\AmmoCountUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.cpp">
+    <ClCompile Include="Scripts\Data\TreasureDataList.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1247,6 +1238,9 @@
     <ClInclude Include="Scripts\Engine\Manager\WeaponManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\SubmachineGun.h">
+      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
+    </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\System\MenuConfirm.h">
       <Filter>ヘッダー ファイル\Engine\Menu</Filter>
     </ClInclude>
@@ -1287,31 +1281,19 @@
       <Filter>ヘッダー ファイル\Engine\Menu\Result</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
+      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReticleUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Manager\EnemyDataManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\AmmoCountUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUIBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
+      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Manager\EnemyDataManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Data\ResultScoreData.h">
       <Filter>ヘッダー ファイル\Data\Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
