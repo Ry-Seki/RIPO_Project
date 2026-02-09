@@ -29,6 +29,8 @@ Treasure::~Treasure() {
 
 }
 void Treasure::Start() {
+	// お宝のUIオブジェクトの一括読み込み
+	LoadTreasureUI();
 }
 /*
  *	@function	Update
@@ -70,6 +72,9 @@ void Treasure::OnCollected() {
 		pViewingEffect->EffectStop();
 		pViewingEffect = nullptr;
 	}
+
+	// 画像が存在すれば消す
+
 }
 
 /*
@@ -87,5 +92,22 @@ void Treasure::UnCollected() {
 
 	// 必要筋力値表示
 
+
+}
+
+/*
+ *	お宝用のUIを一括で読み込む
+ */
+void Treasure::LoadTreasureUI() {
+	if (!json.contains("TreasureUI")) return;
+
+	const auto& uiRoot = json["TreasureUI"];
+
+	// IDを文字列に変換
+	std::string idStr = std::to_string(GetOwner()->ID);
+
+	if (!uiRoot.contains(idStr)) return;
+
+	uiImagePath = uiRoot[idStr].value("ImagePath", "");
 }
 

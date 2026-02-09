@@ -18,10 +18,14 @@
       "0": {
         "0": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1",
         "1": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1",
-        "2": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1",
+        "2": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1"
+      },
+      "2": {
         "3": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1",
         "4": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1",
-        "5": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1"
+        "5": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1",
+        "6": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1",
+        "7": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1"
       }
     },
     "BossData": "Res/Model/Enemy/Boss/Boss.mv1"
