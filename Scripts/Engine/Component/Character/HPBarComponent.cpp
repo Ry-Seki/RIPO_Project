@@ -91,8 +91,6 @@ void HPBarComponent::ShowHPBar()
 		VECTOR screenRight = ConvWorldPosToScreenPos(rightPos);
 		VECTOR screenCenter = ConvWorldPosToScreenPos(headPos);
 
-		DrawFormatString(0, 130, GetColor(255, 255, 255), "screenCenter(%f,%f,%f)",
-			screenCenter.x, screenCenter.y, screenCenter.z);
 		// ƒJƒƒ‰— ‚È‚ç•\¦‚µ‚È‚¢
 		if (screenCenter.z > 0.999f || screenCenter.z < 0.9f) return;
 
