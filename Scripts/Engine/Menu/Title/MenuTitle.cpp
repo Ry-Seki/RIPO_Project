@@ -84,8 +84,8 @@ void MenuTitle::Update(Engine& engine, float unscaledDeltaTime) {
 void MenuTitle::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
 	animTimer += unscaledDeltaTime;
 
-	if (animTimer < ANIM_INTERVAL) return;
-	animTimer -= ANIM_INTERVAL;
+	if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
+	animTimer -= GameConst::UI_ANIM_INTERVAL;
 
 	for (auto& sprite : spriteList) {
 		if (!sprite) continue;

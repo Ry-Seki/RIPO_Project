@@ -1,56 +1,56 @@
 {
   "TutorialEnemy": {
     "ID": 0,
-    "HP": 1,
+    "HP": 10,
     "Attack": 0,
     "Bounty": 5
   },
   "Stage1Enemy": {
     "ID": 1,
-    "HP": 10,
+    "HP": 100,
     "Attack": 10,
     "Bounty": 5
   },
   "Stage2Enemy": {
     "ID": 2,
-    "HP": 30,
+    "HP": 300,
     "Attack": 15,
     "Bounty": 5
   },
   "Stage3Enemy": {
     "ID": 3,
-    "HP": 40,
+    "HP": 400,
     "Attack": 30,
     "Bounty": 5
   },
   "Stage4Enemy": {
     "ID": 4,
-    "HP": 70,
+    "HP": 700,
     "Attack": 50,
     "Bounty": 5
   },
 
   "Stage1Boss": {
     "ID": 101,
-    "HP": 100,
+    "HP": 1000,
     "Attack": 20,
     "Bounty": 50
   },
   "Stage2Boss": {
     "ID": 102,
-    "HP": 300,
+    "HP": 3000,
     "Attack": 30,
     "Bounty": 50
   },
   "Stage3Boss": {
     "ID": 103,
-    "HP": 400,
+    "HP": 4000,
     "Attack": 60,
     "Bounty": 50
   },
   "Stage4Boss": {
     "ID": 104,
-    "HP": 1000,
+    "HP": 10000,
     "Attack": 100,
     "Bounty": 200
   }

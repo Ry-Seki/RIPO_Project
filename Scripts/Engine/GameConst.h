@@ -50,6 +50,7 @@ public:
 	static constexpr float frameTime = 1.0f / FPS;
 	static constexpr int SELECT_SAVE_SLOT_MIN = 1;
 	static constexpr int SELECT_SAVE_SLOT_MAX = 3;
+	static constexpr float UI_ANIM_INTERVAL = 0.25f; 
 
 	//----------------------------------------------------
 	//				ステージ関連の定数

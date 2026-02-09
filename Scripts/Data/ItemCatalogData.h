@@ -15,11 +15,10 @@
  *	@brief	ItemData構造体
  */
 struct ItemData {
+	int itenID = -1;
 	int category = -1;		// アイテムのカテゴリー
 	std::string name = "";	// アイテムの名前
 	int price = 0;			// アイテムの値段
-	int openDay = 0;		// アイテムの開放日
-	int buyCount = 0;		// アイテムの可能購入数
 };
 
 /*
@@ -51,11 +50,10 @@ public:
 				auto data = std::make_shared<ItemData>();
 				int itemID = std::stoi(itemEntry.key());
 
+				data->itenID = itemID;
 				data->category = categoryID;
 				data->name = itemEntry.value()["Name"].get<std::string>();
 				data->price = itemEntry.value()["Price"].get<int>();
-				data->openDay = itemEntry.value()["OpenDay"].get<int>();
-				data->buyCount = itemEntry.value()["BuyCount"].get<int>();
 
 				itemDataMap[itemID] = data;
 			}
@@ -74,6 +72,19 @@ public:
 		if (itr == itemDataMap.end()) return false;
 
 		price = itr->second->price;
+		return true;
+	}
+	/*
+	 *	@brief		IDからアイテムデータの取得
+	 *	@param[in]	int itemID
+	 *	@param[out]	const ItemData*& outItem
+	 *	@return		bool
+	 */
+	bool TryGetItem(int itemID, ItemData*& outItem) const {
+		auto itr = itemDataMap.find(itemID);
+		if (itr == itemDataMap.end()) return false;
+
+		outItem = itr->second.get();
 		return true;
 	}
 	/*

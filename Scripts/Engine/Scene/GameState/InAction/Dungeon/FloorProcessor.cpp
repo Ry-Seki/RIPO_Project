@@ -205,10 +205,19 @@ void FloorProcessor::ChangeFloor() {
  *	@brief	ƒ_ƒ“ƒWƒ‡ƒ“I—¹ˆ—
  */
 void FloorProcessor::EndDungeon() {
+	currentFloor = -1;			
+	nextFloor = -1;
 	holdTreasureObjectID = -1;
+	holdTreasureID = -1;
+	isEventDay = false;
+	isDungeonStart = false;
+	enemyFloorList.clear();
+	resourceData.ResetResourceData();
+	stageData.ClearDungeonStageMap();
 	GameObjectUtility::SetUseObjectColliderFlag(false);
 	CharacterUtility::RemoveAllCharacter();
 	StageManager::GetInstance().Execute();
+	StageObjectManager::GetInstance().ClearObject();
 	StageObjectUtility::RemoveAllStageObject();
 	CameraManager::GetInstance().ResetCamera();
 }

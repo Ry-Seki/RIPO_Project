@@ -27,6 +27,8 @@ private:
 	float moveSpeed;
 	// 視界判定の視野角
 	float viewAngle;
+	// 視界判定の距離
+	float viewDirection;
 	// プレイヤーの距離判定フラグ
 	bool closePlayer;
 	// プレイヤー追跡判定

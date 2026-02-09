@@ -38,6 +38,12 @@ public:
         // データの登録
         registry.LoadFromJson<std::string>(dungeonDataList, setJSON);
     }
+    /*
+     *  @brief      ステージデータマップの解放処理
+     */
+    void ClearDungeonStageMap() {
+        dungeonDataList.clear();
+    }
 
 public:
     /*

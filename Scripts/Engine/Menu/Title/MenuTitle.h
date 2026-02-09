@@ -28,7 +28,6 @@ class MenuTitle : public MenuBase{
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 
-	static constexpr float ANIM_INTERVAL = 0.25f; // 0.25•b‚²‚Æ
 	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Title/StartGame/TitleResources.json";
 	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/StartGame/TitleNavigation.json";
 

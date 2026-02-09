@@ -9,13 +9,26 @@
 #include "EnemyState.h"
 #include "../../Engine.h"
 #include "../AnimatorComponent.h"
+#include "../../Manager/EnemyDataManager.h"
+#include "../../GameEnum.h"
 
 class EnemyComponent : public CharacterBase {
+	//private:
+	//	/*
+	//	 *	エネミーのベースステータ構造体
+	//	 */
+	//	struct baseStatus {
+	//		int ID;		// 識別ID
+	//		int maxHP;		// 最大HP
+	//		int attack;	// 攻撃力
+	//		int bounty;	// 討伐金
+	//	};
 private:
 	GameObject* enemy;
 	EnemyState* state;
 	GameObjectPtr player;
 	std::shared_ptr<AnimatorComponent> animator;
+	struct EnemyDataManager::EnemyStatus status;
 	// ウェイポイント
 	Vector3 wayPoint;
 	// 目先のウェイポイント予定地
@@ -32,12 +45,16 @@ private:
 	bool damageIsTriger;
 	// 攻撃判定フラグ
 	bool attackFlag = false;
+	// ファーストアタック判定フラグ
+	bool firstAttackFlag = false;
 	// 方向転換時のディレイ
 	float turnDelay;
 	// スポーンID
 	int enemySpawnID = 0;
 	// 仮モデルハンドル
 	int modelHandle;
+	// エネミーのHP
+	int HP;
 	// 疑似クールタイム(苦肉の策)
 	float coolTime;
 
@@ -140,6 +157,11 @@ public:
 	inline void SetAttackFlag(bool setValue) { attackFlag = setValue; }
 
 	/*
+	 *	ファーストアタック判定フラグの取得
+	 */
+	inline bool GetFirstAttackFlag() const { return firstAttackFlag; }
+
+	/*
 	 *	位置の取得
 	 */
 	inline Vector3 GetEnemyPosition() const {
@@ -165,6 +187,21 @@ public:
 	inline void SetEnemyRotation(Vector3 setValue) {
 		enemy->rotation = setValue;
 	}
+
+	/*
+	 *	HPの取得
+	 */
+	inline int GetEnemyHP() const { return HP; }
+
+	/*
+	 *	HPの変更
+	 */
+	inline void SetEnemyHP(int setValue) { HP -= setValue; }
+
+	/*
+	 *	最大HPの取得
+	 */
+	inline int GetEnemyMaxHP() const { return status.HP; }
 
 
 

@@ -35,6 +35,7 @@ EnemyComponent::EnemyComponent(EnemyState* initState)
 	, damageIsTriger(false)
 	, turnDelay(0.0f)
 	, modelHandle(0)
+	, HP(0)
 	, coolTime(2.0f)
 	, TOP_VALUE(5000)
 	, RANDOM_RANGE(100)
@@ -64,8 +65,12 @@ void EnemyComponent::Start() {
 	// モデルハンドルのセット
 	animator->SetModelHandle(modelHandle);
 
-
 	animator->LoadIndex(true);
+
+	// 敵のデータ取得
+	status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage4Enemy);
+	HP = status.HP;
+
 
 }
 
@@ -136,28 +141,39 @@ void EnemyComponent::Update(float deltaTime) {
  */
 void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other)
 {
+	if (coolTime <= 0) {
+		attackIsTriger = false;
+	}
 	if (!attackIsTriger && other->GetOwner()->name == "Player") {
 		// 当たったらダメージを与える
 		auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
 		// 今はとりあえず適当なダメージ
-		playerStatus.HP = playerStatus.HP - 10;
+		playerStatus.HP = playerStatus.HP - status.attack;
 		// ダメージを反映
 		player->GetComponent<PlayerComponent>()->SetPlayerStatus(playerStatus);
 
 		attackIsTriger = true;
 	}
-	else if (coolTime <= 0) {
-		attackIsTriger = false;
-		coolTime = 2;
-	}
 
-	// 死亡判定
+	// ダメージ判定
 	if (!damageIsTriger && other->GetOwner()->name == "bullet") {
-		damageIsTriger = true;
-		if (state != nullptr)
+		// ダメージを受ける
+		HP -= other->GetOwner()->GetComponent<BulletComponent>()->GetHitDamage();;
+		if (HP <= 0) {
+			HP = 0;
+		}
+		// 死亡判定
+		if (HP <= 0 && state != nullptr) {
+			damageIsTriger = true;
 			state = new EnemyDeath();
-		state->Start(enemy);
+			state->Start(enemy);
+		}
+		// 死ななかった場合
+		else {
+			firstAttackFlag = true;
+		}
 	}
+	coolTime = 2;
 }
 
 Vector3 EnemyComponent::DxForwardDir(const Vector3& rotation)
