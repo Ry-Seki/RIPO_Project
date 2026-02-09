@@ -34,7 +34,7 @@ void MenuManager::Render() {
 	for (auto& menu : useMenuList) {
 		if (!menu->IsVisible()) continue;
 
-		menu->Render();
+  		menu->Render();
 	}
 }
 /*

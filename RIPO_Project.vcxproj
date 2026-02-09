@@ -203,6 +203,7 @@
     <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\WeaponManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuInGame.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuResourcesFactory.cpp" />
