@@ -1,17 +1,17 @@
 /*
- *	@file	HPBarComponent.cpp
+ *	@file	BossHPBarComponent.cpp
  *	@author	kuu
  */
-#include "HPBarComponent.h"
-#include "EnemyComponent.h"
+#include "BossHPBarComponentr.h"
+#include "BossComponent.h"
 
 /*
  *	コンストラクタ
  */
-HPBarComponent::HPBarComponent()
+BossHPBarComponent::BossHPBarComponent()
 	: player(nullptr)
 	, camera(nullptr)
-	, enemy(nullptr)
+	, boss(nullptr)
 	, maxHP(0)
 	, currentHP(0.0f)
 	, displayHP(0.0f)
@@ -22,15 +22,15 @@ HPBarComponent::HPBarComponent()
 /*
  *	更新処理の前に呼び出す処理
  */
-void HPBarComponent::Start()
+void BossHPBarComponent::Start()
 {
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
 	camera = CameraManager::GetInstance().GetCamera();
 	if (camera == nullptr) return;
-	enemy = GetOwner();
-	if (enemy == nullptr) return;
-	maxHP = enemy->GetComponent<EnemyComponent>()->GetEnemyMaxHP();
+	boss = GetOwner();
+	if (boss == nullptr) return;
+	maxHP = boss->GetComponent<BossComponent>()->GetBossMaxHP();
 	currentHP = maxHP;
 
 	displayHP = maxHP;
@@ -40,9 +40,9 @@ void HPBarComponent::Start()
  *	更新処理
  *  param[in]	float	deltaTime
  */
-void HPBarComponent::Update(float deltaTime)
+void BossHPBarComponent::Update(float deltaTime)
 {
-	currentHP = enemy->GetComponent<EnemyComponent>()->GetEnemyHP();
+	currentHP = boss->GetComponent<BossComponent>()->GetBossHP();
 
 	// ダメージバーの速度
 	float speed = 100.0f;
@@ -60,17 +60,16 @@ void HPBarComponent::Update(float deltaTime)
  *	HPバーを表示させる
  *	param[in]	VECTOR	selfPos		自分自身のポジション
  */
-void HPBarComponent::ShowHPBar()
+void BossHPBarComponent::ShowHPBar()
 {
 	// ダメージを受けるまで表示しない
-	if (enemy->GetComponent<EnemyComponent>()->GetFirstAttackFlag()) {
-		VECTOR enemyPos = ToVECTOR(enemy->position);
+	if (boss->GetComponent<BossComponent>()->GetFirstAttackFlag()) {
+		VECTOR bossPos = ToVECTOR(boss->position);
 
 		// 敵の頭上
-		VECTOR headPos = enemyPos;
+		VECTOR headPos = bossPos;
 		headPos.y += 700 + 10.0f;
 
-		//VECTOR playerPos = ToVECTOR(player->position);
 		VECTOR cameraPos = ToVECTOR(camera->position);
 
 		// 視線ベクトル
@@ -84,7 +83,7 @@ void HPBarComponent::ShowHPBar()
 		VECTOR rightDir = VCross(up, viewDir);
 		rightDir = VNorm(rightDir);
 
-		float worldHalfBar = 200.0f;
+		float worldHalfBar = 400.0f;
 
 		// 左右端をカメラ右方向に作る
 		VECTOR leftPos = VSub(headPos, VScale(rightDir, worldHalfBar));
