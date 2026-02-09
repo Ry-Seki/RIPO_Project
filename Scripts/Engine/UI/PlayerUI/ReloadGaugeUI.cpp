@@ -21,5 +21,5 @@ void ReloadGaugeUI::Render() {
 		changeValue = 1 - ((weapon->reloadingTime / weapon->reloadingTimeMax) * 0.5f);
 	float posEY = posSY * changeValue;
 	// •`‰æ
-	DrawBox(posSX, posSY, posEX, posEY,GetColor(80, 255, 20), TRUE);
+	DrawBox(posSX, posSY, posEX, posEY,GetColor(175, 48, 188), TRUE);
 }
