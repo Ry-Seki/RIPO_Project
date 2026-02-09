@@ -62,7 +62,7 @@ public:
 	 *	お宝が取得されていないときの処理
 	 */
 	void UnCollected();
-	
+
 	/*
 	 *	状態を変更する
 	 *  @param	TreasureState* お宝の状態の変更先
@@ -70,16 +70,7 @@ public:
 	void ChangeState(TreasureState* newState) {
 		state.reset(newState);
 	}
-	
-	/*
-	 *	お宝用のUIを一括で読み込む
-	 */
-	void LoadTreasureUI();
 
-	/*
-	 *	3D空間上でUIを出す
-	 */
-	void CreateUI();
 
 public:
 	/*
