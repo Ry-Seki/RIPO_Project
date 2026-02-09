@@ -8,6 +8,7 @@
 
 #include "FadeBase.h"
 #include "../GameConst.h"
+#include "../ScreenSize.h"
 
 class TileFade : public FadeBase {
 private:
@@ -24,12 +25,12 @@ public:
     void Render() override {
         float t = elapsed / duration;
         t = std::clamp(t, 0.0f, 1.0f);
+        auto screen = GetScreenSize();
+        const int screenWidth = screen.width;
+        const int screenHeight = screen.height;
 
-        const int w = GameConst::WINDOW_WIDTH;
-        const int h = GameConst::WINDOW_HEIGHT;
-
-        const int tileW = w / cols;
-        const int tileH = h / rows;
+        const int tileW = screenWidth / cols;
+        const int tileH = screenHeight / rows;
 
         const int totalTiles = rows * cols;
         int activeTiles = static_cast<int>(totalTiles * t + 0.999f);

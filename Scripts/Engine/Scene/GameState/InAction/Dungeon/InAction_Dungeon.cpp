@@ -188,6 +188,7 @@ bool InAction_Dungeon::IsPlayerDead() {
  */
 void InAction_Dungeon::EndDungeon() {
 	isStart = false;
+	SetMouseDispFlag(TRUE);
 	InputUtility::SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, false);
 	auto& context = owner->GetOwner()->GetActionContext();
 	CalculationDungeon(context.dungeonID, context.isCurrentEvent);

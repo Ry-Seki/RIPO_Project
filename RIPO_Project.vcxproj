@@ -204,6 +204,7 @@
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\WeaponManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuInGame.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuPurchaseCount.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuResourcesFactory.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Result\MenuResultScore.cpp" />
@@ -269,11 +270,14 @@
     <ClCompile Include="Scripts\Engine\UI\Button\UIButtonBase.cpp" />
     <ClCompile Include="Scripts\Engine\UI\EventSystem.cpp" />
     <ClCompile Include="Scripts\Engine\UI\PlayerUI\PlayerUI.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Sprite\Sprite.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
     <ClCompile Include="Scripts\Engine\Vision.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ScreenSize.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonFloorData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonProgressData.h" />
@@ -287,6 +291,7 @@
     <ClInclude Include="Scripts\Data\TreasureDataList.h" />
     <ClInclude Include="Scripts\Data\UI\Button\ButtonInfo.h" />
     <ClInclude Include="Scripts\Data\UI\MenuInfo.h" />
+    <ClInclude Include="Scripts\Data\UI\Sprite\SpriteInfo.h" />
     <ClInclude Include="Scripts\Data\WeaponDataManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioSource.h" />
@@ -373,6 +378,7 @@
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\WeaponManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuInGame.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuPurchaseCount.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuBase.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuResourcesFactory.h" />
@@ -461,6 +467,8 @@
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUI.h" />
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReticleUI.h" />
     <ClInclude Include="Scripts\Engine\UI\Rect.h" />
+    <ClInclude Include="Scripts\Engine\UI\Sprite\Sprite.h" />
+    <ClInclude Include="Scripts\Engine\UI\Sprite\SpriteFactory.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
     <ClInclude Include="Scripts\Engine\Vision.h" />
   </ItemGroup>

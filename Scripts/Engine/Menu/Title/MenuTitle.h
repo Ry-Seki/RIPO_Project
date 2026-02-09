@@ -7,6 +7,11 @@
 #define _MENU_TITLE_H_
 
 #include "../MenuBase.h"
+#include "../../UI/Button/UIButtonBase.h"
+#include "../../UI/Sprite/Sprite.h"
+#include "../../UI/EventSystem.h"
+#include "../../GameEnum.h"
+#include "../../GameConst.h"
 
 // 前方宣言
 class Engine;
@@ -15,10 +20,17 @@ class Engine;
  *	@brief	タイトルメニュー
  */
 class MenuTitle : public MenuBase{
-private:
-	int titleGraphHandle = -1;
+	int currentSlot = -1;
+	float animTimer = 0.0f;
+	int animFrame = 0;
+	EventSystem eventSystem;
 
-	static constexpr const char* _TITLE_LOGO_PATH = "Res/Menu/Title/Trealine_NewTitle.png";
+	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
+	std::vector<std::shared_ptr<Sprite>> spriteList;
+
+	static constexpr float ANIM_INTERVAL = 0.25f; // 0.25秒ごと
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Title/StartGame/TitleResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/StartGame/TitleNavigation.json";
 
 public:
 	/*
@@ -40,6 +52,10 @@ public:
 	 */
 	void Update(Engine& engine, float unscaledDeltaTime) override;
 	/*
+	 *	@brief	アニメーション等の更新
+	 */
+	void AnimUpdate(Engine& engine, float unscaledDeltaTime) override;
+	/*
 	 *	@brief	描画処理
 	 */
 	void Render() override;
@@ -58,6 +74,13 @@ public:
 	 *  @prarm[in]	int setHandle
 	 */
 	void SetupData(int setHandle);
+private:
+	/*
+	 *	@brief		ボタンの押された時の処理
+	 *	@param[in]	int buttonIndex
+	 */
+	void SelectButtonExecute(Engine& engine, int buttonIndex);
+
 };
 
 #endif // !_MENU_TITLE_H_

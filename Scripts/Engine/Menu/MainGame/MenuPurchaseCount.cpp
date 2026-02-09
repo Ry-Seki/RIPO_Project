@@ -1,9 +1,8 @@
 /*
- *	@file	MenuInGame.cpp
+ *	@file	MenuPurchaseCount.cpp
  *	@author	Seki
  */
-
-#include "MenuInGame.h"
+#include "MenuPurchaseCount.h"
 #include "../MenuManager.h"
 #include "../System/MenuSettings.h"
 #include "../System/MenuSaveMode.h"
@@ -23,7 +22,7 @@
 /*
  *	@brief	初期化処理
  */
-void MenuInGame::Initialize(Engine& engine) {
+void MenuPurchaseCount::Initialize(Engine& engine) {
     auto& load = LoadManager::GetInstance();
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
@@ -43,19 +42,20 @@ void MenuInGame::Initialize(Engine& engine) {
 
             button->RegisterUpdateSelectButton([this, button]() {
                 eventSystem.UpdateSelectButton(button);
-            });
+                                               });
 
             button->RegisterOnClick([this, &engine, i]() {
                 SelectButtonExecute(engine, i);
-            });
+                                    });
         }
         eventSystem.LoadNavigation(navigation->GetData());
     });
+
 }
 /*
  *	@brief	メニューを開く
  */
-void MenuInGame::Open() {
+void MenuPurchaseCount::Open() {
     MenuBase::Open();
     currentSlot = -1;
     InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
@@ -67,7 +67,7 @@ void MenuInGame::Open() {
 /*
  *	@brief	更新処理
  */
-void MenuInGame::Update(Engine& engine, float unscaledDeltaTime) {
+void MenuPurchaseCount::Update(Engine& engine, float unscaledDeltaTime) {
     auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
 
     // イベントシステムの更新
@@ -87,74 +87,49 @@ void MenuInGame::Update(Engine& engine, float unscaledDeltaTime) {
 /*
  *	@brief	描画処理
  */
-void MenuInGame::Render() {
+void MenuPurchaseCount::Render() {
     for (auto& button : buttonList) {
         button->Render();
     }
-    DrawFormatString(50, 250, GetColor(255, 255, 255), "InGameMenu");
 }
 /*
  *	@brief	メニューを閉じる
  */
-void MenuInGame::Close(Engine& engine) {
+void MenuPurchaseCount::Close(Engine& engine) {
     MenuBase::Close(engine);
 }
 /*
  *	@brief	メニューを中断
  */
-void MenuInGame::Suspend() {
+void MenuPurchaseCount::Suspend() {
     MenuBase::Suspend();
 }
 /*
  *	@brief	メニューを再開
  */
-void MenuInGame::Resume() {
+void MenuPurchaseCount::Resume() {
     MenuBase::Resume();
-    eventSystem.ApplySelection();
 }
 /*
  *	@brief		ボタンの押された時の処理
  *	@param[in]	int buttonIndex
  */
-void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
-    auto& menu = MenuManager::GetInstance();
-    if (buttonIndex == 0) {
-        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            menu.CloseTopMenu();
-            menu.OpenMenu<MenuLoadMode>();
-        });
-    } else if (buttonIndex == 1) {
-        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            menu.CloseTopMenu();
-            menu.OpenMenu<MenuSaveMode>();
-        });
-    } else if (buttonIndex == 2) {
-        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            menu.CloseTopMenu();
-            menu.OpenMenu<MenuSettings>();
-        });
-    } else if (buttonIndex == 3) {
-        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
-            menu.CloseTopMenu();
-            // TODO : 確認メニューを出す
-            auto confirm = menu.GetMenu<MenuConfirm>();
-            confirm->SetCallback([&engine, &menu](GameEnum::ConfirmResult result) {
-                if (result == GameEnum::ConfirmResult::Yes) {
-                    engine.SetNextScene(std::make_shared<TitleScene>());
-                }else {
-                    menu.CloseTopMenu();
-                }
-            });
-            menu.OpenMenu<MenuConfirm>();
-        });
-    } else {
-        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            menu.CloseTopMenu();
-        });
-    }
+void MenuPurchaseCount::SelectButtonExecute(Engine& engine, int buttonIndex) {
+}
+/*
+ *	@brief		購入個数の設定
+ */
+void MenuPurchaseCount::SetPurchaseCount() {
+}
+/*
+ *	@brief		アイテムの購入個数を一つ増加
+ */
+void MenuPurchaseCount::AddPurchaseCount() {
+    // 現在の所持金を取得
+
+}
+/*
+ *	@brief		アイテムの購入個数を一つ減少
+ */
+void MenuPurchaseCount::SubPurchaseCount() {
 }

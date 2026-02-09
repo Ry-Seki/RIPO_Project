@@ -8,6 +8,7 @@
 
 #include "FadeBase.h"
 #include "../GameConst.h"
+#include "../ScreenSize.h"
 
 #include <cmath>
 #include <algorithm>
@@ -32,8 +33,9 @@ public:
     void Render() override {
         float t = std::clamp(elapsed / duration, 0.0f, 1.0f);
         float progress = (direction == FadeDirection::In) ? (1.0f - t) : t;
-        int screenW = GameConst::WINDOW_WIDTH;
-        int screenH = GameConst::WINDOW_HEIGHT;
+        auto screen = GetScreenSize();
+        int screenW = screen.width;
+        int screenH = screen.height;
         int cx = screenW / 2;
         int cy = screenH / 2;
 
