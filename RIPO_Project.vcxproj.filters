@@ -1355,5 +1355,8 @@
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.h">
       <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Shop</Filter>
     </ClInclude>
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonEntranceData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
