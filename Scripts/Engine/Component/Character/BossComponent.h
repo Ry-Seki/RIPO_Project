@@ -9,6 +9,7 @@
 #include "BossState.h"
 #include "../AnimatorComponent.h"
 #include "../ModelRenderer.h"
+#include "../../Manager/EnemyDataManager.h"
 
 class BossComponent : public CharacterBase {
 private:
@@ -16,8 +17,11 @@ private:
 	GameObjectPtr player;
 	std::shared_ptr<AnimatorComponent> animator;
 	BossState* state;
+	struct EnemyDataManager::EnemyStatus status;
 	// モデルハンドル
 	int modelHandle;
+	// ボスのHP
+	int HP;
 	// クールタイム
 	float coolTime;
 	// 攻撃衝突判定フラグ
@@ -26,6 +30,8 @@ private:
 	bool damageIsTriger;
 	// 行動フラグ
 	bool moveFrag;
+	// 被ダメフラグ
+	bool hitFlag = false;
 	// 定位置
 	Vector3 homePosition;
 
@@ -95,6 +101,21 @@ public:
 	inline Vector3 GetHomePosition() const { return homePosition; }
 
 	/*
+	 *	HPの取得
+	 */
+	inline int GetBossHP() const { return HP; }
+
+	/*
+	 *	HPの変更
+	 */
+	inline void SetBossHP(int setValue) { HP -= setValue; }
+
+	/*
+	 *	最大HPの取得
+	 */
+	inline int GetBossMaxHP() const { return status.HP; }
+
+	/*
 	 *	行動フラグの取得
 	 */
 	inline bool GetMoveFrag() const { return moveFrag; }
@@ -105,6 +126,16 @@ public:
 	inline void SetMoveFrag(bool setValue) {
 		moveFrag = setValue;
 	}
+
+	/*
+	 *	被ダメフラグの取得
+	 */
+	inline bool GetHitFlag() const { return hitFlag; }
+
+	/*
+	 *	被ダメフラグの変更
+	 */
+	inline void SetHitFlag(bool setValue) { hitFlag = setValue; }
 };
 
 #endif // !_BOSSCOMPONENT_H_

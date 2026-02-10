@@ -20,8 +20,8 @@ private:
 	float currentHP;
 	// ’x‚ê‚Ä‚­‚éHP
 	float displayHP;
-
-	const float halfValue;
+	
+	const float HALF_VALUE;
 
 public:
 	/*
