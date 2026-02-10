@@ -250,5 +250,18 @@ namespace GameEnum {
 
 		Max
 	};
+
+	/*
+	 *	@brief	ƒJƒƒ‰‚Ìó‘Ô
+	 *	@author	Riku
+	 */
+	enum class CameraState {
+		Invalid = -1,
+		FPS,
+		TPS,
+		Event,
+
+		Max
+	};
 }
 #endif // !_GAME_ENUM_H_

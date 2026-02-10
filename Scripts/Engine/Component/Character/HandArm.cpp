@@ -7,6 +7,7 @@
 #include "../../Manager/CameraManager.h"
 #include "../../VecMath.h"
 #include "../../GameConst.h"
+#include "../../GameEnum.h"
 #include "../../Scene/Scene.h"
 #include "../../Stage/StageObject/StageObjectUtility.h"
 #include "../../Component/Character/CharacterUtility.h"
@@ -70,6 +71,7 @@ void HandArm::LiftTreasure(GameObjectPtr player, Engine* engine) {
 		}
 		if (hitInfo.collider->GetOwner()->ID == ID1) {
 			liftObject = hitInfo.collider->GetOwner();
+			camera->GetComponent<CameraComponent>()->SetState(GameEnum::CameraState::TPS);
 		}
 		else if (hitInfo.collider->GetOwner()->ID == ID2) {
 			if (player->GetComponent<PlayerComponent>()->GetPlayerStatus().strength > 2) {
