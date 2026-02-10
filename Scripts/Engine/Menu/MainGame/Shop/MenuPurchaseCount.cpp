@@ -19,6 +19,7 @@
 #include "../../../../Data/UI/MenuInfo.h"
 #include "../../../Menu/System/MenuConfirm.h"
 #include "../../../System/Money/MoneyManager.h"
+#include "../../../../Data/ItemCatalogData.h"
 
 /*
  *	@brief	初期化処理
@@ -62,8 +63,6 @@ void MenuPurchaseCount::Open() {
     auto& money = MoneyManager::GetInstance();
     // アイテムデータの設定
     currentMoney = money.GetCurrentMoney();
-    catalogData = money.GetItemCatalogData();
-    bool getData = catalogData.TryGetItem(targetItemID, targetItemData);
     for (auto& button : buttonList) {
         button->Setup();
     }
@@ -127,7 +126,6 @@ void MenuPurchaseCount::Close(Engine& engine) {
     MenuBase::Close(engine);
     purchaseCount = 0;
     purchaseMoney = 0;
-    targetItemID = -1;
     targetItemData = nullptr;
 }
 /*
@@ -178,7 +176,10 @@ void MenuPurchaseCount::SelectButtonExecute(Engine& engine, int buttonIndex) {
  */
 void MenuPurchaseCount::ConfirmPurchaseItem() {
     MoneyManager::GetInstance().SubMoney(purchaseMoney);
-    if (Callback) Callback(targetItemID, purchaseCount);
+    if (!targetItemData) return;
+
+    int targetID = targetItemData->itenID;
+    if (Callback) Callback(targetID, purchaseCount);
 }
 /*
  *	@brief		アイテムの購入個数を一つ増加

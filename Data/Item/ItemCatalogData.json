@@ -24,5 +24,13 @@
       "OpenDay": 0,
       "BuyCount": 20
     }
+  },
+  "1": {
+    "0": {
+      "Name": "サブマシンガン",
+      "Price": 1000,
+      "OpenDay": 0,
+      "BuyCount": 1
+    }
   }
 }
