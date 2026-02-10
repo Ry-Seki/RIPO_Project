@@ -57,17 +57,18 @@ void EnemyStandby::Update(GameObject* enemy, float deltaTime)
 	// ƒAƒjƒ[ƒVƒ‡ƒ“‚ðÄ¶
 	animator->Play(3, 30);
 
-	elapsedTime += deltaTime;
 	// ó‹µ‚É‰ž‚¶‚½ó‘Ô•ªŠò
+	if (enemyComponent->GetEnemyID() > 0) {
+		// ƒ‰ƒ“ƒ_ƒ€‘Ò‹@
+		elapsedTime += deltaTime;
+		if (elapsedTime > randStandby) {
+			// ˆÚ“®ó‘Ô‚Ö‘JˆÚ
+			enemyComponent->SetState(new EnemyTurn());
+		}
 
-	// ƒ‰ƒ“ƒ_ƒ€‘Ò‹@
-	if (elapsedTime > randStandby) {
-		// ˆÚ“®ó‘Ô‚Ö‘JˆÚ
-		enemyComponent->SetState(new EnemyTurn());
-	}
-
-	// Ž‹ŠE”»’è
-	if (player && Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, 30, 2000)) {
-		enemyComponent->SetState(new EnemyChase());
+		// Ž‹ŠE”»’è
+		if (player && Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, 30, 2000)) {
+			enemyComponent->SetState(new EnemyChase());
+		}
 	}
 }

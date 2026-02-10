@@ -71,8 +71,8 @@ public:
 	/*
 	 *	コンストラクタ
 	 */
+	//EnemyComponent();
 	EnemyComponent();
-	EnemyComponent(EnemyState* initState);
 	~EnemyComponent();
 
 public:
@@ -214,6 +214,11 @@ public:
 	 *	最大HPの取得
 	 */
 	inline int GetEnemyMaxHP() const { return status.HP; }
+
+	/*
+	 *	IDの取得
+	 */
+	inline int GetEnemyID() const { return status.ID; }
 
 
 
