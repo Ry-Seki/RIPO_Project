@@ -6,47 +6,35 @@
   },
   "Buttons": [
     {
-      "Name": "Load",
+      "Name": "AddCount",
       "Type": "Single",
       "Rect": {
-        "X": 200,
-        "Y": 50,
-        "Width": 700,
-        "Height": 80
-      },
-      "Resources": {
-      }
-    },
-    {
-      "Name": "Save",
-      "Type": "Single",
-      "Rect": {
-        "X": 200,
-        "Y": 150,
-        "Width": 700,
-        "Height": 80
-      },
-      "Resources": {
-      }
-    },
-    {
-      "Name": "Settings",
-      "Type": "Single",
-      "Rect": {
-        "X": 200,
-        "Y": 250,
-        "Width": 700,
-        "Height": 80
-      },
-      "Resources": {
-      }
-    },
-    {
-      "Name": "Return Title",
-      "Type": "Single",
-      "Rect": {
-        "X": 200,
+        "X": 800,
         "Y": 350,
+        "Width": 200,
+        "Height": 150
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "SubCount",
+      "Type": "Single",
+      "Rect": {
+        "X": 800,
+        "Y": 550,
+        "Width": 200,
+        "Height": 80
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "Buy",
+      "Type": "Single",
+      "Rect": {
+        "X": 750,
+        "Y": 850,
         "Width": 700,
         "Height": 80
       },
@@ -54,16 +42,15 @@
       }
     },
     {
-      "Name": "Back",
+      "Name": "Cancel",
       "Type": "Single",
       "Rect": {
-        "X": 500,
-        "Y": 450,
+        "X": 1000,
+        "Y": 850,
         "Width": 700,
         "Height": 80
       },
       "Resources": {
-
       }
     }
   ]

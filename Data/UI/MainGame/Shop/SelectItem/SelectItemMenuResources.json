@@ -6,61 +6,73 @@
   },
   "Buttons": [
     {
-      "Name": "Load",
+      "Name": "HPUpGrade",
       "Type": "Single",
       "Rect": {
-        "X": 200,
+        "X": 1000,
         "Y": 50,
         "Width": 700,
-        "Height": 80
+        "Height": 100
       },
       "Resources": {
       }
     },
     {
-      "Name": "Save",
+      "Name": "StaminaUpGrade",
       "Type": "Single",
       "Rect": {
-        "X": 200,
-        "Y": 150,
+        "X": 1000,
+        "Y": 200,
         "Width": 700,
-        "Height": 80
+        "Height": 100
       },
       "Resources": {
       }
     },
     {
-      "Name": "Settings",
+      "Name": "StrengthUpGrade",
       "Type": "Single",
       "Rect": {
-        "X": 200,
-        "Y": 250,
-        "Width": 700,
-        "Height": 80
-      },
-      "Resources": {
-      }
-    },
-    {
-      "Name": "Return Title",
-      "Type": "Single",
-      "Rect": {
-        "X": 200,
+        "X": 1000,
         "Y": 350,
         "Width": 700,
-        "Height": 80
+        "Height": 100
       },
       "Resources": {
+      }
+    },
+    {
+      "Name": "ResistTimeUpGrade",
+      "Type": "Single",
+      "Rect": {
+        "X": 1000,
+        "Y": 500,
+        "Width": 700,
+        "Height": 100
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "SubmachineGun",
+      "Rect": {
+        "X": 1000,
+        "Y": 650,
+        "Width": 700,
+        "Height": 100
+      },
+      "Resources": {
+
       }
     },
     {
       "Name": "Back",
       "Type": "Single",
       "Rect": {
-        "X": 500,
-        "Y": 450,
+        "X": 1000,
+        "Y": 800,
         "Width": 700,
-        "Height": 80
+        "Height": 100
       },
       "Resources": {
 

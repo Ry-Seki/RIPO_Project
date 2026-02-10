@@ -149,10 +149,10 @@ void MenuPurchaseCount::SelectButtonExecute(Engine& engine, int buttonIndex) {
     auto confirm = menu.GetMenu<MenuConfirm>();
 
     if (buttonIndex == 0) {
-        SubPurchaseCount();
+        AddPurchaseCount();
     }
     else if (buttonIndex == 1) {
-        AddPurchaseCount();
+        SubPurchaseCount();
     }
     else if (buttonIndex == 2) {
         confirm->SetCallback([this, &menu](GameEnum::ConfirmResult result) {
