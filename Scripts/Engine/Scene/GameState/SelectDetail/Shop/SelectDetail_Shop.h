@@ -43,6 +43,14 @@ public:
 	 */
 	void Teardown() override;
 
+private:
+	/*
+	 *	@brief	w“üˆ—
+	 *	@param[in]	int itemID
+	 *	@param[in]	int buyCount
+	 */
+	void BuyItem(int itemID, int buyCount);
+
 };
 
 #endif // !_SELECT_DETAIL_SHOP_H_

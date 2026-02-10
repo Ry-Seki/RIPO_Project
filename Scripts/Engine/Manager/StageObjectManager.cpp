@@ -118,7 +118,7 @@ void StageObjectManager::GenerateStair(
 	GameObjectPtr createStair;
 	// リストの空きに生成
 	CreateStageObject<Stair>(name, position, rotation, AABBMin, AABBMax, createStair);
-	stair = createStair->GetComponent<Stair>().get();
+	stairList.push_back(createStair->GetComponent<Stair>().get());
 	// オブジェクトのリストに保存
 	createStageObjectList.push_back(createStair);
 	// シーンが持つゲームオブジェクト配列に入れる

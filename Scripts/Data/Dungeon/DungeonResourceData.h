@@ -43,7 +43,7 @@ public:
 	/*
 	 *	@brief		リソースデータのリセット
 	 */
-	void ResetResourceData() {
+	void ClearResourceData() {
 		stageResource.clear();
 		stageBoneResource = nullptr;
 		stageFloorResource = nullptr;

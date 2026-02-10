@@ -13,7 +13,7 @@
       "StageData": "Res/Model/Stage/Stage_4/StageModel_4_4.mv1"
     },
     "StageBoneData": "Data/Dungeon/Stage4/Stage4DungeonCreatePos.json",
-    "StageFloorData": "Data/Dungeon/Stage4/Stage4DungeonFloorData.json"
+    "StageFloorData": "Data/Dungeon/Stage4/Stage4EntranceData.json"
   },
   "Character": {
     "PlayerData": "Res/Model/Player/RIPO_Model.mv1",

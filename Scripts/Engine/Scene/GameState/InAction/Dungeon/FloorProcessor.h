@@ -19,6 +19,7 @@ struct ActionContext;
 class FloorProcessor {
 private:
 	std::vector<std::vector<int>> enemyFloorList;	// フロア内の敵IDリスト
+	int dungeonID = -1;								// ダンジョンID
 	int currentFloor = -1;							// 現在のフロア
 	int nextFloor = -1;								// 移動先のフロア
 	int holdTreasureObjectID = -1;					// プレイヤーが所持しているお宝のオブジェクトID
@@ -30,6 +31,7 @@ private:
 	DungeonFloorData floorData;						// ダンジョンフロアデータ
 	DungeonStageData stageData;						// ダンジョンステージデータ
 	DungeonProgressData dungeonProgressData;		// ダンジョン進捗度データ
+	DungeonEntranceData entranceData;				// 階段、出口データ
 
 private:
 	/*
