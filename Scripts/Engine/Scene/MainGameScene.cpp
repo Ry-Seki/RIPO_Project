@@ -61,7 +61,6 @@ void MainGameScene::Initialize(Engine& engine) {
  */
 void MainGameScene::Setup(Engine& engine) {
 	auto& save = SaveDataManager::GetInstance();
-	save.LoadCurrentSlot();
 
 	auto& context = gameState->GetActionContext();
 	save.ApplyLoadData(context);

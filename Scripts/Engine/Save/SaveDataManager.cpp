@@ -28,8 +28,8 @@ void SaveDataManager::Initialize() {
     }
     // 初期スロットはオートセーブにしておく
     SelectSlot(0);
-    // currentSaveDataにロード
-    LoadCurrentSlot();
+    // currentSaveDataの初期化
+    currentSaveData = SaveData{};
 }
 /*
  *	@brief		セーブ処理

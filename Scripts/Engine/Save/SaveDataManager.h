@@ -20,6 +20,9 @@
 // 前方宣言
 struct ActionContext;
 
+/*
+ *	@brief	セーブデータの管理クラス
+ */
 class SaveDataManager : public Singleton<SaveDataManager> {
 	friend class Singleton<SaveDataManager>;
 
