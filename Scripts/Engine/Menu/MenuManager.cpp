@@ -23,7 +23,7 @@ void MenuManager::Update(float unscaledDeltaTime) {
 
 	// メニューの更新(操作以外)
 	for (auto& menu : useMenuList) {
-		if (menu->IsVisible()) menu->AnimUpdate(*engine, unscaledDeltaTime);
+		if (menu->IsVisible() && menu->IsAnimation()) menu->AnimUpdate(*engine, unscaledDeltaTime);
 	}
 }
 /*
