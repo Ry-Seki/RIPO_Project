@@ -219,6 +219,7 @@ void FloorProcessor::EndDungeon() {
 	enemyFloorList.clear();
 	resourceData.ClearResourceData();
 	stageData.ClearDungeonStageMap();
+	dungeonCreater.Teardown();
 	GameObjectUtility::SetUseObjectColliderFlag(false);
 	CharacterUtility::RemoveAllCharacter();
 	StageManager::GetInstance().Execute();

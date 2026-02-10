@@ -13,7 +13,7 @@
       ],
       "Goal": [
         {
-          "name": "Exit",
+          "name": "Goal",
           "position": 0,
           "rotation": 0,
           "AABBmin": 0,
