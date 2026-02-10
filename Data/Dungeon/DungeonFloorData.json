@@ -42,5 +42,69 @@
         "GoalSpawnCount": 1
       }
     ]
+  },
+  "3": {
+    "Floors": [
+      {
+        "FloorID": 0,
+        "EnemySpawnCount": 3,
+        "BossSpawnCount": 0,
+        "TreasureSpawnCount": 1,
+        "StairSpawnCount": 2,
+        "GoalSpawnCount": 1
+      },
+      {
+        "FloorID": 1,
+        "EnemySpawnCount": 0,
+        "BossSpawnCount": 1,
+        "TreasureSpawnCount": 1,
+        "StairSpawnCount": 1,
+        "GoalSpawnCount": 0
+      },
+      {
+        "FloorID": 2,
+        "EnemySpawnCount": 6,
+        "BossSpawnCount": 0,
+        "TreasureSpawnCount": 1,
+        "StairSpawnCount": 1,
+        "GoalSpawnCount": 0
+      }
+    ]
+  },
+  "4": {
+    "Floors": [
+      {
+        "FloorID": 0,
+        "EnemySpawnCount": 2,
+        "BossSpawnCount": 0,
+        "TreasureSpawnCount": 2,
+        "StairSpawnCount": 1,
+        "GoalSpawnCount": 1
+      },
+      {
+        "FloorID": 1,
+        "EnemySpawnCount": 6,
+        "BossSpawnCount": 0,
+        "TreasureSpawnCount": 2,
+        "StairSpawnCount": 2,
+        "GoalSpawnCount": 0
+      },
+      {
+        "FloorID": 2,
+        "EnemySpawnCount": 3,
+        "BossSpawnCount": 0,
+        "TreasureSpawnCount": 1,
+        "StairSpawnCount": 2,
+        "GoalSpawnCount": 0
+      },
+      {
+        "FloorID": 3,
+        "EnemySpawnCount": 0,
+        "BossSpawnCount": 1,
+        "TreasureSpawnCount": 1,
+        "StairSpawnCount": 1,
+        "GoalSpawnCount": 0
+      }
+    ]
   }
 }

@@ -1,6 +1,6 @@
 {
   "Player": {
-    "StartPos": "ColStartPos",
+    "StartPos": "Col_StartPos",
     "GoalPos": "Col_GoalPos",
     "StairsPos": [
       "Col_StairsPos_0",
