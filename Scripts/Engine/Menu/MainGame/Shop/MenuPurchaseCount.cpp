@@ -51,6 +51,8 @@ void MenuPurchaseCount::Initialize(Engine& engine) {
                 SelectButtonExecute(engine, i);
                                     });
         }
+        // 購入ボタン要素数の設定
+        buyButtonIndex = static_cast<int>(MenuPurchaseCount::ButtonType::BuyButton);
         eventSystem.LoadNavigation(navigation->GetData());
     });
 
@@ -66,6 +68,10 @@ void MenuPurchaseCount::Open() {
     for (auto& button : buttonList) {
         button->Setup();
     }
+    // 購入ボタンの制限
+    if (currentMoney <= 0) {
+        buttonList[buyButtonIndex]->SetIsEnable(false);
+    }
     eventSystem.ApplySelection();
     InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
 }
@@ -74,6 +80,14 @@ void MenuPurchaseCount::Open() {
  */
 void MenuPurchaseCount::Update(Engine& engine, float unscaledDeltaTime) {
     auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
+
+    auto& buyButton = buttonList[buyButtonIndex];
+    // 購入数が0の時は購入ボタンの操作可能フラグをfalseにする
+    if (buyButton->IsEnable()) {
+        if(purchaseCount <= 0) buyButton->SetIsEnable(false);
+    }else {
+        if (purchaseCount > 0) buyButton->SetIsEnable(true);
+    }
 
     // イベントシステムの更新
     eventSystem.Update(unscaledDeltaTime);
@@ -112,12 +126,21 @@ void MenuPurchaseCount::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
  *	@brief	描画処理
  */
 void MenuPurchaseCount::Render() {
+    auto screen = GetScreenSize();
+    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 75);
+    DrawBox(0, 0, screen.width, screen.height, GetColor(0, 0, 0), TRUE);
+    SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+    DrawBox(400, 200, 1300, 800, GetColor(0, 0, 0), TRUE);
+
     for (auto& sprite : spriteList) {
         sprite->Render();
     }
     for (auto& button : buttonList) {
         button->Render();
     }
+    DrawFormatString(800, 450, GetColor(255, 255, 255), "%d", purchaseCount);
+    DrawFormatString(800, 750, GetColor(255, 255, 255), "%d", purchaseMoney);
 }
 /*
  *	@brief	メニューを閉じる
@@ -165,6 +188,7 @@ void MenuPurchaseCount::SelectButtonExecute(Engine& engine, int buttonIndex) {
             // 二回閉じる必要があるためここでも閉じる
             menu.CloseTopMenu();
         });
+        menu.OpenMenu<MenuConfirm>();
     }
     else if (buttonIndex == 3) {
         // 自身を閉じる
@@ -191,8 +215,13 @@ void MenuPurchaseCount::AddPurchaseCount() {
     const int price = targetItemData->price;
     if (price <= 0) return;
 
-    // 最大購入数の取得
-    const int maxCount = currentMoney / price;
+    // 最大購入数の取得(TODO : 現在は苦し紛れのアイテム個数だが、武器は違うようにする)
+    int maxCount = 0;
+    if (targetItemData->buyCount) {
+        maxCount = 1;
+    }else {
+       maxCount = currentMoney / price;
+    }
     if (maxCount <= 0) {
         purchaseCount = 0;
         purchaseMoney = 0;
@@ -219,7 +248,13 @@ void MenuPurchaseCount::SubPurchaseCount() {
     if (price <= 0) return;
 
     // 最大購入数の取得
-    const int maxCount = currentMoney / price;
+    int maxCount = 0;
+    if (targetItemData->buyCount) {
+        maxCount = 1;
+    }else {
+        maxCount = currentMoney / price;
+    }
+
     if (maxCount <= 0) {
         purchaseCount = 0;
         purchaseMoney = 0;

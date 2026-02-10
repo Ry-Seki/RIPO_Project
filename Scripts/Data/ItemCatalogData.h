@@ -18,7 +18,8 @@ struct ItemData {
 	int itenID = -1;
 	int category = -1;		// アイテムのカテゴリー
 	std::string name = "";	// アイテムの名前
-	int price = 0;			// アイテムの値段
+	int price = -1;			// アイテムの値段
+	bool buyCount = false;	// 購入上限
 };
 
 /*
@@ -54,7 +55,7 @@ public:
 				data->category = categoryID;
 				data->name = itemEntry.value()["Name"].get<std::string>();
 				data->price = itemEntry.value()["Price"].get<int>();
-
+				data->buyCount = itemEntry.value()["BuyCount"].get<bool>();
 				itemDataMap[itemID] = data;
 			}
 		}

@@ -64,11 +64,15 @@ void MenuSelectShopItem::Open() {
     auto& money = MoneyManager::GetInstance();
     // アイテムデータの設定
     currentMoney = money.GetCurrentMoney();
-    for (auto& button : buttonList) {
-        button->Setup();
-    }
-    eventSystem.ApplySelection();
-    InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+    catalogData = money.GetItemCatalogData();
+    FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
+    FadeManager::GetInstance().StartFade(fadeIn, [this]() {
+        for (auto& button : buttonList) {
+            button->Setup();
+        }
+        eventSystem.ApplySelection();
+        InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+    });
 }
 /*
  *	@brief	更新処理
@@ -143,8 +147,9 @@ void MenuSelectShopItem::Resume() {
  *	@param[in]	int buttonIndex
  */
 void MenuSelectShopItem::SelectButtonExecute(Engine& engine, int buttonIndex) {
+    int itemID = buttonIndex;
     auto& menu = MenuManager::GetInstance();
-    if (buttonIndex == buttonList.size() - 1) {
+    if (itemID == buttonList.size() - 1) {
         auto confirm = menu.GetMenu<MenuConfirm>();
         confirm->SetCallback([this, &menu, confirm](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
@@ -157,10 +162,11 @@ void MenuSelectShopItem::SelectButtonExecute(Engine& engine, int buttonIndex) {
                 menu.CloseMenu(confirm);
             }
         });
+        menu.OpenMenu<MenuConfirm>();
     } else {
         auto purchase = menu.GetMenu<MenuPurchaseCount>();
         ItemData* item;
-        if (bool isGetItem = catalogData.TryGetItem(buttonIndex, item)) {
+        if (bool isGetItem = catalogData.TryGetItem(itemID, item)) {
             purchase->SetItemData(item);
         }
         menu.OpenMenu<MenuPurchaseCount>();

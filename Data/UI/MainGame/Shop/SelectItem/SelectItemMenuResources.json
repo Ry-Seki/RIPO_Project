@@ -1,9 +1,4 @@
 {
-  "BackGround": {
-    "Resources": [
-
-    ]
-  },
   "Buttons": [
     {
       "Name": "HPUpGrade",
@@ -55,6 +50,7 @@
     },
     {
       "Name": "SubmachineGun",
+      "Type": "Single",
       "Rect": {
         "X": 1000,
         "Y": 650,

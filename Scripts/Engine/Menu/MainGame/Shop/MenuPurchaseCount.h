@@ -25,19 +25,30 @@ struct ItemData;
  */
 class MenuPurchaseCount : public MenuBase {
 private:
+	enum class ButtonType {
+		Invalid = -1,
+		AddButton,
+		SubButton,
+		BuyButton,
+		CancelButton,
+		Max
+	};
+
+private:
+	int buyButtonIndex = -1;
 	int purchaseCount = 0;
 	int currentMoney = -1;
 	int purchaseMoney = -1;
 	int animFrame = 0;
 	float animTimer = 0.0f;
-	ItemData* targetItemData;
+	ItemData* targetItemData = nullptr;
 	EventSystem eventSystem;
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 	std::function<void(int, int)> Callback = nullptr;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/Purchase/Purchase/MenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Shop/Purchase/PurchaseMenuNavigation.json";
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/PurchaseCount/PurchaseMenuResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Shop/PurchaseCount/PurchaseMenuNavigation.json";
 
 public:
 	/*
