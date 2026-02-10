@@ -7,6 +7,11 @@
 #define _MENU_GAME_MODE_SELECT_H_
 
 #include "../MenuBase.h"
+#include "../../UI/Button/UIButtonBase.h"
+#include "../../UI/Sprite/Sprite.h"
+#include "../../UI/EventSystem.h"
+#include "../../GameEnum.h"
+#include "../../GameConst.h"
 
 // 前方宣言
 class Engine;
@@ -15,6 +20,16 @@ class Engine;
  *	@brief	ゲームモードを選択するメニュー
  */
 class MenuGameModeSelect : public MenuBase {
+	int currentSlot = -1;
+	float animTimer = 0.0f;
+	int animFrame = 0;
+	EventSystem eventSystem;
+
+	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
+	std::vector<std::shared_ptr<Sprite>> spriteList;
+
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Title/StartGame/TitleResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/StartGame/TitleNavigation.json";
 
 public:
 	/*
@@ -36,6 +51,10 @@ public:
 	 */
 	void Update(Engine& engine, float unscaledDeltaTime) override;
 	/*
+	 *	@brief	アニメーション等の更新
+	 */
+	void AnimUpdate(Engine& engine, float unscaledDeltaTime) override;
+	/*
 	 *	@brief	描画処理
 	 */
 	void Render() override;
@@ -47,6 +66,14 @@ public:
 	 *	@brief	メニューを再開
 	 */
 	void Resume() override;
+
+private:
+	/*
+	 *	@brief		ボタンの押された時の処理
+	 *	@param[in]	int buttonIndex
+	 */
+	void SelectButtonExecute(Engine& engine, int buttonIndex);
+
 };
 
 #endif // !_MENU_GAME_MODE_SELECT_H_

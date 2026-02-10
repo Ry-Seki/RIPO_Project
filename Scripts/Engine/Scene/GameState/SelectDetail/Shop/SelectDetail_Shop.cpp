@@ -34,13 +34,7 @@ void SelectDetail_Shop::Initialize() {
  *	@brief	€”õ‘Oˆ—
  */
 void SelectDetail_Shop::Setup() {
-	isStart = false;
-	inputHandle = false;
-	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fade, [this]() {
-		isStart = true;
-		MenuManager::GetInstance().OpenMenu<MenuSelectShopItem>();
-	});
+	MenuManager::GetInstance().OpenMenu<MenuSelectShopItem>();
 }
 /*
  *	@brief	XVˆ—
