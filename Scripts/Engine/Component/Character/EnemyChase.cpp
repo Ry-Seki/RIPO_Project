@@ -63,18 +63,18 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime) {
 	animator->SetModelHandle(modelRenderer);
 
 	// 目標判定
-	if (player && Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, viewAngle, viewDirection)) {
-		// 視野角を360度にする
-		viewAngle = 180;
-		// 判定距離を伸ばす
-		viewDirection = 3500;
-		// 足を早くする
-		moveSpeed = 1000;
-		// アニメーションを再生
-		animator->Play(4, 50);
-		ChaseWayPoint(enemy, player->position, true, deltaTime);
+	if (!player) return;
+	// 被ダメ判定
+	if (enemyComponent->GetHitFlag()) {
+		SetTargetPlayer(enemy, deltaTime);
 	}
-	else {
+	bool vision = Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, viewAngle, viewDirection);
+	// 視界判定
+	if (vision) {
+		enemyComponent->SetHitFlag(false);
+		SetTargetPlayer(enemy, deltaTime);
+	}
+	else if (!vision && !enemyComponent->GetHitFlag()) {
 		// アニメーションを再生
 		animator->Play(7, 20);
 		// WayPointを取得
@@ -162,4 +162,16 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 			enemyComponent->SetState(new EnemyStandby());
 		}
 	}
+}
+
+void EnemyChase::SetTargetPlayer(GameObject* enemy, float deltaTime) {
+	// 視野角を360度にする
+	viewAngle = 180;
+	// 判定距離を伸ばす
+	viewDirection = 3500;
+	// 足を早くする
+	moveSpeed = 1000;
+	// アニメーションを再生
+	animator->Play(4, 50);
+	ChaseWayPoint(enemy, player->position, true, deltaTime);
 }

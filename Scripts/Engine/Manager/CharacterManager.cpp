@@ -12,6 +12,7 @@
 #include "../Component/CapsuleCollider.h"
 #include "../Component/AnimatorComponent.h"
 #include "../Component/Character/HPBarComponent.h"
+#include "../Component/Character/BossHPBarComponentr.h"
 
 CharacterManager::CharacterManager()
 	: engine(nullptr) {
@@ -130,6 +131,8 @@ GameObjectPtr CharacterManager::GenerateBoss(
 	GameObjectPtr boss = CreateCharacter<BossComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	// アニメーターコンポーネント追加
 	boss->AddComponent<AnimatorComponent>();
+	// ボスのHPバーコンポーネント追加
+	boss->AddComponent<BossHPBarComponent>();
 	// AABBコライダーコンポーネント追加
 	AABBColliderPtr aabbCollider = boss->AddComponent<AABBCollider>();
 	aabbCollider->aabb = { AABBMin, AABBMax };

@@ -147,7 +147,6 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 	if (!attackIsTriger && other->GetOwner()->name == "Player") {
 		// 当たったらダメージを与える
 		auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
-		// 今はとりあえず適当なダメージ
 		playerStatus.HP = playerStatus.HP - status.attack;
 		// ダメージを反映
 		player->GetComponent<PlayerComponent>()->SetPlayerStatus(playerStatus);
@@ -171,6 +170,7 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 		// 死ななかった場合
 		else {
 			firstAttackFlag = true;
+			hitFlag = true;
 		}
 	}
 	coolTime = 2;

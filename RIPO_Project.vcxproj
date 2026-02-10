@@ -165,6 +165,7 @@
     <ClCompile Include="Scripts\Engine\Component\Character\BossChase.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BossComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BossDeath.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\BossHPBarComponentr.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BossStandby.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BulletComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyAttack.cpp" />
@@ -318,6 +319,7 @@
     <ClInclude Include="Scripts\Engine\Component\Character\BossChase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossDeath.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BossHPBarComponentr.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossStandby.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossState.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BulletComponent.h" />

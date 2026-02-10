@@ -1,34 +1,34 @@
 /*
- *	@file	HPBarComponent.h
- *	@author	kuu
+ *	@file	BossHPBarComponent
+ *  @author	kuu
  */
-#ifndef _HPBARCOMPONENT_H_
-#define _HPBARCOMPONENT_H_
+#ifndef _BOSSHPBARCOMPONENT_H_
+#define _BOSSHPBARCOMPONENT_H_
 
 #include "../Component.h"
 #include "../../Engine.h"
 #include "../../Manager/CameraManager.h"
 
-class HPBarComponent : public Component {
+class BossHPBarComponent : public Component {
 private:
 	GameObjectPtr player;
 	GameObjectPtr camera;
-	GameObject* enemy;
+	GameObject* boss;
 	// 最大HP
 	int maxHP;
 	// 実際のHP
 	float currentHP;
 	// 遅れてくるHP
 	float displayHP;
-	
-	const float HALF_VALUE;
+
+	const float halfValue;
 
 public:
 	/*
 	 *	コンストラクタ
 	 */
-	HPBarComponent();
-	~HPBarComponent() = default;
+	BossHPBarComponent();
+	~BossHPBarComponent() = default;
 
 public:
 	/*
@@ -50,6 +50,4 @@ public:
 
 };
 
-
-
-#endif // !_HPBARCOMPONENT_H_
+#endif // !_BOSSHPBARCOMPONENT_H_
