@@ -7,16 +7,16 @@
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": 0,
-          "AABBmax": 0
+          "AABBmin": [ -500, -500, -10 ],
+          "AABBmax": [ 500, 800, 10 ]
         },
         {
           "MoveID": 2,
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": 0,
-          "AABBmax": 0
+          "AABBmin": [ -500, -500, -10 ],
+          "AABBmax": [ 500, 800, 10 ]
         }
       ],
       "Goal": [
@@ -24,8 +24,8 @@
           "name": "Goal",
           "position": 0,
           "rotation": 0,
-          "AABBmin": 0,
-          "AABBmax": 0
+          "AABBmin": [ -313, -500, -389 ],
+          "AABBmax": [ 313, 800, 389 ]
         }
       ]
     },
@@ -36,8 +36,8 @@
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": 0,
-          "AABBmax": 0
+          "AABBmin": [ -500, -500, -10 ],
+          "AABBmax": [ 500, 800, 10 ]
         }
       ]
     },
@@ -48,8 +48,8 @@
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": 0,
-          "AABBmax": 0
+          "AABBmin": [ -500, -500, -10 ],
+          "AABBmax": [ 500, 800, 10 ]
         }
       ]
     }
