@@ -19,6 +19,7 @@ class WeaponManager : public Singleton<WeaponManager> {
 private:
 	WeaponBasePtr currentWeapon;									// 現在設定されている武器
 	std::unordered_map<GameEnum::Weapon, WeaponBasePtr> weapons;	// 設定可能な武器達
+	bool submachineGun;												// サブマシンガン解放フラグ
 
 private:
 	WeaponManager() = default;
@@ -45,6 +46,11 @@ public:
 	 *　使用中武器の番号取得
 	 */
 	GameEnum::Weapon GetCurrentWeaponNum();
+
+	/*
+	 *	サブマシンガン解放
+	 */
+	void UnlockSubmachineGun();
 };
 
 #endif // !_WEAPONMANAGAER_H_
