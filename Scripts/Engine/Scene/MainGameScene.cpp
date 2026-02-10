@@ -17,7 +17,7 @@
 #include "../Menu/MenuManager.h"
 #include "../Menu/MainGame/MenuInGame.h"
 #include "../Manager/EffectManager.h" 
-#include "../../../../Manager/WeaponManager.h"
+#include "../Manager/WeaponManager.h"
 #include "../../Data/WeaponDataManager.h"
 #include "../Component/Character/HPBarComponent.h"
 #include "../UI/PlayerUI/PlayerUI.h"
