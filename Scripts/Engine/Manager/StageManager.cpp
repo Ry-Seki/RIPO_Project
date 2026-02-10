@@ -201,38 +201,80 @@ std::vector<Vector3> StageManager::GetGoalPos() const {
  *	敵の初期生成位置の取得
  */
 std::unordered_map<int, Vector3> StageManager::GetEnemySpwanPos() const {
-	// 空の配列を作成
+	// 敵IDと生成位置を保持する連想配列
 	std::unordered_map<int, Vector3> enemySpawnPosition;
 
+	// ステージ未ロードなら空で返す
 	if (!loadedStage) return enemySpawnPosition;
 
-	// ステージのモデルハンドルを取得
-	const int modelHandle = loadedStage->GetStageModelHandle();
+	// ステージモデルのハンドル取得
+	int modelHandle = loadedStage->GetStageModelHandle();
 	if (modelHandle == -1) return enemySpawnPosition;
 
-	// JSONの中を検索
-	if (!json.contains(GameConst::_CREATE_POSNAME_ENEMY)) return enemySpawnPosition;
-	if (!json[GameConst::_CREATE_POSNAME_ENEMY].contains("SpawnPos")) return enemySpawnPosition;
+	// EnemyのSpawnPosが存在しなければ空で返す
+	if (!json.contains(GameConst::_CREATE_POSNAME_ENEMY) ||
+		!json[GameConst::_CREATE_POSNAME_ENEMY].contains("SpawnPos")) {
+		return enemySpawnPosition;
+	}
 
-	// 敵の生成位置
-	const auto& spawnObj = json[GameConst::_CREATE_POSNAME_ENEMY]["SpawnPos"];
+	const auto& spawnRoot = json[GameConst::_CREATE_POSNAME_ENEMY]["SpawnPos"];
 
-	// 敵の生成位置のフレームを検索
-	for (auto it = spawnObj.begin(); it != spawnObj.end(); ++it) {
-		// 敵のIDをint型に変換して取得
-		int enemyID = std::stoi(it.key());
-		// フレーム名を取得
-		const std::string frameName = it.value().get<std::string>();
+	if (spawnRoot.is_object()) {
 
-		// モデルにフレーム名があるか検索
-		int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
-		if (frameIndex == -1) continue;
+		// 中身がすべて string の場合は旧形式として扱う
+		bool isOldFormat = true;
+		for (auto it = spawnRoot.begin(); it != spawnRoot.end(); ++it) {
+			if (!it.value().is_string()) {
+				isOldFormat = false;
+				break;
+			}
+		}
 
-		// フレームのワールド座標を取得
-		VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
+		if (isOldFormat) {
+			for (auto it = spawnRoot.begin(); it != spawnRoot.end(); ++it) {
 
-		// Vector3に変換して配列に追加
-		enemySpawnPosition.emplace(enemyID, FromVECTOR(framePos));
+				// 敵IDを取得
+				int enemyID = std::stoi(it.key());
+				const std::string frameName = it.value().get<std::string>();
+
+				// フレーム検索
+				int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
+				if (frameIndex == -1) continue;
+
+				// 座標取得
+				VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
+
+				// 連想配列に追加
+				enemySpawnPosition.emplace(enemyID, FromVECTOR(framePos));
+			}
+
+			return enemySpawnPosition;
+		}
+	}
+
+	for (auto stageIt = spawnRoot.begin(); stageIt != spawnRoot.end(); ++stageIt) {
+
+		const auto& enemyObj = stageIt.value();
+		if (!enemyObj.is_object()) continue;
+
+		for (auto enemyIt = enemyObj.begin(); enemyIt != enemyObj.end(); ++enemyIt) {
+
+			// 敵IDを取得
+			int enemyID = std::stoi(enemyIt.key());
+			if (!enemyIt.value().is_string()) continue;
+
+			const std::string frameName = enemyIt.value().get<std::string>();
+
+			// フレーム検索
+			int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
+			if (frameIndex == -1) continue;
+
+			// 座標取得
+			VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
+
+			// 連想配列に追加
+			enemySpawnPosition.emplace(enemyID, FromVECTOR(framePos));
+		}
 	}
 
 	return enemySpawnPosition;
