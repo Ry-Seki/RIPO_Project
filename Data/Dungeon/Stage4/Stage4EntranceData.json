@@ -1,0 +1,98 @@
+{
+  "Floor": [
+    {
+      "Stair": [
+        {
+          "MoveID": 1,
+          "name": "Stair",
+          "position": 0,
+          "rotation": 0,
+          "AABBmin": 0,
+          "AABBmax": 0
+        }
+      ],
+      "Goal": [
+        {
+          "name": "Exit",
+          "position": 0,
+          "rotation": 0,
+          "AABBmin": 0,
+          "AABBmax": 0
+        }
+      ]
+    },
+    {
+      "Stair": [
+        {
+          "MoveID": 0,
+          "name": "Stair",
+          "position": 0,
+          "rotation": 0,
+          "AABBmin": 0,
+          "AABBmax": 0
+        },
+        {
+          "MoveID": 2,
+          "name": "Stair",
+          "position": 0,
+          "rotation": 0,
+          "AABBmin": 0,
+          "AABBmax": 0
+        }
+      ]
+    },
+    {
+      "Stair": [
+        {
+          "MoveID": 1,
+          "name": "Stair",
+          "position": 0,
+          "rotation": 0,
+          "AABBmin": 0,
+          "AABBmax": 0
+        },
+        {
+          "MoveID": 3,
+          "name": "Stair",
+          "position": 0,
+          "rotation": 0,
+          "AABBmin": 0,
+          "AABBmax": 0
+        }
+      ]
+    },
+    {
+      "Stair": [
+        {
+          "MoveID": 2,
+          "name": "Stair",
+          "position": 0,
+          "rotation": 0,
+          "AABBmin": 0,
+          "AABBmax": 0
+        },
+        {
+          "MoveID": 4,
+          "name": "Stair",
+          "position": 0,
+          "rotation": 0,
+          "AABBmin": 0,
+          "AABBmax": 0
+
+        }
+      ]
+    },
+    {
+      "Stair": [
+        {
+          "MoveID": 3,
+          "name": "Stair",
+          "position": 0,
+          "rotation": 0,
+          "AABBmin": 0,
+          "AABBmax": 0
+        }
+      ]
+    }
+  ]
+}
