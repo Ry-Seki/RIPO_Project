@@ -8,10 +8,12 @@
 
 #include "../../Engine/JSON.h"
 #include "../../Engine/VecMath.h"
+#include "../../Engine/GameConst.h"
 
 #include <unordered_map>
 #include <vector>
 #include <string>
+
  /*
   *	@brief	出口、階段データ
   */
@@ -26,7 +28,7 @@ struct EntranceData {
 
 class DungeonEntranceData {
 private:
-	std::unordered_map<int, EntranceData> dungeonEntranceMap;
+	std::unordered_map<int, std::vector<EntranceData>> dungeonEntranceMap;
 
 public:
 	/*
@@ -40,6 +42,12 @@ public:
 
 public:
 	/*
+	 *	@brief		データのリセット処理
+	 */
+	void ClearEntranceData() {
+		dungeonEntranceMap.clear();
+	}
+	/*
 	 *  @brief      JSONデータの読み込み、mapに自動で登録する
 	 *  @param[in]  const JSON& setJSON     読み込むJSONデータ
 	 */
@@ -52,12 +60,14 @@ public:
 
 		// Floorごとに処理
 		for (size_t floorIndex = 0; floorIndex < floors.size(); ++floorIndex) {
-			LoadEntranceArray(floors[floorIndex], "Stair");		// 階段
-			LoadEntranceArray(floors[floorIndex], "Goal");		// 出口ｗ
+			LoadEntranceArray(floorIndex, floors[floorIndex], GameConst::_CREATE_POSNAME_STAIR);	// 階段
+			LoadEntranceArray(floorIndex, floors[floorIndex], GameConst::_CREATE_POSNAME_GOAL);		// 出口
 		}
 	}
-
-	void LoadEntranceArray(const JSON& floorJson, const std::string& key) {
+	/*
+	 *	@brief
+	 */
+	void LoadEntranceArray(int floorID, const JSON& floorJson, const std::string& key) {
 		if (!floorJson.contains(key) || !floorJson[key].is_array()) {
 			return;
 		}
@@ -100,9 +110,22 @@ public:
 				data.AABBmax.y = entranceArray[i]["AABBmax"][1];
 				data.AABBmax.z = entranceArray[i]["AABBmax"][2];
 			}
+			dungeonEntranceMap[floorID].push_back(data);
 		}
 	}
+	/*
+	 *	@brief		フロアID指定の出口、階段データの取得
+	 *	@param[in]	int floorID
+	 *	@param[out]	std::vector<EntranceData>& data
+	 *	@return		bool
+	 */
+	bool TryGetEntranceData(int floorID, std::vector<EntranceData>& data) {
+		auto itr = dungeonEntranceMap.find(floorID);
+		if (itr == dungeonEntranceMap.end()) return false;
 
+		data = itr->second;
+		return true;
+	}
 };
 
 #endif // !_DUNGEONENTRANCEDATA_H_

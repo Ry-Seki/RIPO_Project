@@ -98,7 +98,8 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 	const Vector3& AABBMax,
 	const Vector3& capsuleStart,
 	const Vector3& capsuleEnd,
-	const float& capsuleRadius) {
+	const float& capsuleRadius,
+	int enemyID) {
 	// 敵のベース作成
 	GameObjectPtr enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	// アニメーターコンポーネント追加
@@ -110,6 +111,10 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 	aabbCollider->aabb = { AABBMin, AABBMax };
 	// シーンが持つゲームオブジェクト配列に追加
 	engine->AddGameObject(enemy);
+	auto component = enemy->GetComponent<EnemyComponent>();
+	if (component) {
+
+	}
 	// 生成キャラクターリストに追加
 	createCharacterList.push_back(enemy);
 	return enemy;
@@ -126,7 +131,8 @@ GameObjectPtr CharacterManager::GenerateBoss(
 	const Vector3& AABBMax,
 	const Vector3& capsuleStart,
 	const Vector3& capsuleEnd,
-	const float& capsuleRadius) {
+	const float& capsuleRadius,
+	const int bossID) {
 	// ボスのベース作成
 	GameObjectPtr boss = CreateCharacter<BossComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	// アニメーターコンポーネント追加
@@ -140,6 +146,12 @@ GameObjectPtr CharacterManager::GenerateBoss(
 	engine->AddGameObject(boss);
 	// 生成キャラクターリストに追加
 	createCharacterList.push_back(boss);
+	auto component = boss->GetComponent<BossComponent>();
+	if (component) {
+		// IDによって挙動を変える
+		// component->SetBossID(setBossID);
+		// component->Change~();
+	}
 	return boss;
 }
 

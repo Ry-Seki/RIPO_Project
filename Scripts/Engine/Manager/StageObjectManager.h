@@ -12,6 +12,8 @@
 #include "../Stage/StageObject/ExitPoint.h"
 #include "../Stage/StageObject/Stair.h"
 
+#include <vector>
+
  /*
   *	ステージオブジェクトの管理クラス
   */
@@ -20,9 +22,10 @@ class StageObjectManager : public Singleton<StageObjectManager> {
 	friend class Singleton<StageObjectManager>;
 
 private:
+	int moveStairID = -1;
 	Engine* engine = nullptr;
 	ExitPoint* exitPoint = nullptr;
-	Stair* stair = nullptr;
+	std::vector<Stair*> stairList;
 
 	GameObjectList createStageObjectList;
 
@@ -139,6 +142,20 @@ public:
 	 */
 	inline GameObjectList& GetCreateObjectList() { return createStageObjectList; }
 	/*
+	 *	@brief		移動先フロアIDの取得
+	 *	@return		int
+	 *	@author		Seki
+	 */
+	inline int GetMoveStairID() const { return moveStairID; }
+	/*
+	 *	@brief		移動先フロアIDの変更
+	 *	@param[in]	int setID
+	 *	@author		Seki
+	 */
+	inline void SetMoveStairID(int setID) {
+		moveStairID = setID;
+	}
+	/*
 	 *	脱出フラグの取得
 	 *  @retrn bool
 	 */
@@ -153,19 +170,23 @@ public:
 	 *  @author oorui
 	 */
 	inline bool GetStairMove() const {
-		if (!stair)return false;
-		return stair->GetStairMove();
+		for (int i = 0, max = stairList.size(); i < max; i++) {
+			if (stairList[i]->GetStairMove()) return true;
+		}
+		return false;
 	}
 
 	/*
 	 *	当たり判定フラグをすべて初期化する
 	 */
 	void ResetFlag() {
-		if(stair) stair->SetStairMove(false);
+		for (int i = 0, max = stairList.size(); i < max; i++) {
+			stairList[i]->SetStairMove(false);
+		}
 		if(exitPoint) exitPoint->SetExitTrigger(false);
 	}
 	void ClearObject() {
-		stair = nullptr;
+		stairList.clear();
 		exitPoint = nullptr;
 	}
 

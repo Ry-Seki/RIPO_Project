@@ -70,6 +70,8 @@ public:
 	static constexpr const char* _CREATE_POSNAME_PLAYER = "Player";					// プレイヤーの生成位置の名前
 	static constexpr const char* _CREATE_POSNAME_TREASURE = "Treasure";				// お宝の生成位置の名前
 	static constexpr const char* _CREATE_POSNAME_EVENT_TREASURE = "EventTreasure";	// イベントお宝の生成位置の名前
+	static constexpr const char* _CREATE_POSNAME_STAIR = "Stair";					// 階段の生成位置の名前
+	static constexpr const char* _CREATE_POSNAME_GOAL = "Goal";						// 出口の生成位置の名前
 	static constexpr const char* _CREATE_POSNAME_LIGHT = "PointLight";				// ポイントライトの生成位置の名前
 	static constexpr const char* _CREATE_POSITION_SPAWN = "SpawnPos";				// スポーンポジションの名前
 
