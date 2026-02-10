@@ -10,7 +10,6 @@
 #include "../../../../Manager/BulletManager.h"
 #include "../../../../Manager/CameraManager.h"
 #include "../../../../Manager/CharacterManager.h"
-#include "../../../../Manager/WeaponManager.h"
 #include "../../../../Manager/StageManager.h"
 #include "../../../../Manager/StageObjectManager.h"
 #include "../../../../Menu/MenuManager.h"
@@ -29,7 +28,6 @@ void InAction_Dungeon::Initialize(Engine& engine) {
 	GameObjectManager::GetInstance().Initialize(engine);
 	CameraManager::GetInstance().Initialize(engine);
 	CharacterManager::GetInstance().Initialize(engine);
-	WeaponManager::GetInstance().Initialize();
 	StageManager::GetInstance().Initialize(engine);
 	StageObjectManager::GetInstance().Initialize(engine);
 	BulletManager::GetInstance().Initialize(engine);
