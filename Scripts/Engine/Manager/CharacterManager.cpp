@@ -113,7 +113,7 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 	engine->AddGameObject(enemy);
 	auto component = enemy->GetComponent<EnemyComponent>();
 	if (component) {
-
+		component->SetEnemyID(enemyID);
 	}
 	// 生成キャラクターリストに追加
 	createCharacterList.push_back(enemy);
@@ -149,7 +149,7 @@ GameObjectPtr CharacterManager::GenerateBoss(
 	auto component = boss->GetComponent<BossComponent>();
 	if (component) {
 		// IDによって挙動を変える
-		// component->SetBossID(setBossID);
+		component->SetBossID(bossID);
 		// component->Change~();
 	}
 	return boss;

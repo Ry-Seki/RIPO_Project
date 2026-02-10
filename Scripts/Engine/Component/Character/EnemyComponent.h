@@ -55,8 +55,10 @@ private:
 	int enemySpawnID = 0;
 	// 仮モデルハンドル
 	int modelHandle;
-	// エネミーのHP
+	// 敵のHP
 	int HP;
+	// 敵のID
+	int ID = -1;
 	// 疑似クールタイム(苦肉の策)
 	float coolTime;
 
@@ -216,11 +218,19 @@ public:
 	inline int GetEnemyMaxHP() const { return status.HP; }
 
 	/*
+	 *	IDデータの取得
+	 */
+	inline int GetEnemyDataID() const { return status.ID; }
+
+	/*
 	 *	IDの取得
 	 */
-	inline int GetEnemyID() const { return status.ID; }
+	inline bool GetEnemyID() const { return ID; }
 
-
+	/*
+	 *	IDの変更
+	 */
+	inline void SetEnemyID(bool setValue) { ID = setValue; }
 
 	/*
 	 *	スポーンIDの取得

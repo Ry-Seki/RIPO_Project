@@ -22,6 +22,8 @@ private:
 	int modelHandle;
 	// ボスのHP
 	int HP;
+	// ボスのID
+	int ID = -1;
 	// クールタイム
 	float coolTime;
 	// 攻撃衝突判定フラグ
@@ -136,6 +138,16 @@ public:
 	 *	被ダメフラグの変更
 	 */
 	inline void SetHitFlag(bool setValue) { hitFlag = setValue; }
+
+	/*
+	 *	IDの取得
+	 */
+	inline bool GetBossID() const { return ID; }
+
+	/*
+	 *	IDの変更
+	 */
+	inline void SetBossID(bool setValue) { ID = setValue; }
 };
 
 #endif // !_BOSSCOMPONENT_H_

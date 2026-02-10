@@ -58,7 +58,7 @@ void EnemyStandby::Update(GameObject* enemy, float deltaTime)
 	animator->Play(3, 30);
 
 	// ó‹µ‚É‰‚¶‚½ó‘Ô•ªŠò
-	if (enemyComponent->GetEnemyID() > 0) {
+	if (enemyComponent->GetEnemyDataID() > 0) {
 		// ƒ‰ƒ“ƒ_ƒ€‘Ò‹@
 		elapsedTime += deltaTime;
 		if (elapsedTime > randStandby) {
