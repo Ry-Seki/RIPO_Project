@@ -8,6 +8,7 @@
 #include "PlayerComponent.h"
 #include "../../Manager/CameraManager.h"
 #include "BossDeath.h"
+#include "BossChase.h"
 #include "BulletComponent.h"
 
 /*
@@ -103,7 +104,7 @@ void BossComponent::OnCollision(const std::shared_ptr<Component>& self, const st
 		if (HP <= 0) {
 			HP = 0;
 		}
-	// Ž€–S”»’è
+		// Ž€–S”»’è
 		if (HP <= 0 && state != nullptr) {
 			damageIsTriger = true;
 			state = new BossDeath();
@@ -111,6 +112,8 @@ void BossComponent::OnCollision(const std::shared_ptr<Component>& self, const st
 		}
 		// Ž€‚È‚È‚©‚Á‚½ê‡
 		else {
+			state = new BossChase();
+			state->Start(boss);
 			hitFlag = true;
 		}
 	}
