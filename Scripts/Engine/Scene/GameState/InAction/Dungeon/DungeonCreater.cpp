@@ -27,8 +27,16 @@ void DungeonCreater::Initialize() {
  *	@brief		準備前処理
  */
 void DungeonCreater::Setup() {
+}
+/*
+ *	@brief		片付け処理
+ */
+void DungeonCreater::Teardown() {
+	EntranceData init{};
 	dungeonID = -1;
+	goalData = init;
 	entranceDataList.clear();
+	stairDataList.clear();
 	dungeonResourceData.ClearResourceData();
 	dungeonEntranceData.ClearEntranceData();
 }
@@ -223,6 +231,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
  */
 void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enemySpawnIDList, const int holdTreasureID,
 	const std::vector<std::vector<int>>& treasureIDList) {
+	entranceDataList.clear();
 	// エントランスデータの取得
 	dungeonEntranceData.TryGetEntranceData(floorID, entranceDataList);
 	// 階段、出口データの分離処理
@@ -402,7 +411,9 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
  *	@brief	階段、出口のデータの設定
  */
 void DungeonCreater::SeparateEntranceData() {
-	for (const auto data : entranceDataList) {
+	stairDataList.clear();
+	// 階段、出口のデータ分離
+	for (const auto& data : entranceDataList) {
 		if (data.name == GameConst::_CREATE_POSNAME_STAIR) {
 			stairDataList.push_back(data);
 		}else if(data.name == GameConst::_CREATE_POSNAME_GOAL){
