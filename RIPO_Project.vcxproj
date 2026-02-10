@@ -285,6 +285,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Data\Dungeon\DungeonData.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonEntranceData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonFloorData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonProgressData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonResourceData.h" />
