@@ -41,6 +41,18 @@ public:
 
 public:
 	/*
+	 *	@brief		リソースデータのリセット
+	 */
+	void ResetResourceData() {
+		stageResource.clear();
+		stageBoneResource = nullptr;
+		stageFloorResource = nullptr;
+		playerResource = nullptr;
+		enemyResource.clear();
+		bossResource = nullptr;
+		treasureResource.clear();
+	}
+	/*
 	 *  @brief      ステージデータからからリソースデータを読み込む
 	 *  @param[in]  DungeonStageData& stageData
 	 *  @param[in]  bool isBossDefeated

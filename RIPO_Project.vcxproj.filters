@@ -346,6 +346,12 @@
     <Filter Include="ヘッダー ファイル\Data\Result">
       <UniqueIdentifier>{efa82e4e-4707-44a5-bbc6-bd1d5bb83c85}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Menu\MainGame\Shop">
+      <UniqueIdentifier>{2b5929a6-6f6a-4bcf-911e-96876d325ecf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Menu\MainGame\Shop">
+      <UniqueIdentifier>{d9bc6d9e-c0bb-48c1-bbb3-0575ca52f52a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -747,8 +753,11 @@
     <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\BossHPBarComponentr.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.cpp">
+      <Filter>ソース ファイル\Engine\Menu\MainGame\Shop</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.cpp">
+      <Filter>ソース ファイル\Engine\Menu\MainGame\Shop</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1340,8 +1349,11 @@
     <ClInclude Include="Scripts\Engine\UI\Sprite\SpriteFactory.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\BossHPBarComponentr.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Shop</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Shop</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

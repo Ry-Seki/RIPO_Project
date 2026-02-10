@@ -1,0 +1,15 @@
+{
+  "Floor": [
+    {
+      "Goal": [
+        {
+          "name": "Exit",
+          "position": 0,
+          "rotation": 0,
+          "AABBmin": 0,
+          "AABBmax": 0
+        }
+      ]
+    }
+  ]
+}

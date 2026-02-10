@@ -144,6 +144,7 @@ void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
             auto confirm = menu.GetMenu<MenuConfirm>();
             confirm->SetCallback([&engine, &menu](GameEnum::ConfirmResult result) {
                 if (result == GameEnum::ConfirmResult::Yes) {
+                    menu.CloseAllMenu();
                     engine.SetNextScene(std::make_shared<TitleScene>());
                 }else {
                     menu.CloseTopMenu();
