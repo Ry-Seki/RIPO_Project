@@ -7,8 +7,8 @@
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": [ -500, -500, -10 ],
-          "AABBmax": [ 500, 800, 10 ]
+          "AABBmin": [ -1000, -500, -100 ],
+          "AABBmax": [ 100, 800, 100 ]
         },
         {
           "MoveID": 2,
