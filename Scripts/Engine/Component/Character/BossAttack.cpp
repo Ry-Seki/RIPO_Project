@@ -40,30 +40,52 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
 
-	animator->Update(deltaTime);
-	animator->Play(3, 10);
+	if (boss->GetComponent<BossComponent>()->GetBossID() == 104) {
+		animator->Play(2, 1350 * deltaTime);
 
-	// 攻撃の当たり判定
-	auto aabbCollider = boss->GetComponent<AABBCollider>();
-	Vector3 aabbDirection = { 0, 0, 0 };
-	const Vector3 aabbMin = { -500, 0, -500 };
-	const Vector3 aabbMax = { 500, 50, 500 };
-	
-	
+		// 攻撃の当たり判定
+		auto aabbCollider = boss->GetComponent<AABBCollider>();
+		Vector3 aabbDirection = { 0, 0, 0 };
+		const Vector3 aabbMin = { -70, 0, -70 };
+		const Vector3 aabbMax = { 70, 100, 70 };
 
-	// アニメーションが終わるまで待ちたい
-	// 仮
-	coolTime -= deltaTime;
-	if (coolTime <= 1.5f) {
-		// 攻撃処理
-		aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
+		// アニメーションが終わるまで待ちたい
+		// 仮
+		coolTime -= deltaTime;
+		if (coolTime <= 1.5f) {
+			// 攻撃処理
+			aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
+		}
+		if (coolTime <= 1.2f) {
+			aabbCollider->aabb = { Vector3::zero, Vector3::zero };
+		}
+		if (coolTime <= 0) {
+			// 状態遷移
+			boss->GetComponent<BossComponent>()->SetState(new BossStandby());
+		}
 	}
-	if (coolTime <= 1.2f) {
-		aabbCollider->aabb = { Vector3::zero, Vector3::zero };
-	}
-	if (coolTime <= 0) {
-		// 状態遷移
-		boss->GetComponent<BossComponent>()->SetState(new BossStandby());
-	}
+	else {
+		animator->Play(3, 1350 * deltaTime);
 
+		// 攻撃の当たり判定
+		auto aabbCollider = boss->GetComponent<AABBCollider>();
+		Vector3 aabbDirection = { 0, 0, 0 };
+		const Vector3 aabbMin = { -500, 0, -500 };
+		const Vector3 aabbMax = { 500, 50, 500 };
+
+		// アニメーションが終わるまで待ちたい
+		// 仮
+		coolTime -= deltaTime;
+		if (coolTime <= 1.5f) {
+			// 攻撃処理
+			aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
+		}
+		if (coolTime <= 1.2f) {
+			aabbCollider->aabb = { Vector3::zero, Vector3::zero };
+		}
+		if (coolTime <= 0) {
+			// 状態遷移
+			boss->GetComponent<BossComponent>()->SetState(new BossStandby());
+		}
+	}
 }

@@ -50,7 +50,6 @@ void BossComponent::Start()
 	if (animator == nullptr) return;
 	// モデルハンドルのセット
 	animator->SetModelHandle(modelHandle);
-	//animator->SetAttachIndex(animationHandle);
 
 	animator->LoadIndex(true);
 
@@ -64,7 +63,7 @@ void BossComponent::Start()
 	state->Start(boss);
 
 	// 敵のデータ取得
-	status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage1Boss);
+	status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage4Boss);
 	HP = status.HP;
 }
 

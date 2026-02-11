@@ -10,6 +10,7 @@
 #include "../AnimatorComponent.h"
 #include "../ModelRenderer.h"
 #include "../../Manager/EnemyDataManager.h"
+#include "../../GameEnum.h"
 
 class BossComponent : public CharacterBase {
 private:
