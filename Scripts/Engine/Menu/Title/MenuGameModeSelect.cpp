@@ -52,6 +52,10 @@ void MenuGameModeSelect::Initialize(Engine& engine) {
 				SelectButtonExecute(engine, i);
 			});
 		}
+		for (auto& sprite : spriteList) {
+			if (sprite->GetName() == "SelectTitleMenu_BackGround")
+				backgroundSprite = sprite.get();
+		}
 		eventSystem.LoadNavigation(navigation->GetData());
 	});
 
@@ -61,17 +65,19 @@ void MenuGameModeSelect::Initialize(Engine& engine) {
  */
 void MenuGameModeSelect::Open() {
 	MenuBase::Open();
-	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
-		isStart = true;
-	});
+	for (auto& sprite : spriteList) {
+		sprite->Setup();
+	}
+	for (auto& button : buttonList) {
+		button->Setup();
+	}
+	eventSystem.ApplySelection();
+	InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
 }
 /*
  *	@brief	更新処理
  */
 void MenuGameModeSelect::Update(Engine& engine, float unscaledDeltaTime) {
-	if (!isStart) return;
-
 	auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
 	// イベントシステムの更新
 	eventSystem.Update(unscaledDeltaTime);
@@ -91,16 +97,35 @@ void MenuGameModeSelect::Update(Engine& engine, float unscaledDeltaTime) {
  *	@brief	アニメーション等の更新
  */
 void MenuGameModeSelect::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
+	animTimer += unscaledDeltaTime;
+
+	if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
+	animTimer -= GameConst::UI_ANIM_INTERVAL;
+
+	for (auto& sprite : spriteList) {
+		if (!sprite) continue;
+
+		int frameCount = sprite->GetFrameCount();
+		if (frameCount <= 1) continue;
+
+		animFrame = (animFrame + 1) % frameCount;
+		sprite->SetFrameIndex(animFrame);
+	}
 }
 /*
  *	@brief	描画処理
  */
 void MenuGameModeSelect::Render() {
-	for (auto& sprite : spriteList) {
-		sprite->Render();
+	if (backgroundSprite->IsVisible()) {
+		backgroundSprite->Render();
 	}
 	for (auto& button : buttonList) {
+		if (!button->IsVisible()) continue;
 		button->Render();
+	}
+	for (auto& sprite : spriteList) {
+		if (sprite.get() == backgroundSprite || !sprite->IsVisible()) continue;
+		sprite->Render();
 	}
 }
 /*

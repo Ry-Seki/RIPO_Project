@@ -29,8 +29,6 @@
 void TitleScene::Initialize(Engine& engine) {
 	isStart = false;
 	inputHandle = false;
-	auto fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fadeIn);
 	MenuManager::GetInstance().GetMenu<MenuTitle>();
 	MenuManager::GetInstance().GetMenu<MenuGameModeSelect>();
 	MenuManager::GetInstance().GetMenu<MenuSystem>();

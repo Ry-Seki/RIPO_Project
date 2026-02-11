@@ -27,9 +27,9 @@ class MenuGameModeSelect : public MenuBase {
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
-
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Title/StartGame/TitleResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/StartGame/TitleNavigation.json";
+	Sprite* backgroundSprite = nullptr;
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Title/SelectGameMode/SelectGameModeMenuResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/SelectGameMode/SelectGameModeMenuNavigation.json";
 
 public:
 	/*

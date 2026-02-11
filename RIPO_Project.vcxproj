@@ -385,6 +385,7 @@
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\WeaponManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeonMenu.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuInGame.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.h" />

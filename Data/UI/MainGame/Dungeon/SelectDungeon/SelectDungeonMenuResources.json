@@ -1,0 +1,70 @@
+{
+  "BackGround": {
+    "Resources": [
+
+    ]
+  },
+  "Buttons": [
+    {
+      "Name": "Load",
+      "Type": "Single",
+      "Rect": {
+        "X": 200,
+        "Y": 50,
+        "Width": 700,
+        "Height": 80
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "Save",
+      "Type": "Single",
+      "Rect": {
+        "X": 200,
+        "Y": 150,
+        "Width": 700,
+        "Height": 80
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "Settings",
+      "Type": "Single",
+      "Rect": {
+        "X": 200,
+        "Y": 250,
+        "Width": 700,
+        "Height": 80
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "Return Title",
+      "Type": "Single",
+      "Rect": {
+        "X": 200,
+        "Y": 350,
+        "Width": 700,
+        "Height": 80
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "Back",
+      "Type": "Single",
+      "Rect": {
+        "X": 500,
+        "Y": 450,
+        "Width": 700,
+        "Height": 80
+      },
+      "Resources": {
+
+      }
+    }
+  ]
+}
