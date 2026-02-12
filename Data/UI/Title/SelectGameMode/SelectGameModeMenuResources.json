@@ -3,7 +3,7 @@
     {
       "Name": "SelectTitleMenu",
       "Rect": {
-        "X": 130,
+        "X": 170,
         "Y": 600,
         "Width": 1640,
         "Height": 215
@@ -69,7 +69,7 @@
       "Name": "EndGame",
       "Type": "Single",
       "Rect": {
-        "X": 620,
+        "X": 650,
         "Y": 930,
         "Width": 700,
         "Height": 90

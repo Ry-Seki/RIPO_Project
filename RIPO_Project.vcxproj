@@ -166,6 +166,7 @@
     <ClCompile Include="Scripts\Engine\Component\Character\BossComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BossDeath.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BossHPBarComponentr.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\BossShootingAttack.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BossStandby.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BulletComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyAttack.cpp" />
@@ -205,6 +206,7 @@
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\WeaponManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuInGame.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.cpp" />
@@ -322,6 +324,7 @@
     <ClInclude Include="Scripts\Engine\Component\Character\BossComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossDeath.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossHPBarComponentr.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BossShootingAttack.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossStandby.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossState.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BulletComponent.h" />
@@ -386,7 +389,7 @@
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\WeaponManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.h" />
-    <ClInclude Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeonMenu.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuInGame.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.h" />
