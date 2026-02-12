@@ -1,14 +1,22 @@
 {
   "Stage": {
-    "StageData": "Res/Model/Stage/Stage_1/StageModel_1.mv1",
-    "StageBoneData": "Data/Dungeon/Tutorial/TutorialDungeonCreatePos.json"
+    "0": {
+      "StageData": "Res/Model/Stage/Tutorial/TutorialStage.mv1"
+    },
+    "StageBoneData": "Data/Dungeon/Tutorial/TutorialCreatePos.json",
+    "StageFloorData": "Data/Dungeon/Tutorial/TutorialEntranceData.json"
   },
   "Character": {
-    "PlayerData": "Res/Model/Player/RIPO_Model.mv1"
+    "PlayerData": "Res/Model/Player/RIPO_Model.mv1",
+    "EnemyData": {
+      "0": {
+        "0": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1"
+      }
+    }
   },
   "Treasure": {
     "0": {
-      "0": "Res/Model/Treasure/Treasure01.mv1"
+      "16": "Res/Model/Treasure/Treasure05.mv1"
     }
   },
   "Audio": {

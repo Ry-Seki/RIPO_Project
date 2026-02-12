@@ -1,35 +1,35 @@
 /*
- *	@file	MenuSelectAction.h
+ *	@file	MenuSelectDungeon.h
  *	@author	Seki
  */
 
-#ifndef _MENU_SELECT_ACTION_H_
-#define _MENU_SELECT_ACTION_H_
+#ifndef _MENU_SELECT_DUNGEON_H_
+#define _MENU_SELECT_DUNGEON_H_
 
-#include "../MenuBase.h"
-#include "../../UI/Button/UIButtonBase.h"
-#include "../../UI/Sprite/Sprite.h"
-#include "../../UI/EventSystem.h"
-#include "../../GameEnum.h"
-#include "../../GameConst.h"
+#include "../../MenuBase.h"
+#include "../../../UI/Button/UIButtonBase.h"
+#include "../../../UI/Sprite/Sprite.h"
+#include "../../../UI/EventSystem.h"
+#include "../../../GameEnum.h"
+#include "../../../GameConst.h"
 
 #include <functional>
 
 /*
- *	@brief	アクション選択メニュー
+ *	@brief	ダンジョン選択メニュー
  */
-class MenuSelectAction : public MenuBase {
+class MenuSelectDungeon : public MenuBase {
 private:
 	float animTimer = 0.0f;
 	int animFrame = 0;
-	bool isHalf = false;
+	std::vector<bool> isEventList;
 
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 	Sprite* elapsedDaySprite = nullptr;
-	
+
 	std::function<void(GameEnum::ActionType)> Callback = nullptr;
 
 	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/SelectAction/SelectActionMenuResources.json";
@@ -39,7 +39,7 @@ public:
 	/*
 	 *	@brief	デストラクタ
 	 */
-	~MenuSelectAction() override {}
+	~MenuSelectDungeon() override {}
 
 public:
 	/*
@@ -87,7 +87,7 @@ public:
 	 *	@brief		半日フラグの設定
 	 *	@param[in]	bool setFlag
 	 */
-	inline void SetIsHalf(bool setFlag) { isHalf = setFlag; }
+	inline void SetIsHalf(const std::vector<bool>& setFlag) { isEventList = setFlag; }
 	/*
 	 *	@brief		コールバックの設定
 	 *	@param[in]	std::function<void(GameEnum::ActionType)> setCallback
@@ -95,6 +95,7 @@ public:
 	inline void SetCallback(std::function<void(GameEnum::ActionType)> setCallback) {
 		Callback = setCallback;
 	}
+
 };
 
-#endif // !_MENU_SELECT_ACTION_H_
+#endif // !_MENU_SELECT_DUNGEON_H_

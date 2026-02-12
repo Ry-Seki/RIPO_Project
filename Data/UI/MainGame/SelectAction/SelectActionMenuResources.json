@@ -1,0 +1,128 @@
+{
+  "Sprites": [
+    {
+      "Name": "BackGround",
+      "Rect": {
+        "X": 0,
+        "Y": 0,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/BackGround/Trealine_LoadBackground_black1.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black2.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black3.jpg"
+      ]
+    },
+    {
+      "Name": "ElapsedDay",
+      "Rect": {
+        "X": 68,
+        "Y": 0,
+        "Width": 485,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDay.png",
+        "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDay_AM.png",
+        "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDay_PM.png"
+      ]
+    },
+    {
+      "Name": "SelectAction_Detail",
+      "Rect": {
+        "X": 785,
+        "Y": 170,
+        "Width": 1135,
+        "Height": 910
+      },
+      "Resources": [
+        "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ActionDetail.png"
+      ]
+    }
+  ],
+  "Buttons": [
+    {
+      "Name": "Dungeon",
+      "Type": "Single",
+      "Rect": {
+        "X": 520,
+        "Y": 40,
+        "Width": 890,
+        "Height": 180
+      },
+      "Resources": {
+        "Idle": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Dungeon.png",
+        "Hover": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Dungeon.png",
+        "Press": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Dungeon_Select.png",
+        "Select": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Dungeon_Select.png",
+        "Disable": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Dungeon_Disable.png"
+      }
+    },
+    {
+      "Name": "Training",
+      "Type": "Single",
+      "Rect": {
+        "X": 1000,
+        "Y": 280,
+        "Width": 840,
+        "Height": 180
+      },
+      "Resources": {
+        "Idle": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Training.png",
+        "Hover": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Training.png",
+        "Press": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Training_Select.png",
+        "Select": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Training_Select.png",
+        "Disable": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Training_Disable.png"
+      }
+    },
+    {
+      "Name": "Shop",
+      "Type": "Single",
+      "Rect": {
+        "X": 730,
+        "Y": 540,
+        "Width": 460,
+        "Height": 180
+      },
+      "Resources": {
+        "Idle": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Shop.png",
+        "Hover": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Shop.png",
+        "Press": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Shop_Select.png",
+        "Select": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Shop_Select.png",
+        "Disable": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Shop_Disable.png"
+      }
+    },
+    {
+      "Name": "PartTime",
+      "Type": "Single",
+      "Rect": {
+        "X": 980,
+        "Y": 810,
+        "Width": 870,
+        "Height": 180
+      },
+      "Resources": {
+        "Idle": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_PartTime.png",
+        "Hover": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_PartTime.png",
+        "Press": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_PartTime_Select.png",
+        "Select": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_PartTime_Select.png",
+        "Disable": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_PartTime_Disable.png"
+      }
+    },
+    {
+      "Name": "Status",
+      "Type": "Single",
+      "Rect": {
+        "X": 135,
+        "Y": 360,
+        "Width": 390,
+        "Height": 380
+      },
+      "Resources": {
+        "Press": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDay_Button.png",
+        "Select": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDay_Button.png"
+      }
+    }
+  ]
+}
