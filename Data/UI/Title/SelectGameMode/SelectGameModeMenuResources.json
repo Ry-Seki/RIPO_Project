@@ -31,7 +31,7 @@
       "Type": "Single",
       "Rect": {
         "X": 115,
-        "Y": 720,
+        "Y": 730,
         "Width": 590,
         "Height": 90
       },
@@ -44,7 +44,7 @@
       "Type": "Single",
       "Rect": {
         "X": 667,
-        "Y": 720,
+        "Y": 730,
         "Width": 590,
         "Height": 90
       },
@@ -56,8 +56,8 @@
       "Name": "System",
       "Type": "Single",
       "Rect": {
-        "X": 1250,
-        "Y": 720,
+        "X": 1260,
+        "Y": 730,
         "Width": 480,
         "Height": 90
       },

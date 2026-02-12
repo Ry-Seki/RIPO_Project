@@ -16,12 +16,19 @@
 #include "../../../../JSON.h"
 #include "../../../../../Data/Dungeon/DungeonStageData.h"
 #include "../../../../../Data/Dungeon/DungeonFloorData.h"
-
+#include "../../../../Menu/MainGame/Dungeon/MenuSelectDungeon.h"
+#include "../../../../Menu/MenuManager.h"
 
 /*
  *	@brief	初期化処理
  */
 void SelectDetail_Dungeon::Initialize() {
+	auto& menu = MenuManager::GetInstance();
+	auto dungeonMenu = menu.GetMenu<MenuSelectDungeon>();
+	dungeonMenu->SetCallback([this](int dungeonID) {
+		StartDungeonDataLoad(dungeonID);
+	});
+
 	LoadManager& load = LoadManager::GetInstance();
 	dungeonDataLoader = load.LoadResource<DungeonDataLoader>(_DUNGEON_LIST_PATH);
 	load.SetOnComplete([this]() { SetupData(); });
@@ -31,16 +38,15 @@ void SelectDetail_Dungeon::Initialize() {
  */
 void SelectDetail_Dungeon::SetupData() {
 	dungeonDataList = dungeonDataLoader->dungeonList;
-
 }
 /*
  *	@brief	準備前処理
  */
 void SelectDetail_Dungeon::Setup() {
-	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fade, [this]() {
-		AssessmentTreasureEvent();
-	});
+	auto& menu = MenuManager::GetInstance();
+	auto dungeonMenu = menu.GetMenu<MenuSelectDungeon>();
+	dungeonMenu->SetIsEvent(AssessmentTreasureEvent());
+	menu.OpenMenu<MenuSelectDungeon>();
 }
 /*
  *	@brief	更新処理
@@ -107,8 +113,10 @@ void SelectDetail_Dungeon::Teardown() {
 }
 /*
  *	@brief		お宝イベント査定
+ *	@return		std::vector<bool>
  */
-void SelectDetail_Dungeon::AssessmentTreasureEvent() {
+std::vector<bool> SelectDetail_Dungeon::AssessmentTreasureEvent() {
+	std::vector<bool> result;
 	auto& context = owner->GetOwner()->GetActionContext();
 	// 経過時間を取得
 	int elapsedDay = context.elapsedDay;
@@ -116,12 +124,16 @@ void SelectDetail_Dungeon::AssessmentTreasureEvent() {
 	for (int i = 0, max = dungeonDataList.size(); i < max; i++) {
 		DungeonData data = dungeonDataList[i];
 		if (elapsedDay >= data.eventStartDay && elapsedDay <= data.eventEndDay) {
+			result.push_back(true);
+
 			if (!data.isEventDay) data.isEventDay = true;
 		} else {
+			result.push_back(false);
 			if (data.isEventDay) data.isEventDay = false;
 		}
 		dungeonDataList[i] = data;
 	}
+	return result;
 }
 /*
  *	@brief	ダンジョンステージデータの読み込み

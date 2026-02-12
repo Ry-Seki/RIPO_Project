@@ -52,9 +52,6 @@ void MenuSelectDungeon::Initialize(Engine& engine) {
                 SelectButtonExecute(engine, i);
             });
         }
-        for (auto& sprite : spriteList) {
-            if (sprite->GetName() == "ElapsedDay") elapsedDaySprite = sprite.get();
-        }
         eventSystem.LoadNavigation(navigation->GetData());
     });
 }
@@ -69,7 +66,6 @@ void MenuSelectDungeon::Open() {
     for (auto& button : buttonList) {
         button->Setup();
     }
-
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
         // TODO : ƒCƒxƒ“ƒg‚²‚Æ‚É‰æ‘œ·‚µ‘Ö‚¦
@@ -114,7 +110,7 @@ void MenuSelectDungeon::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer -= GameConst::UI_ANIM_INTERVAL;
 
     for (auto& sprite : spriteList) {
-        if (!sprite || sprite.get() == elapsedDaySprite) continue;
+        if (!sprite) continue;
 
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
@@ -159,4 +155,5 @@ void MenuSelectDungeon::Resume() {
  *	@param[in]	int buttonIndex
  */
 void MenuSelectDungeon::SelectButtonExecute(Engine& engine, int buttonIndex) {
+
 }
