@@ -38,8 +38,13 @@ void SinglePressButton::Update(float unscaledDeltaTime) {
  *	@brief	描画処理
  */
 void SinglePressButton::Render() {
+	if (handleList.empty()) return;
 	// TODO : 描画インターフェースでの描画
-	
+	int handle = handleList[static_cast<int>(GetRendererState())];
+
+	if (handle != -1) {
+		DrawGraph(rect.x, rect.y, handle, TRUE);
+	}
 	// デバッグ描画
 	DebugRender();
 }

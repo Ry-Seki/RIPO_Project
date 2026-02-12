@@ -52,6 +52,12 @@ private:
 
 public:
 	/*
+	 *	@brief	デストラクタ
+	 */
+	~MenuPurchaseCount() override {}
+
+public:
+	/*
 	 *	@brief	初期化処理
 	 */
 	void Initialize(Engine& engine) override;

@@ -66,7 +66,7 @@ void BossHPBarComponent::ShowHPBar()
 
 	// 敵の頭上
 	VECTOR headPos = bossPos;
-	headPos.y += 700 + 10.0f;
+	headPos.y += 800 + 10.0f;
 
 	VECTOR cameraPos = ToVECTOR(camera->position);
 
@@ -81,7 +81,7 @@ void BossHPBarComponent::ShowHPBar()
 	VECTOR rightDir = VCross(up, viewDir);
 	rightDir = VNorm(rightDir);
 
-	float worldHalfBar = 400.0f;
+	float worldHalfBar = 700.0f;
 
 	// 左右端をカメラ右方向に作る
 	VECTOR leftPos = VSub(headPos, VScale(rightDir, worldHalfBar));

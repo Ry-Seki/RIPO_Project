@@ -10,6 +10,7 @@
 #include "EnemyChase.h"
 #include "EnemyTurn.h"
 #include "EnemyDeath.h"
+#include "EnemyStandby.h"
 #include "BulletComponent.h"
 #include "HPBarComponent.h"
 #include "../CameraComponent.h"
@@ -17,13 +18,8 @@
   *	コンストラクタ
   */
 EnemyComponent::EnemyComponent()
-	: EnemyComponent(new EnemyChase())
-{
-}
-
-EnemyComponent::EnemyComponent(EnemyState* initState)
 	: enemy(nullptr)
-	, state(initState)
+	, state(nullptr)
 	, player(nullptr)
 	, animator(nullptr)
 	, wayPoint(0.0f, 0.0f, 0.0f)
@@ -51,10 +47,6 @@ void EnemyComponent::Start() {
 	enemy = GetOwner();
 	if (enemy == nullptr) return;
 
-	if (state == nullptr)
-		state = new EnemyChase();
-	state->Start(enemy);
-
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
 
@@ -66,11 +58,6 @@ void EnemyComponent::Start() {
 	animator->SetModelHandle(modelHandle);
 
 	animator->LoadIndex(true);
-
-	// 敵のデータ取得
-	status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage4Enemy);
-	HP = status.HP;
-
 
 }
 
@@ -92,48 +79,6 @@ void EnemyComponent::Update(float deltaTime) {
 
 	VECTOR position = ToVECTOR(enemy->position);
 
-	//auto camera = GetCameraViewMatrix();
-	//VECTOR forward;
-	//forward.x = -camera.m[2][0];
-	//forward.y = -camera.m[2][1];
-	//forward.z = -camera.m[2][2];
-	//forward = VNorm(forward);
-	//
-	//GameObjectPtr cameraObj = CameraManager::GetInstance().GetCamera();
-	//float pitch = cameraObj->rotation.x;
-	//float yaw = cameraObj->rotation.y;
-	//VECTOR OBcamera = ToVECTOR(DxForwardDir(cameraObj->rotation));
-	//OBcamera = VNorm(OBcamera);
-	//
-	//float dot = VDot(OBcamera, forward);
-	//dot = std::clamp(dot, -1.0f, 1.0f);
-	//float angle = acosf(dot) * 180.0f / Pi;
-
-	//MATRIX viewMat = /* あなたが直したView行列 */;
-	//MATRIX projMat = /* 使用しているProjection行列 */;
-
-	//SetCameraViewMatrix(viewMat);
-	//SetCameraProjectionMatrix(projMat);
-
-	// 線
-	//VECTOR camPos = ToVECTOR(cameraObj->position);
-	//DrawLine3D(
-	//	camPos,
-	//	VAdd(camPos, VScale(OBcamera, 50.0f)),
-	//	GetColor(255, 0, 0) // 赤
-	//);
-
-	//VECTOR pos = GetCameraPosition();
-	//VECTOR target = GetCameraTarget();
-
-	//VECTOR DxForward = VNorm(VSub(target, pos));
-	//DrawLine3D(
-	//	pos,
-	//	VAdd(pos, VScale(forward, 50.0f)),
-	//	GetColor(0, 255, 0) // 緑
-	//);
-
-	//enemy->GetComponent<HPBarComponent>()->ShowHPBar(position);
 }
 
 /*
@@ -186,4 +131,44 @@ Vector3 EnemyComponent::DxForwardDir(const Vector3& rotation)
 	dir.y = sinf(pitch);
 	dir.z = -cosf(yaw) * cosf(pitch);
 	return dir.Normalized();
+}
+
+void EnemyComponent::SetEnemyStart(int ID)
+{
+	// 敵のデータ取得
+ 	switch (ID)
+	{
+	case 0:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::TutorialEnemy);
+		break;
+	case 1:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage1Enemy);
+		break;
+	case 2:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage2Enemy);
+		break;
+	case 3:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage3Enemy);
+		break;
+	case 4:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage4Enemy);
+		break;
+	}
+	HP = status.HP;
+
+	if (state == nullptr) {
+		// IDに応じて処理を変える
+		if (status.ID == 0) {
+			state = new EnemyStandby();
+		}
+		else {
+			state = new EnemyChase();
+		}
+	}
+
+	state->Start(enemy);
+
+	// HPBarComponent
+	enemy->GetComponent<HPBarComponent>()->SetMaxHP(status.HP);
+	enemy->GetComponent<HPBarComponent>()->SetDisplayHP();
 }

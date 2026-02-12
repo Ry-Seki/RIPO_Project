@@ -10,6 +10,7 @@
 #include "../AnimatorComponent.h"
 #include "../ModelRenderer.h"
 #include "../../Manager/EnemyDataManager.h"
+#include "../../GameEnum.h"
 
 class BossComponent : public CharacterBase {
 private:
@@ -22,6 +23,8 @@ private:
 	int modelHandle;
 	// ボスのHP
 	int HP;
+	// ボスのID
+	int ID = -1;
 	// クールタイム
 	float coolTime;
 	// 攻撃衝突判定フラグ
@@ -54,6 +57,12 @@ public:
 	 *	衝突が起きたときに呼び出される処理
 	 */
 	virtual void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) override;
+
+public:
+	/*
+	 *	IDを知った後に呼び出す初期化処理
+	 */
+	void SetBossStart(int ID);
 
 public:
 	/*
@@ -136,6 +145,16 @@ public:
 	 *	被ダメフラグの変更
 	 */
 	inline void SetHitFlag(bool setValue) { hitFlag = setValue; }
+
+	///*
+	// *	IDの取得
+	// */
+	//inline int GetBossID() const { return ID; }
+
+	///*
+	// *	IDの変更
+	// */
+	//inline void SetBossID(int setValue) { ID = setValue; }
 };
 
 #endif // !_BOSSCOMPONENT_H_

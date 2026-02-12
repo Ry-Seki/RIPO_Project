@@ -48,6 +48,10 @@ public:
 	 */
 	void ShowHPBar();
 
+public:
+	inline void SetMaxHP(int setValue) { maxHP = setValue; }
+	inline void SetDisplayHP() { displayHP = maxHP; }
+
 };
 
 

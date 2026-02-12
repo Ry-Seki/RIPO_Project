@@ -55,8 +55,10 @@ private:
 	int enemySpawnID = 0;
 	// 仮モデルハンドル
 	int modelHandle;
-	// エネミーのHP
+	// 敵のHP
 	int HP;
+	// 敵のID
+	int ID = -1;
 	// 疑似クールタイム(苦肉の策)
 	float coolTime;
 
@@ -71,8 +73,8 @@ public:
 	/*
 	 *	コンストラクタ
 	 */
+	//EnemyComponent();
 	EnemyComponent();
-	EnemyComponent(EnemyState* initState);
 	~EnemyComponent();
 
 public:
@@ -95,6 +97,12 @@ public:
 private:
 	// 後でVecMathにもっていくかも
 	Vector3 DxForwardDir(const Vector3& rotation);
+
+public:
+	/*
+	 *	IDを知った後に呼び出す初期化処理
+	 */
+	void SetEnemyStart(int ID);
 
 public:
 	/*
@@ -215,7 +223,20 @@ public:
 	 */
 	inline int GetEnemyMaxHP() const { return status.HP; }
 
+	/*
+	 *	IDデータの取得
+	 */
+	inline int GetEnemyDataID() const { return status.ID; }
 
+	///*
+	// *	IDの取得
+	// */
+	//inline int GetEnemyID() const { return ID; }
+
+	///*
+	// *	IDの変更
+	// */
+	//inline void SetEnemyID(int setValue) { ID = setValue; }
 
 	/*
 	 *	スポーンIDの取得
