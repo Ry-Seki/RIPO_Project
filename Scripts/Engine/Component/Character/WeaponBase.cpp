@@ -77,7 +77,7 @@ void WeaponBase::ShotBullet(Engine* engine) {
 	BulletManager::GetInstance().BulletShot(
 		camera->position, camera->rotation, 
 		{ 0.5f, 0.5f, 0.5f }, moveDirection,
-		GetPlayer().get(), 1000, hitDamage);
+		GetPlayer().get(), 10000, hitDamage);
 }
 
 /*
