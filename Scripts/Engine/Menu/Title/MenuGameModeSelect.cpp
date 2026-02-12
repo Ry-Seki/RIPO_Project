@@ -9,10 +9,11 @@
 #include "../../Audio/AudioUtility.h"
 #include "../../../Engine/Engine.h"
 #include "../../Scene/MainGameScene.h"
-#include "../../Menu/MenuManager.h"
-#include "../../Menu/Title/MenuSelectNewGame.h"
-#include "../../Menu/Title/MenuSelectLoadGame.h"
-#include "../../Menu/Title/MenuSystem.h"
+#include "../MenuManager.h"
+#include "../Title/MenuSelectNewGame.h"
+#include "../Title/MenuSelectLoadGame.h"
+#include "../Title/MenuSystem.h"
+#include "../System/MenuConfirm.h"
 #include "../MenuResourcesFactory.h"
 #include "../../../Data/UI/MenuInfo.h"
 #include "../../Load/LoadManager.h"
@@ -151,4 +152,35 @@ void MenuGameModeSelect::Resume() {
  *	@param[in]	int buttonIndex
  */
 void MenuGameModeSelect::SelectButtonExecute(Engine& engine, int buttonIndex) {
+	auto& menu = MenuManager::GetInstance();
+	auto confirm = menu.GetMenu<MenuConfirm>();
+	if (buttonIndex == 0) {
+		AudioUtility::PlaySE("DebugSE");
+		confirm->SetCallback([this, confirm, &menu, &engine](GameEnum::ConfirmResult result) {
+			if (result == GameEnum::ConfirmResult::Yes) {
+				AudioUtility::PlaySE("DebugSE");
+				menu.CloseAllMenu();
+				engine.SetNextScene(std::make_shared<MainGameScene>());
+			}
+			menu.CloseMenu(confirm);
+		});
+		menu.OpenMenu<MenuConfirm>();
+	} else if (buttonIndex == 1) {
+		AudioUtility::PlaySE("DebugSE");
+		menu.OpenMenu<MenuSelectLoadGame>();
+	} else if (buttonIndex == 2) {
+		AudioUtility::PlaySE("DebugSE");
+		menu.OpenMenu<MenuSystem>();
+	} else if (buttonIndex == 3) {
+		AudioUtility::PlaySE("DebugSE");
+		confirm->SetCallback([this, confirm, &menu, &engine](GameEnum::ConfirmResult result) {
+			if (result == GameEnum::ConfirmResult::Yes) {
+				AudioUtility::PlaySE("DebugSE");
+				menu.CloseAllMenu();
+				engine.SetIsGameEnd(true);
+			}
+			menu.CloseMenu(confirm);
+		});
+		menu.OpenMenu<MenuConfirm>();
+	}
 }

@@ -23,6 +23,12 @@ private:
 
 public:
 	/*
+	 *	@brief	デストラクタ
+	 */
+	~SelectDetail_Shop() override {}
+
+public:
+	/*
 	 *	@brief	初期化処理
 	 */
 	void Initialize() override;
