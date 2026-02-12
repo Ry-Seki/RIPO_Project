@@ -45,7 +45,7 @@ void BulletComponent::OnCollision(const std::shared_ptr<Component>& self, const 
 	// ŽËŒ‚ŽÒ‚Æ’eˆÈŠO‚ÌÕ“Ë‚Å”jŠü
 	GameObject* otherOwner = other->GetOwner();
 	auto isBullet = otherOwner->GetComponent<BulletComponent>();
-	if (otherOwner == shotOwner.get() || isBullet)return;
+	if (otherOwner == shotOwner || isBullet)return;
 	ResetObject(bullet);
 }
 
@@ -60,12 +60,13 @@ void BulletComponent::OnCollision(const std::shared_ptr<Component>& self, const 
 void BulletComponent::Setup(
 	Vector3 setDirection,
 	Vector3 setScale, 
-	GameObjectPtr setOwner,
+	GameObject* setOwner,
 	float setDamage,
 	float setSpeed) {
 	moveDirection = setDirection;
 	shotOwner = setOwner;
 	hitDamage = setDamage;
 	moveSpeed = setSpeed;
+	bullet = GetOwner();
 	bullet->scale = setScale;
 }

@@ -70,7 +70,7 @@ public:
 		const Vector3& rotation,
 		const Vector3& scale,
 		const Vector3& direction,
-		const GameObjectPtr& shotOwner,
+		GameObject* shotOwner,
 		const float speed,
 		const float damage);
 

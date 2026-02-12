@@ -15,7 +15,7 @@ private:
 	GameObject* bullet;
 	float destroyTimeCount;		// ’e‚ª”jŠü‚³‚ê‚éŠÔ
 	Vector3 moveDirection;		// ˆÚ“®•ûŒü
-	GameObjectPtr shotOwner;	// ËŒ‚Ò
+	GameObject* shotOwner;	// ËŒ‚Ò
 	float hitDamage;			// “–‚½‚Á‚½‚É—^‚¦‚éƒ_ƒ[ƒW
 	float moveSpeed;			// ’e‚Ì‘¬‚³
 
@@ -45,12 +45,13 @@ public:
 	void Setup(
 		Vector3 setDirection,
 		Vector3 setScale,
-		GameObjectPtr setOwner,
+		GameObject* setOwner,
 		float setDamage,
 		float setSpeed);
 
 public:
 	inline float GetHitDamage() { return hitDamage; }
+	inline GameObject* GetShotOwner() { return shotOwner; }
 };
 using BulletComponentPtr = std::shared_ptr<BulletComponent>;
 

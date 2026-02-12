@@ -125,6 +125,11 @@ public:
 	inline int GetBossMaxHP() const { return status.HP; }
 
 	/*
+	 *	UŒ‚—Í‚Ìæ“¾
+	 */
+	inline int GetBossAttack() const { return status.attack; }
+
+	/*
 	 *	s“®ƒtƒ‰ƒO‚Ìæ“¾
 	 */
 	inline bool GetMoveFrag() const { return moveFrag; }

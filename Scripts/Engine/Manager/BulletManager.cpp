@@ -54,6 +54,7 @@ BulletComponentPtr BulletManager::GenerateBullet(
 	return bullet;
 }
 
+
 /*
  *	初期化
  *	@param	setEngine	エンジン
@@ -77,7 +78,7 @@ void BulletManager::BulletShot(
 	const Vector3& rotation,
 	const Vector3& scale,
 	const Vector3& direction,
-	const GameObjectPtr& shotOwner,
+	GameObject* shotOwner,
 	const float speed,
 	const float damage) {
 	// 弾生成 
@@ -85,4 +86,3 @@ void BulletManager::BulletShot(
 	// セットアップ
 	bullet->Setup(direction, scale, shotOwner, damage, speed);
 }
-
