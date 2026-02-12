@@ -36,8 +36,8 @@
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": [ -500, -500, -1000 ],
-          "AABBmax": [ 500, 800, 1000 ]
+          "AABBmin": [ -700, -500, -1000 ],
+          "AABBmax": [ 700, 800, 1000 ]
         }
       ]
     },
@@ -48,16 +48,16 @@
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": 0,
-          "AABBmax": 0
+          "AABBmin": [ -700, -500, -1000 ],
+          "AABBmax": [ 700, 800, 1000 ]
         },
         {
           "MoveID": 3,
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": 0,
-          "AABBmax": 0
+          "AABBmin": [ -700, -500, -1000 ],
+          "AABBmax": [ 700, 800, 1000 ]
         }
       ]
     },
