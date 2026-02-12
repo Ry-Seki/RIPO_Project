@@ -13,13 +13,13 @@
  */
 void UIButtonBase::Initialize() {
 	int indexMax = static_cast<int>(GameEnum::ButtonRendererState::Max);
+	handleList.resize(indexMax);
 	isEnable = true;
 	inputState = GameEnum::ButtonInputState::Idle;
 	selectState = GameEnum::ButtonSelectState::Invalid;
 	inputClickNum = static_cast<int>(GameEnum::MenuAction::Click);
-	handleList.resize(indexMax);
 	for (int i = 0; i < indexMax; i++) {
-		handleList.push_back(-1);
+		handleList[i] = -1;
 	}
 }
 /*

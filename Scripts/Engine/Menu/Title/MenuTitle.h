@@ -20,7 +20,6 @@ class Engine;
  *	@brief	タイトルメニュー
  */
 class MenuTitle : public MenuBase{
-	int currentSlot = -1;
 	float animTimer = 0.0f;
 	int animFrame = 0;
 	EventSystem eventSystem;

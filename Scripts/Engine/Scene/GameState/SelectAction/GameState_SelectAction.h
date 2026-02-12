@@ -9,6 +9,9 @@
 #include "../GameStateBase.h"
 #include "../../../GameEnum.h"
 
+// 前方宣言
+class Engine;
+
 /*
  *	@brief	行動選択状態
  */
@@ -17,6 +20,10 @@ private:
 	bool inputHandle = false;											
 
 public:
+	/*
+	 *	@brief	初期化処理
+	 */
+	void Initialize(Engine& engine) override;
 	/*
 	 *	@brief	準備前処理
 	 */
@@ -34,6 +41,12 @@ public:
 	 */
 	void Teardown() override;
 
+private:
+	/*
+	 *	@brief		アクションの決定
+	 *	@param[in]	GameEnum::ActionType type
+	 */
+	void DecideActionType(GameEnum::ActionType type);
 };
 
 #endif // !_GAME_STATE_SELECT_ACTION_H_
