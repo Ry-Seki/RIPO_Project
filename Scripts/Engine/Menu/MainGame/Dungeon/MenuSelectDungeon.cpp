@@ -9,6 +9,7 @@
  *	@brief	‰Šú‰»ˆ—
  */
 void MenuSelectDungeon::Initialize(Engine& engine) {
+
 }
 /*
  *	@brief	ƒƒjƒ…[‚ğŠJ‚­

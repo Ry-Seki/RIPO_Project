@@ -20,6 +20,7 @@
 #include "../../Load/Sprite/LoadSprite.h"
 #include "../../Load/JSON/LoadJSON.h"
 #include "../../Input/InputUtility.h"
+#include "../../Scene/TutorialScene.h"
 
 #include <DxLib.h>
 
@@ -160,7 +161,7 @@ void MenuGameModeSelect::SelectButtonExecute(Engine& engine, int buttonIndex) {
 			if (result == GameEnum::ConfirmResult::Yes) {
 				AudioUtility::PlaySE("DebugSE");
 				menu.CloseAllMenu();
-				engine.SetNextScene(std::make_shared<MainGameScene>());
+				engine.SetNextScene(std::make_shared<TutorialScene>());
 			}
 			menu.CloseMenu(confirm);
 		});
