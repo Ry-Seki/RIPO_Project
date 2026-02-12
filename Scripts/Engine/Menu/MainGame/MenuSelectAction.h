@@ -20,8 +20,9 @@
  */
 class MenuSelectAction : public MenuBase {
 private:
-	float animTimer = 0.0f;
 	int animFrame = 0;
+	float animTimer = 0.0f;
+	int elapsedDay = -1;
 	bool isHalf = false;
 
 	EventSystem eventSystem;
@@ -83,6 +84,11 @@ private:
 	void SelectButtonExecute(Engine& engine, int buttonIndex);
 
 public:
+	/*
+	 *	@brief		Œo‰ß“ú”‚Ìİ’è
+	 *	@param[in]	int setValue
+	 */
+	inline void SetElapsedDay(int setValue) { elapsedDay = setValue; }
 	/*
 	 *	@brief		”¼“úƒtƒ‰ƒO‚Ìİ’è
 	 *	@param[in]	bool setFlag

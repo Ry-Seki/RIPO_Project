@@ -89,7 +89,6 @@ Orderd_JSON SaveDataManager::ToJSON(const SaveData& data) {
     Orderd_JSON json;
     json["Version"] = _SAVE_VERSION;
     json["IsUsed"] = data.isUsed;
-    json["IsClear"] = data.isClear;
     json["Game"] = ToJSON(data.game);
     json["Player"] = ToJSON(data.player);
     json["World"] = ToJSON(data.world);
@@ -103,7 +102,6 @@ Orderd_JSON SaveDataManager::ToJSON(const SaveData& data) {
 SaveData SaveDataManager::SaveDataFromJSON(const JSON& json) {
     SaveData data{};
     data.isUsed = json.value("IsUsed", false);
-    data.isClear = json.value("IsClear", false);
     data.game = GameDataFromJSON(json["Game"]);
     data.player = PlayerDataFromJSON(json["Player"]);
     data.world = WorldDataFromJSON(json["World"]);
@@ -118,6 +116,7 @@ Orderd_JSON SaveDataManager::ToJSON(const GameProgressData& data) {
     Orderd_JSON json;
     json["playTime"] = data.playTime;
     json["elapsedDay"] = data.elapsedDay;
+    json["isClear"] = data.isClear;
     json["isHalfDay"] = data.isHalfDay;
     json["currentMoney"] = data.currentMoney;
     json["totalTreasureCount"] = data.totalTreasureCount;
@@ -132,6 +131,7 @@ GameProgressData SaveDataManager::GameDataFromJSON(const JSON& json) {
     GameProgressData data{};
     data.playTime = json.value("playTime", 0);
     data.elapsedDay = json.value("elapsedDay", 0);
+    data.isClear = json.value("isClear", false);
     data.isHalfDay = json.value("isHalfDay", false);
     data.currentMoney = json.value("currentMoney", 0);
     data.totalTreasureCount = json.value("totalTreasureCount", 0);

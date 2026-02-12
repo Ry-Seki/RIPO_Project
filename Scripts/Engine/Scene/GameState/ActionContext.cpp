@@ -5,6 +5,7 @@
 
 #include "ActionContext.h"
 #include "../../../Data/SaveData.h"
+#include "../../Time.h"
 
 /*
  *	@biref		セーブデータに情報を渡す
@@ -12,8 +13,10 @@
  */
 GameProgressData ActionContext::GetSaveData() const {
     GameProgressData data{};
+    data.playTime = Time::totalTime;
     data.elapsedDay = elapsedDay;
     data.isHalfDay = isHalf;
+    data.isClear = isClear;
     return data;
 }
 /*

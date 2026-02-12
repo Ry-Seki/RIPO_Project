@@ -131,15 +131,13 @@ void MainGameScene::EndMainGameScene(Engine& engine) {
 	auto& save = SaveDataManager::GetInstance();
 	// アクション終了フラグの変更
 	gameState->SetIsActionEnd(false);
-	// オートセーブ
-	save.CollectSaveData(context);
-	save.AutoSave();
 	// シーン遷移条件
 	if (context.elapsedDay > _END_DAY) {
+		context.isClear = true;
 		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
 		FadeManager::GetInstance().StartFade(fadeOut, [&engine, this]() {
 			engine.SetNextScene(std::make_shared<ResultScene>());
-			});
+		});
 	}
 	else {
 		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
@@ -147,4 +145,7 @@ void MainGameScene::EndMainGameScene(Engine& engine) {
 			gameState->ChageState(GameEnum::GameState::SelectAction);
 			});
 	}
+	// オートセーブ
+	save.CollectSaveData(context);
+	save.AutoSave();
 }
