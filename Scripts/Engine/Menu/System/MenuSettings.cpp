@@ -59,9 +59,9 @@ void MenuSettings::Initialize(Engine& engine) {
  */
 void MenuSettings::Open() {
     MenuBase::Open();
+    currentIndex = -1;
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
-        currentIndex = -1;
         // ƒ{ƒ^ƒ“‚Ì€”õˆ—
         for (auto& button : buttonList) {
             button->Setup();

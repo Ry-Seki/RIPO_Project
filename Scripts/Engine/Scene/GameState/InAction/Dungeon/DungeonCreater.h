@@ -9,14 +9,23 @@
 #include "../../../../../Data/Dungeon/DungeonFloorData.h"
 #include "../../../../../Data/Dungeon/DungeonResourceData.h"
 #include "../../../../../Data/Dungeon/DungeonProgressData.h"
+#include "../../../../../Data/Dungeon/DungeonEntranceData.h"
+#include "../../../../GameConst.h"
+
+#include <vector>
 
 /*
  *	@brief	ダンジョン生成クラス
  */
 class DungeonCreater {
 private:
+	int dungeonID = -1;
 	FloorData floorData;
-	DungeonResourceData resourceData;
+	std::vector<EntranceData> entranceDataList;
+	std::vector<EntranceData> stairDataList;
+	EntranceData goalData;
+	DungeonResourceData dungeonResourceData;
+	DungeonEntranceData dungeonEntranceData;
 
 private:
 
@@ -30,12 +39,18 @@ public:
 	 */
 	void Setup();
 	/*
+	 *	@brief	片付け処理
+	 */
+	void Teardown();
+
+public:
+	/*
 	 *	@brief		ダンジョン生成
 	 *	@param[in]	int floorID
 	 *  @param[in]	const std::vector<std::vector<int>>& treasureIDList
-	 *  @param[out]	int& stairID
+	 *	@param[in]	int dungeon
 	 */
-	void GenerateDungeon(int floorID, const std::vector<std::vector<int>>& treasureIDList, int& stairID);
+	void GenerateDungeon(int floorID, const std::vector<std::vector<int>>& treasureIDList, int dungeon);
 	/*
 	 *	@brief		ダンジョンの再生成
 	 *	@param[in]	int floorID
@@ -43,20 +58,29 @@ public:
 	 *	@param[in]	const int holdTreasureID
 	 *  @param[in]	GameObjectPtr& holdTreasure
 	 *  @param[in]	const std::vector<std::vector<int>>& treasureIDList
-	 *  @param[out]	int& stairID
 	 */
 	void RegenerateDungeon(int floorID, const std::vector<int>& enemySpawnIDList, const int holdTreasureID,
-						   const std::vector<std::vector<int>>& treasureIDList, int& stairID);
+						   const std::vector<std::vector<int>>& treasureIDList);
+
+private:
+	/*
+	 *	@brief	階段、出口のデータの設定
+	 */
+	void SeparateEntranceData();
 
 public:
 	/*
 	 *	@brief		ダンジョンに必要なデータの設定
 	 *	@param[in]	FloorData& setFloorData
 	 *	@param[in]	DungeonResourceData& setResourceData
+	 *	@param[in]	
 	 */
-	inline void SetDungeonData(FloorData& setFloorData, DungeonResourceData& setResourceData) {
+	inline void SetDungeonData(FloorData& setFloorData,
+							   DungeonResourceData& setResourceData,
+							   DungeonEntranceData& setEntranceData) {
 		floorData = setFloorData;
-		resourceData = setResourceData;
+		dungeonResourceData = setResourceData;
+		dungeonEntranceData = setEntranceData;
 	}
 	/*
 	 *	@brief		ダンジョンフロアデータの設定

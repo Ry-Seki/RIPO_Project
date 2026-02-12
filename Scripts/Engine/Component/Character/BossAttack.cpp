@@ -40,16 +40,13 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
 
-	animator->Update(deltaTime);
-	animator->Play(3, 10);
+	animator->Play(3, 1250 * deltaTime);
 
 	// 攻撃の当たり判定
 	auto aabbCollider = boss->GetComponent<AABBCollider>();
 	Vector3 aabbDirection = { 0, 0, 0 };
 	const Vector3 aabbMin = { -500, 0, -500 };
 	const Vector3 aabbMax = { 500, 50, 500 };
-	
-	
 
 	// アニメーションが終わるまで待ちたい
 	// 仮
@@ -65,5 +62,4 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 		// 状態遷移
 		boss->GetComponent<BossComponent>()->SetState(new BossStandby());
 	}
-
 }

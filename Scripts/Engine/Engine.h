@@ -34,6 +34,7 @@ private:
     bool dxlibInitialized = false;          // DxLibの初期化フラグ
     bool effekseerInitialized = false;      // Effekseerの初期化フラグ
     bool initialized = false;               // 初期化フラグ
+    bool isGameEnd = false;
 
 public:
     /*
@@ -121,6 +122,12 @@ public:
      *  @brief      次のシーンの設定
      */
     inline void SetNextScene(ScenePtr setScene) { nextScene = setScene; }
+    /*
+     *  @brief      ゲーム終了フラグの変更
+     *  @param[in]  bool setFlag
+     */
+    inline void SetIsGameEnd(bool setFlag) { isGameEnd = setFlag; }
+
 };
 #endif // !_ENGINE_H_
 

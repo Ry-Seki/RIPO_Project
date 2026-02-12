@@ -23,6 +23,12 @@ private:
 
 public:
 	/*
+	 *	@brief	デストラクタ
+	 */
+	~SelectDetail_Shop() override {}
+
+public:
+	/*
 	 *	@brief	初期化処理
 	 */
 	void Initialize() override;
@@ -42,6 +48,14 @@ public:
 	 *	@brief	片付け処理
 	 */
 	void Teardown() override;
+
+private:
+	/*
+	 *	@brief	購入処理
+	 *	@param[in]	int itemID
+	 *	@param[in]	int buyCount
+	 */
+	void BuyItem(int itemID, int buyCount);
 
 };
 

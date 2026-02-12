@@ -167,6 +167,8 @@
     <ClCompile Include="Scripts\Engine\Component\Character\BossChase.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BossComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BossDeath.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\BossHPBarComponentr.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\BossShootingAttack.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BossStandby.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BulletComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyAttack.cpp" />
@@ -206,7 +208,9 @@
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\WeaponManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuInGame.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp" />
@@ -287,6 +291,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Data\Dungeon\DungeonData.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonEntranceData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonFloorData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonProgressData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonResourceData.h" />
@@ -323,6 +328,8 @@
     <ClInclude Include="Scripts\Engine\Component\Character\BossChase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossDeath.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BossHPBarComponentr.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BossShootingAttack.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossStandby.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossState.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BulletComponent.h" />
@@ -387,7 +394,9 @@
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\WeaponManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuInGame.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuBase.h" />

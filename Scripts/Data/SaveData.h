@@ -19,6 +19,7 @@ struct GameProgressData {
 	bool isHalfDay;			// 半日消費フラグ
 	int currentMoney;		// 現在の所持金
 	int totalTreasureCount;	// 累計お宝獲得数
+	bool isClear = false;	// クリアフラグ
 };
 /*
  *	@breif	プレイヤーステータスレベルデータ
@@ -50,7 +51,6 @@ struct SettingsData {
  */
 struct SaveData {
 	bool isUsed = false;
-	bool isClear = false;
 	GameProgressData game;
 	PlayerStatusLevelData player;
 	WorldProgressData world;

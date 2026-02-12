@@ -53,8 +53,9 @@ namespace CharacterUtility {
 		const Vector3& AABBMax,
 		const Vector3& capsuleStart,
 		const Vector3& capsuleEnd,
-		const float& capsuleRadius) {
-		CharacterManager::GetInstance().GenerateEnemy(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
+		const float& capsuleRadius,
+		int enemyID) {
+		CharacterManager::GetInstance().GenerateEnemy(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius, enemyID);
 	}
 
 	/*
@@ -74,8 +75,9 @@ namespace CharacterUtility {
 		const Vector3& AABBMax,
 		const Vector3& capsuleStart,
 		const Vector3& capsuleEnd,
-		const float& capsuleRadius) {
-		CharacterManager::GetInstance().GenerateBoss(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
+		const float& capsuleRadius,
+		int bossID) {
+		CharacterManager::GetInstance().GenerateBoss(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius, bossID);
 	}
 	/*
 	 *	ID指定のキャラクター削除

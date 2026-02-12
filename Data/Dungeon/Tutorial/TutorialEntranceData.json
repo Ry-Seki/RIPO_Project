@@ -1,0 +1,15 @@
+{
+  "Floor": [
+    {
+      "Goal": [
+        {
+          "name": "Goal",
+          "positoin": 0,
+          "rotation": 0,
+          "AABBmin": [ -500, -500, -500 ],
+          "AABBmax": [ 500, 800, 500 ]
+        }
+      ]
+    }
+  ]
+}

@@ -9,6 +9,7 @@
 #include "../../Manager/CameraManager.h"
 #include "BossStandby.h"
 #include "BossAttack.h"
+#include "BossShootingAttack.h"
 #include "../../Stage/StageUtility.h"
 
 using namespace StageUtility;
@@ -69,7 +70,7 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 	}
 	// ŽË’ö‹——£”»’è
 	if (PLAYER_DISTANCE > Distance(player->position, boss->position)) {
-		bossComponent->SetState(new BossAttack());
+		bossComponent->SetState(new BossShootingAttack());
 	}
 }
 

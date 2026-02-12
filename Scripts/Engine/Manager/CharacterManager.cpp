@@ -12,6 +12,7 @@
 #include "../Component/CapsuleCollider.h"
 #include "../Component/AnimatorComponent.h"
 #include "../Component/Character/HPBarComponent.h"
+#include "../Component/Character/BossHPBarComponentr.h"
 
 CharacterManager::CharacterManager()
 	: engine(nullptr) {
@@ -97,9 +98,10 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 	const Vector3& AABBMax,
 	const Vector3& capsuleStart,
 	const Vector3& capsuleEnd,
-	const float& capsuleRadius) {
+	const float& capsuleRadius,
+	int enemyID) {
 	// 敵のベース作成
-	GameObjectPtr enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
+   	GameObjectPtr enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	// アニメーターコンポーネント追加
 	enemy->AddComponent<AnimatorComponent>();
 	// HPバーコンポーネント追加
@@ -109,6 +111,10 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 	aabbCollider->aabb = { AABBMin, AABBMax };
 	// シーンが持つゲームオブジェクト配列に追加
 	engine->AddGameObject(enemy);
+	auto component = enemy->GetComponent<EnemyComponent>();
+	if (component) {
+		component->SetEnemyStart(enemyID);
+	}
 	// 生成キャラクターリストに追加
 	createCharacterList.push_back(enemy);
 	return enemy;
@@ -125,11 +131,14 @@ GameObjectPtr CharacterManager::GenerateBoss(
 	const Vector3& AABBMax,
 	const Vector3& capsuleStart,
 	const Vector3& capsuleEnd,
-	const float& capsuleRadius) {
+	const float& capsuleRadius,
+	const int bossID) {
 	// ボスのベース作成
 	GameObjectPtr boss = CreateCharacter<BossComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	// アニメーターコンポーネント追加
 	boss->AddComponent<AnimatorComponent>();
+	// ボスのHPバーコンポーネント追加
+	boss->AddComponent<BossHPBarComponent>();
 	// AABBコライダーコンポーネント追加
 	AABBColliderPtr aabbCollider = boss->AddComponent<AABBCollider>();
 	aabbCollider->aabb = { AABBMin, AABBMax };
@@ -137,6 +146,11 @@ GameObjectPtr CharacterManager::GenerateBoss(
 	engine->AddGameObject(boss);
 	// 生成キャラクターリストに追加
 	createCharacterList.push_back(boss);
+	auto component = boss->GetComponent<BossComponent>();
+	if (component) {
+		// IDによって挙動を変える
+		component->SetBossStart(bossID + 100);
+	}
 	return boss;
 }
 

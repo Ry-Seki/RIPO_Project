@@ -11,23 +11,30 @@
 #include "../../../../Fade/FadeFactory.h"
 #include "../../../../Fade/FadeManager.h"
 #include "../../../../Audio/AudioUtility.h"
+#include "../../../../Menu/MenuManager.h"
+#include "../../../../Menu/MainGame/Shop/MenuSelectShopItem.h"
+#include "../../../../Menu/MainGame/Shop/MenuPurchaseCount.h"
 
 /*
  *	@brief	初期化処理
  */
 void SelectDetail_Shop::Initialize() {
+	auto& menu = MenuManager::GetInstance();
+	auto select = menu.GetMenu<MenuSelectShopItem>();
+	auto purchase = menu.GetMenu<MenuPurchaseCount>();
+
+	select->SetCallback([this]() {
+		owner->GetOwner()->ChageState(GameEnum::GameState::InAction);
+	});
+	purchase->SetCallBack([this](int itemID, int buyCount) {
+		BuyItem(itemID, buyCount);
+	});
 }
 /*
  *	@brief	準備前処理
  */
 void SelectDetail_Shop::Setup() {
-	isStart = false;
-	inputHandle = false;
-	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fade, [this]() {
-		isStart = true;
-		MoneyManager::GetInstance().SetItemDataList(itemDataList);
-	});
+	MenuManager::GetInstance().OpenMenu<MenuSelectShopItem>();
 }
 /*
  *	@brief	更新処理
@@ -35,93 +42,26 @@ void SelectDetail_Shop::Setup() {
 void SelectDetail_Shop::Update(float deltaTime) {
 	if (!isStart) return;
 
-	MoneyManager& money = MoneyManager::GetInstance();
-	if (!inputHandle) {
-		auto& context = owner->GetOwner()->GetActionContext();
-		if (CheckHitKey(KEY_INPUT_1)) {
-			inputHandle = true;
-			int ID = 0;
-			if (money.GetCurrentMoney() < itemDataList[ID]->price) return;
-
-			// SEの再生
-			AudioUtility::PlaySE("DebugSE");
-			// 所持金から引く
-			money.SubItemMoney(ID);
-			// 購入済みリストに追加
-			buyItemIDList.push_back(ID);
-		} else if (CheckHitKey(KEY_INPUT_2)) {
-			inputHandle = true;
-			int ID = 1;
-			if (money.GetCurrentMoney() < itemDataList[ID]->price) return;
-
-			// SEの再生
-			AudioUtility::PlaySE("DebugSE");
-			// 所持金から引く
-			money.SubItemMoney(ID);
-			// 購入済みリストに追加
-			buyItemIDList.push_back(ID);
-		} else if (CheckHitKey(KEY_INPUT_3)) {
-			inputHandle = true;
-			int ID = 2;
-			if (money.GetCurrentMoney() < itemDataList[ID]->price) return;
-
-			// SEの再生
-			AudioUtility::PlaySE("DebugSE");
-			// 所持金から引く
-			money.SubItemMoney(ID);
-			// 購入済みリストに追加
-			buyItemIDList.push_back(ID);
-		} else if (CheckHitKey(KEY_INPUT_4)) {
-			inputHandle = true;
-			int ID = 3;
-			if (money.GetCurrentMoney() < itemDataList[ID]->price) return;
-
-			// SEの再生
-			AudioUtility::PlaySE("DebugSE");
-			// 所持金から引く
-			money.SubItemMoney(ID);
-			// 購入済みリストに追加
-			buyItemIDList.push_back(ID);
-		} else if (CheckHitKey(KEY_INPUT_SPACE)) {
-			// SEの再生
-			AudioUtility::PlaySE("DebugSE");
-			inputHandle = true;
-			isStart = false;
-			context.buyIDList = buyItemIDList;
-			FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-			FadeManager::GetInstance().StartFade(fade, [this]() {
-				owner->GetOwner()->ChageState(GameEnum::GameState::InAction);
-			});
-		}
-
-	}
-	// キー離しで再度入力受付
-	if (CheckHitKey(KEY_INPUT_1) == 0 && CheckHitKey(KEY_INPUT_2) == 0 
-		&& CheckHitKey(KEY_INPUT_3) == 0 && CheckHitKey(KEY_INPUT_4) == 0) {
-		inputHandle = false;
-	}
-
 }
 /*
  *	@brief	描画処理
  */
 void SelectDetail_Shop::Render() {
 	if (!isStart) return;
-
-	DrawFormatString(50, 50, GetColor(255, 255, 255), "=== Selection Shop Sample ===");
-	DrawFormatString(50, 80, GetColor(0, 255, 0), "1: HP");
-	DrawFormatString(50, 100, GetColor(0, 255, 0), "2: Stamina");
-	DrawFormatString(50, 120, GetColor(0, 255, 0), "3: Strength");
-	DrawFormatString(50, 140, GetColor(0, 255, 0), "4: ResistTime");
-	DrawFormatString(50, 160, GetColor(0, 255, 0), "BuyItemList : ");
-
-	auto& context = owner->GetOwner()->GetActionContext();
-	for (int i = 0, max = buyItemIDList.size(); i < max; i++) {
-		DrawFormatString(startX + i * intervalX, 160, GetColor(255, 255, 255), "%d", buyItemIDList[i] + 1);
-	}
 }
 /*
  *	@brief	片付け処理
  */
 void SelectDetail_Shop::Teardown() {
+}
+/*
+ *	@brief	購入処理
+ *	@param[in]	int itemID
+ *	@param[in]	int buyCount
+ */
+void SelectDetail_Shop::BuyItem(int itemID, int buyCount) {
+	auto& context = owner->GetOwner()->GetActionContext();
+	for (int i = 0; i < buyCount; i++) {
+		context.buyIDList.push_back(itemID);
+	}
 }

@@ -9,10 +9,18 @@
 #include "../../Audio/AudioUtility.h"
 #include "../../../Engine/Engine.h"
 #include "../../Scene/MainGameScene.h"
-#include "../../Menu/MenuManager.h"
-#include "../../Menu/Title/MenuSelectNewGame.h"
-#include "../../Menu/Title/MenuSelectLoadGame.h"
-#include "../../Menu/Title/MenuSystem.h"
+#include "../MenuManager.h"
+#include "../Title/MenuSelectNewGame.h"
+#include "../Title/MenuSelectLoadGame.h"
+#include "../Title/MenuSystem.h"
+#include "../System/MenuConfirm.h"
+#include "../MenuResourcesFactory.h"
+#include "../../../Data/UI/MenuInfo.h"
+#include "../../Load/LoadManager.h"
+#include "../../Load/Sprite/LoadSprite.h"
+#include "../../Load/JSON/LoadJSON.h"
+#include "../../Input/InputUtility.h"
+#include "../../Scene/TutorialScene.h"
 
 #include <DxLib.h>
 
@@ -20,69 +28,107 @@
  *	@brief	初期化処理
  */
 void MenuGameModeSelect::Initialize(Engine& engine) {
+	auto& load = LoadManager::GetInstance();
+	auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
+	auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
+
+	load.SetOnComplete([this, &engine, menuJSON, navigation]() {
+		MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
+		for (auto& button : result.buttonList) {
+			if (!button) continue;
+
+			eventSystem.RegisterButton(button.get());
+		}
+		eventSystem.Initialize(0);
+		buttonList = std::move(result.buttonList);
+		spriteList = std::move(result.spriteList);
+		for (int i = 0, max = buttonList.size(); i < max; i++) {
+			UIButtonBase* button = buttonList[i].get();
+			if (!button) continue;
+
+			button->RegisterUpdateSelectButton([this, button]() {
+				eventSystem.UpdateSelectButton(button);
+			});
+
+			button->RegisterOnClick([this, &engine, i]() {
+				SelectButtonExecute(engine, i);
+			});
+		}
+		for (auto& sprite : spriteList) {
+			if (sprite->GetName() == "SelectTitleMenu_BackGround")
+				backgroundSprite = sprite.get();
+		}
+		eventSystem.LoadNavigation(navigation->GetData());
+	});
+
 }
 /*
  *	@brief	メニューを開く
  */
 void MenuGameModeSelect::Open() {
 	MenuBase::Open();
-	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
-		isStart = true;
-	});
+	for (auto& sprite : spriteList) {
+		sprite->Setup();
+	}
+	for (auto& button : buttonList) {
+		button->Setup();
+	}
+	eventSystem.ApplySelection();
+	InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
 }
 /*
  *	@brief	更新処理
  */
 void MenuGameModeSelect::Update(Engine& engine, float unscaledDeltaTime) {
-	if (!isStart) return;
+	auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
+	// イベントシステムの更新
+	eventSystem.Update(unscaledDeltaTime);
+	// ボタンの更新
+	for (auto& button : buttonList) {
+		if (button) button->Update(unscaledDeltaTime);
+	}
+	// 現在選択されているボタンの取得
+	auto button = eventSystem.GetCurrentSelectButton();
+	if (!button) return;
 
-	MenuManager& menu = MenuManager::GetInstance();
-	// TODO : モードによって処理を変える
-	if (!inputHandle) {
-		if (CheckHitKey(KEY_INPUT_1)) {
-			AudioUtility::PlaySE("DebugSE");
-			inputHandle = true;
-			FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.0f, FadeDirection::Out, FadeMode::Stop);
-			FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-				isVisible = false;
-				menu.OpenMenu<MenuSelectNewGame>();
-			});
-		} else if (CheckHitKey(KEY_INPUT_2)) {
-			AudioUtility::PlaySE("DebugSE");
-			inputHandle = true;
-			FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.0f, FadeDirection::Out, FadeMode::Stop);
-			FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-				isVisible = false;
-				menu.OpenMenu<MenuSelectLoadGame>();
-			});
-		} else if (CheckHitKey(KEY_INPUT_3)) {
-			AudioUtility::PlaySE("DebugSE");
-			inputHandle = true;
-			FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.0f, FadeDirection::Out, FadeMode::Stop);
-			FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-				isVisible = false;
-				menu.OpenMenu<MenuSystem>();
-			});
-		} else if (CheckHitKey(KEY_INPUT_ESCAPE)) {
-			AudioUtility::PlaySE("DebugSE");
-			inputHandle = true;
-			FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.0f, FadeDirection::Out, FadeMode::Stop);
-			FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-				menu.CloseTopMenu();
-			});
-		}
+	if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+		button->OnPressDown();
+	}
+}
+/*
+ *	@brief	アニメーション等の更新
+ */
+void MenuGameModeSelect::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
+	animTimer += unscaledDeltaTime;
+
+	if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
+	animTimer -= GameConst::UI_ANIM_INTERVAL;
+
+	for (auto& sprite : spriteList) {
+		if (!sprite) continue;
+
+		int frameCount = sprite->GetFrameCount();
+		if (frameCount <= 1) continue;
+
+		animFrame = (animFrame + 1) % frameCount;
+		sprite->SetFrameIndex(animFrame);
 	}
 }
 /*
  *	@brief	描画処理
  */
 void MenuGameModeSelect::Render() {
-	DrawFormatString(50, 70, GetColor(255, 255, 255), "=== Selection GameMode ===");
-	DrawFormatString(50, 100, GetColor(0, 255, 0), "1: NewGame");
-	DrawFormatString(50, 120, GetColor(0, 255, 0), "2: LoadGame");
-	DrawFormatString(50, 140, GetColor(0, 255, 0), "3: System");
-	DrawFormatString(300, 450, GetColor(255, 255, 255), "Return->EscapeKey");
+	if (backgroundSprite->IsVisible()) {
+		backgroundSprite->Render();
+	}
+	for (auto& button : buttonList) {
+		if (!button->IsVisible()) continue;
+		button->Render();
+	}
+	for (auto& sprite : spriteList) {
+		if (sprite.get() == backgroundSprite || !sprite->IsVisible()) continue;
+		sprite->Render();
+	}
 }
 /*
  *	@brief	メニューを閉じる
@@ -101,4 +147,41 @@ void MenuGameModeSelect::Resume() {
 		isStart = true;
 		inputHandle = false;
 	});
+}
+/*
+ *	@brief		ボタンの押された時の処理
+ *	@param[in]	int buttonIndex
+ */
+void MenuGameModeSelect::SelectButtonExecute(Engine& engine, int buttonIndex) {
+	auto& menu = MenuManager::GetInstance();
+	auto confirm = menu.GetMenu<MenuConfirm>();
+	if (buttonIndex == 0) {
+		AudioUtility::PlaySE("DebugSE");
+		confirm->SetCallback([this, confirm, &menu, &engine](GameEnum::ConfirmResult result) {
+			if (result == GameEnum::ConfirmResult::Yes) {
+				AudioUtility::PlaySE("DebugSE");
+				menu.CloseAllMenu();
+				engine.SetNextScene(std::make_shared<TutorialScene>());
+			}
+			menu.CloseMenu(confirm);
+		});
+		menu.OpenMenu<MenuConfirm>();
+	} else if (buttonIndex == 1) {
+		AudioUtility::PlaySE("DebugSE");
+		menu.OpenMenu<MenuSelectLoadGame>();
+	} else if (buttonIndex == 2) {
+		AudioUtility::PlaySE("DebugSE");
+		menu.OpenMenu<MenuSystem>();
+	} else if (buttonIndex == 3) {
+		AudioUtility::PlaySE("DebugSE");
+		confirm->SetCallback([this, confirm, &menu, &engine](GameEnum::ConfirmResult result) {
+			if (result == GameEnum::ConfirmResult::Yes) {
+				AudioUtility::PlaySE("DebugSE");
+				menu.CloseAllMenu();
+				engine.SetIsGameEnd(true);
+			}
+			menu.CloseMenu(confirm);
+		});
+		menu.OpenMenu<MenuConfirm>();
+	}
 }

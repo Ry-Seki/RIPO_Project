@@ -1,0 +1,37 @@
+{
+  "Floor": [
+    {
+      "Stair": [
+        {
+          "MoveID": 1,
+          "name": "Stair",
+          "position": 0,
+          "rotation": 0,
+          "AABBmin": [ -500, -500, -10 ],
+          "AABBmax": [ 500, 800, 10 ]
+        }
+      ],
+      "Goal": [
+        {
+          "name": "Goal",
+          "position": 0,
+          "rotation": 0,
+          "AABBmin": [ -1000, -700, -10 ],
+          "AABBmax": [ 1000, 700, 10 ]
+        }
+      ]
+    },
+    {
+      "Stair": [
+        {
+          "MoveID": 0,
+          "name": "Stair",
+          "position": 0,
+          "rotation": 0,
+          "AABBmin": [ -500, -500, -10 ],
+          "AABBmax": [ 500, 800, 10 ]
+        }
+      ]
+    }
+  ]
+}

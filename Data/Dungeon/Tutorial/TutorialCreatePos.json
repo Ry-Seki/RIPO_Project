@@ -1,0 +1,20 @@
+{
+  "Player": {
+    "StartPos": "Col_StartPos",
+    "GoalPos": "Col_GoalPos",
+    "StairsPos": "Col_StairsPos",
+    "RespawnPos": "Col_RespownPos"
+  },
+  "Enemy": {
+    "SpawnPos": {
+      "0": "Sponer_0"
+    }
+  },
+  "Treasure": {
+    "SpawnPos": {
+      "0": {
+        "16": "TreasureSponer_0"
+      }
+    }
+  }
+}

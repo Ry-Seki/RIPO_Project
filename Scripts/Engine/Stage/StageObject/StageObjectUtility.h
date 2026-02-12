@@ -109,6 +109,22 @@ namespace StageObjectUtility {
 		return StageObjectManager::GetInstance().GetStageObject(objectName);
 	}
 	/*
+	 *	@brief		移動先フロアIDの取得
+	 *	@return		int
+	 *	@author		Seki
+	 */
+	inline int GetMoveStairID() {
+		return StageObjectManager::GetInstance().GetMoveStairID();
+	}
+	/*
+	 *	@brief		移動先フロアIDの設定
+	 *	@param[in]	int setID
+	 *	@author		Seki
+	 */
+	inline void SetMoveStairID(int setID) {
+		StageObjectManager::GetInstance().SetMoveStairID(setID);
+	}
+	/*
 	 *	脱出フラグの取得
 	 *  @return		bool
 	 */

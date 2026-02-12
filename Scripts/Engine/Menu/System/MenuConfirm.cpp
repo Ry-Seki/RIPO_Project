@@ -15,7 +15,6 @@
 #include "../MenuResourcesFactory.h"
 #include "../../../Data/UI/MenuInfo.h"
 #include "../../Menu/MenuManager.h"
-#include "../../GameConst.h"
 
 #include <DxLib.h>
 

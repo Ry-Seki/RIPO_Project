@@ -1,0 +1,82 @@
+{
+  "Sprites": [
+    {
+      "Name": "SelectTitleMenu",
+      "Rect": {
+        "X": 170,
+        "Y": 600,
+        "Width": 1640,
+        "Height": 215
+      },
+      "Resources": [
+        "Res/Menu/Title/Trealine_SelectGameMode.png"
+      ]
+    },
+    {
+      "Name": "SelectTitleMenu_BackGround",
+      "Rect": {
+        "X": 120,
+        "Y": 721,
+        "Width": 1640,
+        "Height": 300
+      },
+      "Resources": [
+        "Res/Menu/Title/Trealine_SelectGameMode_Background.png"
+      ]
+    }
+  ],
+  "Buttons": [
+    {
+      "Name": "NewGame",
+      "Type": "Single",
+      "Rect": {
+        "X": 115,
+        "Y": 720,
+        "Width": 590,
+        "Height": 90
+      },
+      "Resources": {
+        "Select": "Res/Menu/Title/Trealine_SelectGameMode_Selected_Button.png"
+      }
+    },
+    {
+      "Name": "LoadGame",
+      "Type": "Single",
+      "Rect": {
+        "X": 667,
+        "Y": 720,
+        "Width": 590,
+        "Height": 90
+      },
+      "Resources": {
+        "Select": "Res/Menu/Title/Trealine_SelectGameMode_Selected_Button.png"
+      }
+    },
+    {
+      "Name": "System",
+      "Type": "Single",
+      "Rect": {
+        "X": 1250,
+        "Y": 720,
+        "Width": 480,
+        "Height": 90
+      },
+      "Resources": {
+        "Select": "Res/Menu/Title/Trealine_SelectGameMode_Selected_SystemButton.png"
+      }
+    },
+    {
+      "Name": "EndGame",
+      "Type": "Single",
+      "Rect": {
+        "X": 650,
+        "Y": 930,
+        "Width": 700,
+        "Height": 90
+      },
+      "Resources": {
+        "Select": "Res/Menu/Title/Trealine_SelectGameMode_Selected_EndGameButton.png"
+      }
+    }
+  ]
+}

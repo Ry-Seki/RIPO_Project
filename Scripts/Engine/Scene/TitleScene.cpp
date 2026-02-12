@@ -29,8 +29,6 @@
 void TitleScene::Initialize(Engine& engine) {
 	isStart = false;
 	inputHandle = false;
-	auto fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fadeIn);
 	MenuManager::GetInstance().GetMenu<MenuTitle>();
 	MenuManager::GetInstance().GetMenu<MenuGameModeSelect>();
 	MenuManager::GetInstance().GetMenu<MenuSystem>();
@@ -38,6 +36,8 @@ void TitleScene::Initialize(Engine& engine) {
 	MenuManager::GetInstance().GetMenu<MenuConfirm>();
 	auto debugSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/ButtonPush_Debug.mp3");
 	auto goalSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/GoalSE.mp3");
+	auto dungeonBGM01 = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/Dungeon_1/êØÇÃéç.mp3");
+	auto dungeonBGM02 = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/Dungeon_2/ApparitionÅfs_Lullaby.mp3");
 	std::vector<std::shared_ptr<LoadSprite>> loadBGList;
 	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black1.jpg"));
 	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black2.jpg"));

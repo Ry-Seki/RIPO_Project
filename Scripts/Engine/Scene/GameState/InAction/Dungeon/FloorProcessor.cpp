@@ -121,8 +121,7 @@ void FloorProcessor::SetupNextFloor() {
 	dungeonCreater.SetFloorData(setFloorData);
 	// フロアを再生成
 	dungeonCreater.RegenerateDungeon(
-		currentFloor, enemyFloorList[currentFloor], holdTreasureObjectID, GetSpawnTreasureIDTable(), nextFloor
-	);
+		currentFloor, enemyFloorList[currentFloor], holdTreasureObjectID, GetSpawnTreasureIDTable());
 	// フロアデータの更新
 	floorData.TrySetFloorData(currentFloor, setFloorData);
 	// フェードイン
@@ -142,6 +141,7 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart, std::v
 	currentFloor = 0;
 	enemyFloorList.resize(16);
 	// データの取得
+	dungeonID = setContext.dungeonID;
 	stageData = setContext.dungeonStageData;
 	floorData = setContext.dungeonFloorData;
 	isEventDay = setContext.isCurrentEvent;
@@ -160,15 +160,18 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart, std::v
 		FloorData setFloorData;
 		// フロアデータの変更
 		floorData.TryGetFloorData(currentFloor, setFloorData);
+		// 階段、出口データの設定
+		entranceData.LoadFromJSON(resourceData.stageFloorResource->GetData());
+
 		setFloorData.isFirst = false;
 		// ボスを生成するか判定
 		if (dungeonProgressData.isBossDefeated) setFloorData.bossSpawnCount = 0;
 		//　お宝生成数の設定
 		setFloorData.treasureSpawnCount = GetSpawnTreasureCount();
 		// ダンジョン生成クラスに必要なデータを設定
-		dungeonCreater.SetDungeonData(setFloorData, resourceData);
+		dungeonCreater.SetDungeonData(setFloorData, resourceData, entranceData);
 		// ダンジョンの生成
-		dungeonCreater.GenerateDungeon(currentFloor, GetSpawnTreasureIDTable(), nextFloor);
+		dungeonCreater.GenerateDungeon(currentFloor, GetSpawnTreasureIDTable(), dungeonID);
 		// フロアデータの更新
 		floorData.TrySetFloorData(currentFloor, setFloorData);
 		isStart = true;
@@ -196,6 +199,7 @@ void FloorProcessor::ChangeFloor() {
 	// 現在のフロアの片付け処理
 	TeardownCurrentFloor();
 	// フロアの変更
+	nextFloor = StageObjectUtility::GetMoveStairID();
 	StageManager::GetInstance().NextStage(nextFloor);
 	currentFloor = nextFloor;
 	// 次の階層の準備処理
@@ -205,6 +209,7 @@ void FloorProcessor::ChangeFloor() {
  *	@brief	ダンジョン終了処理
  */
 void FloorProcessor::EndDungeon() {
+	dungeonID = -1;
 	currentFloor = -1;			
 	nextFloor = -1;
 	holdTreasureObjectID = -1;
@@ -212,8 +217,9 @@ void FloorProcessor::EndDungeon() {
 	isEventDay = false;
 	isDungeonStart = false;
 	enemyFloorList.clear();
-	resourceData.ResetResourceData();
+	resourceData.ClearResourceData();
 	stageData.ClearDungeonStageMap();
+	dungeonCreater.Teardown();
 	GameObjectUtility::SetUseObjectColliderFlag(false);
 	CharacterUtility::RemoveAllCharacter();
 	StageManager::GetInstance().Execute();

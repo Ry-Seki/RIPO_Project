@@ -8,6 +8,9 @@
 #include "PlayerComponent.h"
 #include "../../Manager/CameraManager.h"
 #include "BossDeath.h"
+#include "BossChase.h"
+#include "BulletComponent.h"
+#include "BossHPBarComponentr.h"
 
 /*
  *	コンストラクタ
@@ -23,10 +26,12 @@ BossComponent::BossComponent(BossState* initState)
 	, animator(nullptr)
 	, state(initState)
 	, modelHandle(-1)
+	, HP(0)
 	, coolTime(3)
 	, attackIsTriger(false)
 	, damageIsTriger(false)
 	, moveFrag(false)
+	, hitFlag(false)
 	, homePosition(Vector3::zero)
 {
 }
@@ -46,7 +51,6 @@ void BossComponent::Start()
 	if (animator == nullptr) return;
 	// モデルハンドルのセット
 	animator->SetModelHandle(modelHandle);
-	//animator->SetAttachIndex(animationHandle);
 
 	animator->LoadIndex(true);
 
@@ -58,6 +62,8 @@ void BossComponent::Start()
 	if (state == nullptr)
 		state = new BossStandby();
 	state->Start(boss);
+
+	
 }
 
 /*
@@ -76,26 +82,62 @@ void BossComponent::Update(float deltaTime)
  */
 void BossComponent::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other)
 {
+	if (coolTime <= 0) {
+		attackIsTriger = false;
+	}
 	if (!attackIsTriger && other->GetOwner()->name == "Player") {
 		// 当たったらダメージを与える
 		auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
-		// 今はとりあえず適当なダメージ
-		playerStatus.HP = playerStatus.HP - 20;
+		playerStatus.HP = playerStatus.HP - status.attack;
 		// ダメージを反映
 		player->GetComponent<PlayerComponent>()->SetPlayerStatus(playerStatus);
 
 		attackIsTriger = true;
 	}
-	else if (coolTime <= 0) {
-		attackIsTriger = false;
-		coolTime = 2;
-	}
 
-	// 死亡判定
+	// ダメージ判定
 	if (!damageIsTriger && other->GetOwner()->name == "bullet") {
-		damageIsTriger = true;
-		if (state != nullptr)
+		// ダメージを受ける
+		HP -= other->GetOwner()->GetComponent<BulletComponent>()->GetHitDamage();;
+		if (HP <= 0) {
+			HP = 0;
+		}
+		// 死亡判定
+		if (HP <= 0 && state != nullptr) {
+			damageIsTriger = true;
 			state = new BossDeath();
-		state->Start(boss);
+			state->Start(boss);
+		}
+		// 死ななかった場合
+		else {
+			state = new BossChase();
+			state->Start(boss);
+			hitFlag = true;
+		}
 	}
+	coolTime = 2;
+}
+
+void BossComponent::SetBossStart(int ID)
+{
+	// 敵のデータ取得
+	switch (ID)
+	{
+	case 101:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage1Boss);
+		break;
+	case 102:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage2Boss);
+		break;
+	case 103:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage3Boss);
+		break;
+	case 104:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage4Boss);
+		break;
+	}
+	HP = status.HP;
+
+	boss->GetComponent<BossHPBarComponent>()->SetMaxHP(status.HP);
+	boss->GetComponent<BossHPBarComponent>()->SetDisplayHP();
 }

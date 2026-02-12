@@ -1,0 +1,78 @@
+{
+  "Buttons": [
+    {
+      "Name": "HPUpGrade",
+      "Type": "Single",
+      "Rect": {
+        "X": 1000,
+        "Y": 50,
+        "Width": 700,
+        "Height": 100
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "StaminaUpGrade",
+      "Type": "Single",
+      "Rect": {
+        "X": 1000,
+        "Y": 200,
+        "Width": 700,
+        "Height": 100
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "StrengthUpGrade",
+      "Type": "Single",
+      "Rect": {
+        "X": 1000,
+        "Y": 350,
+        "Width": 700,
+        "Height": 100
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "ResistTimeUpGrade",
+      "Type": "Single",
+      "Rect": {
+        "X": 1000,
+        "Y": 500,
+        "Width": 700,
+        "Height": 100
+      },
+      "Resources": {
+      }
+    },
+    {
+      "Name": "SubmachineGun",
+      "Type": "Single",
+      "Rect": {
+        "X": 1000,
+        "Y": 650,
+        "Width": 700,
+        "Height": 100
+      },
+      "Resources": {
+
+      }
+    },
+    {
+      "Name": "Back",
+      "Type": "Single",
+      "Rect": {
+        "X": 1000,
+        "Y": 800,
+        "Width": 700,
+        "Height": 100
+      },
+      "Resources": {
+
+      }
+    }
+  ]
+}

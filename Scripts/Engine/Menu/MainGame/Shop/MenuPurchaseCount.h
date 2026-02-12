@@ -11,7 +11,6 @@
 #include "../../../UI/Sprite/Sprite.h"
 #include "../../../UI/EventSystem.h"
 #include "../../../GameEnum.h"
-#include "../../../../Data/ItemCatalogData.h"
 
 #include <vector>
 #include <memory>
@@ -19,27 +18,43 @@
 
  // 前方宣言
 class Engine;
+struct ItemData;
 
 /*
  *	@brief	アイテムの購入数を調整するメニュー
  */
 class MenuPurchaseCount : public MenuBase {
 private:
+	enum class ButtonType {
+		Invalid = -1,
+		AddButton,
+		SubButton,
+		BuyButton,
+		CancelButton,
+		Max
+	};
+
+private:
+	int buyButtonIndex = -1;
 	int purchaseCount = 0;
 	int currentMoney = -1;
 	int purchaseMoney = -1;
-	int targetItemID = -1;
 	int animFrame = 0;
 	float animTimer = 0.0f;
-	ItemCatalogData catalogData;
-	ItemData* targetItemData;
+	ItemData* targetItemData = nullptr;
 	EventSystem eventSystem;
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 	std::function<void(int, int)> Callback = nullptr;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/ShopMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Shop/ShopMenuNavigation.json";
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/PurchaseCount/PurchaseMenuResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Shop/PurchaseCount/PurchaseMenuNavigation.json";
+
+public:
+	/*
+	 *	@brief	デストラクタ
+	 */
+	~MenuPurchaseCount() override {}
 
 public:
 	/*
@@ -96,18 +111,18 @@ private:
 
 public:
 	/*
-	 *	@brief		アイテムIDの設定
-	 *	@param[in]	int setID
-	 */
-	inline void SetItemID(int setID) {
-		targetItemID = setID;
-	}
-	/*
 	 *	@brief		コールバックの設定
 	 *	@param[in]	std::function<void(int, int)> setCallBack
 	 */
 	inline void SetCallBack(std::function<void(int, int)> setCallback) {
 		Callback = setCallback;
+	}
+	/*
+	 *	@brief		アイテムデータの設定
+	 *	@param[in]	ItemData* setData
+	 */
+	inline void SetItemData(ItemData* setData) {
+		targetItemData = setData;
 	}
 };
 

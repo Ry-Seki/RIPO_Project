@@ -27,14 +27,22 @@ class MenuSelectShopItem : public MenuBase {
 private:
 	int animFrame = 0;
 	float animTimer = 0.0f;
+	int selectItemID = -1;
+	int currentMoney = -1;
 	ItemCatalogData catalogData;
 	EventSystem eventSystem;
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
-	std::function<void(int, int)> Callback = nullptr;
+	std::function<void()> Callback = nullptr;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/ShopMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Shop/ShopMenuNavigation.json";
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/SelectItem/SelectItemMenuResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Shop/SelectItem/SelectItemMenuNavigation.json";
+
+public:
+	/*
+	 *	@brief	デストラクタ
+	 */
+	~MenuSelectShopItem() override {}
 
 public:
 	/*
@@ -77,6 +85,14 @@ private:
 	 */
 	void SelectButtonExecute(Engine& engine, int buttonIndex);
 
+public:
+	/*
+	 *	@brief		コールバックの設定
+	 *	@param[in]	std::function<void()> setCallback
+	 */
+	inline void SetCallback(std::function<void()> setCallback) {
+		Callback = setCallback;
+	}
 };
 
 #endif // !MENU_SELECT_SHOP_ITEM_H_

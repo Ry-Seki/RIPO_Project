@@ -20,6 +20,7 @@
 #include "../Manager/WeaponManager.h"
 #include "../../Data/WeaponDataManager.h"
 #include "../Component/Character/HPBarComponent.h"
+#include "../Component/Character/BossHPBarComponentr.h"
 #include "../UI/PlayerUI/PlayerUI.h"
 #include "../Scripts/Engine/Manager/EnemyDataManager.h"
 #include "../Menu/Dungeon/DungeonTreasureUI.h"
@@ -36,7 +37,6 @@ void MainGameScene::Initialize(Engine& engine) {
 	// ゲームステートの初期化
 	gameState = std::make_unique<GameStateMachine>();
 	gameState->Initialize(engine);
-	gameState->ChageState(GameEnum::GameState::SelectAction);
 	MenuManager::GetInstance().GetMenu<MenuInGame>();
 	MenuManager::GetInstance().GetMenu<PlayerUI>();
 	MenuManager::GetInstance().GetMenu<DungeonTreasureUI>();
@@ -60,10 +60,10 @@ void MainGameScene::Initialize(Engine& engine) {
  */
 void MainGameScene::Setup(Engine& engine) {
 	auto& save = SaveDataManager::GetInstance();
-	save.LoadCurrentSlot();
 
 	auto& context = gameState->GetActionContext();
 	save.ApplyLoadData(context);
+	gameState->ChageState(GameEnum::GameState::SelectAction);
 }
 /*
  *  更新処理
@@ -106,11 +106,19 @@ void MainGameScene::Render() {
 	}
 #endif
 
-	// HPゲージ
+	// エネミーHPゲージ
 	for (auto& obj : gameObjects) {
 		if (obj->name != GameConst::_CREATE_POSNAME_ENEMY)
 			continue;
 		auto HPBar = obj->GetComponent<HPBarComponent>();
+		if (HPBar != nullptr)
+			HPBar->ShowHPBar();
+	}
+	// ボスのHPゲージ
+	for (auto& obj : gameObjects) {
+		if (obj->name != GameConst::_CREATE_POSNAME_BOSS)
+			continue;
+		auto HPBar = obj->GetComponent<BossHPBarComponent>();
 		if (HPBar != nullptr)
 			HPBar->ShowHPBar();
 	}
@@ -123,15 +131,13 @@ void MainGameScene::EndMainGameScene(Engine& engine) {
 	auto& save = SaveDataManager::GetInstance();
 	// アクション終了フラグの変更
 	gameState->SetIsActionEnd(false);
-	// オートセーブ
-	save.CollectSaveData(context);
-	save.AutoSave();
 	// シーン遷移条件
 	if (context.elapsedDay > _END_DAY) {
+		context.isClear = true;
 		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
 		FadeManager::GetInstance().StartFade(fadeOut, [&engine, this]() {
 			engine.SetNextScene(std::make_shared<ResultScene>());
-			});
+		});
 	}
 	else {
 		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
@@ -139,4 +145,7 @@ void MainGameScene::EndMainGameScene(Engine& engine) {
 			gameState->ChageState(GameEnum::GameState::SelectAction);
 			});
 	}
+	// オートセーブ
+	save.CollectSaveData(context);
+	save.AutoSave();
 }

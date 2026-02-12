@@ -20,8 +20,8 @@ private:
 	float currentHP;
 	// 遅れてくるHP
 	float displayHP;
-
-	const float halfValue;
+	
+	const float HALF_VALUE;
 
 public:
 	/*
@@ -47,6 +47,10 @@ public:
 	 *	param[in]	Vector3	selfPos		自分自身のポジション
 	 */
 	void ShowHPBar();
+
+public:
+	inline void SetMaxHP(int setValue) { maxHP = setValue; }
+	inline void SetDisplayHP() { displayHP = maxHP; }
 
 };
 

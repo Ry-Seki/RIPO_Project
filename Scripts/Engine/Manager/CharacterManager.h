@@ -97,7 +97,8 @@ public:
 		const Vector3& AABBMax,
 		const Vector3& capsuleStart,
 		const Vector3& capsuleEnd,
-		const float& capsuleRadius);
+		const float& capsuleRadius,
+		int enemyID);
 
 	/*
 	 *	ボス生成
@@ -116,7 +117,8 @@ public:
 		const Vector3& AABBMax,
 		const Vector3& capsuleStart,
 		const Vector3& capsuleEnd,
-		const float& capsuleRadius);
+		const float& capsuleRadius,
+		int bossID);
 
 	/*
 	 *	ID指定のキャラクター削除処理

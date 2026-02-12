@@ -352,8 +352,11 @@
     <Filter Include="ソース ファイル\Engine\Menu\MainGame\Shop">
       <UniqueIdentifier>{d9bc6d9e-c0bb-48c1-bbb3-0575ca52f52a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Camera">
-      <UniqueIdentifier>{2573656e-44cc-4793-b7dd-89afe444a118}</UniqueIdentifier>
+    <Filter Include="ヘッダー ファイル\Engine\Menu\MainGame\Dungeon">
+      <UniqueIdentifier>{ea559f0e-5e3c-45b4-9ada-8aaf5e5e34da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Menu\MainGame\Dungeon">
+      <UniqueIdentifier>{50fd960b-1a0e-46e0-be67-8661180ad80e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -762,11 +765,14 @@
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.cpp">
       <Filter>ソース ファイル\Engine\Menu\MainGame\Shop</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Camera\EventCamera.cpp">
+    <ClCompile Include="Scripts\Engine\Component\Character\BossHPBarComponentr.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Camera\MoveCommand.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.cpp">
+      <Filter>ソース ファイル\Engine\Menu\MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.cpp">
+      <Filter>ソース ファイル\Engine\Menu\MainGame\Dungeon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1364,14 +1370,17 @@
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.h">
       <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Shop</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Camera\EventCamera.h">
-      <Filter>ヘッダー ファイル\Engine\Camera</Filter>
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonEntranceData.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Camera\CameraCommand.h">
-      <Filter>ヘッダー ファイル\Engine\Camera</Filter>
+    <ClInclude Include="Scripts\Engine\Component\Character\BossHPBarComponentr.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Camera\MoveCommand.h">
-      <Filter>ヘッダー ファイル\Engine\Camera</Filter>
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\MainGame</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Dungeon</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
