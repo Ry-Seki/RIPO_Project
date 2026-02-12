@@ -16,5 +16,14 @@
         "16": "TreasureSponer_0"
       }
     }
+  },
+  "PointLight": {
+    "LightPos": [
+      "PointLightPos_0",
+      "PointLightPos_1",
+      "PointLightPos_2",
+      "PointLightPos_3",
+      "PointLightPos_4"
+    ]
   }
 }
