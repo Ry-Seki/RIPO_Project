@@ -11,7 +11,7 @@
 BossShootingAttack::BossShootingAttack()
 	: animator(nullptr)
 	, coolTime(0)
-	, MAX_COOL_TIME(3)
+	, MAX_COOL_TIME(2.5f)
 {
 }
 

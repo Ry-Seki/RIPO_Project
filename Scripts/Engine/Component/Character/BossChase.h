@@ -18,8 +18,10 @@ private:
 	// モデルハンドル
 	int modelHandle;
 
-	// 攻撃用プレイヤー検知距離
+	// 近距離攻撃用プレイヤー検知距離
 	const float PLAYER_DISTANCE;
+	// 遠距離攻撃用プレイヤー検知距離
+	const float SHOOTING_PLAYER_DISTANCE;
 	// 回転スピード
 	const float ROTATE_SPEED;
 	// 移動スピード

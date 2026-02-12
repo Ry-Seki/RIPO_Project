@@ -21,7 +21,8 @@ BossChase::BossChase()
 	: player(nullptr)
 	, animator(nullptr)
 	, modelHandle(-1)
-	, PLAYER_DISTANCE(1000.0)
+	, PLAYER_DISTANCE(2000.0f)
+	, SHOOTING_PLAYER_DISTANCE(4000.0f)
 	, ROTATE_SPEED(3.0f)
 	, MOVE_SPEED(700.0f) {
 }
@@ -58,18 +59,13 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 	ChaseWayPoint(boss, player->position, deltaTime);
 
 	// 状態遷移
-	if (!Vision(boss->position, -ForwardDir(boss->rotation), player->position, 30, 4000)) {
-		// ボスの生成ID
-		//std::vector<int> bossSpawnIDList;
-		// ボスの生成位置の取得
-		//std::unordered_map<int, Vector3> bossSpawnPos = GetEnemySpwanPos(bossSpawnIDList);
-
-		// 一旦初期位置に戻りきってからstandbyに遷移
-		//ChaseWayPoint(boss, bossSpawnPos[0], deltaTime);
-		//bossComponent->SetState(new BossStandby());
-	}
+	/*if (!Vision(boss->position, -ForwardDir(boss->rotation), player->position, 30, 4000)) {
+	}*/
 	// 射程距離判定
 	if (PLAYER_DISTANCE > Distance(player->position, boss->position)) {
+		bossComponent->SetState(new BossAttack());
+	}
+	else if (SHOOTING_PLAYER_DISTANCE > Distance(player->position, boss->position)) {
 		bossComponent->SetState(new BossShootingAttack());
 	}
 }
