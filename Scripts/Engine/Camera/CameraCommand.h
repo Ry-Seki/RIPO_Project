@@ -13,9 +13,19 @@
  */
 class CameraCommand {
 protected:
-	float durationTime;	// 全体時間
-	float elapsedTime;	// 経過時間
-	bool isFinished;	// 終了フラグ
+	float durationTime = 0.0f;	// 全体時間
+	float elapsedTime = 0.0f;	// 経過時間
+
+public:
+	/* 
+	 *	Commandの状態
+	 */
+	enum class CommandState {
+		Waiting,	// 待機中
+		Playing,	// 再生中
+		Finished,	// 終了済み
+	};
+	CommandState state = CommandState::Waiting;
 
 public:
 	CameraCommand() = default;
@@ -27,14 +37,15 @@ public:
 	 */
 	virtual void Start(GameObject* camera) {
 		elapsedTime = 0.0f;
-		isFinished = false;
+		state = CommandState::Playing;
 	}
 
 	/*
 	 *	コマンドの更新処理
 	 */
-	virtual bool Update(GameObject* camera, float deltaTime) = 0;
-
+	virtual void Update(GameObject* camera, float deltaTime) = 0;
 };
+using CameraCommandPtr = std::shared_ptr<CameraCommand>;
+using CameraCommandList = std::vector<CameraCommandPtr>;
 
 #endif // !_CAMERACOMMAND_H_

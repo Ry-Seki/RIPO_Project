@@ -13,6 +13,11 @@
 class MoveCommand : public CameraCommand {
 private:
 	Vector3 startPos;	// 開始位置
+	Vector3 targetPos;	// 移動先
+
+public:
+	MoveCommand(float setDurationTime, Vector3 setTargetPos);
+	virtual ~MoveCommand() = default;
 
 public:
 	/*
@@ -23,7 +28,7 @@ public:
 	/*
 	 *	コマンドの更新処理
 	 */
-	bool Update(GameObject* camera, float deltaTime) override;
+	void Update(GameObject* camera, float deltaTime) override;
 
 };
 

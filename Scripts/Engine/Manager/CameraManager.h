@@ -8,6 +8,7 @@
 #include "../Singleton.h"
 #include "../Engine.h"
 #include "../Component/CameraComponent.h"
+#include "../GameEnum.h"
 
  /*
   *	カメラの管理クラス
@@ -36,6 +37,16 @@ public:
 	void CreateCamera(const std::string& name,
 		const Vector3& position = { 0.0f, 0.0f, 0.0f },
 		const Vector3& rotation = { 0.0f, 0.0f, 0.0f });
+	/*
+	 *	カメラのリセット
+	 *	@author	Seki
+	 */
+	void ResetCamera();
+
+	/*
+	 *	カメライベントの再生
+	 */
+	void CameraEventPlay(GameEnum::CameraEvent event);
 	
 public:
 	/*
@@ -50,12 +61,6 @@ public:
 	 *	カメラのゲット
 	 */
 	inline GameObjectPtr GetCamera() const { return camera; }
-
-	/*
-	 *	カメラのリセット
-	 *	@author	Seki
-	 */
-	void ResetCamera();
 };
 
 #endif // !_CAMERAMANAGER_H_

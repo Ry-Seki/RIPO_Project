@@ -71,7 +71,8 @@ void HandArm::LiftTreasure(GameObjectPtr player, Engine* engine) {
 		}
 		if (hitInfo.collider->GetOwner()->ID == ID1) {
 			liftObject = hitInfo.collider->GetOwner();
-			camera->GetComponent<CameraComponent>()->SetState(GameEnum::CameraState::TPS);
+			// 視点変更イベント再生
+			CameraManager::GetInstance().CameraEventPlay(GameEnum::CameraEvent::ChangeView);
 		}
 		else if (hitInfo.collider->GetOwner()->ID == ID2) {
 			if (player->GetComponent<PlayerComponent>()->GetPlayerStatus().strength > 2) {

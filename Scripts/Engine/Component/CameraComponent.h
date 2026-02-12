@@ -19,11 +19,13 @@ private:
 	float sensitivity;				// 感度
 	float playerDistancePos;		// プレイヤーから離れる距離
 	GameEnum::CameraState state;	// カメラの状態
-	EventCameraPtr eventCamera;		// イベントカメラ
 
 	const float CAMERA_ROTATION_X_MAX;		// カメラの角度のxの最大
 	const float CAMERA_ROTATION_X_MIN;		// カメラの角度のxの最小
 	const float PLAYER_HEAD_HEIGHT;			// プレイヤーの頭の高さ
+
+public:
+	EventCameraPtr eventCamera;		// イベントカメラ
 
 public:
 	CameraComponent();

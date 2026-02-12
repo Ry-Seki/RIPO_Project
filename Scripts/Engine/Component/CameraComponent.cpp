@@ -28,7 +28,6 @@ CameraComponent::CameraComponent()
 void CameraComponent::Start() {
 	// イベントカメラの初期化
 	eventCamera = std::make_shared<EventCamera>();
-	eventCamera->Initialize();
 }
 
 /*

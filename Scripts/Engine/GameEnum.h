@@ -263,5 +263,16 @@ namespace GameEnum {
 
 		Max
 	};
+
+	/*
+	 *	@brief	カメラのイベント
+	 */
+	enum class CameraEvent {
+		Invalid = -1,
+		Death,
+		ChangeView,
+
+		Max
+	};
 }
 #endif // !_GAME_ENUM_H_

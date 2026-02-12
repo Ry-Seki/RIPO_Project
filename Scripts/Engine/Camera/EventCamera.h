@@ -7,18 +7,25 @@
 #define _EVENTCAMERA_H_
 
 #include "../GameObject.h"
-#include <memory>
+#include "../GameEnum.h"
+#include "CameraCommand.h"
+#include <unordered_map>
 
 class EventCamera {
+private:
+	GameEnum::CameraEvent eventNum;
+	std::unordered_map<GameEnum::CameraEvent, CameraCommandList> events;
+	int commandCount;
+
 public:
-	EventCamera() = default;
+	EventCamera();
 	~EventCamera() = default;
 
 public:
 	/*
 	 *	‰Šú‰»ˆ—
 	 */
-	void Initialize();
+	void Initialize(GameObject* camera, GameEnum::CameraEvent setEvent);
 
 	/*
 	 *	XVˆ—
