@@ -143,7 +143,7 @@ public:
 	/*
 	 *	ID�̎擾
 	 */
-	inline bool GetBossID() const { return ID; }
+	inline int GetBossID() const { return ID; }
 
 	/*
 	 *	ID�̕ύX

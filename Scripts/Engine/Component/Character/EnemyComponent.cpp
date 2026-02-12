@@ -45,7 +45,24 @@ EnemyComponent::~EnemyComponent()
 
 void EnemyComponent::Start() {
 	// “G‚Ìƒf[ƒ^æ“¾
-	status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage4Enemy);
+	switch (ID)
+	{
+	case 0:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::TutorialEnemy);
+		break;
+	case 1:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage1Boss);
+		break;
+	case 2:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage2Boss);
+		break;
+	case 3:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage3Boss);
+		break;
+	case 4:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage4Boss);
+		break;
+	}
 	HP = status.HP;
 
 	enemy = GetOwner();
