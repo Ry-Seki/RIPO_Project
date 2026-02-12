@@ -45,6 +45,9 @@ void MenuTitle::Initialize(Engine& engine) {
 				SelectButtonExecute(engine, i);
 			});
 		}
+		for (auto& sprite : spriteList) {
+			if (sprite->GetName() == "StartGame") startGameSprite = sprite.get();
+		}
 		eventSystem.LoadNavigation(navigation->GetData());
 	 });
 }
@@ -53,9 +56,16 @@ void MenuTitle::Initialize(Engine& engine) {
  */
 void MenuTitle::Open() {
 	MenuBase::Open();
+	for (auto& sprite : spriteList) {
+		sprite->Setup();
+	}
+	for (auto& button : buttonList) {
+		button->Setup();
+	}
 	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
 		isStart = true;
+		eventSystem.ApplySelection();
 		InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
 	});
 }
@@ -66,16 +76,18 @@ void MenuTitle::Update(Engine& engine, float unscaledDeltaTime) {
 	if (!isStart) return;
 
 	auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
+	// イベントシステムの更新
+	eventSystem.Update(unscaledDeltaTime);
+	// ボタンの更新
+	for (auto& button : buttonList) {
+		if (button) button->Update(unscaledDeltaTime);
+	}
+	// 現在選択されているボタンの取得
+	auto button = eventSystem.GetCurrentSelectButton();
+	if (!button) return;
 
-	if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]
-		|| input.buttonDown[static_cast<int>(GameEnum::MenuAction::Click)]) {
-		AudioUtility::PlaySE("DebugSE");
-		inputHandle = true;
-		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fadeOut, [this]() {
-			isVisible = false;
-			MenuManager::GetInstance().OpenMenu<MenuGameModeSelect>();
-		});
+	if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+		button->OnPressDown();
 	}
 }
 /*
@@ -102,12 +114,16 @@ void MenuTitle::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
  */
 void MenuTitle::Render() {
 	for (auto& sprite : spriteList ) {
+		if (sprite.get() == startGameSprite || !sprite->IsVisible()) continue;
 		sprite->Render();
 	}
 	for (auto& button : buttonList) {
+		if (!button->IsVisible()) continue;
 		button->Render();
 	}
-	DrawFormatString(300, 400, GetColor(255, 255, 255), "Play->SpaceKey");
+	if (startGameSprite->IsVisible()) {
+		startGameSprite->Render();
+	}
 }
 /*
  *	@brief	メニューを閉じる処理
@@ -116,10 +132,24 @@ void MenuTitle::Close(Engine& engine) {
 	MenuBase::Close(engine);
 }
 /*
+ *	@brief	メニューを中断
+ */
+void MenuTitle::Suspend() {
+	MenuBase::Suspend();
+	for (auto& button : buttonList) {
+		button->SetIsVisible(false);
+	}
+	startGameSprite->SetIsVisible(false);
+}
+/*
  *	@brief	メニューを再開
  */
 void MenuTitle::Resume() {
 	MenuBase::Resume();
+	for (auto& button : buttonList) {
+		button->SetIsVisible(true);
+	}
+	startGameSprite->SetIsVisible(true);
 }
 /*
  *	@brief		ロード済みデータのセット
@@ -132,10 +162,6 @@ void MenuTitle::SelectButtonExecute(Engine& engine, int buttonIndex) {
 	if (buttonIndex == 0) {
 		AudioUtility::PlaySE("DebugSE");
 		inputHandle = true;
-		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::InkSpread, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fadeOut, [this]() {
-			isVisible = false;
-			MenuManager::GetInstance().OpenMenu<MenuGameModeSelect>();
-		});
+		MenuManager::GetInstance().OpenMenu<MenuGameModeSelect>();
 	}
 }

@@ -9,15 +9,17 @@
 #include "../Rect.h"
 
 #include <vector>
-
+#include <string>
 /*
  *	@brief	スプライトクラス
  */
 class Sprite {
 private:
 	int currentIndex = -1;
+	bool isVisible = false;
 	std::vector<int> graphHandleList;
 	Rect rect;
+	std::string name = "";
 
 public:
 	/*
@@ -34,6 +36,16 @@ public:
 	void Render();
 
 public:
+	/*
+	 *	@brief		描画判定
+	 *	@return		bool
+	 */
+	inline bool IsVisible() const { return isVisible; }
+	/*
+	 *	@brief		描画判定の設定
+	 *	@param[in]	bool setFlag
+	 */
+	inline void SetIsVisible(bool setFlag) { isVisible = setFlag; }
 	/*
 	 *	@brief		現在の画像番号の設定
 	 *	@return		int
@@ -59,6 +71,16 @@ public:
 	 *	@param[in]	int setHandle
 	 */
 	inline void SetGraphHandle(int setHandle) { graphHandleList.push_back(setHandle); }
+	/*
+	 *	@brief		名前の取得
+	 *	@return		std::string
+	 */
+	inline std::string GetName() const { return name; }
+	/*
+	 *	@brief		名前の設定
+	 *	@param[in]	const std::string& setName
+	 */
+	inline void SetName(const std::string& setName) { name = setName; }
 };
 
 #endif // !_SPRITE_H_

@@ -12,11 +12,13 @@
  */
 void Sprite::Setup() {
 	currentIndex = 0;
+	isVisible = true;
 }
 /*
  *	@brief	•`‰æˆ—
  */
 void Sprite::Render() {
+	if (!isVisible) return;
 	if (currentIndex < 0 || graphHandleList.empty()) return;
 
 	DrawGraph(rect.x, rect.y, graphHandleList[currentIndex], TRUE);

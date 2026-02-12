@@ -26,6 +26,7 @@ protected:		// •Ê–¼’è‹`
 protected:
 	int inputClickNum = -1;
 	bool isEnable = false;
+	bool isVisible = false;
 	GameEnum::ButtonInputState inputState = GameEnum::ButtonInputState::Invalid;
 	GameEnum::ButtonSelectState selectState = GameEnum::ButtonSelectState::Invalid;
 
@@ -127,6 +128,17 @@ public:
 	inline void SetIsEnable(bool setFlag) {
 		isEnable = setFlag;
 	}
+	/*
+	 *	@brief		•`‰æ”»’è
+	 *	@return		bool
+	 */
+	inline bool IsVisible() const { return isVisible; }
+	/*
+	 *	@brief		•`‰æ”»’è‚Ìİ’è
+	 *	@param[in]	bool setFlag
+	 */
+	inline void SetIsVisible(bool setFlag) { isVisible = setFlag; }
+
 	/*
 	 *	@brief		ƒ{ƒ^ƒ“ó‘Ô‚Ìæ“¾
 	 *	@return		GameEnum::ButtonInputState

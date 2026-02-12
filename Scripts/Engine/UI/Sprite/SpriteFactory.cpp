@@ -18,6 +18,7 @@ std::shared_ptr<Sprite> SpriteFactory::CreateSprite(const SpriteInfo& info) {
     if (info.resourcePathList.empty()) return nullptr;
 
     auto sprite = std::make_shared<Sprite>();
+    sprite->SetName(info.name);
     sprite->SetRect(info.rect);
 
     auto& load = LoadManager::GetInstance();

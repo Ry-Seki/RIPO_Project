@@ -27,6 +27,7 @@ class MenuTitle : public MenuBase{
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
+	Sprite* startGameSprite = nullptr;
 
 	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Title/StartGame/TitleResources.json";
 	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/StartGame/TitleNavigation.json";
@@ -62,6 +63,10 @@ public:
 	 *	@brief	メニューを閉じる
 	 */
 	void Close(Engine& engine) override;
+	/*
+	 *	@brief	メニューを中断
+	 */
+	void Suspend() override;
 	/*
 	 *	@brief	メニューを再開
 	 */
