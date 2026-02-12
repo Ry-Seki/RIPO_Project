@@ -94,9 +94,16 @@ void BossComponent::OnCollision(const std::shared_ptr<Component>& self, const st
 
 		attackIsTriger = true;
 	}
+	coolTime = 2;
 
 	// ダメージ判定
-	if (!damageIsTriger && other->GetOwner()->GetComponent<BulletComponent>()->GetShotOwner() == player.get()) {
+	auto otherOwner = other->GetOwner();
+	if (!otherOwner) return;
+
+	auto bulletComp = otherOwner->GetComponent<BulletComponent>();
+	if (!bulletComp) return;
+
+	if (!damageIsTriger && bulletComp->GetShotOwner() == player.get()) {
 		// ダメージを受ける
 		HP -= other->GetOwner()->GetComponent<BulletComponent>()->GetHitDamage();;
 		if (HP <= 0) {
@@ -115,7 +122,6 @@ void BossComponent::OnCollision(const std::shared_ptr<Component>& self, const st
 			hitFlag = true;
 		}
 	}
-	coolTime = 2;
 }
 
 void BossComponent::SetBossStart(int ID)

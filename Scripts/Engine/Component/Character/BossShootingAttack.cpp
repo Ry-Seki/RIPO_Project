@@ -13,6 +13,7 @@ BossShootingAttack::BossShootingAttack()
 	: animator(nullptr)
 	, player(nullptr)
 	, coolTime(0)
+	, shootFlag(false)
 	, MAX_COOL_TIME(2.5f)
 {
 }
@@ -41,18 +42,22 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 	if (coolTime <= 1.5f) {
 		// UŒ‚ˆ—
 		Vector3 direction = Direction(boss->position, player->position);
-		// ’e”­ŽË
-		BulletManager::GetInstance().BulletShot(
-			boss->position,
-			boss->rotation,
-			{ 1.0f, 1.0f, 1.0f },
-			direction,
-			boss,
-			1000,
-			boss->GetComponent<BossComponent>()->GetBossAttack()
-		);
+		if (!shootFlag) {
+			// ’e”­ŽË
+			BulletManager::GetInstance().BulletShot(
+				{ boss->position.x, boss->position.y + 250, boss->position.z },
+				boss->rotation,
+				{ 1.0f, 1.0f, 1.0f },
+				direction,
+				boss,
+				10000,
+				boss->GetComponent<BossComponent>()->GetBossAttack()
+			);
+			shootFlag = true;
+		}
 	}
 	if (coolTime <= 0) {
+		shootFlag = false;
 		// ó‘Ô‘JˆÚ
 		boss->GetComponent<BossComponent>()->SetState(new BossStandby());
 	}
