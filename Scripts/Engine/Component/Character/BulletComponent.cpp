@@ -55,7 +55,7 @@ void BulletComponent::Start() {
 }
 
 void BulletComponent::Update(float deltaTime) {
-	if (!bullet) return;
+  	if (!bullet) return;
 	
 	// 着弾地点に進む
 	bullet->position += hitDirection * SHOT_SPEED * deltaTime;
@@ -69,11 +69,11 @@ void BulletComponent::Update(float deltaTime) {
 
 void BulletComponent::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
 	// プレイヤーと弾以外の衝突で破棄
-	GameObject* playerOwner = CameraManager::GetInstance().GetTarget().get();
+	/*GameObject* playerOwner = CameraManager::GetInstance().GetTarget().get();
 	GameObject* otherOwner = other->GetOwner();
 	auto isBullet = otherOwner->GetComponent<BulletComponent>();
 	if (otherOwner == playerOwner || isBullet)return;
-	ResetObject(bullet);
+	ResetObject(bullet);*/
 	//if (otherOwner->name == GameConst::_CREATE_POSNAME_ENEMY) {
 	//	RemoveCharacter(otherOwner);
 	//	// 少量のお金を入手
