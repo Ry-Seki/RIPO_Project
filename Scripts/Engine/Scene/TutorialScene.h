@@ -7,6 +7,8 @@
 #define _TUTORIAL_SCENE_H_
 
 #include "Scene.h"
+#include "../GameEnum.h"
+#include "GameState/GameStateMachine.h"
 
  // 前方宣言
 class Engine;
@@ -15,7 +17,13 @@ class Engine;
  *	チュートリアルシーン
  */
 class TutorialScene : public Scene {
+private:
+	std::unique_ptr<GameStateMachine> gameState;
 
+	static constexpr const char* _TREASURE_DATA_PATH = "Data/Treasure/TreasureDataList.json";
+	static constexpr const char* _ITEM_DATA_PATH = "Data/Item/ItemCatalogData.json";
+	static constexpr const char* _EFFECT_DATA_PATH = "Data/Effect/EffectData.json";
+	const int _END_DAY = 31;
 public:
 	/*
 	 *	コンストラクタ
@@ -47,6 +55,11 @@ public:
 	 *	描画処理
 	 */
 	void Render() override;
+private:
+	/*
+	 *  @brief  メインシーン終了処理
+	 */
+	void EndMainGameScene(Engine& engine);
 };
 
 #endif // !_TUTORIAL_SCENE_H_
