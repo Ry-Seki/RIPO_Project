@@ -42,7 +42,6 @@ void TutorialScene::Initialize(Engine& engine) {
 	// ゲームステートの初期化
 	gameState = std::make_unique<GameStateMachine>();
 	gameState->Initialize(engine);
-	gameState->ChageState(GameEnum::GameState::SelectAction);
 	MenuManager::GetInstance().GetMenu<MenuInGame>();
 	MenuManager::GetInstance().GetMenu<PlayerUI>();
 	MenuManager::GetInstance().GetMenu<DungeonTreasureUI>();
@@ -73,6 +72,7 @@ void TutorialScene::Setup(Engine& engine) {
 	auto& save = SaveDataManager::GetInstance();
 	auto& context = gameState->GetActionContext();
 	save.ApplyLoadData(context);
+	gameState->ChageState(GameEnum::GameState::InitialTutorial);
 }
 /*
  *	更新処理
@@ -82,7 +82,7 @@ void TutorialScene::Update(Engine& engine, float deltaTime) {
 	Scene::Update(engine, deltaTime);
 	// 遷移条件
 	if (gameState->IsActionEnd()) {
-		
+		EndTutorialScene(engine);
 	}
 }
 /*
@@ -127,25 +127,17 @@ void TutorialScene::Render() {
 /*
  *  @brief  メインシーン終了処理
  */
-void TutorialScene::EndMainGameScene(Engine& engine) {
+void TutorialScene::EndTutorialScene(Engine& engine) {
 	auto& context = gameState->GetActionContext();
 	auto& save = SaveDataManager::GetInstance();
 	// アクション終了フラグの変更
 	gameState->SetIsActionEnd(false);
+	context.elapsedDay++;
 	// オートセーブ
 	save.CollectSaveData(context);
 	save.AutoSave();
-	// シーン遷移条件
-	if (context.elapsedDay > _END_DAY) {
-		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
-		FadeManager::GetInstance().StartFade(fadeOut, [&engine, this]() {
-			engine.SetNextScene(std::make_shared<MainGameScene>());
-			});
-	}
-	else {
-		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
-		FadeManager::GetInstance().StartFade(fadeOut, [&engine, this]() {
-			gameState->ChageState(GameEnum::GameState::SelectAction);
-			});
-	}
+	FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
+	FadeManager::GetInstance().StartFade(fadeOut, [&engine, this]() {
+		engine.SetNextScene(std::make_shared<MainGameScene>());
+	});
 }
