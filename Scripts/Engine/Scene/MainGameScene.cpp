@@ -37,7 +37,6 @@ void MainGameScene::Initialize(Engine& engine) {
 	// ゲームステートの初期化
 	gameState = std::make_unique<GameStateMachine>();
 	gameState->Initialize(engine);
-	gameState->ChageState(GameEnum::GameState::SelectAction);
 	MenuManager::GetInstance().GetMenu<MenuInGame>();
 	MenuManager::GetInstance().GetMenu<PlayerUI>();
 	MenuManager::GetInstance().GetMenu<DungeonTreasureUI>();
@@ -64,6 +63,7 @@ void MainGameScene::Setup(Engine& engine) {
 
 	auto& context = gameState->GetActionContext();
 	save.ApplyLoadData(context);
+	gameState->ChageState(GameEnum::GameState::SelectAction);
 }
 /*
  *  更新処理
