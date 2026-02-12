@@ -42,13 +42,13 @@ public:
 	/*
 	 *	更新処理
 	 */
-	virtual void ArmUpdate(float deltaTime, ActionMapBase::ActionState action) override;
+	virtual void ArmUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) override;
 		 
 protected:
 	/*
 	 *	銃を撃つ処理
 	 */
-	void ShotBullet();
+	void ShotBullet(Engine* engine);
 
 	/*
 	 *	リロード

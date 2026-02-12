@@ -68,28 +68,4 @@ void BulletComponent::Setup(
 	hitDamage = setDamage;
 	moveSpeed = setSpeed;
 	bullet->scale = setScale;
-
-	/*
-	bullet = GetOwner();
-	// 着弾地点を確認
-	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
-	Ray ray = { bullet->position, ForwardDir(camera->rotation) };
-	Scene::RayCastHit hitInfo;
-	bool hit = bullet->GetEngine()->GetCurrentScene()->RayCast(
-		ray, hitInfo,
-		[this](const ColliderBasePtr& col, float distance) {
-			// プレイヤーと自分以外のオブジェクト
-			return !col ||
-				(col->GetOwner()->name != GameConst::_CREATE_POSNAME_PLAYER &&
-					col->GetOwner()->name != "bullet");
-		}
-	);
-	moveDirection = Direction(bullet->position, hitInfo.point);
-	// ダメージ設定
-	float playerStrength = GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus().strength;
-	auto weaponNumber = WeaponManager::GetInstance().GetCurrentWeaponNum();
-	float defaultDamage = WeaponDataManager::GetInstance().GetWeaponData(weaponNumber).defaultDamage;
-	hitDamage = defaultDamage + (defaultDamage * playerStrength * 0.1f);
-	*/
-
 }

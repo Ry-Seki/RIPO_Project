@@ -36,7 +36,7 @@ BulletComponentPtr BulletManager::GenerateBullet(
 	const Vector3& AABBMax) {
 	// 未使用状態のオブジェクト取得
 	GameObjectPtr createBullet = GameObjectManager::GetInstance().GetUnuseObject();
-	if (createBullet == nullptr) return;
+	if (createBullet == nullptr) return nullptr;
 	// 弾生成
 	BulletComponentPtr bullet = createBullet->AddComponent<BulletComponent>();
 	// コライダー生成

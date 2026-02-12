@@ -21,9 +21,8 @@ HandArm::HandArm()
 	, LEFTABLE_DISTANCE(1000)
 {}
 
-void HandArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) {
+void HandArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) {
 	GameObjectPtr player = GetPlayer();
-	Engine* engine = player->GetEngine();
 	// 右クリックでお宝持ち上げ
 	int lift = static_cast<int>(GameEnum::PlayerAction::Lift);
 	if (action.button[lift])

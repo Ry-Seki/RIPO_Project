@@ -8,6 +8,7 @@
 
 #include "../Component.h"
 #include "../../VecMath.h"
+#include "../../GameObject.h"
 
 class BulletComponent : public Component {
 private:
