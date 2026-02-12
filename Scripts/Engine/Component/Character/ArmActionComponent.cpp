@@ -30,7 +30,8 @@ void ArmActionComponent::Update(float deltaTime) {
 	action = GetInputState(GameEnum::ActionMap::PlayerAction);
 	if (currentArm == nullptr)
 		return;
-	currentArm->ArmUpdate(deltaTime, action);
+	auto engine = GetOwner()->GetEngine();
+	currentArm->ArmUpdate(deltaTime, action, engine);
 }
 
 

@@ -26,7 +26,7 @@ public:
 	/*
 	 *	XVˆ—
 	 */
-	void ArmUpdate(float deltaTime, ActionMapBase::ActionState action) override;
+	void ArmUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) override;
 
 private:
 	/*
