@@ -139,6 +139,7 @@ std::vector<bool> SelectDetail_Dungeon::AssessmentTreasureEvent() {
  *	@brief	ダンジョンステージデータの読み込み
  */
 void SelectDetail_Dungeon::StartDungeonDataLoad(int dungeonID) {
+	this->dungeonID = dungeonID;
 	LoadManager& load = LoadManager::GetInstance();
 	DungeonData dungeonData = dungeonDataList[dungeonID];
 	// ファイルパスの取得

@@ -17,8 +17,8 @@
     {
       "Name": "SelectDungeon",
       "Rect": {
-        "X": 50,
-        "Y": 50,
+        "X": 0,
+        "Y": 0,
         "Width": 1920,
         "Height": 1080
       },
@@ -29,8 +29,8 @@
     {
       "Name": "DungeonSprite",
       "Rect": {
-        "X": 100,
-        "Y": 490,
+        "X": 0,
+        "Y": 445,
         "Width": 1920,
         "Height": 1080
       },
@@ -47,7 +47,7 @@
       "Name": "Dungeon1",
       "Type": "Single",
       "Rect": {
-        "X": 54,
+        "X": 34,
         "Y": 175,
         "Width": 436,
         "Height": 125
@@ -63,7 +63,7 @@
       "Name": "Dungeon2",
       "Type": "Single",
       "Rect": {
-        "X": 545,
+        "X": 525,
         "Y": 175,
         "Width": 436,
         "Height": 125
@@ -79,7 +79,7 @@
       "Name": "Dungeon3",
       "Type": "Single",
       "Rect": {
-        "X": 1036,
+        "X": 1016,
         "Y": 175,
         "Width": 436,
         "Height": 125
@@ -96,7 +96,7 @@
       "Name": "Dungeon4",
       "Type": "Single",
       "Rect": {
-        "X": 1530,
+        "X": 1510,
         "Y": 175,
         "Width": 436,
         "Height": 125
