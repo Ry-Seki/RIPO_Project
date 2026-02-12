@@ -12,17 +12,22 @@
  *	@brief	‰Šú‰»ˆ—
  */
 void UIButtonBase::Initialize() {
+	int indexMax = static_cast<int>(GameEnum::ButtonRendererState::Max);
 	isEnable = true;
 	inputState = GameEnum::ButtonInputState::Idle;
 	selectState = GameEnum::ButtonSelectState::Invalid;
 	inputClickNum = static_cast<int>(GameEnum::MenuAction::Click);
-	handleList.resize(static_cast<int>(GameEnum::ButtonRendererState::Max));
+	handleList.resize(indexMax);
+	for (int i = 0; i < indexMax; i++) {
+		handleList.push_back(-1);
+	}
 }
 /*
  *	@brief	€”õ‘Oˆ—
  */
 void UIButtonBase::Setup() {
 	isEnable = true;
+	isVisible = true;
 	inputState = GameEnum::ButtonInputState::Idle;
 }
 /*

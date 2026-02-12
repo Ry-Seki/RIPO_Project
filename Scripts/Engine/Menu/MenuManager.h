@@ -105,7 +105,7 @@ public:
 		auto menu = GetMenu<T>();
 		if (!menu) return;
 
-		if (!useMenuList.empty()) useMenuList.back()->Suspend();
+		if(!useMenuList.empty())useMenuList.back()->Suspend();
 
 		// すでに使用中リストにあるか判定
 		auto itr = std::find(useMenuList.begin(), useMenuList.end(), menu);
@@ -118,6 +118,7 @@ public:
 			menu->Open();
 		}
 		useMenuList.push_back(menu);
+
 	}
 };
 

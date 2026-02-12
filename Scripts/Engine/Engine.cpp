@@ -33,13 +33,14 @@ int Engine::Initialize() {
 	dxlibInitialized = false;
 	effekseerInitialized = false;
 	initialized = false;
+	isGameEnd = false;
 
 #pragma region DxLibの初期化処理(理解するまでは触らない)
 	SetOutApplicationLogValidFlag(FALSE);
 	//ウィンドウのサイズを変更する
 	SetGraphMode(GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, 32, 0);
 	//起動時のウィンドウのモードの設定
-	ChangeWindowMode(FALSE);			// true : Windowモード, false : FullScreen
+	ChangeWindowMode(TRUE);			// true : Windowモード, false : FullScreen
 	//背景色の設定
 	SetBackgroundColor(196, 196, 196);
 
@@ -123,7 +124,7 @@ int Engine::Run() {
 	SetNextScene(std::make_shared<StandbyScene>());
 	ChangeScene();
 
-	while (ProcessMessage() != -1) {
+	while (!isGameEnd && ProcessMessage() != -1) {
 		// 現在の時間の取得
 		auto frameStart = std::chrono::high_resolution_clock::now();
 

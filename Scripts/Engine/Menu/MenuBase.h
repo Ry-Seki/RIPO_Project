@@ -20,6 +20,7 @@ protected:
 	bool isVisible = false;			// 描画フラグ
 	bool isStart = false;			// 開始フラグ
 	bool inputHandle = false;		// 入力フラグ
+	bool isAnimation = false;		// アニメーションフラグ
 
 public:
 	/*
@@ -44,6 +45,7 @@ public:
 		isInteractive = true;
 		isStart = false;
 		inputHandle = false;
+		isAnimation = true;
 	}
 	/*
 	 *	@brief	更新処理
@@ -65,6 +67,7 @@ public:
 		isInteractive = false;
 		isStart = false;
 		inputHandle = false;
+		isAnimation = false;
 	}
 	/*
 	 *	@brief	メニューが中断されたときの処理
@@ -84,7 +87,7 @@ public:
 
 public:
 	/*
-	 *	@brief		描画フラグの取得
+	 *	@brief		描画判定
 	 *	@return		bool
 	 */
 	inline bool IsVisible() const { return isVisible; }
@@ -94,7 +97,7 @@ public:
 	 */
 	inline void SetIsVisible(bool setFlag) { isVisible = setFlag; }
 	/*
-	 *	@brief		操作可能フラグの取得
+	 *	@brief		操作可能判定
 	 *	@return		bool
 	 */
 	inline bool IsInteractive() const { return isInteractive; }
@@ -103,6 +106,16 @@ public:
 	 *	@param[in]	bool setFlag
 	 */
 	inline void SetIsInteractive(bool setFlag) { isInteractive = setFlag; }
+	/*
+	 *	@brief		アニメーション判定
+	 *	@return		bool
+	 */
+	inline bool IsAnimation() const { return isAnimation; }
+	/*
+	 *	@brief		アニメーション判定の変更
+	 *	@param[in]	bool setFlag
+	 */
+	inline void SetIsAnimation(bool setFlag) { isAnimation = setFlag; }
 };
 
 #endif // !_MENU_BASE_H_

@@ -3,11 +3,11 @@
     {
       "Goal": [
         {
-          "name": "Exit",
+          "name": "Goal",
           "position": 0,
           "rotation": 0,
-          "AABBmin": 0,
-          "AABBmax": 0
+          "AABBmin": [ -1000, -700, -10 ],
+          "AABBmax": [ 1000, 700, 10 ]
         }
       ]
     }

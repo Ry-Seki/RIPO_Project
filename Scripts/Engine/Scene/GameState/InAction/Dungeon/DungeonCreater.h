@@ -39,6 +39,12 @@ public:
 	 */
 	void Setup();
 	/*
+	 *	@brief	•Ğ•t‚¯ˆ—
+	 */
+	void Teardown();
+
+public:
+	/*
 	 *	@brief		ƒ_ƒ“ƒWƒ‡ƒ“¶¬
 	 *	@param[in]	int floorID
 	 *  @param[in]	const std::vector<std::vector<int>>& treasureIDList

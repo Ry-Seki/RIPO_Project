@@ -25,19 +25,33 @@
       "Resources": [
         "Res/Menu/Title/Trealine_NewTitle.png"
       ]
+    },
+    {
+      "Name": "StartGame",
+      "Rect": {
+        "X": 620,
+        "Y": 730,
+        "Width": 683,
+        "Height": 90
+      },
+      "Resources": [
+        "Res/Menu/Title/Trealine_StartGame.png"
+      ]
     }
+    
   ],
   "Buttons": [
     {
-      "Name": "Finish",
+      "Name": "StartGame",
       "Type": "Single",
       "Rect": {
-        "X": 100,
-        "Y": 350,
-        "Width": 100,
-        "Height": 80
+        "X": 600,
+        "Y": 730,
+        "Width": 683,
+        "Height": 90
       },
       "Resources": {
+        "Select": "Res/Menu/Title/Trealine_StartGame_Selected_Button.png"
       }
     }
   ]
