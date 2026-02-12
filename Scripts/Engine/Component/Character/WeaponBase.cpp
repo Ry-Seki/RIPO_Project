@@ -18,12 +18,7 @@ WeaponBase::WeaponBase()
 	, reloadingTimeMax(0)
 	, shotCoolTime(0)
     , shotCoolTimeMax(0)
-	, reload(false)
-
-	, BULLET_NAME("bullet")
-	, BULLET_AABB_MIN({ -10, 0, -10 })
-	, BULLET_AABB_MAX({ 10, 20, 10 }) {
-	
+	, reload(false) {	
 }
 
 /*

@@ -30,10 +30,6 @@ public:
 	float shotCoolTimeMax;			// 射撃のクールタイムの最大
 	bool reload;					// リロードフラグ
 
-	const std::string BULLET_NAME;	// 弾の名前
-	const Vector3 BULLET_AABB_MIN;	// 弾のAABBMin
-	const Vector3 BULLET_AABB_MAX;	// 弾のAABBMax
-
 public:
 	WeaponBase();
 	virtual ~WeaponBase() = default;
