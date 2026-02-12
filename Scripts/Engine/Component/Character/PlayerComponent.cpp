@@ -10,6 +10,7 @@
 #include "../GravityComponent.h"
 #include "../../System/Status/PlayerStatusManager.h"
 #include "../../Input/InputUtility.h"
+#include "BulletComponent.h"
 #include "DxLib.h"
 
 using namespace InputUtility;
@@ -28,7 +29,7 @@ PlayerComponent::PlayerComponent()
 	, hasResolvedInitialGrounding(false)
 	, isDead(false)
 	, animator(nullptr)
-	, status(-1,-1,-1,-1)
+	, status({ -1, -1, -1, -1 })
 
 	, PLAYER_MODEL_ANGLE_CORRECTION(89.98f)
 	, DEFAULT_MOVE_SPEED(1500.0f)
@@ -139,6 +140,16 @@ void PlayerComponent::Update(float deltaTime) {
 	// 左クリックでウデアクションを武器に設定
 	if (action.button[shot])
 		playerArm->SetCurrentArm(GameEnum::Arm::Weapon);
+}
+
+void PlayerComponent::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
+	// プレイヤー以外が発射した弾が当たったらダメージ
+	if (auto bullet = other->GetOwner()->GetComponent<BulletComponent>()) {
+		if (bullet->GetShotOwner() == GetOwner())
+			return;
+
+		status.HP -= bullet->GetHitDamage();
+	}
 }
 
 /*
