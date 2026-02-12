@@ -63,7 +63,21 @@ void BossComponent::Start()
 	state->Start(boss);
 
 	// “G‚Ìƒf[ƒ^æ“¾
-	status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage4Boss);
+	switch (ID)
+	{
+	case 101:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage1Boss);
+		break;
+	case 102:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage2Boss);
+		break;
+	case 103:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage3Boss);
+		break;
+	case 104:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage4Boss);
+		break;
+	}
 	HP = status.HP;
 }
 

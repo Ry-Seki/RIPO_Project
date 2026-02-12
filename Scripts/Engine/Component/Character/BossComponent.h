@@ -148,7 +148,7 @@ public:
 	/*
 	 *	ID�̕ύX
 	 */
-	inline void SetBossID(bool setValue) { ID = setValue; }
+	inline void SetBossID(int setValue) { ID = setValue; }
 };
 
 #endif // !_BOSSCOMPONENT_H_

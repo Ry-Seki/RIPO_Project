@@ -39,8 +39,10 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 	auto modelRenderer = boss->GetComponent<ModelRenderer>()->GetModelHandle();
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
-
-	if (boss->GetComponent<BossComponent>()->GetBossID() == 104) {
+	
+	boss->GetComponent<BossComponent>()->SetBossID(104);
+	int id = boss->GetComponent<BossComponent>()->GetBossID();
+	if (boss->GetComponent<BossComponent>()->GetBossID() == id) {
 		animator->Play(2, 1350 * deltaTime);
 
 		// UŒ‚‚Ì“–‚½‚è”»’è
