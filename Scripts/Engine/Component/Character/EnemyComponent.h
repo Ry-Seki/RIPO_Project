@@ -100,6 +100,12 @@ private:
 
 public:
 	/*
+	 *	IDを知った後に呼び出す初期化処理
+	 */
+	void SetEnemyStart(int ID);
+
+public:
+	/*
 	 *	状態の変更
 	 *  param[in]	EnemyState*	setValue	次の状態
 	 */
@@ -222,15 +228,15 @@ public:
 	 */
 	inline int GetEnemyDataID() const { return status.ID; }
 
-	/*
-	 *	IDの取得
-	 */
-	inline bool GetEnemyID() const { return ID; }
+	///*
+	// *	IDの取得
+	// */
+	//inline int GetEnemyID() const { return ID; }
 
-	/*
-	 *	IDの変更
-	 */
-	inline void SetEnemyID(bool setValue) { ID = setValue; }
+	///*
+	// *	IDの変更
+	// */
+	//inline void SetEnemyID(int setValue) { ID = setValue; }
 
 	/*
 	 *	スポーンIDの取得

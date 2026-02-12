@@ -101,7 +101,7 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 	const float& capsuleRadius,
 	int enemyID) {
 	// 敵のベース作成
-	GameObjectPtr enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
+   	GameObjectPtr enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	// アニメーターコンポーネント追加
 	enemy->AddComponent<AnimatorComponent>();
 	// HPバーコンポーネント追加
@@ -113,7 +113,7 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 	engine->AddGameObject(enemy);
 	auto component = enemy->GetComponent<EnemyComponent>();
 	if (component) {
-		component->SetEnemyID(enemyID);
+		component->SetEnemyStart(enemyID);
 	}
 	// 生成キャラクターリストに追加
 	createCharacterList.push_back(enemy);
@@ -149,7 +149,7 @@ GameObjectPtr CharacterManager::GenerateBoss(
 	auto component = boss->GetComponent<BossComponent>();
 	if (component) {
 		// IDによって挙動を変える
-		component->SetBossID(bossID);
+		component->SetBossStart(bossID + 100);
 	}
 	return boss;
 }

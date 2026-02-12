@@ -60,6 +60,12 @@ public:
 
 public:
 	/*
+	 *	IDを知った後に呼び出す初期化処理
+	 */
+	void SetBossStart(int ID);
+
+public:
+	/*
 	 *	位置の取得
 	 */
 	inline Vector3 GetBossPosition() const {
@@ -140,15 +146,15 @@ public:
 	 */
 	inline void SetHitFlag(bool setValue) { hitFlag = setValue; }
 
-	/*
-	 *	IDの取得
-	 */
-	inline int GetBossID() const { return ID; }
+	///*
+	// *	IDの取得
+	// */
+	//inline int GetBossID() const { return ID; }
 
-	/*
-	 *	IDの変更
-	 */
-	inline void SetBossID(int setValue) { ID = setValue; }
+	///*
+	// *	IDの変更
+	// */
+	//inline void SetBossID(int setValue) { ID = setValue; }
 };
 
 #endif // !_BOSSCOMPONENT_H_

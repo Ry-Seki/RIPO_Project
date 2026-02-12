@@ -44,40 +44,8 @@ EnemyComponent::~EnemyComponent()
 }
 
 void EnemyComponent::Start() {
-	// 敵のデータ取得
-	switch (ID)
-	{
-	case 0:
-		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::TutorialEnemy);
-		break;
-	case 1:
-		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage1Boss);
-		break;
-	case 2:
-		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage2Boss);
-		break;
-	case 3:
-		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage3Boss);
-		break;
-	case 4:
-		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage4Boss);
-		break;
-	}
-	HP = status.HP;
-
 	enemy = GetOwner();
 	if (enemy == nullptr) return;
-
-	if (state == nullptr) {
-		// IDに応じて処理を変える
-		if (status.ID == 0) {
-			state = new EnemyStandby();
-		}
-		else {
-			state = new EnemyChase();
-		}
-	}
-	state->Start(enemy);
 
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
@@ -163,4 +131,44 @@ Vector3 EnemyComponent::DxForwardDir(const Vector3& rotation)
 	dir.y = sinf(pitch);
 	dir.z = -cosf(yaw) * cosf(pitch);
 	return dir.Normalized();
+}
+
+void EnemyComponent::SetEnemyStart(int ID)
+{
+	// 敵のデータ取得
+ 	switch (ID)
+	{
+	case 0:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::TutorialEnemy);
+		break;
+	case 1:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage1Enemy);
+		break;
+	case 2:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage2Enemy);
+		break;
+	case 3:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage3Enemy);
+		break;
+	case 4:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage4Enemy);
+		break;
+	}
+	HP = status.HP;
+
+	if (state == nullptr) {
+		// IDに応じて処理を変える
+		if (status.ID == 0) {
+			state = new EnemyStandby();
+		}
+		else {
+			state = new EnemyChase();
+		}
+	}
+
+	state->Start(enemy);
+
+	// HPBarComponent
+	enemy->GetComponent<HPBarComponent>()->SetMaxHP(status.HP);
+	enemy->GetComponent<HPBarComponent>()->SetDisplayHP();
 }

@@ -30,10 +30,10 @@ void HPBarComponent::Start()
 	if (camera == nullptr) return;
 	enemy = GetOwner();
 	if (enemy == nullptr) return;
-	maxHP = enemy->GetComponent<EnemyComponent>()->GetEnemyMaxHP();
+	//maxHP = enemy->GetComponent<EnemyComponent>()->GetEnemyMaxHP();
 	currentHP = maxHP;
 
-	displayHP = maxHP;
+	//displayHP = maxHP;
 }
 
 /*

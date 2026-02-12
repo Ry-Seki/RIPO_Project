@@ -10,6 +10,7 @@
 #include "BossDeath.h"
 #include "BossChase.h"
 #include "BulletComponent.h"
+#include "BossHPBarComponentr.h"
 
 /*
  *	コンストラクタ
@@ -62,23 +63,7 @@ void BossComponent::Start()
 		state = new BossStandby();
 	state->Start(boss);
 
-	// 敵のデータ取得
-	switch (ID)
-	{
-	case 101:
-		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage1Boss);
-		break;
-	case 102:
-		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage2Boss);
-		break;
-	case 103:
-		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage3Boss);
-		break;
-	case 104:
-		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage4Boss);
-		break;
-	}
-	HP = status.HP;
+	
 }
 
 /*
@@ -131,4 +116,28 @@ void BossComponent::OnCollision(const std::shared_ptr<Component>& self, const st
 		}
 	}
 	coolTime = 2;
+}
+
+void BossComponent::SetBossStart(int ID)
+{
+	// 敵のデータ取得
+	switch (ID)
+	{
+	case 101:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage1Boss);
+		break;
+	case 102:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage2Boss);
+		break;
+	case 103:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage3Boss);
+		break;
+	case 104:
+		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage4Boss);
+		break;
+	}
+	HP = status.HP;
+
+	boss->GetComponent<BossHPBarComponent>()->SetMaxHP(status.HP);
+	boss->GetComponent<BossHPBarComponent>()->SetDisplayHP();
 }

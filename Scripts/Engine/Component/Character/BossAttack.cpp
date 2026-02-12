@@ -40,7 +40,7 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
 
-	animator->Play(3, 1350 * deltaTime);
+	animator->Play(3, 1250 * deltaTime);
 
 	// UŒ‚‚Ì“–‚½‚è”»’è
 	auto aabbCollider = boss->GetComponent<AABBCollider>();
