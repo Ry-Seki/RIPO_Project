@@ -150,7 +150,6 @@ GameObjectPtr CharacterManager::GenerateBoss(
 	if (component) {
 		// ID‚É‚æ‚Á‚Ä‹““®‚ğ•Ï‚¦‚é
 		component->SetBossID(bossID);
-		// component->Change~();
 	}
 	return boss;
 }
