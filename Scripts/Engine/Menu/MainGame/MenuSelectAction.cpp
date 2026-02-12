@@ -143,6 +143,7 @@ void MenuSelectAction::Render() {
         if (!button->IsVisible()) continue;
         button->Render();
     }
+    DrawFormatString(260, 510, GetColor(75, 75, 75), "%d", elapsedDay);
 }
 /*
  *	@brief	ƒƒjƒ…[‚ğ•Â‚¶‚é

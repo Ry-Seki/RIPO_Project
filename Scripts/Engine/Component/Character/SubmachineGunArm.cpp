@@ -24,14 +24,14 @@ void SubmachineGunArm::Initialize() {
 /*
  *	更新処理
  */
-void SubmachineGunArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) {
+void SubmachineGunArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) {
 	// クールタイム
 	if (shotCoolTime <= 0) {
 		shotCoolTime = 0;
 		// 左クリックで射撃
 		int shot = static_cast<int>(GameEnum::PlayerAction::Shot);
 		if (action.button[shot] && ammoCount > 0) {
-			ShotBullet();
+			ShotBullet(engine);
 			shotCoolTime = shotCoolTimeMax;
 			ammoCount -= 1;
 		}

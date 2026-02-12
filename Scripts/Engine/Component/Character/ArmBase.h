@@ -6,6 +6,7 @@
 #define _ARM_BASE_H_
 
 #include "../../Input/ActionMapBase.h"
+#include "../../Engine.h"
 #include <memory>
 
 /*
@@ -29,7 +30,7 @@ public:
 	/*
 	 *	XVˆ—
 	 */
-	virtual void ArmUpdate(float deltaTime, ActionMapBase::ActionState action) {}
+	virtual void ArmUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) {}
 };
 // •Ê–¼’è‹`
 using ArmBasePtr = std::shared_ptr<ArmBase>;

@@ -8,6 +8,7 @@
 
 #include "../SelectDetailBase.h"
 #include "../../../../../Data/Dungeon/DungeonData.h"
+
 #include <vector>
 #include <memory>
 
@@ -53,11 +54,7 @@ public:
 	 */
 	void Teardown() override;
 
-public:
-	/*
-	 *	@brief		お宝イベント査定
-	 */
-	void AssessmentTreasureEvent();
+private:
 	/*
 	 *	@brief		ダンジョンデータのロード開始
 	 */
@@ -67,6 +64,12 @@ public:
 	 *  @param[in]	const std::vector<std::shared_ptr<LoadJSON>>& setDataList
 	 */
 	void SetDungeonData(const std::vector<std::shared_ptr<LoadJSON>>& setDataList);
+
+public:
+	/*
+	 *	@brief		お宝イベント査定
+	 */
+	void AssessmentTreasureEvent();
 };
 
 #endif // !_SELECT_DETAIL_DUNGEON_H_

@@ -33,6 +33,7 @@ void GameState_SelectAction::Setup() {
     context.actionType = GameEnum::ActionType::Invalid;
     auto& menu = MenuManager::GetInstance();
     auto selectMenu = menu.GetMenu<MenuSelectAction>();
+    selectMenu->SetElapsedDay(context.elapsedDay);
     selectMenu->SetIsHalf(context.isHalf);
     menu.OpenMenu<MenuSelectAction>();
 }
