@@ -193,8 +193,12 @@ void CharacterManager::SetModelHandle(GameObject* gameObject, const int modelHan
 	if (!gameObject) return;
 	auto modelRenderer = gameObject->GetComponent<ModelRenderer>();
 	if (!modelRenderer) return;
+	auto animator = gameObject->GetComponent<AnimatorComponent>();
+	if (!animator) return;
 
 	modelRenderer->SetModelHandle(modelHandle);
+	animator->SetModelHandle(modelRenderer->GetModelHandle());
+	animator->LoadIndex(true);
 }
 /*
  *	キャラクターのオーナーオブジェクトの取得
