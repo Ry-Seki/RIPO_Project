@@ -14,7 +14,7 @@ BossShootingAttack::BossShootingAttack()
 	, player(nullptr)
 	, coolTime(0)
 	, shootFlag(false)
-	, MAX_COOL_TIME(2.5f)
+	, MAX_COOL_TIME(2.3f)
 {
 }
 
