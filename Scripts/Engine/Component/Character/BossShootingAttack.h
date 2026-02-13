@@ -16,6 +16,8 @@
 		std::shared_ptr<AnimatorComponent> animator;
 		GameObjectPtr player;
 		float coolTime;
+		// ’eŒ‚‚¿ƒtƒ‰ƒO
+		bool shootFlag;
 
 		const float MAX_COOL_TIME;
 
