@@ -44,7 +44,13 @@ void LongPressButton::Update(float unscaledDeltaTime) {
  *	@brief	描画処理
  */
 void LongPressButton::Render() {
+	if (handleList.empty()) return;
 	// TODO : 描画インターフェースでの描画
+	int handle = handleList[static_cast<int>(GetRendererState())];
+
+	if (handle != -1) {
+		DrawGraph(rect.x, rect.y, handle, TRUE);
+	}
 
 	DebugRender();
 }
@@ -52,6 +58,8 @@ void LongPressButton::Render() {
  *	@brief	押された瞬間
  */
 void LongPressButton::OnPressDown() {
+	if (UpdateSelectButton) UpdateSelectButton();
+
 	inputState = GameEnum::ButtonInputState::Press;
 
 	holdElapsed = 0.0f;

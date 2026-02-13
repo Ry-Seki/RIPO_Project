@@ -52,6 +52,7 @@ void SinglePressButton::Render() {
  *	@brief	âüÇµÇΩèuä‘
  */
 void SinglePressButton::OnPressDown() {
+	if (UpdateSelectButton) UpdateSelectButton();
 	inputState = GameEnum::ButtonInputState::Press;
 }
 /*

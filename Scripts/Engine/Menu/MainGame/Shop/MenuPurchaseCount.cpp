@@ -20,6 +20,7 @@
 #include "../../../Menu/System/MenuConfirm.h"
 #include "../../../System/Money/MoneyManager.h"
 #include "../../../../Data/ItemCatalogData.h"
+#include "../../../Manager/FontManager.h"
 
 /*
  *	@brief	初期化処理
@@ -45,11 +46,11 @@ void MenuPurchaseCount::Initialize(Engine& engine) {
 
             button->RegisterUpdateSelectButton([this, button]() {
                 eventSystem.UpdateSelectButton(button);
-                                               });
+            });
 
             button->RegisterOnClick([this, &engine, i]() {
                 SelectButtonExecute(engine, i);
-                                    });
+            });
         }
         // 購入ボタン要素数の設定
         buyButtonIndex = static_cast<int>(MenuPurchaseCount::ButtonType::BuyButton);
@@ -62,9 +63,12 @@ void MenuPurchaseCount::Initialize(Engine& engine) {
  */
 void MenuPurchaseCount::Open() {
     MenuBase::Open();
+    purchaseCount = 0;
+    purchaseMoney = 0;
     auto& money = MoneyManager::GetInstance();
     // アイテムデータの設定
     currentMoney = money.GetCurrentMoney();
+    leastMoney = currentMoney;
     for (auto& button : buttonList) {
         button->Setup();
     }
@@ -126,12 +130,7 @@ void MenuPurchaseCount::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
  *	@brief	描画処理
  */
 void MenuPurchaseCount::Render() {
-    auto screen = GetScreenSize();
-    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 75);
-    DrawBox(0, 0, screen.width, screen.height, GetColor(0, 0, 0), TRUE);
-    SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
-
-    DrawBox(400, 200, 1300, 800, GetColor(0, 0, 0), TRUE);
+    auto& font = FontManager::GetInstance();
 
     for (auto& sprite : spriteList) {
         sprite->Render();
@@ -139,8 +138,13 @@ void MenuPurchaseCount::Render() {
     for (auto& button : buttonList) {
         button->Render();
     }
-    DrawFormatString(800, 450, GetColor(255, 255, 255), "%d", purchaseCount);
-    DrawFormatString(800, 750, GetColor(255, 255, 255), "%d", purchaseMoney);
+    std::string money = std::to_string(leastMoney);
+    std::string buyCount = std::to_string(purchaseCount);
+    std::string buyMoney = std::to_string(purchaseMoney);
+
+    font.Draw("BuyItem", 1197, 620, money, GetColor(255, 255, 255));
+    font.Draw("BuyItem", 760, 544, buyCount, GetColor(255, 255, 255));
+    font.Draw("BuyItem", 1197, 544, buyMoney, GetColor(255, 255, 255));
 }
 /*
  *	@brief	メニューを閉じる
@@ -236,6 +240,7 @@ void MenuPurchaseCount::AddPurchaseCount() {
     }
     // 購入金額
     purchaseMoney = price * purchaseCount;
+    leastMoney = currentMoney - purchaseMoney;
 }
 /*
  *	@brief		アイテムの購入個数を一つ減少
@@ -270,4 +275,5 @@ void MenuPurchaseCount::SubPurchaseCount() {
     }
     // 購入金額
     purchaseMoney = price * purchaseCount;
+    leastMoney = currentMoney - purchaseMoney;
 }

@@ -53,7 +53,6 @@ void UIButtonBase::Update(float unscaledDeltaTime) {
  *	@brief	”­‰ÎƒCƒxƒ“ƒg
  */
 void UIButtonBase::OnClickEvent() {
-	if (UpdateSelectButton) UpdateSelectButton();
 	if (OnClick) OnClick();
 }
 /*
