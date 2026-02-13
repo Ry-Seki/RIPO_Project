@@ -1,69 +1,112 @@
 {
-  "BackGround": {
-    "Resources": [
-
-    ]
-  },
+  "Sprites": [
+    {
+      "Name": "BackGround",
+      "Rect": {
+        "X": 0,
+        "Y": 0,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/BackGround/Trealine_LoadBackground_black1.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black2.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black3.jpg"
+      ]
+    },
+    {
+      "Name": "SelectDungeon",
+      "Rect": {
+        "X": 0,
+        "Y": 0,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon.png"
+      ]
+    },
+    {
+      "Name": "DungeonSprite",
+      "Rect": {
+        "X": 0,
+        "Y": 445,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/Menu/MainGame/Dungeon/Trealine_Dungeon1.png",
+        "Res/Menu/MainGame/Dungeon/Trealine_Dungeon2.png",
+        "Res/Menu/MainGame/Dungeon/Trealine_Dungeon3.png",
+        "Res/Menu/MainGame/Dungeon/Trealine_Dungeon4.png"
+      ]
+    }
+  ],
   "Buttons": [
     {
-      "Name": "Load",
+      "Name": "Dungeon1",
       "Type": "Single",
       "Rect": {
-        "X": 200,
-        "Y": 50,
-        "Width": 700,
-        "Height": 80
+        "X": 34,
+        "Y": 175,
+        "Width": 436,
+        "Height": 125
       },
       "Resources": {
+        "Idle": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon1_Button.png",
+        "Hover": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon1_Button.png",
+        "Press": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon1_Button_Select.png",
+        "Select": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon1_Button_Select.png"
       }
     },
     {
-      "Name": "Save",
+      "Name": "Dungeon2",
       "Type": "Single",
       "Rect": {
-        "X": 200,
-        "Y": 150,
-        "Width": 700,
-        "Height": 80
+        "X": 525,
+        "Y": 175,
+        "Width": 436,
+        "Height": 125
       },
       "Resources": {
+        "Idle": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon2_Button.png",
+        "Hover": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon2_Button.png",
+        "Press": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon2_Button_Select.png",
+        "Select": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon2_Button_Select.png"
       }
     },
     {
-      "Name": "Settings",
+      "Name": "Dungeon3",
       "Type": "Single",
       "Rect": {
-        "X": 200,
-        "Y": 250,
-        "Width": 700,
-        "Height": 80
+        "X": 1016,
+        "Y": 175,
+        "Width": 436,
+        "Height": 125
       },
       "Resources": {
+        "Idle": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon3_Button.png",
+        "Hover": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon3_Button.png",
+        "Press": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon3_Button_Select.png",
+        "Select": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon3_Button_Select.png",
+        "Disable": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon3_Button_Disable.png"
       }
     },
     {
-      "Name": "Return Title",
+      "Name": "Dungeon4",
       "Type": "Single",
       "Rect": {
-        "X": 200,
-        "Y": 350,
-        "Width": 700,
-        "Height": 80
+        "X": 1510,
+        "Y": 175,
+        "Width": 436,
+        "Height": 125
       },
       "Resources": {
-      }
-    },
-    {
-      "Name": "Back",
-      "Type": "Single",
-      "Rect": {
-        "X": 500,
-        "Y": 450,
-        "Width": 700,
-        "Height": 80
-      },
-      "Resources": {
-
+        "Idle": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon4_Button.png",
+        "Hover": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon4_Button.png",
+        "Press": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon4_Button_Select.png",
+        "Select": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon4_Button_Select.png",
+        "Disable": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon4_Button_Disable.png"
       }
     }
   ]

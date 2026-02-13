@@ -88,11 +88,11 @@ void MenuInGame::Update(Engine& engine, float unscaledDeltaTime) {
  *	@brief	•`‰æˆ—
  */
 void MenuInGame::Render() {
+    DrawBox(0, 0, GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, GetColor(0, 0, 0), TRUE);
     for (auto& button : buttonList) {
         button->Render();
     }
     DrawFormatString(50, 250, GetColor(255, 255, 255), "InGameMenu");
-    DrawBox(0, 0, GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, GetColor(0, 0, 0), TRUE);
 }
 /*
  *	@brief	ƒƒjƒ…[‚ğ•Â‚¶‚é

@@ -177,7 +177,7 @@ void MenuSelectAction::SelectButtonExecute(Engine& engine, int buttonIndex) {
         type = GameEnum::ActionType::Dungeon;
         confirm->SetCallback([this, &menu, &engine, type](GameEnum::ConfirmResult result){
             if (result == GameEnum::ConfirmResult::Yes) {
-                FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.0f, FadeDirection::Out, FadeMode::Stop);
+                FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
                 FadeManager::GetInstance().StartFade(fade, [this, &menu, type]() {
                     menu.CloseTopMenu();
                     if (Callback) Callback(type);
@@ -191,7 +191,7 @@ void MenuSelectAction::SelectButtonExecute(Engine& engine, int buttonIndex) {
         type = GameEnum::ActionType::Training;
         confirm->SetCallback([this, &menu, &engine, type](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
-                FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.0f, FadeDirection::Out, FadeMode::Stop);
+                FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
                 FadeManager::GetInstance().StartFade(fade, [this, &menu, type]() {
                     menu.CloseTopMenu();
                     if (Callback) Callback(type);
@@ -205,7 +205,7 @@ void MenuSelectAction::SelectButtonExecute(Engine& engine, int buttonIndex) {
         type = GameEnum::ActionType::Shop;
         confirm->SetCallback([this, &menu, &engine, type](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
-                FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.0f, FadeDirection::Out, FadeMode::Stop);
+                FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
                 FadeManager::GetInstance().StartFade(fade, [this, &menu, type]() {
                     menu.CloseTopMenu();
                     if (Callback) Callback(type);
@@ -219,7 +219,7 @@ void MenuSelectAction::SelectButtonExecute(Engine& engine, int buttonIndex) {
         type = GameEnum::ActionType::PartTime;
         confirm->SetCallback([this, &menu, &engine, type](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
-                FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.0f, FadeDirection::Out, FadeMode::Stop);
+                FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
                 FadeManager::GetInstance().StartFade(fade, [this, &menu, type]() {
                     menu.CloseTopMenu();
                     if (Callback) Callback(type);

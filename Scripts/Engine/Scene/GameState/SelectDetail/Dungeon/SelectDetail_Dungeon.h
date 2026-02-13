@@ -68,8 +68,9 @@ private:
 public:
 	/*
 	 *	@brief		‚¨•óƒCƒxƒ“ƒg¸’è
+	 *	@return		std::vector<bool>
 	 */
-	void AssessmentTreasureEvent();
+	std::vector<bool> AssessmentTreasureEvent();
 };
 
 #endif // !_SELECT_DETAIL_DUNGEON_H_
