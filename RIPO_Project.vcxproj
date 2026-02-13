@@ -203,6 +203,7 @@
     <ClCompile Include="Scripts\Engine\Manager\CameraManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\CharacterManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\EffectManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\FontManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\GaugeManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
@@ -213,6 +214,7 @@
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Training\MenuSelectTraining.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuResourcesFactory.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Result\MenuResultScore.cpp" />
@@ -389,6 +391,7 @@
     <ClInclude Include="Scripts\Engine\Manager\CameraManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\CharacterManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\EnemyDataManager.h" />
+    <ClInclude Include="Scripts\Engine\Manager\FontManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\GaugeManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
@@ -399,6 +402,7 @@
     <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Training\MenuSelectTraining.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuBase.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuResourcesFactory.h" />

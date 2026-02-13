@@ -97,6 +97,11 @@ public:
 	 */
 	inline UIButtonBase* GetCurrentSelectButton() const{ return currentButton; }
 	/*
+	 *	@brief		現在選択されているボタンの要素数を取得
+	 *	@return		int
+	 */
+	inline int GetCurrentIndex() const { return currentIndex; }
+	/*
 	 *	@brief		ボタンの登録
 	 *  @param[in]	UIButtonBase* setButton
 	 */

@@ -1,9 +1,9 @@
 /*
- *	@file	MenuSelectDungeon.cpp
+ *	@file	MenuSelectTraining.cpp
  *	@author	Seki
  */
 
-#include "MenuSelectDungeon.h"
+#include "MenuSelectTraining.h"
 #include "../../../Audio/AudioUtility.h"
 #include "../../../Load/LoadManager.h"
 #include "../../../Load/JSON/LoadJSON.h"
@@ -25,7 +25,7 @@
 /*
  *	@brief	初期化処理
  */
-void MenuSelectDungeon::Initialize(Engine& engine) {
+void MenuSelectTraining::Initialize(Engine& engine) {
     auto& load = LoadManager::GetInstance();
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
@@ -52,16 +52,13 @@ void MenuSelectDungeon::Initialize(Engine& engine) {
                 SelectButtonExecute(engine, i);
             });
         }
-        for (auto& sprite : spriteList) {
-            if (sprite->GetName() == "DungeonSprite") dungeonSprite = sprite.get();
-        }
         eventSystem.LoadNavigation(navigation->GetData());
     });
 }
 /*
  *	@brief	メニューを開く
  */
-void MenuSelectDungeon::Open() {
+void MenuSelectTraining::Open() {
     MenuBase::Open();
     for (auto& sprite : spriteList) {
         sprite->Setup();
@@ -78,9 +75,9 @@ void MenuSelectDungeon::Open() {
     });
 }
 /*
- *	@brief	更新処理
+ *	@brief	メニューを閉じる
  */
-void MenuSelectDungeon::Update(Engine& engine, float unscaledDeltaTime) {
+void MenuSelectTraining::Update(Engine& engine, float unscaledDeltaTime) {
     auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
 
     if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)]) {
@@ -106,14 +103,14 @@ void MenuSelectDungeon::Update(Engine& engine, float unscaledDeltaTime) {
 /*
  *	@brief	アニメーション等の更新
  */
-void MenuSelectDungeon::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
+void MenuSelectTraining::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer += unscaledDeltaTime;
 
     if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
     animTimer -= GameConst::UI_ANIM_INTERVAL;
 
     for (auto& sprite : spriteList) {
-        if (!sprite || sprite.get() == dungeonSprite) continue;
+        if (!sprite) continue;
 
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
@@ -121,18 +118,16 @@ void MenuSelectDungeon::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
         animFrame = (animFrame + 1) % frameCount;
         sprite->SetFrameIndex(animFrame);
     }
-    currentIndex = eventSystem.GetCurrentIndex();
-    dungeonSprite->SetFrameIndex(currentIndex);
+
 }
 /*
  *	@brief	描画処理
  */
-void MenuSelectDungeon::Render() {
+void MenuSelectTraining::Render() {
     for (auto& sprite : spriteList) {
-        if (!sprite->IsVisible() || sprite.get() == dungeonSprite) continue;
+        if (!sprite->IsVisible()) continue;
         sprite->Render();
     }
-    dungeonSprite->Render();
     for (auto& button : buttonList) {
         if (!button->IsVisible()) continue;
         button->Render();
@@ -141,86 +136,84 @@ void MenuSelectDungeon::Render() {
 /*
  *	@brief	メニューを閉じる
  */
-void MenuSelectDungeon::Close(Engine& engine) {
+void MenuSelectTraining::Close(Engine& engine) {
     MenuBase::Close(engine);
 }
 /*
  *	@brief	メニューを中断
  */
-void MenuSelectDungeon::Suspend() {
+void MenuSelectTraining::Suspend() {
     MenuBase::Suspend();
 }
 /*
  *	@brief	メニューを再開
  */
-void MenuSelectDungeon::Resume() {
+void MenuSelectTraining::Resume() {
     MenuBase::Resume();
 }
 /*
  *	@brief		ボタンの押された時の処理
  *	@param[in]	int buttonIndex
  */
-void MenuSelectDungeon::SelectButtonExecute(Engine& engine, int buttonIndex) {
+void MenuSelectTraining::SelectButtonExecute(Engine& engine, int buttonIndex) {
     auto& menu = MenuManager::GetInstance();
     auto confirm = menu.GetMenu<MenuConfirm>();
-    int dungeonID = 0;
-
+    GameEnum::PlayerStatusType type = GameEnum::PlayerStatusType::Invalid;
     if (buttonIndex == 0) {
-        dungeonID = 1;
+        type = GameEnum::PlayerStatusType::HP;
         AudioUtility::PlaySE("DebugSE");
-        confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
+        confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
                 FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, dungeonID]() {
+                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, type]() {
                     menu.CloseAllMenu();
-                    if (Callback) Callback(dungeonID);
+                    if (Callback) Callback(type);
                 });
+                menu.CloseTopMenu();
             }
-            menu.CloseTopMenu();
         });
         menu.OpenMenu<MenuConfirm>();
-    } else if (buttonIndex == 1) {
-        dungeonID = 2;
+    } else if(buttonIndex == 1){
+        type = GameEnum::PlayerStatusType::Stamina;
         AudioUtility::PlaySE("DebugSE");
-        confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
+        confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
                 FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, dungeonID]() {
+                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, type]() {
                     menu.CloseAllMenu();
-                    if (Callback) Callback(dungeonID);
+                    if (Callback) Callback(type);
                 });
+                menu.CloseTopMenu();
             }
-            menu.CloseTopMenu();
         });
         menu.OpenMenu<MenuConfirm>();
-    }else if (buttonIndex == 2) {
-        dungeonID = 3;
+    }else if(buttonIndex == 2){
+        type = GameEnum::PlayerStatusType::Strength;
         AudioUtility::PlaySE("DebugSE");
-        confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
+        confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
                 FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, dungeonID]() {
+                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, type]() {
                     menu.CloseAllMenu();
-                    if (Callback) Callback(dungeonID);
+                    if (Callback) Callback(type);
                 });
+                menu.CloseTopMenu();
             }
-            menu.CloseTopMenu();
         });
         menu.OpenMenu<MenuConfirm>();
-    }else if (buttonIndex == 3) {
-        dungeonID = 4;
+    }else if(buttonIndex == 3){
+        type = GameEnum::PlayerStatusType::ResistTime;
         AudioUtility::PlaySE("DebugSE");
-        confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
+        confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
                 FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, dungeonID]() {
+                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, type]() {
                     menu.CloseAllMenu();
-                    if (Callback) Callback(dungeonID);
+                    if (Callback) Callback(type);
                 });
+                menu.CloseTopMenu();
             }
-            menu.CloseTopMenu();
         });
         menu.OpenMenu<MenuConfirm>();
     }
-
 }

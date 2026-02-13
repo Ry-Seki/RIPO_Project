@@ -759,9 +759,6 @@
     <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.cpp">
-      <Filter>ソース ファイル\Engine\Menu\MainGame\Shop</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.cpp">
       <Filter>ソース ファイル\Engine\Menu\MainGame\Shop</Filter>
     </ClCompile>
@@ -770,6 +767,12 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.cpp">
       <Filter>ソース ファイル\Engine\Menu\MainGame</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\BossShootingAttack.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.cpp">
+      <Filter>ソース ファイル\Engine\Menu\MainGame\Shop</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.cpp">
       <Filter>ソース ファイル\Engine\Menu\MainGame\Dungeon</Filter>
@@ -1381,6 +1384,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.h">
       <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\BossShootingAttack.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

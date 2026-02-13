@@ -1,10 +1,10 @@
 /*
- *	@file	MenuSelectDungeon.h
+ *	@file	MenuSelectTraining.h
  *	@author	Seki
  */
 
-#ifndef _MENU_SELECT_DUNGEON_H_
-#define _MENU_SELECT_DUNGEON_H_
+#ifndef _MENU_SELECT_TRAINING_H_
+#define _MENU_SELECT_TRAINING_H_
 
 #include "../../MenuBase.h"
 #include "../../../UI/Button/UIButtonBase.h"
@@ -16,31 +16,30 @@
 #include <functional>
 
 /*
- *	@brief	ダンジョン選択メニュー
+ *	@brief	トレーニング選択メニュー
  */
-class MenuSelectDungeon : public MenuBase {
+class MenuSelectTraining : public MenuBase {
 private:
-	int currentIndex = -1;
-	float animTimer = 0.0f;
 	int animFrame = 0;
-	std::vector<bool> isEventList;
+	float animTimer = 0.0f;
+	int elapsedDay = -1;
+	bool isHalf = false;
 
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
-	Sprite* dungeonSprite;
 
-	std::function<void(int)> Callback = nullptr;
+	std::function<void(GameEnum::PlayerStatusType)> Callback = nullptr;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Dungeon/SelectDungeon/SelectDungeonMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame//Dungeon/SelectDungeon/SelectDungeonMenuNavigation.json";
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Training/SelectTraining/SelectTrainingMenuResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Training/SelectTraining/SelectTrainingMenuNavigation.json";
 
 public:
 	/*
 	 *	@brief	デストラクタ
 	 */
-	~MenuSelectDungeon() override {}
+	~MenuSelectTraining() override {}
 
 public:
 	/*
@@ -85,18 +84,12 @@ private:
 
 public:
 	/*
-	 *	@brief		半日フラグの設定
-	 *	@param[in]	bool setFlag
-	 */
-	inline void SetIsEvent(const std::vector<bool>& setFlag) { isEventList = setFlag; }
-	/*
 	 *	@brief		コールバックの設定
-	 *	@param[in]	std::function<void(int)> setCallback
+	 *	@param[in]	std::function<void(GameEnum::PlayerStatusType)> setCallback
 	 */
-	inline void SetCallback(std::function<void(int)> setCallback) {
+	inline void SetCallback(std::function<void(GameEnum::PlayerStatusType)> setCallback) {
 		Callback = setCallback;
 	}
-
 };
 
-#endif // !_MENU_SELECT_DUNGEON_H_
+#endif // !_MENU_TRAINING_H_

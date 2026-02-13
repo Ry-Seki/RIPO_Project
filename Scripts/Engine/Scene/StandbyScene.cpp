@@ -12,6 +12,11 @@
 #include "../Menu/System/MenuLoadMode.h"
 #include "../Menu/System/MenuSaveMode.h"
 #include "../Menu/System/MenuSettings.h"
+#include "../Load/Sprite/LoadSprite.h"
+#include "../Load/LoadManager.h"
+#include "../Load/Animation/LoadAnimation_ChangeBackground.h"
+
+#include <DxLib.h>
 
 /*
  *	コンストラクタ
@@ -31,10 +36,25 @@ void StandbyScene::Initialize(Engine& engine) {
 	menu.GetMenu<MenuLoadMode>();
 	menu.GetMenu<MenuSaveMode>();
 	menu.GetMenu<MenuSettings>();
-	auto fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fadeOut, [&engine]() {
-		engine.SetNextScene(std::make_shared<TitleScene>());
+	std::vector<std::shared_ptr<LoadSprite>> loadBGList;
+	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black1.jpg"));
+	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black2.jpg"));
+	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black3.jpg"));
+	LoadManager::GetInstance().SetOnComplete([&engine, this, loadBGList]() {
+		auto loadBG = std::make_shared<LoadAnimation_ChangeBackground>();
+		std::vector<int> BGHandleList;
+		for (int i = 0, max = loadBGList.size(); i < max; i++) {
+			int handle = loadBGList[i]->GetHandle();
+			BGHandleList.push_back(handle);
+		}
+		loadBG->SetImages(BGHandleList);
+		LoadManager::GetInstance().AddAnimation(loadBG);
+		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+		FadeManager::GetInstance().StartFade(fadeOut, [&engine]() {
+			engine.SetNextScene(std::make_shared<TitleScene>());
+		});
 	});
+
 }
 /*
  *	ロード済みデータのセット
@@ -54,4 +74,5 @@ void StandbyScene::Update(Engine& engine, float deltaTime) {
  *	描画処理
  */
 void StandbyScene::Render() {
+	DrawBox(0, 0, GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, GetColor(0, 0, 0), TRUE);
 }

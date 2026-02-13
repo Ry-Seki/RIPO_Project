@@ -38,21 +38,10 @@ void TitleScene::Initialize(Engine& engine) {
 	auto goalSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/GoalSE.mp3");
 	auto dungeonBGM01 = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/Dungeon_1/êØÇÃéç.mp3");
 	auto dungeonBGM02 = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/Dungeon_2/ApparitionÅfs_Lullaby.mp3");
-	std::vector<std::shared_ptr<LoadSprite>> loadBGList;
-	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black1.jpg"));
-	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black2.jpg"));
-	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black3.jpg"));
-	LoadManager::GetInstance().SetOnComplete([&engine, this, debugSE, goalSE, loadBGList]() {
+	LoadManager::GetInstance().SetOnComplete([&engine, this, debugSE, goalSE]() {
 		AudioUtility::RegisterSEHandle("DebugSE", debugSE->GetHandle());
 		AudioUtility::RegisterSEHandle("GoalSE", goalSE->GetHandle());
 		auto loadBG = std::make_shared<LoadAnimation_ChangeBackground>();
-		std::vector<int> BGHandleList;
-		for (int i = 0, max = loadBGList.size(); i < max; i++) {
-			int handle = loadBGList[i]->GetHandle();
-			BGHandleList.push_back(handle);
-		}
-		loadBG->SetImages(BGHandleList);
-		LoadManager::GetInstance().AddAnimation(loadBG);
 		SetupData(engine);
 	});
 }
@@ -82,4 +71,5 @@ void TitleScene::Render() {
 #if _DEBUG
 	DrawFormatString(50, 50, GetColor(255, 255, 255), "[TitleScene] ï`âÊíÜ...");
 #endif
+	DrawBox(0, 0, GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, GetColor(0, 0, 0), TRUE);
 }
