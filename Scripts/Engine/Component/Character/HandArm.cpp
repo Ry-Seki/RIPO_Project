@@ -21,6 +21,10 @@ HandArm::HandArm()
 	, LEFTABLE_DISTANCE(1000)
 {}
 
+void HandArm::Start() {
+	playerModelHandle = MV1LoadModel("Res/Model/Player/RIPO_Model.mv1");
+}
+
 void HandArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) {
 	GameObjectPtr player = GetPlayer();
 	// 右クリックでお宝持ち上げ
@@ -72,6 +76,8 @@ void HandArm::LiftTreasure(GameObjectPtr player, Engine* engine) {
 			liftObject = hitInfo.collider->GetOwner();
 			// 視点変更イベント再生
 			CameraManager::GetInstance().CameraEventPlay(GameEnum::CameraEvent::ChangeView);
+			// プレイヤーの描画モデル変更
+			SetCharacterModel(player.get(), playerModelHandle);
 		}
 		else if (hitInfo.collider->GetOwner()->ID == ID2) {
 			if (player->GetComponent<PlayerComponent>()->GetPlayerStatus().strength > 2) {

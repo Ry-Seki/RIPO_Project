@@ -44,16 +44,13 @@ PlayerComponent::PlayerComponent()
 	, STAMINA_HEAL_VALUE(0.2f)
 	, JUMP_POWER(1400.0f)
 	, BACK_ACCELERATION(0.5f)
-	, HP_DECREASE_RATE(0.2f)
-{
-}
+	, HP_DECREASE_RATE(0.2f) {}
 
 void PlayerComponent::Start() {
 	// プレイヤーの基礎ステータスを受け取る
 	status = PlayerStatusManager::GetInstance().GetPlayerStatusData()->base;
 
-	armModelHandle = MV1LoadModel("Res/Model/Player/BeamRifle.mv1");
-	playerModelHandle = MV1LoadModel("Res/Model/Player/RIPO_Model.mv1");
+	animator = GetOwner()->GetComponent<AnimatorComponent>();
 }
 
 void PlayerComponent::Update(float deltaTime) {
@@ -102,12 +99,12 @@ void PlayerComponent::Update(float deltaTime) {
 		}
 		resistTimePoint = 0;
 	}
-	
+
 	// HPがなくなったら死亡
 	if (status.HP <= 0) {
 		isDead = true;
 	}
-	
+
 	// 武器変更
 	int first = static_cast<int>(GameEnum::PlayerAction::FirstWeapon);
 	int second = static_cast<int>(GameEnum::PlayerAction::SecondWeapon);
@@ -198,54 +195,32 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 		gravity->AddFallSpeed(-JUMP_POWER);
 	}
 
-	// アニメーション
-	animator = player->GetComponent<AnimatorComponent>();
-	if (!animator)
-		return;
-	auto modelRenderer = player->GetComponent<ModelRenderer>();
-	if (!modelRenderer)
-		return;
-	int modelHandle = modelRenderer->GetModelHandle();
-	if (modelHandle == -1)
-		return;
-	// モデルハンドルのセット
-	animator->SetModelHandle(modelHandle);
-	animator->LoadIndex(true);
+
 	// アニメーション再生
- 	if (moveVec != V_ZERO) {
-		if (forward == 1.0f) {
-			// 前移動
-			animator->Play(4, moveSpeed * 0.066f);
+	if (CameraManager::GetInstance().GetCameraState() == GameEnum::CameraState::TPS) {
+		if (moveVec != V_ZERO) {
+			if (forward == 1.0f) {
+				// 前移動
+				animator->Play(4, moveSpeed * 0.066f);
+			}
+			else if (forward == -1.0f) {
+				// 後ろ移動
+				animator->Play(5, moveSpeed * 0.066f);
+			}
+			else if (right == 1.0f) {
+				// 左移動
+				animator->Play(6, moveSpeed * 0.066f);
+			}
+			else if (right == -1.0f) {
+				// 右移動
+				animator->Play(7, moveSpeed * 0.066f);
+			}
 		}
-		else if (forward == -1.0f) {
-			// 後ろ移動
-			animator->Play(5, moveSpeed * 0.066f);
-		}
-		else if (right == 1.0f) {
-			// 左移動
-			animator->Play(6, moveSpeed * 0.066f);
-		}
-		else if (right == -1.0f) {
-			// 右移動
-			animator->Play(7, moveSpeed * 0.066f);
+		else {
+			// 待機
+			animator->Play(3, 1);
 		}
 	}
-	else  {
-		// 待機
-		animator->Play(3, 1);
-	}
-
-	// モデルの変更
-	auto handArm = player->GetComponent<ArmActionComponent>();
-	if (!handArm->GetLiftObject()) {
-		modelRenderer->SetModelHandle(armModelHandle);
-		//MV1SetOpacityRate(modelHandle, 0);
-	}
-	else {
-		modelRenderer->SetModelHandle(playerModelHandle);
-		//MV1SetOpacityRate(modelHandle, 1);
-	}
-
 }
 
 /*

@@ -1,34 +1,31 @@
 /*
- *	@brief	MenuSelectAction.cpp
+ *	@file	MenuSelectTraining.cpp
  *	@author	Seki
  */
 
-#include "MenuSelectAction.h"
-#include "../../Audio/AudioUtility.h"
-#include "../../Load/LoadManager.h"
-#include "../../Load/JSON/LoadJSON.h"
-#include "../../Load/Sprite/LoadSprite.h"
-#include "../../Fade/FadeManager.h"
-#include "../../Fade/FadeFactory.h"
-#include "../../Input/InputUtility.h"
-#include "../../Save/SaveDataManager.h"
-#include "../../UI/Button/SinglePressButton.h"
-#include "../../GameConst.h"
-#include "../../Engine.h"
-#include "../../Scene/MainGameScene.h"
-#include "../../../Data/UI/MenuInfo.h"
-#include "../MenuResourcesFactory.h"
-#include "../MenuManager.h"
-#include "../System/MenuConfirm.h"
-#include "MenuInGame.h"
-#include "../../Manager/FontManager.h"
-
-#include <DxLib.h>
+#include "MenuSelectTraining.h"
+#include "../../../Audio/AudioUtility.h"
+#include "../../../Load/LoadManager.h"
+#include "../../../Load/JSON/LoadJSON.h"
+#include "../../../Load/Sprite/LoadSprite.h"
+#include "../../../Fade/FadeManager.h"
+#include "../../../Fade/FadeFactory.h"
+#include "../../../Input/InputUtility.h"
+#include "../../../Save/SaveDataManager.h"
+#include "../../../UI/Button/SinglePressButton.h"
+#include "../../../GameConst.h"
+#include "../../../Engine.h"
+#include "../../../Scene/MainGameScene.h"
+#include "../../../../Data/UI/MenuInfo.h"
+#include "../../MenuResourcesFactory.h"
+#include "../../MenuManager.h"
+#include "../../System/MenuConfirm.h"
+#include "../MenuInGame.h"
 
 /*
  *	@brief	初期化処理
  */
-void MenuSelectAction::Initialize(Engine& engine) {
+void MenuSelectTraining::Initialize(Engine& engine) {
     auto& load = LoadManager::GetInstance();
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
@@ -55,42 +52,32 @@ void MenuSelectAction::Initialize(Engine& engine) {
                 SelectButtonExecute(engine, i);
             });
         }
-        for (auto& sprite : spriteList) {
-            if (sprite->GetName() == "ElapsedDay") elapsedDaySprite = sprite.get();
-        }
         eventSystem.LoadNavigation(navigation->GetData());
     });
 }
 /*
  *	@brief	メニューを開く
  */
-void MenuSelectAction::Open() {
-	MenuBase::Open();
+void MenuSelectTraining::Open() {
+    MenuBase::Open();
     for (auto& sprite : spriteList) {
         sprite->Setup();
     }
     for (auto& button : buttonList) {
         button->Setup();
     }
-
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
-        if (isHalf) {
-            buttonList[0]->SetIsEnable(false);
-            elapsedDaySprite->SetFrameIndex(2);
-        }
-        else {
-            elapsedDaySprite->SetFrameIndex(1);
-        }
+        // TODO : イベントごとに画像差し替え
+
         eventSystem.ApplySelection();
         InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
     });
-
 }
 /*
- *	@brief	更新処理
+ *	@brief	メニューを閉じる
  */
-void MenuSelectAction::Update(Engine& engine, float unscaledDeltaTime) {
+void MenuSelectTraining::Update(Engine& engine, float unscaledDeltaTime) {
     auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
 
     if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)]) {
@@ -116,14 +103,14 @@ void MenuSelectAction::Update(Engine& engine, float unscaledDeltaTime) {
 /*
  *	@brief	アニメーション等の更新
  */
-void MenuSelectAction::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
+void MenuSelectTraining::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer += unscaledDeltaTime;
 
     if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
     animTimer -= GameConst::UI_ANIM_INTERVAL;
 
     for (auto& sprite : spriteList) {
-        if (!sprite || sprite.get() == elapsedDaySprite) continue;
+        if (!sprite) continue;
 
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
@@ -131,11 +118,12 @@ void MenuSelectAction::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
         animFrame = (animFrame + 1) % frameCount;
         sprite->SetFrameIndex(animFrame);
     }
+
 }
 /*
  *	@brief	描画処理
  */
-void MenuSelectAction::Render() {
+void MenuSelectTraining::Render() {
     for (auto& sprite : spriteList) {
         if (!sprite->IsVisible()) continue;
         sprite->Render();
@@ -144,90 +132,87 @@ void MenuSelectAction::Render() {
         if (!button->IsVisible()) continue;
         button->Render();
     }
-    std::string elapsedDayStr = std::to_string(elapsedDay);
-    FontManager::GetInstance().Draw("NormalSizeFont", 260, 510, elapsedDayStr, GetColor(75, 75, 75));
 }
 /*
  *	@brief	メニューを閉じる
  */
-void MenuSelectAction::Close(Engine& engine) {
-	MenuBase::Close(engine);
+void MenuSelectTraining::Close(Engine& engine) {
+    MenuBase::Close(engine);
 }
 /*
  *	@brief	メニューを中断
  */
-void MenuSelectAction::Suspend() {
-	MenuBase::Suspend();
+void MenuSelectTraining::Suspend() {
+    MenuBase::Suspend();
 }
 /*
  *	@brief	メニューを再開
  */
-void MenuSelectAction::Resume() {
-	MenuBase::Resume();
+void MenuSelectTraining::Resume() {
+    MenuBase::Resume();
 }
 /*
  *	@brief		ボタンの押された時の処理
  *	@param[in]	int buttonIndex
  */
-void MenuSelectAction::SelectButtonExecute(Engine& engine, int buttonIndex) {
+void MenuSelectTraining::SelectButtonExecute(Engine& engine, int buttonIndex) {
     auto& menu = MenuManager::GetInstance();
     auto confirm = menu.GetMenu<MenuConfirm>();
-    GameEnum::ActionType type = GameEnum::ActionType::Invalid;
-
+    GameEnum::PlayerStatusType type = GameEnum::PlayerStatusType::Invalid;
     if (buttonIndex == 0) {
+        type = GameEnum::PlayerStatusType::HP;
         AudioUtility::PlaySE("DebugSE");
-        type = GameEnum::ActionType::Dungeon;
-        confirm->SetCallback([this, &menu, &engine, type](GameEnum::ConfirmResult result){
+        confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
-                FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fade, [this, &menu, type]() {
-                    menu.CloseTopMenu();
+                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, type]() {
+                    menu.CloseAllMenu();
                     if (Callback) Callback(type);
                 });
+                menu.CloseTopMenu();
             }
-            menu.CloseTopMenu();
         });
         menu.OpenMenu<MenuConfirm>();
-    }else if(buttonIndex == 1){
+    } else if(buttonIndex == 1){
+        type = GameEnum::PlayerStatusType::Stamina;
         AudioUtility::PlaySE("DebugSE");
-        type = GameEnum::ActionType::Training;
-        confirm->SetCallback([this, &menu, &engine, type](GameEnum::ConfirmResult result) {
+        confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
-                FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fade, [this, &menu, type]() {
-                    menu.CloseTopMenu();
+                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, type]() {
+                    menu.CloseAllMenu();
                     if (Callback) Callback(type);
                 });
+                menu.CloseTopMenu();
             }
-            menu.CloseTopMenu();
         });
         menu.OpenMenu<MenuConfirm>();
-    } else if (buttonIndex == 2) {
+    }else if(buttonIndex == 2){
+        type = GameEnum::PlayerStatusType::Strength;
         AudioUtility::PlaySE("DebugSE");
-        type = GameEnum::ActionType::Shop;
-        confirm->SetCallback([this, &menu, &engine, type](GameEnum::ConfirmResult result) {
+        confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
-                FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fade, [this, &menu, type]() {
-                    menu.CloseTopMenu();
+                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, type]() {
+                    menu.CloseAllMenu();
                     if (Callback) Callback(type);
                 });
+                menu.CloseTopMenu();
             }
-            menu.CloseTopMenu();
         });
         menu.OpenMenu<MenuConfirm>();
-    } else if (buttonIndex == 3) {
+    }else if(buttonIndex == 3){
+        type = GameEnum::PlayerStatusType::ResistTime;
         AudioUtility::PlaySE("DebugSE");
-        type = GameEnum::ActionType::PartTime;
-        confirm->SetCallback([this, &menu, &engine, type](GameEnum::ConfirmResult result) {
+        confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
-                FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fade, [this, &menu, type]() {
-                    menu.CloseTopMenu();
+                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, type]() {
+                    menu.CloseAllMenu();
                     if (Callback) Callback(type);
                 });
+                menu.CloseTopMenu();
             }
-            menu.CloseTopMenu();
         });
         menu.OpenMenu<MenuConfirm>();
     }

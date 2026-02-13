@@ -19,6 +19,7 @@ ArmActionComponent::ArmActionComponent()
  */
 void ArmActionComponent::Start() {
 	arms[GameEnum::Arm::Hand] = std::make_shared<HandArm>();
+	arms[GameEnum::Arm::Hand]->Start();
 	arms[GameEnum::Arm::Weapon] = std::make_shared<WeaponBase>();
 	arms[GameEnum::Arm::Weapon]->Start();
 }

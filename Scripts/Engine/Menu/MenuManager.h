@@ -13,6 +13,7 @@
 #include <memory>
 #include <type_traits>
 #include <algorithm>  
+#include <string>
 
 // 前方宣言
 class Engine;
@@ -29,6 +30,7 @@ private:
 	Engine* engine = nullptr;
 	std::vector<MenuBasePtr> unuseMenuList;		// 未使用メニューリスト
 	std::vector<MenuBasePtr> useMenuList;		// 使用中メニューリスト
+	std::vector<std::string> fontNameList;
 
 private:
 	/*
@@ -120,6 +122,13 @@ public:
 		useMenuList.push_back(menu);
 
 	}
+
+public:
+	/*
+	 *	@brief		フォントの取得
+	 *	@param[in]	使用するフォントの名前
+	 */
+	
 };
 
 #endif // !_MENU_MANAGER_H_

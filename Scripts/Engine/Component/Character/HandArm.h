@@ -16,6 +16,7 @@ class HandArm : public ArmBase {
 private:
 	GameObject* liftObject;			// 運ぶオブジェクト
 
+	int playerModelHandle;
 	const float LEFTABLE_DISTANCE;	// 運べる距離
 
 public:
@@ -23,6 +24,10 @@ public:
 	~HandArm() = default;
 
 public:
+	/*
+	 *	最初のUpdateの直前に呼び出される処理
+	 */
+	void Start() override;
 	/*
 	 *	更新処理
 	 */

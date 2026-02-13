@@ -91,7 +91,10 @@ public:
 	 *	アニメーションを適用するモデルハンドルをセット
 	 *  @param	setValue
 	 */
-	inline void SetModelHandle(int setValue) { animModelHandle = setValue; }
+	inline void SetModelHandle(int setValue) { 
+		animModelHandle = setValue;
+	}
+	inline int GetModelHandle() { return animModelHandle; }
 
 	/*
 	 *	@function	GetCurrentAnimation

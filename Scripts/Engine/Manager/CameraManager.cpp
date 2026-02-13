@@ -31,7 +31,7 @@ void CameraManager::CreateCamera(
 	// 未使用状態のオブジェクト取得
 	camera = GameObjectManager::GetInstance().GetUnuseObject();
 	// カメラ生成
-	CameraComponentPtr cameraComponent = camera->AddComponent<CameraComponent>();
+	cameraComponent = camera->AddComponent<CameraComponent>();
 	// データのセット
 	camera->SetObjectData(name, position, rotation);
 	engine->AddGameObject(camera);

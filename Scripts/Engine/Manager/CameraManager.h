@@ -20,6 +20,7 @@ class CameraManager : public Singleton<CameraManager> {
 private:
 	Engine* engine;
 	GameObjectPtr camera;
+	CameraComponentPtr cameraComponent;
 	GameObjectPtr target;
 
 private:
@@ -61,6 +62,10 @@ public:
 	 *	カメラのゲット
 	 */
 	inline GameObjectPtr GetCamera() const { return camera; }
+	/*
+	 *	カメラの状態取得
+	 */
+	inline GameEnum::CameraState GetCameraState() const { return cameraComponent->GetState(); }
 };
 
 #endif // !_CAMERAMANAGER_H_
