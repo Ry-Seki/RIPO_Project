@@ -774,6 +774,12 @@
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.cpp">
       <Filter>ソース ファイル\Engine\Menu\MainGame\Dungeon</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Component\Character\BossShootingAttack.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Manager\FontManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -1381,6 +1387,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.h">
       <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Component\Character\BossShootingAttack.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Manager\FontManager.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

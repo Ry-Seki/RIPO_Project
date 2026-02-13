@@ -50,7 +50,7 @@ public:
 	static constexpr float frameTime = 1.0f / FPS;
 	static constexpr int SELECT_SAVE_SLOT_MIN = 1;
 	static constexpr int SELECT_SAVE_SLOT_MAX = 3;
-	static constexpr float UI_ANIM_INTERVAL = 0.25f; 
+	static constexpr float UI_ANIM_INTERVAL = 0.25f;
 
 	//----------------------------------------------------
 	//				ステージ関連の定数
@@ -83,7 +83,12 @@ public:
 	static constexpr int NORMAL_TREASURE_INDEX = 0;					// 通常お宝要素数
 	static constexpr int EVENT_TREASURE_INDEX = 1;					// イベントお宝要素数
 	static constexpr int TREASURE_TYPE_INDEX = 2;					// お宝の種類
-
+	//----------------------------------------------------
+	//					お宝の名前
+	//----------------------------------------------------
+	const unsigned int WHITE = GetColor(255, 255, 255);
+	const unsigned int GRAY = GetColor(75, 75, 75);
+	const unsigned int BRACK = GetColor(0, 0, 0);
 };
 #endif // !_GAMECONST_H_
 
