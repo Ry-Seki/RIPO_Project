@@ -20,6 +20,7 @@
  */
 class MenuSelectDungeon : public MenuBase {
 private:
+	int currentIndex = -1;
 	float animTimer = 0.0f;
 	int animFrame = 0;
 	std::vector<bool> isEventList;
@@ -28,7 +29,7 @@ private:
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
-	std::vector<Sprite*> dungeonsSprite;
+	Sprite* dungeonSprite;
 
 	std::function<void(int)> Callback = nullptr;
 

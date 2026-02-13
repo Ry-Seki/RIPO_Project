@@ -52,6 +52,9 @@ void MenuSelectDungeon::Initialize(Engine& engine) {
                 SelectButtonExecute(engine, i);
             });
         }
+        for (auto& sprite : spriteList) {
+            if (sprite->GetName() == "DungeonSprite") dungeonSprite = sprite.get();
+        }
         eventSystem.LoadNavigation(navigation->GetData());
     });
 }
@@ -110,7 +113,7 @@ void MenuSelectDungeon::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer -= GameConst::UI_ANIM_INTERVAL;
 
     for (auto& sprite : spriteList) {
-        if (!sprite) continue;
+        if (!sprite || sprite.get() == dungeonSprite) continue;
 
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
@@ -118,15 +121,18 @@ void MenuSelectDungeon::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
         animFrame = (animFrame + 1) % frameCount;
         sprite->SetFrameIndex(animFrame);
     }
+    currentIndex = eventSystem.GetCurrentIndex();
+    dungeonSprite->SetFrameIndex(currentIndex);
 }
 /*
  *	@brief	•`‰æˆ—
  */
 void MenuSelectDungeon::Render() {
     for (auto& sprite : spriteList) {
-        if (!sprite->IsVisible()) continue;
+        if (!sprite->IsVisible() || sprite.get() == dungeonSprite) continue;
         sprite->Render();
     }
+    dungeonSprite->Render();
     for (auto& button : buttonList) {
         if (!button->IsVisible()) continue;
         button->Render();
