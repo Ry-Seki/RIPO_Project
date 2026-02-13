@@ -94,5 +94,11 @@
     "Value": 315,
     "Effect": "treasureViewing",
     "Strength": 1
+  },
+  "LightStatue2": {
+    "ID": 16,
+    "Value": 1,
+    "Effect": "treasureViewing",
+    "Strength": 1
   }
 }
