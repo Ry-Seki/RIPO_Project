@@ -21,6 +21,7 @@
 #include "../MenuManager.h"
 #include "../System/MenuConfirm.h"
 #include "MenuInGame.h"
+#include "../../Manager/FontManager.h"
 
 #include <DxLib.h>
 
@@ -143,7 +144,8 @@ void MenuSelectAction::Render() {
         if (!button->IsVisible()) continue;
         button->Render();
     }
-    DrawFormatString(260, 510, GetColor(75, 75, 75), "%d", elapsedDay);
+    std::string elapsedDayStr = std::to_string(elapsedDay);
+    FontManager::GetInstance().Draw("NormalSizeFont", 260, 510, elapsedDayStr, GetColor(75, 75, 75));
 }
 /*
  *	@brief	ƒƒjƒ…[‚ğ•Â‚¶‚é
