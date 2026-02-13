@@ -77,7 +77,7 @@ void Treasure::OnCollected() {
 	// UIíœ
 	auto menu = MenuManager::GetInstance().GetMenu<DungeonTreasureUI>();
 	if (menu) {
-		menu->HideTreasureUI();
+		menu->HideTreasureUI(GetOwner()->ID);
 
 	}
 }
@@ -106,7 +106,7 @@ void Treasure::UnCollected() {
 		// UI•\¦
 		auto& menu = MenuManager::GetInstance();
 		auto treasureMenu = menu.GetMenu<DungeonTreasureUI>();
-		treasureMenu->ShowTreasureUI(treasureID, GetOwner()->position);
+		treasureMenu->ShowTreasureUI(treasureID, GetOwner()->ID, GetOwner()->position);
 		menu.OpenMenu<DungeonTreasureUI>();
 	}
 	else {
@@ -119,8 +119,12 @@ void Treasure::UnCollected() {
 
 		auto& menu = MenuManager::GetInstance();
 		auto treasureMenu = menu.GetMenu<DungeonTreasureUI>();
-		treasureMenu->HideTreasureUI();
-		menu.CloseMenu(treasureMenu);
+
+		// ©•ª‚ª•\¦Œ ‚ğ‚Á‚Ä‚¢‚é‚¾‚¯•Â‚¶‚é
+		if (treasureMenu->GetOwnerObjectID() == GetOwner()->ID) {
+			treasureMenu->HideTreasureUI(GetOwner()->ID);
+			menu.CloseMenu(treasureMenu);
+		}
 	}
 
 }

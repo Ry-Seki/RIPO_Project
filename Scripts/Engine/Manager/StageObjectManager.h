@@ -183,7 +183,7 @@ public:
 		for (int i = 0, max = stairList.size(); i < max; i++) {
 			stairList[i]->SetStairMove(false);
 		}
-		if(exitPoint) exitPoint->SetExitTrigger(false);
+		if (exitPoint) exitPoint->SetExitTrigger(false);
 	}
 	void ClearObject() {
 		stairList.clear();
