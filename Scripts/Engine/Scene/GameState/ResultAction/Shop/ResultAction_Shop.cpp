@@ -24,8 +24,8 @@ void ResultAction_Shop::Setup() {
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fade, [this]() {
 		auto& context = owner->GetOwner()->GetActionContext();
-		for (int i = 0, max = context.buyIDList.size(); i < max; i++) {
-			PlayerStatusManager::GetInstance().AddPlayerStatus(context.buyIDList[i]);
+		for (int i = 0, max = context.buyStatusIDList.size(); i < max; i++) {
+			PlayerStatusManager::GetInstance().AddPlayerStatus(context.buyStatusIDList[i]);
 		}
 	});
 }
@@ -56,7 +56,8 @@ void ResultAction_Shop::Render() {
  */
 void ResultAction_Shop::Teardown() {
 	auto& context = owner->GetOwner()->GetActionContext();
-	context.buyIDList.clear();
+	context.buyStatusIDList.clear();
+	context.buyWeaponIDList.clear();
 }
 /*
  *	@brief	“ú‚É‚¿isˆ—

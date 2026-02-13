@@ -55,6 +55,6 @@ void SelectDetail_Training::Teardown() {
  */
 void SelectDetail_Training::DecideTrainingType(GameEnum::PlayerStatusType type) {
 	auto& context = owner->GetOwner()->GetActionContext();
-	context.statusType = GameEnum::PlayerStatusType::HP;
+	context.statusType = type;
 	owner->GetOwner()->ChageState(GameEnum::GameState::InAction);
 }

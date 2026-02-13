@@ -1,77 +1,128 @@
 {
+  "Sprites": [
+    {
+      "Name": "BackGround",
+      "Rect": {
+        "X": 0,
+        "Y": 0,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/BackGround/Trealine_LoadBackground_black1.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black2.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black3.jpg"
+      ]
+    },
+    {
+      "Name": "Shop",
+      "Rect": {
+        "X": 0,
+        "Y": 0,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/Menu/MainGame/Shop/Trealine_Shop.png"
+      ]
+    }
+  ],
   "Buttons": [
     {
       "Name": "HPUpGrade",
       "Type": "Single",
       "Rect": {
-        "X": 1000,
-        "Y": 50,
-        "Width": 700,
-        "Height": 100
+        "X": 984,
+        "Y": 120,
+        "Width": 586,
+        "Height": 144
       },
       "Resources": {
+        "Idle": "Res/Menu/MainGame/Shop/Trealine_Shop_HPUpGradeButton.png",
+        "Hover": "Res/Menu/MainGame/Shop/Trealine_Shop_HPUpGradeButton.png",
+        "Press": "Res/Menu/MainGame/Shop/Trealine_Shop_HPUpGradeButton_Press.png",
+        "Select": "Res/Menu/MainGame/Shop/Trealine_Shop_HPUpGradeButton_Select.png"
       }
     },
     {
       "Name": "StaminaUpGrade",
       "Type": "Single",
       "Rect": {
-        "X": 1000,
-        "Y": 200,
-        "Width": 700,
-        "Height": 100
+        "X": 984,
+        "Y": 286,
+        "Width": 795,
+        "Height": 144
       },
       "Resources": {
+        "Idle": "Res/Menu/MainGame/Shop/Trealine_Shop_StaminaUpGradeButton.png",
+        "Hover": "Res/Menu/MainGame/Shop/Trealine_Shop_StaminaUpGradeButton.png",
+        "Press": "Res/Menu/MainGame/Shop/Trealine_Shop_StaminaUpGradeButton_Press.png",
+        "Select": "Res/Menu/MainGame/Shop/Trealine_Shop_StaminaUpGradeButton_Select.png"
       }
     },
     {
       "Name": "StrengthUpGrade",
       "Type": "Single",
       "Rect": {
-        "X": 1000,
-        "Y": 350,
-        "Width": 700,
-        "Height": 100
+        "X": 984,
+        "Y": 452,
+        "Width": 885,
+        "Height": 144
       },
       "Resources": {
+        "Idle": "Res/Menu/MainGame/Shop/Trealine_Shop_StrengthUpGradeButton.png",
+        "Hover": "Res/Menu/MainGame/Shop/Trealine_Shop_StrengthUpGradeButton.png",
+        "Press": "Res/Menu/MainGame/Shop/Trealine_Shop_StrengthUpGradeButton_Press.png",
+        "Select": "Res/Menu/MainGame/Shop/Trealine_Shop_StrengthUpGradeButton_Select.png"
       }
     },
     {
       "Name": "ResistTimeUpGrade",
       "Type": "Single",
       "Rect": {
-        "X": 1000,
-        "Y": 500,
-        "Width": 700,
-        "Height": 100
+        "X": 984,
+        "Y": 618,
+        "Width": 890,
+        "Height": 144
       },
       "Resources": {
+        "Idle": "Res/Menu/MainGame/Shop/Trealine_Shop_ResistTimeUpGradeButton.png",
+        "Hover": "Res/Menu/MainGame/Shop/Trealine_Shop_ResistTimeUpGradeButton.png",
+        "Press": "Res/Menu/MainGame/Shop/Trealine_Shop_ResistTimeUpGradeButton_Press.png",
+        "Select": "Res/Menu/MainGame/Shop/Trealine_Shop_ResistTimeUpGradeButton_Select.png"
       }
     },
     {
       "Name": "SubmachineGun",
       "Type": "Single",
       "Rect": {
-        "X": 1000,
-        "Y": 650,
-        "Width": 700,
-        "Height": 100
+        "X": 984,
+        "Y": 783,
+        "Width": 632,
+        "Height": 144
       },
       "Resources": {
-
+        "Idle": "Res/Menu/MainGame/Shop/Trealine_Shop_Weapon_SMGButton.png",
+        "Hover": "Res/Menu/MainGame/Shop/Trealine_Shop_Weapon_SMGButton.png",
+        "Press": "Res/Menu/MainGame/Shop/Trealine_Shop_Weapon_SMGButton_Press.png",
+        "Select": "Res/Menu/MainGame/Shop/Trealine_Shop_Weapon_SMGButton_Select.png",
+        "Disable": "Res/Menu/MainGame/Shop/Trealine_Shop_Weapon_SMGButton_Disable.png"
       }
     },
     {
-      "Name": "Back",
+      "Name": "Exit",
       "Type": "Single",
       "Rect": {
-        "X": 1000,
-        "Y": 800,
-        "Width": 700,
-        "Height": 100
+        "X": 0,
+        "Y": 895,
+        "Width": 419,
+        "Height": 181
       },
       "Resources": {
-
+        "Idle": "Res/Menu/MainGame/Shop/Trealine_Shop_ExitButton.png",
+        "Hover": "Res/Menu/MainGame/Shop/Trealine_Shop_ExitButton.png",
+        "Press": "Res/Menu/MainGame/Shop/Trealine_Shop_ExitButton_Press.png",
+        "Select": "Res/Menu/MainGame/Shop/Trealine_Shop_ExitButton_Select.png"
       }
     }
   ]

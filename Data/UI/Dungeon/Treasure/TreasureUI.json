@@ -1,7 +1,7 @@
 {
   "TreasureUI": {
     "0": {
-      "ImagePath": "Res/TreasureUI/StrengthUI_ID0.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_Tutorial.png"
     },
     "1": {
       "ImagePath": "Res/TreasureUI/StrengthUI_ID1.png"
@@ -46,7 +46,10 @@
       "ImagePath": "Res/TreasureUI/StrengthUI.png"
     },
     "15": {
-      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID0.png"
+    },
+    "16": {
+      "ImagePath": "Res/TreasureUI/StrengthUI_Tutorial.png"
     }
   }
 }

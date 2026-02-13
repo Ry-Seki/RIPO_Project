@@ -147,6 +147,11 @@ public:
 		return inputState;
 	}
 	/*
+	 *	@brief		–¼‘O‚Ìæ“¾
+	 *	@return		std::string
+	 */
+	inline std::string GetName() const { return name; }
+	/*
 	 *	@brief		–¼‘O‚Ìİ’è
 	 *	@param[in]	const std::string& setName
 	 */

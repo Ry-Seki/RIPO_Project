@@ -31,7 +31,7 @@ StageObjectBasePtr StageObjectManager::CreateStageObject(
 	const Vector3& AABBMin,
 	const Vector3& AABBMax,
 	GameObjectPtr& stageObject,
-	int setTreasreID){
+	int setTreasreID) {
 	// 未使用のオブジェクト取得
 	stageObject = GetUnuseObject();
 	// ステージオブジェクト生成
@@ -65,6 +65,7 @@ void StageObjectManager::GenerateExit(
 	// シーンが持つゲームオブジェクト配列に入れる
 	engine->AddGameObject(createExitPoint);
 }
+
 
 /*
  *	お宝生成
@@ -114,7 +115,7 @@ void StageObjectManager::GenerateStair(
 	const Vector3& position,
 	const Vector3& rotation,
 	const Vector3& AABBMin,
-	const Vector3& AABBMax){
+	const Vector3& AABBMax) {
 	GameObjectPtr createStair;
 	// リストの空きに生成
 	CreateStageObject<Stair>(name, position, rotation, AABBMin, AABBMax, createStair);
@@ -147,7 +148,7 @@ void StageObjectManager::RemoveStageObject(int ID) {
  *  @author		Seki
  */
 void StageObjectManager::RemoveAllStageObject() {
-	for (int i = createStageObjectList.size() -1; i >= 0; i--) {
+	for (int i = createStageObjectList.size() - 1; i >= 0; i--) {
 		if (!createStageObjectList[i]) continue;
 		RemoveStageObject(createStageObjectList[i]->ID);
 	}

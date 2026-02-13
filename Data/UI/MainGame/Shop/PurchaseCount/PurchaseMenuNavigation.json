@@ -1,15 +1,15 @@
 {
   "0": {
-    "Left": 0,
-    "Right": 0,
-    "Up": 2,
+    "Left": 2,
+    "Right": 3,
+    "Up": 1,
     "Down": 1
   },
   "1": {
-    "Left": 1,
-    "Right": 1,
+    "Left": 2,
+    "Right": 3,
     "Up": 0,
-    "Down": 2
+    "Down": 0
   },
   "2": {
     "Left": 3,

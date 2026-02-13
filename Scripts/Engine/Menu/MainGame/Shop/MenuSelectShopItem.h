@@ -33,6 +33,7 @@ private:
 	EventSystem eventSystem;
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
+	UIButtonBase* smgWeapon = nullptr;
 	std::function<void()> Callback = nullptr;
 
 	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/SelectItem/SelectItemMenuResources.json";

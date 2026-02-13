@@ -30,8 +30,8 @@ struct ActionContext {
 
 	DungeonStageData dungeonStageData;			// ダンジョンステージデータ
 	DungeonFloorData dungeonFloorData;			// ダンジョンフロアデータ
-	std::vector<int> buyIDList;					// 購入したアイテムIDリスト
-
+	std::vector<int> buyStatusIDList;			// 購入したステータスアイテムIDリスト
+	std::vector<int> buyWeaponIDList;			// 購入した武器IDリスト
 	GameEnum::ActionType actionType = GameEnum::ActionType::Invalid;				// アクションタイプ
 	GameEnum::PlayerStatusType statusType = GameEnum::PlayerStatusType::Invalid;	// ステータスタイプ
 	GameEnum::MiniGameLevel miniGameLevel = GameEnum::MiniGameLevel::Invalid;		// ミニゲームの難易度

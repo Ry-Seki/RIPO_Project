@@ -14,6 +14,7 @@
 #include "../../../../Menu/MenuManager.h"
 #include "../../../../Menu/MainGame/Shop/MenuSelectShopItem.h"
 #include "../../../../Menu/MainGame/Shop/MenuPurchaseCount.h"
+#include "../../../../Manager/WeaponManager.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -61,7 +62,12 @@ void SelectDetail_Shop::Teardown() {
  */
 void SelectDetail_Shop::BuyItem(int itemID, int buyCount) {
 	auto& context = owner->GetOwner()->GetActionContext();
+	if (itemID == 4) {
+		context.buyWeaponIDList.push_back(itemID);
+		WeaponManager::GetInstance().UnlockSubmachineGun();
+		return;
+	}
 	for (int i = 0; i < buyCount; i++) {
-		context.buyIDList.push_back(itemID);
+		context.buyStatusIDList.push_back(itemID);
 	}
 }
