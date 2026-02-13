@@ -1,0 +1,96 @@
+{
+  "Sprites": [
+    {
+      "Name": "BackGround",
+      "Rect": {
+        "X": 0,
+        "Y": 0,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/BackGround/Trealine_LoadBackground_black1.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black2.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black3.jpg"
+      ]
+    },
+    {
+      "Name": "Training_Detail",
+      "Rect": {
+        "X": 70,
+        "Y": 50,
+        "Width": 1850,
+        "Height": 1015
+      },
+      "Resources": [
+        "Res/Menu/MainGame/Training/Trealine_Training_Training_Info.png"
+      ]
+    }
+  ],
+  "Buttons": [
+    {
+      "Name": "HP",
+      "Type": "Single",
+      "Rect": {
+        "X": 70,
+        "Y": 194,
+        "Width": 618,
+        "Height": 206
+      },
+      "Resources": {
+        "Idle": "Res/Menu/MainGame/Training/Trealine_Training_HPButton.png",
+        "Hover": "Res/Menu/MainGame/Training/Trealine_Training_HPButton.png",
+        "Press": "Res/Menu/MainGame/Training/Trealine_Training_HPButton_Select.png",
+        "Select": "Res/Menu/MainGame/Training/Trealine_Training_HPButton_Select.png"
+      }
+    },
+    {
+      "Name": "Stamina",
+      "Type": "Single",
+      "Rect": {
+        "X": 913,
+        "Y": 346,
+        "Width": 1006,
+        "Height": 171
+      },
+      "Resources": {
+        "Idle": "Res/Menu/MainGame/Training/Trealine_Training_StaminaButton.png",
+        "Hover": "Res/Menu/MainGame/Training/Trealine_Training_StaminaButton.png",
+        "Press": "Res/Menu/MainGame/Training/Trealine_Training_StaminaButton_Select.png",
+        "Select": "Res/Menu/MainGame/Training/Trealine_Training_StaminaButton_Select.png"
+      }
+    },
+    {
+      "Name": "Strength",
+      "Type": "Single",
+      "Rect": {
+        "X": 71,
+        "Y": 495,
+        "Width": 950,
+        "Height": 188
+      },
+      "Resources": {
+        "Idle": "Res/Menu/MainGame/Training/Trealine_Training_StrengthButton.png",
+        "Hover": "Res/Menu/MainGame/Training/Trealine_Training_StrengthButton.png",
+        "Press": "Res/Menu/MainGame/Training/Trealine_Training_StrengthButton_Select.png",
+        "Select": "Res/Menu/MainGame/Training/Trealine_Training_StrengthButton_Select.png"
+      }
+    },
+    {
+      "Name": "ResistTime",
+      "Type": "Single",
+      "Rect": {
+        "X": 715,
+        "Y": 765,
+        "Width": 1024,
+        "Height": 213
+      },
+      "Resources": {
+        "Idle": "Res/Menu/MainGame/Training/Trealine_Training_ResistTimeButton.png",
+        "Hover": "Res/Menu/MainGame/Training/Trealine_Training_ResistTimeButton.png",
+        "Press": "Res/Menu/MainGame/Training/Trealine_Training_ResistTimeButton_Select.png",
+        "Select": "Res/Menu/MainGame/Training/Trealine_Training_ResistTimeButton_Select.png"
+      }
+    }
+  ]
+}

@@ -89,17 +89,18 @@ namespace {
 MenuInfo MenuResourcesFactory::Create(const JSON& json) {
     MenuInfo result{};
 
-    if (json.contains("Buttons")) {
-        for (const auto& button : json["Buttons"]) {
-            auto buttonInfo = ParseButton(button);
-            result.buttonList.push_back(ButtonFactory::CreateButton(buttonInfo));
-        }
-    }
     // スプライト生成
     if (json.contains("Sprites")) {
         for (const auto& sprite : json["Sprites"]) {
             auto spriteInfo = ParseSprite(sprite);
             result.spriteList.push_back(SpriteFactory::CreateSprite(spriteInfo));
+        }
+    }
+    // ボタン生成
+    if (json.contains("Buttons")) {
+        for (const auto& button : json["Buttons"]) {
+            auto buttonInfo = ParseButton(button);
+            result.buttonList.push_back(ButtonFactory::CreateButton(buttonInfo));
         }
     }
     return result;

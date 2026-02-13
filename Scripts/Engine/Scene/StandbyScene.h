@@ -7,6 +7,7 @@
 #define _STANDBY_SCENE_H_
 
 #include "Scene.h"
+#include "../GameConst.h"
 
 // ‘O•ûéŒ¾
 class Engine;
