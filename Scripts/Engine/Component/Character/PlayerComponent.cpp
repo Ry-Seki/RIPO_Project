@@ -101,8 +101,9 @@ void PlayerComponent::Update(float deltaTime) {
 	}
 
 	// HPがなくなったら死亡
-	if (status.HP <= 0) {
-		isDead = true;
+	if (status.HP <= 0 && CameraManager::GetInstance().GetCameraState() != GameEnum::CameraState::Event) {
+		// 視点変更イベント再生
+		CameraManager::GetInstance().CameraEventPlay(GameEnum::CameraEvent::Dead);
 	}
 
 	// 武器変更
@@ -194,7 +195,6 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	if (action.button[jump] && gravity->GetGroundingFrag()) {
 		gravity->AddFallSpeed(-JUMP_POWER);
 	}
-
 
 	// アニメーション再生
 	if (CameraManager::GetInstance().GetCameraState() == GameEnum::CameraState::TPS) {

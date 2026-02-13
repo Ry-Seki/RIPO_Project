@@ -24,12 +24,27 @@ EventCamera::EventCamera()
 void EventCamera::Initialize(GameObject* camera, GameEnum::CameraEvent setEvent) {
 	eventNum = setEvent;
 	commandCount = 0;
+	auto player = GetPlayer()->GetComponent<PlayerComponent>();
 	
-	events[GameEnum::CameraEvent::ChangeView].clear();
+	// FPS→TPS遷移イベント
+	events[GameEnum::CameraEvent::ChangeView].commands.clear();
 	Vector3 playerHeadPos = GetPlayer()->position;
 	playerHeadPos.y += 310;
 	auto pos = playerHeadPos - ForwardDir(camera->rotation) * 500;
-	events[GameEnum::CameraEvent::ChangeView].push_back(std::make_shared<MoveCommand>(1, pos));
+	events[GameEnum::CameraEvent::ChangeView].commands.push_back(std::make_shared<MoveCommand>(0.8f, pos));
+	events[GameEnum::CameraEvent::ChangeView].onFinished = [camera]() {
+		// カメラステートをTPSに
+		camera->GetComponent<CameraComponent>()->SetState(GameEnum::CameraState::TPS);
+	};
+
+	// 死亡イベント
+	events[GameEnum::CameraEvent::Dead].commands.clear();
+	events[GameEnum::CameraEvent::Dead].commands.push_back(std::make_shared<MoveCommand>(0.8f, pos));
+	events[GameEnum::CameraEvent::Dead].onFinished = [player, camera]() {
+		// プレイヤー死亡
+		player->SetIsDead(true);
+		camera->GetComponent<CameraComponent>()->SetState(GameEnum::CameraState::Invalid);
+	};
 }
 
 /*
@@ -37,7 +52,7 @@ void EventCamera::Initialize(GameObject* camera, GameEnum::CameraEvent setEvent)
  */
 void EventCamera::Update(GameObject* camera, float deltaTime) {
 	// 初期化で渡されたイベントのコマンドを順番に再生
-	auto command = events[eventNum][commandCount];
+	auto command = events[eventNum].commands[commandCount];
 	switch (command->state) {
 	case CameraCommand::CommandState::Waiting:
 		command->Start(camera);
@@ -50,15 +65,16 @@ void EventCamera::Update(GameObject* camera, float deltaTime) {
 		break;
 	}
 
-	auto size = events[eventNum].size();
+	// 全てのコマンドが生成し終わったら
+	auto size = events[eventNum].commands.size();
 	if (size == commandCount) {
-		// カメラステートをTPSに
-		camera->GetComponent<CameraComponent>()->SetState(GameEnum::CameraState::TPS);
 		// プレイヤーの入力を取る
 		SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, true);
 		// 全て再生が終わったらコマンドの初期化
-		for (auto command : events[eventNum]) {
+		for (auto command : events[eventNum].commands) {
 			command->state = CameraCommand::CommandState::Waiting;
 		}
+		// 終了時処理を呼ぶ
+		events[eventNum].onFinished();
 	}
 }

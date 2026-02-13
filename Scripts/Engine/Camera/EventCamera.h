@@ -10,12 +10,18 @@
 #include "../GameEnum.h"
 #include "CameraCommand.h"
 #include <unordered_map>
+#include <functional>
 
 class EventCamera {
 private:
 	GameEnum::CameraEvent eventNum;
-	std::unordered_map<GameEnum::CameraEvent, CameraCommandList> events;
 	int commandCount;
+
+	struct Event {
+		CameraCommandList commands;			// イベントを構成するコマンド群
+		std::function<void()> onFinished;	// 終了時処理
+	};
+	std::unordered_map<GameEnum::CameraEvent, Event> events;
 
 public:
 	EventCamera();
