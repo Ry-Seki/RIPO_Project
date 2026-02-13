@@ -11,6 +11,7 @@
 #include "../../Scene/Scene.h"
 #include "../../Stage/StageObject/StageObjectUtility.h"
 #include "../../Component/Character/CharacterUtility.h"
+#include "../../Stage/StageObject/Treasure/Treasure.h"
 
 using namespace StageObjectUtility;
 using namespace CharacterUtility;
@@ -54,36 +55,20 @@ void HandArm::LiftTreasure(GameObjectPtr player, Engine* engine) {
 				col->GetOwner()->name == GameConst::_CREATE_POSNAME_TREASURE;
 		}
 	);
-	// 条件内でヒットすればそのオブジェクトを保存
-	if (hit) {
-		// 仮でパワーを反映する(IDで宝を判定して無理やり制限を掛ける)
-		int ID1 = -1;
-		int ID2 = -1;
-		auto objectList = GetCreateObjectList();
-		for (auto& obj : objectList) {
-			if (obj->name == GameConst::_CREATE_POSNAME_TREASURE) {
-				if (ID1 == -1) {
-					ID1 = obj->ID;
-					continue;
-				}
-				else if (ID2 == -1) {
-					ID2 = obj->ID;
-					break;
-				}
-			}
-		}
-		if (hitInfo.collider->GetOwner()->ID == ID1) {
-			liftObject = hitInfo.collider->GetOwner();
-			// 視点変更イベント再生
-			CameraManager::GetInstance().CameraEventPlay(GameEnum::CameraEvent::ChangeView);
-			// プレイヤーの描画モデル変更
-			SetCharacterModel(player.get(), playerModelHandle);
-		}
-		else if (hitInfo.collider->GetOwner()->ID == ID2) {
-			if (player->GetComponent<PlayerComponent>()->GetPlayerStatus().strength > 2) {
-				liftObject = hitInfo.collider->GetOwner();
-			}
-		}
+
+	// お宝がヒットしたら必要ストレングスによって持つ
+	if (!hit)
+		return;
+	if (auto treasure = hitInfo.collider->GetOwner()->GetComponent<Treasure>()) {
+		int playerStrength = player->GetComponent<PlayerComponent>()->GetPlayerStatus().strength;
+		if (treasure->GetStrength() > playerStrength || liftObject)
+			return;
+
+		liftObject = hitInfo.collider->GetOwner();
+		// 視点変更イベント再生
+		CameraManager::GetInstance().CameraEventPlay(GameEnum::CameraEvent::ChangeView);
+		// プレイヤーの描画モデル変更
+		SetCharacterModel(player.get(), playerModelHandle);
 	}
 }
 
