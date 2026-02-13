@@ -53,7 +53,7 @@ void MenuSelectDungeon::Initialize(Engine& engine) {
             });
         }
         for (auto& sprite : spriteList) {
-            if (sprite->GetName() == "ElapsedDay") elapsedDaySprite = sprite.get();
+            if (sprite->GetName() == "DungeonSprite") dungeonSprite = sprite.get();
         }
         eventSystem.LoadNavigation(navigation->GetData());
     });
@@ -69,7 +69,6 @@ void MenuSelectDungeon::Open() {
     for (auto& button : buttonList) {
         button->Setup();
     }
-
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
         // TODO : ƒCƒxƒ“ƒg‚²‚Æ‚É‰æ‘œ·‚µ‘Ö‚¦
@@ -114,7 +113,7 @@ void MenuSelectDungeon::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer -= GameConst::UI_ANIM_INTERVAL;
 
     for (auto& sprite : spriteList) {
-        if (!sprite || sprite.get() == elapsedDaySprite) continue;
+        if (!sprite || sprite.get() == dungeonSprite) continue;
 
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
@@ -122,15 +121,18 @@ void MenuSelectDungeon::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
         animFrame = (animFrame + 1) % frameCount;
         sprite->SetFrameIndex(animFrame);
     }
+    currentIndex = eventSystem.GetCurrentIndex();
+    dungeonSprite->SetFrameIndex(currentIndex);
 }
 /*
  *	@brief	•`‰æˆ—
  */
 void MenuSelectDungeon::Render() {
     for (auto& sprite : spriteList) {
-        if (!sprite->IsVisible()) continue;
+        if (!sprite->IsVisible() || sprite.get() == dungeonSprite) continue;
         sprite->Render();
     }
+    dungeonSprite->Render();
     for (auto& button : buttonList) {
         if (!button->IsVisible()) continue;
         button->Render();
@@ -159,4 +161,66 @@ void MenuSelectDungeon::Resume() {
  *	@param[in]	int buttonIndex
  */
 void MenuSelectDungeon::SelectButtonExecute(Engine& engine, int buttonIndex) {
+    auto& menu = MenuManager::GetInstance();
+    auto confirm = menu.GetMenu<MenuConfirm>();
+    int dungeonID = 0;
+
+    if (buttonIndex == 0) {
+        dungeonID = 1;
+        AudioUtility::PlaySE("DebugSE");
+        confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
+            if (result == GameEnum::ConfirmResult::Yes) {
+                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, dungeonID]() {
+                    menu.CloseAllMenu();
+                    if (Callback) Callback(dungeonID);
+                });
+            }
+            menu.CloseTopMenu();
+        });
+        menu.OpenMenu<MenuConfirm>();
+    } else if (buttonIndex == 1) {
+        dungeonID = 2;
+        AudioUtility::PlaySE("DebugSE");
+        confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
+            if (result == GameEnum::ConfirmResult::Yes) {
+                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, dungeonID]() {
+                    menu.CloseAllMenu();
+                    if (Callback) Callback(dungeonID);
+                });
+            }
+            menu.CloseTopMenu();
+        });
+        menu.OpenMenu<MenuConfirm>();
+    }else if (buttonIndex == 2) {
+        dungeonID = 3;
+        AudioUtility::PlaySE("DebugSE");
+        confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
+            if (result == GameEnum::ConfirmResult::Yes) {
+                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, dungeonID]() {
+                    menu.CloseAllMenu();
+                    if (Callback) Callback(dungeonID);
+                });
+            }
+            menu.CloseTopMenu();
+        });
+        menu.OpenMenu<MenuConfirm>();
+    }else if (buttonIndex == 3) {
+        dungeonID = 4;
+        AudioUtility::PlaySE("DebugSE");
+        confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
+            if (result == GameEnum::ConfirmResult::Yes) {
+                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, dungeonID]() {
+                    menu.CloseAllMenu();
+                    if (Callback) Callback(dungeonID);
+                });
+            }
+            menu.CloseTopMenu();
+        });
+        menu.OpenMenu<MenuConfirm>();
+    }
+
 }

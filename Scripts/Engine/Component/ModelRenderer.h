@@ -44,7 +44,9 @@ public:
      *  モデルハンドルの設定
      *  param[in]   const int setHandle   モデルハンドル
      */
-    void SetModelHandle(const int setHandle) { modelHandle = MV1DuplicateModel(setHandle); }
+    void SetModelHandle(const int setHandle) {
+        modelHandle = MV1DuplicateModel(setHandle);
+    }
 
     /*
      *  モデルハンドルの取得

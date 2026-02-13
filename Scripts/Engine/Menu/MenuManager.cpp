@@ -4,12 +4,17 @@
  */
 
 #include "MenuManager.h"
+#include "../Manager/FontManager.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
  */
 void MenuManager::Initialize(Engine& engine) {
 	this->engine = &engine;
+	fontNameList.push_back("NormalSizeFont");
+	fontNameList.push_back("SaveSlotFont");
+	FontManager::GetInstance().LoadFont(86, fontNameList[0]);
+	FontManager::GetInstance().LoadFont(64, fontNameList[1]);
 }
 /*
  *	@brief	XVˆ—

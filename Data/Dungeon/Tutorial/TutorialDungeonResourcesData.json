@@ -7,7 +7,7 @@
     "StageFloorData": "Data/Dungeon/Tutorial/TutorialEntranceData.json"
   },
   "Character": {
-    "PlayerData": "Res/Model/Player/RIPO_Model.mv1",
+    "PlayerData": "Res/Model/Player/BeamRifle.mv1",
     "EnemyData": {
       "0": {
         "0": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1"

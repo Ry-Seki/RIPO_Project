@@ -71,6 +71,7 @@ void AnimatorComponent::Update(float deltaTime) {
  */
 void AnimatorComponent::LoadIndex(bool isLoop, int transition) {
 	if (animModelHandle < 0)return;
+	pAnimations.clear();
 
 	// モデル内のアニメーション数を取得
 	int animCount = MV1GetAnimNum(animModelHandle);

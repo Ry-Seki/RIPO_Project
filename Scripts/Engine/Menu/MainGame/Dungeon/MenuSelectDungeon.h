@@ -20,6 +20,7 @@
  */
 class MenuSelectDungeon : public MenuBase {
 private:
+	int currentIndex = -1;
 	float animTimer = 0.0f;
 	int animFrame = 0;
 	std::vector<bool> isEventList;
@@ -28,12 +29,12 @@ private:
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
-	Sprite* elapsedDaySprite = nullptr;
+	Sprite* dungeonSprite;
 
-	std::function<void(GameEnum::ActionType)> Callback = nullptr;
+	std::function<void(int)> Callback = nullptr;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/SelectAction/SelectActionMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/SelectAction/SelectActionMenuNavigation.json";
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Dungeon/SelectDungeon/SelectDungeonMenuResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame//Dungeon/SelectDungeon/SelectDungeonMenuNavigation.json";
 
 public:
 	/*
@@ -87,12 +88,12 @@ public:
 	 *	@brief		半日フラグの設定
 	 *	@param[in]	bool setFlag
 	 */
-	inline void SetIsHalf(const std::vector<bool>& setFlag) { isEventList = setFlag; }
+	inline void SetIsEvent(const std::vector<bool>& setFlag) { isEventList = setFlag; }
 	/*
 	 *	@brief		コールバックの設定
-	 *	@param[in]	std::function<void(GameEnum::ActionType)> setCallback
+	 *	@param[in]	std::function<void(int)> setCallback
 	 */
-	inline void SetCallback(std::function<void(GameEnum::ActionType)> setCallback) {
+	inline void SetCallback(std::function<void(int)> setCallback) {
 		Callback = setCallback;
 	}
 

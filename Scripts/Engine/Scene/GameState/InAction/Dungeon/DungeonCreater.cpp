@@ -114,7 +114,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	// 位置の設定
 	player->position = GetStartPos();
 	// モデルの設定
-	SetModelHandle(player.get(), playerHandle);
+	SetCharacterModel(player.get(), playerHandle);
 
 	// 敵の生成位置の取得
 	std::unordered_map<int, Vector3> enemySpawnPos = GetEnemySpwanPos();
@@ -132,7 +132,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 		enemyCharacter->position = enemySpawnPos[i];
 		enemyCharacter->scale = { 4.5f, 4.5f, 4.5f };
 		// モデルの設定
-		SetModelHandle(enemyCharacter.get(), enemyHandle);
+		SetCharacterModel(enemyCharacter.get(), enemyHandle);
 		// コンポーネントの取得
 		std::shared_ptr<EnemyComponent> component = enemyCharacter->GetComponent<EnemyComponent>();
 		if (!component) continue;
@@ -157,7 +157,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 
 			bossCharacter->position = bossSpawnPos[0];
 			// モデルの設定
-			SetModelHandle(bossCharacter.get(), bossHandle);
+			SetCharacterModel(bossCharacter.get(), bossHandle);
 		}
 	}
 	if (treasureCount > 0) {
