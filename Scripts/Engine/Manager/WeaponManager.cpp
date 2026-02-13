@@ -52,3 +52,10 @@ GameEnum::Weapon WeaponManager::GetCurrentWeaponNum() {
 void WeaponManager::UnlockSubmachineGun() {
 	submachineGun = true;
 }
+
+/*
+ *	サブマシンガンが解放されているか
+ */
+bool WeaponManager::IsSubmachineGun() {
+	return submachineGun;
+}
