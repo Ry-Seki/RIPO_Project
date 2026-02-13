@@ -36,6 +36,7 @@
         "Height": 90
       },
       "Resources": {
+        "Press": "Res/Menu/Title/Trealine_SelectGameMode_Selected_Button.png",
         "Select": "Res/Menu/Title/Trealine_SelectGameMode_Selected_Button.png"
       }
     },
@@ -49,6 +50,7 @@
         "Height": 90
       },
       "Resources": {
+        "Press": "Res/Menu/Title/Trealine_SelectGameMode_Selected_Button.png",
         "Select": "Res/Menu/Title/Trealine_SelectGameMode_Selected_Button.png"
       }
     },
@@ -62,6 +64,7 @@
         "Height": 90
       },
       "Resources": {
+        "Press": "Res/Menu/Title/Trealine_SelectGameMode_Selected_SystemButton.png",
         "Select": "Res/Menu/Title/Trealine_SelectGameMode_Selected_SystemButton.png"
       }
     },
@@ -75,6 +78,7 @@
         "Height": 90
       },
       "Resources": {
+        "Press": "Res/Menu/Title/Trealine_SelectGameMode_Selected_EndGameButton.png",
         "Select": "Res/Menu/Title/Trealine_SelectGameMode_Selected_EndGameButton.png"
       }
     }
