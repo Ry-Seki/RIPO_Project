@@ -25,40 +25,14 @@ BulletComponent::BulletComponent()
 	, bullet(nullptr)
 	, hitDamage(0.0f)
 
-	, SHOT_SPEED(10000) {
-}
-
-void BulletComponent::Start() {
-	bullet = GetOwner();
-	GetOwner()->scale = { 0.5f, 0.5f, 0.5f, };
-	// 着弾地点を確認
-	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
-	Ray ray = { bullet->position, ForwardDir(camera->rotation) };
-	Scene::RayCastHit hitInfo;
-	bool hit = bullet->GetEngine()->GetCurrentScene()->RayCast(
-		ray, hitInfo,
-		[this](const ColliderBasePtr& col, float distance) {
-			// プレイヤーと自分以外のオブジェクト
-			return !col ||
-				(col->GetOwner()->name != GameConst::_CREATE_POSNAME_PLAYER &&
-				col->GetOwner()->name != "bullet");
-		}
-	);
-	hitDirection = Direction(bullet->position, hitInfo.point);
-
-	// ダメージ設定
-	float playerStrength = GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus().strength;
-	auto weaponNumber = WeaponManager::GetInstance().GetCurrentWeaponNum();
-	float defaultDamage = WeaponDataManager::GetInstance().GetWeaponData(weaponNumber).defaultDamage;
-	hitDamage = defaultDamage + (defaultDamage * playerStrength * 0.1f);
-	
+	, moveSpeed(10000) {
 }
 
 void BulletComponent::Update(float deltaTime) {
   	if (!bullet) return;
 	
 	// 着弾地点に進む
-	bullet->position += hitDirection * SHOT_SPEED * deltaTime;
+	bullet->position += moveDirection * moveSpeed * deltaTime;
 
 	// 破棄カウントダウン
 	destroyTimeCount -= deltaTime;
@@ -68,21 +42,31 @@ void BulletComponent::Update(float deltaTime) {
 }
 
 void BulletComponent::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
-	// プレイヤーと弾以外の衝突で破棄
-	/*GameObject* playerOwner = CameraManager::GetInstance().GetTarget().get();
+	// 射撃者と弾以外の衝突で破棄
 	GameObject* otherOwner = other->GetOwner();
 	auto isBullet = otherOwner->GetComponent<BulletComponent>();
-	if (otherOwner == playerOwner || isBullet)return;
-	ResetObject(bullet);*/
-	//if (otherOwner->name == GameConst::_CREATE_POSNAME_ENEMY) {
-	//	RemoveCharacter(otherOwner);
-	//	// 少量のお金を入手
-	//	MoneyManager::GetInstance().AddMoney(5);
-	//}
-	//// ボスに当たったら敵も破棄
-	//else if (otherOwner->name == GameConst::_CREATE_POSNAME_BOSS) {
-	//	RemoveCharacter(otherOwner);
-	//	// 少量のお金を入手
-	//	MoneyManager::GetInstance().AddMoney(50);
-	//}
+	if (otherOwner == shotOwner || isBullet)return;
+	ResetObject(bullet);
+}
+
+/*
+ *	セットアップ
+ *	@param	setDirection	移動方向
+ *	@param	setScale		スケール
+ *	@param	setOwner		射撃者
+ *	@param	setDamage		当たった時に与えるダメージ
+ *	@param	setSpeed		弾の速さ
+ */
+void BulletComponent::Setup(
+	Vector3 setDirection,
+	Vector3 setScale, 
+	GameObject* setOwner,
+	float setDamage,
+	float setSpeed) {
+	moveDirection = setDirection;
+	shotOwner = setOwner;
+	hitDamage = setDamage;
+	moveSpeed = setSpeed;
+	bullet = GetOwner();
+	bullet->scale = setScale;
 }

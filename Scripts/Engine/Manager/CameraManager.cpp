@@ -5,8 +5,10 @@
 
 #include "CameraManager.h"
 #include "../GameObject/GameObjectUtility.h"
+#include "../Input/InputUtility.h"
 
 using namespace GameObjectUtility;
+using namespace InputUtility;
 
 CameraManager::CameraManager() 
 	: engine(nullptr){
@@ -41,4 +43,17 @@ void CameraManager::CreateCamera(
 void CameraManager::ResetCamera() {
 	ResetObject(camera);
 	camera = nullptr;
+}
+
+/*
+ *	カメライベントの再生
+ */
+void CameraManager::CameraEventPlay(GameEnum::CameraEvent event) {
+	// のちに修正予定
+	// プレイヤーの入力を切る
+	SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, false);
+	// カメラステートをイベントに
+	CameraComponentPtr cameraCom =  camera->GetComponent<CameraComponent>();
+	cameraCom->SetState(GameEnum::CameraState::Event);
+	cameraCom->eventCamera->Initialize(camera.get(), event);
 }

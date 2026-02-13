@@ -8,7 +8,12 @@
 #include "../../Manager/CameraManager.h"
 #include "../../Manager/WeaponManager.h"
 #include "../../Load/LoadManager.h"
+#include "../../Scene/Scene.h"
+#include "../../GameConst.h"
 #include "RevolverArm.h"
+#include "../../Component/Character/CharacterUtility.h"
+
+using namespace CharacterUtility;
 
 WeaponBase::WeaponBase()
 	: number(GameEnum::Weapon::Invalid)
@@ -18,12 +23,7 @@ WeaponBase::WeaponBase()
 	, reloadingTimeMax(0)
 	, shotCoolTime(0)
     , shotCoolTimeMax(0)
-	, reload(false)
-
-	, BULLET_NAME("bullet")
-	, BULLET_AABB_MIN({ -10, 0, -10 })
-	, BULLET_AABB_MAX({ 10, 20, 10 }) {
-	
+	, reload(false) {	
 }
 
 /*
@@ -36,9 +36,9 @@ void WeaponBase::Initialize() {
 /*
  *	更新処理
  */
-void WeaponBase::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) {
+void WeaponBase::ArmUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) {
 	WeaponBasePtr weapon = WeaponManager::GetInstance().GetCurrentWeapon();
-	weapon->ArmUpdate(deltaTime, action);
+	weapon->ArmUpdate(deltaTime, action, engine);
 
 	 // 手動リロード開始
 	int reload = static_cast<int>(GameEnum::PlayerAction::BulletReload);
@@ -52,11 +52,32 @@ void WeaponBase::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) {
 /*
  *	銃を撃つ処理
  */
-void WeaponBase::ShotBullet() {
-	auto camera = CameraManager::GetInstance().GetCamera();
-	BulletManager::GetInstance().GenerateBullet(
-		BULLET_NAME, camera->position, camera->rotation,
-		BULLET_AABB_MIN, BULLET_AABB_MAX);
+void WeaponBase::ShotBullet(Engine* engine) {
+	// 着弾地点を確認
+	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
+	Ray ray = { camera->position, ForwardDir(camera->rotation) };
+	Scene::RayCastHit hitInfo;
+	bool hit = engine->GetCurrentScene()->RayCast(
+		ray, hitInfo,
+		[this](const ColliderBasePtr& col, float distance) {
+			// プレイヤーと自分以外のオブジェクト
+			return !col ||
+				(col->GetOwner()->name != GameConst::_CREATE_POSNAME_PLAYER &&
+					col->GetOwner()->name != "bullet");
+		}
+	);
+	Vector3 moveDirection = Direction(camera->position, hitInfo.point);
+	// ダメージ設定
+	float playerStrength = GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus().strength;
+	auto weaponNumber = WeaponManager::GetInstance().GetCurrentWeaponNum();
+	float defaultDamage = WeaponDataManager::GetInstance().GetWeaponData(weaponNumber).defaultDamage;
+	float hitDamage = defaultDamage + (defaultDamage * playerStrength * 0.1f);
+
+	// 弾発射
+	BulletManager::GetInstance().BulletShot(
+		camera->position, camera->rotation, 
+		{ 0.5f, 0.5f, 0.5f }, moveDirection,
+		GetPlayer().get(), 10000, hitDamage);
 }
 
 /*

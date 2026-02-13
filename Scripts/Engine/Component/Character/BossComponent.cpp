@@ -96,7 +96,7 @@ void BossComponent::OnCollision(const std::shared_ptr<Component>& self, const st
 	}
 
 	// ダメージ判定
-	if (!damageIsTriger && other->GetOwner()->name == "bullet") {
+	if (!damageIsTriger && other->GetOwner()->GetComponent<BulletComponent>()->GetShotOwner() == player.get()) {
 		// ダメージを受ける
 		HP -= other->GetOwner()->GetComponent<BulletComponent>()->GetHitDamage();;
 		if (HP <= 0) {

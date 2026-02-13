@@ -24,7 +24,7 @@ void RevolverArm::Initialize() {
 /*
  *	更新処理
  */
-void RevolverArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) {
+void RevolverArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) {
 	// クールタイム
 	if (shotCoolTime <= 0) {
 		shotCoolTime = 0;
@@ -32,7 +32,7 @@ void RevolverArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState action) 
 		int shot = static_cast<int>(GameEnum::PlayerAction::Shot);
 		if (action.buttonDown[shot]) {
 			if (ammoCount > 0) {
-				ShotBullet();
+				ShotBullet(engine);
 				shotCoolTime = shotCoolTimeMax;
 				ammoCount -= 1;
 			}

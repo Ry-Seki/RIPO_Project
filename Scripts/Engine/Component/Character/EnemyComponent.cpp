@@ -32,7 +32,7 @@ EnemyComponent::EnemyComponent()
 	, turnDelay(0.0f)
 	, modelHandle(0)
 	, HP(0)
-	, coolTime(2.0f)
+	, coolTime(1.0f)
 	, TOP_VALUE(5000)
 	, RANDOM_RANGE(100)
 	, moveVec(Vector3::zero) {
@@ -118,7 +118,7 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 			hitFlag = true;
 		}
 	}
-	coolTime = 2;
+	coolTime = 1;
 }
 
 Vector3 EnemyComponent::DxForwardDir(const Vector3& rotation)

@@ -250,5 +250,29 @@ namespace GameEnum {
 
 		Max
 	};
+
+	/*
+	 *	@brief	カメラの状態
+	 *	@author	Riku
+	 */
+	enum class CameraState {
+		Invalid = -1,
+		FPS,
+		TPS,
+		Event,
+
+		Max
+	};
+
+	/*
+	 *	@brief	カメラのイベント
+	 */
+	enum class CameraEvent {
+		Invalid = -1,
+		Death,
+		ChangeView,
+
+		Max
+	};
 }
 #endif // !_GAME_ENUM_H_

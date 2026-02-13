@@ -155,6 +155,8 @@
     <ClCompile Include="Scripts\Engine\Audio\BGM\BGMSource.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\SE\SEManager.cpp" />
     <ClCompile Include="Scripts\Engine\Audio\SE\SESource.cpp" />
+    <ClCompile Include="Scripts\Engine\Camera\EventCamera.cpp" />
+    <ClCompile Include="Scripts\Engine\Camera\MoveCommand.cpp" />
     <ClCompile Include="Scripts\Engine\Collision\Collision.cpp" />
     <ClCompile Include="Scripts\Engine\Component\AABBCollider.cpp" />
     <ClCompile Include="Scripts\Engine\Component\AnimatorComponent.cpp" />
@@ -201,6 +203,7 @@
     <ClCompile Include="Scripts\Engine\Manager\CameraManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\CharacterManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\EffectManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\FontManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\GaugeManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
@@ -312,6 +315,9 @@
     <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\SE\SESource.h" />
     <ClInclude Include="Scripts\Engine\AutoJSONRegitry.h" />
+    <ClInclude Include="Scripts\Engine\Camera\CameraCommand.h" />
+    <ClInclude Include="Scripts\Engine\Camera\EventCamera.h" />
+    <ClInclude Include="Scripts\Engine\Camera\MoveCommand.h" />
     <ClInclude Include="Scripts\Engine\Collision\ColliderBase.h" />
     <ClInclude Include="Scripts\Engine\Collision\Collision.h" />
     <ClInclude Include="Scripts\Engine\Component\AABBCollider.h" />
@@ -385,6 +391,7 @@
     <ClInclude Include="Scripts\Engine\Manager\CameraManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\CharacterManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\EnemyDataManager.h" />
+    <ClInclude Include="Scripts\Engine\Manager\FontManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\GaugeManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
