@@ -26,7 +26,6 @@ private:
 	Vector3 drawWorldPos;						// 表示位置のワールド座標
 
 	static constexpr const char* _TREASUREUIDATA_FILEPATH = "Data/UI/Dungeon/Treasure/TreasureUI.json";	// お宝UIのデータのパス
-	static constexpr const char* _TREASUREUI_FILEPATH = "Res/TreasureUI/StrengthUI";					// お宝UIのパス
 	static constexpr const char* _TRESUREUIJSON_NAME = "TreasureUI";		// お宝のjsonの階層名
 
 public:
