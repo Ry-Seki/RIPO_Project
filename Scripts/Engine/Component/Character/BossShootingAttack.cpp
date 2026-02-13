@@ -29,12 +29,15 @@ void BossShootingAttack::Start(GameObject* boss)
 
 void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 {
+	auto bossComponent = boss->GetComponent<BossComponent>();
 	// モデルハンドルのセット
 	auto modelRenderer = boss->GetComponent<ModelRenderer>()->GetModelHandle();
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
 
 	animator->Play(0, 2000 * deltaTime);
+
+	bossComponent->SetHitFlag(true);
 
 	// アニメーションが終わるまで待ちたい
 	// 仮
@@ -51,14 +54,15 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 				direction,
 				boss,
 				10000,
-				boss->GetComponent<BossComponent>()->GetBossAttack()
+				bossComponent->GetBossAttack()
 			);
 			shootFlag = true;
 		}
 	}
 	if (coolTime <= 0) {
 		shootFlag = false;
+		bossComponent->SetHitFlag(false);
 		// 状態遷移
-		boss->GetComponent<BossComponent>()->SetState(new BossStandby());
+		bossComponent->SetState(new BossStandby());
 	}
 }

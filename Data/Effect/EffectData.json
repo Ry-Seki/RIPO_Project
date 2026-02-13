@@ -11,6 +11,24 @@
       "name": "Beam",
       "magnification": 30.0,
       "loop": false
+    },
+    {
+      "file": "Res/Effect/Enemy/BossAttack.efkefc",
+      "name": "BossAttackEffect",
+      "magnification": 30.0,
+      "loop": false
+    },
+    {
+      "file": "Res/Effect/Enemy/BossShoot.efkefc",
+      "name": "BossShootEffect",
+      "magnification": 30.0,
+      "loop": false
+    },
+    {
+      "file": "Res/Effect/Enemy/EnemyHit.efkefc",
+      "name": "EnemyHitEffect",
+      "magnification": 30.0,
+      "loop": false
     }
   ]
 }

@@ -6,6 +6,7 @@
 #include "../../Vision.h"
 #include "../../Manager/CameraManager.h"
 #include "../../Manager/StageManager.h"
+#include "../../Manager/EffectManager.h"
 #include "EnemyAttack.h"
 #include "EnemyChase.h"
 #include "EnemyTurn.h"
@@ -57,8 +58,6 @@ void EnemyComponent::Start() {
 	// モデルハンドルのセット
 	animator->SetModelHandle(modelHandle);
 
-	animator->LoadIndex(true);
-
 }
 
 /*
@@ -90,6 +89,8 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 		attackIsTriger = false;
 	}
 	if (!attackIsTriger && other->GetOwner()->name == "Player") {
+		// エフェクトを出す
+		EffectManager::GetInstance().Instantiate("EnemyHitEffect", self->GetOwner()->position);
 		// 当たったらダメージを与える
 		auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
 		playerStatus.HP = playerStatus.HP - status.attack;

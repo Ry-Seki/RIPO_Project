@@ -50,7 +50,7 @@ void BossStandby::Update(GameObject* boss, float deltaTime)
 
 	auto bossComponent = boss->GetComponent<BossComponent>();
 
-	animator->Play(7, 10);
+ 	//animator->Play(7, 10);
 	// ó‘Ô‘JˆÚ
 	if (Vision(bossComponent->GetBossPosition(), -ForwardDir(boss->rotation), player->position, 180, viewAngle)) {
 		boss->GetComponent<BossComponent>()->SetState(new BossChase());
