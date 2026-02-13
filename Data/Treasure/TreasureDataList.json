@@ -9,13 +9,13 @@
     "ID": 1,
     "Value": 150,
     "Effect": "treasureViewing",
-    "Strength": 1
+    "Strength": 2
   },
   "BrownTV": {
     "ID": 2,
     "Value": 300,
     "Effect": "treasureViewing",
-    "Strength": 1
+    "Strength": 2
   },
   "BackLookUma": {
     "ID": 3,
@@ -27,13 +27,13 @@
     "ID": 4,
     "Value": 304,
     "Effect": "treasureViewing",
-    "Strength": 1
+    "Strength": 2
   },
   "LuxuryBox": {
     "ID": 5,
     "Value": 305,
     "Effect": "treasureViewing",
-    "Strength": 1
+    "Strength": 2
   },
   "ThreeSticksWithPictures": {
     "ID": 6,

@@ -106,7 +106,7 @@ void Treasure::UnCollected() {
 		// UI•\Ž¦
 		auto& menu = MenuManager::GetInstance();
 		auto treasureMenu = menu.GetMenu<DungeonTreasureUI>();
-		treasureMenu->ShowTreasureUI(GetOwner()->ID, GetOwner()->position);
+		treasureMenu->ShowTreasureUI(treasureID, GetOwner()->position);
 		menu.OpenMenu<DungeonTreasureUI>();
 	}
 	else {

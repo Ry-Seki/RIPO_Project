@@ -1,25 +1,25 @@
 {
   "TreasureUI": {
     "0": {
-      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID0.png"
     },
     "1": {
-      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID1.png"
     },
     "2": {
-      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID2.png"
     },
     "3": {
-      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID3.png"
     },
     "4": {
-      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID4.png"
     },
     "5": {
-      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID5.png"
     },
     "6": {
-      "ImagePath": "Res/TreasureUI/StrengthUI.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID6.png"
     },
     "7": {
       "ImagePath": "Res/TreasureUI/StrengthUI.png"
