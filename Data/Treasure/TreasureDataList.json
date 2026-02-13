@@ -3,7 +3,7 @@
     "ID": 0,
     "Value": 100,
     "Effect": "treasureViewing",
-    "Strength": 1
+    "Strength": 0
   },
   "LionStatue": {
     "ID": 1,
