@@ -145,7 +145,9 @@ void MenuSelectAction::Render() {
         button->Render();
     }
     std::string elapsedDayStr = std::to_string(elapsedDay);
-    FontManager::GetInstance().Draw("NormalSizeFont", 260, 510, elapsedDayStr, GetColor(75, 75, 75));
+    std::string maxDayStr = " / " + std::to_string(GameConst::END_DAY);
+    FontManager::GetInstance().Draw("NormalSizeFont", 210, 510, elapsedDayStr, GetColor(75, 75, 75));
+    FontManager::GetInstance().Draw("NormalSizeFont", 220, 510, maxDayStr, GetColor(75, 75, 75));
 }
 /*
  *	@brief	ƒƒjƒ…[‚ğ•Â‚¶‚é

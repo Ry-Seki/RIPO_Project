@@ -132,6 +132,8 @@ void TutorialScene::EndTutorialScene(Engine& engine) {
 	auto& save = SaveDataManager::GetInstance();
 	// アクション終了フラグの変更
 	gameState->SetIsActionEnd(false);
+	context.prevIncome = 0;
+	MoneyManager::GetInstance().ResetMoney();
 	// オートセーブ
 	save.CollectSaveData(context);
 	save.AutoSave();

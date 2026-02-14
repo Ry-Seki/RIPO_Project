@@ -209,9 +209,11 @@
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\WeaponManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuPlayerDeath.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuInGame.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Money\MenuMoneyChange.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Training\MenuSelectTraining.cpp" />
@@ -229,6 +231,7 @@
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuSelectLoadGame.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuSystem.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuTitle.cpp" />
+    <ClCompile Include="Scripts\Engine\Random.cpp" />
     <ClCompile Include="Scripts\Engine\Save\SaveDataManager.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\DebugScene.cpp" />
     <ClCompile Include="Scripts\Engine\Scene\GameState\ActionContext.cpp" />
@@ -398,8 +401,10 @@
     <ClInclude Include="Scripts\Engine\Manager\WeaponManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuPlayerDeath.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuInGame.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Money\MenuMoneyChange.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Training\MenuSelectTraining.h" />
@@ -418,6 +423,7 @@
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuSelectLoadGame.h" />
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuSystem.h" />
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuTitle.h" />
+    <ClInclude Include="Scripts\Engine\Random.h" />
     <ClInclude Include="Scripts\Engine\Save\SaveDataManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\DebugScene.h" />
     <ClInclude Include="Scripts\Engine\Scene\GameState\ActionContext.h" />

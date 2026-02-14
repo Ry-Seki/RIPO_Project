@@ -14,6 +14,7 @@
 #include "../../../JSON.h"
 #include "../../../../Data/Dungeon/DungeonStageData.h"
 #include "../../../../Data/Dungeon/DungeonFloorData.h"
+#include "../../../System/Money/MoneyManager.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -76,6 +77,7 @@ void GameState_InitialTutorial::SetDungeonData(const std::vector<std::shared_ptr
 	auto& context = owner->GetActionContext();
 	// ‚»‚ê‚¼‚ê‚Ìƒf[ƒ^‚ğ‰Šú‰»
 	context.dungeonID = 0;
+	context.prevIncome = MoneyManager::GetInstance().GetCurrentMoney();
 	context.isCurrentEvent = dungeonDataList[0].isEventDay;
 	context.dungeonStageData.LoadFromJSON(dungeonData);
 	context.dungeonFloorData.LoadFromJSON(dungeonfloorData, 0);
