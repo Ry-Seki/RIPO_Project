@@ -97,7 +97,7 @@
   },
   "LightStatue2": {
     "ID": 16,
-    "Value": 1,
+    "Value": 100,
     "Effect": "treasureViewing",
     "Strength": 0
   }
