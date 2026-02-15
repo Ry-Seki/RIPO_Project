@@ -49,6 +49,7 @@ void MenuSelectSaveSlot::Initialize (Engine& engine) {
         }
         eventSystem.LoadNavigation(navigation->GetData());
     });
+    gameDataList.reserve(4);
 }
 /*
  *	@brief	メニューを開く
@@ -69,19 +70,21 @@ void MenuSelectSaveSlot::Open () {
     if (saveMode == GameEnum::SaveSlotMenuMode::Load) {
         // セーブスロットの使用状態の取得
         auto& save = SaveDataManager::GetInstance();
+        // セーブデータの取得
+        auto allData = save.GetAllSlotData();
+        for (const auto& data : allData) {
+            gameDataList.push_back(data.game);
+        }
+
         std::vector<bool> isUsedList = save.GetAllSlotIsUsed();
-        for (int i = 0, max = buttonList.size(); i < max; i++) {
+        for (int i = 0, max = buttonList.size() - 1; i < max; i++) {
             auto button = buttonList[i];
             if (!button) continue;
 
             if (button == buttonList.back()) continue;
 
-            if (!isUsedList[i]) button->SetIsEnable(false);
-        }
-        auto allData = SaveDataManager::GetInstance().GetAllSlotData();
-
-        for (const auto& data : allData) {
-            gameDataList.push_back(data.game);
+            bool isUsed = isUsedList[i];
+            button->SetIsEnable(isUsed);
         }
     }
     eventSystem.ApplySelection();
@@ -143,7 +146,7 @@ void MenuSelectSaveSlot::Render () {
         if (!button->IsVisible()) continue;
         button->Render();
     }
-
+    RenderSlotInfo();
 }
 /*
  *	@brief	メニューを閉じる
@@ -205,6 +208,7 @@ void MenuSelectSaveSlot::RenderSlotInfo() {
     auto& font = FontManager::GetInstance();
     int white = GetColor(255, 255, 255);
     for (int i = 0, max = gameDataList.size(); i < max; i++) {
+        if (!buttonList[i]->IsEnable()) continue;
         std::string elapsedDayStr = std::to_string(gameDataList[i].elapsedDay);
         std::string halfDayStr;
         if (gameDataList[i].isHalfDay) {
@@ -216,11 +220,10 @@ void MenuSelectSaveSlot::RenderSlotInfo() {
         std::string moneyStr = std::to_string(gameDataList[i].currentMoney);
         std::string treasureStr = std::to_string(gameDataList[i].totalTreasureCount);
 
-        font.Draw("NormalSizeFont", 1295, 273 + i, elapsedDayStr, white);
-        font.Draw("NormalSizeFont", 1370, 273, halfDayStr, white);
-        font.Draw("SaveSlotFont", 1671, 232, playTimeStr, white);
-        font.Draw("SaveSlotFont", 1671, 269, moneyStr, white);
-        font.Draw("SaveSlotFont", 1671, 302, treasureStr, white);
-
+        font.Draw("NormalSizeFont", 1295, 273 + 205 * i, elapsedDayStr, white);
+        font.Draw("NormalSizeFont", 1370, 273 + 205 * i, halfDayStr, white);
+        font.Draw("SaveSlotFont", 1671, 232 + 205 * i, playTimeStr, white);
+        font.Draw("SaveSlotFont", 1671, 269 + 205 * i, moneyStr, white);
+        font.Draw("SaveSlotFont", 1671, 302 + 205 * i, treasureStr, white);
     }
 }

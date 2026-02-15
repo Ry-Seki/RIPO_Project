@@ -12,13 +12,13 @@
 #include "../../UI/EventSystem.h"
 #include "../../GameEnum.h"
 #include "../../GameConst.h"
+#include "../../../Data/SaveData.h"
 
 #include <vector>
 #include <memory>
 
 // 前方宣言
 class Engine;
-struct GameProgressData;
 
 /*
  *	@brief	セーブスロットを選択するメニュー

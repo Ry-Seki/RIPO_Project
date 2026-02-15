@@ -25,6 +25,7 @@ struct DungeonData {
  *  @brief  ダンジョン情報
  */
 struct DungeonInfoData {
+    bool isUsed = false;
     bool isEventDay = false;
     int eventStartDay = 0;              // イベント開始日
     int eventEndDay = 0;                // イベント終了日
