@@ -51,8 +51,10 @@ void LongPressButton::Render() {
 	if (handle != -1) {
 		DrawGraph(rect.x, rect.y, handle, TRUE);
 	}
-
+#if _DEBUG
+	// デバッグ描画
 	DebugRender();
+#endif
 }
 /*
  *	@brief	押された瞬間

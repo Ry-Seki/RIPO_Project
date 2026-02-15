@@ -370,6 +370,12 @@
     <Filter Include="ヘッダー ファイル\Engine\Menu\MainGame\Money">
       <UniqueIdentifier>{688a24e6-f157-46c6-8ec2-9963e5f7b5b4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\Menu\MainGame\Status">
+      <UniqueIdentifier>{ea8f333d-a46f-49c5-bb25-22d381dbf735}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Menu\MainGame\Status">
+      <UniqueIdentifier>{22e1ebfc-99f9-405d-aa98-7bfa7ca9d994}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -809,6 +815,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Random.cpp">
       <Filter>ソース ファイル\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Status\MenuPlayerStatus.cpp">
+      <Filter>ソース ファイル\Engine\Menu\MainGame\Status</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1436,14 +1445,17 @@
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Training\MenuSelectTraining.h">
       <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Training</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuPlayerDeath.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Money\MenuMoneyChange.h">
       <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Money</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Random.h">
       <Filter>ヘッダー ファイル\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuPlayerDeath.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Dungeon</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Status\MenuPlayerStatus.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Status</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

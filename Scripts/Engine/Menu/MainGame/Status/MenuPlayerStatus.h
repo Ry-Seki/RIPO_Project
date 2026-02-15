@@ -1,10 +1,10 @@
 /*
- *	@file	MenuPlayerDeath.h
+ *	@file	MenuPlayerStatus.h
  *	@author	Seki
  */
 
-#ifndef _MENU_PLAYER_DEATH_H_
-#define _MENU_PLAYER_DEATH_H_
+#ifndef _MENU_PLAYER_STATUS_H_
+#define _MENU_PLAYER_STATUS_H_
 
 #include "../../MenuBase.h"
 #include "../../../UI/Button/UIButtonBase.h"
@@ -12,20 +12,24 @@
 #include "../../../UI/EventSystem.h"
 #include "../../../GameEnum.h"
 #include "../../../GameConst.h"
+#include "../../../../Data/PlayerStatusData.h"
 
 #include <functional>
 
-// 前方宣言
+ // 前方宣言
 class Engine;
+struct PlayerStatusData;
 
 /*
- *	@brief	プレイヤー死亡メニュー
+ *	@brief	プレイヤーのステータスメニュー
  */
-class MenuPlayerDeath : public MenuBase {
+class MenuPlayerStatus : public MenuBase {
 private:
 	float animTimer = 0.0f;
 	int animFrame = 0;
-
+	bool isCallback = false;
+	PlayerStatusData currentStatus;
+	PlayerStatusData prevStatus;
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
@@ -33,14 +37,14 @@ private:
 
 	std::function<void()> Callback = nullptr;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Dungeon/Result/PlayerDeathMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Dungeon/Result/PlayerDeathMenuNavigation.json";
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Status/StatusMenuResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Status/StatusMenuNavigation.json";
 
 public:
 	/*
 	 *	@brief	デストラクタ
 	 */
-	~MenuPlayerDeath() override {}
+	~MenuPlayerStatus() override {}
 
 public:
 	/*
@@ -78,12 +82,33 @@ public:
 
 private:
 	/*
-	 *	@brief		ボタンの押された時の処理
-	 *	@param[in]	int buttonIndex
+	 *	@brief	ボタンの押された時の処理
 	 */
 	void SelectButtonExecute(Engine& engine);
+	/*
+	 *	@brief	現在のステータスの描画
+	 */
+	void CurrentStatusRender();
+	/*
+	 *	@brief	ステータスの比較処理
+	 */
+	void ComparisonStatus();
 
 public:
+	/*
+	 *	@brief		増加前のステータス設定
+	 *	@param[in]	PlayerStatusData* setData
+	 */
+	inline void SetPrevStatusData(const PlayerStatusData& setData) {
+		prevStatus = setData;
+	}
+	/*
+	 *	@brief		コールバック判定の設定
+	 *	@param[in]	bool setFlag
+	 */
+	inline void SetIsCallback(bool setFlag) {
+		isCallback = setFlag;
+	}
 	/*
 	 *	@brief		コールバックの設定
 	 *	@param[in]	std::function<void()> setCallback
@@ -94,4 +119,4 @@ public:
 
 };
 
-#endif // !_MENU_PLAYER_DEATH_H_
+#endif // !_MENU_PLAYER_STATUS_H_

@@ -20,7 +20,7 @@ void PlayerStatusUI::Initialize() {}
  */
 void PlayerStatusUI::Render() {
 	auto playerStatus = GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus();
-	auto baseStatus = PlayerStatusManager::GetInstance().GetPlayerStatusData()->base;
+	auto baseStatus = PlayerStatusManager::GetInstance().GetPlayerStatusData().base;
 	float posX = GameConst::WINDOW_WIDTH * 0.05f;
 	float posY = GameConst::WINDOW_HEIGHT * 0.05f;
 	DrawFormatString(posX, posY, GetColor(0, 255, 0), "%d / %d", playerStatus.HP, baseStatus.HP);

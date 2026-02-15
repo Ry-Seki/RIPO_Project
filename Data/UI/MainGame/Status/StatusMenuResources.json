@@ -1,0 +1,48 @@
+{
+  "Sprites": [
+    {
+      "Name": "BackGround",
+      "Rect": {
+        "X": 0,
+        "Y": 0,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/BackGround/Trealine_LoadBackground_black1.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black2.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black3.jpg"
+      ]
+    },
+    {
+      "Name": "Status",
+      "Rect": {
+        "X": 254,
+        "Y": 159,
+        "Width": 1280,
+        "Height": 653
+      },
+      "Resources": [
+        "Res/Menu/MainGame/Status/Trealine_Status.png"
+      ]
+    }
+  ],
+  "Buttons": [
+    {
+      "Name": "Close",
+      "Type": "Single",
+      "Rect": {
+        "X": 1550,
+        "Y": 950,
+        "Width": 333,
+        "Height": 97
+      },
+      "Resources": {
+        "Idle": "Res/Menu/MainGame/Status/Trealine_Status_CloseButton.png",
+        "Hover": "Res/Menu/MainGame/Status/Trealine_Status_CloseButton.png",
+        "Press": "Res/Menu/MainGame/Status/Trealine_Status_CloseButton_Press.png",
+        "Select": "Res/Menu/MainGame/Status/Trealine_Status_CloseButton_Select.png"
+      }
+    }
+  ]
+}

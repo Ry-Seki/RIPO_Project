@@ -8,9 +8,12 @@
 
 #include "../MenuBase.h"
 #include "../../../Data/ResultScoreData.h"
-#include "../../GameEnum.h"
 #include "../../UI/EventSystem.h"
 #include "../../UI/Button/UIButtonBase.h"
+#include "../../UI/Sprite/Sprite.h"
+#include "../../GameEnum.h"
+#include "../../GameConst.h"
+
 
 // ‘O•ûéŒ¾
 class Engine;
@@ -24,6 +27,7 @@ private:
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
+	std::vector<std::shared_ptr<Sprite>> spriteList;
 
 	ResultScoreData resultScore;
 	GameEnum::ResultRank rank = GameEnum::ResultRank::Invalid;
@@ -73,6 +77,11 @@ private:
 	 *  @return     GameEnum::ResultRank
 	 */
 	GameEnum::ResultRank JudgeRank(int playerScore);
+	/*
+	 *	@brief		ƒ‰ƒ“ƒN‚©‚ç->•¶š—ñŒ^‚É•ÏŠ·
+	 *	@return		std::string
+	 */
+	std::string ToRankString();
 
 public:
 	/*

@@ -137,8 +137,6 @@ void TutorialScene::EndTutorialScene(Engine& engine) {
 	// オートセーブ
 	save.CollectSaveData(context);
 	save.AutoSave();
-	FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
-	FadeManager::GetInstance().StartFade(fadeOut, [&engine, this]() {
-		engine.SetNextScene(std::make_shared<MainGameScene>());
-	});
+	engine.SetNextScene(std::make_shared<MainGameScene>());
+	
 }

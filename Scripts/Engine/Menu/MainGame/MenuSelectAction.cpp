@@ -22,6 +22,8 @@
 #include "../System/MenuConfirm.h"
 #include "MenuInGame.h"
 #include "../../Manager/FontManager.h"
+#include "../../System/Status/PlayerStatusManager.h"
+#include "Status/MenuPlayerStatus.h"
 
 #include <DxLib.h>
 
@@ -232,5 +234,12 @@ void MenuSelectAction::SelectButtonExecute(Engine& engine, int buttonIndex) {
             menu.CloseTopMenu();
         });
         menu.OpenMenu<MenuConfirm>();
+    }else if (buttonIndex == 4) {
+        AudioUtility::PlaySE("DebugSE");
+        auto& menu = MenuManager::GetInstance();
+        auto status = menu.GetMenu<MenuPlayerStatus>();
+        status->SetIsCallback(false);
+        status->SetPrevStatusData(PlayerStatusManager::GetInstance().GetPlayerStatusData());
+        menu.OpenMenu<MenuPlayerStatus>();
     }
 }

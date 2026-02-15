@@ -134,16 +134,10 @@ void MainGameScene::EndMainGameScene(Engine& engine) {
 	// シーン遷移条件
 	if (context.elapsedDay > GameConst::END_DAY) {
 		context.isClear = true;
-		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
-		FadeManager::GetInstance().StartFade(fadeOut, [&engine, this]() {
-			engine.SetNextScene(std::make_shared<ResultScene>());
-		});
+		engine.SetNextScene(std::make_shared<ResultScene>());
 	}
 	else {
-		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
-		FadeManager::GetInstance().StartFade(fadeOut, [&engine, this]() {
-			gameState->ChageState(GameEnum::GameState::SelectAction);
-		});
+		gameState->ChageState(GameEnum::GameState::SelectAction);	
 	}
 	// オートセーブ
 	save.CollectSaveData(context);
