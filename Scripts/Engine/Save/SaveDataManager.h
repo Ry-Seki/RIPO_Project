@@ -176,6 +176,11 @@ public:
 	 *	@return		std::vector<bool>
 	 */
 	std::vector<bool> GetAllSlotIsUsed();
+	/*
+	 *	@brief      指定スロットのGameProgressDataを取得
+	 *	@return     std::vector<SaveData>
+	 */
+	std::vector<SaveData> GetAllSlotData();
 
 public:
 	/*

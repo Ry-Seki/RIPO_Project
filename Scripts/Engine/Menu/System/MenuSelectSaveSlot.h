@@ -8,6 +8,7 @@
 
 #include "../MenuBase.h"
 #include "../../UI/Button/UIButtonBase.h"
+#include "../../UI/Sprite/Sprite.h"
 #include "../../UI/EventSystem.h"
 #include "../../GameEnum.h"
 #include "../../GameConst.h"
@@ -17,6 +18,7 @@
 
 // 前方宣言
 class Engine;
+struct GameProgressData;
 
 /*
  *	@brief	セーブスロットを選択するメニュー
@@ -24,10 +26,15 @@ class Engine;
 class MenuSelectSaveSlot : public MenuBase {
 private:
 	int currentSlot = -1;
+	float animTimer = 0.0f;
+	int animFrame = 0;
 	GameEnum::SaveSlotMenuMode saveMode;
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
+	std::vector<std::shared_ptr<Sprite>> spriteList;
+
+	std::vector<GameProgressData> gameDataList;
 
 	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/System/SaveLoad/SaveSlotResources.json";
 	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/SaveLoad/SaveSlotNavigation.json";
@@ -46,6 +53,10 @@ public:
 	 */
 	void Update (Engine& engine, float unscaledDeltaTime) override;
 	/*
+	 *	@brief	アニメーション等の更新
+	 */
+	void AnimUpdate(Engine& engine, float unscaledDeltaTime) override;
+	/*
 	 *	@brief	描画処理
 	 */
 	void Render () override;
@@ -60,6 +71,10 @@ public:
 	 *	@param[in]	int slotIndex
 	 */
 	void SelectButtonExecute(Engine& engine, int slotIndex);
+	/*
+	 *	@brief		セーブスロット情報の描画
+	 */
+	void RenderSlotInfo();
 
 public:
 	/*

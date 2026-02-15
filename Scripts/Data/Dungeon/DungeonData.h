@@ -9,7 +9,7 @@
 #include <string>
 
 /*
- *	ダンジョンの概要データ
+ *	@brief  ダンジョンの概要データ
  */
 struct DungeonData {
     int dungeonID = 0;                  // ダンジョン識別ID（0はチュートリアル）
@@ -20,5 +20,16 @@ struct DungeonData {
     int necessaryStrength = 0;          // 必要なstrength
     std::string dungeonPath = "";       // ダンジョンデータCSVやモデルパス
     bool isEventDay = false;            // イベントフラグ
+};
+/*
+ *  @brief  ダンジョン情報
+ */
+struct DungeonInfoData {
+    bool isEventDay = false;
+    int eventStartDay = 0;              // イベント開始日
+    int eventEndDay = 0;                // イベント終了日
+    int levelOfDanger = 0;              // 危険度レベル
+    int necessaryStrength = 0;          // 必要なstrength
+
 };
 #endif // !_DUNGEON_DATA_H_

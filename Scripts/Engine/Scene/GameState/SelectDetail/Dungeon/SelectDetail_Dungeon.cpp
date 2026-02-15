@@ -45,8 +45,9 @@ void SelectDetail_Dungeon::SetupData() {
  */
 void SelectDetail_Dungeon::Setup() {
 	auto& menu = MenuManager::GetInstance();
+	AssessmentTreasureEvent();
 	auto dungeonMenu = menu.GetMenu<MenuSelectDungeon>();
-	dungeonMenu->SetIsEvent(AssessmentTreasureEvent());
+	dungeonMenu->SetIsEvent(ToDungeonInfoData());
 	menu.OpenMenu<MenuSelectDungeon>();
 }
 /*
@@ -113,11 +114,9 @@ void SelectDetail_Dungeon::Teardown() {
 	inputHandle = false;
 }
 /*
- *	@brief		お宝イベント査定
- *	@return		std::vector<bool>
+ *	@brief	お宝イベント査定
  */
-std::vector<bool> SelectDetail_Dungeon::AssessmentTreasureEvent() {
-	std::vector<bool> result;
+void SelectDetail_Dungeon::AssessmentTreasureEvent() {
 	auto& context = owner->GetOwner()->GetActionContext();
 	// 経過時間を取得
 	int elapsedDay = context.elapsedDay;
@@ -125,16 +124,13 @@ std::vector<bool> SelectDetail_Dungeon::AssessmentTreasureEvent() {
 	for (int i = 0, max = dungeonDataList.size(); i < max; i++) {
 		DungeonData data = dungeonDataList[i];
 		if (elapsedDay >= data.eventStartDay && elapsedDay <= data.eventEndDay) {
-			result.push_back(true);
-
 			if (!data.isEventDay) data.isEventDay = true;
+
 		} else {
-			result.push_back(false);
 			if (data.isEventDay) data.isEventDay = false;
 		}
 		dungeonDataList[i] = data;
 	}
-	return result;
 }
 /*
  *	@brief	ダンジョンステージデータの読み込み
@@ -172,4 +168,21 @@ void SelectDetail_Dungeon::SetDungeonData(const std::vector<std::shared_ptr<Load
 	context.dungeonFloorData.LoadFromJSON(dungeonfloorData, dungeonID);
 	// ステートの切り替え
 	owner->GetOwner()->ChageState(GameEnum::GameState::InAction);
+}
+/*
+ *	@brief		ダンジョンデータからダンジョン情報データへ変換
+ *	@return		std::vector<DungeonInfoData>
+ */
+std::vector<DungeonInfoData> SelectDetail_Dungeon::ToDungeonInfoData() {
+	std::vector<DungeonInfoData> dataList;
+	for (int i = 0, max = dungeonDataList.size(); i < max; i++) {
+		DungeonInfoData data{};
+		data.isEventDay = dungeonDataList[i].isEventDay;
+		data.eventStartDay = dungeonDataList[i].eventEndDay;
+		data.eventEndDay = dungeonDataList[i].eventEndDay;
+		data.levelOfDanger = dungeonDataList[i].levelOfDanger;
+		data.necessaryStrength = dungeonDataList[i].necessaryStrength;
+		dataList.push_back(data);
+	}
+	return dataList;
 }

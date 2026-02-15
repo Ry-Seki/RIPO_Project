@@ -367,3 +367,35 @@ std::vector<bool> SaveDataManager::GetAllSlotIsUsed() {
     }
     return result;
 }
+/*
+ *	@brief      指定スロットのGameProgressDataを取得
+ *	@return     std::vector<SaveData>
+ */
+std::vector<SaveData> SaveDataManager::GetAllSlotData() {
+    std::vector<SaveData> result;
+    
+    // オートセーブ
+    {
+        SaveData data{};
+        if (Load(data, _AUTO_SAVE)) {
+            result.push_back(data);
+        }
+        else {
+            result.push_back(SaveData{});
+        }
+    }
+    // 通常スロット
+    for (int i = GameConst::SELECT_SAVE_SLOT_MIN;
+         i <= GameConst::SELECT_SAVE_SLOT_MAX; ++i) {
+        SaveData data{};
+        std::string slot = "Slot" + std::to_string(i);
+
+        if (Load(data, slot)) {
+            result.push_back(data);
+        }
+        else {
+            result.push_back(SaveData{});
+        }
+    }
+    return result;
+}
