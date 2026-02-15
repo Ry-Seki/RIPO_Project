@@ -8,6 +8,7 @@
 #include "BossStandby.h"
 #include "../../Manager/BulletManager.h"
 #include "../../Manager/CameraManager.h"
+#include "../../Manager/EffectManager.h"
 
 BossShootingAttack::BossShootingAttack()
 	: animator(nullptr)
@@ -25,6 +26,8 @@ void BossShootingAttack::Start(GameObject* boss)
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
 	coolTime = MAX_COOL_TIME;
+	// エフェクトを出す
+	EffectManager::GetInstance().Instantiate("BossShootEffect", boss->position);
 }
 
 void BossShootingAttack::Update(GameObject* boss, float deltaTime)
