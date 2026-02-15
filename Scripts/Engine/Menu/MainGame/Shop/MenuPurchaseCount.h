@@ -36,9 +36,10 @@ private:
 
 private:
 	int buyButtonIndex = -1;
-	int purchaseCount = 0;
+	int purchaseCount = -1;
 	int currentMoney = -1;
 	int purchaseMoney = -1;
+	int leastMoney = -1;
 	int animFrame = 0;
 	float animTimer = 0.0f;
 	ItemData* targetItemData = nullptr;

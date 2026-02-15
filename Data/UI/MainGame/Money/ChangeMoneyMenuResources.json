@@ -1,0 +1,49 @@
+{
+  "Sprites": [
+    {
+      "Name": "BackGround",
+      "Rect": {
+        "X": 0,
+        "Y": 0,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/BackGround/Trealine_LoadBackground_black1.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black2.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black3.jpg"
+      ]
+    },
+    {
+      "Name": "ChangeMoney",
+      "Rect": {
+        "X": 51,
+        "Y": 39,
+        "Width": 1737,
+        "Height": 690
+      },
+      "Resources": [
+        "Res/Menu/MainGame/Money/Trealine_Money.png"
+      ]
+    }
+  ],
+  "Buttons": [
+    {
+      "Name": "Continue",
+      "Type": "Single",
+      "Rect": {
+        "X": 633,
+        "Y": 845,
+        "Width": 653,
+        "Height": 169
+      },
+      "Resources": {
+        "Idle": "Res/Menu/MainGame/Result/Dungeon/Trealine_ResultDungeon_Button.png",
+        "Hover": "Res/Menu/MainGame/Result/Dungeon/Trealine_ResultDungeon_Button.png",
+        "Press": "Res/Menu/MainGame/Result/Dungeon/Trealine_ResultDungeon_Button_Press.png",
+        "Select": "Res/Menu/MainGame/Result/Dungeon/Trealine_ResultDungeon_Button_Select.png"
+      }
+    }
+
+  ]
+}

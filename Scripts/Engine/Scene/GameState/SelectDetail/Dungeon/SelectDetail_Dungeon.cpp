@@ -18,6 +18,7 @@
 #include "../../../../../Data/Dungeon/DungeonFloorData.h"
 #include "../../../../Menu/MainGame/Dungeon/MenuSelectDungeon.h"
 #include "../../../../Menu/MenuManager.h"
+#include "../../../../System/Money/MoneyManager.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -165,6 +166,7 @@ void SelectDetail_Dungeon::SetDungeonData(const std::vector<std::shared_ptr<Load
 	auto& context = owner->GetOwner()->GetActionContext();
 	// ‚»‚ê‚¼‚ê‚Ìƒf[ƒ^‚ğ‰Šú‰»
 	context.dungeonID = dungeonID;
+	context.prevIncome = MoneyManager::GetInstance().GetCurrentMoney();
 	context.isCurrentEvent = dungeonDataList[dungeonID].isEventDay;
 	context.dungeonStageData.LoadFromJSON(dungeonData);
 	context.dungeonFloorData.LoadFromJSON(dungeonfloorData, dungeonID);

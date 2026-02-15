@@ -13,6 +13,18 @@
         "Res/BackGround/Trealine_LoadBackground_black2.jpg",
         "Res/BackGround/Trealine_LoadBackground_black3.jpg"
       ]
+    },
+    {
+      "Name": "ResultScore",
+      "Rect": {
+        "X": 51,
+        "Y": 39,
+        "Width": 1737,
+        "Height": 690
+      },
+      "Resources": [
+        "Res/Menu/Result/Trealine_ResultScore.png"
+      ]
     }
   ],
   "Buttons": [
@@ -20,12 +32,16 @@
       "Name": "Finish",
       "Type": "Single",
       "Rect": {
-        "X": 100,
-        "Y": 350,
-        "Width": 100,
-        "Height": 80
+        "X": 633,
+        "Y": 845,
+        "Width": 653,
+        "Height": 169
       },
       "Resources": {
+        "Idle": "Res/Menu/MainGame/Result/Dungeon/Trealine_ResultDungeon_Button.png",
+        "Hover": "Res/Menu/MainGame/Result/Dungeon/Trealine_ResultDungeon_Button.png",
+        "Press": "Res/Menu/MainGame/Result/Dungeon/Trealine_ResultDungeon_Button_Press.png",
+        "Select": "Res/Menu/MainGame/Result/Dungeon/Trealine_ResultDungeon_Button_Select.png"
       }
     }
   ]

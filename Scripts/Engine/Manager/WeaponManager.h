@@ -26,7 +26,7 @@ private:
 	~WeaponManager() = default;
 
 public:
-	/* 
+	/*
 	 *　初期化
 	 */
 	void Initialize();
@@ -51,6 +51,11 @@ public:
 	 *	サブマシンガン解放
 	 */
 	void UnlockSubmachineGun();
+	
+	/*
+	 *	サブマシンガンが解放されているか
+	 */
+	bool IsSubmachineGun();
 };
 
 #endif // !_WEAPONMANAGAER_H_

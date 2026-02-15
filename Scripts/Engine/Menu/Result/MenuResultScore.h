@@ -8,9 +8,12 @@
 
 #include "../MenuBase.h"
 #include "../../../Data/ResultScoreData.h"
-#include "../../GameEnum.h"
 #include "../../UI/EventSystem.h"
 #include "../../UI/Button/UIButtonBase.h"
+#include "../../UI/Sprite/Sprite.h"
+#include "../../GameEnum.h"
+#include "../../GameConst.h"
+
 
 // 前方宣言
 class Engine;
@@ -20,10 +23,12 @@ class Engine;
  */
 class MenuResultScore : public MenuBase {
 private:
-	int currentSlot = -1;
+	float animTimer = 0.0f;
+	int animFrame = 0;
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
+	std::vector<std::shared_ptr<Sprite>> spriteList;
 
 	ResultScoreData resultScore;
 	GameEnum::ResultRank rank = GameEnum::ResultRank::Invalid;
@@ -44,6 +49,10 @@ public:
 	 *	@brief	更新処理
 	 */
 	void Update(Engine& engine, float unscaledDeltaTime) override;
+	/*
+	 *	@brief	アニメーション等の更新
+	 */
+	void AnimUpdate(Engine& engine, float unscaledDeltaTime) override;
 	/*
 	 *	@brief	描画処理
 	 */
@@ -73,6 +82,11 @@ private:
 	 *  @return     GameEnum::ResultRank
 	 */
 	GameEnum::ResultRank JudgeRank(int playerScore);
+	/*
+	 *	@brief		ランクから->文字列型に変換
+	 *	@return		std::string
+	 */
+	std::string ToRankString();
 
 public:
 	/*

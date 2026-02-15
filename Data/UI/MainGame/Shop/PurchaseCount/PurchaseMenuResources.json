@@ -1,56 +1,97 @@
 {
-  "BackGround": {
-    "Resources": [
+  "Sprites": [
+    {
+      "Name": "BackGround",
+      "Rect": {
+        "X": 0,
+        "Y": 0,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/BackGround/Trealine_LoadBackground_black1.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black2.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black3.jpg"
+      ]
+    },
+    {
+      "Name": "PurchaseMenu",
+      "Rect": {
+        "X": 374,
+        "Y": 99,
+        "Width": 1210,
+        "Height": 842
+      },
+      "Resources": [
+        "Res/Menu/MainGame/Shop/Trealine_Shop_PurchaseCount.png"
+      ]
+    }
 
-    ]
-  },
+  ],
   "Buttons": [
     {
       "Name": "AddCount",
       "Type": "LongPress",
       "Rect": {
-        "X": 800,
-        "Y": 350,
-        "Width": 200,
-        "Height": 80
+        "X": 682,
+        "Y": 421,
+        "Width": 194,
+        "Height": 117
       },
       "Resources": {
+        "Idle": "Res/Menu/MainGame/Shop/Trealine_Shop_AddPressButton.png",
+        "Hover": "Res/Menu/MainGame/Shop/Trealine_Shop_AddPressButton.png",
+        "Press": "Res/Menu/MainGame/Shop/Trealine_Shop_AddPressButton_Press.png",
+        "Select": "Res/Menu/MainGame/Shop/Trealine_Shop_AddPressButton_Select.png"
       }
     },
     {
       "Name": "SubCount",
       "Type": "LongPress",
       "Rect": {
-        "X": 800,
-        "Y": 550,
-        "Width": 200,
-        "Height": 80
+        "X": 682,
+        "Y": 621,
+        "Width": 194,
+        "Height": 117
       },
       "Resources": {
+        "Idle": "Res/Menu/MainGame/Shop/Trealine_Shop_SubPressButton.png",
+        "Hover": "Res/Menu/MainGame/Shop/Trealine_Shop_SubPressButton.png",
+        "Press": "Res/Menu/MainGame/Shop/Trealine_Shop_SubPressButton_Press.png",
+        "Select": "Res/Menu/MainGame/Shop/Trealine_Shop_SubPressButton_Select.png"
       }
     },
     {
       "Name": "Buy",
       "Type": "Single",
       "Rect": {
-        "X": 750,
-        "Y": 850,
-        "Width": 300,
-        "Height": 150
+        "X": 628,
+        "Y": 762,
+        "Width": 194,
+        "Height": 117
       },
       "Resources": {
+        "Idle": "Res/Menu/MainGame/Shop/Trealine_Shop_BuyButton.png",
+        "Hover": "Res/Menu/MainGame/Shop/Trealine_Shop_BuyButton.png",
+        "Press": "Res/Menu/MainGame/Shop/Trealine_Shop_BuyButton_Press.png",
+        "Select": "Res/Menu/MainGame/Shop/Trealine_Shop_BuyButton_Select.png",
+        "Disable": "Res/Menu/MainGame/Shop/Trealine_Shop_BuyButton_Disable.png"
       }
     },
     {
       "Name": "Cancel",
       "Type": "Single",
       "Rect": {
-        "X": 1200,
-        "Y": 850,
-        "Width": 300,
-        "Height": 150
+        "X": 991,
+        "Y": 762,
+        "Width": 256,
+        "Height": 117
       },
       "Resources": {
+        "Idle": "Res/Menu/MainGame/Shop/Trealine_Shop_CancelButton.png",
+        "Hover": "Res/Menu/MainGame/Shop/Trealine_Shop_CancelButton.png",
+        "Press": "Res/Menu/MainGame/Shop/Trealine_Shop_CancelButton_Press.png",
+        "Select": "Res/Menu/MainGame/Shop/Trealine_Shop_CancelButton_Select.png"
       }
     }
   ]

@@ -49,6 +49,13 @@ public:
 		itemCatalogData.LoadFromJson(setItemJSON);
 	}
 	/*
+	 *	@brief		お金のリセット
+	 */
+	void ResetMoney() {
+		currentMoney = 0;
+		prevMoney = 0;
+	}
+	/*
 	 *	@brief		アイテムデータのポインタを貸し出す
 	 *	@param[out]	std::vector<ItemData>& itemDataList
 	 */

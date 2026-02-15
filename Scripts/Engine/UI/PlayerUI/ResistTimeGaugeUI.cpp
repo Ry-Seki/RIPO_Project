@@ -16,7 +16,7 @@ using namespace CharacterUtility;
 void ResistTimeGaugeUI::Render() {
 	// •`‰æˆÊ’uŒvŽZ
 	float playerResist = static_cast<float>(GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus().resistTime);
-	float baseResist = static_cast<float>(PlayerStatusManager::GetInstance().GetPlayerStatusData()->base.resistTime);
+	float baseResist = static_cast<float>(PlayerStatusManager::GetInstance().GetPlayerStatusData().base.resistTime);
 	float posSX = GameConst::WINDOW_WIDTH * 0.2f;
 	float posSY = GameConst::WINDOW_HEIGHT * 0.93f;
 	float changeValue = 0.2f;

@@ -15,7 +15,7 @@
 #include "../../Input/InputUtility.h"
 #include "../../../Data/UI/MenuInfo.h"
 #include "../../Scene/TitleScene.h"
-
+#include "../../Manager/FontManager.h"
 #include <DxLib.h>
 
 /*
@@ -34,6 +34,7 @@ void MenuResultScore::Initialize(Engine& engine) {
             eventSystem.RegisterButton(button.get());
         }
         eventSystem.Initialize(0);
+        spriteList = std::move(result.spriteList);
         buttonList = std::move(result.buttonList);
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             UIButtonBase* button = buttonList[i].get();
@@ -57,14 +58,15 @@ void MenuResultScore::Open() {
     MenuBase::Open();
     int playerScore = MoneyManager::GetInstance().GetCurrentMoney();
     rank = JudgeRank(playerScore);
-    currentSlot = -1;
     // ボタンの準備処理
+    for (auto& sprite : spriteList) {
+        sprite->Setup();
+    }
     for (auto& button : buttonList) {
         button->Setup();
     }
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
-        isStart = true;
         eventSystem.ApplySelection();
         InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
     });
@@ -91,38 +93,41 @@ void MenuResultScore::Update(Engine& engine, float unscaledDeltaTime) {
     }
 }
 /*
+ *	@brief	アニメーション等の更新
+ */
+void MenuResultScore::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
+    animTimer += unscaledDeltaTime;
+
+    if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
+    animTimer -= GameConst::UI_ANIM_INTERVAL;
+
+    for (auto& sprite : spriteList) {
+        int frameCount = sprite->GetFrameCount();
+        if (frameCount <= 1) continue;
+
+        animFrame = (animFrame + 1) % frameCount;
+        sprite->SetFrameIndex(animFrame);
+    }
+}
+/*
  *	@brief	描画処理
  */
 void MenuResultScore::Render() {
-    if (!isStart) return;
-
-    MoneyManager& money = MoneyManager::GetInstance();
-    DrawFormatString(50, 50, GetColor(255, 255, 255), "ResultMoney : %d", money.GetCurrentMoney());
-    DrawFormatString(50, 70, GetColor(255, 255, 255), "ResultScore ");
-    // TODO : それぞれの描画インターフェーズでの描画にする
-    switch (rank) {
-        case GameEnum::ResultRank::Invalid:
-            DrawFormatString(200, 70, GetColor(255, 255, 255), "無効");
-            break;
-        case GameEnum::ResultRank::S:
-            DrawFormatString(200, 70, GetColor(255, 255, 255), "S ");
-            break;
-        case GameEnum::ResultRank::A:
-            DrawFormatString(200, 70, GetColor(255, 255, 255), "A ");
-            break;
-        case GameEnum::ResultRank::B:
-            DrawFormatString(200, 70, GetColor(255, 255, 255), "B ");
-            break;
-        case GameEnum::ResultRank::C:
-            DrawFormatString(200, 70, GetColor(255, 255, 255), "C ");
-            break;
-        case GameEnum::ResultRank::D:
-            DrawFormatString(200, 70, GetColor(255, 255, 255), "D ");
-            break;
+    auto& money = MoneyManager::GetInstance();
+    auto& font = FontManager::GetInstance();
+    for (auto& sprite : spriteList) {
+        if (!sprite->IsVisible()) continue;
+        sprite->Render();
     }
     for (auto& button : buttonList) {
+        if (!button->IsVisible()) continue;
         button->Render();
     }
+    std::string showMoneyStr = std::to_string(money.GetCurrentMoney());
+    std::string scoreRank = ToRankString();
+    font.Draw("NormalSizeFont", 1550, 490, showMoneyStr, GetColor(255, 255, 255));
+    font.Draw("NormalSizeFont", 1550, 638, scoreRank, GetColor(255, 255, 255));
+
 }
 /*
  *	@brief	メニューを閉じる
@@ -175,4 +180,29 @@ GameEnum::ResultRank MenuResultScore::JudgeRank(int playerScore) {
         }
     }
     return GameEnum::ResultRank::Invalid;
+}
+/*
+ *	@brief		ランクから->文字列型に変換
+ *	@return		std::string
+ */
+std::string MenuResultScore::ToRankString() {
+    std::string rankStr;
+    switch (rank) {
+        case GameEnum::ResultRank::S:
+            rankStr = 'S';
+            break;
+        case GameEnum::ResultRank::A:
+            rankStr = 'A';
+            break;
+        case GameEnum::ResultRank::B:
+            rankStr = 'B';
+            break;
+        case GameEnum::ResultRank::C:
+            rankStr = 'C';
+            break;
+        case GameEnum::ResultRank::D:
+            rankStr = 'D';
+            break;
+    }
+    return rankStr;
 }

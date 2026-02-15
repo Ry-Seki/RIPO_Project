@@ -84,7 +84,6 @@ void MainGameScene::Render() {
 	gameState->Render();
 	Scene::Render();
 	EffectManager::GetInstance().Render();
-	DrawFormatString(50, 400, GetColor(255, 255, 255), "Money : %d", MoneyManager::GetInstance().GetCurrentMoney());
 
 #if _DEBUG
 	// 全オブジェクトのCollider描画
@@ -131,19 +130,14 @@ void MainGameScene::EndMainGameScene(Engine& engine) {
 	auto& save = SaveDataManager::GetInstance();
 	// アクション終了フラグの変更
 	gameState->SetIsActionEnd(false);
+	context.prevIncome = 0;
 	// シーン遷移条件
-	if (context.elapsedDay > _END_DAY) {
+	if (context.elapsedDay > GameConst::END_DAY) {
 		context.isClear = true;
-		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
-		FadeManager::GetInstance().StartFade(fadeOut, [&engine, this]() {
-			engine.SetNextScene(std::make_shared<ResultScene>());
-		});
+		engine.SetNextScene(std::make_shared<ResultScene>());
 	}
 	else {
-		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
-		FadeManager::GetInstance().StartFade(fadeOut, [&engine, this]() {
-			gameState->ChageState(GameEnum::GameState::SelectAction);
-			});
+		gameState->ChageState(GameEnum::GameState::SelectAction);	
 	}
 	// オートセーブ
 	save.CollectSaveData(context);

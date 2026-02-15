@@ -169,8 +169,8 @@ void MenuSelectTraining::SelectButtonExecute(Engine& engine, int buttonIndex) {
                     menu.CloseAllMenu();
                     if (Callback) Callback(type);
                 });
-                menu.CloseTopMenu();
             }
+            menu.CloseTopMenu();
         });
         menu.OpenMenu<MenuConfirm>();
     } else if(buttonIndex == 1){
@@ -183,8 +183,8 @@ void MenuSelectTraining::SelectButtonExecute(Engine& engine, int buttonIndex) {
                     menu.CloseAllMenu();
                     if (Callback) Callback(type);
                 });
-                menu.CloseTopMenu();
             }
+            menu.CloseTopMenu();
         });
         menu.OpenMenu<MenuConfirm>();
     }else if(buttonIndex == 2){
@@ -197,8 +197,8 @@ void MenuSelectTraining::SelectButtonExecute(Engine& engine, int buttonIndex) {
                     menu.CloseAllMenu();
                     if (Callback) Callback(type);
                 });
-                menu.CloseTopMenu();
             }
+            menu.CloseTopMenu();
         });
         menu.OpenMenu<MenuConfirm>();
     }else if(buttonIndex == 3){
@@ -211,8 +211,8 @@ void MenuSelectTraining::SelectButtonExecute(Engine& engine, int buttonIndex) {
                     menu.CloseAllMenu();
                     if (Callback) Callback(type);
                 });
-                menu.CloseTopMenu();
             }
+            menu.CloseTopMenu();
         });
         menu.OpenMenu<MenuConfirm>();
     }
