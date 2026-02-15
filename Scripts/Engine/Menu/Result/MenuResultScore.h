@@ -23,7 +23,8 @@ class Engine;
  */
 class MenuResultScore : public MenuBase {
 private:
-	int currentSlot = -1;
+	float animTimer = 0.0f;
+	int animFrame = 0;
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
@@ -48,6 +49,10 @@ public:
 	 *	@brief	更新処理
 	 */
 	void Update(Engine& engine, float unscaledDeltaTime) override;
+	/*
+	 *	@brief	アニメーション等の更新
+	 */
+	void AnimUpdate(Engine& engine, float unscaledDeltaTime) override;
 	/*
 	 *	@brief	描画処理
 	 */

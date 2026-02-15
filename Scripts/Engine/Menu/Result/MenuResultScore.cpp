@@ -93,6 +93,23 @@ void MenuResultScore::Update(Engine& engine, float unscaledDeltaTime) {
     }
 }
 /*
+ *	@brief	アニメーション等の更新
+ */
+void MenuResultScore::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
+    animTimer += unscaledDeltaTime;
+
+    if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
+    animTimer -= GameConst::UI_ANIM_INTERVAL;
+
+    for (auto& sprite : spriteList) {
+        int frameCount = sprite->GetFrameCount();
+        if (frameCount <= 1) continue;
+
+        animFrame = (animFrame + 1) % frameCount;
+        sprite->SetFrameIndex(animFrame);
+    }
+}
+/*
  *	@brief	描画処理
  */
 void MenuResultScore::Render() {
