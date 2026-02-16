@@ -156,16 +156,13 @@ void MenuPurchaseCount::Close(Engine& engine) {
     targetItemData = nullptr;
 }
 /*
- *	@brief	メニューを中断
- */
-void MenuPurchaseCount::Suspend() {
-    MenuBase::Suspend();
-}
-/*
  *	@brief	メニューを再開
  */
 void MenuPurchaseCount::Resume() {
     MenuBase::Resume();
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
 }
 /*
  *	@brief		ボタンの押された時の処理

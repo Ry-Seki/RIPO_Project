@@ -37,21 +37,12 @@ void MenuSelectLoadGame::Update(Engine& engine, float unscaledDeltaTime) {
  *	@biref	描画処理
  */
 void MenuSelectLoadGame::Render() {
-	DrawFormatString(50, 70, GetColor(255, 255, 255), "LoadGame");
-	DrawFormatString(300, 400, GetColor(255, 255, 255), "Play->SpaceKey");
-	DrawFormatString(300, 450, GetColor(255, 255, 255), "Return->EscapeKey");
 }
 /*
  *	@brief	メニューを閉じる
  */
 void MenuSelectLoadGame::Close(Engine& engine) {
 	MenuBase::Close(engine);
-}
-/*
- *	@brief	メニューを中断
- */
-void MenuSelectLoadGame::Suspend() {
-
 }
 /*
  *	@brief	メニューを再開
