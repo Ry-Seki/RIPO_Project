@@ -47,7 +47,7 @@ void SelectDetail_Dungeon::Setup() {
 	auto& menu = MenuManager::GetInstance();
 	AssessmentTreasureEvent();
 	auto dungeonMenu = menu.GetMenu<MenuSelectDungeon>();
-	dungeonMenu->SetIsEvent(ToDungeonInfoData());
+	dungeonMenu->SetInfoData(ToDungeonInfoData());
 	menu.OpenMenu<MenuSelectDungeon>();
 }
 /*
@@ -102,10 +102,6 @@ void SelectDetail_Dungeon::Update(float deltaTime) {
  *	@brief	ï`âÊèàóù
  */
 void SelectDetail_Dungeon::Render() {
-	DrawFormatString(50, 50, GetColor(0, 0, 0), "1: Stage1Dungeon");
-	DrawFormatString(50, 75, GetColor(0, 0, 0), "2: Stage2Dungeon");
-	DrawFormatString(50, 100, GetColor(0, 0, 0), "3: Stage3Dungeon");
-	DrawFormatString(50, 125, GetColor(0, 0, 0), "4: Stage4Dungeon");
 }
 /*
  *	@brief	ï–ïtÇØèàóù
@@ -175,13 +171,14 @@ void SelectDetail_Dungeon::SetDungeonData(const std::vector<std::shared_ptr<Load
  */
 std::vector<DungeonInfoData> SelectDetail_Dungeon::ToDungeonInfoData() {
 	std::vector<DungeonInfoData> dataList;
-	for (int i = 0, max = dungeonDataList.size(); i < max; i++) {
+	for (int i = 1, max = dungeonDataList.size(); i < max; i++) {
 		DungeonInfoData data{};
 		data.isEventDay = dungeonDataList[i].isEventDay;
 		data.eventStartDay = dungeonDataList[i].eventEndDay;
 		data.eventEndDay = dungeonDataList[i].eventEndDay;
 		data.levelOfDanger = dungeonDataList[i].levelOfDanger;
 		data.necessaryStrength = dungeonDataList[i].necessaryStrength;
+		data.treasureCount = dungeonDataList[i].treasureCount;
 		dataList.push_back(data);
 	}
 	return dataList;
