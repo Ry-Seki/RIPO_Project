@@ -132,11 +132,11 @@ void TutorialScene::EndTutorialScene(Engine& engine) {
 	auto& save = SaveDataManager::GetInstance();
 	// アクション終了フラグの変更
 	gameState->SetIsActionEnd(false);
+	context.prevIncome = 0;
+	MoneyManager::GetInstance().ResetMoney();
 	// オートセーブ
 	save.CollectSaveData(context);
 	save.AutoSave();
-	FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::NonStop);
-	FadeManager::GetInstance().StartFade(fadeOut, [&engine, this]() {
-		engine.SetNextScene(std::make_shared<MainGameScene>());
-	});
+	engine.SetNextScene(std::make_shared<MainGameScene>());
+	
 }

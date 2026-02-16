@@ -42,11 +42,8 @@ void ResultScene::SetupData(Engine& engine, const JSON& json) {
  *	@brief	準備前処理
  */
 void ResultScene::Setup(Engine& engine) {
-	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fade, [this]() {
-		isStart = true;
-		MenuManager::GetInstance().OpenMenu<MenuResultScore>();
-	});
+    isStart = true;
+    MenuManager::GetInstance().OpenMenu<MenuResultScore>();
 }
 /*
  *	@brief	更新処理
@@ -60,9 +57,6 @@ void ResultScene::Update(Engine& engine, float deltaTime) {
  *	@brief	描画処理
  */
 void ResultScene::Render() {
-	MoneyManager& money = MoneyManager::GetInstance();
-	DrawFormatString(50, 50, GetColor(255, 255, 255), "ResultMoney : %d", money.GetCurrentMoney());
-	DrawFormatString(50, 70, GetColor(255, 255, 255), "ResultScore ");
 }
 /*
  *	@brief		読み込んだJSONデータを構造体に変換

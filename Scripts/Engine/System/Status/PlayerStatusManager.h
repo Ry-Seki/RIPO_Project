@@ -22,7 +22,7 @@ class PlayerStatusManager : public Singleton<PlayerStatusManager> {
 	friend class Singleton<PlayerStatusManager>;
 
 private:
-	std::shared_ptr<PlayerStatusData> playerStatus;		// プレイヤーステータスデータ
+	PlayerStatusData playerStatus;		// プレイヤーステータスデータ
 
 	static constexpr const char* _PLAYER_STATUS_DATA_PATH = "Data/Player/PlayerStatusData.json";
 
@@ -30,7 +30,7 @@ private:
 	/*
 	 *	コンストラクタ
 	 */
-	PlayerStatusManager() : playerStatus(std::make_shared<PlayerStatusData>()){};
+	PlayerStatusManager() = default;
 	/*
 	 *	デストラクタ
 	 */
@@ -79,10 +79,9 @@ public:
 public:
 	/*
 	 *	@brief	プレイヤーのステータスデータの取得
-	 *	@return	PlayerStatusData*
+	 *	@return	PlayerStatusData&
 	 */
-	inline PlayerStatusData* GetPlayerStatusData() const { return playerStatus.get(); }
-
+	inline const PlayerStatusData& GetPlayerStatusData() const { return playerStatus; }
 };
 
 #endif // !_PLAYER_STATUS_MANAGER_H_

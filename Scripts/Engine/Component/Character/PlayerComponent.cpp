@@ -48,7 +48,7 @@ PlayerComponent::PlayerComponent()
 
 void PlayerComponent::Start() {
 	// プレイヤーの基礎ステータスを受け取る
-	status = PlayerStatusManager::GetInstance().GetPlayerStatusData()->base;
+	status = PlayerStatusManager::GetInstance().GetPlayerStatusData().base;
 
 	animator = GetOwner()->GetComponent<AnimatorComponent>();
 }
@@ -56,7 +56,7 @@ void PlayerComponent::Start() {
 void PlayerComponent::Update(float deltaTime) {
 	GameObject* player = GetOwner();
 	// プレイヤーの基礎ステータス
-	PlayerStatusValue baseStatus = PlayerStatusManager::GetInstance().GetPlayerStatusData()->base;
+	PlayerStatusValue baseStatus = PlayerStatusManager::GetInstance().GetPlayerStatusData().base;
 	// プレイヤーの入力情報
 	action = GetInputState(GameEnum::ActionMap::PlayerAction);
 

@@ -22,6 +22,8 @@
 #include "../System/MenuConfirm.h"
 #include "MenuInGame.h"
 #include "../../Manager/FontManager.h"
+#include "../../System/Status/PlayerStatusManager.h"
+#include "Status/MenuPlayerStatus.h"
 
 #include <DxLib.h>
 
@@ -145,7 +147,9 @@ void MenuSelectAction::Render() {
         button->Render();
     }
     std::string elapsedDayStr = std::to_string(elapsedDay);
-    FontManager::GetInstance().Draw("NormalSizeFont", 260, 510, elapsedDayStr, GetColor(75, 75, 75));
+    std::string maxDayStr = " / " + std::to_string(GameConst::END_DAY);
+    FontManager::GetInstance().Draw("NormalSizeFont", 190, 510, elapsedDayStr, GetColor(75, 75, 75));
+    FontManager::GetInstance().Draw("NormalSizeFont", 250, 510, maxDayStr, GetColor(75, 75, 75));
 }
 /*
  *	@brief	ÉÅÉjÉÖÅ[Çï¬Ç∂ÇÈ
@@ -230,5 +234,12 @@ void MenuSelectAction::SelectButtonExecute(Engine& engine, int buttonIndex) {
             menu.CloseTopMenu();
         });
         menu.OpenMenu<MenuConfirm>();
+    }else if (buttonIndex == 4) {
+        AudioUtility::PlaySE("DebugSE");
+        auto& menu = MenuManager::GetInstance();
+        auto status = menu.GetMenu<MenuPlayerStatus>();
+        status->SetIsCallback(false);
+        status->SetPrevStatusData(PlayerStatusManager::GetInstance().GetPlayerStatusData());
+        menu.OpenMenu<MenuPlayerStatus>();
     }
 }

@@ -26,8 +26,6 @@ private:
     static constexpr const char* _ITEM_DATA_PATH = "Data/Item/ItemCatalogData.json";
     static constexpr const char* _EFFECT_DATA_PATH = "Data/Effect/EffectData.json";
 
-    const int _END_DAY = 30;
-
 public:
     /*
      *  @brief  コンストラクタ

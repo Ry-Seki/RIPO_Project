@@ -64,13 +64,17 @@ private:
 	 *  @param[in]	const std::vector<std::shared_ptr<LoadJSON>>& setDataList
 	 */
 	void SetDungeonData(const std::vector<std::shared_ptr<LoadJSON>>& setDataList);
+	/*
+	 *	@brief		ダンジョンデータからダンジョン情報データへ変換
+	 *	@return		std::vector<DungeonInfoData>
+	 */
+	std::vector<DungeonInfoData> ToDungeonInfoData();
 
 public:
 	/*
-	 *	@brief		お宝イベント査定
-	 *	@return		std::vector<bool>
+	 *	@brief	お宝イベント査定
 	 */
-	std::vector<bool> AssessmentTreasureEvent();
+	void AssessmentTreasureEvent();
 };
 
 #endif // !_SELECT_DETAIL_DUNGEON_H_

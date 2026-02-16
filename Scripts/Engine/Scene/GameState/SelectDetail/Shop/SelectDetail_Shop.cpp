@@ -25,7 +25,7 @@ void SelectDetail_Shop::Initialize() {
 	auto purchase = menu.GetMenu<MenuPurchaseCount>();
 
 	select->SetCallback([this]() {
-		owner->GetOwner()->ChageState(GameEnum::GameState::InAction);
+		owner->GetOwner()->ChageState(GameEnum::GameState::ResultAction);
 	});
 	purchase->SetCallBack([this](int itemID, int buyCount) {
 		BuyItem(itemID, buyCount);

@@ -21,6 +21,8 @@
 #include "../../MenuManager.h"
 #include "../../System/MenuConfirm.h"
 #include "../MenuInGame.h"
+#include "../../../Manager/FontManager.h"
+#include "../../../../Data/Dungeon/DungeonData.h"
 
 /*
  *	@brief	初期化処理
@@ -137,6 +139,7 @@ void MenuSelectDungeon::Render() {
         if (!button->IsVisible()) continue;
         button->Render();
     }
+    
 }
 /*
  *	@brief	メニューを閉じる
@@ -222,5 +225,18 @@ void MenuSelectDungeon::SelectButtonExecute(Engine& engine, int buttonIndex) {
         });
         menu.OpenMenu<MenuConfirm>();
     }
+
+}
+/*
+ *	@brief		ダンジョン情報の描画
+ */
+void MenuSelectDungeon::RenderDungeonInfo() {
+    auto& font = FontManager::GetInstance();
+
+    std::string eventStart = std::to_string(dungeonInfoList[currentIndex].eventStartDay);
+    std::string eventEnd = std::to_string(dungeonInfoList[currentIndex].eventEndDay);
+    std::string strength = std::to_string(dungeonInfoList[currentIndex].necessaryStrength);
+    std::string level = std::to_string(dungeonInfoList[currentIndex].levelOfDanger);
+
 
 }
