@@ -66,7 +66,6 @@ public:
 		isVisible = false;
 		isInteractive = false;
 		isStart = false;
-		inputHandle = false;
 		isAnimation = false;
 	}
 	/*

@@ -88,7 +88,8 @@ void MenuMoneyChange::Update(Engine& engine, float unscaledDeltaTime) {
         auto button = eventSystem.GetCurrentSelectButton();
         if (!button) return;
 
-        if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+        if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+            inputHandle = true;
             button->OnPressDown();
         }
     } else {
@@ -154,7 +155,9 @@ void MenuMoneyChange::Suspend() {
  */
 void MenuMoneyChange::Resume() {
     MenuBase::Resume();
-
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
 }
 /*
  *	@brief		ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—

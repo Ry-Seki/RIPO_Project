@@ -161,6 +161,9 @@ void MenuSelectSaveSlot::Close (Engine& engine) {
 }
 void MenuSelectSaveSlot::Resume() {
     MenuBase::Resume();
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
     auto& save = SaveDataManager::GetInstance();
     gameDataList.clear();
     // ロード時、セーブスロットが未使用だった場合選択不可にする

@@ -85,7 +85,8 @@ void MenuPlayerDeath::Update(Engine& engine, float unscaledDeltaTime) {
     auto button = eventSystem.GetCurrentSelectButton();
     if (!button) return;
 
-    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+    if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+        inputHandle = true;
         button->OnPressDown();
     }
 }
@@ -136,6 +137,9 @@ void MenuPlayerDeath::Suspend() {
  */
 void MenuPlayerDeath::Resume() {
     MenuBase::Resume();
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
 }
 /*
  *	@brief	ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—

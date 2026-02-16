@@ -28,6 +28,7 @@ void UIButtonBase::Initialize() {
 void UIButtonBase::Setup() {
 	isEnable = true;
 	isVisible = true;
+	inputHandle = false;
 	inputState = GameEnum::ButtonInputState::Idle;
 }
 /*

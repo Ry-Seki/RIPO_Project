@@ -99,7 +99,8 @@ void MenuSelectShopItem::Update(Engine& engine, float unscaledDeltaTime) {
     auto button = eventSystem.GetCurrentSelectButton();
     if (!button) return;
 
-    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+    if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+        inputHandle = true;
         button->OnPressDown();
     }
 }
@@ -150,6 +151,9 @@ void MenuSelectShopItem::Suspend() {
  */
 void MenuSelectShopItem::Resume() {
     MenuBase::Resume();
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
     if (WeaponManager::GetInstance().IsSubmachineGun()
         && smgWeapon->IsEnable()) {
         smgWeapon->SetIsEnable(false);

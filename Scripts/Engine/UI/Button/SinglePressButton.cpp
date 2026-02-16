@@ -22,8 +22,9 @@ void SinglePressButton::Update(float unscaledDeltaTime) {
 
     UIButtonBase::Update(unscaledDeltaTime);
 
-    if (inputState == GameEnum::ButtonInputState::Hover 
+    if (!inputHandle && inputState == GameEnum::ButtonInputState::Hover 
 		&& input.buttonDown[inputClickNum]) {
+		inputHandle = true;
         OnPressDown();
     }
 
