@@ -47,6 +47,9 @@ void MenuSelectSaveSlot::Initialize (Engine& engine) {
                 SelectButtonExecute(engine, i);
             });
         }
+        for (auto& sprite : spriteList) {
+            if (sprite->GetName() == "SaveLoad") saveLoadSprite = sprite.get();
+        }
         eventSystem.LoadNavigation(navigation->GetData());
     });
     gameDataList.reserve(4);
@@ -66,6 +69,7 @@ void MenuSelectSaveSlot::Open () {
     for (auto& button : buttonList) {
         button->Setup();
     }
+    saveLoadSprite->SetFrameIndex(static_cast<int>(saveMode));
     // ロード時、セーブスロットが未使用だった場合選択不可にする
     if (saveMode == GameEnum::SaveSlotMenuMode::Load) {
         // セーブスロットの使用状態の取得
@@ -125,7 +129,7 @@ void MenuSelectSaveSlot::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer -= GameConst::UI_ANIM_INTERVAL;
 
     for (auto& sprite : spriteList) {
-        if (!sprite) continue;
+        if (!sprite || sprite.get() == saveLoadSprite) continue;
 
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
@@ -139,9 +143,10 @@ void MenuSelectSaveSlot::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
  */
 void MenuSelectSaveSlot::Render () {
     for (auto& sprite : spriteList) {
-        if (!sprite->IsVisible()) continue;
+        if (!sprite->IsVisible() || sprite.get() == saveLoadSprite) continue;
         sprite->Render();
     }
+    saveLoadSprite->Render();
     for (auto& button : buttonList) {
         if (!button->IsVisible()) continue;
         button->Render();
@@ -220,8 +225,8 @@ void MenuSelectSaveSlot::RenderSlotInfo() {
         std::string moneyStr = std::to_string(gameDataList[i].currentMoney);
         std::string treasureStr = std::to_string(gameDataList[i].totalTreasureCount);
 
-        font.Draw("NormalSizeFont", 1295, 273 + 205 * i, elapsedDayStr, white);
-        font.Draw("NormalSizeFont", 1370, 273 + 205 * i, halfDayStr, white);
+        font.Draw("ElapsedDayFont", 1295, 273 + 205 * i, elapsedDayStr, white);
+        font.Draw("ElapsedDayFont", 1370, 273 + 205 * i, halfDayStr, white);
         font.Draw("SaveSlotFont", 1671, 232 + 205 * i, playTimeStr, white);
         font.Draw("SaveSlotFont", 1671, 269 + 205 * i, moneyStr, white);
         font.Draw("SaveSlotFont", 1671, 302 + 205 * i, treasureStr, white);

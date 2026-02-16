@@ -24,7 +24,7 @@
       },
       "Resources": [
         "Res/Menu/System/Save/Trealine_Save.png",
-        "Res/Menu/System/LoadTrealine_Load.png"
+        "Res/Menu/System/Load/Trealine_Load.png"
       ]
     }
   ],

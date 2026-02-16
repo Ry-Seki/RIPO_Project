@@ -15,10 +15,12 @@ void MenuManager::Initialize(Engine& engine) {
 	fontNameList.push_back("SaveSlotFont");
 	fontNameList.push_back("BuyItem");
 	fontNameList.push_back("MiniSizeFont");
+	fontNameList.push_back("ElapsedDayFont");
 	FontManager::GetInstance().LoadFont(86, fontNameList[0]);
 	FontManager::GetInstance().LoadFont(16, fontNameList[1]);
 	FontManager::GetInstance().LoadFont(64, fontNameList[2]);
 	FontManager::GetInstance().LoadFont(32, fontNameList[3]);
+	FontManager::GetInstance().LoadFont(48, fontNameList[4]);
 }
 /*
  *	@brief	çXêVèàóù

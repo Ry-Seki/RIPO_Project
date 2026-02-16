@@ -34,6 +34,8 @@ private:
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 
+	Sprite* saveLoadSprite = nullptr;
+
 	std::vector<GameProgressData> gameDataList;
 
 	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/System/SaveLoad/SaveSlotResources.json";
