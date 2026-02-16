@@ -71,7 +71,6 @@ void MainGameScene::Setup(Engine& engine) {
 void MainGameScene::Update(Engine& engine, float deltaTime) {
 	gameState->Update(deltaTime);
 	Scene::Update(engine, deltaTime);
-	EffectManager::GetInstance().Update();
 	// 遷移条件
 	if (gameState->IsActionEnd()) {
 		EndMainGameScene(engine);
@@ -137,7 +136,7 @@ void MainGameScene::EndMainGameScene(Engine& engine) {
 		engine.SetNextScene(std::make_shared<ResultScene>());
 	}
 	else {
-		gameState->ChageState(GameEnum::GameState::SelectAction);	
+		gameState->ChageState(GameEnum::GameState::SelectAction);
 	}
 	// オートセーブ
 	save.CollectSaveData(context);

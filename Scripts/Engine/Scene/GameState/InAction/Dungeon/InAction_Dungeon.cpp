@@ -20,6 +20,7 @@
 #include "../../../../Fade/FadeManager.h"
 #include "../../../../System/World/WorldProgressManager.h"
 #include "../../../../Input/InputUtility.h"
+#include "../../../../Manager/EffectManager.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -72,6 +73,7 @@ void InAction_Dungeon::Update(float deltaTime) {
 	else if (stairFrag) {
 		floorProcessor.ChangeFloor();
 	}
+	EffectManager::GetInstance().Update();
 }
 /*
  *	@brief	•`‰æˆ—
