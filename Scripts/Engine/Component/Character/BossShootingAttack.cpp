@@ -8,6 +8,7 @@
 #include "BossStandby.h"
 #include "../../Manager/BulletManager.h"
 #include "../../Manager/CameraManager.h"
+#include "../../Manager/EffectManager.h"
 
 BossShootingAttack::BossShootingAttack()
 	: animator(nullptr)
@@ -25,16 +26,21 @@ void BossShootingAttack::Start(GameObject* boss)
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
 	coolTime = MAX_COOL_TIME;
+	// エフェクトを出す
+	//EffectManager::GetInstance().Instantiate("BossShootEffect", boss->position);
 }
 
 void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 {
+	auto bossComponent = boss->GetComponent<BossComponent>();
 	// モデルハンドルのセット
 	auto modelRenderer = boss->GetComponent<ModelRenderer>()->GetModelHandle();
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
 
 	animator->Play(0, 2000 * deltaTime);
+
+	bossComponent->SetHitFlag(true);
 
 	// アニメーションが終わるまで待ちたい
 	// 仮
@@ -51,14 +57,15 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 				direction,
 				boss,
 				10000,
-				boss->GetComponent<BossComponent>()->GetBossAttack()
+				bossComponent->GetBossAttack()
 			);
 			shootFlag = true;
 		}
 	}
 	if (coolTime <= 0) {
 		shootFlag = false;
+		bossComponent->SetHitFlag(false);
 		// 状態遷移
-		boss->GetComponent<BossComponent>()->SetState(new BossStandby());
+		bossComponent->SetState(new BossStandby());
 	}
 }

@@ -217,7 +217,8 @@ void MenuPurchaseCount::AddPurchaseCount() {
     if (currentMoney <= 0) return;
 
     const int price = targetItemData->price;
-    if (price <= 0) return;
+
+    if (currentMoney < price) return;
 
     // Å‘åw“ü”‚ÌŽæ“¾(TODO : Œ»Ý‚Í‹ê‚µ•´‚ê‚ÌƒAƒCƒeƒ€ŒÂ”‚¾‚ªA•Ší‚Íˆá‚¤‚æ‚¤‚É‚·‚é)
     int maxCount = 0;
@@ -250,7 +251,8 @@ void MenuPurchaseCount::SubPurchaseCount() {
     if (currentMoney <= 0) return;
 
     const int price = targetItemData->price;
-    if (price <= 0) return;
+
+    if (currentMoney < price) return;
 
     // Å‘åw“ü”‚ÌŽæ“¾
     int maxCount = 0;

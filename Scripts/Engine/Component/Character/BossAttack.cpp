@@ -6,6 +6,7 @@
 #include "../ModelRenderer.h"
 #include "BossComponent.h"
 #include "BossStandby.h"
+#include "../../Manager/EffectManager.h"
 
  /*
   *	コンストラクタ
@@ -26,6 +27,8 @@ void BossAttack::Start(GameObject* boss)
 	animator = boss->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
 	coolTime = MAX_COOL_TIME;
+	// エフェクトを出す
+	//EffectManager::GetInstance().Instantiate("BossAttackEffect", boss->position);
 }
 
 /*
@@ -35,6 +38,7 @@ void BossAttack::Start(GameObject* boss)
  */
 void BossAttack::Update(GameObject* boss, float deltaTime)
 {
+	auto bossComponent = boss->GetComponent<BossComponent>();
 	// モデルハンドルのセット
 	auto modelRenderer = boss->GetComponent<ModelRenderer>()->GetModelHandle();
 	if (modelRenderer == -1) return;
@@ -48,6 +52,9 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 	const Vector3 aabbMin = { -500, 0, -500 };
 	const Vector3 aabbMax = { 500, 50, 500 };
 
+	bossComponent->SetHitFlag(true);
+
+
 	// アニメーションが終わるまで待ちたい
 	// 仮
 	coolTime -= deltaTime;
@@ -59,7 +66,8 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 		aabbCollider->aabb = { Vector3::zero, Vector3::zero };
 	}
 	if (coolTime <= 0) {
+		bossComponent->SetHitFlag(false);
 		// 状態遷移
-		boss->GetComponent<BossComponent>()->SetState(new BossStandby());
+		bossComponent->SetState(new BossStandby());
 	}
 }

@@ -77,6 +77,7 @@ void MenuSelectAction::Open() {
 
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
+        isStart = true;
         if (isHalf) {
             buttonList[0]->SetIsEnable(false);
             elapsedDaySprite->SetFrameIndex(2);

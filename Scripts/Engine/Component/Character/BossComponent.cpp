@@ -52,8 +52,6 @@ void BossComponent::Start()
 	// モデルハンドルのセット
 	animator->SetModelHandle(modelHandle);
 
-	animator->LoadIndex(true);
-
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
 
@@ -63,7 +61,7 @@ void BossComponent::Start()
 		state = new BossStandby();
 	state->Start(boss);
 
-	
+	animator->LoadIndex(true);
 }
 
 /*
@@ -117,9 +115,11 @@ void BossComponent::OnCollision(const std::shared_ptr<Component>& self, const st
 		}
 		// 死ななかった場合
 		else {
-			state = new BossChase();
-			state->Start(boss);
-			hitFlag = true;
+			if (!hitFlag) {
+				state = new BossChase();
+				state->Start(boss);
+				hitFlag = true;
+			}
 		}
 	}
 }

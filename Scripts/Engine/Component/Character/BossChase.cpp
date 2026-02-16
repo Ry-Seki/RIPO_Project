@@ -21,7 +21,7 @@ BossChase::BossChase()
 	: player(nullptr)
 	, animator(nullptr)
 	, modelHandle(-1)
-	, PLAYER_DISTANCE(2000.0f)
+	, PLAYER_DISTANCE(1700.0f)
 	, SHOOTING_PLAYER_DISTANCE(4000.0f)
 	, ROTATE_SPEED(3.0f)
 	, MOVE_SPEED(700.0f) {

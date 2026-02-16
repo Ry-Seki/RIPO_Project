@@ -8,6 +8,7 @@
 
 #include "../MenuBase.h"
 #include "../../UI/Button/UIButtonBase.h"
+#include "../../UI/Sprite/Sprite.h"
 #include "../../UI/EventSystem.h"
 #include "../../GameEnum.h"
 
@@ -23,8 +24,11 @@ class Engine;
 class MenuInGame : public MenuBase {
 private:
 	int currentSlot = -1;
+	float animTimer = -1;
+	int animFrame = -1;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
+	std::vector<std::shared_ptr<Sprite>> spriteList;
 	EventSystem eventSystem;
 
 	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/InGame/InGameMenuResources.json";
@@ -49,6 +53,10 @@ public:
 	 *	@brief	更新処理
 	 */
 	void Update(Engine& engine, float unscaledDeltaTime) override;
+	/*
+	 *	@brief	アニメーション等の更新
+	 */
+	void AnimUpdate(Engine& engine, float unscaledDeltaTime) override;
 	/*
 	 *	@brief	描画処理
 	 */
