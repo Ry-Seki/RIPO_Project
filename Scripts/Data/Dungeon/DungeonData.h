@@ -18,6 +18,7 @@ struct DungeonData {
     int eventEndDay = 0;                // イベント終了日
     int levelOfDanger = 0;              // 危険度レベル
     int necessaryStrength = 0;          // 必要なstrength
+    int treasureCount = 0;              // お宝の数
     std::string dungeonPath = "";       // ダンジョンデータCSVやモデルパス
     bool isEventDay = false;            // イベントフラグ
 };
@@ -31,6 +32,7 @@ struct DungeonInfoData {
     int eventEndDay = 0;                // イベント終了日
     int levelOfDanger = 0;              // 危険度レベル
     int necessaryStrength = 0;          // 必要なstrength
+    int treasureCount = 0;              // お宝の数
 
 };
 #endif // !_DUNGEON_DATA_H_

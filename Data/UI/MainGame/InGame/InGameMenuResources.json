@@ -1,70 +1,116 @@
 {
-  "BackGround": {
-    "Resources": [
-
-    ]
-  },
-  "Buttons": [
+  "Sprites": [
     {
-      "Name": "Load",
-      "Type": "Single",
+      "Name": "BackGround",
       "Rect": {
-        "X": 200,
-        "Y": 50,
-        "Width": 700,
-        "Height": 80
+        "X": 0,
+        "Y": 0,
+        "Width": 1920,
+        "Height": 1080
       },
-      "Resources": {
-      }
+      "Resources": [
+        "Res/BackGround/Trealine_LoadBackground_black1.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black2.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black3.jpg"
+      ]
     },
     {
-      "Name": "Save",
-      "Type": "Single",
+      "Name": "Menu",
       "Rect": {
-        "X": 200,
-        "Y": 150,
-        "Width": 700,
-        "Height": 80
+        "X": 52,
+        "Y": 42,
+        "Width": 1920,
+        "Height": 1080
       },
-      "Resources": {
-      }
-    },
-    {
-      "Name": "Settings",
-      "Type": "Single",
-      "Rect": {
-        "X": 200,
-        "Y": 250,
-        "Width": 700,
-        "Height": 80
-      },
-      "Resources": {
-      }
-    },
-    {
-      "Name": "Return Title",
-      "Type": "Single",
-      "Rect": {
-        "X": 200,
-        "Y": 350,
-        "Width": 700,
-        "Height": 80
-      },
-      "Resources": {
-      }
-    },
-    {
-      "Name": "Back",
-      "Type": "Single",
-      "Rect": {
-        "X": 500,
-        "Y": 450,
-        "Width": 700,
-        "Height": 80
-      },
-      "Resources": {
-
-      }
+      "Resources": [
+        "Res/Menu/MainGame/InGame/Trealine_SelectInGameMenu.png"
+      ]
     }
-  ]
+  ],
+    "Buttons" :[
+      {
+        "Name": "Load",
+        "Type": "Single",
+        "Rect": {
+          "X": 989,
+          "Y": 11,
+          "Width": 882,
+          "Height": 227
+        },
+        "Resources": {
+          "Idle": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_LoadButton.png",
+          "Hover": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_LoadButton.png",
+          "Press": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_LoadButton_Press.png",
+          "Select": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_LoadButton_Select.png",
+          "Disable": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_LoadButton_Disable.png"
+        }
+      },
+      {
+        "Name": "Save",
+        "Type": "Single",
+        "Rect": {
+          "X": 989,
+          "Y": 238,
+          "Width": 882,
+          "Height": 227
+        },
+        "Resources": {
+          "Idle": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_SaveButton.png",
+          "Hover": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_SaveButton.png",
+          "Press": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_SaveButton_Press.png",
+          "Select": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_SaveButton_Select.png",
+          "Disable": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_SaveButton_Disable.png"
+        }
+      },
+      {
+        "Name": "Settings",
+        "Type": "Single",
+        "Rect": {
+          "X": 989,
+          "Y": 465,
+          "Width": 882,
+          "Height": 227
+        },
+        "Resources": {
+          "Idle": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_SettingsButton.png",
+          "Hover": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_SettingsButton.png",
+          "Press": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_SettingsButton_Press.png",
+          "Select": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_SettingsButton_Select.png",
+          "Disable": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_SettingsButton_Disable.png"
+        }
+      },
+      {
+        "Name": "Return Title",
+        "Type": "Single",
+        "Rect": {
+          "X": 989,
+          "Y": 692,
+          "Width": 882,
+          "Height": 227
+        },
+        "Resources": {
+          "Idle": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_ReturnToTitleButton.png",
+          "Hover": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_ReturnToTitleButton.png",
+          "Press": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_ReturnToTitleButton_Press.png",
+          "Select": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_ReturnToTitleButton_Select.png",
+          "Disable": "Res/Menu/MainGame/InGame/Trealine_SelectMenu_ReturnToTitleButton_Disable.png"
+        }
+      },
+      {
+        "Name": "Back",
+        "Type": "Single",
+        "Rect": {
+          "X": 1587,
+          "Y": 972,
+          "Width": 333,
+          "Height": 97
+        },
+        "Resources": {
+          "Idle": "Res/Menu/MainGame/Status/Trealine_Status_CloseButton.png",
+          "Hover": "Res/Menu/MainGame/Status/Trealine_Status_CloseButton.png",
+          "Press": "Res/Menu/MainGame/Status/Trealine_Status_CloseButton_Press.png",
+          "Select": "Res/Menu/MainGame/Status/Trealine_Status_CloseButton_Select.png"
+        }
+      }
+    ]
 }

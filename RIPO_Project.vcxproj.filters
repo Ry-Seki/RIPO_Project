@@ -792,9 +792,6 @@
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.cpp">
       <Filter>ソース ファイル\Engine\Menu\MainGame\Shop</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.cpp">
-      <Filter>ソース ファイル\Engine\Menu\MainGame\Dungeon</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Camera\EventCamera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -818,6 +815,9 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Status\MenuPlayerStatus.cpp">
       <Filter>ソース ファイル\Engine\Menu\MainGame\Status</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.cpp">
+      <Filter>ソース ファイル\Engine\Menu\MainGame\Dungeon</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
