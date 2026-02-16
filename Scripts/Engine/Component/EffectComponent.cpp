@@ -58,7 +58,7 @@ void EffectComponent::EffectAllStop() {
  */
 void EffectComponent::EffectStop() {
 	// Ä¶’†‚Å‚È‚¯‚ê‚Î‰½‚à‚µ‚È‚¢
-	if (playingHandle != -1)return;
+	if (playingHandle == -1)return;
 
 	// Ä¶‚ğ’â~
 	StopEffekseer3DEffect(playingHandle);

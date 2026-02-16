@@ -14,7 +14,7 @@ std::ofstream StageMemoryProfiler::file;
 /*
  *	初期化
  *  @param	const std::string& ファイルパス
- *  @tips	csvファイルを指定場所に作成、あれば中身をクリアしてうわガキ
+ *  @tips	csvファイルを指定場所に作成、あれば中身をクリアして上書き
  */
 void StageMemoryProfiler::Initialize(const std::string& filePath) {
 	// CSVを出力するフォルダが存在しない場合は作成する
