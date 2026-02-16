@@ -10,6 +10,9 @@
 #include "../../../../Audio/AudioUtility.h"
 #include "../../../../Fade/FadeFactory.h"
 #include "../../../../Fade/FadeManager.h"
+#include "../../../../Menu/MenuManager.h"
+#include "../../../../Menu/MainGame/Dungeon/MenuPlayerDeath.h"
+#include "../../../../Menu/MainGame/Money/MenuMoneyChange.h"
 
 #include <DxLib.h>
 
@@ -17,19 +20,26 @@
  *	@brief	初期化処理
  */
 void ResultAction_Dungeon::Initialize() {
+	auto& menu = MenuManager::GetInstance();
+	auto death = menu.GetMenu<MenuPlayerDeath>();
+	auto money = menu.GetMenu<MenuMoneyChange>();
+	death->SetCallback([this]() {
+		AdvanceDay();
+	});
+	money->SetCallback([this]() {
+		AdvanceDay();
+	});
 }
 /*
  *	@brief	準備前処理
  */
 void ResultAction_Dungeon::Setup() {
-	prevMoney = 0;
-	currentMoney = 0;
 	inputHandle = false;
 	isStart = false;
+	ResultPlayerAction();
 	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fade, [this]() {
 		isStart = true;
-		ResultPlayerAction();
 	});
 }
 /*
@@ -51,14 +61,6 @@ void ResultAction_Dungeon::Update(float deltaTime) {
 void ResultAction_Dungeon::Render() {
 	if (!isStart) return;
 
-	if (isPlayerDead) {
-		DrawFormatString(50, 50, GetColor(255, 255, 255), "プレイヤーは死んでしまった...。");
-	}else {
-		DrawFormatString(50, 50, GetColor(255, 255, 255), "前 : %d", prevMoney);
-		DrawFormatString(70, 70, GetColor(255, 255, 255), "↓  %d", currentMoney - prevMoney);
-		DrawFormatString(50, 90, GetColor(255, 255, 255), "現在 : %d", currentMoney);
-	}
-	DrawFormatString(50, 180, GetColor(255, 255, 255), "次の日に進む->SpaceKey");
 }
 /*
  *	@brief	片付け処理
@@ -80,33 +82,15 @@ void ResultAction_Dungeon::AdvanceDay() {
  *	@brief	プレイヤーのリザルト処理
  */
 void ResultAction_Dungeon::ResultPlayerAction() {
+	auto& menu = MenuManager::GetInstance();
 	auto& context = owner->GetOwner()->GetActionContext();
 
-	isPlayerDead = context.isPlayerDead;
-	context.currentIncome = 0;
-
-	if (isPlayerDead) return;
-
-	int prev = MoneyManager::GetInstance().GetPrevMoney();
-	int current = MoneyManager::GetInstance().GetCurrentMoney();
-
-	// すでに処理済みの収入イベントなら何もしない
-	if (current == context.prevIncome) {
-		prevMoney = current;
-		currentMoney = current;
-		return;
-	}
-
-	int delta = current - prev;
-	if (delta > 0) {
-		// 収入として確定
-		context.currentIncome = delta;
-
-		// イベント消費済みマーク
-		context.prevIncome = current;
-
-		// 表示用（そのまま）
-		prevMoney = prev;
-		currentMoney = current;
+	if (context.isPlayerDead) {
+		menu.OpenMenu<MenuPlayerDeath>();
+	} else {
+		auto money = menu.GetMenu<MenuMoneyChange>();
+		money->SetCurrentMoney(MoneyManager::GetInstance().GetCurrentMoney());
+		money->SetPrevMoney(context.prevIncome);
+		menu.OpenMenu<MenuMoneyChange>();
 	}
 }

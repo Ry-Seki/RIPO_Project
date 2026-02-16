@@ -56,7 +56,6 @@ void DungeonTreasureUI::Update(Engine& engine, float deltaTime) {
  */
 void DungeonTreasureUI::Open() {
 	MenuBase::Open();
-	SetIsVisible(true);
 }
 
 /*
@@ -64,7 +63,6 @@ void DungeonTreasureUI::Open() {
  */
 void DungeonTreasureUI::Close(Engine& engine) {
 	MenuBase::Close(engine);
-	SetIsVisible(false);
 
 }
 /*
@@ -96,11 +94,11 @@ void DungeonTreasureUI::Render() {
  *	指定したTreasureIDのUIを表示する
  *  @param	int treasureID
  */
-void DungeonTreasureUI::ShowTreasureUI(int treasureID, const Vector3& worldPos) {
+void DungeonTreasureUI::ShowTreasureUI(int treasureID, int ownerID, const Vector3& worldPos) {
 
 	// 対応するUIが無ければ何もしない
 	if (!uiGraphTable.contains(treasureID)) return;
-
+	ownerObjectID = ownerID;
 	// 表示中のIDを保存
 	currentTreasureID = treasureID;
 
@@ -112,7 +110,10 @@ void DungeonTreasureUI::ShowTreasureUI(int treasureID, const Vector3& worldPos) 
 /*
  *	UIを非表示にする
  */
-void DungeonTreasureUI::HideTreasureUI() {
+void DungeonTreasureUI::HideTreasureUI(int ownerID) {
+	if(ownerObjectID != ownerID) return;
+
 	currentTreasureID = -1;
-	
+	ownerObjectID = -1;
+
 }

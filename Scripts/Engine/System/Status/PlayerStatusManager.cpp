@@ -23,11 +23,11 @@ void PlayerStatusManager::Initialize() {
  *  @param[in]	const JSON& setJSON	設定するJSONデータ
  */
 void PlayerStatusManager::SetupData(const JSON& setJSON) {
-	for (int i = 0, max = playerStatus->base.Length(); i < max; i++) {
-		playerStatus->base[i] = setJSON[GameConst::_STATUS_KEY][GameConst::STATUS_PART[i]];
+	for (int i = 0, max = playerStatus.base.Length(); i < max; i++) {
+		playerStatus.base[i] = setJSON[GameConst::_STATUS_KEY][GameConst::STATUS_PART[i]];
 	}
-	for (int i = 0, max = playerStatus->rise.Length(); i < max; i++) {
-		playerStatus->rise[i] = setJSON[GameConst::_RASE_KEY][GameConst::STATUS_PART[i]];
+	for (int i = 0, max = playerStatus.rise.Length(); i < max; i++) {
+		playerStatus.rise[i] = setJSON[GameConst::_RASE_KEY][GameConst::STATUS_PART[i]];
 	}
 	ApplyPlayerStatus();
 }
@@ -38,8 +38,8 @@ void PlayerStatusManager::SetupData(const JSON& setJSON) {
  */
 void PlayerStatusManager::SetPlayerStatus(int statusPart, int setLevel) {
 	if (setLevel == 0) return;
-	playerStatus->lv[statusPart] = setLevel;
-	playerStatus->base[statusPart] += playerStatus->rise[statusPart] * setLevel;
+	playerStatus.lv[statusPart] = setLevel;
+	playerStatus.base[statusPart] += playerStatus.rise[statusPart] * setLevel;
 }
 /*
  *	@brief		レベル指定のプレイヤーのステータス上昇
@@ -48,8 +48,8 @@ void PlayerStatusManager::SetPlayerStatus(int statusPart, int setLevel) {
  */
 void PlayerStatusManager::AddPlayerStatus(int statusPart, int setLevel) {
 	if (setLevel == 0) return;
-	playerStatus->lv[statusPart] += setLevel;
-	playerStatus->base[statusPart] += playerStatus->rise[statusPart] * setLevel;
+	playerStatus.lv[statusPart] += setLevel;
+	playerStatus.base[statusPart] += playerStatus.rise[statusPart] * setLevel;
 }
 /*
  *	@brief		セーブ用ステータスレベルデータの収集
@@ -57,10 +57,10 @@ void PlayerStatusManager::AddPlayerStatus(int statusPart, int setLevel) {
  */
 PlayerStatusLevelData PlayerStatusManager::GetSaveData() const {
 	PlayerStatusLevelData data{};
-	data.hpLevel = playerStatus->lv.HP;
-	data.staminaLevel = playerStatus->lv.stamina;
-	data.strengthLevel = playerStatus->lv.strength;
-	data.resistTimeLevel = playerStatus->lv.resistTime;
+	data.hpLevel = playerStatus.lv.HP;
+	data.staminaLevel = playerStatus.lv.stamina;
+	data.strengthLevel = playerStatus.lv.strength;
+	data.resistTimeLevel = playerStatus.lv.resistTime;
 	return data;
 }
 /*
@@ -68,16 +68,16 @@ PlayerStatusLevelData PlayerStatusManager::GetSaveData() const {
  *	@param[in]	const PlayerStatusLevelData& data
  */
 void PlayerStatusManager::ApplyLoadData(const PlayerStatusLevelData& data) {
-	playerStatus->lv.HP = data.hpLevel;
-	playerStatus->lv.stamina = data.staminaLevel;
-	playerStatus->lv.strength = data.strengthLevel;
-	playerStatus->lv.resistTime = data.resistTimeLevel;
+	playerStatus.lv.HP = data.hpLevel;
+	playerStatus.lv.stamina = data.staminaLevel;
+	playerStatus.lv.strength = data.strengthLevel;
+	playerStatus.lv.resistTime = data.resistTimeLevel;
 }
 /*
  *	@brief		セーブデータからステータスレベルを設定
  */
 void PlayerStatusManager::ApplyPlayerStatus() {
-	for (int i = 0, max = playerStatus->base.Length(); i < max; i++) {
-		SetPlayerStatus(i, playerStatus->lv[i]);
+	for (int i = 0, max = playerStatus.base.Length(); i < max; i++) {
+		SetPlayerStatus(i, playerStatus.lv[i]);
 	}
 }

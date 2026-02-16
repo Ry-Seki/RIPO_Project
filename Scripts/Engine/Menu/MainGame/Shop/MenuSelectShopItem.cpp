@@ -22,6 +22,7 @@
 #include "../../../System/Money/MoneyManager.h"
 #include "../../../../Data/ItemCatalogData.h"
 #include "MenuPurchaseCount.h"
+#include "../../../Manager/WeaponManager.h"
 
 /*
  *	@brief	初期化処理
@@ -53,6 +54,9 @@ void MenuSelectShopItem::Initialize(Engine& engine) {
                 SelectButtonExecute(engine, i);
             });
         }
+        for (auto& button : buttonList) {
+            if (button->GetName() == "SubmachineGun") smgWeapon = button.get();
+        }
         eventSystem.LoadNavigation(navigation->GetData());
     });
 }
@@ -61,15 +65,20 @@ void MenuSelectShopItem::Initialize(Engine& engine) {
  */
 void MenuSelectShopItem::Open() {
     MenuBase::Open();
+    for (auto& sprite : spriteList) {
+        sprite->Setup();
+    }
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
     auto& money = MoneyManager::GetInstance();
     // アイテムデータの設定
     currentMoney = money.GetCurrentMoney();
     catalogData = money.GetItemCatalogData();
+    if (WeaponManager::GetInstance().IsSubmachineGun()) smgWeapon->SetIsEnable(false);
+
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
-        for (auto& button : buttonList) {
-            button->Setup();
-        }
         eventSystem.ApplySelection();
         InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
     });
@@ -120,8 +129,8 @@ void MenuSelectShopItem::Render() {
     for (auto& sprite : spriteList) {
         sprite->Render();
     }
-    for (auto& button : buttonList) {
-        button->Render();
+    for (int i = buttonList.size() - 1; i >= 0; i--) {
+        buttonList[i]->Render();
     }
 }
 /*
@@ -141,6 +150,11 @@ void MenuSelectShopItem::Suspend() {
  */
 void MenuSelectShopItem::Resume() {
     MenuBase::Resume();
+    if (WeaponManager::GetInstance().IsSubmachineGun()
+        && smgWeapon->IsEnable()) {
+        smgWeapon->SetIsEnable(false);
+    }
+    eventSystem.ApplySelection();
 }
 /*
  *	@brief		ボタンの押された時の処理

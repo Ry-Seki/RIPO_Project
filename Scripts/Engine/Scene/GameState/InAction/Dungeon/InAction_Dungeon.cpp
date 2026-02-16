@@ -20,6 +20,7 @@
 #include "../../../../Fade/FadeManager.h"
 #include "../../../../System/World/WorldProgressManager.h"
 #include "../../../../Input/InputUtility.h"
+#include "../../../../Manager/EffectManager.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -72,6 +73,7 @@ void InAction_Dungeon::Update(float deltaTime) {
 	else if (stairFrag) {
 		floorProcessor.ChangeFloor();
 	}
+	EffectManager::GetInstance().Update();
 }
 /*
  *	@brief	•`‰æˆ—
@@ -81,7 +83,6 @@ void InAction_Dungeon::Render() {
 
 	StageManager::GetInstance().Render();
 #if _DEBUG
-	DrawFormatString(50, 50, GetColor(0, 0, 0), "2 : AdvanveDay");
 	{
 		VECTOR pos1, pos2;
 
@@ -153,12 +154,12 @@ void InAction_Dungeon::Render() {
 		}
 
 	}
-	PlayerStatusData* BaseStatus = PlayerStatusManager::GetInstance().GetPlayerStatusData();
+	PlayerStatusData BaseStatus = PlayerStatusManager::GetInstance().GetPlayerStatusData();
 	PlayerStatusValue playerStatus = GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus();
-	DrawFormatString(450, 20, GetColor(255, 255, 255), "HP : %d / %d", playerStatus.HP, BaseStatus->base.HP);
-	DrawFormatString(450, 40, GetColor(255, 255, 255), "Stamina : %d / %d", playerStatus.stamina, BaseStatus->base.stamina);
-	DrawFormatString(450, 60, GetColor(255, 255, 255), "Strength : %d", BaseStatus->base.strength);
-	DrawFormatString(450, 80, GetColor(255, 255, 255), "ResistTime : %d / %d", playerStatus.resistTime, BaseStatus->base.resistTime);
+	DrawFormatString(450, 20, GetColor(255, 255, 255), "HP : %d / %d", playerStatus.HP, BaseStatus.base.HP);
+	DrawFormatString(450, 40, GetColor(255, 255, 255), "Stamina : %d / %d", playerStatus.stamina, BaseStatus.base.stamina);
+	DrawFormatString(450, 60, GetColor(255, 255, 255), "Strength : %d", BaseStatus.base.strength);
+	DrawFormatString(450, 80, GetColor(255, 255, 255), "ResistTime : %d / %d", playerStatus.resistTime, BaseStatus.base.resistTime);
 #endif
 }
 /*

@@ -15,6 +15,9 @@
 
 #include <functional>
 
+// 前方宣言
+struct DungeonInfoData;
+
 /*
  *	@brief	ダンジョン選択メニュー
  */
@@ -23,13 +26,14 @@ private:
 	int currentIndex = -1;
 	float animTimer = 0.0f;
 	int animFrame = 0;
-	std::vector<bool> isEventList;
 
+	std::vector<DungeonInfoData> dungeonInfoList;
+	std::vector<std::string> dungeonString;
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
-	Sprite* dungeonSprite;
+	Sprite* dungeonSprite = nullptr;
 
 	std::function<void(int)> Callback = nullptr;
 
@@ -82,13 +86,17 @@ private:
 	 *	@param[in]	int buttonIndex
 	 */
 	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	/*
+	 *	@brief		ダンジョン情報の描画
+	 */
+	void RenderDungeonInfo();
 
 public:
 	/*
 	 *	@brief		半日フラグの設定
-	 *	@param[in]	bool setFlag
+	 *	@param[in]	const std::vector<DungeonInfoData>& setData
 	 */
-	inline void SetIsEvent(const std::vector<bool>& setFlag) { isEventList = setFlag; }
+	inline void SetIsEvent(const std::vector<DungeonInfoData>& setData) { dungeonInfoList = setData; }
 	/*
 	 *	@brief		コールバックの設定
 	 *	@param[in]	std::function<void(int)> setCallback
@@ -96,7 +104,6 @@ public:
 	inline void SetCallback(std::function<void(int)> setCallback) {
 		Callback = setCallback;
 	}
-
 };
 
 #endif // !_MENU_SELECT_DUNGEON_H_
