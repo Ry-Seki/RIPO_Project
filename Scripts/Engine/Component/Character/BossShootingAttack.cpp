@@ -27,7 +27,7 @@ void BossShootingAttack::Start(GameObject* boss)
 	if (player == nullptr) return;
 	coolTime = MAX_COOL_TIME;
 	// エフェクトを出す
-	//EffectManager::GetInstance().Instantiate("BossShootEffect", boss->position);
+	EffectManager::GetInstance().Instantiate("BossShootEffect", boss->position);
 }
 
 void BossShootingAttack::Update(GameObject* boss, float deltaTime)

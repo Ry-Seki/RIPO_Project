@@ -28,7 +28,7 @@ void BossAttack::Start(GameObject* boss)
 	if (animator == nullptr) return;
 	coolTime = MAX_COOL_TIME;
 	// エフェクトを出す
-	//EffectManager::GetInstance().Instantiate("BossAttackEffect", boss->position);
+	EffectManager::GetInstance().Instantiate("BossAttackEffect", boss->position);
 }
 
 /*
