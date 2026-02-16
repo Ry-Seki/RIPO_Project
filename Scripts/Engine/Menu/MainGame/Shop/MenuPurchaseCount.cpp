@@ -156,12 +156,6 @@ void MenuPurchaseCount::Close(Engine& engine) {
     targetItemData = nullptr;
 }
 /*
- *	@brief	メニューを中断
- */
-void MenuPurchaseCount::Suspend() {
-    MenuBase::Suspend();
-}
-/*
  *	@brief	メニューを再開
  */
 void MenuPurchaseCount::Resume() {

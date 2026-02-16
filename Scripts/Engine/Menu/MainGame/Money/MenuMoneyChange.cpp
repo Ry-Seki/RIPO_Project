@@ -145,12 +145,6 @@ void MenuMoneyChange::Close(Engine& engine) {
     isAnimationEnd = false;
 }
 /*
- *	@brief	メニューを中断
- */
-void MenuMoneyChange::Suspend() {
-    MenuBase::Suspend();
-}
-/*
  *	@brief	メニューを再開
  */
 void MenuMoneyChange::Resume() {

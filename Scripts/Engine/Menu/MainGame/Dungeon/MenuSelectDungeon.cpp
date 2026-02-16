@@ -152,12 +152,6 @@ void MenuSelectDungeon::Close(Engine& engine) {
     MenuBase::Close(engine);
 }
 /*
- *	@brief	メニューを中断
- */
-void MenuSelectDungeon::Suspend() {
-    MenuBase::Suspend();
-}
-/*
  *	@brief	メニューを再開
  */
 void MenuSelectDungeon::Resume() {

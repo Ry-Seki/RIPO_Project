@@ -141,12 +141,6 @@ void MenuSelectShopItem::Close(Engine& engine) {
     MenuBase::Close(engine);
 }
 /*
- *	@brief	メニューを中断
- */
-void MenuSelectShopItem::Suspend() {
-    MenuBase::Suspend();
-}
-/*
  *	@brief	メニューを再開
  */
 void MenuSelectShopItem::Resume() {

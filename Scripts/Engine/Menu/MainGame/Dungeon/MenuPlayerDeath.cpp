@@ -127,12 +127,6 @@ void MenuPlayerDeath::Close(Engine& engine) {
     MenuBase::Close(engine);
 }
 /*
- *	@brief	メニューを中断
- */
-void MenuPlayerDeath::Suspend() {
-    MenuBase::Suspend();
-}
-/*
  *	@brief	メニューを再開
  */
 void MenuPlayerDeath::Resume() {

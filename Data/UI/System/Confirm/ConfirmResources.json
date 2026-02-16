@@ -1,32 +1,50 @@
 {
-  "BackGround": {
-    "Resources": [
-
-    ]
-  },
+  "Sprites": [
+    {
+      "Name": "SaveLoad",
+      "Rect": {
+        "X": 90,
+        "Y": 0,
+        "Width": 805,
+        "Height": 417
+      },
+      "Resources": [
+        "Res/Menu/System/Confirm/Trealine_Confirm1.png",
+        "Res/Menu/System/Confirm/Trealine_Confirm2.png"
+      ]
+    }
+  ],
   "Buttons": [
     {
       "Name": "Confirm",
       "Type": "Single",
       "Rect": {
-        "X": 100,
-        "Y": 350,
-        "Width": 100,
-        "Height": 80
+        "X": 592,
+        "Y": 718,
+        "Width": 255,
+        "Height": 143
       },
       "Resources": {
+        "Idle": "Res/Menu/System/Confirm/Trealine_Confirm_YesButton.png",
+        "Hover": "Res/Menu/System/Confirm/Trealine_Confirm_YesButton.png",
+        "Press": "Res/Menu/System/Confirm/Trealine_Confirm_YesButton_Press.png",
+        "Select": "Res/Menu/System/Confirm/Trealine_Confirm_YesButton_Select.png"
       }
     },
     {
       "Name": "Cancel",
       "Type": "Single",
       "Rect": {
-        "X": 400,
-        "Y": 350,
-        "Width": 100,
-        "Height": 80
+        "X": 1051,
+        "Y": 718,
+        "Width": 255,
+        "Height": 143
       },
       "Resources": {
+        "Idle": "Res/Menu/System/Confirm/Trealine_Confirm_NoButton.png",
+        "Hover": "Res/Menu/System/Confirm/Trealine_Confirm_NoButton.png",
+        "Press": "Res/Menu/System/Confirm/Trealine_Confirm_NoButton_Press.png",
+        "Select": "Res/Menu/System/Confirm/Trealine_Confirm_NoButton_Select.png"
       }
     }
   ]

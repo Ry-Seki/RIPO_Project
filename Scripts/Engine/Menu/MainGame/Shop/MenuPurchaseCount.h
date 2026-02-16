@@ -83,10 +83,6 @@ public:
 	 */
 	void Close(Engine& engine) override;
 	/*
-	 *	@brief	メニューを中断
-	 */
-	void Suspend() override;
-	/*
 	 *	@brief	メニューを再開
 	 */
 	void Resume() override;
