@@ -26,4 +26,5 @@ GameProgressData ActionContext::GetSaveData() const {
 void ActionContext::ApplyLoadData(const GameProgressData& data) {
     elapsedDay = data.elapsedDay;
     isHalf = data.isHalfDay;
+    Time::AddTotalTime(data.playTime);
 }
