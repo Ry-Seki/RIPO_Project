@@ -11,9 +11,13 @@
 #include "../../System/Status/PlayerStatusManager.h"
 #include "../../Input/InputUtility.h"
 #include "BulletComponent.h"
+#include "../../Load/LoadManager.h"
+#include "../../Load/Audio/LoadAudio.h"
+#include "../../Audio/AudioUtility.h"
 #include "DxLib.h"
 
 using namespace InputUtility;
+using namespace AudioUtility;
 
 PlayerComponent::PlayerComponent()
 	: moveSpeed(0.0f)
@@ -51,6 +55,12 @@ void PlayerComponent::Start() {
 	status = PlayerStatusManager::GetInstance().GetPlayerStatusData().base;
 
 	animator = GetOwner()->GetComponent<AnimatorComponent>();
+
+	auto avoidSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/Avoid.mp3");
+	LoadManager::GetInstance().SetOnComplete([this, avoidSE]() {
+		AudioUtility::RegisterSEHandle("avoidSE", avoidSE->GetHandle());
+	});
+
 }
 
 void PlayerComponent::Update(float deltaTime) {
@@ -101,8 +111,9 @@ void PlayerComponent::Update(float deltaTime) {
 	}
 
 	// HPがなくなったら死亡
-	if (status.HP <= 0) {
-		isDead = true;
+	if (status.HP <= 0 && CameraManager::GetInstance().GetCameraState() != GameEnum::CameraState::Event) {
+		// 視点変更イベント再生
+		CameraManager::GetInstance().CameraEventPlay(GameEnum::CameraEvent::Dead);
 	}
 
 	// 武器変更
@@ -195,7 +206,6 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 		gravity->AddFallSpeed(-JUMP_POWER);
 	}
 
-
 	// アニメーション再生
 	if (CameraManager::GetInstance().GetCameraState() == GameEnum::CameraState::TPS) {
 		if (moveVec != V_ZERO) {
@@ -274,6 +284,8 @@ void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 		// スタミナ消費
 		status.stamina -= STAMINA_AVOID_COST;
 		staminaHealCoolTime = STAMINA_HEAL_COOL_TIME_MAX;
+
+		PlaySE("avoidSE");
 	}
 	if (isAvoid) {
 		// プレイヤーの角度のsin,cos
