@@ -127,7 +127,7 @@ void MenuSelectSaveSlot::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer += unscaledDeltaTime;
 
     if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
-    animTimer -= GameConst::UI_ANIM_INTERVAL;
+    animTimer = 0;
 
     for (auto& sprite : spriteList) {
         if (!sprite || sprite.get() == saveLoadSprite) continue;
@@ -198,7 +198,12 @@ void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
 
     // もし一番下のボタンの場合、それは戻るボタン
     if (currentSlot > GameConst::SELECT_SAVE_SLOT_MAX) {
-        menu.CloseTopMenu();
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+            menu.CloseTopMenu();
+            FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
+            FadeManager::GetInstance().StartFade(fadeIn);
+        });
         return;
     }
 

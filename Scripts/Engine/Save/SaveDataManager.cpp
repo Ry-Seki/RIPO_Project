@@ -9,6 +9,7 @@
 #include "../System/Money/MoneyManager.h"
 #include "../System/World/WorldProgressManager.h"
 #include "../Scene/GameState/ActionContext.h"
+#include "../Manager/WeaponManager.h"
 
 /*
  *	@brief	èâä˙âªèàóù
@@ -119,6 +120,7 @@ Orderd_JSON SaveDataManager::ToJSON(const GameProgressData& data) {
     json["isClear"] = data.isClear;
     json["clearCount"] = data.clearCount;
     json["isHalfDay"] = data.isHalfDay;
+    json["isWeapon"] = data.isWeapon;
     json["currentMoney"] = data.currentMoney;
     json["totalTreasureCount"] = data.totalTreasureCount;
     return json;
@@ -135,6 +137,7 @@ GameProgressData SaveDataManager::GameDataFromJSON(const JSON& json) {
     data.isClear = json.value("isClear", false);
     data.clearCount = json.value("ClearCount", 0);
     data.isHalfDay = json.value("isHalfDay", false);
+    data.isWeapon = json.value("isWeapon", false);
     data.currentMoney = json.value("currentMoney", 0);
     data.totalTreasureCount = json.value("totalTreasureCount", 0);
     return data;
@@ -337,6 +340,8 @@ void SaveDataManager::CollectSaveData(const ActionContext& context) {
         = MoneyManager::GetInstance().GetCurrentMoney();
     currentSaveData.game.totalTreasureCount =
         currentSaveData.world.getTreasureIDList.size();
+    currentSaveData.game.isWeapon
+        = WeaponManager::GetInstance().IsSubmachineGun();
 
     // Player
     currentSaveData.player
@@ -352,6 +357,7 @@ void SaveDataManager::ApplyLoadData(ActionContext& context) {
     // Game
     context.ApplyLoadData(currentSaveData.game);
     MoneyManager::GetInstance().SetMoney(currentSaveData.game.currentMoney);
+    WeaponManager::GetInstance().SetIsSubmachinGun(currentSaveData.game.isWeapon);
     // Player
     PlayerStatusManager::GetInstance().ApplyLoadData(currentSaveData.player);
     // World
@@ -417,6 +423,7 @@ void SaveDataManager::ResetClearSaveData() {
     data.game.currentMoney = 0;
     data.game.elapsedDay = 0;
     data.game.isHalfDay = false;
+    data.game.isWeapon = false;
     data.game.totalTreasureCount = 0;
     data.game.isClear = false;
     data.game.clearCount++;

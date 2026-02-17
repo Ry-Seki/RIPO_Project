@@ -19,6 +19,7 @@ struct GameProgressData {
 	bool isHalfDay;			// 半日消費フラグ
 	int currentMoney;		// 現在の所持金
 	int totalTreasureCount;	// 累計お宝獲得数
+	bool isWeapon = false;	// 武器フラグ
 	bool isClear = false;	// クリアフラグ
 	int clearCount = 0;		// クリア回数
 };
