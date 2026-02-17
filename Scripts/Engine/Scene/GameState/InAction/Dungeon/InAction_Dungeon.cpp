@@ -21,10 +21,11 @@
 #include "../../../../System/World/WorldProgressManager.h"
 #include "../../../../Input/InputUtility.h"
 #include "../../../../Manager/EffectManager.h"
+#include "../../../../Load/Audio/LoadAudio.h"
 
-/*
- *	@brief	初期化処理
- */
+ /*
+  *	@brief	初期化処理
+  */
 void InAction_Dungeon::Initialize(Engine& engine) {
 	GameObjectManager::GetInstance().Initialize(engine);
 	CameraManager::GetInstance().Initialize(engine);
@@ -32,6 +33,12 @@ void InAction_Dungeon::Initialize(Engine& engine) {
 	StageManager::GetInstance().Initialize(engine);
 	StageObjectManager::GetInstance().Initialize(engine);
 	BulletManager::GetInstance().Initialize(engine);
+	auto dungeonBGM01 = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/Dungeon_1/星の詩.mp3");
+	auto dungeonBGM02 = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/Dungeon_2/Apparition’s_Lullaby.mp3");
+	LoadManager::GetInstance().SetOnComplete([&engine, this, dungeonBGM01, dungeonBGM02]() {
+		AudioUtility::RegisterBGMHandle("dungeonBGM01", dungeonBGM01->GetHandle());
+		AudioUtility::RegisterBGMHandle("dungeonBGM02", dungeonBGM01->GetHandle());
+		});
 }
 /*
  *	@brief	準備前処理
@@ -59,7 +66,7 @@ void InAction_Dungeon::Update(float deltaTime) {
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.5f, FadeDirection::Out, FadeMode::Stop);
 		FadeManager::GetInstance().StartFade(fade, [this]() {
 			EndDungeon();
-		});
+			});
 	}
 	// 出口に触れたとき
 	else if (exitFrag) {
@@ -68,7 +75,7 @@ void InAction_Dungeon::Update(float deltaTime) {
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.5f, FadeDirection::Out, FadeMode::Stop);
 		FadeManager::GetInstance().StartFade(fade, [this]() {
 			EndDungeon();
-		});
+			});
 	}
 	else if (stairFrag) {
 		floorProcessor.ChangeFloor();
@@ -132,11 +139,11 @@ void InAction_Dungeon::Render() {
 		// プレイヤーの位置表示
 		GameObjectPtr player = CameraManager::GetInstance().GetTarget();
 		DrawFormatString(0, 0, GetColor(255, 255, 255), "PlayerPosition(%f,%f,%f)",
-						 player->position.x, player->position.y, player->position.z);
+			player->position.x, player->position.y, player->position.z);
 		// カメラの角度表示
 		GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
 		DrawFormatString(0, 20, GetColor(255, 255, 255), "CameraRotation(%f,%f,%f)",
-						 camera->rotation.x, camera->rotation.y, camera->rotation.z);
+			camera->rotation.x, camera->rotation.y, camera->rotation.z);
 		bool stairFrag = StageObjectManager::GetInstance().GetStairMove();
 		if (stairFrag) {
 			DrawFormatString(0, 40, GetColor(255, 255, 255), "StairFrag_true");
@@ -179,7 +186,7 @@ bool InAction_Dungeon::IsPlayerDead() {
 
 	auto component = player->GetComponent<PlayerComponent>();
 	if (!component) return false;
-	
+
 	return component->GetIsDead();
 }
 /*
@@ -218,7 +225,8 @@ void InAction_Dungeon::CalculationDungeon(int dungeonID, bool isEventDay) {
 			return;
 		}
 		world.ProcureNewTreasure(dungeonID, treasureID);
-	} else {
+	}
+	else {
 		world.ProcureNewTreasure(dungeonID, treasureID);
 	}
 }
