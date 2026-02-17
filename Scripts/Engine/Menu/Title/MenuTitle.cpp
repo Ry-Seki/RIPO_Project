@@ -133,6 +133,7 @@ void MenuTitle::Render() {
  */
 void MenuTitle::Close(Engine& engine) {
 	MenuBase::Close(engine);
+	AudioUtility::StopBGM();
 }
 /*
  *	@brief	ƒƒjƒ…[‚ğ’†’f
