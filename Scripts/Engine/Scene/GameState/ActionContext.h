@@ -25,6 +25,7 @@ struct ActionContext {
 	bool isPlayerDead = false;				// プレイヤーの死亡判定
 	bool isHalf = false;					// 半日かどうか
 	bool isCurrentEvent = false;			// イベント中かどうか				
+	bool isClear = false;					// ゲームクリアフラグ
 
 	DungeonStageData dungeonStageData;			// ダンジョンステージデータ
 	DungeonFloorData dungeonFloorData;			// ダンジョンフロアデータ
