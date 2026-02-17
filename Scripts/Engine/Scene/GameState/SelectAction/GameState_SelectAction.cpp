@@ -62,4 +62,5 @@ void GameState_SelectAction::DecideActionType(GameEnum::ActionType type) {
     auto& context = owner->GetActionContext();
     context.actionType = type;
     owner->ChageState(GameEnum::GameState::SelectDetail);
+    AudioUtility::StopBGM();
 }

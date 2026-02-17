@@ -51,7 +51,7 @@ public:
 	static constexpr int SELECT_SAVE_SLOT_MIN = 1;
 	static constexpr int SELECT_SAVE_SLOT_MAX = 3;
 	static constexpr float UI_ANIM_INTERVAL = 0.25f;
-	static constexpr int END_DAY = 30;
+	static constexpr int END_DAY = 14;
 
 	//----------------------------------------------------
 	//				ステージ関連の定数

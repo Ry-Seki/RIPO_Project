@@ -54,7 +54,7 @@ void BGMManager::StopBGM() {
  *	@param[in]	const std::string setBGMName	Ý’è‚·‚éBGM–¼
  */
 void BGMManager::ChangeBGM(const std::string setBGMName) {
-	if (!currentSource) {
+	if (currentSource) {
 		// ‰¹Œ¹‚Ì’âŽ~A”jŠüˆ—
 		currentSource->Stop();
 		currentSource->Teardown();
