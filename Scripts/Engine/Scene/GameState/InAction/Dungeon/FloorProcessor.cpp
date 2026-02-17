@@ -19,6 +19,7 @@
 #include "../../../../Input/InputUtility.h"
 #include "../../../../Menu/MenuManager.h"
 #include "../../../../UI/PlayerUI/PlayerUI.h"
+#include "../../../../Audio/AudioUtility.h"
 
 /*
  *	@brief	現在のフロアの片付け処理
@@ -187,6 +188,21 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart, std::v
 			// プレイヤーのアクションマップをアクティブ化
 			InputUtility::SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, true);
 		});
+		// BGM仮
+		switch (dungeonID) {
+		case   0:
+			AudioUtility::ChangeBGM("dungeonBGM01");
+			AudioUtility::PlayBGM();
+			break;
+		case 1:
+			AudioUtility::ChangeBGM("dungeonBGM01");
+			AudioUtility::PlayBGM();
+			break;
+		case 2:
+			AudioUtility::ChangeBGM("dungeonBGM02");
+			AudioUtility::PlayBGM();
+			break;
+		}
 	});
 }
 /*
@@ -226,6 +242,7 @@ void FloorProcessor::EndDungeon() {
 	StageObjectManager::GetInstance().ClearObject();
 	StageObjectUtility::RemoveAllStageObject();
 	CameraManager::GetInstance().ResetCamera();
+	AudioUtility::StopBGM();
 }
 /*
  *	@brief		フロア、イベント関係なしの全てのお宝ID一覧を取得

@@ -14,6 +14,10 @@ private:
 	int StaminaGraphHandle = -1;
 	int StrengthGraphHandle = -1;
 
+	static constexpr const char* HP_PATH = "Res/PlayerUI/hp.png";
+	static constexpr const char* STAMINA_PATH = "Res/PlayerUI/stamina.png";
+	static constexpr const char* STRENGTH_PATH = "Res/PlayerUI/strength.png";
+
 public:
 	PlayerStatusUI() = default;
 	~PlayerStatusUI() = default;

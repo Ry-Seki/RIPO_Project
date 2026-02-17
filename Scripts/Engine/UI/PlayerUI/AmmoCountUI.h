@@ -17,7 +17,7 @@ public:
 	/*
 	 *	‰Šú‰»ˆ—
 	 */
-	void Initialize() override{}
+	void Initialize() override;
 	/*
 	 *	XVˆ—
 	 */
