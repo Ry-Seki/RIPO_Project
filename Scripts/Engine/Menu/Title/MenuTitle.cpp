@@ -87,6 +87,7 @@ void MenuTitle::Update(Engine& engine, float unscaledDeltaTime) {
 	if (!button) return;
 
 	if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+		inputHandle = true;
 		button->OnPressDown();
 	}
 }
@@ -147,7 +148,7 @@ void MenuTitle::Suspend() {
 void MenuTitle::Resume() {
 	MenuBase::Resume();
 	for (auto& button : buttonList) {
-		button->SetIsVisible(true);
+		button->Setup();
 	}
 	startGameSprite->SetIsVisible(true);
 }

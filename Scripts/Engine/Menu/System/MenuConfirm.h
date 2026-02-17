@@ -8,6 +8,7 @@
 
 #include "../MenuBase.h"
 #include "../../UI/Button/UIButtonBase.h"
+#include "../../UI/Sprite/Sprite.h"
 #include "../../UI/EventSystem.h"
 #include "../../GameEnum.h"
 #include "../../GameConst.h"
@@ -22,10 +23,12 @@ class Engine;
  */
 class MenuConfirm : public MenuBase {
 private:
-	int currentSlot = -1;
+	float animTimer = -1;
+	int animFrame = -1;
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
+	std::vector<std::shared_ptr<Sprite>> spriteList;
 	std::function<void(GameEnum::ConfirmResult)> Callback = nullptr;
 
 	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/System/Confirm/ConfirmResources.json";
@@ -50,6 +53,10 @@ public:
 	 *	@brief	更新処理
 	 */
 	void Update(Engine& engine, float unscaledDeltaTime) override;
+	/*
+	 *	@brief	アニメーション等の更新
+	 */
+	void AnimUpdate(Engine& engine, float unscaledDeltaTime) override;
 	/*
 	 *	@brief	描画処理
 	 */

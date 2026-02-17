@@ -27,6 +27,7 @@ protected:
 	int inputClickNum = -1;
 	bool isEnable = false;
 	bool isVisible = false;
+	bool inputHandle = false;
 	GameEnum::ButtonInputState inputState = GameEnum::ButtonInputState::Invalid;
 	GameEnum::ButtonSelectState selectState = GameEnum::ButtonSelectState::Invalid;
 
@@ -88,7 +89,7 @@ public:
 	 *	@brief	•`‰æˆ—
 	 */
 	virtual void Render() = 0;
-
+		
 public:
 	/*
 	 *	@brief	‰Ÿ‚µ‚½uŠÔ
