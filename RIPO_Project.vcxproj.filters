@@ -376,8 +376,11 @@
     <Filter Include="ソース ファイル\Engine\Menu\MainGame\Status">
       <UniqueIdentifier>{22e1ebfc-99f9-405d-aa98-7bfa7ca9d994}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Engine\UI\Sprite">
-      <UniqueIdentifier>{1a270e6f-b214-47f9-89a4-3f975e059b76}</UniqueIdentifier>
+    <Filter Include="ヘッダー ファイル\Engine\Menu\MainGame\PartTime">
+      <UniqueIdentifier>{ce7d92a8-c671-4c5d-92c9-4c60bcb8e1cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\Menu\MainGame\PartTime">
+      <UniqueIdentifier>{cc774162-245d-42b6-a988-ae8bc58408b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -774,6 +777,12 @@
     <ClCompile Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Sprite\Sprite.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.cpp">
       <Filter>ソース ファイル\Engine\Menu\MainGame\Shop</Filter>
     </ClCompile>
@@ -816,11 +825,8 @@
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.cpp">
       <Filter>ソース ファイル\Engine\Menu\MainGame\Dungeon</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Sprite\Sprite.cpp">
-      <Filter>ソース ファイル\Engine\UI\Sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp">
-      <Filter>ソース ファイル\Engine\UI\Sprite</Filter>
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\PartTime\SelectMiniGameLevel.cpp">
+      <Filter>ソース ファイル\Engine\Menu\MainGame\PartTime</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1459,6 +1465,12 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Status\MenuPlayerStatus.h">
       <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Status</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\PartTime\SelectMiniGameLevel.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\MainGame\PartTime</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\PartTime\MenuMiniGame.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\MainGame\PartTime</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
