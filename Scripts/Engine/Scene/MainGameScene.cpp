@@ -132,13 +132,12 @@ void MainGameScene::EndMainGameScene(Engine& engine) {
 	context.prevIncome = 0;
 	// シーン遷移条件
 	if (context.elapsedDay > GameConst::END_DAY) {
-		context.isClear = true;
+		save.ResetClearSaveData();
 		engine.SetNextScene(std::make_shared<ResultScene>());
 	}
 	else {
+		save.CollectSaveData(context);
 		gameState->ChageState(GameEnum::GameState::SelectAction);
 	}
-	// オートセーブ
-	save.CollectSaveData(context);
 	save.AutoSave();
 }

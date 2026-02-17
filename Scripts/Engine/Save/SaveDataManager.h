@@ -181,6 +181,10 @@ public:
 	 *	@return     std::vector<SaveData>
 	 */
 	std::vector<SaveData> GetAllSlotData();
+	/*
+	 *	@brief	クリア済みセーブデータのリセット
+	 */
+	void ResetClearSaveData();
 
 public:
 	/*
