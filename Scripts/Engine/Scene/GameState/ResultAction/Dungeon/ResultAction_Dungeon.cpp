@@ -74,7 +74,8 @@ void ResultAction_Dungeon::Teardown() {
 void ResultAction_Dungeon::AdvanceDay() {
 	// 一日進める
 	auto& context = owner->GetOwner()->GetActionContext();
-	int elapsedDay = ++context.elapsedDay;
+	context.elapsedDay++;
+	context.isHalf = false;
 	// アクション終了フラグの変更
 	owner->GetOwner()->SetIsActionEnd(true);
 }

@@ -73,10 +73,13 @@ void MenuSelectDungeon::Open() {
     for (auto& button : buttonList) {
         button->Setup();
     }
+    // TODO : ダンジョン3, 4を閉じる
+    buttonList[2]->SetIsEnable(false);
+    buttonList[3]->SetIsEnable(false);
+
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
         // TODO : イベントごとに画像差し替え
-
         eventSystem.ApplySelection();
         currentIndex = eventSystem.GetCurrentIndex();
         InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);

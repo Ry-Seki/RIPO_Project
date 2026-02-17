@@ -31,6 +31,9 @@ public:
         timeScale = 1.0f;
         fps = 0.0f;
     }
+    static void AddTotalTime(float setTime) {
+        totalTime += setTime;
+    }
 
     static void Update() {
         // Œ»İŠÔ‚Ìæ“¾
