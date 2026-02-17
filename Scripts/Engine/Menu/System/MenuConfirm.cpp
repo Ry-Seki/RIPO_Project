@@ -4,6 +4,7 @@
  */
 
 #include "MenuConfirm.h"
+#include "../../Audio/AudioUtility.h"
 #include "../../Load/LoadManager.h"
 #include "../../Load/JSON/LoadJSON.h"
 #include "../../Load/Sprite/LoadSprite.h"
@@ -148,6 +149,7 @@ void MenuConfirm::Resume() {
  *	@param[in]	int buttonIndex
  */
 void MenuConfirm::SelectButtonExecute(Engine& engine, int buttonIndex) {
+    AudioUtility::PlaySE("DebugSE");
     GameEnum::ConfirmResult result = static_cast<GameEnum::ConfirmResult>(buttonIndex);
 
     if (Callback) Callback(result);

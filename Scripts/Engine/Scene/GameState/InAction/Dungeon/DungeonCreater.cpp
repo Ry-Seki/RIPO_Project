@@ -298,7 +298,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 		auto enemyCharacter = enemyList[i];
 		if (!enemyCharacter) continue;
 		// モデルの設定
-		SetModelHandle(enemyCharacter.get(), enemyHandle);
+		SetCharacterModel(enemyCharacter.get(), enemyHandle);
 		// コンポーネントの取得
 		std::shared_ptr<EnemyComponent> component = enemyCharacter->GetComponent<EnemyComponent>();
 		if (!component) continue;
@@ -333,7 +333,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 			bossCharacter->position = bossSpawnPos[0];
 			bossCharacter->scale = { 3, 3, 3 };
 			// モデルの設定
-			SetModelHandle(bossCharacter.get(), bossHandle);
+			SetCharacterModel(bossCharacter.get(), bossHandle);
 		}
 	}
 	if (treasureCount > 0) {
