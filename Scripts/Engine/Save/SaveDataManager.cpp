@@ -416,5 +416,6 @@ void SaveDataManager::ResetClearSaveData() {
         currentSaveData.player.strengthLevel = 0;
         currentSaveData.player.resistTimeLevel = 0;
         currentSaveData.world = worldData;
+        SaveCurrentSlot();
     }
 }
