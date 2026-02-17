@@ -4,6 +4,7 @@
  */
 
 #include "LoadAnimation_ChangeBackground.h"
+#include "../../Manager/FontManager.h"
 
 /*
  *	更新処理
@@ -37,9 +38,7 @@ void LoadAnimation_ChangeBackground::Render() {
     SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 
     // デバッグ表示
-    DrawFormatString(255, 255, GetColor(255, 255, 255), "Load中");
-    DrawFormatString(255, 300, GetColor(255, 255, 255), "LoadIndex : %d", currentIndex);
-    DrawFormatString(255, 330, GetColor(255, 255, 0), "elapsedTime : %.2f / %.2f", elapsedTime, switchInterval);
+    FontManager::GetInstance().Draw("NormalSizeFont", 1400, 915, "Loading...", GetColor(255, 255, 255));
 }
 /*
  *  解放処理

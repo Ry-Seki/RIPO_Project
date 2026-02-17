@@ -24,6 +24,7 @@
 #include "../../Manager/FontManager.h"
 #include "../../System/Status/PlayerStatusManager.h"
 #include "Status/MenuPlayerStatus.h"
+#include "../../System/Money/MoneyManager.h"
 
 #include <DxLib.h>
 
@@ -150,8 +151,10 @@ void MenuSelectAction::Render() {
     }
     std::string elapsedDayStr = std::to_string(elapsedDay);
     std::string maxDayStr = " / " + std::to_string(GameConst::END_DAY);
+    std::string money = std::to_string(MoneyManager::GetInstance().GetCurrentMoney());
     FontManager::GetInstance().Draw("NormalSizeFont", 190, 510, elapsedDayStr, GetColor(75, 75, 75));
     FontManager::GetInstance().Draw("NormalSizeFont", 250, 510, maxDayStr, GetColor(75, 75, 75));
+    FontManager::GetInstance().Draw("NormalSizeFont", 455, 973, money, GetColor(75, 75, 75));
 }
 /*
  *	@brief	ƒƒjƒ…[‚ğ•Â‚¶‚é
