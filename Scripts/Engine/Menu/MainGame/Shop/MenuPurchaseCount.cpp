@@ -156,16 +156,13 @@ void MenuPurchaseCount::Close(Engine& engine) {
     targetItemData = nullptr;
 }
 /*
- *	@brief	メニューを中断
- */
-void MenuPurchaseCount::Suspend() {
-    MenuBase::Suspend();
-}
-/*
  *	@brief	メニューを再開
  */
 void MenuPurchaseCount::Resume() {
     MenuBase::Resume();
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
 }
 /*
  *	@brief		ボタンの押された時の処理
@@ -217,7 +214,8 @@ void MenuPurchaseCount::AddPurchaseCount() {
     if (currentMoney <= 0) return;
 
     const int price = targetItemData->price;
-    if (price <= 0) return;
+
+    if (currentMoney < price) return;
 
     // 最大購入数の取得(TODO : 現在は苦し紛れのアイテム個数だが、武器は違うようにする)
     int maxCount = 0;
@@ -250,7 +248,8 @@ void MenuPurchaseCount::SubPurchaseCount() {
     if (currentMoney <= 0) return;
 
     const int price = targetItemData->price;
-    if (price <= 0) return;
+
+    if (currentMoney < price) return;
 
     // 最大購入数の取得
     int maxCount = 0;

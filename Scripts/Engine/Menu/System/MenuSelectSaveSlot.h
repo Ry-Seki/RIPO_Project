@@ -37,6 +37,7 @@ private:
 	Sprite* saveLoadSprite = nullptr;
 
 	std::vector<GameProgressData> gameDataList;
+	std::vector<bool> isUsedList;
 
 	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/System/SaveLoad/SaveSlotResources.json";
 	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/SaveLoad/SaveSlotNavigation.json";
@@ -66,6 +67,10 @@ public:
 	 *	@brief	メニューを閉じる
 	 */
 	void Close (Engine& engine) override;
+	/*
+	 *	@brief	メニューを再開
+	 */
+	void Resume() override;
 
 public:
 	/*

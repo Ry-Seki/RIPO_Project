@@ -36,6 +36,7 @@ void MenuInGame::Initialize(Engine& engine) {
             eventSystem.RegisterButton(button.get());
         }
         eventSystem.Initialize(0);
+        spriteList = std::move(result.spriteList);
         buttonList = std::move(result.buttonList);
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             UIButtonBase* button = buttonList[i].get();
@@ -57,12 +58,17 @@ void MenuInGame::Initialize(Engine& engine) {
  */
 void MenuInGame::Open() {
     MenuBase::Open();
-    currentSlot = -1;
-    InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+    animTimer = 0.0f;
+    animFrame = 0;
+    for (auto& sprite : spriteList) {
+        sprite->Setup();
+    }
     for (auto& button : buttonList) {
         button->Setup();
     }
+
     eventSystem.ApplySelection();
+    InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
 }
 /*
  *	@brief	更新処理
@@ -80,19 +86,44 @@ void MenuInGame::Update(Engine& engine, float unscaledDeltaTime) {
     auto button = eventSystem.GetCurrentSelectButton();
     if (!button) return;
 
-    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+    if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+        inputHandle = true;
         button->OnPressDown();
+    }
+}
+/*
+ *	@brief	アニメーション等の更新
+ */
+void MenuInGame::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
+    animTimer += unscaledDeltaTime;
+
+    if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
+    animTimer -= GameConst::UI_ANIM_INTERVAL;
+
+    for (auto& sprite : spriteList) {
+        if (!sprite) continue;
+
+        int frameCount = sprite->GetFrameCount();
+        if (frameCount <= 1) continue;
+
+        animFrame = (animFrame + 1) % frameCount;
+        sprite->SetFrameIndex(animFrame);
     }
 }
 /*
  *	@brief	描画処理
  */
 void MenuInGame::Render() {
-    DrawBox(0, 0, GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, GetColor(0, 0, 0), TRUE);
+    for (auto& sprite : spriteList) {
+        if (!sprite->IsVisible()) continue;
+
+        sprite->Render();
+    }
     for (auto& button : buttonList) {
+        if (!button->IsVisible()) continue;
+
         button->Render();
     }
-    DrawFormatString(50, 250, GetColor(255, 255, 255), "InGameMenu");
 }
 /*
  *	@brief	メニューを閉じる
@@ -111,6 +142,9 @@ void MenuInGame::Suspend() {
  */
 void MenuInGame::Resume() {
     MenuBase::Resume();
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
     eventSystem.ApplySelection();
 }
 /*
@@ -122,19 +156,16 @@ void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
     if (buttonIndex == 0) {
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            menu.CloseTopMenu();
             menu.OpenMenu<MenuLoadMode>();
         });
     } else if (buttonIndex == 1) {
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            menu.CloseTopMenu();
             menu.OpenMenu<MenuSaveMode>();
         });
     } else if (buttonIndex == 2) {
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            menu.CloseTopMenu();
             menu.OpenMenu<MenuSettings>();
         });
     } else if (buttonIndex == 3) {
@@ -156,7 +187,10 @@ void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
     } else {
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            menu.CloseTopMenu();
+            FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
+            FadeManager::GetInstance().StartFade(fadeIn, [this, &menu]() {
+                menu.CloseTopMenu();
+            });
         });
     }
 }

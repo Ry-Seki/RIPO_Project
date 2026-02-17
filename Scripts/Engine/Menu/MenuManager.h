@@ -108,19 +108,19 @@ public:
 		if (!menu) return;
 
 		if(!useMenuList.empty())useMenuList.back()->Suspend();
-
+		// メニューに追加
 		// すでに使用中リストにあるか判定
 		auto itr = std::find(useMenuList.begin(), useMenuList.end(), menu);
 		if (itr != useMenuList.end()) {
 			// 既存メニューの場合は再開
+			useMenuList.push_back(menu);
 			menu->Resume();
 			useMenuList.erase(itr);
 		} else {
+			useMenuList.push_back(menu);
 			// 初回表示
 			menu->Open();
 		}
-		useMenuList.push_back(menu);
-
 	}
 
 public:

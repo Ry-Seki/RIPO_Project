@@ -88,7 +88,8 @@ void MenuPlayerStatus::Update(Engine& engine, float unscaledDeltaTime) {
     auto button = eventSystem.GetCurrentSelectButton();
     if (!button) return;
 
-    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+    if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+        inputHandle = true;
         button->OnPressDown();
     }
 }
@@ -132,18 +133,6 @@ void MenuPlayerStatus::Render() {
 void MenuPlayerStatus::Close(Engine& engine) {
     MenuBase::Close(engine);
     isCallback = false;
-}
-/*
- *	@brief	メニューを中断
- */
-void MenuPlayerStatus::Suspend() {
-    MenuBase::Suspend();
-}
-/*
- *	@brief	メニューを再開
- */
-void MenuPlayerStatus::Resume() {
-    MenuBase::Resume();
 }
 /*
  *	@brief	ボタンの押された時の処理

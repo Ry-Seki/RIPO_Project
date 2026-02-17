@@ -91,7 +91,8 @@ void MenuGameModeSelect::Update(Engine& engine, float unscaledDeltaTime) {
 	auto button = eventSystem.GetCurrentSelectButton();
 	if (!button) return;
 
-	if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+	if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+		inputHandle = true;
 		button->OnPressDown();
 	}
 }
@@ -142,10 +143,15 @@ void MenuGameModeSelect::Close(Engine& engine) {
 void MenuGameModeSelect::Resume() {
 	MenuBase::Resume();
 	isStart = false;
+	inputHandle = true;
+
 	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
 		isStart = true;
 		inputHandle = false;
+		for (auto& button : buttonList) {
+			button->Setup();
+		}
 	});
 }
 /*

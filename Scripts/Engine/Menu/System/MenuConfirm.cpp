@@ -4,6 +4,7 @@
  */
 
 #include "MenuConfirm.h"
+#include "../../Audio/AudioUtility.h"
 #include "../../Load/LoadManager.h"
 #include "../../Load/JSON/LoadJSON.h"
 #include "../../Load/Sprite/LoadSprite.h"
@@ -34,6 +35,7 @@ void MenuConfirm::Initialize(Engine& engine) {
             eventSystem.RegisterButton(button.get());
         }
         eventSystem.Initialize(0);
+        spriteList = std::move(result.spriteList);
         buttonList = std::move(result.buttonList);
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             UIButtonBase* button = buttonList[i].get();
@@ -55,8 +57,9 @@ void MenuConfirm::Initialize(Engine& engine) {
  */
 void MenuConfirm::Open() {
     MenuBase::Open();
-    currentSlot = -1;
-    // ボタンの準備処理
+    for (auto& sprite : spriteList) {
+        sprite->Setup();
+    }
     for (auto& button : buttonList) {
         button->Setup();
     }
@@ -79,17 +82,44 @@ void MenuConfirm::Update(Engine& engine, float unscaledDeltaTime) {
     auto button = eventSystem.GetCurrentSelectButton();
     if (!button) return;
 
-    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+    if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+        inputHandle = true;
         button->OnPressDown();
+    }
+}
+/*
+ *	@brief	アニメーション等の更新
+ */
+void MenuConfirm::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
+    animTimer += unscaledDeltaTime;
+
+    if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
+    animTimer -= GameConst::UI_ANIM_INTERVAL;
+
+    for (auto& sprite : spriteList) {
+        int frameCount = sprite->GetFrameCount();
+        if (frameCount <= 1) continue;
+
+        animFrame = (animFrame + 1) % frameCount;
+        sprite->SetFrameIndex(animFrame);
     }
 }
 /*
  *	@brief	描画処理
  */
 void MenuConfirm::Render() {
-    DrawFormatString(50, 300, GetColor(255, 255, 255), "MenuConfirm");
+    SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
     DrawBox(0, 0, GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, GetColor(0, 0, 0), TRUE);
+    SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
+
+    for (auto& sprite : spriteList) {
+        if (!sprite->IsVisible()) continue;
+
+        sprite->Render();
+    }
     for (auto& button : buttonList) {
+        if (!button->IsVisible()) continue;
+
         button->Render();
     }
 }
@@ -110,13 +140,18 @@ void MenuConfirm::Suspend() {
  */
 void MenuConfirm::Resume() {
     MenuBase::Resume();
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
 }
 /*
  *	@brief		ボタンの押された時の処理
  *	@param[in]	int buttonIndex
  */
 void MenuConfirm::SelectButtonExecute(Engine& engine, int buttonIndex) {
+    AudioUtility::PlaySE("DebugSE");
     GameEnum::ConfirmResult result = static_cast<GameEnum::ConfirmResult>(buttonIndex);
 
     if (Callback) Callback(result);
+    Callback = nullptr;
 }

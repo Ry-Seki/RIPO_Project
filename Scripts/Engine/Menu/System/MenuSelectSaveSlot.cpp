@@ -6,6 +6,7 @@
 #include "MenuSelectSaveSlot.h"
 #include "MenuConfirm.h"
 #include "../MenuManager.h"
+#include "../../Audio/AudioUtility.h"
 #include "../../Load/LoadManager.h"
 #include "../../Load/JSON/LoadJSON.h"
 #include "../../Load/Sprite/LoadSprite.h"
@@ -16,6 +17,8 @@
 #include "../MenuResourcesFactory.h"
 #include "../../../Data/UI/MenuInfo.h"
 #include "../../Manager/FontManager.h"
+#include "../../Fade/FadeManager.h"
+#include "../../Fade/FadeFactory.h"
 
 /*
  *	@brief	初期化処理
@@ -59,6 +62,8 @@ void MenuSelectSaveSlot::Initialize (Engine& engine) {
  */
 void MenuSelectSaveSlot::Open () {
     MenuBase::Open();
+    // セーブスロットの使用状態の取得
+    auto& save = SaveDataManager::GetInstance();
 	currentSlot = -1;
     gameDataList.clear();
 
@@ -70,17 +75,14 @@ void MenuSelectSaveSlot::Open () {
         button->Setup();
     }
     saveLoadSprite->SetFrameIndex(static_cast<int>(saveMode));
+    // セーブデータの取得
+    auto allData = save.GetAllSlotData();
+    for (const auto& data : allData) {
+        gameDataList.push_back(data.game);
+    }
     // ロード時、セーブスロットが未使用だった場合選択不可にする
     if (saveMode == GameEnum::SaveSlotMenuMode::Load) {
-        // セーブスロットの使用状態の取得
-        auto& save = SaveDataManager::GetInstance();
-        // セーブデータの取得
-        auto allData = save.GetAllSlotData();
-        for (const auto& data : allData) {
-            gameDataList.push_back(data.game);
-        }
-
-        std::vector<bool> isUsedList = save.GetAllSlotIsUsed();
+        isUsedList = save.GetAllSlotIsUsed();
         for (int i = 0, max = buttonList.size() - 1; i < max; i++) {
             auto button = buttonList[i];
             if (!button) continue;
@@ -91,19 +93,17 @@ void MenuSelectSaveSlot::Open () {
             button->SetIsEnable(isUsed);
         }
     }
-    eventSystem.ApplySelection();
-	InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+    FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
+    FadeManager::GetInstance().StartFade(fadeIn, [this]() {
+        eventSystem.ApplySelection();
+        InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+    });
 }
 /*
  *	@brief	更新処理
  */
 void MenuSelectSaveSlot::Update (Engine& engine, float unscaledDeltaTime) {
     auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
-
-    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)]) {
-        MenuManager::GetInstance().CloseTopMenu();
-        return;
-    }
 
     // イベントシステムの更新
     eventSystem.Update(unscaledDeltaTime);
@@ -115,7 +115,8 @@ void MenuSelectSaveSlot::Update (Engine& engine, float unscaledDeltaTime) {
     auto button = eventSystem.GetCurrentSelectButton();
     if (!button) return;
 
-    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+    if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+        inputHandle = true;
         button->OnPressDown();
     }
 }
@@ -159,6 +160,31 @@ void MenuSelectSaveSlot::Render () {
 void MenuSelectSaveSlot::Close (Engine& engine) {
     MenuBase::Close(engine);
 }
+void MenuSelectSaveSlot::Resume() {
+    MenuBase::Resume();
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
+    auto& save = SaveDataManager::GetInstance();
+    gameDataList.clear();
+    // ロード時、セーブスロットが未使用だった場合選択不可にする
+    if (saveMode == GameEnum::SaveSlotMenuMode::Save) {
+        auto allData = save.GetAllSlotData();
+        for (const auto& data : allData) {
+            gameDataList.push_back(data.game);
+        }
+        isUsedList = save.GetAllSlotIsUsed();
+        for (int i = 0, max = buttonList.size() - 1; i < max; i++) {
+            auto button = buttonList[i];
+            if (!button) continue;
+
+            if (button == buttonList.back()) continue;
+
+            bool isUsed = isUsedList[i];
+            button->SetIsEnable(isUsed);
+        }
+    }
+}
 /*
  *	@brief		ボタンの押された時の処理
  *	@param[in]	int slotIndex
@@ -182,6 +208,7 @@ void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
                 if (result == GameEnum::ConfirmResult::Yes) {
                     save.SelectSlot(currentSlot);
                     save.SaveCurrentSlot();
+                    menu.CloseTopMenu();
                 } else {
                     menu.CloseTopMenu();
                 }
@@ -213,7 +240,7 @@ void MenuSelectSaveSlot::RenderSlotInfo() {
     auto& font = FontManager::GetInstance();
     int white = GetColor(255, 255, 255);
     for (int i = 0, max = gameDataList.size(); i < max; i++) {
-        if (!buttonList[i]->IsEnable()) continue;
+        if (!isUsedList[i]) continue;
         std::string elapsedDayStr = std::to_string(gameDataList[i].elapsedDay);
         std::string halfDayStr;
         if (gameDataList[i].isHalfDay) {

@@ -72,10 +72,6 @@ public:
 	 */
 	void Close(Engine& engine) override;
 	/*
-	 *	@brief	メニューを中断
-	 */
-	void Suspend() override;
-	/*
 	 *	@brief	メニューを再開
 	 */
 	void Resume() override;
@@ -96,7 +92,7 @@ public:
 	 *	@brief		半日フラグの設定
 	 *	@param[in]	const std::vector<DungeonInfoData>& setData
 	 */
-	inline void SetIsEvent(const std::vector<DungeonInfoData>& setData) { dungeonInfoList = setData; }
+	inline void SetInfoData(const std::vector<DungeonInfoData>& setData) { dungeonInfoList = setData; }
 	/*
 	 *	@brief		コールバックの設定
 	 *	@param[in]	std::function<void(int)> setCallback

@@ -96,7 +96,8 @@ void MenuSelectTraining::Update(Engine& engine, float unscaledDeltaTime) {
     auto button = eventSystem.GetCurrentSelectButton();
     if (!button) return;
 
-    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+    if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+        inputHandle = true;
         button->OnPressDown();
     }
 }
@@ -138,18 +139,6 @@ void MenuSelectTraining::Render() {
  */
 void MenuSelectTraining::Close(Engine& engine) {
     MenuBase::Close(engine);
-}
-/*
- *	@brief	メニューを中断
- */
-void MenuSelectTraining::Suspend() {
-    MenuBase::Suspend();
-}
-/*
- *	@brief	メニューを再開
- */
-void MenuSelectTraining::Resume() {
-    MenuBase::Resume();
 }
 /*
  *	@brief		ボタンの押された時の処理

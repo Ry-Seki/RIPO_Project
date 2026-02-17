@@ -34,11 +34,13 @@ void TitleScene::Initialize(Engine& engine) {
 	MenuManager::GetInstance().GetMenu<MenuSystem>();
 	MenuManager::GetInstance().GetMenu<MenuSelectSaveSlot>();
 	MenuManager::GetInstance().GetMenu<MenuConfirm>();
+	auto titleBGM = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Title/Peritune_Zephyr_Fields_loop.mp3");
 	auto debugSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/ButtonPush_Debug.mp3");
 	auto goalSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/GoalSE.mp3");
 	auto dungeonBGM01 = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/Dungeon_1/êØÇÃéç.mp3");
 	auto dungeonBGM02 = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/Dungeon_2/ApparitionÅfs_Lullaby.mp3");
-	LoadManager::GetInstance().SetOnComplete([&engine, this, debugSE, goalSE]() {
+	LoadManager::GetInstance().SetOnComplete([&engine, this, titleBGM, debugSE, goalSE]() {
+		AudioUtility::RegisterBGMHandle("TitleBGM", titleBGM->GetHandle());
 		AudioUtility::RegisterSEHandle("DebugSE", debugSE->GetHandle());
 		AudioUtility::RegisterSEHandle("GoalSE", goalSE->GetHandle());
 		auto loadBG = std::make_shared<LoadAnimation_ChangeBackground>();

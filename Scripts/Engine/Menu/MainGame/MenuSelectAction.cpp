@@ -77,6 +77,7 @@ void MenuSelectAction::Open() {
 
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
+        isStart = true;
         if (isHalf) {
             buttonList[0]->SetIsEnable(false);
             elapsedDaySprite->SetFrameIndex(2);
@@ -111,7 +112,8 @@ void MenuSelectAction::Update(Engine& engine, float unscaledDeltaTime) {
     auto button = eventSystem.GetCurrentSelectButton();
     if (!button) return;
 
-    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+    if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
+        inputHandle = true;
         button->OnPressDown();
     }
 }
@@ -168,6 +170,9 @@ void MenuSelectAction::Suspend() {
  */
 void MenuSelectAction::Resume() {
 	MenuBase::Resume();
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
 }
 /*
  *	@brief		ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—
