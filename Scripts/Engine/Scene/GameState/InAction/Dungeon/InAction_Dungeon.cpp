@@ -37,7 +37,7 @@ void InAction_Dungeon::Initialize(Engine& engine) {
 	auto dungeonBGM02 = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/Dungeon_2/Apparitionfs_Lullaby.mp3");
 	LoadManager::GetInstance().SetOnComplete([&engine, this, dungeonBGM01, dungeonBGM02]() {
 		AudioUtility::RegisterBGMHandle("dungeonBGM01", dungeonBGM01->GetHandle());
-		AudioUtility::RegisterBGMHandle("dungeonBGM02", dungeonBGM01->GetHandle());
+		AudioUtility::RegisterBGMHandle("dungeonBGM02", dungeonBGM02->GetHandle());
 		});
 }
 /*
