@@ -376,6 +376,9 @@
     <Filter Include="ソース ファイル\Engine\Menu\MainGame\Status">
       <UniqueIdentifier>{22e1ebfc-99f9-405d-aa98-7bfa7ca9d994}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\UI\Sprite">
+      <UniqueIdentifier>{1a270e6f-b214-47f9-89a4-3f975e059b76}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -771,12 +774,6 @@
     <ClCompile Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Sprite\Sprite.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.cpp">
       <Filter>ソース ファイル\Engine\Menu\MainGame\Shop</Filter>
     </ClCompile>
@@ -818,6 +815,12 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.cpp">
       <Filter>ソース ファイル\Engine\Menu\MainGame\Dungeon</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Sprite\Sprite.cpp">
+      <Filter>ソース ファイル\Engine\UI\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp">
+      <Filter>ソース ファイル\Engine\UI\Sprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -60,8 +60,6 @@ public:
 	inline void SetFrameIndex(int index) {
 		if (index < 0) return;
 
-		if (index > graphHandleList.size()) index = graphHandleList.size() - 1;
-
 		currentIndex = index;
 	}
 	/*

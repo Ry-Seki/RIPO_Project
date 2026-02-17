@@ -117,6 +117,7 @@ Orderd_JSON SaveDataManager::ToJSON(const GameProgressData& data) {
     json["playTime"] = data.playTime;
     json["elapsedDay"] = data.elapsedDay;
     json["isClear"] = data.isClear;
+    json["clearCount"] = data.clearCount;
     json["isHalfDay"] = data.isHalfDay;
     json["currentMoney"] = data.currentMoney;
     json["totalTreasureCount"] = data.totalTreasureCount;
@@ -132,6 +133,7 @@ GameProgressData SaveDataManager::GameDataFromJSON(const JSON& json) {
     data.playTime = json.value("playTime", 0);
     data.elapsedDay = json.value("elapsedDay", 0);
     data.isClear = json.value("isClear", false);
+    data.clearCount = json.value("ClearCount", 0);
     data.isHalfDay = json.value("isHalfDay", false);
     data.currentMoney = json.value("currentMoney", 0);
     data.totalTreasureCount = json.value("totalTreasureCount", 0);
@@ -402,21 +404,29 @@ std::vector<SaveData> SaveDataManager::GetAllSlotData() {
 /*
  *	@brief	クリア済みセーブデータのリセット
  */
-void SaveDataManager::ResetClearSaveData() {
-    // 一部のデータ以外の初期化
-    if (currentSaveData.game.isClear) {
-        WorldProgressData worldData{};
 
-        currentSaveData.game.isClear = true;
-        currentSaveData.game.currentMoney = 0;
-        currentSaveData.game.elapsedDay = 0;
-        currentSaveData.game.isHalfDay = false;
-        currentSaveData.game.totalTreasureCount = 0;
-        currentSaveData.player.hpLevel = 0;
-        currentSaveData.player.staminaLevel = 0;
-        currentSaveData.player.strengthLevel = 0;
-        currentSaveData.player.resistTimeLevel = 0;
-        currentSaveData.world = worldData;
-        SaveCurrentSlot();
-    }
+void SaveDataManager::ResetClearSaveData() {
+    SaveData data{};
+    if (!Load(data, currentSlotPath)) return;
+
+    if (!data.game.isClear) return;
+
+    // 一部のデータ以外の初期化
+    WorldProgressData worldData{};
+
+    data.game.currentMoney = 0;
+    data.game.elapsedDay = 0;
+    data.game.isHalfDay = false;
+    data.game.totalTreasureCount = 0;
+    data.game.isClear = false;
+    data.game.clearCount++;
+    data.player.hpLevel = 0;
+    data.player.staminaLevel = 0;
+    data.player.strengthLevel = 0;
+    data.player.resistTimeLevel = 0;
+
+    data.world = WorldProgressData{};
+
+    Save(data, currentSlotPath);
+    currentSaveData = data;
 }
