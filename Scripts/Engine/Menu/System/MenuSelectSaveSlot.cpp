@@ -6,6 +6,7 @@
 #include "MenuSelectSaveSlot.h"
 #include "MenuConfirm.h"
 #include "../MenuManager.h"
+#include "../../Audio/AudioUtility.h"
 #include "../../Load/LoadManager.h"
 #include "../../Load/JSON/LoadJSON.h"
 #include "../../Load/Sprite/LoadSprite.h"

@@ -56,6 +56,8 @@ void MenuTitle::Initialize(Engine& engine) {
  */
 void MenuTitle::Open() {
 	MenuBase::Open();
+	AudioUtility::ChangeBGM("TitleBGM");
+	AudioUtility::PlayBGM();
 	for (auto& sprite : spriteList) {
 		sprite->Setup();
 	}
