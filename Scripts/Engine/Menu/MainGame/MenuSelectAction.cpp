@@ -173,6 +173,15 @@ void MenuSelectAction::Resume() {
     for (auto& button : buttonList) {
         button->Setup();
     }
+    FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
+    FadeManager::GetInstance().StartFade(fadeIn, [this]() {
+        if (isHalf) {
+            buttonList[0]->SetIsEnable(false);
+        }
+        else {
+            elapsedDaySprite->SetFrameIndex(1);
+        }
+    });
 }
 /*
  *	@brief		ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—
