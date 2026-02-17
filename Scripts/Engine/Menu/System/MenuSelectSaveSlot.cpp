@@ -222,9 +222,13 @@ void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
             confirm->SetCallback([this, &engine, &save, &menu](GameEnum::ConfirmResult result) {
                 if (result == GameEnum::ConfirmResult::Yes) {
                     save.SelectSlot(currentSlot);
-                    save.LoadCurrentSlot();
                     if (save.GetSaveData().game.isClear) {
+                        // TODO : Ç±Ç±ê‚ëŒèCê≥
+                        save.LoadCurrentSlot();
                         save.ResetClearSaveData();
+                        save.LoadCurrentSlot();
+                    } else {
+                        save.LoadCurrentSlot();
                     }
                     engine.SetNextScene(std::make_shared<MainGameScene>());
                     menu.CloseAllMenu();
