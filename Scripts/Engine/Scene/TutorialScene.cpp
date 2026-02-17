@@ -136,6 +136,7 @@ void TutorialScene::EndTutorialScene(Engine& engine) {
 	MoneyManager::GetInstance().ResetMoney();
 	// オートセーブ
 	save.CollectSaveData(context);
+	save.ResetClearSaveData();
 	save.AutoSave();
 	engine.SetNextScene(std::make_shared<MainGameScene>());
 	

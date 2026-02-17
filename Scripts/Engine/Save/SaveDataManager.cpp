@@ -399,3 +399,22 @@ std::vector<SaveData> SaveDataManager::GetAllSlotData() {
     }
     return result;
 }
+/*
+ *	@brief	クリア済みセーブデータのリセット
+ */
+void SaveDataManager::ResetClearSaveData() {
+    // 一部のデータ以外の初期化
+    if (currentSaveData.game.isClear) {
+        WorldProgressData worldData{};
+
+        currentSaveData.game.currentMoney = 0;
+        currentSaveData.game.elapsedDay = 0;
+        currentSaveData.game.isHalfDay = false;
+        currentSaveData.game.totalTreasureCount = 0;
+        currentSaveData.player.hpLevel = 0;
+        currentSaveData.player.staminaLevel = 0;
+        currentSaveData.player.strengthLevel = 0;
+        currentSaveData.player.resistTimeLevel = 0;
+        currentSaveData.world = worldData;
+    }
+}
