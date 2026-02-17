@@ -138,6 +138,7 @@ void MenuPlayerStatus::Close(Engine& engine) {
  *	@brief	ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—
  */
 void MenuPlayerStatus::SelectButtonExecute(Engine& engine) {
+    AudioUtility::PlaySE("DebugSE");
     auto& menu = MenuManager::GetInstance();
     FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {

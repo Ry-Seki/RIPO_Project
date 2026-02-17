@@ -23,6 +23,7 @@
 #include "../../../../Data/ItemCatalogData.h"
 #include "MenuPurchaseCount.h"
 #include "../../../Manager/WeaponManager.h"
+#include "../../../Audio/AudioUtility.h"
 
 /*
  *	@brief	èâä˙âªèàóù
@@ -162,6 +163,7 @@ void MenuSelectShopItem::SelectButtonExecute(Engine& engine, int buttonIndex) {
     int itemID = buttonIndex;
     auto& menu = MenuManager::GetInstance();
     if (itemID == buttonList.size() - 1) {
+        AudioUtility::PlaySE("DebugSE");
         auto confirm = menu.GetMenu<MenuConfirm>();
         confirm->SetCallback([this, &menu, confirm](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
@@ -176,6 +178,7 @@ void MenuSelectShopItem::SelectButtonExecute(Engine& engine, int buttonIndex) {
         });
         menu.OpenMenu<MenuConfirm>();
     } else {
+        AudioUtility::PlaySE("DebugSE");
         auto purchase = menu.GetMenu<MenuPurchaseCount>();
         ItemData* item;
         if (bool isGetItem = catalogData.TryGetItem(itemID, item)) {
