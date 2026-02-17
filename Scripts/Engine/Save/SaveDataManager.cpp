@@ -407,6 +407,7 @@ void SaveDataManager::ResetClearSaveData() {
     if (currentSaveData.game.isClear) {
         WorldProgressData worldData{};
 
+        currentSaveData.game.isClear = true;
         currentSaveData.game.currentMoney = 0;
         currentSaveData.game.elapsedDay = 0;
         currentSaveData.game.isHalfDay = false;

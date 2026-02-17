@@ -132,7 +132,6 @@ void MainGameScene::EndMainGameScene(Engine& engine) {
 	context.prevIncome = 0;
 	// ƒV[ƒ“‘JˆÚðŒ
 	if (context.elapsedDay > GameConst::END_DAY) {
-		context.isClear = true;
 		save.ResetClearSaveData();
 		engine.SetNextScene(std::make_shared<ResultScene>());
 	}
