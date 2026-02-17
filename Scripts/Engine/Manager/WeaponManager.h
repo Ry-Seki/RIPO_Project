@@ -56,6 +56,11 @@ public:
 	 *	サブマシンガンが解放されているか
 	 */
 	bool IsSubmachineGun();
+
+	/*
+	 *	サブマシンガン解放フラグの設定
+	 */
+	void SetIsSubmachinGun(bool setFlag);
 };
 
 #endif // !_WEAPONMANAGAER_H_

@@ -85,6 +85,10 @@ private:
 	 *	@brief	ステータスの比較処理
 	 */
 	void ComparisonStatus();
+	/*
+	 *	@brief	コールバックの実行
+	 */
+	void ExecuteCallback();
 
 public:
 	/*

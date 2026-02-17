@@ -114,7 +114,7 @@ void MenuPurchaseCount::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer += unscaledDeltaTime;
 
     if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
-    animTimer -= GameConst::UI_ANIM_INTERVAL;
+    animTimer = 0;
 
     for (auto& sprite : spriteList) {
         if (!sprite) continue;

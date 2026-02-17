@@ -66,9 +66,11 @@ void MenuInGame::Open() {
     for (auto& button : buttonList) {
         button->Setup();
     }
-
-    eventSystem.ApplySelection();
-    InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+    FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
+    FadeManager::GetInstance().StartFade(fadeIn, [this]() {
+        eventSystem.ApplySelection();
+        InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+    });
 }
 /*
  *	@brief	çXêVèàóù
@@ -98,7 +100,7 @@ void MenuInGame::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer += unscaledDeltaTime;
 
     if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
-    animTimer -= GameConst::UI_ANIM_INTERVAL;
+    animTimer = 0;
 
     for (auto& sprite : spriteList) {
         if (!sprite) continue;
@@ -187,10 +189,9 @@ void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
     } else {
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+            menu.CloseTopMenu();
             FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
-            FadeManager::GetInstance().StartFade(fadeIn, [this, &menu]() {
-                menu.CloseTopMenu();
-            });
+            FadeManager::GetInstance().StartFade(fadeIn);
         });
     }
 }
