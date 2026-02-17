@@ -74,17 +74,16 @@ void MenuSelectAction::Open() {
     for (auto& button : buttonList) {
         button->Setup();
     }
-
+    if (isHalf) {
+        buttonList[0]->SetIsEnable(false);
+        elapsedDaySprite->SetFrameIndex(2);
+    }
+    else {
+        elapsedDaySprite->SetFrameIndex(1);
+    }
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
         isStart = true;
-        if (isHalf) {
-            buttonList[0]->SetIsEnable(false);
-            elapsedDaySprite->SetFrameIndex(2);
-        }
-        else {
-            elapsedDaySprite->SetFrameIndex(1);
-        }
         eventSystem.ApplySelection();
         InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
     });
@@ -173,15 +172,13 @@ void MenuSelectAction::Resume() {
     for (auto& button : buttonList) {
         button->Setup();
     }
-    FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
-    FadeManager::GetInstance().StartFade(fadeIn, [this]() {
-        if (isHalf) {
-            buttonList[0]->SetIsEnable(false);
-        }
-        else {
-            elapsedDaySprite->SetFrameIndex(1);
-        }
-    });
+    if (isHalf) {
+        buttonList[0]->SetIsEnable(false);
+    }
+    else {
+        elapsedDaySprite->SetFrameIndex(1);
+    }
+    
 }
 /*
  *	@brief		ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—

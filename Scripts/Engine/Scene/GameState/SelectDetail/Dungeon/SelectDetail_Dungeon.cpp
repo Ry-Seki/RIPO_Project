@@ -174,7 +174,7 @@ std::vector<DungeonInfoData> SelectDetail_Dungeon::ToDungeonInfoData() {
 	for (int i = 1, max = dungeonDataList.size(); i < max; i++) {
 		DungeonInfoData data{};
 		data.isEventDay = dungeonDataList[i].isEventDay;
-		data.eventStartDay = dungeonDataList[i].eventEndDay;
+		data.eventStartDay = dungeonDataList[i].eventStartDay;
 		data.eventEndDay = dungeonDataList[i].eventEndDay;
 		data.levelOfDanger = dungeonDataList[i].levelOfDanger;
 		data.necessaryStrength = dungeonDataList[i].necessaryStrength;
