@@ -19,6 +19,7 @@
 #include "../MenuResourcesFactory.h"
 #include "../../../Data/UI/MenuInfo.h"
 #include "../../Menu/System/MenuConfirm.h"
+#include "../../Audio/AudioUtility.h"
 
 /*
  *	@brief	èâä˙âªèàóù
@@ -156,21 +157,25 @@ void MenuInGame::Resume() {
 void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
     auto& menu = MenuManager::GetInstance();
     if (buttonIndex == 0) {
+        AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
             menu.OpenMenu<MenuLoadMode>();
         });
     } else if (buttonIndex == 1) {
+        AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
             menu.OpenMenu<MenuSaveMode>();
         });
     } else if (buttonIndex == 2) {
+        AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
             menu.OpenMenu<MenuSettings>();
         });
     } else if (buttonIndex == 3) {
+        AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
             menu.CloseTopMenu();
@@ -187,6 +192,7 @@ void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
             menu.OpenMenu<MenuConfirm>();
         });
     } else {
+        AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
             menu.CloseTopMenu();

@@ -166,9 +166,9 @@ void MenuSelectSaveSlot::Resume() {
         button->Setup();
     }
     auto& save = SaveDataManager::GetInstance();
-    gameDataList.clear();
     // ロード時、セーブスロットが未使用だった場合選択不可にする
     if (saveMode == GameEnum::SaveSlotMenuMode::Save) {
+        gameDataList.clear();
         auto allData = save.GetAllSlotData();
         for (const auto& data : allData) {
             gameDataList.push_back(data.game);
@@ -198,6 +198,7 @@ void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
 
     // もし一番下のボタンの場合、それは戻るボタン
     if (currentSlot > GameConst::SELECT_SAVE_SLOT_MAX) {
+        AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
             menu.CloseTopMenu();
@@ -209,6 +210,7 @@ void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
 
     switch (saveMode) {
         case GameEnum::SaveSlotMenuMode::Save:
+            AudioUtility::PlaySE("DebugSE");
             confirm->SetCallback([this, &save, &menu](GameEnum::ConfirmResult result) {
                 if (result == GameEnum::ConfirmResult::Yes) {
                     save.SelectSlot(currentSlot);
@@ -224,6 +226,7 @@ void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
             break;
 
         case GameEnum::SaveSlotMenuMode::Load:
+            AudioUtility::PlaySE("DebugSE");
             confirm->SetCallback([this, &engine, &save, &menu](GameEnum::ConfirmResult result) {
                 if (result == GameEnum::ConfirmResult::Yes) {
                     save.SelectSlot(currentSlot);

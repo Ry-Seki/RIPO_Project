@@ -11,6 +11,7 @@
 #include "../../../Fade/FadeFactory.h"
 #include "../../../Fade/FadeManager.h"
 #include "../../../Load/JSON/LoadJSON.h"
+#include "../../../Load/Audio/LoadAudio.h"
 #include "../../../Load/LoadManager.h"
 #include "../../../Input/InputUtility.h"
 #include "../../../Engine.h"
@@ -21,6 +22,7 @@
 #include "../../../System/Money/MoneyManager.h"
 #include "../../../../Data/ItemCatalogData.h"
 #include "../../../Manager/FontManager.h"
+#include "../../../Audio/AudioUtility.h"
 
 /*
  *	@brief	初期化処理
@@ -56,7 +58,10 @@ void MenuPurchaseCount::Initialize(Engine& engine) {
         buyButtonIndex = static_cast<int>(MenuPurchaseCount::ButtonType::BuyButton);
         eventSystem.LoadNavigation(navigation->GetData());
     });
-
+    auto buySE = load.LoadResource<LoadAudio>("Res/Audio/SE/BuyItem.mp3");
+    load.SetOnComplete([this, buySE]() {
+        AudioUtility::RegisterSEHandle("BuySE", buySE->GetHandle());
+    });
 }
 /*
  *	@brief	メニューを開く
@@ -179,6 +184,7 @@ void MenuPurchaseCount::SelectButtonExecute(Engine& engine, int buttonIndex) {
         SubPurchaseCount();
     }
     else if (buttonIndex == 2) {
+        AudioUtility::PlaySE("DebugSE");
         confirm->SetCallback([this, &menu](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
                 // 購入処理
@@ -200,6 +206,7 @@ void MenuPurchaseCount::SelectButtonExecute(Engine& engine, int buttonIndex) {
  *	@brief		購入の確定
  */
 void MenuPurchaseCount::ConfirmPurchaseItem() {
+    AudioUtility::PlaySE("BuyItem");
     MoneyManager::GetInstance().SubMoney(purchaseMoney);
     if (!targetItemData) return;
 
