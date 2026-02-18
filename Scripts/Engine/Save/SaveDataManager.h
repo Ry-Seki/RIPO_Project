@@ -185,6 +185,10 @@ public:
 	 *	@brief	クリア済みセーブデータのリセット
 	 */
 	void ResetClearSaveData();
+	/*
+	 *	@brief	データの初期化
+	 */
+	void InitSaveData();
 
 public:
 	/*

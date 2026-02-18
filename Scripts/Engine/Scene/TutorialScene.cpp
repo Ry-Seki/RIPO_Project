@@ -71,7 +71,7 @@ void TutorialScene::SetupData(Engine& engine) {
 void TutorialScene::Setup(Engine& engine) {
 	auto& save = SaveDataManager::GetInstance();
 	auto& context = gameState->GetActionContext();
-	save.ResetClearSaveData();
+	save.InitSaveData();
 	save.ApplyLoadData(context);
 	gameState->ChageState(GameEnum::GameState::InitialTutorial);
 }
@@ -139,5 +139,4 @@ void TutorialScene::EndTutorialScene(Engine& engine) {
 	save.CollectSaveData(context);
 	save.AutoSave();
 	engine.SetNextScene(std::make_shared<MainGameScene>());
-	
 }

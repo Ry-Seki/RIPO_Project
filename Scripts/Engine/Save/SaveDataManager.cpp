@@ -440,3 +440,11 @@ void SaveDataManager::ResetClearSaveData() {
     Save(data, currentSlotPath);
     currentSaveData = data;
 }
+/*
+ *	@brief	ƒf[ƒ^‚Ì‰Šú‰»
+ */
+void SaveDataManager::InitSaveData() {
+    SaveData data{};
+    currentSaveData = data;
+    Save(data, currentSlotPath);
+}
