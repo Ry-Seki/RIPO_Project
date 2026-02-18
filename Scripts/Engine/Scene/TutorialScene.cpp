@@ -71,6 +71,7 @@ void TutorialScene::SetupData(Engine& engine) {
 void TutorialScene::Setup(Engine& engine) {
 	auto& save = SaveDataManager::GetInstance();
 	auto& context = gameState->GetActionContext();
+	save.ResetClearSaveData();
 	save.ApplyLoadData(context);
 	gameState->ChageState(GameEnum::GameState::InitialTutorial);
 }

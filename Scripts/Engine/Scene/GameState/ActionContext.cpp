@@ -16,6 +16,7 @@ GameProgressData ActionContext::GetSaveData() const {
     data.playTime = Time::totalTime;
     data.elapsedDay = elapsedDay;
     data.isHalfDay = isHalf;
+    data.isClear = isClear;
     return data;
 }
 /*

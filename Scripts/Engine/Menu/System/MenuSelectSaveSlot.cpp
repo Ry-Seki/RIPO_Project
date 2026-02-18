@@ -92,6 +92,13 @@ void MenuSelectSaveSlot::Open () {
             bool isUsed = isUsedList[i];
             button->SetIsEnable(isUsed);
         }
+    }else if(saveMode == GameEnum::SaveSlotMenuMode::Save) {
+        gameDataList.clear();
+        auto allData = save.GetAllSlotData();
+        for (const auto& data : allData) {
+            gameDataList.push_back(data.game);
+        }
+        isUsedList = save.GetAllSlotIsUsed();
     }
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
@@ -166,7 +173,6 @@ void MenuSelectSaveSlot::Resume() {
         button->Setup();
     }
     auto& save = SaveDataManager::GetInstance();
-    // ロード時、セーブスロットが未使用だった場合選択不可にする
     if (saveMode == GameEnum::SaveSlotMenuMode::Save) {
         gameDataList.clear();
         auto allData = save.GetAllSlotData();
@@ -174,15 +180,6 @@ void MenuSelectSaveSlot::Resume() {
             gameDataList.push_back(data.game);
         }
         isUsedList = save.GetAllSlotIsUsed();
-        for (int i = 0, max = buttonList.size() - 1; i < max; i++) {
-            auto button = buttonList[i];
-            if (!button) continue;
-
-            if (button == buttonList.back()) continue;
-
-            bool isUsed = isUsedList[i];
-            button->SetIsEnable(isUsed);
-        }
     }
 }
 /*

@@ -426,6 +426,7 @@ void SaveDataManager::ResetClearSaveData() {
     data.game.currentMoney = 0;
     data.game.elapsedDay = 0;
     data.game.isHalfDay = false;
+    data.game.isClear = false;
     data.game.isWeapon = false;
     data.game.totalTreasureCount = 0;
     data.game.clearCount++;
