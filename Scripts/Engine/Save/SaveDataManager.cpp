@@ -419,13 +419,15 @@ void SaveDataManager::ResetClearSaveData() {
 
     // 一部のデータ以外の初期化
     WorldProgressData worldData{};
-
+    PlayerStatusLevelData statusData{};
+    MoneyManager::GetInstance().ResetMoney();
+    WeaponManager::GetInstance().SetIsSubmachinGun(false);
+    PlayerStatusManager::GetInstance().ApplyLoadData(statusData);
     data.game.currentMoney = 0;
     data.game.elapsedDay = 0;
     data.game.isHalfDay = false;
     data.game.isWeapon = false;
     data.game.totalTreasureCount = 0;
-    data.game.isClear = false;
     data.game.clearCount++;
     data.player.hpLevel = 0;
     data.player.staminaLevel = 0;
