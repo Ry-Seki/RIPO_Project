@@ -80,10 +80,10 @@ void MenuSelectAction::Open() {
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
         isStart = true;
         if (isHalf) {
-            elapsedDaySprite->SetFrameIndex(2);
+            elapsedDaySprite->SetFrameIndex(1);
         }
         else {
-            elapsedDaySprite->SetFrameIndex(1);
+            elapsedDaySprite->SetFrameIndex(0);
         }
 
         eventSystem.ApplySelection();
@@ -180,11 +180,7 @@ void MenuSelectAction::Resume() {
     }
     if (isHalf) {
         buttonList[0]->SetIsEnable(false);
-    }
-    else {
-        elapsedDaySprite->SetFrameIndex(1);
-    }
-    
+    }    
 }
 /*
  *	@brief		ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—
