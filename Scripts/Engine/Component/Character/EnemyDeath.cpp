@@ -6,6 +6,7 @@
 #include "../ModelRenderer.h"
 #include "../../System/Money/MoneyManager.h"
 #include "CharacterUtility.h"
+#include "../../Manager/EffectManager.h"
 
 using namespace CharacterUtility;
 
@@ -46,6 +47,8 @@ void EnemyDeath::Update(GameObject* enemy, float deltaTime)
 	if (animationTime >= 1.0f) {
 		// 少量のお金を入手
 		MoneyManager::GetInstance().AddMoney(5);
+		// エフェクトを出す
+		EffectManager::GetInstance().Instantiate("AllEnemyDeathEffect", enemy->position);
 		// 破棄
 		RemoveCharacter(enemy);
 	}

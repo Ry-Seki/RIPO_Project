@@ -1,9 +1,9 @@
 /*
- *	@file	SelectMiniGameLevel.h
+ *	@file	MenuSelectMiniGameLevel.cpp
  *	@author	Seki
  */
 
-#include "SelectMiniGameLevel.h"
+#include "MenuSelectMiniGameLevel.h"
 #include "../../../Audio/AudioUtility.h"
 #include "../../../Load/LoadManager.h"
 #include "../../../Load/JSON/LoadJSON.h"
@@ -22,7 +22,7 @@
 /*
  *	@brief	初期化処理
  */
-void SelectMiniGameLevel::Initialize(Engine& engine) {
+void MenuSelectMiniGameLevel::Initialize(Engine& engine) {
     auto& load = LoadManager::GetInstance();
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
@@ -55,7 +55,7 @@ void SelectMiniGameLevel::Initialize(Engine& engine) {
 /*
  *	@brief	メニューを開く
  */
-void SelectMiniGameLevel::Open() {
+void MenuSelectMiniGameLevel::Open() {
     MenuBase::Open();
     for (auto& sprite : spriteList) {
         sprite->Setup();
@@ -72,7 +72,7 @@ void SelectMiniGameLevel::Open() {
 /*
  *	@brief	更新処理
  */
-void SelectMiniGameLevel::Update(Engine& engine, float unscaledDeltaTime) {
+void MenuSelectMiniGameLevel::Update(Engine& engine, float unscaledDeltaTime) {
     auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
 
     // イベントシステムの更新
@@ -93,7 +93,7 @@ void SelectMiniGameLevel::Update(Engine& engine, float unscaledDeltaTime) {
 /*
  *	@brief	アニメーション等の更新
  */
-void SelectMiniGameLevel::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
+void MenuSelectMiniGameLevel::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer += unscaledDeltaTime;
 
     if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
@@ -110,7 +110,7 @@ void SelectMiniGameLevel::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
 /*
  *	@brief	描画処理
  */
-void SelectMiniGameLevel::Render() {
+void MenuSelectMiniGameLevel::Render() {
     for (auto& sprite : spriteList) {
         if (!sprite->IsVisible()) continue;
         sprite->Render();
@@ -123,13 +123,13 @@ void SelectMiniGameLevel::Render() {
 /*
  *	@brief	メニューを閉じる
  */
-void SelectMiniGameLevel::Close(Engine& engine) {
+void MenuSelectMiniGameLevel::Close(Engine& engine) {
     MenuBase::Close(engine);
 }
 /*
  *	@brief	メニューを再開
  */
-void SelectMiniGameLevel::Resume() {
+void MenuSelectMiniGameLevel::Resume() {
     MenuBase::Resume();
     for (auto& button : buttonList) {
         button->Setup();
@@ -139,11 +139,27 @@ void SelectMiniGameLevel::Resume() {
  *	@brief		ボタンの押された時の処理
  *	@param[in]	int buttonIndex
  */
-void SelectMiniGameLevel::SelectButtonExecute(Engine& engine, int buttonIndex) {
+void MenuSelectMiniGameLevel::SelectButtonExecute(Engine& engine, int buttonIndex) {
     GameEnum::MiniGameLevel level = GameEnum::MiniGameLevel::Invalid;
     auto& menu = MenuManager::GetInstance();
 
     if (buttonIndex == 0) {
+        level = GameEnum::MiniGameLevel::Easy;
+        AudioUtility::PlaySE("DebugSE");
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, level]() {
+            if (Callback) Callback(level);
+            menu.CloseTopMenu();
+        });
+    } else if (buttonIndex == 1) {
+        level = GameEnum::MiniGameLevel::Easy;
+        AudioUtility::PlaySE("DebugSE");
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, level]() {
+            if (Callback) Callback(level);
+            menu.CloseTopMenu();
+        });
+    } else if (buttonIndex == 2) {
         level = GameEnum::MiniGameLevel::Easy;
         AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);

@@ -11,6 +11,7 @@
 #include "BossChase.h"
 #include "BulletComponent.h"
 #include "BossHPBarComponentr.h"
+#include "../../Manager/EffectManager.h"
 
 /*
  *	コンストラクタ
@@ -84,6 +85,8 @@ void BossComponent::OnCollision(const std::shared_ptr<Component>& self, const st
 		attackIsTriger = false;
 	}
 	if (!attackIsTriger && other->GetOwner()->name == "Player") {
+		// エフェクトを出す
+		EffectManager::GetInstance().Instantiate("AllEnemyHitEffect", other->GetOwner()->position);
 		// 当たったらダメージを与える
 		auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
 		playerStatus.HP = playerStatus.HP - status.attack;

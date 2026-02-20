@@ -93,7 +93,6 @@ void TutorialScene::Render() {
 	gameState->Render();
 	Scene::Render();
 	EffectManager::GetInstance().Render();
-	DrawFormatString(50, 400, GetColor(255, 255, 255), "Money : %d", MoneyManager::GetInstance().GetCurrentMoney());
 
 #if _DEBUG
 	// 全オブジェクトのCollider描画

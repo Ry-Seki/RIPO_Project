@@ -9,7 +9,6 @@
 #include <vector>
 #include <string>
 #include <filesystem>
-#include <random>
 
 /*
  *	@brief	倉庫番のマップをフォルダーから持ってくるクラス

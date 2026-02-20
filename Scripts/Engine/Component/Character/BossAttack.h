@@ -15,6 +15,8 @@ class BossAttack : public BossState {
 private:
 	std::shared_ptr<AnimatorComponent> animator;
 	float coolTime;
+	// エフェクトを一回しか出さないためのフラグ
+	bool FirstEffectFlag;
 
 	const float MAX_COOL_TIME;
 

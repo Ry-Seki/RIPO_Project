@@ -4,6 +4,7 @@
  */
 
 #include "SokobanMapManager.h"
+#include "../../../../../../Random.h"
 
 /*
  *  @brief      ƒtƒHƒ‹ƒ_‚Ì“Ç‚İ‚İ
@@ -37,10 +38,6 @@ bool SokobanMapManager::LoadMapList(const std::string& folderPath) {
 std::string SokobanMapManager::GetRandomMap() const {
     if (!isLoaded || mapFileList.empty()) return "";
 
-    static std::random_device rd;
-    static std::mt19937 mt(rd());
 
-    std::uniform_int_distribution<int> dist(0, (int)mapFileList.size() - 1);
-
-    return mapFileList[dist(mt)];
+    return mapFileList[Random::Range(0, mapFileList.size())];
 }
