@@ -15,18 +15,24 @@
     {
       "file": "Res/Effect/Enemy/BossAttack.efkefc",
       "name": "BossAttackEffect",
-      "magnification": 100.0,
+      "magnification": 50.0,
       "loop": false
     },
     {
       "file": "Res/Effect/Enemy/BossShoot.efkefc",
       "name": "BossShootEffect",
+      "magnification": 120.0,
+      "loop": false
+    },
+    {
+      "file": "Res/Effect/Enemy/AllEnemyHit.efkefc",
+      "name": "AllEnemyHitEffect",
       "magnification": 100.0,
       "loop": false
     },
     {
-      "file": "Res/Effect/Enemy/EnemyHit.efkefc",
-      "name": "EnemyHitEffect",
+      "file": "Res/Effect/Enemy/AllEnemyDeath.efkefc",
+      "name": "AllEnemyDeathEffect",
       "magnification": 100.0,
       "loop": false
     }

@@ -14,6 +14,7 @@
 BossAttack::BossAttack()
 	: animator(nullptr)
 	, coolTime(0)
+	, FirstEffectFlag(false)
 	, MAX_COOL_TIME(3)
 {
 }
@@ -27,8 +28,7 @@ void BossAttack::Start(GameObject* boss)
 	animator = boss->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
 	coolTime = MAX_COOL_TIME;
-	// エフェクトを出す
-	EffectManager::GetInstance().Instantiate("BossAttackEffect", boss->position);
+	
 }
 
 /*
@@ -58,6 +58,13 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 	// アニメーションが終わるまで待ちたい
 	// 仮
 	coolTime -= deltaTime;
+	if (coolTime <= 1.85f) {
+		if (!FirstEffectFlag) {
+			// エフェクトを出す
+			EffectManager::GetInstance().Instantiate("BossAttackEffect", boss->position);
+			FirstEffectFlag = true;
+		}
+	}
 	if (coolTime <= 1.5f) {
 		// 攻撃処理
 		aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
