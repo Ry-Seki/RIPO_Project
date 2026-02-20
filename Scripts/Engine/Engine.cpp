@@ -40,7 +40,7 @@ int Engine::Initialize() {
 	//ウィンドウのサイズを変更する
 	SetGraphMode(GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, 32, 0);
 	//起動時のウィンドウのモードの設定
-	ChangeWindowMode(FALSE);			// true : Windowモード, false : FullScreen
+	ChangeWindowMode(TRUE);			// true : Windowモード, false : FullScreen
 	//背景色の設定
 	SetBackgroundColor(196, 196, 196);
 
