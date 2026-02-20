@@ -825,7 +825,7 @@
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.cpp">
       <Filter>ソース ファイル\Engine\Menu\MainGame\Dungeon</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MainGame\PartTime\SelectMiniGameLevel.cpp">
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\PartTime\MenuSelectMiniGameLevel.cpp">
       <Filter>ソース ファイル\Engine\Menu\MainGame\PartTime</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1466,7 +1466,7 @@
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Status\MenuPlayerStatus.h">
       <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Status</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MainGame\PartTime\SelectMiniGameLevel.h">
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\PartTime\MenuSelectMiniGameLevel.h">
       <Filter>ヘッダー ファイル\Engine\Menu\MainGame\PartTime</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\MainGame\PartTime\MenuMiniGame.h">
