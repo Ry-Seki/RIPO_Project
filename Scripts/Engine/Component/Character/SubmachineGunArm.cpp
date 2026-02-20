@@ -8,7 +8,7 @@
  /*
   *	初期化処理
   */
-void SubmachineGunArm::Initialize() {
+void SubmachineGunArm::WeaponInitialize() {
 	number = GameEnum::Weapon::SubmachineGun;
 	// サブマシンガンのデータ取得
 	auto data = WeaponDataManager::GetInstance().GetWeaponData(number);
@@ -24,7 +24,7 @@ void SubmachineGunArm::Initialize() {
 /*
  *	更新処理
  */
-void SubmachineGunArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) {
+void SubmachineGunArm::WeaponUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) {
 	// クールタイム
 	if (shotCoolTime <= 0) {
 		shotCoolTime = 0;

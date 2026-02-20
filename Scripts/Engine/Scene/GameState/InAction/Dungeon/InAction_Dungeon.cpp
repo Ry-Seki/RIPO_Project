@@ -22,6 +22,7 @@
 #include "../../../../Input/InputUtility.h"
 #include "../../../../Manager/EffectManager.h"
 #include "../../../../Load/Audio/LoadAudio.h"
+#include "../../../../Manager/WeaponManager.h"
 
  /*
   *	@brief	‰Šú‰»ˆ—
@@ -48,6 +49,7 @@ void InAction_Dungeon::Setup() {
 	auto& context = owner->GetOwner()->GetActionContext();
 	floorProcessor.CreateFloor(context, isStart, treasureIDList);
 	SetMouseDispFlag(false);
+	WeaponManager::GetInstance().Initialize();
 }
 /*
  *	@brief	XVˆ—

@@ -20,11 +20,11 @@ public:
 	/*
 	 *	‰Šú‰»ˆ—
 	 */
-	void Initialize() override;
+	void WeaponInitialize() override;
 	/*
 	 *	XVˆ—
 	 */
-	void ArmUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) override;
+	void WeaponUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) override;
 };
 
 #endif // !_REVOLVERARM_H_

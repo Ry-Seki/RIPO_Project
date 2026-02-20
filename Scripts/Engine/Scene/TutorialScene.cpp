@@ -55,7 +55,7 @@ void TutorialScene::Initialize(Engine& engine) {
 		Setup(engine);
 		});
 	PlayerStatusManager::GetInstance().Initialize();
-	WeaponManager::GetInstance().Initialize();
+	//WeaponManager::GetInstance().Initialize();
 	WeaponDataManager::GetInstance().Initialize();
 	EnemyDataManager::GetInstance().Initialize();
 

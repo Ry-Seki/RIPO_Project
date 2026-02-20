@@ -36,14 +36,31 @@ public:
 
 public:
 	/*
+	 *	最初のUpdateの直前に呼び出される処理
+	 */
+	void Start() override;
+	/*
 	 *	初期化処理
 	 */
-	virtual void Initialize() override;
+	void Initialize() override;
 	/*
 	 *	更新処理
 	 */
-	virtual void ArmUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) override;
+	void ArmUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) override;
 		 
+	/*
+	 *	各武器の最初のUpdateの直前に呼び出される処理
+	 */
+	virtual void WeaponStart() {}
+	/*
+	 *	各武器の初期化処理
+	 */
+	virtual void WeaponInitialize() {}
+	/*
+	 *	各武器の更新処理
+	 */
+	virtual void WeaponUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) {}
+
 protected:
 	/*
 	 *	銃を撃つ処理

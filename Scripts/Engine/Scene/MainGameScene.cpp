@@ -17,7 +17,6 @@
 #include "../Menu/MenuManager.h"
 #include "../Menu/MainGame/MenuInGame.h"
 #include "../Manager/EffectManager.h" 
-#include "../Manager/WeaponManager.h"
 #include "../../Data/WeaponDataManager.h"
 #include "../Component/Character/HPBarComponent.h"
 #include "../Component/Character/BossHPBarComponentr.h"
@@ -50,7 +49,6 @@ void MainGameScene::Initialize(Engine& engine) {
 		Setup(engine);
 		});
 	PlayerStatusManager::GetInstance().Initialize();
-	WeaponManager::GetInstance().Initialize();
 	WeaponDataManager::GetInstance().Initialize();
 	EnemyDataManager::GetInstance().Initialize();
 

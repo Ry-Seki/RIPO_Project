@@ -16,6 +16,7 @@ void WeaponManager::Initialize() {
 	weapons[GameEnum::Weapon::SubmachineGun] = std::make_shared<SubmachineGunArm>();
 	// ‰ŠúÝ’è‚ÍƒŠƒ{ƒ‹ƒo[
 	currentWeapon = weapons[GameEnum::Weapon::Revolver];
+	currentWeapon->Initialize();
 }
 
 /*

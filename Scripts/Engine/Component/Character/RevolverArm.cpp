@@ -8,7 +8,7 @@
 /*
  *	初期化処理
  */
-void RevolverArm::Initialize() {
+void RevolverArm::WeaponInitialize() {
 	number = GameEnum::Weapon::Revolver;
 	// リボルバーのデータ取得
 	auto data = WeaponDataManager::GetInstance().GetWeaponData(number);
@@ -24,7 +24,7 @@ void RevolverArm::Initialize() {
 /*
  *	更新処理
  */
-void RevolverArm::ArmUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) {
+void RevolverArm::WeaponUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) {
 	// クールタイム
 	if (shotCoolTime <= 0) {
 		shotCoolTime = 0;
