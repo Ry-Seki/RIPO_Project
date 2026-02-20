@@ -176,21 +176,19 @@ void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
         });
     } else if (buttonIndex == 3) {
         AudioUtility::PlaySE("DebugSE");
-        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
-            menu.CloseTopMenu();
-            // TODO : 確認メニューを出す
-            auto confirm = menu.GetMenu<MenuConfirm>();
-            confirm->SetCallback([&engine, &menu](GameEnum::ConfirmResult result) {
-                if (result == GameEnum::ConfirmResult::Yes) {
+        auto confirm = menu.GetMenu<MenuConfirm>();
+        confirm->SetCallback([&engine, this, &menu](GameEnum::ConfirmResult result) {
+            if (result == GameEnum::ConfirmResult::Yes) {
+                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
+                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
                     menu.CloseAllMenu();
                     engine.SetNextScene(std::make_shared<TitleScene>());
-                }else {
-                    menu.CloseTopMenu();
-                }
-            });
-            menu.OpenMenu<MenuConfirm>();
+                });
+            }else {
+                menu.CloseTopMenu();
+            }
         });
+        menu.OpenMenu<MenuConfirm>();
     } else {
         AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);

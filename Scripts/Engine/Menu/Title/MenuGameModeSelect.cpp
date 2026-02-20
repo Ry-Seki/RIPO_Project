@@ -146,11 +146,10 @@ void MenuGameModeSelect::Close(Engine& engine) {
  */
 void MenuGameModeSelect::Resume() {
 	MenuBase::Resume();
-	isStart = false;
-	inputHandle = true;
 	for (auto& button : buttonList) {
 		button->Setup();
-	}	
+	}
+	eventSystem.ApplySelection();
 }
 /*
  *	@brief		ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—
