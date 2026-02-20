@@ -81,6 +81,10 @@ void MenuGameModeSelect::Open() {
  */
 void MenuGameModeSelect::Update(Engine& engine, float unscaledDeltaTime) {
 	auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
+
+	if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)]) {
+		CheckEndGame(engine);
+	}
 	// イベントシステムの更新
 	eventSystem.Update(unscaledDeltaTime);
 	// ボタンの更新
@@ -142,11 +146,10 @@ void MenuGameModeSelect::Close(Engine& engine) {
  */
 void MenuGameModeSelect::Resume() {
 	MenuBase::Resume();
-	isStart = false;
-	inputHandle = true;
 	for (auto& button : buttonList) {
 		button->Setup();
-	}	
+	}
+	eventSystem.ApplySelection();
 }
 /*
  *	@brief		ボタンの押された時の処理
@@ -179,15 +182,23 @@ void MenuGameModeSelect::SelectButtonExecute(Engine& engine, int buttonIndex) {
 			menu.OpenMenu<MenuSystem>();
 		});
 	} else if (buttonIndex == 3) {
-		AudioUtility::PlaySE("DebugSE");
-		confirm->SetCallback([this, confirm, &menu, &engine](GameEnum::ConfirmResult result) {
-			if (result == GameEnum::ConfirmResult::Yes) {
-				AudioUtility::PlaySE("DebugSE");
-				menu.CloseAllMenu();
-				engine.SetIsGameEnd(true);
-			}
-			menu.CloseMenu(confirm);
-		});
-		menu.OpenMenu<MenuConfirm>();
+		CheckEndGame(engine);
 	}
+}
+/*
+ *	@brief		ゲーム終了処理
+ */
+void MenuGameModeSelect::CheckEndGame(Engine& engine) {
+	auto& menu = MenuManager::GetInstance();
+	auto confirm = menu.GetMenu<MenuConfirm>();
+	AudioUtility::PlaySE("DebugSE");
+	confirm->SetCallback([this, confirm, &menu, &engine](GameEnum::ConfirmResult result) {
+		if (result == GameEnum::ConfirmResult::Yes) {
+			AudioUtility::PlaySE("DebugSE");
+			menu.CloseAllMenu();
+			engine.SetIsGameEnd(true);
+		}
+		menu.CloseMenu(confirm);
+						 });
+	menu.OpenMenu<MenuConfirm>();
 }

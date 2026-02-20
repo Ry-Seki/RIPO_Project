@@ -423,6 +423,8 @@ void SaveDataManager::ResetClearSaveData() {
     MoneyManager::GetInstance().ResetMoney();
     WeaponManager::GetInstance().SetIsSubmachinGun(false);
     PlayerStatusManager::GetInstance().ApplyLoadData(statusData);
+    WorldProgressManager::GetInstance().SetWorldProgressData(worldData);
+
     data.game.currentMoney = 0;
     data.game.elapsedDay = 0;
     data.game.isHalfDay = false;
@@ -435,7 +437,7 @@ void SaveDataManager::ResetClearSaveData() {
     data.player.strengthLevel = 0;
     data.player.resistTimeLevel = 0;
 
-    data.world = WorldProgressData{};
+    data.world = worldData;
 
     Save(data, currentSlotPath);
     currentSaveData = data;

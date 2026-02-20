@@ -1,10 +1,10 @@
 /*
- *	@file	SelectMiniGameLevel.h
+ *	@file	MenuSelectMiniGameLevel.h
  *	@author	Seki
  */
 
-#ifndef _SELECT_MINI_GAME_LEVEL_H_
-#define _SELECT_MINI_GAME_LEVEL_H_
+#ifndef _MENU_SELECT_MINI_GAME_LEVEL_H_
+#define _MENU_SELECT_MINI_GAME_LEVEL_H_
 
 #include "../../MenuBase.h"
 #include "../../../UI/Button/UIButtonBase.h"
@@ -21,7 +21,7 @@ class Engine;
 /*
  *	@brief	ミニゲーム難易度選択メニュー
  */
-class SelectMiniGameLevel : public MenuBase {
+class MenuSelectMiniGameLevel : public MenuBase {
 private:
 	float animTimer = 0.0f;
 	int animFrame = 0;
@@ -40,7 +40,7 @@ public:
 	/*
 	 *	@brief	デストラクタ
 	 */
-	~SelectMiniGameLevel() override {}
+	~MenuSelectMiniGameLevel() override {}
 
 public:
 	/*
@@ -90,4 +90,4 @@ public:
 
 };
 
-#endif // !_SELECT_MINI_GAME_LEVEL_H_
+#endif // !_MENU_SELECT_MINI_GAME_LEVEL_H_

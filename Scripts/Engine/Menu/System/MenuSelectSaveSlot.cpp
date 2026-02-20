@@ -173,7 +173,18 @@ void MenuSelectSaveSlot::Resume() {
         button->Setup();
     }
     auto& save = SaveDataManager::GetInstance();
-    if (saveMode == GameEnum::SaveSlotMenuMode::Save) {
+    if (saveMode == GameEnum::SaveSlotMenuMode::Load) {
+        isUsedList = save.GetAllSlotIsUsed();
+        for (int i = 0, max = buttonList.size() - 1; i < max; i++) {
+            auto button = buttonList[i];
+            if (!button) continue;
+
+            if (button == buttonList.back()) continue;
+
+            bool isUsed = isUsedList[i];
+            button->SetIsEnable(isUsed);
+        }
+    } else if (saveMode == GameEnum::SaveSlotMenuMode::Save) {
         gameDataList.clear();
         auto allData = save.GetAllSlotData();
         for (const auto& data : allData) {
