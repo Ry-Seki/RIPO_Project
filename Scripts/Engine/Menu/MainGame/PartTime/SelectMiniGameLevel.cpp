@@ -1,34 +1,28 @@
 /*
- *	@file	MenuSelectShopItem.cpp
+ *	@file	SelectMiniGameLevel.h
  *	@author	Seki
  */
 
-#include "MenuSelectShopItem.h"
-#include "../../MenuManager.h"
-#include "../../System/MenuSettings.h"
-#include "../../System/MenuSaveMode.h"
-#include "../../System/MenuLoadMode.h"
-#include "../../../UI/Button/SinglePressButton.h"
-#include "../../../Fade/FadeFactory.h"
-#include "../../../Fade/FadeManager.h"
-#include "../../../Load/JSON/LoadJSON.h"
-#include "../../../Load/LoadManager.h"
-#include "../../../Input/InputUtility.h"
-#include "../../../Engine.h"
-#include "../../../Scene/TitleScene.h"
-#include "../../MenuResourcesFactory.h"
-#include "../../../../Data/UI/MenuInfo.h"
-#include "../../../Menu/System/MenuConfirm.h"
-#include "../../../System/Money/MoneyManager.h"
-#include "../../../../Data/ItemCatalogData.h"
-#include "MenuPurchaseCount.h"
-#include "../../../Manager/WeaponManager.h"
+#include "SelectMiniGameLevel.h"
 #include "../../../Audio/AudioUtility.h"
+#include "../../../Load/LoadManager.h"
+#include "../../../Load/JSON/LoadJSON.h"
+#include "../../../Load/Sprite/LoadSprite.h"
+#include "../../../Fade/FadeManager.h"
+#include "../../../Fade/FadeFactory.h"
+#include "../../../Input/InputUtility.h"
+#include "../../../Save/SaveDataManager.h"
+#include "../../../UI/Button/SinglePressButton.h"
+#include "../../../Engine.h"
+#include "../../../Scene/MainGameScene.h"
+#include "../../../../Data/UI/MenuInfo.h"
+#include "../../MenuResourcesFactory.h"
+#include "../../MenuManager.h"
 
 /*
  *	@brief	初期化処理
  */
-void MenuSelectShopItem::Initialize(Engine& engine) {
+void SelectMiniGameLevel::Initialize(Engine& engine) {
     auto& load = LoadManager::GetInstance();
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
@@ -55,16 +49,13 @@ void MenuSelectShopItem::Initialize(Engine& engine) {
                 SelectButtonExecute(engine, i);
             });
         }
-        for (auto& button : buttonList) {
-            if (button->GetName() == "SubmachineGun") smgWeapon = button.get();
-        }
         eventSystem.LoadNavigation(navigation->GetData());
     });
 }
-/* 
+/*
  *	@brief	メニューを開く
  */
-void MenuSelectShopItem::Open() {
+void SelectMiniGameLevel::Open() {
     MenuBase::Open();
     for (auto& sprite : spriteList) {
         sprite->Setup();
@@ -72,13 +63,7 @@ void MenuSelectShopItem::Open() {
     for (auto& button : buttonList) {
         button->Setup();
     }
-    auto& money = MoneyManager::GetInstance();
-    // アイテムデータの設定
-    currentMoney = money.GetCurrentMoney();
-    catalogData = money.GetItemCatalogData();
-    if (WeaponManager::GetInstance().IsSubmachineGun()) smgWeapon->SetIsEnable(false);
-
-    FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
+    FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
         eventSystem.ApplySelection();
         InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
@@ -87,7 +72,7 @@ void MenuSelectShopItem::Open() {
 /*
  *	@brief	更新処理
  */
-void MenuSelectShopItem::Update(Engine& engine, float unscaledDeltaTime) {
+void SelectMiniGameLevel::Update(Engine& engine, float unscaledDeltaTime) {
     auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
 
     // イベントシステムの更新
@@ -108,15 +93,13 @@ void MenuSelectShopItem::Update(Engine& engine, float unscaledDeltaTime) {
 /*
  *	@brief	アニメーション等の更新
  */
-void MenuSelectShopItem::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
+void SelectMiniGameLevel::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer += unscaledDeltaTime;
 
     if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
     animTimer = 0;
 
     for (auto& sprite : spriteList) {
-        if (!sprite) continue;
-
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
 
@@ -127,63 +110,46 @@ void MenuSelectShopItem::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
 /*
  *	@brief	描画処理
  */
-void MenuSelectShopItem::Render() {
+void SelectMiniGameLevel::Render() {
     for (auto& sprite : spriteList) {
+        if (!sprite->IsVisible()) continue;
         sprite->Render();
     }
-    for (int i = buttonList.size() - 1; i >= 0; i--) {
-        buttonList[i]->Render();
+    for (auto& button : buttonList) {
+        if (!button->IsVisible()) continue;
+        button->Render();
     }
 }
 /*
  *	@brief	メニューを閉じる
  */
-void MenuSelectShopItem::Close(Engine& engine) {
+void SelectMiniGameLevel::Close(Engine& engine) {
     MenuBase::Close(engine);
 }
 /*
  *	@brief	メニューを再開
  */
-void MenuSelectShopItem::Resume() {
+void SelectMiniGameLevel::Resume() {
     MenuBase::Resume();
     for (auto& button : buttonList) {
         button->Setup();
     }
-    if (WeaponManager::GetInstance().IsSubmachineGun()
-        && smgWeapon->IsEnable()) {
-        smgWeapon->SetIsEnable(false);
-    }
-    eventSystem.ApplySelection();
 }
 /*
  *	@brief		ボタンの押された時の処理
  *	@param[in]	int buttonIndex
  */
-void MenuSelectShopItem::SelectButtonExecute(Engine& engine, int buttonIndex) {
-    int itemID = buttonIndex;
+void SelectMiniGameLevel::SelectButtonExecute(Engine& engine, int buttonIndex) {
+    GameEnum::MiniGameLevel level = GameEnum::MiniGameLevel::Invalid;
     auto& menu = MenuManager::GetInstance();
-    if (itemID == buttonList.size() - 1) {
+
+    if (buttonIndex == 0) {
+        level = GameEnum::MiniGameLevel::Easy;
         AudioUtility::PlaySE("DebugSE");
-        auto confirm = menu.GetMenu<MenuConfirm>();
-        confirm->SetCallback([this, &menu, confirm](GameEnum::ConfirmResult result) {
-            if (result == GameEnum::ConfirmResult::Yes) {
-                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, confirm]() {
-                    menu.CloseAllMenu();
-                    if (Callback) Callback();
-                });
-            }else{
-                menu.CloseMenu(confirm);
-            }
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, level]() {
+            if (Callback) Callback(level);
+            menu.CloseTopMenu();
         });
-        menu.OpenMenu<MenuConfirm>();
-    } else {
-        AudioUtility::PlaySE("DebugSE");
-        auto purchase = menu.GetMenu<MenuPurchaseCount>();
-        ItemData* item;
-        if (bool isGetItem = catalogData.TryGetItem(itemID, item)) {
-            purchase->SetItemData(item);
-        }
-        menu.OpenMenu<MenuPurchaseCount>();
     }
 }

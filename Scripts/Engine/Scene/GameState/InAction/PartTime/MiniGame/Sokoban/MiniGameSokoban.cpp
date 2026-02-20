@@ -5,6 +5,8 @@
 
 #include "MiniGameSokoban.h"
 #include "SokobanMapManager.h"
+#include "../ScreenSize.h"
+
 #include <DxLib.h>
 
 /*
@@ -25,6 +27,9 @@ void MiniGameSokoban::Open() {
 
     // goalMap を初期化
     goalMap.assign(map.size(), std::vector<bool>(map[0].size(), false));
+    auto screen = GetScreenSize();
+    screenWidth = screen.width;
+    screenHeight = screen.height;
 
     //マップの初期化処理
     InitializeMap();
@@ -222,11 +227,16 @@ void MiniGameSokoban::Reset() {
  *  @brief      描画処理
  */
 void MiniGameSokoban::Render() {
+    int mapWidth = (int) map[0].size() * _TILE_SIZE;
+    int mapHeight = (int) map.size() * _TILE_SIZE;
+
+    int offsetX = (screenWidth - mapWidth) / 2;
+    int offsetY = (screenHeight - mapHeight) / 2;
     // タイル描画
     for (int y = 0; y < (int)map.size(); ++y) {
         for (int x = 0; x < (int)map[y].size(); ++x) {
-            int left = x * _TILE_SIZE;
-            int top = y * _TILE_SIZE;
+            int left = offsetX + x * _TILE_SIZE;
+            int top = offsetY + y * _TILE_SIZE;
             int right = left + _TILE_SIZE;
             int bottom = top + _TILE_SIZE;
 
@@ -251,20 +261,20 @@ void MiniGameSokoban::Render() {
         if (goalMap[box.y][box.x]) color = GetColor(255, 200, 0);
 
         DrawBox(
-            (int)box.drawX,
-            (int)box.drawY,
-            (int)box.drawX + _TILE_SIZE,
-            (int)box.drawY + _TILE_SIZE,
+            offsetX + (int) box.drawX,
+            offsetY + (int) box.drawY,
+            offsetX + (int) box.drawX + _TILE_SIZE,
+            offsetY + (int) box.drawY + _TILE_SIZE,
             color, TRUE
         );
     }
 
     // プレイヤー描画
     DrawBox(
-        (int)player.drawX,
-        (int)player.drawY,
-        (int)player.drawX + _TILE_SIZE,
-        (int)player.drawY + _TILE_SIZE,
+        offsetX + (int) player.drawX,
+        offsetY + (int) player.drawY,
+        offsetX + (int) player.drawX + _TILE_SIZE,
+        offsetY + (int) player.drawY + _TILE_SIZE,
         GetColor(0, 0, 255),
         TRUE
     );
@@ -274,7 +284,6 @@ void MiniGameSokoban::Render() {
  */
 void MiniGameSokoban::Close() {
     MiniGameBase::Close();
-    score = 25;
 }
 /*
  *	@brief		難易度からフォルダのパスに変更

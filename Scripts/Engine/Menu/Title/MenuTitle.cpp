@@ -100,7 +100,7 @@ void MenuTitle::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
 	animTimer += unscaledDeltaTime;
 
 	if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
-	animTimer -= GameConst::UI_ANIM_INTERVAL;
+	animTimer = 0;
 
 	for (auto& sprite : spriteList) {
 		if (!sprite) continue;
@@ -133,6 +133,7 @@ void MenuTitle::Render() {
  */
 void MenuTitle::Close(Engine& engine) {
 	MenuBase::Close(engine);
+	AudioUtility::StopBGM();
 }
 /*
  *	@brief	ƒƒjƒ…[‚ð’†’f

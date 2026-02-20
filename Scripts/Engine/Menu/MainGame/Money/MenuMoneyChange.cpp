@@ -7,6 +7,7 @@
 #include "../../../Audio/AudioUtility.h"
 #include "../../../Load/LoadManager.h"
 #include "../../../Load/JSON/LoadJSON.h"
+#include "../../../Load/Audio/LoadAudio.h"
 #include "../../../Load/Sprite/LoadSprite.h"
 #include "../../../Fade/FadeManager.h"
 #include "../../../Fade/FadeFactory.h"
@@ -52,6 +53,10 @@ void MenuMoneyChange::Initialize(Engine& engine) {
             });
         }
         eventSystem.LoadNavigation(navigation->GetData());
+    });
+    auto getSE = load.LoadResource<LoadAudio>("Res/Audio/SE/GetMoney.mp3");
+    load.SetOnComplete([this, getSE]() {
+        AudioUtility::RegisterSEHandle("GetMoney", getSE->GetHandle());
     });
 }
 /*
@@ -103,7 +108,7 @@ void MenuMoneyChange::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer += unscaledDeltaTime;
 
     if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
-    animTimer -= GameConst::UI_ANIM_INTERVAL;
+    animTimer = 0;
 
     for (auto& sprite : spriteList) {
         int frameCount = sprite->GetFrameCount();
@@ -158,6 +163,7 @@ void MenuMoneyChange::Resume() {
  *	@param[in]	int buttonIndex
  */
 void MenuMoneyChange::SelectButtonExecute(Engine& engine, int buttonIndex) {
+    AudioUtility::PlaySE("DebugSE");
     auto& menu = MenuManager::GetInstance();
     FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
@@ -202,6 +208,7 @@ bool MenuMoneyChange::ShowChangeMoney(float unscaledDeltaTime) {
 
     if (elapsedTime > _CHANGE_DURATION) {
         elapsedTime = 0.0f;
+        AudioUtility::PlaySE("GetMoney");
         return true;
     }
 

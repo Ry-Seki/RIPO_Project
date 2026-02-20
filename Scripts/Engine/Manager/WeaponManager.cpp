@@ -59,3 +59,9 @@ void WeaponManager::UnlockSubmachineGun() {
 bool WeaponManager::IsSubmachineGun() {
 	return submachineGun;
 }
+/*
+ *	サブマシンガン解放フラグの設定
+ */
+void WeaponManager::SetIsSubmachinGun(bool setFlag) {
+	submachineGun = setFlag;
+}

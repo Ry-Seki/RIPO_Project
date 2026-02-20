@@ -9,6 +9,7 @@
 #include "../System/Money/MoneyManager.h"
 #include "../System/World/WorldProgressManager.h"
 #include "../Scene/GameState/ActionContext.h"
+#include "../Manager/WeaponManager.h"
 
 /*
  *	@brief	初期化処理
@@ -117,7 +118,9 @@ Orderd_JSON SaveDataManager::ToJSON(const GameProgressData& data) {
     json["playTime"] = data.playTime;
     json["elapsedDay"] = data.elapsedDay;
     json["isClear"] = data.isClear;
+    json["clearCount"] = data.clearCount;
     json["isHalfDay"] = data.isHalfDay;
+    json["isWeapon"] = data.isWeapon;
     json["currentMoney"] = data.currentMoney;
     json["totalTreasureCount"] = data.totalTreasureCount;
     return json;
@@ -132,7 +135,9 @@ GameProgressData SaveDataManager::GameDataFromJSON(const JSON& json) {
     data.playTime = json.value("playTime", 0);
     data.elapsedDay = json.value("elapsedDay", 0);
     data.isClear = json.value("isClear", false);
+    data.clearCount = json.value("ClearCount", 0);
     data.isHalfDay = json.value("isHalfDay", false);
+    data.isWeapon = json.value("isWeapon", false);
     data.currentMoney = json.value("currentMoney", 0);
     data.totalTreasureCount = json.value("totalTreasureCount", 0);
     return data;
@@ -335,6 +340,8 @@ void SaveDataManager::CollectSaveData(const ActionContext& context) {
         = MoneyManager::GetInstance().GetCurrentMoney();
     currentSaveData.game.totalTreasureCount =
         currentSaveData.world.getTreasureIDList.size();
+    currentSaveData.game.isWeapon
+        = WeaponManager::GetInstance().IsSubmachineGun();
 
     // Player
     currentSaveData.player
@@ -350,6 +357,7 @@ void SaveDataManager::ApplyLoadData(ActionContext& context) {
     // Game
     context.ApplyLoadData(currentSaveData.game);
     MoneyManager::GetInstance().SetMoney(currentSaveData.game.currentMoney);
+    WeaponManager::GetInstance().SetIsSubmachinGun(currentSaveData.game.isWeapon);
     // Player
     PlayerStatusManager::GetInstance().ApplyLoadData(currentSaveData.player);
     // World
@@ -398,4 +406,45 @@ std::vector<SaveData> SaveDataManager::GetAllSlotData() {
         }
     }
     return result;
+}
+/*
+ *	@brief	クリア済みセーブデータのリセット
+ */
+
+void SaveDataManager::ResetClearSaveData() {
+    SaveData data{};
+    if (!Load(data, currentSlotPath)) return;
+
+    if (!data.game.isClear) return;
+
+    // 一部のデータ以外の初期化
+    WorldProgressData worldData{};
+    PlayerStatusLevelData statusData{};
+    MoneyManager::GetInstance().ResetMoney();
+    WeaponManager::GetInstance().SetIsSubmachinGun(false);
+    PlayerStatusManager::GetInstance().ApplyLoadData(statusData);
+    data.game.currentMoney = 0;
+    data.game.elapsedDay = 0;
+    data.game.isHalfDay = false;
+    data.game.isClear = false;
+    data.game.isWeapon = false;
+    data.game.totalTreasureCount = 0;
+    data.game.clearCount++;
+    data.player.hpLevel = 0;
+    data.player.staminaLevel = 0;
+    data.player.strengthLevel = 0;
+    data.player.resistTimeLevel = 0;
+
+    data.world = WorldProgressData{};
+
+    Save(data, currentSlotPath);
+    currentSaveData = data;
+}
+/*
+ *	@brief	データの初期化
+ */
+void SaveDataManager::InitSaveData() {
+    SaveData data{};
+    currentSaveData = data;
+    Save(data, currentSlotPath);
 }

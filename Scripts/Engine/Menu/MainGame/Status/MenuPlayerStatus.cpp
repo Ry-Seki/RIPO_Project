@@ -100,7 +100,7 @@ void MenuPlayerStatus::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer += unscaledDeltaTime;
 
     if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
-    animTimer -= GameConst::UI_ANIM_INTERVAL;
+    animTimer = 0;
 
     for (auto& sprite : spriteList) {
         int frameCount = sprite->GetFrameCount();
@@ -138,10 +138,11 @@ void MenuPlayerStatus::Close(Engine& engine) {
  *	@brief	É{É^ÉìÇÃâüÇ≥ÇÍÇΩéûÇÃèàóù
  */
 void MenuPlayerStatus::SelectButtonExecute(Engine& engine) {
+    AudioUtility::PlaySE("DebugSE");
     auto& menu = MenuManager::GetInstance();
     FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-        if (isCallback && Callback) Callback();
+        ExecuteCallback();
         menu.CloseTopMenu();
     });
 }
@@ -191,5 +192,14 @@ void MenuPlayerStatus::ComparisonStatus() {
             diffText.c_str(),
             GetColor(255, 255, 255)
         );
+    }
+}
+
+void MenuPlayerStatus::ExecuteCallback() {
+    if (isCallback && Callback) {
+        Callback();
+    } else {
+        FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeIn);
     }
 }

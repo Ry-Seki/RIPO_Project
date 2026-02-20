@@ -214,6 +214,7 @@
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuInGame.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Money\MenuMoneyChange.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\PartTime\SelectMiniGameLevel.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Status\MenuPlayerStatus.cpp" />
@@ -406,6 +407,8 @@
     <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuInGame.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Money\MenuMoneyChange.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\PartTime\MenuMiniGame.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\PartTime\SelectMiniGameLevel.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.h" />
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Status\MenuPlayerStatus.h" />

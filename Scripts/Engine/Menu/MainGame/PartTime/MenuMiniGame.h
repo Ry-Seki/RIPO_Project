@@ -1,10 +1,9 @@
 /*
- *	@file	MenuPlayerStatus.h
+ *	@file	MenuMiniGame.h
  *	@author	Seki
  */
 
-#ifndef _MENU_PLAYER_STATUS_H_
-#define _MENU_PLAYER_STATUS_H_
+#ifndef _MENU_MINI_GAME_H_
 
 #include "../../MenuBase.h"
 #include "../../../UI/Button/UIButtonBase.h"
@@ -12,24 +11,20 @@
 #include "../../../UI/EventSystem.h"
 #include "../../../GameEnum.h"
 #include "../../../GameConst.h"
-#include "../../../../Data/PlayerStatusData.h"
 
 #include <functional>
 
  // 前方宣言
 class Engine;
-struct PlayerStatusData;
 
 /*
- *	@brief	プレイヤーのステータスメニュー
+ *	@brief	ミニゲームメニュー
  */
-class MenuPlayerStatus : public MenuBase {
+class MenuMiniGame : public MenuBase {
 private:
 	float animTimer = 0.0f;
 	int animFrame = 0;
-	bool isCallback = false;
-	PlayerStatusData currentStatus;
-	PlayerStatusData prevStatus;
+
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
@@ -37,14 +32,14 @@ private:
 
 	std::function<void()> Callback = nullptr;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Status/StatusMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Status/StatusMenuNavigation.json";
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Dungeon/Result/PlayerDeathMenuResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Dungeon/Result/PlayerDeathMenuNavigation.json";
 
 public:
 	/*
 	 *	@brief	デストラクタ
 	 */
-	~MenuPlayerStatus() override {}
+	~MenuMiniGame() override {}
 
 public:
 	/*
@@ -71,40 +66,19 @@ public:
 	 *	@brief	メニューを閉じる
 	 */
 	void Close(Engine& engine) override;
+	/*
+	 *	@brief	メニューを再開
+	 */
+	void Resume() override;
 
 private:
 	/*
-	 *	@brief	ボタンの押された時の処理
+	 *	@brief		ボタンの押された時の処理
+	 *	@param[in]	int buttonIndex
 	 */
 	void SelectButtonExecute(Engine& engine);
-	/*
-	 *	@brief	現在のステータスの描画
-	 */
-	void CurrentStatusRender();
-	/*
-	 *	@brief	ステータスの比較処理
-	 */
-	void ComparisonStatus();
-	/*
-	 *	@brief	コールバックの実行
-	 */
-	void ExecuteCallback();
 
 public:
-	/*
-	 *	@brief		増加前のステータス設定
-	 *	@param[in]	PlayerStatusData* setData
-	 */
-	inline void SetPrevStatusData(const PlayerStatusData& setData) {
-		prevStatus = setData;
-	}
-	/*
-	 *	@brief		コールバック判定の設定
-	 *	@param[in]	bool setFlag
-	 */
-	inline void SetIsCallback(bool setFlag) {
-		isCallback = setFlag;
-	}
 	/*
 	 *	@brief		コールバックの設定
 	 *	@param[in]	std::function<void()> setCallback
@@ -114,5 +88,4 @@ public:
 	}
 
 };
-
-#endif // !_MENU_PLAYER_STATUS_H_
+#endif // !_MENU_MINI_GAME_H_

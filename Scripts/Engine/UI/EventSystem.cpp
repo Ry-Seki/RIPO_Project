@@ -6,6 +6,7 @@
 #include "EventSystem.h"
 #include "../Input/InputUtility.h"
 #include "Button/UIButtonBase.h"
+#include "../Audio/AudioUtility.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -40,15 +41,19 @@ void EventSystem::Update(float unscaledDeltaTime) {
 	} else {
 		if (horizontal < 0.0f) {
 			isInput = true;
+			AudioUtility::PlaySE("SelectSE");
 			nextIndex = FindNextEnableButton(currentIndex, GameEnum::NavigationDir::Left);
 		} else if (horizontal > 0.0f) {
 			isInput = true;
+			AudioUtility::PlaySE("SelectSE");
 			nextIndex = FindNextEnableButton(currentIndex, GameEnum::NavigationDir::Right);
 		} else if (vertical > 0.0f) {
 			isInput = true;
+			AudioUtility::PlaySE("SelectSE");
 			nextIndex = FindNextEnableButton(currentIndex, GameEnum::NavigationDir::Up);
 		} else if (vertical < 0.0f) {
 			isInput = true;
+			AudioUtility::PlaySE("SelectSE");
 			nextIndex = FindNextEnableButton(currentIndex, GameEnum::NavigationDir::Down);
 		}
 	}

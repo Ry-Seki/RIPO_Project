@@ -39,6 +39,18 @@
       "Resources": [
         "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ActionDetail.png"
       ]
+    },
+    {
+      "Name": "CurrentMoney",
+      "Rect": {
+        "X": 50,
+        "Y": 898,
+        "Width": 735,
+        "Height": 182
+      },
+      "Resources": [
+        "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Money.png"
+      ]
     }
   ],
   "Buttons": [

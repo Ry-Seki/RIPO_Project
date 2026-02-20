@@ -269,7 +269,7 @@ namespace GameEnum {
 	 */
 	enum class CameraEvent {
 		Invalid = -1,
-		Death,
+		Dead,
 		ChangeView,
 
 		Max

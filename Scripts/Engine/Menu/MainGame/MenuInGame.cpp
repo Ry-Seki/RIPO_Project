@@ -19,6 +19,7 @@
 #include "../MenuResourcesFactory.h"
 #include "../../../Data/UI/MenuInfo.h"
 #include "../../Menu/System/MenuConfirm.h"
+#include "../../Audio/AudioUtility.h"
 
 /*
  *	@brief	èâä˙âªèàóù
@@ -66,9 +67,11 @@ void MenuInGame::Open() {
     for (auto& button : buttonList) {
         button->Setup();
     }
-
-    eventSystem.ApplySelection();
-    InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+    FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
+    FadeManager::GetInstance().StartFade(fadeIn, [this]() {
+        eventSystem.ApplySelection();
+        InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+    });
 }
 /*
  *	@brief	çXêVèàóù
@@ -98,7 +101,7 @@ void MenuInGame::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer += unscaledDeltaTime;
 
     if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
-    animTimer -= GameConst::UI_ANIM_INTERVAL;
+    animTimer = 0;
 
     for (auto& sprite : spriteList) {
         if (!sprite) continue;
@@ -154,21 +157,25 @@ void MenuInGame::Resume() {
 void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
     auto& menu = MenuManager::GetInstance();
     if (buttonIndex == 0) {
+        AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
             menu.OpenMenu<MenuLoadMode>();
         });
     } else if (buttonIndex == 1) {
+        AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
             menu.OpenMenu<MenuSaveMode>();
         });
     } else if (buttonIndex == 2) {
+        AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
             menu.OpenMenu<MenuSettings>();
         });
     } else if (buttonIndex == 3) {
+        AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
             menu.CloseTopMenu();
@@ -185,12 +192,12 @@ void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
             menu.OpenMenu<MenuConfirm>();
         });
     } else {
+        AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+            menu.CloseTopMenu();
             FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
-            FadeManager::GetInstance().StartFade(fadeIn, [this, &menu]() {
-                menu.CloseTopMenu();
-            });
+            FadeManager::GetInstance().StartFade(fadeIn);
         });
     }
 }

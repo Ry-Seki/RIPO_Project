@@ -12,7 +12,11 @@
 #include "../../GameConst.h"
 #include "RevolverArm.h"
 #include "../../Component/Character/CharacterUtility.h"
+#include "../../Load/Audio/LoadAudio.h"
+#include "../../Load/LoadManager.h"
+#include "../../Audio/AudioUtility.h"
 
+using namespace AudioUtility;
 using namespace CharacterUtility;
 
 WeaponBase::WeaponBase()
@@ -31,6 +35,12 @@ WeaponBase::WeaponBase()
  */
 void WeaponBase::Initialize() {
 	WeaponManager::GetInstance().GetCurrentWeapon()->Initialize();
+	auto shotSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/Shot.mp3");
+	auto reloadSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/Reload.mp3");
+	LoadManager::GetInstance().SetOnComplete([this, shotSE, reloadSE]() {
+		AudioUtility::RegisterSEHandle("shotSE", shotSE->GetHandle());
+		AudioUtility::RegisterSEHandle("reloadSE", reloadSE->GetHandle());
+		});
 }
 
 /*
@@ -42,8 +52,10 @@ void WeaponBase::ArmUpdate(float deltaTime, ActionMapBase::ActionState action, E
 
 	 // 手動リロード開始
 	int reload = static_cast<int>(GameEnum::PlayerAction::BulletReload);
-	if (action.buttonDown[reload])
+	if (action.buttonDown[reload]) {
 		weapon->reload = true;
+		PlaySE("reloadSE");
+	}
 
 	// リロード
 	weapon->BulletReload(deltaTime);
@@ -78,6 +90,8 @@ void WeaponBase::ShotBullet(Engine* engine) {
 		camera->position, camera->rotation, 
 		{ 0.5f, 0.5f, 0.5f }, moveDirection,
 		GetPlayer().get(), 10000, hitDamage);
+
+	PlaySE("shotSE");	
 }
 
 /*

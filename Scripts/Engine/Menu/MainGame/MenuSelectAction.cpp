@@ -24,6 +24,7 @@
 #include "../../Manager/FontManager.h"
 #include "../../System/Status/PlayerStatusManager.h"
 #include "Status/MenuPlayerStatus.h"
+#include "../../System/Money/MoneyManager.h"
 
 #include <DxLib.h>
 
@@ -74,17 +75,17 @@ void MenuSelectAction::Open() {
     for (auto& button : buttonList) {
         button->Setup();
     }
-
+    if (isHalf) buttonList[0]->SetIsEnable(false);
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
         isStart = true;
         if (isHalf) {
-            buttonList[0]->SetIsEnable(false);
             elapsedDaySprite->SetFrameIndex(2);
         }
         else {
             elapsedDaySprite->SetFrameIndex(1);
         }
+
         eventSystem.ApplySelection();
         InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
     });
@@ -124,7 +125,7 @@ void MenuSelectAction::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer += unscaledDeltaTime;
 
     if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
-    animTimer -= GameConst::UI_ANIM_INTERVAL;
+    animTimer = 0;
 
     for (auto& sprite : spriteList) {
         if (!sprite || sprite.get() == elapsedDaySprite) continue;
@@ -150,8 +151,10 @@ void MenuSelectAction::Render() {
     }
     std::string elapsedDayStr = std::to_string(elapsedDay);
     std::string maxDayStr = " / " + std::to_string(GameConst::END_DAY);
+    std::string money = std::to_string(MoneyManager::GetInstance().GetCurrentMoney());
     FontManager::GetInstance().Draw("NormalSizeFont", 190, 510, elapsedDayStr, GetColor(75, 75, 75));
     FontManager::GetInstance().Draw("NormalSizeFont", 250, 510, maxDayStr, GetColor(75, 75, 75));
+    FontManager::GetInstance().Draw("NormalSizeFont", 455, 973, money, GetColor(75, 75, 75));
 }
 /*
  *	@brief	メニューを閉じる
@@ -173,6 +176,13 @@ void MenuSelectAction::Resume() {
     for (auto& button : buttonList) {
         button->Setup();
     }
+    if (isHalf) {
+        buttonList[0]->SetIsEnable(false);
+    }
+    else {
+        elapsedDaySprite->SetFrameIndex(1);
+    }
+    
 }
 /*
  *	@brief		ボタンの押された時の処理

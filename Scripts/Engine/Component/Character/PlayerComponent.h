@@ -106,6 +106,11 @@ public:
 	 *	死亡フラグの取得
 	 */
 	inline bool GetIsDead()const { return isDead; }
+	/*
+	 *	死亡フラグセット
+	 */
+	inline void SetIsDead(bool setIsDead) { isDead = setIsDead; }
+	
 };
 
 #endif // !_PLAYERCOMPONENT_H_
