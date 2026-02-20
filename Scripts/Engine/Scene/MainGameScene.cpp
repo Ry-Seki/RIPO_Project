@@ -49,8 +49,8 @@ void MainGameScene::Initialize(Engine& engine) {
 		Setup(engine);
 		});
 	PlayerStatusManager::GetInstance().Initialize();
-	WeaponDataManager::GetInstance().Initialize();
 	EnemyDataManager::GetInstance().Initialize();
+	WeaponManager::GetInstance().Initialize();
 
 }
 /*

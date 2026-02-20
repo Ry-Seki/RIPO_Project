@@ -24,10 +24,6 @@ public:
 	 */
 	virtual void Start() {}
 	/*
-	 *	‰Šú‰»ˆ—
-	 */
-	virtual void Initialize() {}
-	/*
 	 *	XVˆ—
 	 */
 	virtual void ArmUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) {}

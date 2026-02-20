@@ -9,6 +9,7 @@
 #include "../../GameConst.h"
 #include "AmmoCountUI.h"
 #include "ReloadGaugeUI.h"
+#include "../../Manager/WeaponManager.h"
 
 void ReticleUI::Initialize() {
 	LoadManager& load = LoadManager::GetInstance();
@@ -19,6 +20,12 @@ void ReticleUI::Initialize() {
 }
 
 void ReticleUI::Render() {
+	auto weapon = WeaponManager::GetInstance().GetCurrentWeapon();
+	if (!weapon)
+		return;
+	// リロード中は表示なし
+	if (weapon->reload)
+		return;
 	// 画像描画位置を計算
 	float centerWidth = GameConst::WINDOW_WIDTH * 0.5f;
 	float centerHeight = GameConst::WINDOW_HEIGHT * 0.5f;

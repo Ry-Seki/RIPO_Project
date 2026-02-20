@@ -22,7 +22,7 @@ private:
 	bool submachineGun = false;												// サブマシンガン解放フラグ
 
 private:
-	WeaponManager() = default;
+	WeaponManager();
 	~WeaponManager() = default;
 
 public:

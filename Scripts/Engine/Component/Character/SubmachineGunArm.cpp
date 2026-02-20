@@ -8,7 +8,7 @@
  /*
   *	初期化処理
   */
-void SubmachineGunArm::WeaponInitialize() {
+void SubmachineGunArm::WeaponStart() {
 	number = GameEnum::Weapon::SubmachineGun;
 	// サブマシンガンのデータ取得
 	auto data = WeaponDataManager::GetInstance().GetWeaponData(number);

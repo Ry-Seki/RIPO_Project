@@ -18,9 +18,9 @@ public:
 
 public:
 	/*
-	 *	初期化処理
+	 *	最初のUpdateの直前に呼び出される処理
 	 */
-	void WeaponInitialize() override;
+	void WeaponStart();
 	/*
 	 *	更新処理
 	 */

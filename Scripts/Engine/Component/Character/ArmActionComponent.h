@@ -22,12 +22,11 @@
  */
 class ArmActionComponent : public Component {
 private:
-	ArmBasePtr currentArm;								// 現在使っているウデ
-	std::unordered_map<GameEnum::Arm, ArmBasePtr> arms;	// 使用可能なウデ達
+	std::unordered_map<GameEnum::Arm, ArmBasePtr> arms;	// ウデ達
 	ActionMapBase::ActionState action;					// 入力状態
 
 public:
-	ArmActionComponent();
+	ArmActionComponent() = default;
 	virtual ~ArmActionComponent() = default;
 
 public:
@@ -42,33 +41,11 @@ public:
 
 public:
 	/*
-	 *	使用するウデをセット
-	 */
-	inline void SetCurrentArm(GameEnum::Arm setArm) {
-		if (currentArm == arms[setArm])
-			return;
-		currentArm = arms[setArm];
-		currentArm->Initialize();
-	}
-
-	/*
-	 *	使用しているウデを取得
-	 */
-	inline ArmBasePtr GetCurrentArm() {
-		if (!currentArm) return nullptr;
-		// currentArmがWeaponBase型でないならnullptrが代入される(dynamic_pointer_castの仕様)
-		if (std::dynamic_pointer_cast<WeaponBase>(currentArm)) {
-			return WeaponManager::GetInstance().GetCurrentWeapon();
-		}
-		return currentArm;
-	}
-
-	/*
 	 *	運んでいるオブジェクトを取得
 	 */
 	inline GameObject* GetLiftObject() {
-		// currentArmがHandArm型でないならnullptrが代入される(dynamic_pointer_castの仕様)
-		if (auto arm = std::dynamic_pointer_cast<HandArm>(currentArm))
+		// arms[GameEnum::Arm::Hand]がHandArm型でないならnullptrが代入される(dynamic_pointer_castの仕様)
+		if (auto arm = std::dynamic_pointer_cast<HandArm>(arms[GameEnum::Arm::Hand]))
 			return arm->GetLiftObject();
 		return nullptr;
 	}

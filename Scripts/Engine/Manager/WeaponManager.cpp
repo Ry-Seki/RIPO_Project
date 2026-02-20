@@ -7,16 +7,21 @@
 #include "../Component/Character/RevolverArm.h"
 #include "../Component/Character/SubmachineGunArm.h"
 
+WeaponManager::WeaponManager() 
+	: submachineGun(false)
+{}
+
 /*
  *　初期化
  */
 void WeaponManager::Initialize() {
-	submachineGun = false;
 	weapons[GameEnum::Weapon::Revolver] = std::make_shared<RevolverArm>();
+	weapons[GameEnum::Weapon::Revolver]->WeaponStart();
 	weapons[GameEnum::Weapon::SubmachineGun] = std::make_shared<SubmachineGunArm>();
+	weapons[GameEnum::Weapon::SubmachineGun]->WeaponStart();
 	// 初期設定はリボルバー
 	currentWeapon = weapons[GameEnum::Weapon::Revolver];
-	currentWeapon->Initialize();
+	
 }
 
 /*
@@ -29,7 +34,6 @@ void WeaponManager::SetCurrentWeapon(GameEnum::Weapon setWeapon) {
 	if (setWeapon == GameEnum::Weapon::SubmachineGun && !submachineGun)
 		return;
 	currentWeapon = weapons[setWeapon];
-	currentWeapon->Initialize();
 }
 
 /*

@@ -40,10 +40,6 @@ public:
 	 */
 	void Start() override;
 	/*
-	 *	初期化処理
-	 */
-	void Initialize() override;
-	/*
 	 *	更新処理
 	 */
 	void ArmUpdate(float deltaTime, ActionMapBase::ActionState action, Engine* engine) override;
@@ -52,10 +48,6 @@ public:
 	 *	各武器の最初のUpdateの直前に呼び出される処理
 	 */
 	virtual void WeaponStart() {}
-	/*
-	 *	各武器の初期化処理
-	 */
-	virtual void WeaponInitialize() {}
 	/*
 	 *	各武器の更新処理
 	 */

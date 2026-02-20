@@ -34,20 +34,12 @@ WeaponBase::WeaponBase()
  *	最初のUpdateの直前に呼び出される処理
  */
 void WeaponBase::Start() {
-	WeaponManager::GetInstance().GetCurrentWeapon()->WeaponStart();
 	auto shotSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/Shot.mp3");
 	auto reloadSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/Reload.mp3");
 	LoadManager::GetInstance().SetOnComplete([this, shotSE, reloadSE]() {
 		AudioUtility::RegisterSEHandle("shotSE", shotSE->GetHandle());
 		AudioUtility::RegisterSEHandle("reloadSE", reloadSE->GetHandle());
 		});
-}
-
-/*
- *	初期化処理
- */
-void WeaponBase::Initialize() {
-	WeaponManager::GetInstance().GetCurrentWeapon()->WeaponInitialize();
 }
 
 /*
@@ -59,7 +51,7 @@ void WeaponBase::ArmUpdate(float deltaTime, ActionMapBase::ActionState action, E
 
 	 // 手動リロード開始
 	int reload = static_cast<int>(GameEnum::PlayerAction::BulletReload);
-	if (action.buttonDown[reload]) {
+	if (action.buttonDown[reload] && weapon->ammoCount != weapon->ammoCountMax) {
 		weapon->reload = true;
 		PlaySE("reloadSE");
 	}

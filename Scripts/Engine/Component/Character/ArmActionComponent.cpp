@@ -10,10 +10,6 @@
 
 using namespace InputUtility;
 
-ArmActionComponent::ArmActionComponent() 
-	: currentArm(nullptr)
-{}
-
 /*
  *	最初のUpdateの直前に呼び出される処理
  */
@@ -29,10 +25,14 @@ void ArmActionComponent::Start() {
  */
 void ArmActionComponent::Update(float deltaTime) {
 	action = GetInputState(GameEnum::ActionMap::PlayerAction);
-	if (currentArm == nullptr)
-		return;
 	auto engine = GetOwner()->GetEngine();
-	currentArm->ArmUpdate(deltaTime, action, engine);
+	// 両ウデの更新処理
+	for (auto [armNum, arm] : arms) {
+		// 物を持ってるときは武器の更新はスキップ
+		if (arm == arms[GameEnum::Arm::Weapon] && GetLiftObject())
+			continue;
+		arm->ArmUpdate(deltaTime, action, engine);
+	}
 }
 
 

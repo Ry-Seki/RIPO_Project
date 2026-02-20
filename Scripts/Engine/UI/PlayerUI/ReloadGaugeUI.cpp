@@ -13,6 +13,8 @@
 void ReloadGaugeUI::Render() {
 	// •`‰æˆÊ’uŒvŽZ
 	auto weapon = WeaponManager::GetInstance().GetCurrentWeapon();
+	if (!weapon)
+		return;
 	float posSX = GameConst::WINDOW_WIDTH * 0.9f;
 	float posSY = GameConst::WINDOW_HEIGHT * 0.8f;
 	float posEX = GameConst::WINDOW_WIDTH * 0.95f;

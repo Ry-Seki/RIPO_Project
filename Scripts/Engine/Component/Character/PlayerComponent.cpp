@@ -135,19 +135,6 @@ void PlayerComponent::Update(float deltaTime) {
 	}
 	// ステージとの当たり判定
 	StageManager::GetInstance().StageCollider(player, moveVec);
-
-	auto playerArm = player->GetComponent<ArmActionComponent>();
-	// 物を持っていたらウデ変更不可
-	if (playerArm->GetLiftObject())
-		return;
-	// 右クリックでウデアクションをハンドに設定
-	int lift = static_cast<int>(GameEnum::PlayerAction::Lift);
-	if (action.button[lift])
-		playerArm->SetCurrentArm(GameEnum::Arm::Hand);
-	int shot = static_cast<int>(GameEnum::PlayerAction::Shot);
-	// 左クリックでウデアクションを武器に設定
-	if (action.button[shot])
-		playerArm->SetCurrentArm(GameEnum::Arm::Weapon);
 }
 
 void PlayerComponent::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
