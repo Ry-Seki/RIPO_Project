@@ -17,13 +17,12 @@
     {
       "Name": "ElapsedDay",
       "Rect": {
-        "X": 68,
-        "Y": 0,
-        "Width": 485,
-        "Height": 1080
+        "X": 256,
+        "Y": 616,
+        "Width": 126,
+        "Height": 79
       },
       "Resources": [
-        "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDay.png",
         "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDay_AM.png",
         "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDay_PM.png"
       ]
@@ -126,14 +125,16 @@
       "Name": "Status",
       "Type": "Single",
       "Rect": {
-        "X": 135,
-        "Y": 360,
-        "Width": 390,
-        "Height": 380
+        "X": 120,
+        "Y": 364,
+        "Width": 452,
+        "Height": 363
       },
       "Resources": {
-        "Press": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDay_Button.png",
-        "Select": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDay_Button.png"
+        "Idle": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDayButton.png",
+        "Hover": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDayButton.png",
+        "Press": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDayButton_Select.png",
+        "Select": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDayButton_Select.png"
       }
     }
   ]

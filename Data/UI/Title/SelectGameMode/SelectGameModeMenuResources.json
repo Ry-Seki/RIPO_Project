@@ -3,10 +3,10 @@
     {
       "Name": "SelectTitleMenu",
       "Rect": {
-        "X": 170,
-        "Y": 600,
-        "Width": 1640,
-        "Height": 215
+        "X": 135,
+        "Y": 637,
+        "Width": 1537,
+        "Height": 362
       },
       "Resources": [
         "Res/Menu/Title/Trealine_SelectGameMode.png"
@@ -15,10 +15,10 @@
     {
       "Name": "SelectTitleMenu_BackGround",
       "Rect": {
-        "X": 120,
-        "Y": 721,
-        "Width": 1640,
-        "Height": 300
+        "X": 135,
+        "Y": 637,
+        "Width": 1537,
+        "Height": 362
       },
       "Resources": [
         "Res/Menu/Title/Trealine_SelectGameMode_Background.png"
@@ -30,9 +30,9 @@
       "Name": "NewGame",
       "Type": "Single",
       "Rect": {
-        "X": 115,
-        "Y": 730,
-        "Width": 590,
+        "X": 215,
+        "Y": 725,
+        "Width": 468,
         "Height": 90
       },
       "Resources": {
@@ -44,9 +44,9 @@
       "Name": "LoadGame",
       "Type": "Single",
       "Rect": {
-        "X": 667,
-        "Y": 730,
-        "Width": 590,
+        "X": 755,
+        "Y": 725,
+        "Width": 468,
         "Height": 90
       },
       "Resources": {
@@ -58,9 +58,9 @@
       "Name": "System",
       "Type": "Single",
       "Rect": {
-        "X": 1260,
-        "Y": 730,
-        "Width": 480,
+        "X": 1315,
+        "Y": 725,
+        "Width": 401,
         "Height": 90
       },
       "Resources": {
@@ -72,10 +72,10 @@
       "Name": "EndGame",
       "Type": "Single",
       "Rect": {
-        "X": 650,
-        "Y": 930,
-        "Width": 700,
-        "Height": 90
+        "X": 690,
+        "Y": 935,
+        "Width": 656,
+        "Height": 83
       },
       "Resources": {
         "Press": "Res/Menu/Title/Trealine_SelectGameMode_Selected_EndGameButton.png",

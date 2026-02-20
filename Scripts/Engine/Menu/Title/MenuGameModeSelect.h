@@ -73,7 +73,10 @@ private:
 	 *	@param[in]	int buttonIndex
 	 */
 	void SelectButtonExecute(Engine& engine, int buttonIndex);
-
+	/*
+	 *	@brief		ƒQ[ƒ€I—¹ˆ—
+	 */
+	void CheckEndGame(Engine& engine);
 };
 
 #endif // !_MENU_GAME_MODE_SELECT_H_
