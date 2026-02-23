@@ -35,8 +35,8 @@
     "Floors": [
       {
         "FloorID": 0,
-        "EnemySpawnCount": 3,
-        "BossSpawnCount": 0,
+        "EnemySpawnCount": 2,
+        "BossSpawnCount": 1,
         "TreasureSpawnCount": 3,
         "StairSpawnCount": 0,
         "GoalSpawnCount": 1

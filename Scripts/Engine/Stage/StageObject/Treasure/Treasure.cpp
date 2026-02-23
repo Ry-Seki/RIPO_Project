@@ -23,7 +23,7 @@ Treasure::Treasure()
 	, isCollected(false)
 	, pViewingEffect(nullptr)
 	, state(std::make_unique<UnTreasureState>())
-	, viewRadius(5000.0f) {
+	, viewRadius(8000.0f) {
 }
 /*
  *	デストラクタ
