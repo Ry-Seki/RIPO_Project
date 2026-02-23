@@ -7,6 +7,10 @@
 #include "BossComponent.h"
 #include "BossStandby.h"
 #include "../../Manager/EffectManager.h"
+#include "../../Load/Audio/LoadAudio.h"
+#include "../../Audio/AudioUtility.h"
+
+using namespace AudioUtility;
 
  /*
   *	コンストラクタ
@@ -15,6 +19,7 @@ BossAttack::BossAttack()
 	: animator(nullptr)
 	, coolTime(0)
 	, FirstEffectFlag(false)
+	, FirstSEFlag(false)
 	, MAX_COOL_TIME(3)
 {
 }
@@ -29,6 +34,11 @@ void BossAttack::Start(GameObject* boss)
 	if (animator == nullptr) return;
 	coolTime = MAX_COOL_TIME;
 	
+
+	auto bossAttackSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/BossAttackSE.mp3");
+	LoadManager::GetInstance().SetOnComplete([this, bossAttackSE]() {
+		AudioUtility::RegisterSEHandle("bossAttackSE", bossAttackSE->GetHandle());
+		});
 }
 
 /*
@@ -68,6 +78,11 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 	if (coolTime <= 1.5f) {
 		// 攻撃処理
 		aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
+		if (!FirstSEFlag) {
+			// 効果音を出す
+			PlaySE("bossAttackSE");
+			FirstSEFlag = true;
+		}
 	}
 	if (coolTime <= 1.2f) {
 		aabbCollider->aabb = { Vector3::zero, Vector3::zero };

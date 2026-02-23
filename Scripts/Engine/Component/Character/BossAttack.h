@@ -17,6 +17,8 @@ private:
 	float coolTime;
 	// エフェクトを一回しか出さないためのフラグ
 	bool FirstEffectFlag;
+	// 音を一回しか鳴らさないためのフラグ
+	bool FirstSEFlag;
 
 	const float MAX_COOL_TIME;
 

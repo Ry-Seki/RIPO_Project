@@ -9,6 +9,10 @@
 #include "EnemyAttack.h"
 #include "../ModelRenderer.h"
 #include "EnemyStandby.h"
+#include "../../Load/Audio/LoadAudio.h"
+#include "../../Audio/AudioUtility.h"
+
+using namespace AudioUtility;
 
  /*
   *	コンストラクタ
@@ -23,10 +27,12 @@ EnemyChase::EnemyChase()
 	, moveSpeed(700.0f)
 	, viewAngle(30)
 	, viewDirection(2000)
+	, coolTimeSE(0.7f)
 	, closePlayer(false)
 	, chasePlayer(false)
 	, ROTATE_SPEED(13.0f)
-	, DIFFERENCE_PLAYER(700) {
+	, DIFFERENCE_PLAYER(700)
+	, SE_DISTANCE(3000)	{
 }
 
 void EnemyChase::Start(GameObject* enemy) {
@@ -46,6 +52,12 @@ void EnemyChase::Start(GameObject* enemy) {
 		viewAngle = 180;
 		enemyComponent->SetAttackFlag(false);
 	}
+
+	// 効果音の読み込み
+	auto enemyWalkSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/EnemyWalkSE.mp3");
+	LoadManager::GetInstance().SetOnComplete([this, enemyWalkSE]() {
+		AudioUtility::RegisterSEHandle("enemyWalkSE", enemyWalkSE->GetHandle());
+		});
 }
 
 /*
@@ -90,6 +102,7 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime) {
 			ChaseWayPoint(enemy, nextWayPoint, false, deltaTime);
 		}
 	}
+	coolTimeSE -= deltaTime;
 }
 
 /*
@@ -101,9 +114,20 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime) {
  *  param[in]	float		deltaTime
  */
 void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetChange, float deltaTime) {
-	// デバッグ用
-	if (CheckHitKey(KEY_INPUT_Q)) {
-		enemy->GetComponent<EnemyComponent>()->SetState(new EnemyTurn());
+	// 一定の距離に近づいたら再生
+	if (Distance(player->position, enemy->position) < SE_DISTANCE) {
+		// SEのクールタイム
+		if (coolTimeSE < 0) {
+			// 歩行音を再生
+			PlaySE("enemyWalkSE");
+			// プレイヤー追跡中はSEの間隔を短くする
+			if (player && wayPoint == player->position) {
+				coolTimeSE = 0.3;
+			}
+			else {
+				coolTimeSE = 0.7f;
+			}
+		}
 	}
 	// 目標と自身のpositionの差
 	const float differenceTarget = 100.0f;
