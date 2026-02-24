@@ -15,7 +15,9 @@ BossHPBarComponent::BossHPBarComponent()
 	, maxHP(0)
 	, currentHP(0.0f)
 	, displayHP(0.0f)
+	, minScreenCenterZ(0.95f)
 	, halfValue(0.5f)
+	, DISTANCE_PLAYER(2000)
 {
 }
 
@@ -92,8 +94,16 @@ void BossHPBarComponent::ShowHPBar()
 	VECTOR screenRight = ConvWorldPosToScreenPos(rightPos);
 	VECTOR screenCenter = ConvWorldPosToScreenPos(headPos);
 
+	auto player = CameraManager::GetInstance().GetTarget();
+	// 距離が近い場合は範囲を広げる
+	if (player && Distance(player->position, boss->position) < DISTANCE_PLAYER) {
+		minScreenCenterZ = 0.9f;
+	}
+	else {
+		minScreenCenterZ = 0.95f;
+	}
 	// カメラ裏なら表示しない
-	if (screenCenter.z > 0.999f || screenCenter.z < 0.95f) return;
+	if (screenCenter.z > 0.999f || screenCenter.z < minScreenCenterZ) return;
 
 	// 画面上の長さ（距離で計算）
 	float dx = screenRight.x - screenLeft.x;

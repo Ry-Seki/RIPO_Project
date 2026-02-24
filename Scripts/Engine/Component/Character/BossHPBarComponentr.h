@@ -20,8 +20,11 @@ private:
 	float currentHP;
 	// ’x‚ê‚Ä‚­‚éHP
 	float displayHP;
+	// •\¦”ÍˆÍ‚ÌÅ’á’l
+	float minScreenCenterZ;
 
 	const float halfValue;
+	const float DISTANCE_PLAYER;
 
 public:
 	/*
