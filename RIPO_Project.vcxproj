@@ -162,6 +162,7 @@
     <ClCompile Include="Scripts\Engine\Component\AnimatorComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\CapsuleCollider.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\AllEnemyCommonModule.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\ArmActionComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BossAttack.cpp" />
     <ClCompile Include="Scripts\Engine\Component\Character\BossChase.cpp" />
@@ -329,6 +330,7 @@
     <ClInclude Include="Scripts\Engine\Component\AnimatorComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\CapsuleCollider.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\AllEnemyCommonModule.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\ArmBase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossAttack.h" />
@@ -344,6 +346,7 @@
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterUtility.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyAttack.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyChase.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyCommonModule.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyDeath.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyStandby.h" />
