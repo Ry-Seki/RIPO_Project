@@ -25,8 +25,11 @@ private:
 	int currentTreasureID = -1;					// 表示中のお宝のID
 	Vector3 drawWorldPos;						// 表示位置のワールド座標
 	int ownerObjectID = -1;						// 表示を許可されているTreasure
+	int interactUI;								// インタラクトUI
+	bool isInteract = false;					// インタラクトUI表示圏内かどうか
 	static constexpr const char* _TREASUREUIDATA_FILEPATH = "Data/UI/Dungeon/Treasure/TreasureUI.json";	// お宝UIのデータのパス
 	static constexpr const char* _TRESUREUIJSON_NAME = "TreasureUI";		// お宝のjsonの階層名
+	static constexpr const char* _INTERACTUI_FILEPATH = "Res/TreasureUI/interactUI.png";				// インタラクトUIのパス
 
 public:
 
@@ -76,6 +79,12 @@ public:
 	 *	表示中
 	 */
 	int GetOwnerObjectID() const { return ownerObjectID; }
+
+	/*
+	 *	インタラクト表示圏内フラグを変更
+	 *	@param	frag	圏内かどうか
+	 */
+	void SetInteract(bool frag) { isInteract = frag; }
 };
 
 

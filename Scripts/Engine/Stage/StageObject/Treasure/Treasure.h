@@ -20,6 +20,7 @@ private:
 	int strength;				// 筋力値
 	bool isCollected;			// 取得済みかどうか
 	float viewRadius;			// 取得範囲
+	float interactRadius;		// インタラクト表示圏内
 	std::string effectName;		// 再生するエフェクトの名前
 	EffectComponent* pViewingEffect; // 表示用エフェクト
 

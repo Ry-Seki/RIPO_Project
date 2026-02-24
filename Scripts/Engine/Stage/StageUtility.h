@@ -52,6 +52,14 @@ namespace StageUtility {
 		return StageManager::GetInstance().GetEnemySpwanPos();
 	}
 	/*
+	 *	ボスの初期生成位置の取得
+	 *  @param[out]	std::vector<int>& IDList
+	 *	@return		std::vector<Vector3>
+	 */
+	inline std::unordered_map<int, Vector3> GetBossSpwanPos() {
+		return StageManager::GetInstance().GetBossSpwanPos();
+	}
+	/*
 	 *  お宝の生成位置の取得
 	 *  @return		std::vector<Vector3>
 	 */

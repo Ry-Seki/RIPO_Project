@@ -7,6 +7,7 @@
 #define _SELECT_DETAIL_PART_TIME_H_
 
 #include "../SelectDetailBase.h"
+#include "../../../../GameEnum.h"
 
 /*
  *	@brief	アルバイト内容を選択するクラス
@@ -34,6 +35,13 @@ public:
 	 *	@brief	片付け処理
 	 */
 	void Teardown() override;
+
+private:
+	/*
+	 *	@brief		ミニゲーム難易度の決定
+	 *	@param[in]	GameEnum::MiniGameLevel level
+	 */
+	void DecideMiniGameLevel(GameEnum::MiniGameLevel level);
 
 };
 

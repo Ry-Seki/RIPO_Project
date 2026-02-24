@@ -33,8 +33,8 @@ private:
 
 	std::function<void(GameEnum::MiniGameLevel)> Callback = nullptr;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Dungeon/Result/PlayerDeathMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Dungeon/Result/PlayerDeathMenuNavigation.json";
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/PartTime/SelectLevelMenuResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/PartTime/SelectLevelMenuNavigation.json";
 
 public:
 	/*

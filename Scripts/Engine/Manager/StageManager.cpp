@@ -282,12 +282,86 @@ std::unordered_map<int, Vector3> StageManager::GetEnemySpwanPos() const {
 }
 
 /*
- * ボスの生成位置の取得
- * @author	kuu
+ *	ボスの生成位置の取得
  */
-std::vector<Vector3> StageManager::GetBossSpwanPos(std::vector<int>& id) const {
-	//　のちに実装←後
-	return std::vector<Vector3>();
+std::unordered_map<int, Vector3> StageManager::GetBossSpwanPos() const {
+	// ボスIDと生成位置を保持する連想配列
+	std::unordered_map<int, Vector3> bossSpawnPosition;
+
+	// ステージ未ロードなら空で返す
+	if (!loadedStage)return bossSpawnPosition;
+
+	// ステージモデルのハンドル取得
+	int modelHandle = loadedStage->GetStageModelHandle();
+	if (modelHandle == -1)return bossSpawnPosition;
+
+	// ボスのSpawnPosが存在しなければ空で返す
+	if (!json.contains(GameConst::_CREATE_POSNAME_ENEMY) ||
+		!json[GameConst::_CREATE_POSNAME_ENEMY].contains("BossSpawnPos")) {
+		return bossSpawnPosition;
+	}
+
+	const auto& spawnRoot = json[GameConst::_CREATE_POSNAME_ENEMY]["BossSpawnPos"];
+
+	if (spawnRoot.is_object()) {
+		// 中身がすべてstringの場合は旧形式として扱う
+		bool isOldFormat = true;
+		for (auto it = spawnRoot.begin(); it != spawnRoot.end(); ++it) {
+			if (!it.value().is_string()) {
+				isOldFormat = false;
+				break;
+			}
+		}
+
+		if (isOldFormat) {
+			for (auto it = spawnRoot.begin(); it != spawnRoot.end(); ++it) {
+
+				// 敵IDを取得
+				int enemyID = std::stoi(it.key());
+				const std::string frameName = it.value().get<std::string>();
+
+				// フレーム検索
+				int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
+				if (frameIndex == -1) continue;
+
+				// 座標取得
+				VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
+
+				// 連想配列に追加
+				bossSpawnPosition.emplace(enemyID, FromVECTOR(framePos));
+			}
+
+			return bossSpawnPosition;
+		}
+	}
+
+	for (auto stageIt = spawnRoot.begin(); stageIt != spawnRoot.end(); ++stageIt) {
+
+		const auto& enemyObj = stageIt.value();
+		if (!enemyObj.is_object()) continue;
+
+		for (auto enemyIt = enemyObj.begin(); enemyIt != enemyObj.end(); ++enemyIt) {
+
+			// 敵IDを取得
+			int enemyID = std::stoi(enemyIt.key());
+			if (!enemyIt.value().is_string()) continue;
+
+			const std::string frameName = enemyIt.value().get<std::string>();
+
+			// フレーム検索
+			int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
+			if (frameIndex == -1) continue;
+
+			// 座標取得
+			VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
+
+			// 連想配列に追加
+			bossSpawnPosition.emplace(enemyID, FromVECTOR(framePos));
+		}
+	}
+
+	return bossSpawnPosition;
+
 }
 
 /*
@@ -407,19 +481,19 @@ std::vector<Vector3> StageManager::GetStairsPos() const {
 
 	if (frameNames.empty()) return result;
 
-	
+
 	for (const auto& name : frameNames) {
-		
+
 		const char* cstr = name.c_str();
 
-		
+
 		int frameIndex = MV1SearchFrame(modelHandle, cstr);
 		if (frameIndex == -1) continue;
 
-		
+
 		VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
 
-		
+
 		result.push_back(FromVECTOR(framePos));
 	}
 
@@ -448,13 +522,13 @@ Vector3 StageManager::GetRespawnPos() const {
 
 	std::string frameName;
 
-	
+
 	if (respawnJson.is_string()) {
 		frameName = respawnJson.get<std::string>();
 	}
-	
+
 	else if (respawnJson.is_array() && !respawnJson.empty()) {
-		
+
 		if (respawnJson[0].is_string()) {
 			frameName = respawnJson[0].get<std::string>();
 		}

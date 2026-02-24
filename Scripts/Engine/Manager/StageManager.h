@@ -153,7 +153,7 @@ public:
 	 *　ボスの初期生成位置の取得
 	 *  author	kuu
 	 */
-	std::vector<Vector3> GetBossSpwanPos(std::vector<int>& id)const;
+	std::unordered_map<int, Vector3> GetBossSpwanPos()const;
 
 	/*
 	 * お宝の生成位置の取得
