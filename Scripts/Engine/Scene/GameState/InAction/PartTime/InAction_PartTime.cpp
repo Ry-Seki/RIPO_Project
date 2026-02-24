@@ -7,56 +7,50 @@
 #include "MiniGame/Sokoban/MiniGameSokoban.h"
 #include "../GameState_InAction.h"
 #include "../../GameStateMachine.h"
-#include "../../../../Fade/FadeFactory.h"
-#include "../../../../Fade/FadeManager.h"
-#include "../../../../Audio/AudioUtility.h"
+#include "../../../../Menu/MenuManager.h"
+#include "../../../../Menu/MainGame/PartTime/MenuMiniGame.h"
 
 /*
  *	@brief	初期化処理
  */
 void InAction_PartTime::Initialize(Engine& engine) {
-	miniGameList.push_back(std::make_shared<MiniGameSokoban>());
+	auto& menu = MenuManager::GetInstance();
+	auto miniGame = menu.GetMenu<MenuMiniGame>();
+	miniGame->SetCallback([this](GameEnum::MiniGameLevel level) {
+		CompleteMiniGame(level);
+	});
 }
 /*
  *	@brief	準備前処理
  */
 void InAction_PartTime::Setup() {
-	isStart = false;
-	miniGame = miniGameList[0];
+	auto& menu = MenuManager::GetInstance();
 	auto& context = owner->GetOwner()->GetActionContext();
+	auto miniGame = menu.GetMenu<MenuMiniGame>();
 	miniGame->SetMiniGameLevel(context.miniGameLevel);
-	miniGame->Open();
-	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
-		isStart = true;
-	});
+	menu.OpenMenu<MenuMiniGame>();
 }
 /*
  *	@brief	更新処理
  */
 void InAction_PartTime::Update(float deltaTime) {
-	if (!isStart) return;
-	// ミニゲームの更新
-	miniGame->Update(deltaTime);
-
-	// ミニゲーム終了時、その結果を反映
-	if (miniGame->IsComplete()) {
-		isStart = false;
-		AudioUtility::PlaySE("DebugSE");
-		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fade, [this]() {
-			owner->GetOwner()->ChageState(GameEnum::GameState::ResultAction);
-		});
-	}
 }
 /*
  *	@brief	描画処理
  */
 void InAction_PartTime::Render() {
-	if (miniGame) miniGame->Render();
 }
 /*
  *	@brief	片付け処理
  */
 void InAction_PartTime::Teardown() {
+}
+/*
+ *	@brief		ミニゲーム完了処理
+ *	@param[in]	GameEnum::MiniGameLevel level
+ */
+void InAction_PartTime::CompleteMiniGame(GameEnum::MiniGameLevel level) {
+	auto& context = owner->GetOwner()->GetActionContext();
+	context.miniGameLevel = level;
+	owner->GetOwner()->ChageState(GameEnum::GameState::ResultAction);
 }

@@ -67,6 +67,10 @@ public:
 	 *	@brief	ミニゲーム終了時処理
 	 */
 	void Close() override;
+	/*
+	 *  @brief      マップリセット処理
+	 */
+	void Reset() override;
 
 private:
 	/*
@@ -93,10 +97,6 @@ private:
 	 *  @brief      補間移動更新処理
 	 */
 	void UpdateInterp(float deltaTime);
-	/*
-	 *  @brief      マップリセット処理
-	 */
-	void Reset();
 
 private:
 	/*

@@ -18,7 +18,9 @@
 #include "../../../../Data/UI/MenuInfo.h"
 #include "../../MenuResourcesFactory.h"
 #include "../../MenuManager.h"
+#include "../../System/MenuConfirm.h"
 #include "../../../Scene/GameState/InAction/PartTime/MiniGame/MiniGameBase.h"
+#include "../../../Scene/GameState/InAction/PartTime/MiniGame/Sokoban/MiniGameSokoban.h"
 
 /*
  *	@brief	初期化処理
@@ -26,32 +28,26 @@
 void MenuMiniGame::Initialize(Engine& engine) {
     auto& load = LoadManager::GetInstance();
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
-    auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
 
-    load.SetOnComplete([this, &engine, menuJSON, navigation]() {
+    load.SetOnComplete([this, &engine, menuJSON]() {
         MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
         for (auto& button : result.buttonList) {
             if (!button) continue;
 
             eventSystem.RegisterButton(button.get());
         }
-        eventSystem.Initialize(0);
         spriteList = std::move(result.spriteList);
         buttonList = std::move(result.buttonList);
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             UIButtonBase* button = buttonList[i].get();
             if (!button) continue;
 
-            button->RegisterUpdateSelectButton([this, button]() {
-                eventSystem.UpdateSelectButton(button);
-            });
-
             button->RegisterOnClick([this, &engine, i]() {
-                SelectButtonExecute(engine);
+                SelectButtonExecute(engine, i);
             });
         }
-        eventSystem.LoadNavigation(navigation->GetData());
     });
+    miniGameList.push_back(std::make_shared<MiniGameSokoban>());
 }
 /*
  *	@brief	メニューを開く
@@ -70,7 +66,6 @@ void MenuMiniGame::Open() {
 
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
-        eventSystem.ApplySelection();
         InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
     });
 }
@@ -86,29 +81,17 @@ void MenuMiniGame::Update(Engine& engine, float unscaledDeltaTime) {
     if (miniGame->IsComplete()) {
         isStart = false;
         AudioUtility::PlaySE("DebugSE");
-        FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
+        FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fade, [this]() {
             MenuManager::GetInstance().CloseTopMenu();
-            if (Callback) Callback();
+            if (Callback) Callback(level);
          });
     } else {
-        // イベントシステムの更新
-        eventSystem.Update(unscaledDeltaTime);
         // ボタンの更新
         for (auto& button : buttonList) {
             if (button) button->Update(unscaledDeltaTime);
         }
-        // 現在選択されているボタンの取得
-        auto button = eventSystem.GetCurrentSelectButton();
-        if (!button) return;
-
-        if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
-            inputHandle = true;
-            button->OnPressDown();
-        }
-
     }
-
 }
 /*
  *	@brief	アニメーション等の更新
@@ -139,23 +122,49 @@ void MenuMiniGame::Render() {
         if (!button->IsVisible()) continue;
         button->Render();
     }
+    miniGame->Render();
 }
 /*
  *	@brief	メニューを閉じる
  */
 void MenuMiniGame::Close(Engine& engine) {
     MenuBase::Close(engine);
+    miniGame = nullptr;
 }
 /*
  *	@brief	メニューを再開
  */
 void MenuMiniGame::Resume() {
     MenuBase::Resume();
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
 }
 /*
  *	@brief		ボタンの押された時の処理
  *	@param[in]	int buttonIndex
  */
-void MenuMiniGame::SelectButtonExecute(Engine& engine) {
+void MenuMiniGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
+    auto& menu = MenuManager::GetInstance();
+    auto confirm = menu.GetMenu<MenuConfirm>();
 
+    if(buttonIndex == 0){
+        miniGame->Reset();
+    } else if (buttonIndex == 1) {
+        confirm->SetCallback([this, &menu](GameEnum::ConfirmResult result) {
+            if (result == GameEnum::ConfirmResult::Yes) {
+                level = GameEnum::MiniGameLevel::Retire;
+                menu.CloseTopMenu();
+                isInteractive = false;
+                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+                    menu.CloseTopMenu();
+                    if (Callback) Callback(level);
+                });
+            }else {
+                menu.CloseTopMenu();
+            }
+        });
+        menu.OpenMenu<MenuConfirm>();
+    }
 }

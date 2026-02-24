@@ -15,81 +15,47 @@
       ]
     },
     {
-      "Name": "SelectLevel",
+      "Name": "MiniGame",
       "Rect": {
-        "X": 56,
-        "Y": 34,
-        "Width": 961,
-        "Height": 143
+        "X": 387,
+        "Y": 58,
+        "Width": 1920,
+        "Height": 1080
       },
       "Resources": [
-        "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_SelectLevel.png"
+        "Res/Menu/MainGame/PartTime/MiniGame/Trealine_PartTime_MiniGame.png"
       ]
     }
   ],
     "Buttons" :[
       {
-        "Name": "Easy",
+        "Name": "Reset",
         "Type": "Single",
         "Rect": {
-          "X": 1017,
-          "Y": 217,
-          "Width": 512,
-          "Height": 181
+          "X": 930,
+          "Y": 867,
+          "Width": 202,
+          "Height": 52
         },
         "Resources": {
-          "Idle": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_EasyButton.png",
-          "Hover": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_EasyButton.png",
-          "Press": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_EasyButton_Press.png",
-          "Select": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_EasyButton_Select.png"
+          "Idle": "Res/Menu/MainGame/PartTime/MiniGame/Trealine_MiniGame_ResetButton.png",
+          "Hover": "Res/Menu/MainGame/PartTime/MiniGame/Trealine_MiniGame_ResetButton_Hover.png",
+          "Press": "Res/Menu/MainGame/PartTime/MiniGame/Trealine_MiniGame_ResetButton_Press.png"
         }
       },
       {
-        "Name": "Normal",
+        "Name": "Retire",
         "Type": "Single",
         "Rect": {
-          "X": 1017,
-          "Y": 470,
-          "Width": 788,
-          "Height": 189
+          "X": 1216,
+          "Y": 867,
+          "Width": 202,
+          "Height": 52
         },
         "Resources": {
-          "Idle": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_NormalButton.png",
-          "Hover": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_NormalButton.png",
-          "Press": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_NormalButton_Press.png",
-          "Select": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_NormalButton_Select.png"
-        }
-      },
-      {
-        "Name": "Hard",
-        "Type": "Single",
-        "Rect": {
-          "X": 1017,
-          "Y": 731,
-          "Width": 512,
-          "Height": 181
-        },
-        "Resources": {
-          "Idle": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_HardButton.png",
-          "Hover": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_HardButton.png",
-          "Press": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_HardButton_Press.png",
-          "Select": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_HardButton_Select.png"
-        }
-      },
-      {
-        "Name": "Back",
-        "Type": "Single",
-        "Rect": {
-          "X": 1574,
-          "Y": 943,
-          "Width": 252,
-          "Height": 89
-        },
-        "Resources": {
-          "Idle": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_BackButton.png",
-          "Hover": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_BackButton.png",
-          "Press": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_BackButton_Press.png",
-          "Select": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_BackButton_Select.png"
+          "Idle": "Res/Menu/MainGame/PartTime/MiniGame/Trealine_MiniGame_RetireButton.png",
+          "Hover": "Res/Menu/MainGame/PartTime/MiniGame/Trealine_MiniGame_RetireButton_Hover.png",
+          "Press": "Res/Menu/MainGame/PartTime/MiniGame/Trealine_MiniGame_RetireButton_Press.png"
         }
       }
     ]
