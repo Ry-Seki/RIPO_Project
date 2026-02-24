@@ -8,20 +8,28 @@
 
 #include "StageObjectBase.h"
 #include "../../Engine.h"
+#include "../Scripts/Engine/Component/EffectComponent.h"
 
 class ExitPoint : public StageObjectBase {
 private:
 	// 脱出フラグ
 	bool exitTriger = false;
-
+	std::string effectName = "GoalEffect";		// 再生するエフェクトの名前
+	EffectComponent* pViewingEffect;		// 表示用エフェクト
+	float viewRadius;						// エフェクト表示圏内
 public:
 	/*
 	 *	コンストラクタ
 	 */
-	ExitPoint() = default;
+	ExitPoint();
 	~ExitPoint() override {};
 
 public:
+
+	/*
+	 *	更新
+	 */
+	void Update(float deltaTime)override;
 
 	/*
 	 *	出口の衝突イベント
