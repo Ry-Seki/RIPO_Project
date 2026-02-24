@@ -6,6 +6,7 @@
 #include "../ModelRenderer.h"
 #include "BossComponent.h"
 #include "../../Vision.h"
+#include "AllEnemyCommonModule.h"
 #include "../../Manager/CameraManager.h"
 #include "BossStandby.h"
 #include "BossAttack.h"
@@ -96,36 +97,19 @@ void BossChase::ChaseWayPoint(GameObject* boss, Vector3 wayPoint, float deltaTim
 	// 目標の方向
 	Vector3 direction = Direction(boss->position, wayPoint);
 	float goalAngle = atan2(direction.x, direction.z);
-	goalAngle = goalAngle + 180 * Deg2Rad;
 
-	// 正規化した角度の移動量
-	float angleDirection = fmod((goalAngle - boss->rotation.y) * Rad2Deg, 360);
-	angleDirection = angleDirection * Deg2Rad;
+	// 反転モデル用
+	goalAngle += Pi;
+	// 最短の角度
+	float angleDiff = EnemyNormalizeAngle(goalAngle - boss->rotation.y);
 
-	// 正規化したエネミーの角度
-	float bossDirection = fmod(boss->rotation.y * Rad2Deg, 360);
-	bossDirection = bossDirection * Deg2Rad;
+	float rotateStep = ROTATE_SPEED * deltaTime;
 
-	Vector3 bossForward = ForwardDir(boss->rotation);
-
-	// -の状態
-	if (angleDirection < 0) {
-		if (bossDirection > goalAngle) {
-			boss->rotation.y -= ROTATE_SPEED * deltaTime;
-		}
-		else {
-			// 目標の方向に補正
-			boss->rotation.y = goalAngle;
-		}
+	if (fabs(angleDiff) < rotateStep) {
+		boss->rotation.y = goalAngle;
 	}
-	// +の状態
-	else if (angleDirection > 0) {
-		if (bossDirection < goalAngle) {
-			boss->rotation.y += ROTATE_SPEED * deltaTime;
-		}
-		else {
-			boss->rotation.y = goalAngle;
-		}
+	else {
+		boss->rotation.y += (angleDiff > 0 ? rotateStep : -rotateStep);
 	}
 
 	auto distance = Distance(wayPoint, boss->position);
@@ -133,16 +117,5 @@ void BossChase::ChaseWayPoint(GameObject* boss, Vector3 wayPoint, float deltaTim
 	if (player && wayPoint == player->position) {
 		boss->position.x += direction.x * MOVE_SPEED * deltaTime;
 		boss->position.z += direction.z * MOVE_SPEED * deltaTime;
-	}
-	// 初期位置に戻る時の処理
-	else {
-		float moveX = 0;
-		float moveZ = 0;
-		// 目標の方向に進む
-		moveX += direction.x * MOVE_SPEED * deltaTime;
-		moveZ += direction.z * MOVE_SPEED * deltaTime;
-
-		boss->position.x += moveX;
-		boss->position.z += moveZ;
 	}
 }
