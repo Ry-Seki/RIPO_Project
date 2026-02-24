@@ -19,6 +19,8 @@ private:
 	std::shared_ptr<EnemyComponent> enemyComponent;
 	// クールタイム
 	float coolTime;
+	// 効果音を一回しか出さないためのフラグ
+	bool FirstSEFlag;
 
 	// クールタイム最大値
 	const float MAX_COOL_TIME;

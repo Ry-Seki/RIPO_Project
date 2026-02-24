@@ -29,6 +29,8 @@ private:
 	float viewAngle;
 	// 視界判定の距離
 	float viewDirection;
+	// SEの間隔
+	float coolTimeSE;
 	// プレイヤーの距離判定フラグ
 	bool closePlayer;
 	// プレイヤー追跡判定
@@ -40,6 +42,8 @@ private:
 	const float ROTATE_SPEED;
 	// プレイヤーの距離
 	const float DIFFERENCE_PLAYER;
+	// 歩行音が聞こえる距離
+	const float SE_DISTANCE;
 
 public:
 	/*

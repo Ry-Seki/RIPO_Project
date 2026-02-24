@@ -9,6 +9,10 @@
 #include "../../Manager/BulletManager.h"
 #include "../../Manager/CameraManager.h"
 #include "../../Manager/EffectManager.h"
+#include "../../Load/Audio/LoadAudio.h"
+#include "../../Audio/AudioUtility.h"
+
+using namespace AudioUtility;
 
 BossShootingAttack::BossShootingAttack()
 	: animator(nullptr)
@@ -26,8 +30,17 @@ void BossShootingAttack::Start(GameObject* boss)
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
 	coolTime = MAX_COOL_TIME;
+	// 効果音の読み込み
+	auto bossShootActiveSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/BossShootActiveSE.mp3");
+	auto bossShootAttackSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/BossShootAttackSE.mp3");
+	LoadManager::GetInstance().SetOnComplete([this, bossShootActiveSE, bossShootAttackSE]() {
+		AudioUtility::RegisterSEHandle("bossShootActiveSE", bossShootActiveSE->GetHandle());
+		AudioUtility::RegisterSEHandle("bossShootAttackSE", bossShootAttackSE->GetHandle());
+		});
 	// エフェクトを出す
 	EffectManager::GetInstance().Instantiate("BossShootEffect", boss->position);
+	// 射撃待機音を出す
+	PlaySE("bossShootActiveSE");
 }
 
 void BossShootingAttack::Update(GameObject* boss, float deltaTime)
@@ -59,6 +72,8 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 				10000,
 				bossComponent->GetBossAttack()
 			);
+			// 射撃待機音を出す
+			PlaySE("bossShootAttackSE");
 			shootFlag = true;
 		}
 	}

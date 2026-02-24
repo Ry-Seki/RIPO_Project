@@ -8,6 +8,7 @@
 #include "BossState.h"
 #include "../AnimatorComponent.h"
 
+
 /*
  *	ボスの攻撃処理クラス
  */

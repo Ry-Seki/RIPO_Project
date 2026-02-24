@@ -17,6 +17,8 @@ private:
 	std::shared_ptr<AnimatorComponent> animator;
 	// モデルハンドル
 	int modelHandle;
+	// SEの間隔
+	float coolTimeSE;
 
 	// 近距離攻撃用プレイヤー検知距離
 	const float PLAYER_DISTANCE;

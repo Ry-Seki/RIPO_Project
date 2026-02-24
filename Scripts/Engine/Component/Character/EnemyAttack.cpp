@@ -7,6 +7,10 @@
 #include "EnemyChase.h"
 #include "PlayerComponent.h"
 #include "../ModelRenderer.h"
+#include "../../Load/Audio/LoadAudio.h"
+#include "../../Audio/AudioUtility.h"
+
+using namespace AudioUtility;
 
 /*
  *	コンストラクタ
@@ -16,6 +20,7 @@ EnemyAttack::EnemyAttack()
 	, animator(nullptr)
 	, enemyComponent(nullptr)
 	, coolTime(0)
+	, FirstSEFlag(false)
 	, MAX_COOL_TIME(2) {
 }
 
@@ -33,6 +38,11 @@ void EnemyAttack::Start(GameObject* enemy)
 	if (player == nullptr) return;
 
 	enemy->GetComponent<EnemyComponent>()->SetAttackFlag(true);
+
+	auto enemyAttackSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/EnemyAttackSE.mp3");
+	LoadManager::GetInstance().SetOnComplete([this, enemyAttackSE]() {
+		AudioUtility::RegisterSEHandle("enemyAttackSE", enemyAttackSE->GetHandle());
+		});
 }
 
 /*
@@ -59,6 +69,11 @@ void EnemyAttack::Update(GameObject* enemy, float deltaTime)
 	if (coolTime <= 1.5f) {
 		// 前方に当たり判定を出す
 		aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
+		if (!FirstSEFlag) {
+			// 効果音を出す
+			PlaySE("enemyAttackSE");
+			FirstSEFlag = true;
+		}
 	}
 	if (coolTime <= 1.3f) {
 		aabbCollider->aabb = { Vector3::zero, Vector3::zero };
