@@ -143,7 +143,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	}
 	if (bossCount > 0) {
 		// ボスの生成位置の取得
-		std::unordered_map<int, Vector3> bossSpawnPos = GetEnemySpwanPos();
+		std::unordered_map<int, Vector3> bossSpawnPos = GetBossSpwanPos();
 		// ボスの取得
 		std::vector<GameObjectPtr> bossList = GetObjectByName("Boss");
 		// モデルハンドルの取得
@@ -156,6 +156,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 			if (!bossCharacter) continue;
 
 			bossCharacter->position = bossSpawnPos[0];
+			bossCharacter->scale = { 3, 3, 3 };
 			// モデルの設定
 			SetCharacterModel(bossCharacter.get(), bossHandle);
 		}
@@ -318,7 +319,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	}
 	if (bossCount > 0) {
 		// ボスの生成位置の取得
-		std::unordered_map<int, Vector3> bossSpawnPos = GetEnemySpwanPos();
+		std::unordered_map<int, Vector3> bossSpawnPos = GetBossSpwanPos();
 		// ボスの取得
 		std::vector<GameObjectPtr> bossList = GetObjectByName("Boss");
 		// モデルハンドルの取得

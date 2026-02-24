@@ -9,7 +9,13 @@
     "SpawnPos": {
       "0": "Sponer_0",
       "1": "Sponer_1",
-      "2": "Sponer_2"
+      "2": "Sponer_2",
+      "3": "Sponer_3",
+      "4": "Sponer_4",
+      "5": "Sponer_5"
+    },
+    "BossSpawnPos": {
+      "0": "BossSponer_0"
     }
   },
   "Treasure": {
