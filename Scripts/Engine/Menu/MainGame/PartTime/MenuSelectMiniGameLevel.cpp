@@ -152,7 +152,7 @@ void MenuSelectMiniGameLevel::SelectButtonExecute(Engine& engine, int buttonInde
             menu.CloseTopMenu();
         });
     } else if (buttonIndex == 1) {
-        level = GameEnum::MiniGameLevel::Easy;
+        level = GameEnum::MiniGameLevel::Normal;
         AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, level]() {
@@ -160,12 +160,21 @@ void MenuSelectMiniGameLevel::SelectButtonExecute(Engine& engine, int buttonInde
             menu.CloseTopMenu();
         });
     } else if (buttonIndex == 2) {
-        level = GameEnum::MiniGameLevel::Easy;
+        level = GameEnum::MiniGameLevel::Hard;
         AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, level]() {
             if (Callback) Callback(level);
             menu.CloseTopMenu();
+        });
+    }
+    else if (buttonIndex == 3) {
+        level = GameEnum::MiniGameLevel::Invalid;
+        AudioUtility::PlaySE("DebugSE");
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, level]() {
+            menu.CloseTopMenu();
+            if (Callback) Callback(level);
         });
     }
 }

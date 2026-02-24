@@ -1,0 +1,96 @@
+{
+  "Sprites": [
+    {
+      "Name": "BackGround",
+      "Rect": {
+        "X": 0,
+        "Y": 0,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/BackGround/Trealine_LoadBackground_black1.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black2.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black3.jpg"
+      ]
+    },
+    {
+      "Name": "SelectLevel",
+      "Rect": {
+        "X": 56,
+        "Y": 34,
+        "Width": 961,
+        "Height": 143
+      },
+      "Resources": [
+        "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_SelectLevel.png"
+      ]
+    }
+  ],
+    "Buttons" :[
+      {
+        "Name": "Easy",
+        "Type": "Single",
+        "Rect": {
+          "X": 1017,
+          "Y": 217,
+          "Width": 512,
+          "Height": 181
+        },
+        "Resources": {
+          "Idle": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_EasyButton.png",
+          "Hover": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_EasyButton.png",
+          "Press": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_EasyButton_Press.png",
+          "Select": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_EasyButton_Select.png"
+        }
+      },
+      {
+        "Name": "Normal",
+        "Type": "Single",
+        "Rect": {
+          "X": 1017,
+          "Y": 470,
+          "Width": 788,
+          "Height": 189
+        },
+        "Resources": {
+          "Idle": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_NormalButton.png",
+          "Hover": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_NormalButton.png",
+          "Press": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_NormalButton_Press.png",
+          "Select": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_NormalButton_Select.png"
+        }
+      },
+      {
+        "Name": "Hard",
+        "Type": "Single",
+        "Rect": {
+          "X": 1017,
+          "Y": 731,
+          "Width": 512,
+          "Height": 181
+        },
+        "Resources": {
+          "Idle": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_HardButton.png",
+          "Hover": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_HardButton.png",
+          "Press": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_HardButton_Press.png",
+          "Select": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_HardButton_Select.png"
+        }
+      },
+      {
+        "Name": "Back",
+        "Type": "Single",
+        "Rect": {
+          "X": 1574,
+          "Y": 943,
+          "Width": 252,
+          "Height": 89
+        },
+        "Resources": {
+          "Idle": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_BackButton.png",
+          "Hover": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_BackButton.png",
+          "Press": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_BackButton_Press.png",
+          "Select": "Res/Menu/MainGame/PartTime/SelectLevel/Trealine_PartTime_BackButton_Select.png"
+        }
+      }
+    ]
+}
