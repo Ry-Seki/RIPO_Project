@@ -5,6 +5,7 @@
 #include "EnemyChase.h"
 #include "EnemyTurn.h"
 #include "../../Vision.h"
+#include "AllEnemyCommonModule.h"
 #include "../../Manager/CameraManager.h"
 #include "EnemyAttack.h"
 #include "../ModelRenderer.h"
@@ -140,7 +141,7 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 		// ”½“]ƒ‚ƒfƒ‹—p
 		goalAngle += Pi;
 		// Å’Z‚ÌŠp“x
-		float angleDiff = NormalizeAngle(goalAngle - enemy->rotation.y);
+		float angleDiff = EnemyNormalizeAngle(goalAngle - enemy->rotation.y);
 
 		float rotateStep = ROTATE_SPEED * deltaTime;
 

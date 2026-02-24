@@ -82,14 +82,6 @@ private:
 	 */
 	void SetTargetPlayer(GameObject* enemy, float deltaTime);
 
-	/*
-	 *	Šp“x·‚ð³‹K‰»
-	 */
-	float NormalizeAngle(float angle) {
-		while (angle > Pi) angle -= 2.0f * Pi;
-		while (angle < -Pi) angle += 2.0f * Pi;
-		return angle;
-	}
 public:
 
 };
