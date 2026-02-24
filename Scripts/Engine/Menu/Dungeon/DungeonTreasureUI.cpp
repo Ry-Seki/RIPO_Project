@@ -7,6 +7,8 @@
  *	デストラクタ
  */
 DungeonTreasureUI::~DungeonTreasureUI() {
+	// 読み込んだ画像データ削除
+	DeleteGraph(interactUI);
 }
 
 /*
@@ -16,6 +18,8 @@ void DungeonTreasureUI::Initialize(Engine& engine) {
 	auto& load = LoadManager::GetInstance();
 	auto treasureUIJSON = load.LoadResource<LoadJSON>(_TREASUREUIDATA_FILEPATH);
 	if (!treasureUIJSON) return;
+	interactUI = LoadGraph(_INTERACTUI_FILEPATH);
+	if (!interactUI)return;
 
 	load.SetOnComplete([this, treasureUIJSON]() {
 		// JSONデータ取得
@@ -88,6 +92,10 @@ void DungeonTreasureUI::Render() {
 		graph,      // 画像ハンドル
 		TRUE        // 透明度有効
 	);
+
+	// インタラクト表示圏内であればインタラクトUIを描画する
+	if (isInteract)
+		DrawRotaGraph(1200, 600, 0.2f, 0.0f, interactUI, TRUE, FALSE);
 }
 
 /*
@@ -111,9 +119,11 @@ void DungeonTreasureUI::ShowTreasureUI(int treasureID, int ownerID, const Vector
  *	UIを非表示にする
  */
 void DungeonTreasureUI::HideTreasureUI(int ownerID) {
-	if(ownerObjectID != ownerID) return;
+	if (ownerObjectID != ownerID) return;
 
 	currentTreasureID = -1;
 	ownerObjectID = -1;
+
+	//if (!isInteract)
 
 }

@@ -23,7 +23,8 @@ Treasure::Treasure()
 	, isCollected(false)
 	, pViewingEffect(nullptr)
 	, state(std::make_unique<UnTreasureState>())
-	, viewRadius(8000.0f) {
+	, viewRadius(8000.0f)
+	, interactRadius(1000.0f) {
 }
 /*
  *	デストラクタ
@@ -106,8 +107,15 @@ void Treasure::UnCollected() {
 		// UI表示
 		auto& menu = MenuManager::GetInstance();
 		auto treasureMenu = menu.GetMenu<DungeonTreasureUI>();
+		if (distance < interactRadius) {
+			treasureMenu->SetInteract(true);
+		}
+		else {
+			treasureMenu->SetInteract(false);
+		}
 		treasureMenu->ShowTreasureUI(treasureID, GetOwner()->ID, GetOwner()->position);
 		menu.OpenMenu<DungeonTreasureUI>();
+
 	}
 	else {
 
