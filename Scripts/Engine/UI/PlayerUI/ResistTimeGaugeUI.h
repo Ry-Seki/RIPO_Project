@@ -9,6 +9,11 @@
 #include "PlayerUIBase.h"
 
 class ResistTimeGaugeUI : public PlayerUIBase {
+private:
+	int resistTimeGraphHandle = -1;
+
+	static constexpr const char* RESIST_PATH = "Res/PlayerUI/resist.png";
+
 public:
 	ResistTimeGaugeUI() = default;
 	~ResistTimeGaugeUI() = default;
@@ -17,7 +22,7 @@ public:
 	/*
 	 *	初期化処理
 	 */
-	void Initialize() override {}
+	void Initialize() override;
 	/*
 	 *	更新処理
 	 */
@@ -26,6 +31,12 @@ public:
 	 *	描画処理
 	 */
 	void Render() override;
+
+public:
+	/*
+	 *	グラフハンドルのセット
+	 */
+	void SetGraphHandle(int setHandle);
 };
 
 #endif // !_RESISTTIMEGAUGEUI_H_

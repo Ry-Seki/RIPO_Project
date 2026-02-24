@@ -10,6 +10,7 @@
 #include "AmmoCountUI.h"
 #include "ReloadGaugeUI.h"
 #include "../../Manager/WeaponManager.h"
+#include "../../Manager/CameraManager.h"
 
 void ReticleUI::Initialize() {
 	LoadManager& load = LoadManager::GetInstance();
@@ -20,6 +21,9 @@ void ReticleUI::Initialize() {
 }
 
 void ReticleUI::Render() {
+	// ƒJƒƒ‰‚ª3lÌ‚È‚ç•\¦‚È‚µ
+	if (CameraManager::GetInstance().GetCameraState() == GameEnum::CameraState::TPS)
+		return;
 	auto weapon = WeaponManager::GetInstance().GetCurrentWeapon();
 	if (!weapon)
 		return;

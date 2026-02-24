@@ -7,6 +7,8 @@
 #include "../../Manager/WeaponManager.h"
 #include "../../GameConst.h"
 #include "../../Manager/FontManager.h"
+#include "../../Manager/CameraManager.h"
+#include "../../GameEnum.h"
 
 /*
  *	‰Šú‰»ˆ—
@@ -19,6 +21,9 @@ void AmmoCountUI::Initialize() {
  *	•`‰æˆ—
  */
 void AmmoCountUI::Render() {
+	// ƒJƒƒ‰‚ª3lÌ‚È‚ç•\¦‚È‚µ
+	if (CameraManager::GetInstance().GetCameraState() == GameEnum::CameraState::TPS)
+		return;
 	auto weapon = WeaponManager::GetInstance().GetCurrentWeapon();
 	if (!weapon)
 		return;

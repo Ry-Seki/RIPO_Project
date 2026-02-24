@@ -7,8 +7,21 @@
 #include "../../Component/Character/CharacterUtility.h"
 #include "../../System/Status/PlayerStatusManager.h"
 #include "../../GameConst.h"
+#include "../../Load/LoadManager.h"
+#include "../../Load/Sprite/LoadSprite.h"
 
 using namespace CharacterUtility;
+
+/*
+ *	初期化処理
+ */
+void ResistTimeGaugeUI::Initialize() {
+	LoadManager& load = LoadManager::GetInstance();
+	auto resistSprite = load.LoadResource<LoadSprite>(RESIST_PATH);
+	load.SetOnComplete([this, resistSprite]() {
+		SetGraphHandle(resistSprite->GetHandle());
+		});
+}
 
 /*
  *	描画処理
@@ -26,4 +39,14 @@ void ResistTimeGaugeUI::Render() {
 	float posEY = GameConst::WINDOW_HEIGHT * 0.95f;
 	// 描画
 	DrawBox(posSX, posSY, posEX, posEY, GetColor(213, 255, 147), TRUE);
+	float graphX = GameConst::WINDOW_WIDTH * 0.1f;
+	float graphY = GameConst::WINDOW_HEIGHT * 0.9f;
+	DrawGraph(graphX, graphY, resistTimeGraphHandle, TRUE);
+}
+
+/*
+ *	グラフハンドルのセット
+ */
+void ResistTimeGaugeUI::SetGraphHandle(int setHandle) {
+	resistTimeGraphHandle = setHandle;
 }

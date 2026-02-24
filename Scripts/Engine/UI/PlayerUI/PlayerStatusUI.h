@@ -11,8 +11,8 @@
 class PlayerStatusUI : public PlayerUIBase{
 private:
 	int HPGraphHandle = -1;
-	int StaminaGraphHandle = -1;
-	int StrengthGraphHandle = -1;
+	int staminaGraphHandle = -1;
+	int strengthGraphHandle = -1;
 
 	static constexpr const char* HP_PATH = "Res/PlayerUI/hp.png";
 	static constexpr const char* STAMINA_PATH = "Res/PlayerUI/stamina.png";

@@ -51,10 +51,10 @@ void PlayerStatusUI::Render() {
 	DrawGraph(graphPosX, posY, HPGraphHandle, TRUE);
 	posY = GameConst::WINDOW_HEIGHT * 0.15f;
 	FontManager::GetInstance().Draw("playerStatus", posX, posY, stamina + " / " + staminaMax, GetColor(255, 255, 0));
-	DrawGraph(graphPosX, posY, StaminaGraphHandle, TRUE);
+	DrawGraph(graphPosX, posY, staminaGraphHandle, TRUE);
 	posY = GameConst::WINDOW_HEIGHT * 0.25f;
 	FontManager::GetInstance().Draw("playerStatus", posX, posY, strength, GetColor(255, 0, 0));
-	DrawGraph(graphPosX, posY, StrengthGraphHandle, TRUE);
+	DrawGraph(graphPosX, posY, strengthGraphHandle, TRUE);
 
 }
 
@@ -63,6 +63,6 @@ void PlayerStatusUI::Render() {
  */
 void PlayerStatusUI::SetGraphHandle(int setHPHandle, int setStaminaHandle, int setStrengthHandle) {
 	HPGraphHandle = setHPHandle;
-	StaminaGraphHandle = setStaminaHandle;
-	StrengthGraphHandle = setStrengthHandle;
+	staminaGraphHandle = setStaminaHandle;
+	strengthGraphHandle = setStrengthHandle;
 }
