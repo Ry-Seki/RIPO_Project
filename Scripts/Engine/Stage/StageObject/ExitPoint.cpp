@@ -41,6 +41,14 @@ void ExitPoint::Update(float deltaTime) {
 			);
 		}
 	}
+	else {
+		// エフェクトが存在すれば停止
+		if (pViewingEffect) {
+			pViewingEffect->EffectStop();
+			pViewingEffect = nullptr;
+		}
+
+	}
 
 
 
