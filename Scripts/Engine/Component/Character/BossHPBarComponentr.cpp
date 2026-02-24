@@ -30,10 +30,10 @@ void BossHPBarComponent::Start()
 	if (camera == nullptr) return;
 	boss = GetOwner();
 	if (boss == nullptr) return;
-	maxHP = boss->GetComponent<BossComponent>()->GetBossMaxHP();
+	//maxHP = boss->GetComponent<BossComponent>()->GetBossMaxHP();
 	currentHP = maxHP;
 
-	displayHP = maxHP;
+	//displayHP = maxHP;
 }
 
 /*
@@ -93,7 +93,7 @@ void BossHPBarComponent::ShowHPBar()
 	VECTOR screenCenter = ConvWorldPosToScreenPos(headPos);
 
 	// カメラ裏なら表示しない
-	if (screenCenter.z > 0.999f || screenCenter.z < 0.9f) return;
+	if (screenCenter.z > 0.999f || screenCenter.z < 0.95f) return;
 
 	// 画面上の長さ（距離で計算）
 	float dx = screenRight.x - screenLeft.x;
