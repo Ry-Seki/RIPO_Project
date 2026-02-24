@@ -37,10 +37,6 @@ void ResultAction_Dungeon::Setup() {
 	inputHandle = false;
 	isStart = false;
 	ResultPlayerAction();
-	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fade, [this]() {
-		isStart = true;
-	});
 }
 /*
  *	@brief	XVˆ—

@@ -18,7 +18,7 @@ class LoadBase {
 protected:
 	std::string filePath;		// ファイルパス
 	bool isLoaded = false;		// 読み込み完了フラグ
-
+	
 public:
 	/*
 	 *	コンストラクタ

@@ -22,7 +22,6 @@ void InAction_PartTime::Initialize(Engine& engine) {
  */
 void InAction_PartTime::Setup() {
 	isStart = false;
-	// TODO : 難易度によってミニゲーム内容を変動させる
 	miniGame = miniGameList[0];
 	auto& context = owner->GetOwner()->GetActionContext();
 	miniGame->SetMiniGameLevel(context.miniGameLevel);

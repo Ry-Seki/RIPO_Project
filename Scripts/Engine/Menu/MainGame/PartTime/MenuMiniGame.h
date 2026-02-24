@@ -16,12 +16,20 @@
 
  // 前方宣言
 class Engine;
+class MiniGameBase;
 
 /*
  *	@brief	ミニゲームメニュー
  */
 class MenuMiniGame : public MenuBase {
+public:
+	using MiniGamePtr = std::shared_ptr<MiniGameBase>;
+
 private:
+	std::vector<MiniGamePtr> miniGameList;
+	MiniGamePtr miniGame = nullptr;
+	GameEnum::MiniGameLevel level = GameEnum::MiniGameLevel::Invalid;
+
 	float animTimer = 0.0f;
 	int animFrame = 0;
 
@@ -86,6 +94,12 @@ public:
 	inline void SetCallback(std::function<void()> setCallback) {
 		Callback = setCallback;
 	}
-
+	/*
+	 *	@brief		ミニゲーム難易度の設定
+	 *	@param[in]	GameEnum::MiniGameLevel setLevel
+	 */
+	inline void SetMiniGameLevel(GameEnum::MiniGameLevel setLevel) {
+		level = setLevel;
+	}
 };
 #endif // !_MENU_MINI_GAME_H_
