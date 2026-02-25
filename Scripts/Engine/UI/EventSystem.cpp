@@ -41,19 +41,15 @@ void EventSystem::Update(float unscaledDeltaTime) {
 	} else {
 		if (horizontal < 0.0f) {
 			isInput = true;
-			AudioUtility::PlaySE("SelectSE");
 			nextIndex = FindNextEnableButton(currentIndex, GameEnum::NavigationDir::Left);
 		} else if (horizontal > 0.0f) {
 			isInput = true;
-			AudioUtility::PlaySE("SelectSE");
 			nextIndex = FindNextEnableButton(currentIndex, GameEnum::NavigationDir::Right);
 		} else if (vertical > 0.0f) {
 			isInput = true;
-			AudioUtility::PlaySE("SelectSE");
 			nextIndex = FindNextEnableButton(currentIndex, GameEnum::NavigationDir::Up);
 		} else if (vertical < 0.0f) {
 			isInput = true;
-			AudioUtility::PlaySE("SelectSE");
 			nextIndex = FindNextEnableButton(currentIndex, GameEnum::NavigationDir::Down);
 		}
 	}
@@ -99,10 +95,22 @@ int EventSystem::FindNextEnableButton(int fromIndex, GameEnum::NavigationDir dir
 		int next = -1;
 		// •ûŒü‚É‚æ‚Á‚Äs‚«æ‚ðŒˆ’è
 		switch (dir) {
-			case GameEnum::NavigationDir::Left:  next = navigation.left;  break;
-			case GameEnum::NavigationDir::Right: next = navigation.right; break;
-			case GameEnum::NavigationDir::Up:    next = navigation.up;    break;
-			case GameEnum::NavigationDir::Down:  next = navigation.down;  break;
+			case GameEnum::NavigationDir::Left: 
+				AudioUtility::PlaySE("SelectSE");
+				next = navigation.left;
+				break;
+			case GameEnum::NavigationDir::Right:
+				AudioUtility::PlaySE("SelectSE");
+				next = navigation.right;
+				break;
+			case GameEnum::NavigationDir::Up:
+				AudioUtility::PlaySE("SelectSE");
+				next = navigation.up;
+				break;
+			case GameEnum::NavigationDir::Down:
+				AudioUtility::PlaySE("SelectSE");
+				next = navigation.down;
+				break;
 		}
 		// •ûŒü‚ª–³Œø‚È”Žš‚Ìê‡A”²‚¯‚é
 		if (next < 0 || next >= buttonList.size()) break;

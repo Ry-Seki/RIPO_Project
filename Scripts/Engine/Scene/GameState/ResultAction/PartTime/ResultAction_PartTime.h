@@ -8,14 +8,16 @@
 
 #include "../ResultActionBase.h"
 #include "../../../../GameEnum.h"
+#include "../../../../JSON.h"
+
+#include <vector>
 
 /*
  *	@brief	アルバイトアクションリザルト
  */
 class ResultAction_PartTime : public ResultActionBase {
 private:
-	const int _INCOME = 50;
-	
+	std::vector<int> rewardList;
 	static constexpr const char* _SOKOBAN_REWARD_PATH = "Data/MiniGame/Sokoban/SokobanReward.json";
 
 public:
@@ -45,7 +47,11 @@ public:
 	void AdvanceDay() override;
 
 private:
-
+	/*
+	 *	@brief		JSON->rewardListに変換
+	 *	@param[in]	const JSON& json
+	 */
+	void ToRewardList(const JSON& json);
 
 };
 

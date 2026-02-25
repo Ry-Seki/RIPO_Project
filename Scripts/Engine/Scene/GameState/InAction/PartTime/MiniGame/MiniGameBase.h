@@ -46,6 +46,10 @@ public:
 	 *	@brief	ミニゲーム終了時処理
 	 */
 	virtual void Close() { isComplete = true; }
+	/*
+	 *	@brief	リセット処理
+	 */
+	virtual void Reset() {}
 
 public:
 	/*

@@ -12,43 +12,46 @@
 #include "../../../../System/Money/MoneyManager.h"
 #include "../../../../Load/JSON/LoadJSON.h"
 #include "../../../../Load/LoadManager.h"
+#include "../../../../Menu/MenuManager.h"
+#include "../../../../Menu/MainGame/Money/MenuMoneyChange.h"
 
 /*
  *	@brief	初期化処理
  */
 void ResultAction_PartTime::Initialize() {
 	auto& load = LoadManager::GetInstance();
+	auto& menu = MenuManager::GetInstance();
+	auto money = menu.GetMenu<MenuMoneyChange>();
 	auto reward = load.LoadResource<LoadJSON>(_SOKOBAN_REWARD_PATH);
+	load.SetOnComplete([this, reward]() {
+		ToRewardList(reward->GetData());
+	});
+	money->SetCallback([this]() {
+		AdvanceDay();
+	});
 }
 /*
  *	@brief	準備前処理
  */
 void ResultAction_PartTime::Setup() {
-	inputHandle = false;
-	FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fade, [this]() {
-		auto& context = owner->GetOwner()->GetActionContext();
-		// TODO:ここは難易度によって変動させる
-		MoneyManager::GetInstance().AddMoney(_INCOME);
-	});
+	auto& menu = MenuManager::GetInstance();
+	auto& context = owner->GetOwner()->GetActionContext();
+	int reward = static_cast<int>(context.miniGameLevel);
+	MoneyManager::GetInstance().AddMoney(rewardList[reward]);
+	auto money = menu.GetMenu<MenuMoneyChange>();
+	money->SetCurrentMoney(MoneyManager::GetInstance().GetCurrentMoney());
+	money->SetPrevMoney(context.prevIncome);
+	menu.OpenMenu<MenuMoneyChange>();
 }
 /*
  *	@brief	更新処理
  */
 void ResultAction_PartTime::Update(float deltaTime) {
-	if (!inputHandle && CheckHitKey(KEY_INPUT_SPACE)) {
-		// SEの再生
-		AudioUtility::PlaySE("DebugSE");
-		inputHandle = true;
-		AdvanceDay();
-	}
 }
 /*
  *	@brief	描画処理
  */
 void ResultAction_PartTime::Render() {
-	DrawFormatString(50, 50, GetColor(255, 255, 255), "GameClear!");
-	DrawFormatString(50, 180, GetColor(255, 255, 255), "次の日に進む->SpaceKey");
 }
 /*
  *	@brief	片付け処理
@@ -71,4 +74,20 @@ void ResultAction_PartTime::AdvanceDay() {
 	}
 	// アクション終了フラグの変更
 	owner->GetOwner()->SetIsActionEnd(true);
+}
+/*
+ *	@brief		JSON->rewardListに変換
+ *	@param[in]	const JSON& json
+ */
+void ResultAction_PartTime::ToRewardList(const JSON& json) {
+	rewardList.resize(static_cast<int>(GameEnum::MiniGameLevel::Max));
+
+	rewardList[static_cast<int>(GameEnum::MiniGameLevel::Easy)]
+		= json.value("Easy", 0);
+	rewardList[static_cast<int>(GameEnum::MiniGameLevel::Normal)]
+		= json.value("Normal", 0);
+	rewardList[static_cast<int>(GameEnum::MiniGameLevel::Hard)]
+		= json.value("Hard", 0);
+	rewardList[static_cast<int>(GameEnum::MiniGameLevel::Retire)] 
+		= json.value("Retire", 0);
 }
