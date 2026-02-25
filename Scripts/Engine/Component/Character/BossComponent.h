@@ -39,6 +39,8 @@ private:
 	bool hitFlag = false;
 	// ’èˆÊ’u
 	Vector3 homePosition;
+	// ˆÚ“®—Ê
+	Vector3 moveVec;
 
 public:
 	/*

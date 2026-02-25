@@ -7,6 +7,7 @@
 #include "BossStandby.h"
 #include "PlayerComponent.h"
 #include "../../Manager/CameraManager.h"
+#include "../../Manager/StageManager.h"
 #include "BossDeath.h"
 #include "BossChase.h"
 #include "BulletComponent.h"
@@ -34,6 +35,7 @@ BossComponent::BossComponent(BossState* initState)
 	, moveFrag(false)
 	, hitFlag(false)
 	, homePosition(Vector3::zero)
+	, moveVec(Vector3::zero)
 {
 }
 
@@ -82,10 +84,16 @@ void BossComponent::Start()
  */
 void BossComponent::Update(float deltaTime)
 {
+	// 移動量を初期化
+	moveVec = Vector3::zero;
+
 	if (state == nullptr || boss == nullptr) return;
 	state->Update(boss, deltaTime);
 
 	coolTime -= deltaTime;
+
+	// ステージとの当たり判定
+	StageManager::GetInstance().StageCollider(boss, moveVec);
 }
 
 /*

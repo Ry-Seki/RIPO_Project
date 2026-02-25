@@ -48,6 +48,8 @@ void BossChase::Start(GameObject* boss) {
  *  param[in]	float		deltaTime
  */
 void BossChase::Update(GameObject* boss, float deltaTime) {
+	// 移動量を初期化
+	moveVec = Vector3::zero;
 	// モデルハンドルのセット
 	auto modelRenderer = boss->GetComponent<ModelRenderer>()->GetModelHandle();
 	if (modelRenderer == -1) return;
@@ -104,9 +106,15 @@ void BossChase::ChaseWayPoint(GameObject* boss, Vector3 wayPoint, float deltaTim
 	}
 
 	auto distance = Distance(wayPoint, boss->position);
+	float moveX = 0;
+	float moveZ = 0;
 	// プレイヤーの手前で止まる
 	if (player && wayPoint == player->position) {
-		boss->position.x += direction.x * MOVE_SPEED * deltaTime;
-		boss->position.z += direction.z * MOVE_SPEED * deltaTime;
+		moveX += direction.x * MOVE_SPEED * deltaTime;
+		moveZ += direction.z * MOVE_SPEED * deltaTime;
+		boss->position.x += moveX;
+		boss->position.z += moveZ;
 	}
+	// 移動量を更新
+	moveVec = { moveX,0.0f,moveZ };
 }
