@@ -79,6 +79,7 @@ namespace GameEnum {
 		Easy,			// 簡単
 		Normal,			// 普通
 		Hard,			// 難しい
+		Retire,			// リタイア
 		Max
 	};
 	/*

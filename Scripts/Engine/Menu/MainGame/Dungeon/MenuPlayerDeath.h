@@ -74,8 +74,7 @@ public:
 
 private:
 	/*
-	 *	@brief		ボタンの押された時の処理
-	 *	@param[in]	int buttonIndex
+	 *	@brief	ボタンの押された時の処理
 	 */
 	void SelectButtonExecute(Engine& engine);
 

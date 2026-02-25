@@ -215,6 +215,7 @@
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuInGame.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Money\MenuMoneyChange.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\PartTime\MenuMiniGame.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\PartTime\MenuSelectMiniGameLevel.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.cpp" />

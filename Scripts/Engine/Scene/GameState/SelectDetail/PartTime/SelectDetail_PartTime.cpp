@@ -11,6 +11,7 @@
 #include "../../../../Audio/AudioUtility.h"
 #include "../../../../Menu/MenuManager.h"
 #include "../../../../Menu/MainGame/PartTime/MenuSelectMiniGameLevel.h"
+#include "../../../../System/Money/MoneyManager.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -56,6 +57,7 @@ void SelectDetail_PartTime::Teardown() {
 void SelectDetail_PartTime::DecideMiniGameLevel(GameEnum::MiniGameLevel level) {
 	auto& context = owner->GetOwner()->GetActionContext();
 	context.miniGameLevel = level;
+	context.prevIncome = MoneyManager::GetInstance().GetCurrentMoney();
 	if (level == GameEnum::MiniGameLevel::Invalid) {
 		owner->GetOwner()->ChageState(GameEnum::GameState::SelectAction);
 	} else {

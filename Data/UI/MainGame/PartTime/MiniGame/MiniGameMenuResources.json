@@ -1,0 +1,62 @@
+{
+  "Sprites": [
+    {
+      "Name": "BackGround",
+      "Rect": {
+        "X": 0,
+        "Y": 0,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/BackGround/Trealine_LoadBackground_black1.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black2.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black3.jpg"
+      ]
+    },
+    {
+      "Name": "MiniGame",
+      "Rect": {
+        "X": 387,
+        "Y": 58,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/Menu/MainGame/PartTime/MiniGame/Trealine_PartTime_MiniGame.png"
+      ]
+    }
+  ],
+    "Buttons" :[
+      {
+        "Name": "Reset",
+        "Type": "Single",
+        "Rect": {
+          "X": 930,
+          "Y": 867,
+          "Width": 202,
+          "Height": 52
+        },
+        "Resources": {
+          "Idle": "Res/Menu/MainGame/PartTime/MiniGame/Trealine_MiniGame_ResetButton.png",
+          "Hover": "Res/Menu/MainGame/PartTime/MiniGame/Trealine_MiniGame_ResetButton_Hover.png",
+          "Press": "Res/Menu/MainGame/PartTime/MiniGame/Trealine_MiniGame_ResetButton_Press.png"
+        }
+      },
+      {
+        "Name": "Retire",
+        "Type": "Single",
+        "Rect": {
+          "X": 1216,
+          "Y": 867,
+          "Width": 202,
+          "Height": 52
+        },
+        "Resources": {
+          "Idle": "Res/Menu/MainGame/PartTime/MiniGame/Trealine_MiniGame_RetireButton.png",
+          "Hover": "Res/Menu/MainGame/PartTime/MiniGame/Trealine_MiniGame_RetireButton_Hover.png",
+          "Press": "Res/Menu/MainGame/PartTime/MiniGame/Trealine_MiniGame_RetireButton_Press.png"
+        }
+      }
+    ]
+}

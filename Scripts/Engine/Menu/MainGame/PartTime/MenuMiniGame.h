@@ -16,12 +16,20 @@
 
  // 前方宣言
 class Engine;
+class MiniGameBase;
 
 /*
  *	@brief	ミニゲームメニュー
  */
 class MenuMiniGame : public MenuBase {
+public:
+	using MiniGamePtr = std::shared_ptr<MiniGameBase>;
+
 private:
+	std::vector<MiniGamePtr> miniGameList;
+	MiniGamePtr miniGame = nullptr;
+	GameEnum::MiniGameLevel level = GameEnum::MiniGameLevel::Invalid;
+
 	float animTimer = 0.0f;
 	int animFrame = 0;
 
@@ -30,10 +38,10 @@ private:
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 
-	std::function<void()> Callback = nullptr;
+	std::function<void(GameEnum::MiniGameLevel)> Callback = nullptr;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Dungeon/Result/PlayerDeathMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Dungeon/Result/PlayerDeathMenuNavigation.json";
+	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/PartTime/MiniGame/MiniGameMenuResources.json";
+	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/PartTime/MiniGame/MiniGameMenuNavigation.json";
 
 public:
 	/*
@@ -76,16 +84,22 @@ private:
 	 *	@brief		ボタンの押された時の処理
 	 *	@param[in]	int buttonIndex
 	 */
-	void SelectButtonExecute(Engine& engine);
+	void SelectButtonExecute(Engine& engine, int buttonIndex);
 
 public:
 	/*
 	 *	@brief		コールバックの設定
-	 *	@param[in]	std::function<void()> setCallback
+	 *	@param[in]	std::function<void(GameEnum::MiniGameLevel)> setCallback
 	 */
-	inline void SetCallback(std::function<void()> setCallback) {
+	inline void SetCallback(std::function<void(GameEnum::MiniGameLevel)> setCallback) {
 		Callback = setCallback;
 	}
-
+	/*
+	 *	@brief		ミニゲーム難易度の設定
+	 *	@param[in]	GameEnum::MiniGameLevel setLevel
+	 */
+	inline void SetMiniGameLevel(GameEnum::MiniGameLevel setLevel) {
+		level = setLevel;
+	}
 };
 #endif // !_MENU_MINI_GAME_H_

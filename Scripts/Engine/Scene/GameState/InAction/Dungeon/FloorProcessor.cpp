@@ -233,6 +233,7 @@ void FloorProcessor::EndDungeon() {
 	isEventDay = false;
 	isDungeonStart = false;
 	enemyFloorList.clear();
+	// TODO : ˆá‚¤ƒ_ƒ“ƒWƒ‡ƒ“‚¾‚Á‚½Žž‚Ì‚Ý‚É‚·‚é
 	resourceData.ClearResourceData();
 	stageData.ClearDungeonStageMap();
 	dungeonCreater.Teardown();
