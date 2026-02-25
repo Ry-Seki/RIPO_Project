@@ -12,11 +12,8 @@
 #include "BossAttack.h"
 #include "BossShootingAttack.h"
 #include "../../Stage/StageUtility.h"
-#include "../../Load/Audio/LoadAudio.h"
-#include "../../Audio/AudioUtility.h"
 
 using namespace StageUtility;
-using namespace AudioUtility;
 
 /*
  *	コンストラクタ
@@ -43,12 +40,6 @@ void BossChase::Start(GameObject* boss) {
 	if (animator == nullptr) return;
 
 	boss->GetComponent<BossComponent>()->SetMoveFrag(true);
-
-	// 効果音の読み込み
-	auto bossWalkSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/BossWalkSE.mp3");
-	LoadManager::GetInstance().SetOnComplete([this, bossWalkSE]() {
-		AudioUtility::RegisterSEHandle("bossWalkSE", bossWalkSE->GetHandle());
-		});
 }
 
 /*
@@ -57,6 +48,8 @@ void BossChase::Start(GameObject* boss) {
  *  param[in]	float		deltaTime
  */
 void BossChase::Update(GameObject* boss, float deltaTime) {
+	// 移動量を初期化
+	moveVec = Vector3::zero;
 	// モデルハンドルのセット
 	auto modelRenderer = boss->GetComponent<ModelRenderer>()->GetModelHandle();
 	if (modelRenderer == -1) return;
@@ -68,7 +61,7 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 	coolTimeSE -= deltaTime;
 	if (coolTimeSE < 0) {
 		// 歩行音を再生
-		PlaySE("bossWalkSE");
+		AudioUtility::PlaySE("bossWalkSE");
 		coolTimeSE = 1.5f;
 	}
 
@@ -113,9 +106,15 @@ void BossChase::ChaseWayPoint(GameObject* boss, Vector3 wayPoint, float deltaTim
 	}
 
 	auto distance = Distance(wayPoint, boss->position);
+	float moveX = 0;
+	float moveZ = 0;
 	// プレイヤーの手前で止まる
 	if (player && wayPoint == player->position) {
-		boss->position.x += direction.x * MOVE_SPEED * deltaTime;
-		boss->position.z += direction.z * MOVE_SPEED * deltaTime;
+		moveX += direction.x * MOVE_SPEED * deltaTime;
+		moveZ += direction.z * MOVE_SPEED * deltaTime;
+		boss->position.x += moveX;
+		boss->position.z += moveZ;
 	}
+	// 移動量を更新
+	moveVec = { moveX,0.0f,moveZ };
 }

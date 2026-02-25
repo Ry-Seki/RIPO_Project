@@ -19,6 +19,8 @@ private:
 	int modelHandle;
 	// SEの間隔
 	float coolTimeSE;
+	// 移動量
+	Vector3 moveVec;
 
 	// 近距離攻撃用プレイヤー検知距離
 	const float PLAYER_DISTANCE;

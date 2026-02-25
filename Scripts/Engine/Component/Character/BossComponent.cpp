@@ -7,6 +7,7 @@
 #include "BossStandby.h"
 #include "PlayerComponent.h"
 #include "../../Manager/CameraManager.h"
+#include "../../Manager/StageManager.h"
 #include "BossDeath.h"
 #include "BossChase.h"
 #include "BulletComponent.h"
@@ -34,6 +35,7 @@ BossComponent::BossComponent(BossState* initState)
 	, moveFrag(false)
 	, hitFlag(false)
 	, homePosition(Vector3::zero)
+	, moveVec(Vector3::zero)
 {
 }
 
@@ -63,6 +65,18 @@ void BossComponent::Start()
 	state->Start(boss);
 
 	animator->LoadIndex(true);
+
+	// 効果音の読み込み
+	auto bossAttackSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/BossAttackSE.mp3");
+	auto bossShootActiveSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/BossShootActiveSE.mp3");
+	auto bossShootAttackSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/BossShootAttackSE.mp3");
+	auto bossWalkSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/BossWalkSE.mp3");
+	LoadManager::GetInstance().SetOnComplete([this, bossAttackSE, bossShootActiveSE, bossShootAttackSE, bossWalkSE]() {
+		AudioUtility::RegisterSEHandle("bossAttackSE", bossAttackSE->GetHandle());
+		AudioUtility::RegisterSEHandle("bossShootActiveSE", bossShootActiveSE->GetHandle());
+		AudioUtility::RegisterSEHandle("bossShootAttackSE", bossShootAttackSE->GetHandle());
+		AudioUtility::RegisterSEHandle("bossWalkSE", bossWalkSE->GetHandle());
+		});
 }
 
 /*
@@ -70,10 +84,16 @@ void BossComponent::Start()
  */
 void BossComponent::Update(float deltaTime)
 {
+	// 移動量を初期化
+	moveVec = Vector3::zero;
+
 	if (state == nullptr || boss == nullptr) return;
 	state->Update(boss, deltaTime);
 
 	coolTime -= deltaTime;
+
+	// ステージとの当たり判定
+	StageManager::GetInstance().StageCollider(boss, moveVec);
 }
 
 /*

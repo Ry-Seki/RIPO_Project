@@ -58,6 +58,13 @@ void EnemyComponent::Start() {
 	// モデルハンドルのセット
 	animator->SetModelHandle(modelHandle);
 
+	// 効果音を読み込む
+	auto enemyAttackSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/EnemyAttackSE.mp3");
+	auto enemyWalkSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/EnemyWalkSE.mp3");
+	LoadManager::GetInstance().SetOnComplete([this, enemyAttackSE, enemyWalkSE]() {
+		AudioUtility::RegisterSEHandle("enemyAttackSE", enemyAttackSE->GetHandle());
+		AudioUtility::RegisterSEHandle("enemyWalkSE", enemyWalkSE->GetHandle());
+		});
 }
 
 /*
