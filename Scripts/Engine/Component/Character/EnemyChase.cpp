@@ -10,10 +10,6 @@
 #include "EnemyAttack.h"
 #include "../ModelRenderer.h"
 #include "EnemyStandby.h"
-#include "../../Load/Audio/LoadAudio.h"
-#include "../../Audio/AudioUtility.h"
-
-using namespace AudioUtility;
 
  /*
   *	コンストラクタ
@@ -53,12 +49,6 @@ void EnemyChase::Start(GameObject* enemy) {
 		viewAngle = 180;
 		enemyComponent->SetAttackFlag(false);
 	}
-
-	// 効果音の読み込み
-	auto enemyWalkSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/EnemyWalkSE.mp3");
-	LoadManager::GetInstance().SetOnComplete([this, enemyWalkSE]() {
-		AudioUtility::RegisterSEHandle("enemyWalkSE", enemyWalkSE->GetHandle());
-		});
 }
 
 /*
@@ -120,7 +110,7 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 		// SEのクールタイム
 		if (coolTimeSE < 0) {
 			// 歩行音を再生
-			PlaySE("enemyWalkSE");
+			AudioUtility::PlaySE("enemyWalkSE");
 			// プレイヤー追跡中はSEの間隔を短くする
 			if (player && wayPoint == player->position) {
 				coolTimeSE = 0.3;

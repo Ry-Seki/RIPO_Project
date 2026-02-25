@@ -63,6 +63,18 @@ void BossComponent::Start()
 	state->Start(boss);
 
 	animator->LoadIndex(true);
+
+	// å¯â âπÇÃì«Ç›çûÇ›
+	auto bossAttackSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/BossAttackSE.mp3");
+	auto bossShootActiveSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/BossShootActiveSE.mp3");
+	auto bossShootAttackSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/BossShootAttackSE.mp3");
+	auto bossWalkSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/BossWalkSE.mp3");
+	LoadManager::GetInstance().SetOnComplete([this, bossAttackSE, bossShootActiveSE, bossShootAttackSE, bossWalkSE]() {
+		AudioUtility::RegisterSEHandle("bossAttackSE", bossAttackSE->GetHandle());
+		AudioUtility::RegisterSEHandle("bossShootActiveSE", bossShootActiveSE->GetHandle());
+		AudioUtility::RegisterSEHandle("bossShootAttackSE", bossShootAttackSE->GetHandle());
+		AudioUtility::RegisterSEHandle("bossWalkSE", bossWalkSE->GetHandle());
+		});
 }
 
 /*

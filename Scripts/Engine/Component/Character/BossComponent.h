@@ -11,6 +11,8 @@
 #include "../ModelRenderer.h"
 #include "../../Manager/EnemyDataManager.h"
 #include "../../GameEnum.h"
+#include "../../Load/Audio/LoadAudio.h"
+#include "../../Audio/AudioUtility.h"
 
 class BossComponent : public CharacterBase {
 private:

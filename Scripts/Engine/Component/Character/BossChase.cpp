@@ -12,11 +12,8 @@
 #include "BossAttack.h"
 #include "BossShootingAttack.h"
 #include "../../Stage/StageUtility.h"
-#include "../../Load/Audio/LoadAudio.h"
-#include "../../Audio/AudioUtility.h"
 
 using namespace StageUtility;
-using namespace AudioUtility;
 
 /*
  *	コンストラクタ
@@ -43,12 +40,6 @@ void BossChase::Start(GameObject* boss) {
 	if (animator == nullptr) return;
 
 	boss->GetComponent<BossComponent>()->SetMoveFrag(true);
-
-	// 効果音の読み込み
-	auto bossWalkSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/BossWalkSE.mp3");
-	LoadManager::GetInstance().SetOnComplete([this, bossWalkSE]() {
-		AudioUtility::RegisterSEHandle("bossWalkSE", bossWalkSE->GetHandle());
-		});
 }
 
 /*
@@ -68,7 +59,7 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 	coolTimeSE -= deltaTime;
 	if (coolTimeSE < 0) {
 		// 歩行音を再生
-		PlaySE("bossWalkSE");
+		AudioUtility::PlaySE("bossWalkSE");
 		coolTimeSE = 1.5f;
 	}
 
