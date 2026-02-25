@@ -134,11 +134,11 @@ Vector3 StageManager::GetStartPos() const {
 	// jsonファイルの文字列がなかった場合のnullCheck
 	if (
 		!json.contains(GameConst::_CREATE_POSNAME_PLAYER) ||
-		!json[GameConst::_CREATE_POSNAME_PLAYER].contains("StartPos")
+		!json[GameConst::_CREATE_POSNAME_PLAYER].contains(GameConst::_CREATE_POSITION_STARTPOS)
 		)
 		return Vector3();
 
-	std::string frameName = json[GameConst::_CREATE_POSNAME_PLAYER]["StartPos"];
+	std::string frameName = json[GameConst::_CREATE_POSNAME_PLAYER][GameConst::_CREATE_POSITION_STARTPOS];
 	// string型→const char* 型への型変換
 	const char* cstr = frameName.c_str();
 
@@ -172,12 +172,12 @@ std::vector<Vector3> StageManager::GetGoalPos() const {
 	// jsonファイルの文字列がなかった場合のnullCheck
 	if (
 		!json.contains(GameConst::_CREATE_POSNAME_PLAYER) ||
-		!json[GameConst::_CREATE_POSNAME_PLAYER].contains("GoalPos")
+		!json[GameConst::_CREATE_POSNAME_PLAYER].contains(GameConst::_CREATE_POSITION_GOALPOS)
 		)
 		return result;
 
 	// フレーム名を取得
-	std::string framName = json[GameConst::_CREATE_POSNAME_PLAYER]["GoalPos"];
+	std::string framName = json[GameConst::_CREATE_POSNAME_PLAYER][GameConst::_CREATE_POSITION_GOALPOS];
 
 	// string型→const char* 型への型変換
 	const char* cstr = framName.c_str();
@@ -213,11 +213,11 @@ std::unordered_map<int, Vector3> StageManager::GetEnemySpwanPos() const {
 
 	// EnemyのSpawnPosが存在しなければ空で返す
 	if (!json.contains(GameConst::_CREATE_POSNAME_ENEMY) ||
-		!json[GameConst::_CREATE_POSNAME_ENEMY].contains("SpawnPos")) {
+		!json[GameConst::_CREATE_POSNAME_ENEMY].contains(GameConst::_CREATE_POSITION_SPAWN)) {
 		return enemySpawnPosition;
 	}
 
-	const auto& spawnRoot = json[GameConst::_CREATE_POSNAME_ENEMY]["SpawnPos"];
+	const auto& spawnRoot = json[GameConst::_CREATE_POSNAME_ENEMY][GameConst::_CREATE_POSITION_SPAWN];
 
 	if (spawnRoot.is_object()) {
 
@@ -297,11 +297,11 @@ std::unordered_map<int, Vector3> StageManager::GetBossSpwanPos() const {
 
 	// ボスのSpawnPosが存在しなければ空で返す
 	if (!json.contains(GameConst::_CREATE_POSNAME_ENEMY) ||
-		!json[GameConst::_CREATE_POSNAME_ENEMY].contains("BossSpawnPos")) {
+		!json[GameConst::_CREATE_POSNAME_ENEMY].contains(GameConst::_CREATE_POSITION_BOSSSPAWN)) {
 		return bossSpawnPosition;
 	}
 
-	const auto& spawnRoot = json[GameConst::_CREATE_POSNAME_ENEMY]["BossSpawnPos"];
+	const auto& spawnRoot = json[GameConst::_CREATE_POSNAME_ENEMY][GameConst::_CREATE_POSITION_BOSSSPAWN];
 
 	if (spawnRoot.is_object()) {
 		// 中身がすべてstringの場合は旧形式として扱う
@@ -330,7 +330,7 @@ std::unordered_map<int, Vector3> StageManager::GetBossSpwanPos() const {
 				// 連想配列に追加
 				bossSpawnPosition.emplace(enemyID, FromVECTOR(framePos));
 			}
-
+			// ボスの出現位置を返す
 			return bossSpawnPosition;
 		}
 	}
@@ -360,6 +360,7 @@ std::unordered_map<int, Vector3> StageManager::GetBossSpwanPos() const {
 		}
 	}
 
+	// ボスの出現位置を返す
 	return bossSpawnPosition;
 
 }
@@ -413,6 +414,7 @@ std::unordered_map<int, Vector3> StageManager::GetTreasureSpawnPos(int setValue)
 		treasureSpawnPositions.emplace(treasureID, FromVECTOR(framePos));
 	}
 
+	// 座標の位置を返す
 	return treasureSpawnPositions;
 
 }
@@ -430,8 +432,8 @@ std::vector<Vector3> StageManager::GetPointLightPos()const {
 	if (modelHandle == -1) return result;
 
 	// jsonから座標を取得
-	if (json.contains(GameConst::_CREATE_POSNAME_LIGHT) && json[GameConst::_CREATE_POSNAME_LIGHT].contains("LightPos")) {
-		auto spawnArray = json[GameConst::_CREATE_POSNAME_LIGHT]["LightPos"];
+	if (json.contains(GameConst::_CREATE_POSNAME_LIGHT) && json[GameConst::_CREATE_POSNAME_LIGHT].contains(GameConst::_CREATE_POSITION_LIGHTPOS)) {
+		auto spawnArray = json[GameConst::_CREATE_POSNAME_LIGHT][GameConst::_CREATE_POSITION_LIGHTPOS];
 		for (const auto& frameNameJson : spawnArray) {
 			std::string frameName = frameNameJson.get<std::string>();
 			int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
@@ -461,11 +463,11 @@ std::vector<Vector3> StageManager::GetStairsPos() const {
 
 	// jsonから階段の位置を取得
 	if (!json.contains(GameConst::_CREATE_POSNAME_PLAYER) ||
-		!json[GameConst::_CREATE_POSNAME_PLAYER].contains("StairsPos")) {
+		!json[GameConst::_CREATE_POSNAME_PLAYER].contains(GameConst::_CREATE_POSITION_STAIRPOS)) {
 		return result;
 	}
 
-	const auto& stairsJson = json[GameConst::_CREATE_POSNAME_PLAYER]["StairsPos"];
+	const auto& stairsJson = json[GameConst::_CREATE_POSNAME_PLAYER][GameConst::_CREATE_POSITION_STAIRPOS];
 	std::vector<std::string>frameNames;
 
 	if (stairsJson.is_string()) {

@@ -33,11 +33,12 @@ void ExitPoint::Update(float deltaTime) {
 	// プレイヤーと出口の距離
 	float distance = Distance(player->position, GetOwner()->position);
 
+	// エフェクト再生
 	if (distance < viewRadius) {
 		if (!pViewingEffect) {
 			pViewingEffect = EffectManager::GetInstance().Instantiate(
-				effectName,
-				GetOwner()->position
+				effectName,				// 再生したいエフェクトの名前
+				GetOwner()->position	// 再生する位置
 			);
 		}
 	}
@@ -50,9 +51,6 @@ void ExitPoint::Update(float deltaTime) {
 
 	}
 
-
-
-	// エフェクト再生
 }
 
 // 出口の衝突イベント
@@ -61,7 +59,7 @@ void ExitPoint::OnCollision(const std::shared_ptr<Component>& self, const std::s
 	if (exitTriger || other->GetOwner()->name != GameConst::_CREATE_POSNAME_PLAYER)
 		return;
 
-	 
+
 
 	// 衝突済みにする
 	exitTriger = true;
