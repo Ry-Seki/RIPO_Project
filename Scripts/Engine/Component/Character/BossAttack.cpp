@@ -21,6 +21,7 @@ BossAttack::BossAttack()
 	, FirstEffectFlag(false)
 	, FirstSEFlag(false)
 	, MAX_COOL_TIME(3)
+	, ANIMATION_SPEED(1250)
 {
 }
 
@@ -54,7 +55,8 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
 
-	animator->Play(3, 1250 * deltaTime);
+	//auto animations = ANIMATION_SPEED * deltaTime;
+	animator->Play(3, ANIMATION_SPEED * deltaTime);
 
 	// UŒ‚‚Ì“–‚½‚è”»’è
 	auto aabbCollider = boss->GetComponent<AABBCollider>();

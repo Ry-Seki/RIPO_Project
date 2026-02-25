@@ -21,6 +21,7 @@ private:
 	bool FirstSEFlag;
 
 	const float MAX_COOL_TIME;
+	const float ANIMATION_SPEED;
 
 public:
 	/*

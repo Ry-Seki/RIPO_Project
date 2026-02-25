@@ -89,7 +89,11 @@ void EnemyTurn::Update(GameObject* enemy, float deltaTime) {
 	}
 
 	// Ž‹ŠE”»’è
-	if (player && Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, 30, 2000)) {
+	if (player && Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, 60, 3000)) {
+		enemyComponent->SetState(new EnemyChase());
+	}
+	// ”íƒ_ƒ”»’è
+	if (enemyComponent->GetHitFlag()) {
 		enemyComponent->SetState(new EnemyChase());
 	}
 }
