@@ -12,11 +12,11 @@
 
 class ExitPoint : public StageObjectBase {
 private:
-	// 脱出フラグ
-	bool exitTriger = false;
+	bool exitTriger = false;					// 脱出フラグ
+	bool onTrigger = false;						// 衝突検知フラグ
 	std::string effectName = "GoalEffect";		// 再生するエフェクトの名前
-	EffectComponent* pViewingEffect;		// 表示用エフェクト
-	float viewRadius;						// エフェクト表示圏内
+	EffectComponent* pViewingEffect;			// 表示用エフェクト
+	float viewRadius;							// エフェクト表示圏内
 public:
 	/*
 	 *	コンストラクタ
