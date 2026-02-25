@@ -340,9 +340,6 @@
     <Filter Include="ヘッダー ファイル\Engine\Menu\Result">
       <UniqueIdentifier>{a0acf34b-48a2-4142-b465-1fe006130abc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\UI\Button\PlayerUI">
-      <UniqueIdentifier>{4a377cb4-b6a1-41cf-8ea4-71c1f2ff6190}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ヘッダー ファイル\Data\Result">
       <UniqueIdentifier>{efa82e4e-4707-44a5-bbc6-bd1d5bb83c85}</UniqueIdentifier>
     </Filter>
@@ -381,6 +378,18 @@
     </Filter>
     <Filter Include="ソース ファイル\Engine\Menu\MainGame\PartTime">
       <UniqueIdentifier>{cc774162-245d-42b6-a988-ae8bc58408b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\UI\PlayerUI">
+      <UniqueIdentifier>{4a377cb4-b6a1-41cf-8ea4-71c1f2ff6190}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\UI\Sprite">
+      <UniqueIdentifier>{0e08820e-3d26-4b06-b4bc-9bb450c834a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\UI\Sprite">
+      <UniqueIdentifier>{79a4d307-5c51-46b9-a19f-fae4cffb6149}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\UI\Font">
+      <UniqueIdentifier>{401e9360-a062-4b01-b705-458262029769}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -774,12 +783,6 @@
     <ClCompile Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Sprite\Sprite.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.cpp">
       <Filter>ソース ファイル\Engine\Menu\MainGame\Shop</Filter>
     </ClCompile>
@@ -833,6 +836,12 @@
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Menu\MainGame\PartTime\MenuMiniGame.cpp">
       <Filter>ソース ファイル\Engine\Menu\MainGame\PartTime</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Sprite\Sprite.cpp">
+      <Filter>ソース ファイル\Engine\UI\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp">
+      <Filter>ソース ファイル\Engine\UI\Sprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1289,9 +1298,6 @@
     <ClInclude Include="Scripts\Engine\UI\Rect.h">
       <Filter>ヘッダー ファイル\Engine\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\EventSystem.h">
       <Filter>ヘッダー ファイル\Engine\UI</Filter>
     </ClInclude>
@@ -1361,9 +1367,6 @@
     <ClInclude Include="Scripts\Engine\UI\Button\ButtonFactory.h">
       <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer_Idle.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\System\MenuCredit.h">
       <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
     </ClInclude>
@@ -1389,10 +1392,10 @@
       <Filter>ヘッダー ファイル\Engine\Menu\Result</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
+      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReticleUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
+      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Manager\EnemyDataManager.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -1407,19 +1410,16 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUIBase.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
+      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
+      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
+      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerStatusUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Button\PlayerUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Sprite\Sprite.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\Sprite\SpriteFactory.h">
       <Filter>ヘッダー ファイル</Filter>
@@ -1483,6 +1483,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Component\Character\AllEnemyCommonModule.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Sprite\Sprite.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Sprite</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

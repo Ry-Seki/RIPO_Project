@@ -26,9 +26,6 @@ void ResultAction_PartTime::Initialize() {
 	load.SetOnComplete([this, reward]() {
 		ToRewardList(reward->GetData());
 	});
-	money->SetCallback([this]() {
-		AdvanceDay();
-	});
 }
 /*
  *	@brief	€”õ‘Oˆ—
@@ -39,6 +36,9 @@ void ResultAction_PartTime::Setup() {
 	int reward = static_cast<int>(context.miniGameLevel);
 	MoneyManager::GetInstance().AddMoney(rewardList[reward]);
 	auto money = menu.GetMenu<MenuMoneyChange>();
+	money->SetCallback([this]() {
+		AdvanceDay();
+	});
 	money->SetCurrentMoney(MoneyManager::GetInstance().GetCurrentMoney());
 	money->SetPrevMoney(context.prevIncome);
 	menu.OpenMenu<MenuMoneyChange>();
