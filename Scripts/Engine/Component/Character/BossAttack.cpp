@@ -36,10 +36,10 @@ void BossAttack::Start(GameObject* boss)
 	coolTime = MAX_COOL_TIME;
 	
 
-	auto bossAttackSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/BossAttackSE.mp3");
-	LoadManager::GetInstance().SetOnComplete([this, bossAttackSE]() {
-		AudioUtility::RegisterSEHandle("bossAttackSE", bossAttackSE->GetHandle());
-		});
+	//auto bossAttackSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/EnemySE/BossAttackSE.mp3");
+	//LoadManager::GetInstance().SetOnComplete([this, bossAttackSE]() {
+	//	AudioUtility::RegisterSEHandle("bossAttackSE", bossAttackSE->GetHandle());
+	//	});
 }
 
 /*
@@ -82,7 +82,7 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 		aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
 		if (!FirstSEFlag) {
 			// å¯â âπÇèoÇ∑
-			PlaySE("bossAttackSE");
+			//PlaySE("bossAttackSE");
 			FirstSEFlag = true;
 		}
 	}
