@@ -6,7 +6,6 @@
 #ifndef _UI_BUTTON_BASE_H_
 #define _UI_BUTTON_BASE_H_
 
-#include "IButtonStateRenderer.h"
 #include "../Rect.h"
 #include "../../GameEnum.h"
 
@@ -20,9 +19,6 @@
  *	@brief	UIボタンの基底クラス
  */
 class UIButtonBase {
-protected:		// 別名定義
-	using IButtonStateRendererPtr = std::shared_ptr<IButtonStateRenderer>;
-
 protected:
 	int inputClickNum = -1;
 	bool isEnable = false;
@@ -34,7 +30,6 @@ protected:
 	Rect rect;
 	std::string name = "";
 	std::vector<int> handleList;							
-	std::vector<IButtonStateRendererPtr> rendererList;	// TODO : そのうち追加
 
 	std::function<void()> OnClick = nullptr;
 	std::function<void()> UpdateSelectButton = nullptr;

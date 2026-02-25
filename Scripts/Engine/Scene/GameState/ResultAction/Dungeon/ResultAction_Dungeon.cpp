@@ -22,11 +22,7 @@
 void ResultAction_Dungeon::Initialize() {
 	auto& menu = MenuManager::GetInstance();
 	auto death = menu.GetMenu<MenuPlayerDeath>();
-	auto money = menu.GetMenu<MenuMoneyChange>();
 	death->SetCallback([this]() {
-		AdvanceDay();
-	});
-	money->SetCallback([this]() {
 		AdvanceDay();
 	});
 }
@@ -86,6 +82,9 @@ void ResultAction_Dungeon::ResultPlayerAction() {
 		menu.OpenMenu<MenuPlayerDeath>();
 	} else {
 		auto money = menu.GetMenu<MenuMoneyChange>();
+		money->SetCallback([this]() {
+			AdvanceDay();
+		});
 		money->SetCurrentMoney(MoneyManager::GetInstance().GetCurrentMoney());
 		money->SetPrevMoney(context.prevIncome);
 		menu.OpenMenu<MenuMoneyChange>();

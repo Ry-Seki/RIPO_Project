@@ -7,7 +7,6 @@
 #define __SINGLE_PRESS_BUTTON_H_
 
 #include "UIButtonBase.h"
-#include "IButtonStateRenderer.h"
 #include "../Rect.h"
 #include "../../GameEnum.h"
 

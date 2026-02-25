@@ -497,8 +497,6 @@
     <ClInclude Include="Scripts\Engine\System\World\WorldProgressManager.h" />
     <ClInclude Include="Scripts\Engine\Time.h" />
     <ClInclude Include="Scripts\Engine\UI\Button\ButtonFactory.h" />
-    <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer.h" />
-    <ClInclude Include="Scripts\Engine\UI\Button\IButtonStateRenderer_Idle.h" />
     <ClInclude Include="Scripts\Engine\UI\Button\LongPressButton.h" />
     <ClInclude Include="Scripts\Engine\UI\Button\SinglePressButton.h" />
     <ClInclude Include="Scripts\Engine\UI\Button\UIButtonBase.h" />
