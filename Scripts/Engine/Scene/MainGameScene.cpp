@@ -50,7 +50,7 @@ void MainGameScene::Initialize(Engine& engine) {
 		});
 	PlayerStatusManager::GetInstance().Initialize();
 	EnemyDataManager::GetInstance().Initialize();
-	WeaponManager::GetInstance().Initialize();
+	WeaponDataManager::GetInstance().Initialize();
 
 }
 /*
