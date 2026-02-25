@@ -75,6 +75,11 @@ public:
 	static constexpr const char* _CREATE_POSNAME_GOAL = "Goal";						// 出口の生成位置の名前
 	static constexpr const char* _CREATE_POSNAME_LIGHT = "PointLight";				// ポイントライトの生成位置の名前
 	static constexpr const char* _CREATE_POSITION_SPAWN = "SpawnPos";				// スポーンポジションの名前
+	static constexpr const char* _CREATE_POSITION_BOSSSPAWN = "BossSpawnPos";		// ボススポーンポジションの名前
+	static constexpr const char* _CREATE_POSITION_GOALPOS = "GoalPos";				// ゴールポジションの名前
+	static constexpr const char* _CREATE_POSITION_STARTPOS = "StartPos";			// スタートスポーンポジションの名前
+	static constexpr const char* _CREATE_POSITION_STAIRPOS = "StairsPos";			// 階段スポーンポジションの名前
+	static constexpr const char* _CREATE_POSITION_LIGHTPOS = "LightPos";			// 階段スポーンポジションの名前
 
 	//----------------------------------------------------
 	//					お宝の名前

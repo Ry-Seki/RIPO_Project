@@ -6,6 +6,7 @@
 #include "MiniGameSokoban.h"
 #include "SokobanMapManager.h"
 #include "../ScreenSize.h"
+#include "../../../../../../Input/InputUtility.h"
 
 #include <DxLib.h>
 
@@ -80,19 +81,17 @@ void MiniGameSokoban::ParseBoxesFromMap() {
  *  @brief      更新処理
  */
 void MiniGameSokoban::Update(float deltaTime) {
-    // R でリセット（補間中でもリセット可能）
-    if (CheckHitKey(KEY_INPUT_R)) {
-        Reset();
-        return;
-    }
+    auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
+    float vertical = input.axis[static_cast<int>(GameEnum::MenuAction::Vertical)];
+    float horizontal = input.axis[static_cast<int>(GameEnum::MenuAction::Horizontal)];
 
     // 補間中は入力禁止
     if (!IsMoving()) {
         int dx = 0, dy = 0;
-        if (CheckHitKey(KEY_INPUT_W)) dy = -1;
-        else if (CheckHitKey(KEY_INPUT_S)) dy = 1;
-        else if (CheckHitKey(KEY_INPUT_A)) dx = -1;
-        else if (CheckHitKey(KEY_INPUT_D)) dx = 1;
+        if (vertical > 0.0f) dy = -1;
+        else if (vertical < 0.0f) dy = 1;
+        else if (horizontal < 0.0f) dx = -1;
+        else if (horizontal > 0.0f) dx = 1;
 
         if (dx != 0 || dy != 0) {
             StartPlayerMove(dx, dy);
@@ -227,18 +226,33 @@ void MiniGameSokoban::Reset() {
  *  @brief      描画処理
  */
 void MiniGameSokoban::Render() {
-    int mapWidth = (int) map[0].size() * _TILE_SIZE;
-    int mapHeight = (int) map.size() * _TILE_SIZE;
+    const int rectX = 618;
+    const int rectY = 368;
+    const int rectW = 700;
+    const int rectH = 400;
 
-    int offsetX = (screenWidth - mapWidth) / 2;
-    int offsetY = (screenHeight - mapHeight) / 2;
+    int mapPixelWidth = (int) map[0].size() * _TILE_SIZE;
+    int mapPixelHeight = (int) map.size() * _TILE_SIZE;
+
+    float scaleX = (float) rectW / mapPixelWidth;
+    float scaleY = (float) rectH / mapPixelHeight;
+    float scale = (std::min)(scaleX, scaleY);
+
+    int scaledWidth = (int) (mapPixelWidth * scale);
+    int scaledHeight = (int) (mapPixelHeight * scale);
+
+    int offsetX = rectX + (rectW - scaledWidth) / 2;
+    int offsetY = rectY + (rectH - scaledHeight) / 2;
+
     // タイル描画
+    int tileSize = static_cast<int>(_TILE_SIZE * scale);
+
     for (int y = 0; y < (int)map.size(); ++y) {
         for (int x = 0; x < (int)map[y].size(); ++x) {
-            int left = offsetX + x * _TILE_SIZE;
-            int top = offsetY + y * _TILE_SIZE;
-            int right = left + _TILE_SIZE;
-            int bottom = top + _TILE_SIZE;
+            int left = offsetX + x * tileSize;
+            int top = offsetY + y * tileSize;
+            int right = left + tileSize;
+            int bottom = top + tileSize;
 
             auto type = map[y][x];
 
@@ -261,20 +275,20 @@ void MiniGameSokoban::Render() {
         if (goalMap[box.y][box.x]) color = GetColor(255, 200, 0);
 
         DrawBox(
-            offsetX + (int) box.drawX,
-            offsetY + (int) box.drawY,
-            offsetX + (int) box.drawX + _TILE_SIZE,
-            offsetY + (int) box.drawY + _TILE_SIZE,
+            offsetX + static_cast<int>(box.drawX * scale),
+            offsetY + static_cast<int>(box.drawY * scale),
+            offsetX + static_cast<int>(box.drawX * scale) + tileSize,
+            offsetY + static_cast<int>(box.drawY * scale) + tileSize,
             color, TRUE
         );
     }
 
     // プレイヤー描画
     DrawBox(
-        offsetX + (int) player.drawX,
-        offsetY + (int) player.drawY,
-        offsetX + (int) player.drawX + _TILE_SIZE,
-        offsetY + (int) player.drawY + _TILE_SIZE,
+        offsetX + static_cast<int>(player.drawX * scale),
+        offsetY + static_cast<int>(player.drawY * scale),
+        offsetX + static_cast<int>(player.drawX * scale) + tileSize,
+        offsetY + static_cast<int>(player.drawY * scale) + tileSize,
         GetColor(0, 0, 255),
         TRUE
     );

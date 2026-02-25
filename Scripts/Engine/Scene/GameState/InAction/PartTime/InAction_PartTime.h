@@ -46,6 +46,12 @@ public:
 	 */
 	void Teardown() override;
 
+private:
+	/*
+	 *	@brief		ƒ~ƒjƒQ[ƒ€Š®—¹ˆ—
+	 *	@param[in]	GameEnum::MiniGameLevel level
+	 */
+	void CompleteMiniGame(GameEnum::MiniGameLevel level);
 };
 
 #endif // !_IN_ACTION_PART_TIME_H_
