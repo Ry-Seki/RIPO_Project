@@ -275,5 +275,15 @@ namespace GameEnum {
 
 		Max
 	};
+	/*
+	 *	@brief	•¶Žš‚Ì‘µ‚¢‚ÌŽí—Þ
+	 */
+	enum class AlignmentType {
+		Invalid = -1,
+		Left,
+		Center,
+		Right,
+		Max
+	};
 }
 #endif // !_GAME_ENUM_H_
