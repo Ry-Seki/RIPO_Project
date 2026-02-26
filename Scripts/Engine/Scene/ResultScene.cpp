@@ -57,6 +57,7 @@ void ResultScene::Update(Engine& engine, float deltaTime) {
  *	@brief	描画処理
  */
 void ResultScene::Render() {
+    DrawBox(0, 0, GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, GetColor(0, 0, 0), TRUE);
 }
 /*
  *	@brief		読み込んだJSONデータを構造体に変換

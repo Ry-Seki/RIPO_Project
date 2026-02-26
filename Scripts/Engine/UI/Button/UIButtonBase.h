@@ -27,6 +27,8 @@ protected:
 	GameEnum::ButtonInputState inputState = GameEnum::ButtonInputState::Invalid;
 	GameEnum::ButtonSelectState selectState = GameEnum::ButtonSelectState::Invalid;
 
+	int x = -1;
+	int y = -1;
 	Rect rect;
 	std::string name = "";
 	std::vector<int> handleList;							
@@ -37,10 +39,11 @@ protected:
 public:
 	/*
 	 *	@brief		コンストラクタ
+	 *	@param[in]	int setX, setY
 	 *	@param[in]	Rect setRect
 	 */
-	UIButtonBase(Rect setRect)
-		: rect(setRect){
+	UIButtonBase(int setX, int setY, Rect setRect)
+		: x(setX), y(setY), rect(setRect){
 	}
 	/*
 	 *	@brief	デストラクタ

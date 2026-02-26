@@ -31,6 +31,10 @@
     {
       "Name": "Finish",
       "Type": "Single",
+      "Position": {
+        "X": 633,
+        "Y": 845
+      },
       "Rect": {
         "X": 633,
         "Y": 845,

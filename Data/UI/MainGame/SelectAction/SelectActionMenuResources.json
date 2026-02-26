@@ -56,6 +56,10 @@
     {
       "Name": "Dungeon",
       "Type": "Single",
+      "Position": {
+        "X": 520,
+        "Y": 40
+      },
       "Rect": {
         "X": 520,
         "Y": 40,
@@ -73,6 +77,10 @@
     {
       "Name": "Training",
       "Type": "Single",
+      "Position": {
+        "X": 1000,
+        "Y": 280
+      },
       "Rect": {
         "X": 1000,
         "Y": 280,
@@ -90,6 +98,10 @@
     {
       "Name": "Shop",
       "Type": "Single",
+      "Position": {
+        "X": 730,
+        "Y": 540
+      },
       "Rect": {
         "X": 730,
         "Y": 540,
@@ -107,6 +119,10 @@
     {
       "Name": "PartTime",
       "Type": "Single",
+      "Position": {
+        "X": 980,
+        "Y": 810
+      },
       "Rect": {
         "X": 980,
         "Y": 810,
@@ -124,6 +140,10 @@
     {
       "Name": "Status",
       "Type": "Single",
+      "Position": {
+        "X": 120,
+        "Y": 364
+      },
       "Rect": {
         "X": 120,
         "Y": 364,

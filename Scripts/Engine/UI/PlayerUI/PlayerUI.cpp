@@ -9,6 +9,7 @@
 #include "ReloadGaugeUI.h"
 #include "ResistTimeGaugeUI.h"
 #include "PlayerStatusUI.h"
+#include "DungeonMoneyUI.h"
 
 /*
  * ‰Šú‰»
@@ -20,6 +21,7 @@ void PlayerUI::Initialize(Engine& engine) {
 	UIs.push_back(std::make_shared<ReloadGaugeUI>());
 	UIs.push_back(std::make_shared<ResistTimeGaugeUI>());
 	UIs.push_back(std::make_shared<PlayerStatusUI>());
+	UIs.push_back(std::make_shared<DungeonMoneyUI>());
 	
 	// UI‚Ì‰Šú‰»
 	for (auto ui : UIs) {

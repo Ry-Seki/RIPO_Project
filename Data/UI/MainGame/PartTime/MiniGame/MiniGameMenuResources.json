@@ -31,6 +31,10 @@
       {
         "Name": "Reset",
         "Type": "Single",
+        "Position": {
+          "X": 930,
+          "Y": 867
+        },
         "Rect": {
           "X": 930,
           "Y": 867,
@@ -46,6 +50,10 @@
       {
         "Name": "Retire",
         "Type": "Single",
+        "Position": {
+          "X": 1216,
+          "Y": 867
+        },
         "Rect": {
           "X": 1216,
           "Y": 867,

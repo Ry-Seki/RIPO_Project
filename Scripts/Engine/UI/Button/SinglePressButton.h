@@ -23,10 +23,11 @@ private:
 public:
 	/*
 	 *	@brief		コンストラクタ
+	 *  @param[in]	int setX, setY
 	 *	@param[in]	Rect setRect
 	 */
-	SinglePressButton(Rect setRect)
-		: UIButtonBase(setRect) {
+	SinglePressButton(int setX, int setY, Rect setRect)
+		: UIButtonBase(setX, setY, setRect) {
 	}
 	/*
 	 *	@brief		デストラクタ

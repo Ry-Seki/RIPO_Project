@@ -96,26 +96,27 @@ int EventSystem::FindNextEnableButton(int fromIndex, GameEnum::NavigationDir dir
 		// •ûŒü‚É‚æ‚Á‚Äs‚«æ‚ğŒˆ’è
 		switch (dir) {
 			case GameEnum::NavigationDir::Left: 
-				AudioUtility::PlaySE("SelectSE");
 				next = navigation.left;
 				break;
 			case GameEnum::NavigationDir::Right:
-				AudioUtility::PlaySE("SelectSE");
 				next = navigation.right;
 				break;
 			case GameEnum::NavigationDir::Up:
-				AudioUtility::PlaySE("SelectSE");
 				next = navigation.up;
 				break;
 			case GameEnum::NavigationDir::Down:
-				AudioUtility::PlaySE("SelectSE");
 				next = navigation.down;
 				break;
 		}
 		// •ûŒü‚ª–³Œø‚È”š‚Ìê‡A”²‚¯‚é
 		if (next < 0 || next >= buttonList.size()) break;
+
 		// —LŒøó‘Ô‚È‚ç‚»‚ê‚ğ•Ô‚·
-		if (buttonList[next]->IsEnable()) return next;
+		if (buttonList[next]->IsEnable()) {
+			if (next != fromIndex) AudioUtility::PlaySE("SelectSE");
+
+			return next;
+		}
 
 		current = next;
 		safety++;
