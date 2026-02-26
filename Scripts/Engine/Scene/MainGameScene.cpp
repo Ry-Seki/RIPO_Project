@@ -118,6 +118,7 @@ void MainGameScene::Render() {
 		if (HPBar != nullptr)
 			HPBar->ShowHPBar();
 	}
+	DrawBox(0, 0, GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, GetColor(0, 0, 0), TRUE);
 }
 /*
  *  @brief  メインシーン終了処理
