@@ -31,6 +31,7 @@ private:
 	std::shared_ptr<AnimatorComponent> animator;	// アニメーターコンポーネント
 	PlayerStatusValue status;						// プレイヤーのステータス
 	ActionMapBase::ActionState action;				// プレイヤーのアクション状態
+	int playerModelHandle;							// プレイヤーのモデルハンドル
 
 	const float PLAYER_MODEL_ANGLE_CORRECTION;	// プレイヤーのモデル角度を補正する値
 	const float DEFAULT_MOVE_SPEED;				// デフォルトの移動速度
@@ -85,11 +86,9 @@ private:
 	void PlayerAvoid(GameObject* player, float deltaTime);
 
 	/*
-	 *	初期接地チェック
-	 *  @param GameObject* player　接地判定をするキャラクター
-	 *  @author oorui
+	 *	モデルセット
 	 */
-	void IsGrounding(GameObject* player);
+	void SetModelHandle(int setModelHandle);
 	
 public:
 	/*

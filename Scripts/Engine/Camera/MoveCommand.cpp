@@ -1,5 +1,6 @@
 /*
  *	@file	MoveCommand.cpp
+ *	@author Riku
  */
 
 #include "MoveCommand.h"

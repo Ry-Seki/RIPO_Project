@@ -15,6 +15,7 @@
 #include "../../Stage/StageObject/Treasure/Treasure.h"
 #include "../../Load/LoadManager.h"
 #include "../../Load/Audio/LoadAudio.h"
+#include "../../Load/Model/LoadModel.h"
 
 using namespace StageObjectUtility;
 using namespace CharacterUtility;
@@ -27,11 +28,11 @@ HandArm::HandArm()
 {}
 
 void HandArm::Start() {
-	playerModelHandle = MV1LoadModel("Res/Model/Player/RIPO_Model.mv1");
-
+	auto playerModel = LoadManager::GetInstance().LoadResource<LoadModel>("Res/Model/Player/RIPO_Model.mv1");
 	auto liftSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Lift.mp3");
 	auto notStrengthSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/NotStrength.mp3");
-	LoadManager::GetInstance().SetOnComplete([this, liftSE, notStrengthSE]() {
+	LoadManager::GetInstance().SetOnComplete([this, playerModel, liftSE, notStrengthSE]() {
+		SetModelHandle(playerModel->GetHandle());
 		RegisterSEHandle("liftSE", liftSE->GetHandle());
 		RegisterSEHandle("notStrengthSE", notStrengthSE->GetHandle());
 	});
@@ -100,4 +101,11 @@ void HandArm::CarryTreasure(GameObjectPtr player) {
 	auto cameraRot = camera->rotation;
 	cameraRot.x = 0;
 	liftObject->position = player->position + (ForwardDir(cameraRot) * 500);
+}
+
+/*
+ *	モデルセット
+ */
+void HandArm::SetModelHandle(int setModelHandle) {
+	playerModelHandle = setModelHandle;
 }

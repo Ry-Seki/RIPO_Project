@@ -5,6 +5,7 @@
 
 #include "EventCamera.h"
 #include "MoveCommand.h"
+#include "WaitCommand.h"
 #include "../Component/CameraComponent.h"
 #include "../Input/InputUtility.h"
 
@@ -39,7 +40,8 @@ void EventCamera::Initialize(GameObject* camera, GameEnum::CameraEvent setEvent)
 
 	// 死亡イベント
 	events[GameEnum::CameraEvent::Dead].commands.clear();
-	events[GameEnum::CameraEvent::Dead].commands.push_back(std::make_shared<MoveCommand>(0, Vector3(GetPlayer()->position.x, GetPlayer()->position.y + 310, GetPlayer()->position.z)));
+	events[GameEnum::CameraEvent::Dead].commands.push_back(std::make_shared<MoveCommand>(0.8f, pos));
+	events[GameEnum::CameraEvent::Dead].commands.push_back(std::make_shared<WaitCommand>(0.5f));
 	events[GameEnum::CameraEvent::Dead].onFinished = [player, camera]() {
 		// プレイヤー死亡
 		player->SetIsDead(true);

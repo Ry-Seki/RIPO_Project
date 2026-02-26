@@ -44,6 +44,11 @@ private:
 	 */
 	void CarryTreasure(GameObjectPtr player);
 
+	/*
+	 *	モデルセット
+	 */
+	void SetModelHandle(int setModelHandle);
+
 public:
 	inline GameObject* GetLiftObject() const { return liftObject; }
 };

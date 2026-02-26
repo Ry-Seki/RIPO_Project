@@ -13,11 +13,14 @@
 #include "BulletComponent.h"
 #include "../../Load/LoadManager.h"
 #include "../../Load/Audio/LoadAudio.h"
+#include "../../Load/Model/LoadModel.h"
 #include "../../Audio/AudioUtility.h"
+#include "CharacterUtility.h"
 #include "DxLib.h"
 
 using namespace InputUtility;
 using namespace AudioUtility;
+using namespace CharacterUtility;
 
 PlayerComponent::PlayerComponent()
 	: moveSpeed(0.0f)
@@ -35,6 +38,7 @@ PlayerComponent::PlayerComponent()
 	, isDead(false)
 	, animator(nullptr)
 	, status({ -1, -1, -1, -1 })
+	, playerModelHandle(-1)
 
 	, PLAYER_MODEL_ANGLE_CORRECTION(89.98f)
 	, DEFAULT_MOVE_SPEED(1500.0f)
@@ -57,12 +61,14 @@ void PlayerComponent::Start() {
 	status = PlayerStatusManager::GetInstance().GetPlayerStatusData().base;
 
 	animator = GetOwner()->GetComponent<AnimatorComponent>();
-
+	
+	auto playerModel = LoadManager::GetInstance().LoadResource<LoadModel>("Res/Model/Player/RIPO_Model.mv1");
 	auto avoidSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Avoid.mp3");
 	auto changeWeaponSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/ChangeWeapon.mp3");
 	auto workSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Work.mp3");
 	auto jumpSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Jump.mp3");
-	LoadManager::GetInstance().SetOnComplete([this, avoidSE, changeWeaponSE, workSE, jumpSE]() {
+	LoadManager::GetInstance().SetOnComplete([this, playerModel, avoidSE, changeWeaponSE, workSE, jumpSE]() {
+		SetModelHandle(playerModel->GetHandle());
 		RegisterSEHandle("avoidSE", avoidSE->GetHandle());
 		RegisterSEHandle("changeWeaponSE", changeWeaponSE->GetHandle());
 		RegisterSEHandle("workSE", workSE->GetHandle());
@@ -116,6 +122,12 @@ void PlayerComponent::Update(float deltaTime) {
 	if (status.HP <= 0 && CameraManager::GetInstance().GetCameraState() != GameEnum::CameraState::Event) {
 		// 視点変更イベント再生
 		CameraManager::GetInstance().CameraEventPlay(GameEnum::CameraEvent::Dead);
+		// プレイヤーの描画モデル変更
+		SetCharacterModel(GetOwner(), playerModelHandle);
+		// アニメーションのループをしない
+		animator->LoadIndex(false);
+		// アニメーション
+		animator->Play(static_cast<int>(PlayerAnimNum::Deth), moveSpeed * 0.066f);
 	}
 
 	// 武器変更
@@ -210,24 +222,24 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 		if (moveVec != V_ZERO) {
 			if (forward == 1.0f) {
 				// 前移動
-				animator->Play(4, moveSpeed * 0.066f);
+				animator->Play(static_cast<int>(PlayerAnimNum::Walk), moveSpeed * 0.066f);
 			}
 			else if (forward == -1.0f) {
 				// 後ろ移動
-				animator->Play(5, moveSpeed * 0.066f);
+				animator->Play(static_cast<int>(PlayerAnimNum::BackWalk), moveSpeed * 0.066f);
 			}
 			else if (right == 1.0f) {
 				// 左移動
-				animator->Play(6, moveSpeed * 0.066f);
+				animator->Play(static_cast<int>(PlayerAnimNum::LeftWalk), moveSpeed * 0.066f);
 			}
 			else if (right == -1.0f) {
 				// 右移動
-				animator->Play(7, moveSpeed * 0.066f);
+				animator->Play(static_cast<int>(PlayerAnimNum::RightWalk), moveSpeed * 0.066f);
 			}
 		}
 		else {
 			// 待機
-			animator->Play(3, 1);
+			animator->Play(static_cast<int>(PlayerAnimNum::CarryIdle), 1);
 		}
 	}
 
@@ -324,4 +336,11 @@ void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 			avoidCoolTime -= deltaTime;
 		}
 	}
+}
+
+/*
+ *	モデルセット
+ */
+void PlayerComponent::SetModelHandle(int setModelHandle) {
+	playerModelHandle = setModelHandle;
 }

@@ -1,5 +1,6 @@
 /*
  *	@file	MoveCommand.h
+ *	@author Riku
  */
 
 #ifndef _MOVECOMMAND_H_
