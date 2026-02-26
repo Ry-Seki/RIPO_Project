@@ -843,6 +843,9 @@
     <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp">
       <Filter>ソース ファイル\Engine\UI\Sprite</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\DungeonMoneyUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -1486,6 +1489,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\Sprite\Sprite.h">
       <Filter>ヘッダー ファイル\Engine\UI\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\DungeonMoneyUI.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
