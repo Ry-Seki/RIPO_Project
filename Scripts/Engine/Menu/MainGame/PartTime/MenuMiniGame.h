@@ -85,6 +85,10 @@ private:
 	 *	@param[in]	int buttonIndex
 	 */
 	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	/*
+	 *	@brief		ƒŠƒZƒbƒgˆ—
+	 */
+	void Reset();
 
 public:
 	/*
