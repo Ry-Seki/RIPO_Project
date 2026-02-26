@@ -22,6 +22,7 @@ private:
 	float staminaChangePoint;						// スタミナの回復＆消費を調節するためのfloat型変数
 	float resistTimePoint;							// 耐性値の減少を調節するためのfloat型変数
 	float moveDirectionY;							// y軸の移動方向
+	float workSECoolTime;							// 歩きSEのクールタイム
 	Vector3 moveVec;								// プレイヤーの移動量
 	bool canAvoid;									// 回避可能か否か
 	bool isAvoid;									// 回避中か否か
@@ -45,6 +46,7 @@ private:
 	const float JUMP_POWER;						// ジャンプ力
 	const float BACK_ACCELERATION;				// 後ろ歩き時の加速度
 	const float HP_DECREASE_RATE;				// HPの減少倍率
+	const float WORK_SE_COOL_TIME_MAX;			// 歩きSEのクールタイムの最大
 
 	// プレイヤーのアニメーション番号
 	enum class PlayerAnimNum {
