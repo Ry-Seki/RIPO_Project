@@ -31,6 +31,10 @@
       {
         "Name": "Easy",
         "Type": "Single",
+        "Position": {
+          "X": 1017,
+          "Y": 217
+        },
         "Rect": {
           "X": 1017,
           "Y": 217,
@@ -47,6 +51,10 @@
       {
         "Name": "Normal",
         "Type": "Single",
+        "Position": {
+          "X": 1017,
+          "Y": 470
+        },
         "Rect": {
           "X": 1017,
           "Y": 470,
@@ -63,6 +71,10 @@
       {
         "Name": "Hard",
         "Type": "Single",
+        "Position": {
+          "X": 1017,
+          "Y": 731
+        },
         "Rect": {
           "X": 1017,
           "Y": 731,
@@ -79,6 +91,10 @@
       {
         "Name": "Back",
         "Type": "Single",
+        "Position": {
+          "X": 1574,
+          "Y": 943
+        },
         "Rect": {
           "X": 1574,
           "Y": 943,

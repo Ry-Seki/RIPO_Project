@@ -22,10 +22,10 @@ std::shared_ptr<UIButtonBase> ButtonFactory::CreateButton(const ButtonInfo& butt
 	// TODO : ここをスイッチ分をできるだけ使わないようにしたい
 	switch (buttonInfo.type) {
 		case GameEnum::ButtonType::SinglePressButton:
-			button = std::make_shared<SinglePressButton>(buttonInfo.rect);
+			button = std::make_shared<SinglePressButton>(buttonInfo.x, buttonInfo.y, buttonInfo.rect);
 			break;
 		case GameEnum::ButtonType::LongPressButton:
-			button = std::make_shared<LongPressButton>(buttonInfo.rect);
+			button = std::make_shared<LongPressButton>(buttonInfo.x, buttonInfo.y, buttonInfo.rect);
 			break;
 		default:
 			return nullptr;

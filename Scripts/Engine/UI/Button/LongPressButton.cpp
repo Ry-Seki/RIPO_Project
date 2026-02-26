@@ -49,7 +49,7 @@ void LongPressButton::Render() {
 	int handle = handleList[static_cast<int>(GetRendererState())];
 
 	if (handle != -1) {
-		DrawGraph(rect.x, rect.y, handle, TRUE);
+		DrawGraph(x, y, handle, TRUE);
 	}
 #if _DEBUG
 	// デバッグ描画

@@ -31,6 +31,10 @@
     {
       "Name": "Close",
       "Type": "Single",
+      "Position": {
+        "X": 1550,
+        "Y": 950
+      },
       "Rect": {
         "X": 1550,
         "Y": 950,
