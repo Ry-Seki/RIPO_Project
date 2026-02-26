@@ -48,6 +48,8 @@ void EnemyAttack::Update(GameObject* enemy, float deltaTime)
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
 
+	auto enemyComponent = enemy->GetComponent<EnemyComponent>();
+
 	Vector3 direction = Direction(enemy->position, player->position);
 	// AABBコライダーを前方に置く
 	auto aabbCollider = enemy->GetComponent<AABBCollider>();
@@ -65,9 +67,13 @@ void EnemyAttack::Update(GameObject* enemy, float deltaTime)
 			AudioUtility::PlaySE("enemyAttackSE");
 			FirstSEFlag = true;
 		}
+		// 攻撃中判定開始
+		enemyComponent->SetEnemyAttackTimeFlag(true);
 	}
 	if (coolTime <= 1.3f) {
 		aabbCollider->aabb = { Vector3::zero, Vector3::zero };
+		// 攻撃中判定終了
+		enemyComponent->SetEnemyAttackTimeFlag(false);
 	}
 	if (coolTime <= 0.7f) {
 		// 待機アニメーション
@@ -80,6 +86,6 @@ void EnemyAttack::Update(GameObject* enemy, float deltaTime)
 	}
 	if (coolTime <= 0) {
 		// 状態遷移
-		enemy->GetComponent<EnemyComponent>()->SetState(new EnemyChase());
+		enemyComponent->SetState(new EnemyChase());
 	}
 }

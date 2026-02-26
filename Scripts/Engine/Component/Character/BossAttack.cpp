@@ -76,9 +76,13 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 			AudioUtility::PlaySE("bossAttackSE");
 			FirstSEFlag = true;
 		}
+		// UŒ‚’†”»’èŠJŽn
+		bossComponent->SetBossAttackTimeFlag(true);
 	}
 	if (coolTime <= 1.2f) {
 		aabbCollider->aabb = { Vector3::zero, Vector3::zero };
+		// UŒ‚’†”»’èI—¹
+		bossComponent->SetBossAttackTimeFlag(false);
 	}
 	if (coolTime <= 0) {
 		bossComponent->SetHitFlag(false);

@@ -96,15 +96,17 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 		attackIsTriger = false;
 	}
 	if (!attackIsTriger && other->GetOwner()->name == "Player") {
-		// エフェクトを出す
-		EffectManager::GetInstance().Instantiate("AllEnemyHitEffect", other->GetOwner()->position);
-		// 当たったらダメージを与える
-		auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
-		playerStatus.HP = playerStatus.HP - status.attack;
-		// ダメージを反映
-		player->GetComponent<PlayerComponent>()->SetPlayerStatus(playerStatus);
+		if (enemyAttackTimeFlag) {
+			// エフェクトを出す
+			EffectManager::GetInstance().Instantiate("AllEnemyHitEffect", other->GetOwner()->position);
+			// 当たったらダメージを与える
+			auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
+			playerStatus.HP = playerStatus.HP - status.attack;
+			// ダメージを反映
+			player->GetComponent<PlayerComponent>()->SetPlayerStatus(playerStatus);
 
-		attackIsTriger = true;
+			attackIsTriger = true;
+		}
 	}
 
 	// ダメージ判定
