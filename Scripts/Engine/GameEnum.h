@@ -71,6 +71,17 @@ namespace GameEnum {
 		Max
 	};
 	/*
+	 *	@brief	ショップでの行動
+	 *	@author	Seki
+	 */
+	enum class ShopActionType {
+		Invalid = -1,
+		Exit,
+		Back,
+
+		Max
+	};
+	/*
 	 *	@brief	ミニゲーム難易度
 	 *  @author	Seki
 	 */
@@ -136,6 +147,7 @@ namespace GameEnum {
 	};
 	/*
 	 *	@brief	ボタンの描画状態
+	 *	@author	Seki
 	 */
 	enum class ButtonRendererState {
 		Invalid = -1,
@@ -160,6 +172,7 @@ namespace GameEnum {
 	};
 	/*
 	 *	@brief	確認の種類
+	 *	@author	Seki
 	 */
 	enum class ConfirmResult {
 		Yes,
@@ -276,13 +289,26 @@ namespace GameEnum {
 		Max
 	};
 	/*
+	 *	@brief	テキストの種類
+	 *	@author	Seki
+	 */
+	enum class TextType {
+		Invalid = -1,
+		Static,
+		Dynamic,
+
+		Max
+	};
+	/*
 	 *	@brief	文字の揃いの種類
+	 *	@author	Seki
 	 */
 	enum class AlignmentType {
 		Invalid = -1,
 		Left,
 		Center,
 		Right,
+
 		Max
 	};
 }

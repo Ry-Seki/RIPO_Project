@@ -2,6 +2,7 @@
   "Text": [
     {
       "Name": "Debug",
+      "TextType": "Static",
       "UseFont": "Debug",
       "Alignment": "Left",
       "Position": {

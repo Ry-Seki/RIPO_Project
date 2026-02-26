@@ -32,6 +32,10 @@
     {
       "Name": "AddCount",
       "Type": "LongPress",
+      "Position": {
+        "X": 682,
+        "Y": 421
+      },
       "Rect": {
         "X": 682,
         "Y": 421,
@@ -48,6 +52,10 @@
     {
       "Name": "SubCount",
       "Type": "LongPress",
+      "Position": {
+        "X": 682,
+        "Y": 621
+      },
       "Rect": {
         "X": 682,
         "Y": 621,
@@ -64,6 +72,10 @@
     {
       "Name": "Buy",
       "Type": "Single",
+      "Position": {
+        "X": 628,
+        "Y": 762
+      },
       "Rect": {
         "X": 628,
         "Y": 762,
@@ -81,6 +93,10 @@
     {
       "Name": "Cancel",
       "Type": "Single",
+      "Position": {
+        "X": 991,
+        "Y": 762
+      },
       "Rect": {
         "X": 991,
         "Y": 762,

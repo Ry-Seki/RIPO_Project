@@ -9,6 +9,8 @@
 #include "../SelectDetailBase.h"
 #include "../../../../../Data/ItemCatalogData.h"
 
+#include "../../../../GameEnum.h"
+
 #include <vector>
 
 /*
@@ -51,12 +53,21 @@ public:
 
 private:
 	/*
-	 *	@brief	購入処理
+	 *	@brief		ショップでの行動決定
+	 *	@param[in]	GameEnum::ShopActionType type
+	 */
+	void ExecuteShopAction(GameEnum::ShopActionType type);
+	/*
+	 *	@brief		購入処理
 	 *	@param[in]	int itemID
 	 *	@param[in]	int buyCount
 	 */
 	void BuyItem(int itemID, int buyCount);
-
+	/*
+	 *	@brief		アイテムの購入判定
+	 *	@return		bool
+	 */
+	bool IsBuyItem();
 };
 
 #endif // !_SELECT_DETAIL_SHOP_H_

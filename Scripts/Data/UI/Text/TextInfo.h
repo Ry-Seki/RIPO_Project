@@ -20,7 +20,8 @@ struct TextInfo {
 	int size = -1;
 	std::string name = "";
 	std::string useFont = "";
-	GameEnum::AlignmentType type = GameEnum::AlignmentType::Invalid;
+	GameEnum::TextType textType = GameEnum::TextType::Invalid;
+	GameEnum::AlignmentType alignment = GameEnum::AlignmentType::Invalid;
 	std::vector<std::string> textData;
 };
 

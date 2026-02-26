@@ -8,6 +8,10 @@
     {
       "Name": "Settings",
       "Type": "Single",
+      "Position": {
+        "X": 100,
+        "Y": 350
+      },
       "Rect": {
         "X": 100,
         "Y": 350,
@@ -20,6 +24,10 @@
     {
       "Name": "Credit",
       "Type": "Single",
+      "Position": {
+        "X": 400,
+        "Y": 350
+      },
       "Rect": {
         "X": 400,
         "Y": 350,
@@ -32,6 +40,10 @@
     {
       "Name": "Back",
       "Type": "Single",
+      "Position": {
+        "X": 400,
+        "Y": 450
+      },
       "Rect": {
         "X": 400,
         "Y": 450,

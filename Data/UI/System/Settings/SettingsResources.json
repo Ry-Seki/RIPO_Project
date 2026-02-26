@@ -8,6 +8,10 @@
     {
       "Name": "SubSensitivity",
       "Type": "LongPress",
+      "Position": {
+        "X": 200,
+        "Y": 50
+      },
       "Rect": {
         "X": 200,
         "Y": 50,
@@ -20,6 +24,10 @@
     {
       "Name": "AddSensitivity",
       "Type": "LongPress",
+      "Position": {
+        "X": 400,
+        "Y": 50
+      },
       "Rect": {
         "X": 400,
         "Y": 50,
@@ -32,6 +40,10 @@
     {
       "Name": "SubMasterVolume",
       "Type": "LongPress",
+      "Position": {
+        "X": 200,
+        "Y": 150
+      },
       "Rect": {
         "X": 200,
         "Y": 150,
@@ -44,6 +56,10 @@
     {
       "Name": "AddMasterVolume",
       "Type": "LongPress",
+      "Position": {
+        "X": 400,
+        "Y": 150
+      },
       "Rect": {
         "X": 400,
         "Y": 150,
@@ -56,6 +72,10 @@
     {
       "Name": "SubBGMVolume",
       "Type": "LongPress",
+      "Position": {
+        "X": 200,
+        "Y": 250
+      },
       "Rect": {
         "X": 200,
         "Y": 250,
@@ -68,6 +88,10 @@
     {
       "Name": "AddBGMVolume",
       "Type": "LongPress",
+      "Position": {
+        "X": 400,
+        "Y": 250
+      },
       "Rect": {
         "X": 400,
         "Y": 250,
@@ -80,6 +104,10 @@
     {
       "Name": "SubSEVolume",
       "Type": "LongPress",
+      "Position": {
+        "X": 200,
+        "Y": 350
+      },
       "Rect": {
         "X": 200,
         "Y": 350,
@@ -92,6 +120,10 @@
     {
       "Name": "AddSEVolume",
       "Type": "LongPress",
+      "Position": {
+        "X": 400,
+        "Y": 350
+      },
       "Rect": {
         "X": 400,
         "Y": 350,
@@ -104,6 +136,10 @@
     {
       "Name": "Back",
       "Type": "Single",
+      "Position": {
+        "X": 500,
+        "Y": 450
+      },
       "Rect": {
         "X": 500,
         "Y": 450,
