@@ -18,6 +18,10 @@
     {
       "Name": "Confirm",
       "Type": "Single",
+      "Position": {
+        "X": 592,
+        "Y": 718
+      },
       "Rect": {
         "X": 592,
         "Y": 718,
@@ -34,6 +38,10 @@
     {
       "Name": "Cancel",
       "Type": "Single",
+      "Position": {
+        "X": 1051,
+        "Y": 718
+      },
       "Rect": {
         "X": 1051,
         "Y": 718,

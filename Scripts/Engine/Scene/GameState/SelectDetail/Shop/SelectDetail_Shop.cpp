@@ -24,8 +24,11 @@ void SelectDetail_Shop::Initialize() {
 	auto select = menu.GetMenu<MenuSelectShopItem>();
 	auto purchase = menu.GetMenu<MenuPurchaseCount>();
 
-	select->SetCallback([this]() {
-		owner->GetOwner()->ChageState(GameEnum::GameState::ResultAction);
+	select->SetCallback([this](GameEnum::ShopActionType type) {
+		ExecuteShopAction(type);
+	});
+	select->SetIsBuyItem([this]() {
+		return IsBuyItem();
 	});
 	purchase->SetCallBack([this](int itemID, int buyCount) {
 		BuyItem(itemID, buyCount);
@@ -56,6 +59,19 @@ void SelectDetail_Shop::Render() {
 void SelectDetail_Shop::Teardown() {
 }
 /*
+ *	@brief		ショップでの行動決定
+ *	@param[in]	GameEnum::ShopActionType type
+ */
+void SelectDetail_Shop::ExecuteShopAction(GameEnum::ShopActionType type) {
+	auto& context = owner->GetOwner()->GetActionContext();
+
+	if (type == GameEnum::ShopActionType::Back) {
+		owner->GetOwner()->ChageState(GameEnum::GameState::SelectAction);
+	} else if (type == GameEnum::ShopActionType::Exit) {
+		owner->GetOwner()->ChageState(GameEnum::GameState::ResultAction);
+	}
+}
+/*
  *	@brief	購入処理
  *	@param[in]	int itemID
  *	@param[in]	int buyCount
@@ -70,4 +86,11 @@ void SelectDetail_Shop::BuyItem(int itemID, int buyCount) {
 	for (int i = 0; i < buyCount; i++) {
 		context.buyStatusIDList.push_back(itemID);
 	}
+}
+
+bool SelectDetail_Shop::IsBuyItem() {
+	auto& context = owner->GetOwner()->GetActionContext();
+	if (context.buyStatusIDList.empty() && context.buyWeaponIDList.empty()) return false;
+
+	return true;
 }

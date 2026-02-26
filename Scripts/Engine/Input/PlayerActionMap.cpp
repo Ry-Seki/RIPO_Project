@@ -66,7 +66,7 @@ void PlayerActionMap::Initialize() {
 	state.button[static_cast<int>(GameEnum::PlayerAction::Jump)] = false;
 	state.button[static_cast<int>(GameEnum::PlayerAction::Shot)] = false;
 	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::Shot)] = false;
-	state.button[static_cast<int>(GameEnum::PlayerAction::Lift)] = false;
+	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::Lift)] = false;
 	state.button[static_cast<int>(GameEnum::PlayerAction::OpenMenu)] = false;
 	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::BulletReload)] = false;
 	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::FirstWeapon)] = false;

@@ -46,6 +46,10 @@
     {
       "Name": "Dungeon1",
       "Type": "Single",
+      "Position": {
+        "X": 34,
+        "Y": 175
+      },
       "Rect": {
         "X": 34,
         "Y": 175,
@@ -62,6 +66,10 @@
     {
       "Name": "Dungeon2",
       "Type": "Single",
+      "Position": {
+        "X": 525,
+        "Y": 175
+      },
       "Rect": {
         "X": 525,
         "Y": 175,
@@ -78,6 +86,10 @@
     {
       "Name": "Dungeon3",
       "Type": "Single",
+      "Position": {
+        "X": 1016,
+        "Y": 175
+      },
       "Rect": {
         "X": 1016,
         "Y": 175,
@@ -95,6 +107,10 @@
     {
       "Name": "Dungeon4",
       "Type": "Single",
+      "Position": {
+        "X": 1510,
+        "Y": 175
+      },
       "Rect": {
         "X": 1510,
         "Y": 175,

@@ -24,10 +24,11 @@ private:
 public:
 	/*
 	 *	@brief		コンストラクタ
+	 *	@param[in]	int setX, setY
 	 *	@param[in]	Rect setRect
 	 */
-	LongPressButton(Rect setRect) 
-		: UIButtonBase(setRect){
+	LongPressButton(int setX, int setY, Rect setRect) 
+		: UIButtonBase(setX, setY, setRect){
 	}
 	/*
 	 *	@brief		デストラクタ

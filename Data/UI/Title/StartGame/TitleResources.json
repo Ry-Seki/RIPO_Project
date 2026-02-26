@@ -44,6 +44,10 @@
     {
       "Name": "StartGame",
       "Type": "Single",
+      "Position": {
+        "X": 600,
+        "Y": 730
+      },
       "Rect": {
         "X": 600,
         "Y": 730,

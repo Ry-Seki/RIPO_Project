@@ -32,6 +32,10 @@
     {
       "Name": "AutoSaveSlot",
       "Type": "Single",
+      "Position": {
+        "X": 1086,
+        "Y": 193
+      },
       "Rect": {
         "X": 1086,
         "Y": 193,
@@ -49,6 +53,10 @@
     {
       "Name": "SaveSlot1",
       "Type": "Single",
+      "Position": {
+        "X": 1086,
+        "Y": 398
+      },
       "Rect": {
         "X": 1086,
         "Y": 398,
@@ -66,6 +74,10 @@
     {
       "Name": "SaveSlot2",
       "Type": "Single",
+      "Position": {
+        "X": 1086,
+        "Y": 603
+      },
       "Rect": {
         "X": 1086,
         "Y": 603,
@@ -83,6 +95,10 @@
     {
       "Name": "SaveSlot3",
       "Type": "Single",
+      "Position": {
+        "X": 1086,
+        "Y": 808
+      },
       "Rect": {
         "X": 1086,
         "Y": 808,
@@ -100,6 +116,10 @@
     {
       "Name": "Back",
       "Type": "Single",
+      "Position": {
+        "X": 11,
+        "Y": 952
+      },
       "Rect": {
         "X": 11,
         "Y": 952,

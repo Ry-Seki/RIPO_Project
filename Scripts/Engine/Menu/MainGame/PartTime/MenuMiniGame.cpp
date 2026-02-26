@@ -66,6 +66,7 @@ void MenuMiniGame::Open() {
 
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
+        isStart = true;
         InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
     });
 }
@@ -73,9 +74,11 @@ void MenuMiniGame::Open() {
  *	@brief	更新処理
  */
 void MenuMiniGame::Update(Engine& engine, float unscaledDeltaTime) {
+    if (!isStart) return;
+
     auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
     // ミニゲームの更新
-    miniGame->Update(unscaledDeltaTime);
+    if(miniGame) miniGame->Update(unscaledDeltaTime);
 
     // ミニゲーム終了時、その結果を反映
     if (miniGame->IsComplete()) {
@@ -122,7 +125,7 @@ void MenuMiniGame::Render() {
         if (!button->IsVisible()) continue;
         button->Render();
     }
-    miniGame->Render();
+    if(miniGame) miniGame->Render();
 }
 /*
  *	@brief	メニューを閉じる
@@ -139,6 +142,7 @@ void MenuMiniGame::Resume() {
     for (auto& button : buttonList) {
         button->Setup();
     }
+    isStart = true;
 }
 /*
  *	@brief		ボタンの押された時の処理
@@ -149,7 +153,7 @@ void MenuMiniGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
     auto confirm = menu.GetMenu<MenuConfirm>();
 
     if(buttonIndex == 0){
-        miniGame->Reset();
+        Reset();
     } else if (buttonIndex == 1) {
         confirm->SetCallback([this, &menu](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
@@ -166,5 +170,14 @@ void MenuMiniGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
             }
         });
         menu.OpenMenu<MenuConfirm>();
+    }
+}
+/*
+ *	@brief		リセット処理
+ */
+void MenuMiniGame::Reset() {
+    if(miniGame) miniGame->Reset();
+    for (auto& button : buttonList) {
+        button->Setup();
     }
 }

@@ -295,6 +295,7 @@
     <ClCompile Include="Scripts\Engine\UI\PlayerUI\Reticle.cpp" />
     <ClCompile Include="Scripts\Engine\UI\Sprite\Sprite.cpp" />
     <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Text\Text.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
     <ClCompile Include="Scripts\Engine\Vision.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
@@ -314,6 +315,9 @@
     <ClInclude Include="Scripts\Data\TreasureDataList.h" />
     <ClInclude Include="Scripts\Data\UI\Button\ButtonInfo.h" />
     <ClInclude Include="Scripts\Data\UI\MenuInfo.h" />
+    <ClInclude Include="Scripts\Data\UI\Sprite\SpriteInfo.h" />
+    <ClInclude Include="Scripts\Data\UI\Text\Alignment\IAlignmentBase.h" />
+    <ClInclude Include="Scripts\Data\UI\Text\TextInfo.h" />
     <ClInclude Include="Scripts\Data\WeaponDataManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioSource.h" />
@@ -513,6 +517,7 @@
     <ClInclude Include="Scripts\Engine\UI\Rect.h" />
     <ClInclude Include="Scripts\Engine\UI\Sprite\Sprite.h" />
     <ClInclude Include="Scripts\Engine\UI\Sprite\SpriteFactory.h" />
+    <ClInclude Include="Scripts\Engine\UI\Text\Text.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
     <ClInclude Include="Scripts\Engine\Vision.h" />
   </ItemGroup>

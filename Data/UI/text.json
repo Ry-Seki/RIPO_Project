@@ -2,13 +2,17 @@
   "Text": [
     {
       "Name": "Debug",
-      "Alignment": "",
+      "TextType": "Static",
+      "UseFont": "Debug",
+      "Alignment": "Left",
       "Position": {
         "X": 0,
         "Y": 0
       },
+      "Size": 32,
       "Data": [
-        "‚±‚ê‚ÍƒfƒoƒbƒN—p‚Å‚·B\n ‰üs‚É‘Î‰ž‚³‚¹‚½‚¢‚Å‚·B"
+        "ã“ã‚Œã¯ãƒ‡ãƒãƒƒã‚¯ç”¨ã§ã™ã€‚",
+        "æ”¹è¡Œå¯¾å¿œã§ã™ã€‚"
       ]
     }
   ]

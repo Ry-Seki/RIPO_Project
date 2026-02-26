@@ -34,12 +34,12 @@ WeaponBase::WeaponBase()
  *	Å‰‚ÌUpdate‚Ì’¼‘O‚ÉŒÄ‚Ño‚³‚ê‚éˆ—
  */
 void WeaponBase::Start() {
-	auto shotSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/Shot.mp3");
-	auto reloadSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/Reload.mp3");
+	auto shotSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Shot.mp3");
+	auto reloadSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Reload.mp3");
 	LoadManager::GetInstance().SetOnComplete([this, shotSE, reloadSE]() {
-		AudioUtility::RegisterSEHandle("shotSE", shotSE->GetHandle());
-		AudioUtility::RegisterSEHandle("reloadSE", reloadSE->GetHandle());
-		});
+		RegisterSEHandle("shotSE", shotSE->GetHandle());
+		RegisterSEHandle("reloadSE", reloadSE->GetHandle());
+	});
 }
 
 /*

@@ -31,6 +31,10 @@
     {
       "Name": "HP",
       "Type": "Single",
+      "Position": {
+        "X": 70,
+        "Y": 194
+      },
       "Rect": {
         "X": 70,
         "Y": 194,
@@ -47,6 +51,10 @@
     {
       "Name": "Stamina",
       "Type": "Single",
+      "Position": {
+        "X": 913,
+        "Y": 346
+      },
       "Rect": {
         "X": 913,
         "Y": 346,
@@ -63,6 +71,10 @@
     {
       "Name": "Strength",
       "Type": "Single",
+      "Position": {
+        "X": 71,
+        "Y": 495
+      },
       "Rect": {
         "X": 71,
         "Y": 495,
@@ -79,6 +91,10 @@
     {
       "Name": "ResistTime",
       "Type": "Single",
+      "Position": {
+        "X": 715,
+        "Y": 765
+      },
       "Rect": {
         "X": 715,
         "Y": 765,

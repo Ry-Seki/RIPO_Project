@@ -45,6 +45,8 @@ namespace {
         ButtonInfo info{};
         info.name = json.value("Name", "");
         info.type = ParseButtonType(json.value("Type", "Invalid"));
+        info.x = json["Position"].value("X", 0);
+        info.y = json["Position"].value("Y", 0);
         info.rect = ParseRect(json["Rect"]);
 
         if (json.contains("Resources")) {

@@ -25,6 +25,7 @@ class Engine;
  */
 class MenuSelectShopItem : public MenuBase {
 private:
+	int currentSlot = -1;
 	int animFrame = 0;
 	float animTimer = 0.0f;
 	int selectItemID = -1;
@@ -34,7 +35,10 @@ private:
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 	UIButtonBase* smgWeapon = nullptr;
-	std::function<void()> Callback = nullptr;
+	UIButtonBase* exitButton = nullptr;
+	UIButtonBase* backButton = nullptr;
+	std::function<void(GameEnum::ShopActionType)> Callback = nullptr;
+	std::function<bool()> IsBuyItem = nullptr;
 
 	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/SelectItem/SelectItemMenuResources.json";
 	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Shop/SelectItem/SelectItemMenuNavigation.json";
@@ -85,10 +89,17 @@ private:
 public:
 	/*
 	 *	@brief		コールバックの設定
-	 *	@param[in]	std::function<void()> setCallback
+	 *	@param[in]	std::function<void(GameEnum::ShopActionType)> setCallback
 	 */
-	inline void SetCallback(std::function<void()> setCallback) {
+	inline void SetCallback(std::function<void(GameEnum::ShopActionType)> setCallback) {
 		Callback = setCallback;
+	}
+	/*
+	 *	@brief		アイテムの購入判定関数の設定
+	 *	@param[in]	std::function<bool()> setIsBuyItem
+	 */
+	inline void SetIsBuyItem(std::function<bool()> setIsBuyItem) {
+		IsBuyItem = setIsBuyItem;
 	}
 };
 

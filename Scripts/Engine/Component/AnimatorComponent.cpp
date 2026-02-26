@@ -95,7 +95,12 @@ void AnimatorComponent::LoadIndex(bool isLoop, int transition) {
  */
 void AnimatorComponent::Play(int index, float speed) {
 	// 同じアニメーションなら再生しない
-	if (currentAnimation == index) return;
+	if (currentAnimation == index) {
+		// 速度だけ違うなら速度だけ変える
+		if (pAnimations[index]->playAnimSpeed != speed)
+			pAnimations[index]->playAnimSpeed = speed;
+		return;
+	}
 	// すでにアタッチされているアニメーションがあれば解除する
 	if (attachIndex >= 0) {
 		// 前のアニメーションをモデルからデタッチする

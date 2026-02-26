@@ -1,35 +1,41 @@
 {
   "0": {
-    "Left": 0,
-    "Right": 0,
-    "Up": 5,
+    "Left": 6,
+    "Right": 5,
+    "Up": 4,
     "Down": 1
   },
   "1": {
-    "Left": 1,
-    "Right": 1,
+    "Left": 6,
+    "Right": 5,
     "Up": 0,
     "Down": 2
   },
   "2": {
-    "Left": 2,
-    "Right": 2,
+    "Left": 6,
+    "Right": 5,
     "Up": 1,
     "Down": 3
   },
   "3": {
-    "Left": 3,
-    "Right": 3,
+    "Left": 6,
+    "Right": 5,
     "Up": 2,
     "Down": 4
   },
   "4": {
-    "Left": 4,
-    "Right": 4,
+    "Left": 6,
+    "Right": 5,
     "Up": 3,
     "Down": 5
   },
   "5": {
+    "Left": 6,
+    "Right": 6,
+    "Up": 4,
+    "Down": 0
+  },
+  "6": {
     "Left": 5,
     "Right": 5,
     "Up": 4,

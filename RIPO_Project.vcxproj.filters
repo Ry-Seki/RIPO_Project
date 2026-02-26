@@ -388,8 +388,17 @@
     <Filter Include="ソース ファイル\Engine\UI\Sprite">
       <UniqueIdentifier>{79a4d307-5c51-46b9-a19f-fae4cffb6149}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\UI\Font">
+    <Filter Include="ヘッダー ファイル\Engine\UI\Text">
       <UniqueIdentifier>{401e9360-a062-4b01-b705-458262029769}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\UI\Text">
+      <UniqueIdentifier>{ef0f1fd5-6d93-496d-b7d5-1bcf803bdf7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Data\Menu\Text">
+      <UniqueIdentifier>{9ebd1d1b-9300-4c65-806d-d3dd2754ae26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Data\Menu\Sprite">
+      <UniqueIdentifier>{72261b83-7f30-4797-a4aa-1435e78276d9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -843,7 +852,7 @@
     <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp">
       <Filter>ソース ファイル\Engine\UI\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\DungeonMoneyUI.cpp">
+    <ClCompile Include="Scripts\Engine\UI\Text\Text.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1424,9 +1433,6 @@
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerStatusUI.h">
       <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Sprite\SpriteFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.h">
       <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Shop</Filter>
     </ClInclude>
@@ -1490,8 +1496,20 @@
     <ClInclude Include="Scripts\Engine\UI\Sprite\Sprite.h">
       <Filter>ヘッダー ファイル\Engine\UI\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\DungeonMoneyUI.h">
+    <ClInclude Include="Scripts\Data\UI\Text\Alignment\IAlignmentBase.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Text\Text.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Sprite\SpriteFactory.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\UI\Sprite\SpriteInfo.h">
+      <Filter>ヘッダー ファイル\Data\Menu\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Data\UI\Text\TextInfo.h">
+      <Filter>ヘッダー ファイル\Data\Menu\Text</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
