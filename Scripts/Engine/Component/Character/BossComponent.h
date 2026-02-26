@@ -37,6 +37,8 @@ private:
 	bool moveFrag;
 	// 被ダメフラグ
 	bool hitFlag = false;
+	// 攻撃中判定フラグ
+	bool bossAttackTimeFlag = false;
 	// 定位置
 	Vector3 homePosition;
 	// 移動量
@@ -154,6 +156,16 @@ public:
 	 *	被ダメフラグの変更
 	 */
 	inline void SetHitFlag(bool setValue) { hitFlag = setValue; }
+
+	/*
+	 *	攻撃中フラグの取得
+	 */
+	inline bool GetBossAttackTimeFlag() const { return bossAttackTimeFlag; }
+
+	/*
+	 *	攻撃中フラグの変更
+	 */
+	inline void SetBossAttackTimeFlag(bool setValue) { bossAttackTimeFlag = setValue; }
 
 	///*
 	// *	IDの取得

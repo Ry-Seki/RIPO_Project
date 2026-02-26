@@ -51,6 +51,8 @@ private:
 	bool firstAttackFlag = false;
 	// 被ダメフラグ
 	bool hitFlag = false;
+	// 攻撃中判定フラグ
+	bool enemyAttackTimeFlag = false;
 	// 方向転換時のディレイ
 	float turnDelay;
 	// スポーンID
@@ -229,6 +231,16 @@ public:
 	 *	IDデータの取得
 	 */
 	inline int GetEnemyDataID() const { return status.ID; }
+
+	/*
+	 *	攻撃中フラグの取得
+	 */
+	inline bool GetEnemyAttackTimeFlag() const { return enemyAttackTimeFlag; }
+
+	/*
+	 *	攻撃中フラグの変更
+	 */
+	inline void SetEnemyAttackTimeFlag(bool setValue) { enemyAttackTimeFlag = setValue; }
 
 	///*
 	// *	IDの取得

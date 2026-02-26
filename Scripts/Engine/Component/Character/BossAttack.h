@@ -43,8 +43,6 @@ public:
 	 *  param[in]	float		deltaTime
 	 */
 	virtual void Update(GameObject* boss, float deltaTime) override;
-
-
 };
 
 #endif // !_BOSSATTACK_H_
