@@ -4,6 +4,9 @@
  */
 
 #include "RevolverArm.h"
+#include "../../Audio/AudioUtility.h"
+
+using namespace AudioUtility;
 
 /*
  *	‰Šú‰»ˆ—
@@ -39,6 +42,7 @@ void RevolverArm::WeaponUpdate(float deltaTime, ActionMapBase::ActionState actio
 			// ’e‚ª‚È‚©‚Á‚½‚çƒŠƒ[ƒh
 			else {
 				reload = true;
+				PlaySE("reloadSE");
 			}
 		}
 	}

@@ -4,6 +4,9 @@
  */
 
 #include "SubmachineGunArm.h"
+#include "../../Audio/AudioUtility.h"
+
+using namespace AudioUtility;
 
  /*
   *	‰Šú‰»ˆ—
@@ -38,6 +41,7 @@ void SubmachineGunArm::WeaponUpdate(float deltaTime, ActionMapBase::ActionState 
 		else if (action.buttonDown[shot]) {
 			// ’e‚ª‚È‚©‚Á‚½‚çƒŠƒ[ƒh
 			reload = true;
+			PlaySE("reloadSE");
 		}
 	}
 	else {

@@ -28,6 +28,7 @@ PlayerComponent::PlayerComponent()
 	, staminaChangePoint(0.0f)
 	, resistTimePoint(0.0f)
 	, moveDirectionY(0.0f)
+	, workSECoolTime(0.0f)
 	, canAvoid(true)
 	, isAvoid(false)
 	, hasResolvedInitialGrounding(false)
@@ -48,7 +49,8 @@ PlayerComponent::PlayerComponent()
 	, STAMINA_HEAL_VALUE(0.2f)
 	, JUMP_POWER(1400.0f)
 	, BACK_ACCELERATION(0.5f)
-	, HP_DECREASE_RATE(0.2f) {}
+	, HP_DECREASE_RATE(0.2f) 
+	, WORK_SE_COOL_TIME_MAX(33.0f){}
 
 void PlayerComponent::Start() {
 	// プレイヤーの基礎ステータスを受け取る
@@ -56,9 +58,15 @@ void PlayerComponent::Start() {
 
 	animator = GetOwner()->GetComponent<AnimatorComponent>();
 
-	auto avoidSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/Avoid.mp3");
-	LoadManager::GetInstance().SetOnComplete([this, avoidSE]() {
-		AudioUtility::RegisterSEHandle("avoidSE", avoidSE->GetHandle());
+	auto avoidSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Avoid.mp3");
+	auto changeWeaponSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/ChangeWeapon.mp3");
+	auto workSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Work.mp3");
+	auto jumpSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Jump.mp3");
+	LoadManager::GetInstance().SetOnComplete([this, avoidSE, changeWeaponSE, workSE, jumpSE]() {
+		RegisterSEHandle("avoidSE", avoidSE->GetHandle());
+		RegisterSEHandle("changeWeaponSE", changeWeaponSE->GetHandle());
+		RegisterSEHandle("workSE", workSE->GetHandle());
+		RegisterSEHandle("jumpSE", jumpSE->GetHandle());
 	});
 
 }
@@ -119,10 +127,18 @@ void PlayerComponent::Update(float deltaTime) {
 	// 武器変更
 	int first = static_cast<int>(GameEnum::PlayerAction::FirstWeapon);
 	int second = static_cast<int>(GameEnum::PlayerAction::SecondWeapon);
-	if (action.buttonDown[first])
+	if (action.buttonDown[first]) {
+		// リボルバーに変更
 		WeaponManager::GetInstance().SetCurrentWeapon(GameEnum::Weapon::Revolver);
-	if (action.buttonDown[second])
+		// SE再生
+		PlaySE("changeWeaponSE");
+	}
+	if (action.buttonDown[second]) {
+		// SMGに変更
 		WeaponManager::GetInstance().SetCurrentWeapon(GameEnum::Weapon::SubmachineGun);
+		// SE再生
+		PlaySE("changeWeaponSE");
+	}
 
 	// 回避
 	PlayerAvoid(player, deltaTime);
@@ -191,6 +207,8 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	int jump = static_cast<int>(GameEnum::PlayerAction::Jump);
 	if (action.button[jump] && gravity->GetGroundingFrag()) {
 		gravity->AddFallSpeed(-JUMP_POWER);
+		// SE再生
+		PlaySE("jumpSE");
 	}
 
 	// アニメーション再生
@@ -216,6 +234,18 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 		else {
 			// 待機
 			animator->Play(3, 1);
+		}
+	}
+
+	// SE再生
+	if (gravity->GetGroundingFrag() && moveVec != V_ZERO) {
+		// SE再生クールタイム
+		if (workSECoolTime >= WORK_SE_COOL_TIME_MAX) {
+			PlaySE("workSE");
+			workSECoolTime = 0;
+		}
+		else {
+			workSECoolTime += deltaTime * moveSpeed * 0.066f;
 		}
 	}
 }
@@ -271,7 +301,7 @@ void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 		// スタミナ消費
 		status.stamina -= STAMINA_AVOID_COST;
 		staminaHealCoolTime = STAMINA_HEAL_COOL_TIME_MAX;
-
+		// SE再生
 		PlaySE("avoidSE");
 	}
 	if (isAvoid) {
