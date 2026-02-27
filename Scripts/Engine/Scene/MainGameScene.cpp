@@ -78,6 +78,7 @@ void MainGameScene::Update(Engine& engine, float deltaTime) {
  *  描画処理
  */
 void MainGameScene::Render() {
+	DrawBox(0, 0, GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, GetColor(0, 0, 0), TRUE);
 	gameState->Render();
 	Scene::Render();
 	EffectManager::GetInstance().Render();
@@ -118,7 +119,6 @@ void MainGameScene::Render() {
 		if (HPBar != nullptr)
 			HPBar->ShowHPBar();
 	}
-	DrawBox(0, 0, GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, GetColor(0, 0, 0), TRUE);
 }
 /*
  *  @brief  メインシーン終了処理
