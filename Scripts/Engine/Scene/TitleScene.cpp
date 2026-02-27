@@ -70,8 +70,8 @@ void TitleScene::Update(Engine& engine, float deltaTime) {
  *  ï`âÊèàóù
  */
 void TitleScene::Render() {
+	DrawBox(0, 0, GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, GetColor(0, 0, 0), TRUE);
 #if _DEBUG
 	DrawFormatString(50, 50, GetColor(255, 255, 255), "[TitleScene] ï`âÊíÜ...");
 #endif
-	DrawBox(0, 0, GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, GetColor(0, 0, 0), TRUE);
 }

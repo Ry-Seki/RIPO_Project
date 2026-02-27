@@ -88,6 +88,7 @@ void TutorialScene::Update(Engine& engine, float deltaTime) {
  *	•`‰æˆ—
  */
 void TutorialScene::Render() {
+	DrawBox(0, 0, GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, GetColor(0, 0, 0), TRUE);
 	gameState->Render();
 	Scene::Render();
 	EffectManager::GetInstance().Render();
