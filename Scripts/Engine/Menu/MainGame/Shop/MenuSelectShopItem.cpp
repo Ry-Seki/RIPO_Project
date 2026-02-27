@@ -41,8 +41,9 @@ void MenuSelectShopItem::Initialize(Engine& engine) {
             eventSystem.RegisterButton(button.get());
         }
         eventSystem.Initialize(0);
-        buttonList = std::move(result.buttonList);
         spriteList = std::move(result.spriteList);
+        textList = std::move(result.textList);
+        buttonList = std::move(result.buttonList);
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             UIButtonBase* button = buttonList[i].get();
             if (!button) continue;
@@ -85,8 +86,7 @@ void MenuSelectShopItem::Open() {
 
     if (IsBuyItem()) {
         backButton->SetIsEnable(false);
-    }
-    else {
+    } else {
         exitButton->SetIsEnable(false);
     }
 

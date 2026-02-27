@@ -51,6 +51,28 @@
       ]
     }
   ],
+  "Texts": [
+    {
+      "Name": "ItemPriceText",
+      "Type": "Dynamic",
+      "UseFont": "BuyItem",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1502,
+        "Y": 289
+      }
+    },
+    {
+      "Name": "MoneyText",
+      "Type": "Dynamic",
+      "UseFont": "NormalSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1611,
+        "Y": 830
+      }
+    }
+  ],
   "Buttons": [
     {
       "Name": "HPUpGrade",
