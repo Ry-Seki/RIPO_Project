@@ -67,12 +67,14 @@ void PlayerComponent::Start() {
 	auto changeWeaponSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/ChangeWeapon.mp3");
 	auto workSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Work.mp3");
 	auto jumpSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Jump.mp3");
-	LoadManager::GetInstance().SetOnComplete([this, playerModel, avoidSE, changeWeaponSE, workSE, jumpSE]() {
+	auto bulletHitSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/BulletHit.mp3");
+	LoadManager::GetInstance().SetOnComplete([this, playerModel, avoidSE, changeWeaponSE, workSE, jumpSE, bulletHitSE]() {
 		SetModelHandle(playerModel->GetHandle());
 		RegisterSEHandle("avoidSE", avoidSE->GetHandle());
 		RegisterSEHandle("changeWeaponSE", changeWeaponSE->GetHandle());
 		RegisterSEHandle("workSE", workSE->GetHandle());
 		RegisterSEHandle("jumpSE", jumpSE->GetHandle());
+		RegisterSEHandle("bulletHitSE", bulletHitSE->GetHandle());
 	});
 
 }
@@ -169,6 +171,8 @@ void PlayerComponent::OnCollision(const std::shared_ptr<Component>& self, const 
 			return;
 
 		status.HP -= bullet->GetHitDamage();
+		// SEçƒê∂
+		PlaySE("bulletHitSE");
 	}
 }
 
