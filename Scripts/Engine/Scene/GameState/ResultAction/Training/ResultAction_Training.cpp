@@ -37,6 +37,7 @@ void ResultAction_Training::Setup() {
 	auto& context = owner->GetOwner()->GetActionContext();
 	player.AddPlayerStatus(static_cast<int>(context.statusType));
 	menu.OpenMenu<MenuPlayerStatus>();
+	AudioUtility::PlaySE(GameConst::_TRAINING_SE);
 }
 /*
  *	@brief	XVˆ—

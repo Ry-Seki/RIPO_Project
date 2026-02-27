@@ -19,6 +19,7 @@
 #include "../../Manager/FontManager.h"
 #include "../../Fade/FadeManager.h"
 #include "../../Fade/FadeFactory.h"
+#include "../../UI/Text/Dynamic/DynamicText.h"
 
 /*
  *	@brief	初期化処理
@@ -37,6 +38,7 @@ void MenuSelectSaveSlot::Initialize (Engine& engine) {
         }
         eventSystem.Initialize(0);
         spriteList = std::move(result.spriteList);
+        textList = std::move(result.textList);
         buttonList = std::move(result.buttonList);
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             UIButtonBase* button = buttonList[i].get();
@@ -100,6 +102,7 @@ void MenuSelectSaveSlot::Open () {
         }
         isUsedList = save.GetAllSlotIsUsed();
     }
+    CreateSlotText();
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
         eventSystem.ApplySelection();
@@ -194,6 +197,61 @@ void MenuSelectSaveSlot::Resume() {
     }
 }
 /*
+ *	@brief	テキストの生成(セーブスロットのテキスト描画用)
+ */
+void MenuSelectSaveSlot::CreateSlotText() {
+    slotTextList.clear();
+    const int slotSpacing = 205;
+    const int white = GetColor(255, 255, 255);
+
+    for (int i = 0; i < gameDataList.size(); i++) {
+        int offsetY = slotSpacing * i;
+
+        SlotTextSet set;
+
+        // スロットに必要なテキストの生成
+        for (auto& text : textList) {
+            TextInfo info = text->GetTextInfo();
+            info.y += offsetY;
+
+            if (text->GetName() == "ElapsedDayText") {
+                set.elapsedDay = std::make_shared<DynamicText>(info);
+                set.elapsedDay->SetColor(white);
+            }
+            else if (text->GetName() == "HalfDayText") {
+                set.halfDay = std::make_shared<DynamicText>(info);
+                set.halfDay->SetColor(white);
+            }
+            else if (text->GetName() == "PlayTimeText") {
+                set.playTime = std::make_shared<DynamicText>(info);
+                set.playTime->SetColor(white);
+            }
+            else if (text->GetName() == "MoneyText") {
+                set.money = std::make_shared<DynamicText>(info);
+                set.money->SetColor(white);
+            }
+            else if (text->GetName() == "TreasureText") {
+                set.treasure = std::make_shared<DynamicText>(info);
+                set.treasure->SetColor(white);
+            }
+        }
+        slotTextList.push_back(set);
+    }
+    // テキストの中身の文字列の設定
+    for (int i = 0; i < slotTextList.size(); i++) {
+        if (!isUsedList[i]) continue;
+
+        auto& data = gameDataList[i];
+        auto& slot = slotTextList[i];
+
+        slot.elapsedDay->SetText(std::to_string(data.elapsedDay));
+        slot.halfDay->SetText(data.isHalfDay ? "[PM]" : "[AM]");
+        slot.playTime->SetText(std::to_string(data.playTime));
+        slot.money->SetText(std::to_string(data.currentMoney));
+        slot.treasure->SetText(std::to_string(data.totalTreasureCount));
+    }
+}
+/*
  *	@brief		ボタンの押された時の処理
  *	@param[in]	int slotIndex
  */
@@ -254,25 +312,11 @@ void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
  *	@brief		セーブスロット情報の描画
  */
 void MenuSelectSaveSlot::RenderSlotInfo() {
-    auto& font = FontManager::GetInstance();
-    int white = GetColor(255, 255, 255);
-    for (int i = 0, max = gameDataList.size(); i < max; i++) {
-        if (!isUsedList[i]) continue;
-        std::string elapsedDayStr = std::to_string(gameDataList[i].elapsedDay);
-        std::string halfDayStr;
-        if (gameDataList[i].isHalfDay) {
-            halfDayStr = "[PM]";
-        } else {
-            halfDayStr = "[AM]";
-        }
-        std::string playTimeStr = std::to_string(gameDataList[i].playTime);
-        std::string moneyStr = std::to_string(gameDataList[i].currentMoney);
-        std::string treasureStr = std::to_string(gameDataList[i].totalTreasureCount);
-
-        font.Draw("ElapsedDayFont", 1295, 273 + 205 * i, elapsedDayStr, white);
-        font.Draw("ElapsedDayFont", 1370, 273 + 205 * i, halfDayStr, white);
-        font.Draw("SaveSlotFont", 1671, 232 + 205 * i, playTimeStr, white);
-        font.Draw("SaveSlotFont", 1671, 269 + 205 * i, moneyStr, white);
-        font.Draw("SaveSlotFont", 1671, 302 + 205 * i, treasureStr, white);
+    for (auto& slot : slotTextList) {
+        if (slot.elapsedDay) slot.elapsedDay->Render();
+        if (slot.halfDay)    slot.halfDay->Render();
+        if (slot.playTime)   slot.playTime->Render();
+        if (slot.money)      slot.money->Render();
+        if (slot.treasure)   slot.treasure->Render();
     }
 }

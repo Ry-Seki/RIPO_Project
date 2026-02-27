@@ -13,7 +13,7 @@
  */
 class InAction_Shop : public InActionBase {
 private:
-	static constexpr const char* _SHOPBGM_PATH = "Res/Audio/BGM/Shop/ShopBGM.mp3";
+	static constexpr const char* _SHOP_BGMPATH = "Res/Audio/BGM/Shop/ShopBGM.mp3";
 public:
 	/*
 	 *	@brief	‰Šú‰»ˆ—

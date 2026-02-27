@@ -35,6 +35,7 @@ private:
 
 	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/SelectAction/SelectActionMenuResources.json";
 	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/SelectAction/SelectActionMenuNavigation.json";
+	static constexpr const char* _SELECTMENU_BGMPATH = "Res/Audio/BGM/Title/MenuBGM.mp3";
 
 public:
 	/*

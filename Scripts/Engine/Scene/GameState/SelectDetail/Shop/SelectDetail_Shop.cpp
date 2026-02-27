@@ -39,7 +39,7 @@ void SelectDetail_Shop::Initialize() {
  */
 void SelectDetail_Shop::Setup() {
 	MenuManager::GetInstance().OpenMenu<MenuSelectShopItem>();
-	AudioUtility::ChangeBGM("shopBGM");
+	AudioUtility::ChangeBGM(GameConst::_SHOP_BGM);
 	AudioUtility::PlayBGM();
 }
 /*

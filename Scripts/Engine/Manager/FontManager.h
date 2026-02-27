@@ -21,6 +21,8 @@ private:
 	std::unordered_map<std::string, int> m_fonts;
 	// 使用するフォント種類
 	const std::string m_fontType = "Noto Sans Thin";
+	// フォントハンドル
+	int handle = -1;
 
 public:
 	FontManager() = default;
@@ -55,6 +57,14 @@ public:
 	 *  全フォントの削除
 	 */
 	void ReleaseAll();
+
+	/*
+	 *	@brief		フォントハンドルの取得
+	 *	@param[in]	const std::string& fontSizeName
+	 *	@return		int
+	 *	@author		Seki
+	 */
+	int GetHandle(const std::string& fontSizeName);
 };
 
 #endif // !FONTMANAGER_H_

@@ -19,6 +19,10 @@ private:
 	FloorProcessor floorProcessor;
 	std::vector<std::vector<int>> treasureIDList;
 
+	static constexpr const char* _DUNGEON01_BGMPATH = "Res/Audio/BGM/Dungeon/Dungeon_1/星の詩.mp3";					// ダンジョン1のBGMパス
+	static constexpr const char* _DUNGEON02_BGMPATH = "Res/Audio/BGM/Dungeon/Dungeon_2/Apparition’s_Lullaby.mp3";	// ダンジョン2のBGMパス
+	static constexpr const char* _DUNGEONSELECT_BGMPATH = "Res/Audio/BGM/Dungeon/DungeonSelectBGM.mp3";				// ダンジョン選択画面のBGMパス
+
 public:
 	/*
 	 *	@brief	初期化処理

@@ -16,13 +16,12 @@
  */
 struct TextInfo {
 	int x = -1, y = -1;
-	int width = -1;
-	int size = -1;
+	int lineHeight = -1;
 	std::string name = "";
 	std::string useFont = "";
 	GameEnum::TextType textType = GameEnum::TextType::Invalid;
 	GameEnum::AlignmentType alignment = GameEnum::AlignmentType::Invalid;
-	std::vector<std::string> textData;
+	std::vector<std::string> textLineList;
 };
 
 #endif // !_TEXT_INFO_H_

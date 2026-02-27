@@ -16,7 +16,7 @@
  */
 void MiniGameSokoban::Open() {
     MiniGameBase::Open();
-    AudioUtility::ChangeBGM("partBGM");
+    AudioUtility::ChangeBGM(GameConst::_PART_BGM);
     AudioUtility::PlayBGM();
     // É}ÉbÉvì«Ç›çûÇ›
     SokobanMapManager mapManager;

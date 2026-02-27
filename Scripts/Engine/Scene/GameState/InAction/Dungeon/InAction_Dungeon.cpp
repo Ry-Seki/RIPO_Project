@@ -34,13 +34,13 @@ void InAction_Dungeon::Initialize(Engine& engine) {
 	StageManager::GetInstance().Initialize(engine);
 	StageObjectManager::GetInstance().Initialize(engine);
 	BulletManager::GetInstance().Initialize(engine);
-	auto dungeonBGM01 = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/Dungeon_1/êØÇÃéç.mp3");
-	auto dungeonBGM02 = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/Dungeon_2/ApparitionÅfs_Lullaby.mp3");
-	auto selectDungeonBGM = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/DungeonSelectBGM.mp3");
+	auto dungeonBGM01 = LoadManager::GetInstance().LoadResource<LoadAudio>(_DUNGEON01_BGMPATH);
+	auto dungeonBGM02 = LoadManager::GetInstance().LoadResource<LoadAudio>(_DUNGEON02_BGMPATH);
+	auto selectDungeonBGM = LoadManager::GetInstance().LoadResource<LoadAudio>(_DUNGEONSELECT_BGMPATH);
 	LoadManager::GetInstance().SetOnComplete([&engine, this, dungeonBGM01, dungeonBGM02, selectDungeonBGM]() {
-		AudioUtility::RegisterBGMHandle("dungeonBGM01", dungeonBGM01->GetHandle());
-		AudioUtility::RegisterBGMHandle("dungeonBGM02", dungeonBGM02->GetHandle());
-		AudioUtility::RegisterBGMHandle("selectDungeon", selectDungeonBGM->GetHandle());
+		AudioUtility::RegisterBGMHandle(GameConst::_DUNGEON_BGM01, dungeonBGM01->GetHandle());
+		AudioUtility::RegisterBGMHandle(GameConst::_DUNGEON_BGM02, dungeonBGM02->GetHandle());
+		AudioUtility::RegisterBGMHandle(GameConst::_DUNGEONSELECT_BGM, selectDungeonBGM->GetHandle());
 		});
 }
 /*

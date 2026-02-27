@@ -189,17 +189,18 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart, std::v
 			InputUtility::SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, true);
 		});
 		// BGM‰¼
+		// author oorui
 		switch (dungeonID) {
 		case   0:
-			AudioUtility::ChangeBGM("dungeonBGM01");
+			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM01);
 			AudioUtility::PlayBGM();
 			break;
 		case 1:
-			AudioUtility::ChangeBGM("dungeonBGM01");
+			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM01);
 			AudioUtility::PlayBGM();
 			break;
 		case 2:
-			AudioUtility::ChangeBGM("dungeonBGM02");
+			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM02);
 			AudioUtility::PlayBGM();
 			break;
 		}

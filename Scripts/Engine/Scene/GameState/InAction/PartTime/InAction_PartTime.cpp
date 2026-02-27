@@ -22,7 +22,7 @@ void InAction_PartTime::Initialize(Engine& engine) {
 	miniGame->SetCallback([this](GameEnum::MiniGameLevel level) {
 		CompleteMiniGame(level);
 	});
-	auto partBGM = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Part/GameBGM.mp3");
+	auto partBGM = LoadManager::GetInstance().LoadResource<LoadAudio>(_PART_BGMPATH);
 	LoadManager::GetInstance().SetOnComplete([&engine, this, partBGM]() {
 		AudioUtility::RegisterBGMHandle("partBGM", partBGM->GetHandle());
 		});
