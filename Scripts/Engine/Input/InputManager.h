@@ -26,6 +26,11 @@ private:	//メンバ変数
 	int prevMouseInput;
 	int nowMouseWheel;
 	int prevMouseWheel;
+	int nowMousePosX;
+	int prevMousePosX;
+	int nowMousePosY;
+	int prevMousePosY;
+	bool mouseVisible;
 	
 	std::unordered_map<GameEnum::ActionMap, std::shared_ptr<ActionMapBase>> actionMaps;		// 各アクションマップ
 private:	    //コンストラクタとデストラクタ
@@ -104,6 +109,29 @@ public:		//マウス用入力管理
 			!static_cast<bool>(nowMouseInput & mouseButton);
 	}
 
+	/*
+	 *	マウスの移動量取得
+	 *	@param[in]	int axis			取得する軸
+	 *	@param[out] int mouseMoveAxis	マウスの移動量
+	 *  @outhor Riku
+	 */
+	inline void GetMouseMove(int axis, int& mouseMoveAxis) {
+		if (axis == static_cast<int>(ActionMapBase::MouseMove::X))
+			mouseMoveAxis = prevMousePosX - nowMousePosX;
+		else if (axis == static_cast<int>(ActionMapBase::MouseMove::Y))
+			mouseMoveAxis = prevMousePosY - nowMousePosY;
+	}
+	/*
+	 *	マウスの位置取得
+	 *	@param[out]	int mousePosX	マウスの位置X
+	 *	@param[out] int mousePosY	マウスの位置Y
+	 *  @outhor Riku
+	 */
+	inline void GetMousePosition(int& mousePosX, int& mousePosY) {
+		mousePosX = nowMousePosX;
+		mousePosY = nowMousePosY;
+	}
+
 public: // マウスとキーの両方入力
 	/*
 	 *	ボタンが押されたかどうか
@@ -167,5 +195,14 @@ public: // アクションマップ関連
 		return actionMaps[map]->state;
 	}
 
+public:
+	/*
+	 *	マウスの表示非表示切り替え
+	 *	@param[in]	bool setVisible	切り替え先
+	 */
+	inline void SetMouseVisible(bool setVisible) {
+		mouseVisible = setVisible;
+		SetMouseDispFlag(setVisible);
+	}
 };
 

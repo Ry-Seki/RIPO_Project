@@ -100,7 +100,7 @@ int Engine::Initialize() {
 	MenuManager::GetInstance().Initialize(*this);
 	// ‰Šú‰»ƒtƒ‰ƒO‚Ì•ÏX
 	initialized = true;
-	SetMouseDispFlag(TRUE);
+	InputManager::GetInstance().SetMouseVisible(true);
 	return 0;
 }
 /*

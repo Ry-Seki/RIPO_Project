@@ -205,6 +205,8 @@ namespace GameEnum {
 		BulletReload,	// 銃のリロード
 		FirstWeapon,	// 武器1
 		SecondWeapon,	// 武器2
+		CameraMoveX,	// カメラのX軸移動
+		CameraMoveY,	// カメラのY軸移動
 
 		Max
 	};

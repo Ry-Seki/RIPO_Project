@@ -18,6 +18,7 @@ public:
 		Key,			// キーボード
 		MouseButton,	// マウスのボタン
 		MouseWheel,		// マウスホイール
+		MouseMove,		// マウスの移動
 	};
 
 	// 入力
@@ -26,18 +27,25 @@ public:
 		int input;
 	};
 
+	// マウス移動
+	enum class MouseMove {
+		X,
+		Y,
+	};
+
 	// 入力の種類
 	enum class BindingType {
-		Axis,	// 軸入力
-		Button,	// ボタン入力
+		AxisButton,	// 軸のボタン入力
+		Button,		// ボタン入力
+		AxisValue,	// 軸の入力量
 	};
 
 	// 入力の設定
 	struct Binding {
 		int action;			// 入力に対する行動
 		BindingType type;	// 入力の種類
-		Input positive;		// 入力を確認するボタン
-		Input negative;		// 入力を確認するボタン(positiveと対をなすもの)
+		Input positive;		// 確認する入力
+		Input negative;		// 確認する入力(positiveと対をなすもの)
 	};
 	// 行動の状態
 	struct ActionState {
@@ -63,8 +71,8 @@ public:
 	 *	@param	Input positive	+方向の入力ボタン
 	 *	@param	Input negative	-方向の入力ボタン
 	 */
-	void AddAxis(int action, Input positive, Input negative) {
-		bindings.push_back({action, BindingType::Axis, positive, negative});
+	void AddAxisButton(int action, Input positive, Input negative) {
+		bindings.push_back({action, BindingType::AxisButton, positive, negative});
 	}
 
 	/*
@@ -75,6 +83,15 @@ public:
 	 */
 	void AddButton(int action, Input input) {
 		bindings.push_back({action, BindingType::Button, input, input});
+	}
+
+	/*
+	 *	軸入力設定
+	 *	@param	int	action	行動設定
+	 *	@param	Input input	軸に対する入力
+	 */
+	void AddAxisValue(int action, Input input) {
+		bindings.push_back({ action, BindingType::AxisValue, input, input });
 	}
 
 	/*

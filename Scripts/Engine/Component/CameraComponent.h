@@ -14,8 +14,6 @@
 
 class CameraComponent : public Component {
 private:
-	Vector3 mousePosition;			// マウスの位置
-	Vector3 mouseMoveValue;			// マウスの移動量
 	float sensitivity;				// 感度
 	float playerDistancePos;		// プレイヤーから離れる距離
 	GameEnum::CameraState state;	// カメラの状態
