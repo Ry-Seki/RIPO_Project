@@ -74,7 +74,7 @@ public:
 		const auto& entranceArray = floorJson[key];
 
 		// Entrance”z—ñ‚ğ‘–¸
-		for (size_t i = 0; i < entranceArray.size(); ++i) {
+		for (size_t i = 0; i < entranceArray.size(); i++) {
 			EntranceData data;
 
 			// MoveID

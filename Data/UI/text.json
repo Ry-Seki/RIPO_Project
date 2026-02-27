@@ -3,17 +3,27 @@
     {
       "Name": "Debug",
       "TextType": "Static",
+      "LineHeight": 24,
       "UseFont": "Debug",
       "Alignment": "Left",
       "Position": {
         "X": 0,
         "Y": 0
       },
-      "Size": 32,
       "Data": [
         "これはデバック用です。",
         "改行対応です。"
       ]
+    },
+    {
+      "Name": "Debug",
+      "TextType": "Dynamic",
+      "UseFont": "Debug",
+      "Alignment": "Left",
+      "Position": {
+        "X": 0,
+        "Y": 0
+      }
     }
   ]
 }

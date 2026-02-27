@@ -172,7 +172,7 @@ void MenuResultScore::SelectButtonExecute(Engine& engine, int buttonIndex) {
  *  @return     GameEnum::ResultRank
  */
 GameEnum::ResultRank MenuResultScore::JudgeRank(int playerScore) {
-    for (int i = 0, max = static_cast<int>(GameEnum::ResultRank::Max); i < max; ++i) {
+    for (int i = 0, max = static_cast<int>(GameEnum::ResultRank::Max); i < max; i++) {
         if (playerScore >= resultScore.requiredScore[i]) {
             return static_cast<GameEnum::ResultRank>(i);
         }
