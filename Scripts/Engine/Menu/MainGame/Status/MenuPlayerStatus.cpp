@@ -153,7 +153,7 @@ void MenuPlayerStatus::CurrentStatusRender() {
     auto& font = FontManager::GetInstance();
     constexpr int STATUS_COUNT = 4;
 
-    for (int i = 0; i < STATUS_COUNT; ++i) {
+    for (int i = 0; i < STATUS_COUNT; i++) {
         font.Draw("MiniSizeFont", 1425, 424 + 125 * i, std::to_string(currentStatus.base[i]).c_str(), GetColor(255, 255, 255));
     }
 }
@@ -173,7 +173,7 @@ void MenuPlayerStatus::ComparisonStatus() {
     const float offsetY = 125;  // ŠesŠÔŠu
     const int white = GetColor(255, 255, 255);
 
-    for (int i = 0; i < STATUS_COUNT; ++i) {
+    for (int i = 0; i < STATUS_COUNT; i++) {
         font.Draw("MiniSizeFont", 1170, 424 + 125 * i, std::to_string(prev[i]).c_str(), white);
 
         int diff = current[i] - prev[i];
