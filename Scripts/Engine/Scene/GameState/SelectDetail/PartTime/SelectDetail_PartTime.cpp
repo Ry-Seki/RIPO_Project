@@ -32,6 +32,8 @@ void SelectDetail_PartTime::Setup() {
 	auto& context = owner->GetOwner()->GetActionContext();
 	context.miniGameLevel = GameEnum::MiniGameLevel::Invalid;
 	MenuManager::GetInstance().OpenMenu<MenuSelectMiniGameLevel>();
+
+
 }
 /*
  *	@brief	XVˆ—

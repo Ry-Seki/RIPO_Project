@@ -36,9 +36,11 @@ void InAction_Dungeon::Initialize(Engine& engine) {
 	BulletManager::GetInstance().Initialize(engine);
 	auto dungeonBGM01 = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/Dungeon_1/êØÇÃéç.mp3");
 	auto dungeonBGM02 = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/Dungeon_2/ApparitionÅfs_Lullaby.mp3");
-	LoadManager::GetInstance().SetOnComplete([&engine, this, dungeonBGM01, dungeonBGM02]() {
+	auto selectDungeonBGM = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/DungeonSelectBGM.mp3");
+	LoadManager::GetInstance().SetOnComplete([&engine, this, dungeonBGM01, dungeonBGM02, selectDungeonBGM]() {
 		AudioUtility::RegisterBGMHandle("dungeonBGM01", dungeonBGM01->GetHandle());
 		AudioUtility::RegisterBGMHandle("dungeonBGM02", dungeonBGM02->GetHandle());
+		AudioUtility::RegisterBGMHandle("selectDungeon", selectDungeonBGM->GetHandle());
 		});
 }
 /*

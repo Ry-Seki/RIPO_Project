@@ -25,6 +25,7 @@
 #include "../../System/Status/PlayerStatusManager.h"
 #include "Status/MenuPlayerStatus.h"
 #include "../../System/Money/MoneyManager.h"
+#include "../../Load/Audio/LoadAudio.h"
 
 #include <DxLib.h>
 
@@ -35,8 +36,8 @@ void MenuSelectAction::Initialize(Engine& engine) {
     auto& load = LoadManager::GetInstance();
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
-
-    load.SetOnComplete([this, &engine, menuJSON, navigation]() {
+    auto selectMenuBGM = load.LoadResource<LoadAudio>("Res/Audio/BGM/Title/MenuBGM.mp3");
+    load.SetOnComplete([this, &engine, menuJSON, navigation, selectMenuBGM]() {
         MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
         for (auto& button : result.buttonList) {
             if (!button) continue;
@@ -62,6 +63,7 @@ void MenuSelectAction::Initialize(Engine& engine) {
             if (sprite->GetName() == "ElapsedDay") elapsedDaySprite = sprite.get();
         }
         eventSystem.LoadNavigation(navigation->GetData());
+        AudioUtility::RegisterBGMHandle("menuBGM", selectMenuBGM->GetHandle());
     });
 }
 /*
@@ -69,6 +71,8 @@ void MenuSelectAction::Initialize(Engine& engine) {
  */
 void MenuSelectAction::Open() {
 	MenuBase::Open();
+    AudioUtility::ChangeBGM("menuBGM");
+    AudioUtility::PlayBGM();
     for (auto& sprite : spriteList) {
         sprite->Setup();
     }
@@ -163,6 +167,7 @@ void MenuSelectAction::Render() {
  */
 void MenuSelectAction::Close(Engine& engine) {
 	MenuBase::Close(engine);
+    AudioUtility::StopBGM();
 }
 /*
  *	@brief	ÉÅÉjÉÖÅ[ÇíÜíf

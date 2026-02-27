@@ -39,6 +39,8 @@ void SelectDetail_Shop::Initialize() {
  */
 void SelectDetail_Shop::Setup() {
 	MenuManager::GetInstance().OpenMenu<MenuSelectShopItem>();
+	AudioUtility::ChangeBGM("shopBGM");
+	AudioUtility::PlayBGM();
 }
 /*
  *	@brief	更新処理
@@ -57,6 +59,7 @@ void SelectDetail_Shop::Render() {
  *	@brief	片付け処理
  */
 void SelectDetail_Shop::Teardown() {
+	AudioUtility::StopBGM();
 }
 /*
  *	@brief		ショップでの行動決定

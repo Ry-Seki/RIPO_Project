@@ -20,6 +20,7 @@
 #include "../../../Data/UI/MenuInfo.h"
 #include "../../Menu/System/MenuConfirm.h"
 #include "../../Audio/AudioUtility.h"
+#include "../../Load/Audio/LoadAudio.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -28,7 +29,6 @@ void MenuInGame::Initialize(Engine& engine) {
     auto& load = LoadManager::GetInstance();
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
-
     load.SetOnComplete([this, &engine, menuJSON, navigation]() {
         MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
         for (auto& button : result.buttonList) {
@@ -133,6 +133,7 @@ void MenuInGame::Render() {
  */
 void MenuInGame::Close(Engine& engine) {
     MenuBase::Close(engine);
+    AudioUtility::StopBGM();
 }
 /*
  *	@brief	ƒƒjƒ…[‚ğ’†’f

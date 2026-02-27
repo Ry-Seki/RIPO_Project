@@ -12,7 +12,8 @@
  *	@brief	ショップ行動実行クラス
  */
 class InAction_Shop : public InActionBase {
-
+private:
+	static constexpr const char* _SHOPBGM_PATH = "Res/Audio/BGM/Shop/ShopBGM.mp3";
 public:
 	/*
 	 *	@brief	初期化処理
