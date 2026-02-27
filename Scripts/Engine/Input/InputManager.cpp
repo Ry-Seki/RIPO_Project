@@ -6,6 +6,7 @@
 #include "InputManager.h"
 #include "PlayerActionMap.h"
 #include "MenuActionMap.h"
+#include "../GameConst.h"
 
 /*
  *	コンストラクタ
@@ -16,7 +17,12 @@ InputManager::InputManager()
 	, nowMouseInput()
 	, prevMouseInput() 
 	, nowMouseWheel()
-	, prevMouseWheel(){
+	, prevMouseWheel()
+	, nowMousePosX()
+	, prevMousePosX()
+	, nowMousePosY()
+	, prevMousePosY()
+	, mouseVisible(true){
 }
 /*
  *	デストラクタ
@@ -54,6 +60,23 @@ void InputManager::Update() {
 	prevMouseWheel = nowMouseWheel;
 	// 現在のマウスホイールの回転量を取得
 	nowMouseWheel = GetMouseWheelRotVol();
+
+	// 1フレーム前のマウスの位置を保存
+	prevMousePosX = nowMousePosX;
+	prevMousePosY = nowMousePosY;
+	// 現在のマウスの位置を保存
+	GetMousePoint(&nowMousePosX, &nowMousePosY);
+	// マウスカーソルが非表示ならカーソルは中央固定
+	if (!mouseVisible) {
+		// 画面中央
+		int windowWidthCenter = GameConst::WINDOW_WIDTH / 2;
+		int windowHeightCenter = GameConst::WINDOW_HEIGHT / 2;
+		// マウスを画面中央に固定
+		SetMousePoint(windowWidthCenter, windowHeightCenter);
+		// 1フレーム前位置は画面中央とする
+		prevMousePosX = windowWidthCenter;
+		prevMousePosY = windowHeightCenter;
+	}
 
 	// 各アクションマップの更新処理
 	for (auto [mapNum, actionMap] : actionMaps) {

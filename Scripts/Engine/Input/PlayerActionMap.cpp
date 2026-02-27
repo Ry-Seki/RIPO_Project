@@ -12,12 +12,12 @@
 void PlayerActionMap::Initialize() {
 	// 入力設定
 	// 前移動
-	AddAxis(
+	AddAxisButton(
 		static_cast<int>(GameEnum::PlayerAction::ForwardMove),
 		{ InputType::Key, KEY_INPUT_W },
 		{ InputType::Key, KEY_INPUT_S });
 	// 右移動
-	AddAxis(
+	AddAxisButton(
 		static_cast<int>(GameEnum::PlayerAction::RightMove),
 		{ InputType::Key, KEY_INPUT_D },
 		{ InputType::Key, KEY_INPUT_A });
@@ -57,6 +57,14 @@ void PlayerActionMap::Initialize() {
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::SecondWeapon),
 		{ InputType::Key, KEY_INPUT_2 });
+	// カメラのX軸移動
+	AddAxisValue(
+		static_cast<int>(GameEnum::PlayerAction::CameraMoveX),
+		{ InputType::MouseMove, static_cast<int>(MouseMove::X) });
+	// カメラのY軸移動
+	AddAxisValue(
+		static_cast<int>(GameEnum::PlayerAction::CameraMoveY),
+		{ InputType::MouseMove, static_cast<int>(MouseMove::Y) });
 
 	// 値の初期化
 	state.axis[static_cast<int>(GameEnum::PlayerAction::ForwardMove)] = 0.0f;
@@ -71,6 +79,8 @@ void PlayerActionMap::Initialize() {
 	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::BulletReload)] = false;
 	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::FirstWeapon)] = false;
 	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::SecondWeapon)] = false;
+	state.axis[static_cast<int>(GameEnum::PlayerAction::CameraMoveX)] = 0.0f;
+	state.axis[static_cast<int>(GameEnum::PlayerAction::CameraMoveY)] = 0.0f;
 
 	isActive = false;
 }

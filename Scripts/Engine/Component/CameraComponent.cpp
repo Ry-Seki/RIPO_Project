@@ -7,13 +7,14 @@
 #include "../Manager/CameraManager.h"
 #include "../GameConst.h"
 #include "Character/ArmActionComponent.h"
+#include "../Input/InputUtility.h"
 #include "DxLib.h"
 #include <algorithm>
 
+using namespace InputUtility;
+
 CameraComponent::CameraComponent()
-	: mousePosition(Vector3::zero)
-	, mouseMoveValue(Vector3::zero)
-	, sensitivity(0.005f)
+	: sensitivity(0.005f)
 	, playerDistancePos(500)
 	, state(GameEnum::CameraState::FPS)
 
@@ -44,25 +45,13 @@ void CameraComponent::Update(float deltaTime) {
 		GameObjectPtr player = CameraManager::GetInstance().GetTarget();
 		if (!player) break;
 
-		// マウスの位置を取得
-		int mouseX = 0, mouseY = 0;
-		GetMousePoint(&mouseX, &mouseY);
-		mousePosition.x = mouseX;
-		mousePosition.y = mouseY;
-
-		if (mousePosition == Vector3::zero) break;
-		// 画面中央
-		int windowWidthCenter = GameConst::WINDOW_WIDTH / 2;
-		int windowHeightCenter = GameConst::WINDOW_HEIGHT / 2;
-
-		// 移動量計算
-		mouseMoveValue.x = mousePosition.x - windowWidthCenter;
-		mouseMoveValue.y = mousePosition.y - windowHeightCenter;
+		auto action = GetInputState(GameEnum::ActionMap::PlayerAction);
 		// 感度を加える
-		mouseMoveValue *= sensitivity;
+		float mouseMoveValueX = -action.axis[static_cast<int>(GameEnum::PlayerAction::CameraMoveX)] * sensitivity;
+		float mouseMoveValueY = -action.axis[static_cast<int>(GameEnum::PlayerAction::CameraMoveY)] * sensitivity;
 		auto handArm = player->GetComponent<ArmActionComponent>();
 		// 移動量を角度に変換
-		Vector3 moveRotation = { mouseMoveValue.y, mouseMoveValue.x, 0 };
+		Vector3 moveRotation = { mouseMoveValueY, mouseMoveValueX, 0 };
 		// カメラの角度に移動量を加える
 		camera->rotation += moveRotation;
 		// x軸の角度は制限を掛ける
@@ -78,9 +67,7 @@ void CameraComponent::Update(float deltaTime) {
 			// 持っていなかったら頭の位置
 			camera->position = playerHeadPos;
 		}
-
-		// マウスを画面中央に固定
-		SetMousePoint(windowWidthCenter, windowHeightCenter);
+		
 	}
 		break;
 	case GameEnum::CameraState::Event:

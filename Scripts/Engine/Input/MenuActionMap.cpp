@@ -14,23 +14,23 @@
 void MenuActionMap::Initialize() {
 	// ì¸óÕê›íË
 	// è„â∫à⁄ìÆ
-	AddAxis(
+	AddAxisButton(
 		static_cast<int>(GameEnum::MenuAction::Vertical),
 		{ InputType::Key, KEY_INPUT_UP },
 		{ InputType::Key, KEY_INPUT_DOWN }
 	);
-	AddAxis(
+	AddAxisButton(
 		static_cast<int>(GameEnum::MenuAction::Vertical),
 		{ InputType::Key, KEY_INPUT_W },
 		{ InputType::Key, KEY_INPUT_S }
 	);
 	// ç∂âEà⁄ìÆ
-	AddAxis(
+	AddAxisButton(
 		static_cast<int>(GameEnum::MenuAction::Horizontal),
 		{ InputType::Key, KEY_INPUT_RIGHT },
 		{ InputType::Key, KEY_INPUT_LEFT }
 	);
-	AddAxis(
+	AddAxisButton(
 		static_cast<int>(GameEnum::MenuAction::Horizontal),
 		{ InputType::Key, KEY_INPUT_D },
 		{ InputType::Key, KEY_INPUT_A }
