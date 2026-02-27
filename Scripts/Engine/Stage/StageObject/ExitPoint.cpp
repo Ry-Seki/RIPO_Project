@@ -1,6 +1,6 @@
 /*
  *	@file	ExitPoint.h
- *  @author kuu & oorui
+ *  @author oorui
  */
 
 #include "ExitPoint.h"
@@ -73,7 +73,9 @@ void ExitPoint::OnCollision(const std::shared_ptr<Component>& self, const std::s
 
 		// プレイヤーの入力を停止
 		SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, false);
+		
 		// メニューの入力を開始
+		SetMouseVisible(true);
 		SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
 
 		// 確認UIを表示
@@ -107,6 +109,7 @@ void ExitPoint::OnCollision(const std::shared_ptr<Component>& self, const std::s
 			}
 			// 認可されなければ
 			else if (result == GameEnum::ConfirmResult::No) {
+				SetMouseVisible(false);
 				// フェード
 				FadeBasePtr fadeout = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
 				FadeManager::GetInstance().StartFade(fadeout);
