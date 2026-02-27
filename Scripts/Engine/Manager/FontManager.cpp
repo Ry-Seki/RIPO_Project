@@ -23,7 +23,7 @@ void FontManager::LoadFont(int size, const std::string& name) {
         return;
 
     // フォントハンドルを生成
-    int handle = CreateFontToHandle(m_fontType.c_str(), size, -1);
+    handle = CreateFontToHandle(m_fontType.c_str(), size, -1);
 
     // フォントを登録
     if (handle != -1) {
@@ -72,9 +72,27 @@ void FontManager::UnloadFont(const std::string& name) {
 void FontManager::ReleaseAll() {
     for (auto& font : m_fonts) {
         // フォントハンドルを削除
-        DeleteFontToHandle(font.second);
+        int deleteHandle = font.second;
+
+        if(deleteHandle != -1) DeleteFontToHandle(deleteHandle);
     }
 
     m_fonts.clear();
+}
+
+/*
+ *	@brief		フォントハンドルの取得
+ *	@param[in]	const std::string& fontSizeName
+ *	@return		int
+ *  @author     Seki
+ */
+int FontManager::GetHandle(const std::string& fontSizeName) {
+    // フォントを検索
+    auto itr = m_fonts.find(fontSizeName);
+
+    // 未生成なら何もしない
+    if (itr == m_fonts.end()) return -1;
+
+    return itr->second;
 }
 

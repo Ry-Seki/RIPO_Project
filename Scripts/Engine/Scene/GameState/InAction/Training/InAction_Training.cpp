@@ -7,11 +7,20 @@
 #include "../../GameStateMachine.h"
 #include "../../../../Fade/FadeFactory.h"
 #include "../../../../Fade/FadeManager.h"
+#include "../../../../Load/Audio/LoadAudio.h"
+#include "../../../../Load/LoadManager.h"
+#include "../../../../Audio/AudioUtility.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
  */
 void InAction_Training::Initialize(Engine& engine) {
+	auto trainingBGM01 = LoadManager::GetInstance().LoadResource<LoadAudio>(_TRAININGBGM_PATH);
+	auto trainingCopSE = LoadManager::GetInstance().LoadResource<LoadAudio>(_TRAININGSE_PATH);
+	LoadManager::GetInstance().SetOnComplete([&engine, this, trainingBGM01,trainingCopSE]() {
+		AudioUtility::RegisterBGMHandle(GameConst::_TRAINING_BGM, trainingBGM01->GetHandle());
+		AudioUtility::RegisterSEHandle(GameConst::_TRAINING_SE, trainingCopSE->GetHandle());
+	});
 }
 /*
  *	@brief	€”õ‘Oˆ—
@@ -22,6 +31,7 @@ void InAction_Training::Setup() {
 	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
 		isStart = true;
 	});
+
 }
 /*
  *	@brief	XVˆ—

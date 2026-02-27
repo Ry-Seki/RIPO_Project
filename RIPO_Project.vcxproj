@@ -157,6 +157,7 @@
     <ClCompile Include="Scripts\Engine\Audio\SE\SESource.cpp" />
     <ClCompile Include="Scripts\Engine\Camera\EventCamera.cpp" />
     <ClCompile Include="Scripts\Engine\Camera\MoveCommand.cpp" />
+    <ClCompile Include="Scripts\Engine\Camera\RotateCommand.cpp" />
     <ClCompile Include="Scripts\Engine\Camera\WaitCommand.cpp" />
     <ClCompile Include="Scripts\Engine\Collision\Collision.cpp" />
     <ClCompile Include="Scripts\Engine\Component\AABBCollider.cpp" />
@@ -296,7 +297,10 @@
     <ClCompile Include="Scripts\Engine\UI\PlayerUI\Reticle.cpp" />
     <ClCompile Include="Scripts\Engine\UI\Sprite\Sprite.cpp" />
     <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp" />
-    <ClCompile Include="Scripts\Engine\UI\Text\Text.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Text\Dynamic\DynamicText.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Text\Static\StaticText.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Text\TextBase.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Text\TextFactory.cpp" />
     <ClCompile Include="Scripts\Engine\VecMath.cpp" />
     <ClCompile Include="Scripts\Engine\Vision.cpp" />
     <ClCompile Include="Scripts\Main.cpp" />
@@ -331,6 +335,7 @@
     <ClInclude Include="Scripts\Engine\Camera\CameraCommand.h" />
     <ClInclude Include="Scripts\Engine\Camera\EventCamera.h" />
     <ClInclude Include="Scripts\Engine\Camera\MoveCommand.h" />
+    <ClInclude Include="Scripts\Engine\Camera\RotateCommand.h" />
     <ClInclude Include="Scripts\Engine\Camera\WaitCommand.h" />
     <ClInclude Include="Scripts\Engine\Collision\ColliderBase.h" />
     <ClInclude Include="Scripts\Engine\Collision\Collision.h" />
@@ -519,7 +524,10 @@
     <ClInclude Include="Scripts\Engine\UI\Rect.h" />
     <ClInclude Include="Scripts\Engine\UI\Sprite\Sprite.h" />
     <ClInclude Include="Scripts\Engine\UI\Sprite\SpriteFactory.h" />
-    <ClInclude Include="Scripts\Engine\UI\Text\Text.h" />
+    <ClInclude Include="Scripts\Engine\UI\Text\Dynamic\DynamicText.h" />
+    <ClInclude Include="Scripts\Engine\UI\Text\Static\StaticText.h" />
+    <ClInclude Include="Scripts\Engine\UI\Text\TextBase.h" />
+    <ClInclude Include="Scripts\Engine\UI\Text\TextFactory.h" />
     <ClInclude Include="Scripts\Engine\VecMath.h" />
     <ClInclude Include="Scripts\Engine\Vision.h" />
   </ItemGroup>

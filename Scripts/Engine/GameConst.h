@@ -90,11 +90,27 @@ public:
 	static constexpr int EVENT_TREASURE_INDEX = 1;					// イベントお宝要素数
 	static constexpr int TREASURE_TYPE_INDEX = 2;					// お宝の種類
 	//----------------------------------------------------
-	//					お宝の名前
+	//					色
 	//----------------------------------------------------
 	const unsigned int WHITE = GetColor(255, 255, 255);
 	const unsigned int GRAY = GetColor(75, 75, 75);
 	const unsigned int BRACK = GetColor(0, 0, 0);
+	//----------------------------------------------------
+	//					BGMの命名
+	//----------------------------------------------------
+	static constexpr const char* _DUNGEON_BGM01 = "dungeonBGM01";		// ダンジョン1のBGM名
+	static constexpr const char* _DUNGEON_BGM02 = "dungeonBGM02";		// ダンジョン2のBGM名
+	static constexpr const char* _DUNGEONSELECT_BGM = "selectDungeon";	// ダンジョン選択画面のBGM名
+	static constexpr const char* _TRAINING_BGM = "trainingBGM";			// トレーニング画面のBGM名
+	static constexpr const char* _MENU_BGM = "menuBGM";					// メニュー画面のBGM名
+	static constexpr const char* _SHOP_BGM = "shopBGM";					// ショップ画面のBGM名
+	static constexpr const char* _PART_BGM = "partBGM";				// パート画面のBGM名
+	//----------------------------------------------------
+	//					SEの命名
+	//----------------------------------------------------
+	static constexpr const char* _TRAINING_SE = "trainingSE";			// トレーニング完了時のSE
+
+
 };
 #endif // !_GAMECONST_H_
 

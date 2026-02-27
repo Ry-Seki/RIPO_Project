@@ -9,6 +9,7 @@
 #include "../MenuBase.h"
 #include "../../UI/Button/UIButtonBase.h"
 #include "../../UI/Sprite/Sprite.h"
+#include "../../UI/Text/TextBase.h"
 #include "../../UI/EventSystem.h"
 #include "../../GameEnum.h"
 #include "../../GameConst.h"
@@ -24,6 +25,18 @@ class Engine;
  *	@brief	セーブスロットを選択するメニュー
  */
 class MenuSelectSaveSlot : public MenuBase {
+public:
+	using TextBasePtr = std::shared_ptr<TextBase>;
+
+private:
+	struct SlotTextSet {
+		TextBasePtr elapsedDay;
+		TextBasePtr halfDay;
+		TextBasePtr playTime;
+		TextBasePtr money;
+		TextBasePtr treasure;
+	};
+
 private:
 	int currentSlot = -1;
 	float animTimer = 0.0f;
@@ -31,10 +44,12 @@ private:
 	GameEnum::SaveSlotMenuMode saveMode;
 	EventSystem eventSystem;
 
-	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
+	std::vector<std::shared_ptr<TextBase>> textList;
+	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 
 	Sprite* saveLoadSprite = nullptr;
+	std::vector<SlotTextSet> slotTextList;
 
 	std::vector<GameProgressData> gameDataList;
 	std::vector<bool> isUsedList;
@@ -71,6 +86,12 @@ public:
 	 *	@brief	メニューを再開
 	 */
 	void Resume() override;
+
+private:
+	/*
+	 *	@brief	テキストの生成(セーブスロットのテキスト描画用)
+	 */
+	void CreateSlotText();
 
 public:
 	/*

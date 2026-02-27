@@ -400,6 +400,18 @@
     <Filter Include="ヘッダー ファイル\Data\Menu\Sprite">
       <UniqueIdentifier>{72261b83-7f30-4797-a4aa-1435e78276d9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Engine\UI\Text\Dynamic">
+      <UniqueIdentifier>{2c1c4474-b45a-43ae-9619-ae5e1ab31dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Engine\UI\Text\Static">
+      <UniqueIdentifier>{b9a6fec0-4222-48b6-8ca6-5ef74374e04c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\UI\Text\Dynamic">
+      <UniqueIdentifier>{d773bc02-7a73-4545-956a-7133bad0ac46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Engine\UI\Text\Static">
+      <UniqueIdentifier>{163d122c-dd53-4d16-bf90-de6b1d62755f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Scripts\Main.cpp">
@@ -852,8 +864,23 @@
     <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp">
       <Filter>ソース ファイル\Engine\UI\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Text\Text.cpp">
+    <ClCompile Include="Scripts\Engine\Camera\WaitCommand.cpp">
       <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\DungeonMoneyUI.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Text\TextBase.cpp">
+      <Filter>ソース ファイル\Engine\UI\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Text\Dynamic\DynamicText.cpp">
+      <Filter>ソース ファイル\Engine\UI\Text\Dynamic</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Text\Static\StaticText.cpp">
+      <Filter>ソース ファイル\Engine\UI\Text\Static</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\UI\Text\TextFactory.cpp">
+      <Filter>ソース ファイル\Engine\UI\Text</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1499,9 +1526,6 @@
     <ClInclude Include="Scripts\Data\UI\Text\Alignment\IAlignmentBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Text\Text.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Text</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\Sprite\SpriteFactory.h">
       <Filter>ヘッダー ファイル\Engine\UI\Sprite</Filter>
     </ClInclude>
@@ -1510,6 +1534,24 @@
     </ClInclude>
     <ClInclude Include="Scripts\Data\UI\Text\TextInfo.h">
       <Filter>ヘッダー ファイル\Data\Menu\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Camera\WaitCommand.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\DungeonMoneyUI.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Text\TextBase.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Text\Dynamic\DynamicText.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Text\Dynamic</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Text\Static\StaticText.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Text\Static</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\UI\Text\TextFactory.h">
+      <Filter>ヘッダー ファイル\Engine\UI\Text</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

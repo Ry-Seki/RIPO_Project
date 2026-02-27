@@ -7,6 +7,7 @@
 #include "SokobanMapManager.h"
 #include "../ScreenSize.h"
 #include "../../../../../../Input/InputUtility.h"
+#include "../../../../../../Audio/AudioUtility.h"
 
 #include <DxLib.h>
 
@@ -15,6 +16,8 @@
  */
 void MiniGameSokoban::Open() {
     MiniGameBase::Open();
+    AudioUtility::ChangeBGM(GameConst::_PART_BGM);
+    AudioUtility::PlayBGM();
     // マップ読み込み
     SokobanMapManager mapManager;
     if(!mapManager.LoadMapList(GetMiniGamePath())) return;
@@ -298,6 +301,7 @@ void MiniGameSokoban::Render() {
  */
 void MiniGameSokoban::Close() {
     MiniGameBase::Close();
+    AudioUtility::StopBGM();
 }
 /*
  *	@brief		難易度からフォルダのパスに変更

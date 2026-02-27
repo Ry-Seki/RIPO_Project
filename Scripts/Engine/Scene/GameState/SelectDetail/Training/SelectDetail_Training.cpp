@@ -33,6 +33,8 @@ void SelectDetail_Training::Setup() {
 	auto& context = owner->GetOwner()->GetActionContext();
 	context.statusType = GameEnum::PlayerStatusType::Invalid;
 	MenuManager::GetInstance().OpenMenu<MenuSelectTraining>();
+	AudioUtility::ChangeBGM(GameConst::_TRAINING_BGM);
+	AudioUtility::PlayBGM();
 }
 /*
  *	@brief	更新処理
@@ -48,6 +50,7 @@ void SelectDetail_Training::Render() {
  *	@brief	片付け処理
  */
 void SelectDetail_Training::Teardown() {
+	AudioUtility::StopBGM();
 }
 /*
  *	@brief		トレーニング内容決定

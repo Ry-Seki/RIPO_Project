@@ -22,6 +22,7 @@
 #include "../../System/Settings/SettingsManager.h"
 
 #include <DxLib.h>
+
 /*
  *	@brief	‰Šú‰»ˆ—
  */

@@ -34,11 +34,13 @@ void InAction_Dungeon::Initialize(Engine& engine) {
 	StageManager::GetInstance().Initialize(engine);
 	StageObjectManager::GetInstance().Initialize(engine);
 	BulletManager::GetInstance().Initialize(engine);
-	auto dungeonBGM01 = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/Dungeon_1/êØÇÃéç.mp3");
-	auto dungeonBGM02 = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Dungeon/Dungeon_2/ApparitionÅfs_Lullaby.mp3");
-	LoadManager::GetInstance().SetOnComplete([&engine, this, dungeonBGM01, dungeonBGM02]() {
-		AudioUtility::RegisterBGMHandle("dungeonBGM01", dungeonBGM01->GetHandle());
-		AudioUtility::RegisterBGMHandle("dungeonBGM02", dungeonBGM02->GetHandle());
+	auto dungeonBGM01 = LoadManager::GetInstance().LoadResource<LoadAudio>(_DUNGEON01_BGMPATH);
+	auto dungeonBGM02 = LoadManager::GetInstance().LoadResource<LoadAudio>(_DUNGEON02_BGMPATH);
+	auto selectDungeonBGM = LoadManager::GetInstance().LoadResource<LoadAudio>(_DUNGEONSELECT_BGMPATH);
+	LoadManager::GetInstance().SetOnComplete([&engine, this, dungeonBGM01, dungeonBGM02, selectDungeonBGM]() {
+		AudioUtility::RegisterBGMHandle(GameConst::_DUNGEON_BGM01, dungeonBGM01->GetHandle());
+		AudioUtility::RegisterBGMHandle(GameConst::_DUNGEON_BGM02, dungeonBGM02->GetHandle());
+		AudioUtility::RegisterBGMHandle(GameConst::_DUNGEONSELECT_BGM, selectDungeonBGM->GetHandle());
 		});
 }
 /*
@@ -48,7 +50,7 @@ void InAction_Dungeon::Setup() {
 	isStart = false;
 	auto& context = owner->GetOwner()->GetActionContext();
 	floorProcessor.CreateFloor(context, isStart, treasureIDList);
-	SetMouseDispFlag(false);
+	InputUtility::SetMouseVisible(false);
 	WeaponManager::GetInstance().Initialize();
 }
 /*
@@ -175,7 +177,7 @@ void InAction_Dungeon::Render() {
  *	@brief	ï–ïtÇØèàóù
  */
 void InAction_Dungeon::Teardown() {
-	SetMouseDispFlag(true);
+	InputUtility::SetMouseVisible(true);
 	MenuManager::GetInstance().CloseAllMenu();
 }
 /*
@@ -196,7 +198,7 @@ bool InAction_Dungeon::IsPlayerDead() {
  */
 void InAction_Dungeon::EndDungeon() {
 	isStart = false;
-	SetMouseDispFlag(TRUE);
+	InputUtility::SetMouseVisible(true);
 	InputUtility::SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, false);
 	auto& context = owner->GetOwner()->GetActionContext();
 	CalculationDungeon(context.dungeonID, context.isCurrentEvent);

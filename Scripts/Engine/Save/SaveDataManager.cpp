@@ -370,7 +370,7 @@ void SaveDataManager::ApplyLoadData(ActionContext& context) {
  */
 std::vector<bool> SaveDataManager::GetAllSlotIsUsed() {
     std::vector<bool> result;
-    for (int i = 0; i <= GameConst::SELECT_SAVE_SLOT_MAX; ++i) {
+    for (int i = 0; i <= GameConst::SELECT_SAVE_SLOT_MAX; i++) {
         result.push_back(Exists(i));
     }
     return result;
@@ -394,7 +394,7 @@ std::vector<SaveData> SaveDataManager::GetAllSlotData() {
     }
     // í èÌÉXÉçÉbÉg
     for (int i = GameConst::SELECT_SAVE_SLOT_MIN;
-         i <= GameConst::SELECT_SAVE_SLOT_MAX; ++i) {
+         i <= GameConst::SELECT_SAVE_SLOT_MAX; i++) {
         SaveData data{};
         std::string slot = "Slot" + std::to_string(i);
 

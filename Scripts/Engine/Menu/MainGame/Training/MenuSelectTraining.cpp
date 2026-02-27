@@ -139,6 +139,8 @@ void MenuSelectTraining::Render() {
  */
 void MenuSelectTraining::Close(Engine& engine) {
     MenuBase::Close(engine);
+    AudioUtility::StopBGM();
+
 }
 /*
  *	@brief		ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—

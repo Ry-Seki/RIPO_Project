@@ -28,6 +28,58 @@
       ]
     }
   ],
+  "Texts": [
+    {
+      "Name": "ElapsedDayText",
+      "Type": "Dynamic",
+      "UseFont": "ElapsedDayFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1295,
+        "Y": 273
+      }
+    },
+    {
+      "Name": "HalfDayText",
+      "Type": "Dynamic",
+      "UseFont": "ElapsedDayFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1370,
+        "Y": 273
+      }
+    },
+    {
+      "Name": "PlayTimeText",
+      "Type": "Dynamic",
+      "UseFont": "SaveSlotFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1671,
+        "Y": 232
+      }
+    },
+    {
+      "Name": "MoneyText",
+      "Type": "Dynamic",
+      "UseFont": "SaveSlotFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1671,
+        "Y": 269
+      }
+    },
+    {
+      "Name": "TreasureText",
+      "Type": "Dynamic",
+      "UseFont": "SaveSlotFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1671,
+        "Y": 308
+      }
+    }
+  ],
   "Buttons": [
     {
       "Name": "AutoSaveSlot",

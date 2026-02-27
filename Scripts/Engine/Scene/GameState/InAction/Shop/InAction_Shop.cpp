@@ -8,11 +8,18 @@
 #include "../../GameStateMachine.h"
 #include "../../../../Fade/FadeFactory.h"
 #include "../../../../Fade/FadeManager.h"
+#include "../../../../Load/LoadManager.h"
+#include "../../../../Audio/AudioUtility.h"
+#include "../../../../Load/Audio/LoadAudio.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
  */
 void InAction_Shop::Initialize(Engine& engine) {
+	auto shopBGM = LoadManager::GetInstance().LoadResource<LoadAudio>(_SHOP_BGMPATH);
+	LoadManager::GetInstance().SetOnComplete([&engine, this, shopBGM]() {
+		AudioUtility::RegisterBGMHandle(GameConst::_SHOP_BGM, shopBGM->GetHandle());
+	});
 }
 /*
  *	@brief	€”õ‘Oˆ—

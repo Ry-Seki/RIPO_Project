@@ -9,6 +9,9 @@
 #include "../../GameStateMachine.h"
 #include "../../../../Menu/MenuManager.h"
 #include "../../../../Menu/MainGame/PartTime/MenuMiniGame.h"
+#include "../../../../Audio/AudioUtility.h"
+#include "../../../../Load/Audio/LoadAudio.h"
+#include "../../../../Load/LoadManager.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -19,6 +22,10 @@ void InAction_PartTime::Initialize(Engine& engine) {
 	miniGame->SetCallback([this](GameEnum::MiniGameLevel level) {
 		CompleteMiniGame(level);
 	});
+	auto partBGM = LoadManager::GetInstance().LoadResource<LoadAudio>(_PART_BGMPATH);
+	LoadManager::GetInstance().SetOnComplete([&engine, this, partBGM]() {
+		AudioUtility::RegisterBGMHandle("partBGM", partBGM->GetHandle());
+		});
 }
 /*
  *	@brief	€”õ‘Oˆ—
