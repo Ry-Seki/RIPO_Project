@@ -46,7 +46,7 @@ void EnemyDeath::Update(GameObject* enemy, float deltaTime)
 	// アニメーションが終わるまで待つ
 	if (animationTime >= 1.0f) {
 		// 少量のお金を入手
-		MoneyManager::GetInstance().AddMoney(5);
+		MoneyManager::GetInstance().AddMoney(enemy->GetComponent<EnemyComponent>()->GetEnemyDataBounty());
 		// エフェクトを出す
 		EffectManager::GetInstance().Instantiate("AllEnemyDeathEffect", enemy->position);
 		// 破棄
