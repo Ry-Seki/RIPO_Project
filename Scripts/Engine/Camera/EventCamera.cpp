@@ -6,6 +6,7 @@
 #include "EventCamera.h"
 #include "MoveCommand.h"
 #include "WaitCommand.h"
+#include "RotateCommand.h"
 #include "../Component/CameraComponent.h"
 #include "../Input/InputUtility.h"
 
@@ -29,9 +30,11 @@ void EventCamera::Initialize(GameObject* camera, GameEnum::CameraEvent setEvent)
 	
 	// FPS→TPS遷移イベント
 	events[GameEnum::CameraEvent::ChangeView].commands.clear();
+	// カメラの移動先を計算
 	Vector3 playerHeadPos = GetPlayer()->position;
 	playerHeadPos.y += 310;
 	auto pos = playerHeadPos - ForwardDir(camera->rotation) * 500;
+	// 計算された移動先へ向かうコマンド
 	events[GameEnum::CameraEvent::ChangeView].commands.push_back(std::make_shared<MoveCommand>(0.8f, pos));
 	events[GameEnum::CameraEvent::ChangeView].onFinished = [camera]() {
 		// カメラステートをTPSに
@@ -40,8 +43,18 @@ void EventCamera::Initialize(GameObject* camera, GameEnum::CameraEvent setEvent)
 
 	// 死亡イベント
 	events[GameEnum::CameraEvent::Dead].commands.clear();
-	events[GameEnum::CameraEvent::Dead].commands.push_back(std::make_shared<MoveCommand>(0.8f, pos));
-	events[GameEnum::CameraEvent::Dead].commands.push_back(std::make_shared<WaitCommand>(0.5f));
+	// 回転の開始角度
+	Vector3 startRot = camera->rotation;
+	startRot.x = 0;
+	// 回転先の角度
+	Vector3 targetRot = camera->rotation;
+	targetRot.x = 0.7f;
+	// 回転コマンド
+	events[GameEnum::CameraEvent::Dead].commands.push_back(std::make_shared<RotateCommand>(0.1f, startRot, targetRot));
+	// TPSのときの位置まで移動コマンド
+	events[GameEnum::CameraEvent::Dead].commands.push_back(std::make_shared<MoveCommand>(0.3f, pos));
+	// 待機コマンド
+	events[GameEnum::CameraEvent::Dead].commands.push_back(std::make_shared<WaitCommand>(2.0f));
 	events[GameEnum::CameraEvent::Dead].onFinished = [player, camera]() {
 		// プレイヤー死亡
 		player->SetIsDead(true);
