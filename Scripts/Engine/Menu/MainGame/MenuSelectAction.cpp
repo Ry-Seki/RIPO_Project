@@ -45,8 +45,9 @@ void MenuSelectAction::Initialize(Engine& engine) {
             eventSystem.RegisterButton(button.get());
         }
         eventSystem.Initialize(0);
-        buttonList = std::move(result.buttonList);
         spriteList = std::move(result.spriteList);
+        textList = std::move(result.textList);
+        buttonList = std::move(result.buttonList);
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             UIButtonBase* button = buttonList[i].get();
             if (!button) continue;
@@ -80,6 +81,7 @@ void MenuSelectAction::Open() {
         button->Setup();
     }
     if (isHalf) buttonList[0]->SetIsEnable(false);
+    CreateElapsedDayText();
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
         isStart = true;
@@ -154,13 +156,9 @@ void MenuSelectAction::Render() {
         button->Render();
     }
     if(elapsedDaySprite) elapsedDaySprite->Render();
-
-    std::string elapsedDayStr = std::to_string(elapsedDay);
-    std::string maxDayStr = " / " + std::to_string(GameConst::END_DAY);
-    std::string money = std::to_string(MoneyManager::GetInstance().GetCurrentMoney());
-    FontManager::GetInstance().Draw("NormalSizeFont", 190, 510, elapsedDayStr, GetColor(75, 75, 75));
-    FontManager::GetInstance().Draw("NormalSizeFont", 250, 510, maxDayStr, GetColor(75, 75, 75));
-    FontManager::GetInstance().Draw("NormalSizeFont", 455, 973, money, GetColor(75, 75, 75));
+    for (auto& text : textList) {
+        text->Render();
+    }
 }
 /*
  *	@brief	メニューを閉じる
@@ -186,6 +184,20 @@ void MenuSelectAction::Resume() {
     if (isHalf) {
         buttonList[0]->SetIsEnable(false);
     }    
+}
+/*
+ *	@brief		テキストの生成
+ */
+void MenuSelectAction::CreateElapsedDayText() {
+    const int gray = GetColor(75, 75, 75);
+    std::string elapsedDayStr = std::to_string(elapsedDay);
+    std::string maxDayStr = " / " + std::to_string(GameConst::END_DAY);
+    std::string money = std::to_string(MoneyManager::GetInstance().GetCurrentMoney());
+    textList[0]->SetText(elapsedDayStr + maxDayStr);
+    textList[1]->SetText(money);
+    for (auto& text : textList) {
+        text->SetColor(gray);
+    }
 }
 /*
  *	@brief		ボタンの押された時の処理

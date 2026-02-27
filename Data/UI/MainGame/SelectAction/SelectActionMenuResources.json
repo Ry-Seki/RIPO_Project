@@ -52,6 +52,28 @@
       ]
     }
   ],
+  "Texts": [
+    {
+      "Name": "ElapsedDayText",
+      "Type": "Dynamic",
+      "UseFont": "NormalSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 190,
+        "Y": 510
+      }
+    },
+    {
+      "Name": "Money",
+      "Type": "Dynamic",
+      "UseFont": "NormalSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 455,
+        "Y": 973
+      }
+    }
+  ],
   "Buttons": [
     {
       "Name": "Dungeon",

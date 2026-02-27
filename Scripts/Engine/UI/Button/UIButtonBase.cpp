@@ -38,7 +38,7 @@ void UIButtonBase::Update(float unscaledDeltaTime) {
 	if (!isEnable) return;
 	// マウスポインタの取得
 	int mouseX, mouseY;
-	GetMousePoint(&mouseX, &mouseY);
+	InputUtility::GetMousePosition(mouseX, mouseY);
 
 	// 触れているか判定
 	bool isHover = rect.IsHovered(mouseX, mouseY);
