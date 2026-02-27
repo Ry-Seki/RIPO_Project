@@ -36,7 +36,7 @@ void MenuSelectAction::Initialize(Engine& engine) {
     auto& load = LoadManager::GetInstance();
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
-    auto selectMenuBGM = load.LoadResource<LoadAudio>("Res/Audio/BGM/Title/MenuBGM.mp3");
+    auto selectMenuBGM = load.LoadResource<LoadAudio>(_SELECTMENU_BGMPATH);
     load.SetOnComplete([this, &engine, menuJSON, navigation, selectMenuBGM]() {
         MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
         for (auto& button : result.buttonList) {
@@ -63,7 +63,7 @@ void MenuSelectAction::Initialize(Engine& engine) {
             if (sprite->GetName() == "ElapsedDay") elapsedDaySprite = sprite.get();
         }
         eventSystem.LoadNavigation(navigation->GetData());
-        AudioUtility::RegisterBGMHandle("menuBGM", selectMenuBGM->GetHandle());
+        AudioUtility::RegisterBGMHandle(GameConst::_MENU_BGM, selectMenuBGM->GetHandle());
     });
 }
 /*
@@ -71,7 +71,7 @@ void MenuSelectAction::Initialize(Engine& engine) {
  */
 void MenuSelectAction::Open() {
 	MenuBase::Open();
-    AudioUtility::ChangeBGM("menuBGM");
+    AudioUtility::ChangeBGM(GameConst::_MENU_BGM);
     AudioUtility::PlayBGM();
     for (auto& sprite : spriteList) {
         sprite->Setup();

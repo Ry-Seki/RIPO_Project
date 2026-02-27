@@ -16,9 +16,9 @@
  *	@brief	‰Šú‰»ˆ—
  */
 void InAction_Shop::Initialize(Engine& engine) {
-	auto shopBGM = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Shop/ShopBGM.mp3");
+	auto shopBGM = LoadManager::GetInstance().LoadResource<LoadAudio>(_SHOP_BGMPATH);
 	LoadManager::GetInstance().SetOnComplete([&engine, this, shopBGM]() {
-		AudioUtility::RegisterBGMHandle("shopBGM", shopBGM->GetHandle());
+		AudioUtility::RegisterBGMHandle(GameConst::_SHOP_BGM, shopBGM->GetHandle());
 	});
 }
 /*

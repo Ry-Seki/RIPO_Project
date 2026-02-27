@@ -162,7 +162,7 @@ void MenuSelectDungeon::Close(Engine& engine) {
  */
 void MenuSelectDungeon::Resume() {
 	MenuBase::Resume();
-	AudioUtility::ChangeBGM("selectDungeon");
+	AudioUtility::ChangeBGM(GameConst::_DUNGEONSELECT_BGM);
 	AudioUtility::PlayBGM();
 	for (auto& button : buttonList) {
 		button->Setup();

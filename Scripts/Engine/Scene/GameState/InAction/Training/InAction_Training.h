@@ -13,7 +13,8 @@
  */
 class InAction_Training : public InActionBase {
 private:
-
+	static constexpr const char* _TRAININGBGM_PATH = "Res/Audio/BGM/Training/TrainingBGM.mp3";
+	static constexpr const char* _TRAININGSE_PATH = "Res/Audio/SE/TrainingComplete.mp3";
 public:
 	/*
 	 *	@brief	‰Šú‰»ˆ—

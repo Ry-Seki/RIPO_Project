@@ -24,6 +24,7 @@ private:
 	std::vector<MiniGamePtr> miniGameList;
 	MiniGamePtr miniGame = nullptr;
 
+	static constexpr const char* _PART_BGMPATH = "Res/Audio/BGM/Part/GameBGM.mp3";
 public:
 	/*
 	 *	@brief	‰Šú‰»ˆ—

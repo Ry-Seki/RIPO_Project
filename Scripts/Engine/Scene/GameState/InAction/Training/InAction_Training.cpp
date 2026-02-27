@@ -15,9 +15,11 @@
  *	@brief	‰Šú‰»ˆ—
  */
 void InAction_Training::Initialize(Engine& engine) {
-	auto trainingBGM01 = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Training/TrainingBGM.mp3");
-	LoadManager::GetInstance().SetOnComplete([&engine, this, trainingBGM01]() {
-		AudioUtility::RegisterBGMHandle("trainingBGM", trainingBGM01->GetHandle());
+	auto trainingBGM01 = LoadManager::GetInstance().LoadResource<LoadAudio>(_TRAININGBGM_PATH);
+	auto trainingCopSE = LoadManager::GetInstance().LoadResource<LoadAudio>(_TRAININGSE_PATH);
+	LoadManager::GetInstance().SetOnComplete([&engine, this, trainingBGM01,trainingCopSE]() {
+		AudioUtility::RegisterBGMHandle(GameConst::_TRAINING_BGM, trainingBGM01->GetHandle());
+		AudioUtility::RegisterSEHandle(GameConst::_TRAINING_SE, trainingCopSE->GetHandle());
 	});
 }
 /*
