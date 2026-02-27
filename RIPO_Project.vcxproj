@@ -157,6 +157,7 @@
     <ClCompile Include="Scripts\Engine\Audio\SE\SESource.cpp" />
     <ClCompile Include="Scripts\Engine\Camera\EventCamera.cpp" />
     <ClCompile Include="Scripts\Engine\Camera\MoveCommand.cpp" />
+    <ClCompile Include="Scripts\Engine\Camera\RotateCommand.cpp" />
     <ClCompile Include="Scripts\Engine\Camera\WaitCommand.cpp" />
     <ClCompile Include="Scripts\Engine\Collision\Collision.cpp" />
     <ClCompile Include="Scripts\Engine\Component\AABBCollider.cpp" />
@@ -331,6 +332,7 @@
     <ClInclude Include="Scripts\Engine\Camera\CameraCommand.h" />
     <ClInclude Include="Scripts\Engine\Camera\EventCamera.h" />
     <ClInclude Include="Scripts\Engine\Camera\MoveCommand.h" />
+    <ClInclude Include="Scripts\Engine\Camera\RotateCommand.h" />
     <ClInclude Include="Scripts\Engine\Camera\WaitCommand.h" />
     <ClInclude Include="Scripts\Engine\Collision\ColliderBase.h" />
     <ClInclude Include="Scripts\Engine\Collision\Collision.h" />
