@@ -16,6 +16,7 @@
 #include "../../../Data/WeaponDataManager.h"
 #include "../Character/ArmActionComponent.h"
 #include "../Character/WeaponBase.h"
+#include "../../Manager/EffectManager.h"
 
 using namespace GameObjectUtility;
 using namespace CharacterUtility;
@@ -46,6 +47,8 @@ void BulletComponent::OnCollision(const std::shared_ptr<Component>& self, const 
 	GameObject* otherOwner = other->GetOwner();
 	auto isBullet = otherOwner->GetComponent<BulletComponent>();
 	if (otherOwner == shotOwner || isBullet)return;
+	// エフェクトを出す
+	EffectManager::GetInstance().Instantiate("BulletEliminationEffect", bullet->position);
 	ResetObject(bullet);
 }
 

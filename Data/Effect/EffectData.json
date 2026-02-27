@@ -41,6 +41,12 @@
       "name": "GoalEffect",
       "magnification": 300.0,
       "loop": true
+    },
+    {
+      "file": "Res/Effect/Bullet/bulletElimination.efkefc",
+      "name": "BulletEliminationEffect",
+      "magnification": 100.0,
+      "loop": false
     }
   ]
 }
