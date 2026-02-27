@@ -48,7 +48,7 @@ void InAction_Dungeon::Setup() {
 	isStart = false;
 	auto& context = owner->GetOwner()->GetActionContext();
 	floorProcessor.CreateFloor(context, isStart, treasureIDList);
-	SetMouseDispFlag(false);
+	InputUtility::SetMouseVisible(false);
 	WeaponManager::GetInstance().Initialize();
 }
 /*
@@ -175,7 +175,7 @@ void InAction_Dungeon::Render() {
  *	@brief	•Ð•t‚¯ˆ—
  */
 void InAction_Dungeon::Teardown() {
-	SetMouseDispFlag(true);
+	InputUtility::SetMouseVisible(true);
 	MenuManager::GetInstance().CloseAllMenu();
 }
 /*
@@ -196,7 +196,7 @@ bool InAction_Dungeon::IsPlayerDead() {
  */
 void InAction_Dungeon::EndDungeon() {
 	isStart = false;
-	SetMouseDispFlag(TRUE);
+	InputUtility::SetMouseVisible(true);
 	InputUtility::SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, false);
 	auto& context = owner->GetOwner()->GetActionContext();
 	CalculationDungeon(context.dungeonID, context.isCurrentEvent);

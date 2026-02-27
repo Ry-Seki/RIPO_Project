@@ -31,6 +31,22 @@ namespace InputUtility {
 	inline ActionMapBase::ActionState GetInputState(GameEnum::ActionMap map) {
 		return InputManager::GetInstance().GetInputState(map);
 	}
+	/*
+	 *	マウスの表示非表示切り替え
+	 *	@param[in]	bool setVisible	切り替え先
+	 */
+	inline void SetMouseVisible(bool setVisible) {
+		InputManager::GetInstance().SetMouseVisible(setVisible);
+	}
+	/*
+	 *	マウスの位置取得
+	 *	@param[out]	int mousePosX	マウスの位置X
+	 *	@param[out] int mousePosY	マウスの位置Y
+	 *  @outhor Riku
+	 */
+	inline void GetMousePosition(int& mousePosX, int& mousePosY) {
+		InputManager::GetInstance().GetMousePosition(mousePosX, mousePosY);
+	}
 }
 
 #endif // !_INPUT_UTILITY_H_
