@@ -9,6 +9,7 @@
 #include "../../MenuBase.h"
 #include "../../../UI/Button/UIButtonBase.h"
 #include "../../../UI/Sprite/Sprite.h"
+#include "../../../UI/Text/TextBase.h"
 #include "../../../UI/EventSystem.h"
 #include "../../../GameEnum.h"
 #include "../../../GameConst.h"
@@ -22,6 +23,16 @@ struct DungeonInfoData;
  *	@brief	ダンジョン選択メニュー
  */
 class MenuSelectDungeon : public MenuBase {
+public:
+	using TextBasePtr = std::shared_ptr<TextBase>;
+
+private:
+	struct DungeonTextSet {
+		TextBasePtr level;
+		TextBasePtr treasureCount;
+		TextBasePtr strength;
+		TextBasePtr eventDay;
+	};
 private:
 	int currentIndex = -1;
 	float animTimer = 0.0f;
@@ -31,9 +42,12 @@ private:
 	std::vector<std::string> dungeonString;
 	EventSystem eventSystem;
 
-	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
+	std::vector<std::shared_ptr<TextBase>> textList;
+	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	Sprite* dungeonSprite = nullptr;
+
+	std::vector<DungeonTextSet> dungeonTextList;
 
 	std::function<void(int)> Callback = nullptr;
 
@@ -82,6 +96,14 @@ private:
 	 *	@param[in]	int buttonIndex
 	 */
 	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	/*
+	 *	@brief		テキストの生成
+	 */
+	void CreateDungeonText();
+	/*
+	 *	@brief		テキストの準備前処理
+	 */
+	void SetupText();
 	/*
 	 *	@brief		ダンジョン情報の描画
 	 */
