@@ -4,6 +4,7 @@
  */
 
 #include "DxLibResourcesManager.h"
+#include "../Engine/Manager/FontManager.h"
 
 #include <DxLib.h>
 #include <EffekseerForDXLib.h>
@@ -32,4 +33,8 @@ void DxLibResourcesManager::Teardown() {
 		if(audio != -1) DeleteSoundMem(audio);
 	}
 	audioHandleList.clear();
+	// ƒtƒHƒ“ƒg‚Ì‰ð•ú
+	FontManager::GetInstance().ReleaseAll();
+
+
 }
