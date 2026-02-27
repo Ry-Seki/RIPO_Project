@@ -67,7 +67,7 @@ void PlayerComponent::Start() {
 	auto changeWeaponSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/ChangeWeapon.mp3");
 	auto workSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Work.mp3");
 	auto jumpSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Jump.mp3");
-	auto bulletHitSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/BulletHit.mp3");
+	auto bulletHitSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/BulletHit.mp3");
 	LoadManager::GetInstance().SetOnComplete([this, playerModel, avoidSE, changeWeaponSE, workSE, jumpSE, bulletHitSE]() {
 		SetModelHandle(playerModel->GetHandle());
 		RegisterSEHandle("avoidSE", avoidSE->GetHandle());
