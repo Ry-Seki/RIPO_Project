@@ -23,8 +23,15 @@ void InAction_PartTime::Initialize(Engine& engine) {
 		CompleteMiniGame(level);
 	});
 	auto partBGM = LoadManager::GetInstance().LoadResource<LoadAudio>(_PART_BGMPATH);
-	LoadManager::GetInstance().SetOnComplete([&engine, this, partBGM]() {
-		AudioUtility::RegisterBGMHandle("partBGM", partBGM->GetHandle());
+	auto boxBrock = LoadManager::GetInstance().LoadResource<LoadAudio>(_PART_SE01PATH);
+	auto boxMove = LoadManager::GetInstance().LoadResource<LoadAudio>(_PART_SE02PATH);
+	auto boxCop = LoadManager::GetInstance().LoadResource<LoadAudio>(_PART_SE03PATH);
+	LoadManager::GetInstance().SetOnComplete([&engine, this, partBGM, boxBrock,boxMove,boxCop]() {
+		AudioUtility::RegisterBGMHandle(GameConst::_PART_BGM, partBGM->GetHandle());
+		AudioUtility::RegisterSEHandle(GameConst::_BOXBROCK_SE, boxBrock->GetHandle());
+		AudioUtility::RegisterSEHandle(GameConst::_BOXMOVE_SE, boxMove->GetHandle());
+		AudioUtility::RegisterSEHandle(GameConst::_PARTCOP_SE, boxCop->GetHandle());
+
 		});
 }
 /*
