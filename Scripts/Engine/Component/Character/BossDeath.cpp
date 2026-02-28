@@ -46,7 +46,7 @@ void BossDeath::Update(GameObject* boss, float deltaTime)
 	// アニメーションが終わるまで待つ
 	if (animationTime >= 2.4f) {
 		// 少量のお金を入手
-		MoneyManager::GetInstance().AddMoney(50);
+		MoneyManager::GetInstance().AddMoney(boss->GetComponent<BossComponent>()->GetBossDataBounty());
 		// エフェクトを出す
 		EffectManager::GetInstance().Instantiate("AllEnemyDeathEffect", boss->position);
 		// 死亡

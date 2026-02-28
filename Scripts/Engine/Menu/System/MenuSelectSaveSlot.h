@@ -89,16 +89,18 @@ public:
 
 private:
 	/*
-	 *	@brief	テキストの生成(セーブスロットのテキスト描画用)
-	 */
-	void CreateSlotText();
-
-public:
-	/*
 	 *	@brief		ボタンのコールバック登録
 	 *	@param[in]	int slotIndex
 	 */
 	void SelectButtonExecute(Engine& engine, int slotIndex);
+	/*
+	 *	@brief	テキストの生成(セーブスロットのテキスト描画用)
+	 */
+	void CreateSlotText();
+	/*
+	 *	@brief	テキストの準備前処理
+	 */
+	void SetupText();
 	/*
 	 *	@brief		セーブスロット情報の描画
 	 */

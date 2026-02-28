@@ -42,6 +42,48 @@
       ]
     }
   ],
+  "Texts": [
+    {
+      "Name": "DungeonLevelText",
+      "Type": "Dynamic",
+      "UseFont": "ElapsedDayFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1780,
+        "Y": 480
+      }
+    },
+    {
+      "Name": "StrengthText",
+      "Type": "Dynamic",
+      "UseFont": "ElapsedDayFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1780,
+        "Y": 580
+      }
+    },
+    {
+      "Name": "TreasureCountText",
+      "Type": "Dynamic",
+      "UseFont": "ElapsedDayFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1780,
+        "Y": 700
+      }
+    },
+    {
+      "Name": "EventInfoText",
+      "Type": "Dynamic",
+      "UseFont": "ElapsedDayFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1740,
+        "Y": 810
+      }
+    }
+  ],
   "Buttons": [
     {
       "Name": "Dungeon1",

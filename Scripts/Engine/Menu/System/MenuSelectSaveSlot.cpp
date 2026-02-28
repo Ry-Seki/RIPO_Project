@@ -58,6 +58,7 @@ void MenuSelectSaveSlot::Initialize (Engine& engine) {
         eventSystem.LoadNavigation(navigation->GetData());
     });
     gameDataList.reserve(4);
+
 }
 /*
  *	@brief	メニューを開く
@@ -103,6 +104,7 @@ void MenuSelectSaveSlot::Open () {
         isUsedList = save.GetAllSlotIsUsed();
     }
     CreateSlotText();
+    SetupText();
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
         eventSystem.ApplySelection();
@@ -197,61 +199,6 @@ void MenuSelectSaveSlot::Resume() {
     }
 }
 /*
- *	@brief	テキストの生成(セーブスロットのテキスト描画用)
- */
-void MenuSelectSaveSlot::CreateSlotText() {
-    slotTextList.clear();
-    const int slotSpacing = 205;
-    const int white = GetColor(255, 255, 255);
-
-    for (int i = 0; i < gameDataList.size(); i++) {
-        int offsetY = slotSpacing * i;
-
-        SlotTextSet set;
-
-        // スロットに必要なテキストの生成
-        for (auto& text : textList) {
-            TextInfo info = text->GetTextInfo();
-            info.y += offsetY;
-
-            if (text->GetName() == "ElapsedDayText") {
-                set.elapsedDay = std::make_shared<DynamicText>(info);
-                set.elapsedDay->SetColor(white);
-            }
-            else if (text->GetName() == "HalfDayText") {
-                set.halfDay = std::make_shared<DynamicText>(info);
-                set.halfDay->SetColor(white);
-            }
-            else if (text->GetName() == "PlayTimeText") {
-                set.playTime = std::make_shared<DynamicText>(info);
-                set.playTime->SetColor(white);
-            }
-            else if (text->GetName() == "MoneyText") {
-                set.money = std::make_shared<DynamicText>(info);
-                set.money->SetColor(white);
-            }
-            else if (text->GetName() == "TreasureText") {
-                set.treasure = std::make_shared<DynamicText>(info);
-                set.treasure->SetColor(white);
-            }
-        }
-        slotTextList.push_back(set);
-    }
-    // テキストの中身の文字列の設定
-    for (int i = 0; i < slotTextList.size(); i++) {
-        if (!isUsedList[i]) continue;
-
-        auto& data = gameDataList[i];
-        auto& slot = slotTextList[i];
-
-        slot.elapsedDay->SetText(std::to_string(data.elapsedDay));
-        slot.halfDay->SetText(data.isHalfDay ? "[PM]" : "[AM]");
-        slot.playTime->SetText(std::to_string(data.playTime));
-        slot.money->SetText(std::to_string(data.currentMoney));
-        slot.treasure->SetText(std::to_string(data.totalTreasureCount));
-    }
-}
-/*
  *	@brief		ボタンの押された時の処理
  *	@param[in]	int slotIndex
  */
@@ -306,6 +253,66 @@ void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
             });
             menu.OpenMenu<MenuConfirm>();
 			break;
+    }
+}
+/*
+ *	@brief	テキストの生成(セーブスロットのテキスト描画用)
+ */
+void MenuSelectSaveSlot::CreateSlotText() {
+    slotTextList.clear();
+    const int slotSpacing = 205;
+    const int white = GetColor(255, 255, 255);
+
+    for (int i = 0; i < gameDataList.size(); i++) {
+        int offsetY = slotSpacing * i;
+
+        SlotTextSet set;
+
+        // スロットに必要なテキストの生成
+        for (auto& text : textList) {
+            TextInfo info = text->GetTextInfo();
+            info.y += offsetY;
+
+            if (text->GetName() == "ElapsedDayText") {
+                set.elapsedDay = std::make_shared<DynamicText>(info);
+                set.elapsedDay->SetColor(white);
+            }
+            else if (text->GetName() == "HalfDayText") {
+                set.halfDay = std::make_shared<DynamicText>(info);
+                set.halfDay->SetColor(white);
+            }
+            else if (text->GetName() == "PlayTimeText") {
+                set.playTime = std::make_shared<DynamicText>(info);
+                set.playTime->SetColor(white);
+            }
+            else if (text->GetName() == "MoneyText") {
+                set.money = std::make_shared<DynamicText>(info);
+                set.money->SetColor(white);
+            }
+            else if (text->GetName() == "TreasureText") {
+                set.treasure = std::make_shared<DynamicText>(info);
+                set.treasure->SetColor(white);
+            }
+        }
+        slotTextList.push_back(set);
+    }
+}
+/*
+ *	@brief	テキストの準備前処理
+ */
+void MenuSelectSaveSlot::SetupText() {
+    // テキストの中身の文字列の設定
+    for (int i = 0, max = slotTextList.size(); i < max; i++) {
+        if (!isUsedList[i]) continue;
+
+        auto& data = gameDataList[i];
+        auto& slot = slotTextList[i];
+
+        slot.elapsedDay->SetText(std::to_string(data.elapsedDay));
+        slot.halfDay->SetText(data.isHalfDay ? "[PM]" : "[AM]");
+        slot.playTime->SetText(std::to_string(data.playTime));
+        slot.money->SetText(std::to_string(data.currentMoney));
+        slot.treasure->SetText(std::to_string(data.totalTreasureCount));
     }
 }
 /*

@@ -158,13 +158,25 @@ bool MiniGameSokoban::TryPushBox(int bx, int by, int dx, int dy) {
     if (nextboxY < 0 || nextboxY >= (int)map.size()) return false;
     if (nextboxX < 0 || nextboxX >= (int)map[0].size()) return false;
 
-    if (map[nextboxY][nextboxX] == TileType::Wall) return false;
-    if (map[nextboxY][nextboxX] == TileType::Box) return false;
+    if (map[nextboxY][nextboxX] == TileType::Wall) {
+        AudioUtility::PlaySE(GameConst::_BOXBROCK_SE);
+        return false;
+    }
+    if (map[nextboxY][nextboxX] == TileType::Box) {
+        AudioUtility::PlaySE(GameConst::_BOXBROCK_SE);
+        return false;
+    }
 
     // ロジック移動
     map[by][bx] = TileType::Empty;
     map[nextboxY][nextboxX] = TileType::Box;
 
+    // SEを再生
+    AudioUtility::PlaySE(GameConst::_BOXMOVE_SE);
+
+    if (goalMap[nextboxY][nextboxX]) {
+        AudioUtility::PlaySE(GameConst::_PARTCOP_SE);
+    }
     // 該当箱を補間開始
     if (auto box = GetBox(bx, by)) {
         box->x = nextboxX;

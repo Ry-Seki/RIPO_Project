@@ -1,8 +1,8 @@
 {
-  "Text": [
+  "Texts": [
     {
       "Name": "Debug",
-      "TextType": "Static",
+      "Type": "Static",
       "LineHeight": 24,
       "UseFont": "Debug",
       "Alignment": "Left",
@@ -17,7 +17,7 @@
     },
     {
       "Name": "Debug",
-      "TextType": "Dynamic",
+      "Type": "Dynamic",
       "UseFont": "Debug",
       "Alignment": "Left",
       "Position": {

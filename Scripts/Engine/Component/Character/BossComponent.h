@@ -136,6 +136,11 @@ public:
 	inline int GetBossAttack() const { return status.attack; }
 
 	/*
+	 *	討伐金データの取得
+	 */
+	inline int GetBossDataBounty() const { return status.bounty; }
+
+	/*
 	 *	行動フラグの取得
 	 */
 	inline bool GetMoveFrag() const { return moveFrag; }

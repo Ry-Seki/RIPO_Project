@@ -233,6 +233,11 @@ public:
 	inline int GetEnemyDataID() const { return status.ID; }
 
 	/*
+	 *	討伐金データの取得
+	 */
+	inline int GetEnemyDataBounty() const { return status.bounty; }
+
+	/*
 	 *	攻撃中フラグの取得
 	 */
 	inline bool GetEnemyAttackTimeFlag() const { return enemyAttackTimeFlag; }
