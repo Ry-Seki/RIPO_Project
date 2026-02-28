@@ -31,6 +31,7 @@ void PlayerStatusUI::Initialize() {
  *	•`‰æˆ—
  */
 void PlayerStatusUI::Render() {
+	// Å‘å’l‚Æ•¶Žš•‚ð‡‚í‚¹‚é
 	auto playerStatus = GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus();
 	auto baseStatus = PlayerStatusManager::GetInstance().GetPlayerStatusData().base;
 	std::string hp = std::to_string(playerStatus.HP);
@@ -44,6 +45,7 @@ void PlayerStatusUI::Render() {
 		stamina = " " + stamina;
 	}
 	std::string strength = std::to_string(playerStatus.strength);
+	// Y‚ÌˆÊ’u‚¾‚¯‚¸‚ç‚µ‚Ä3Ží‰æ‘œ‚Æ•¶Žš‚Ì•`‰æ
 	float graphPosX = GameConst::WINDOW_WIDTH * 0.02f;
 	float posX = GameConst::WINDOW_WIDTH * 0.1f;
 	float posY = GameConst::WINDOW_HEIGHT * 0.05f;

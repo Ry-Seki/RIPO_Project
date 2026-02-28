@@ -27,6 +27,7 @@ void AmmoCountUI::Render() {
 	auto weapon = WeaponManager::GetInstance().GetCurrentWeapon();
 	if (!weapon)
 		return;
+	// ”Žš‚ª1Œ…‚Ìê‡‚Í‹ó”’‚ð’Ç‰Á‚Å•`‰æ
 	float posX = GameConst::WINDOW_WIDTH * 0.8f;
 	float posY = GameConst::WINDOW_HEIGHT * 0.85f;
 	std::string ammoCount = std::to_string(weapon->ammoCount);

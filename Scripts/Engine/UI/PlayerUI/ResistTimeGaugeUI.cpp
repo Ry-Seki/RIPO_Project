@@ -37,8 +37,9 @@ void ResistTimeGaugeUI::Render() {
 		changeValue = 0.2f + (playerResist / baseResist) * 0.6f;
 	float posEX = GameConst::WINDOW_WIDTH * changeValue;
 	float posEY = GameConst::WINDOW_HEIGHT * 0.95f;
-	// ï`âÊ
+	// ÉQÅ[ÉWï`âÊ
 	DrawBox(posSX, posSY, posEX, posEY, GetColor(213, 255, 147), TRUE);
+	// âÊëúï`âÊ
 	float graphX = GameConst::WINDOW_WIDTH * 0.1f;
 	float graphY = GameConst::WINDOW_HEIGHT * 0.9f;
 	DrawGraph(graphX, graphY, resistTimeGraphHandle, TRUE);
