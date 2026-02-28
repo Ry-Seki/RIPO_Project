@@ -29,7 +29,12 @@ struct EntranceData {
 class DungeonEntranceData {
 private:
 	std::unordered_map<int, std::vector<EntranceData>> dungeonEntranceMap;
-
+	
+	static constexpr const char* _FLOOR = "Floor";
+	static constexpr const char* _POSITION = "position";
+	static constexpr const char* _ROTATION = "rotation";
+	static constexpr const char* _MIN = "AABBmin";
+	static constexpr const char* _MAX = "AABBmax";
 public:
 	/*
 	 *	@brief	コンストラクタ
@@ -55,7 +60,7 @@ public:
 		dungeonEntranceMap.clear();
 
 		// Floor配列を取得
-		const auto& floors = setJSON["Floor"];
+		const auto& floors = setJSON[_FLOOR];
 		if (!floors.is_array()) return;
 
 		// Floorごとに処理
@@ -65,7 +70,10 @@ public:
 		}
 	}
 	/*
-	 *	@brief
+	 *	@brief	階段と出口のデータを取得
+	 *  @param[in]	floorID		階層のID
+	 *  @param[in]	floorjson	階層のJSON
+	 *  @param[in]	key			識別
 	 */
 	void LoadEntranceArray(int floorID, const JSON& floorJson, const std::string& key) {
 		if (!floorJson.contains(key) || !floorJson[key].is_array()) {
@@ -84,31 +92,31 @@ public:
 			data.name = entranceArray[i].value("name", "");
 
 			// positionを取得
-			if (entranceArray[i].contains("position") && entranceArray[i]["position"].is_array()) {
-				data.position.x = entranceArray[i]["position"][0];
-				data.position.y = entranceArray[i]["position"][1];
-				data.position.z = entranceArray[i]["position"][2];
+			if (entranceArray[i].contains(_POSITION) && entranceArray[i][_POSITION].is_array()) {
+				data.position.x = entranceArray[i][_POSITION][0];
+				data.position.y = entranceArray[i][_POSITION][1];
+				data.position.z = entranceArray[i][_POSITION][2];
 			}
 
 			// rotationを取得
-			if (entranceArray[i].contains("rotation") && entranceArray[i]["rotation"].is_array()) {
-				data.rotation.x = entranceArray[i]["rotation"][0];
-				data.rotation.y = entranceArray[i]["rotation"][1];
-				data.rotation.z = entranceArray[i]["rotation"][2];
+			if (entranceArray[i].contains(_ROTATION) && entranceArray[i][_ROTATION].is_array()) {
+				data.rotation.x = entranceArray[i][_ROTATION][0];
+				data.rotation.y = entranceArray[i][_ROTATION][1];
+				data.rotation.z = entranceArray[i][_ROTATION][2];
 			}
 
 			// AABB最小値を取得
-			if (entranceArray[i].contains("AABBmin") && entranceArray[i]["AABBmin"].is_array()) {
-				data.AABBmin.x = entranceArray[i]["AABBmin"][0];
-				data.AABBmin.y = entranceArray[i]["AABBmin"][1];
-				data.AABBmin.z = entranceArray[i]["AABBmin"][2];
+			if (entranceArray[i].contains(_MIN) && entranceArray[i][_MIN].is_array()) {
+				data.AABBmin.x = entranceArray[i][_MIN][0];
+				data.AABBmin.y = entranceArray[i][_MIN][1];
+				data.AABBmin.z = entranceArray[i][_MIN][2];
 			}
 
 			// AABB最大値を取得
-			if (entranceArray[i].contains("AABBmax") && entranceArray[i]["AABBmax"].is_array()) {
-				data.AABBmax.x = entranceArray[i]["AABBmax"][0];
-				data.AABBmax.y = entranceArray[i]["AABBmax"][1];
-				data.AABBmax.z = entranceArray[i]["AABBmax"][2];
+			if (entranceArray[i].contains(_MAX) && entranceArray[i][_MAX].is_array()) {
+				data.AABBmax.x = entranceArray[i][_MAX][0];
+				data.AABBmax.y = entranceArray[i][_MAX][1];
+				data.AABBmax.z = entranceArray[i][_MAX][2];
 			}
 			dungeonEntranceMap[floorID].push_back(data);
 		}
