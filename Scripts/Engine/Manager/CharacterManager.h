@@ -153,6 +153,11 @@ public:
 	GameObjectPtr GetPlayer()const { return player; }
 
 	/*
+	 *	キャラクターリストの取得
+	 */
+	const GameObjectList& GetCharacterList() const { return createCharacterList; }
+
+	/*
 	 *	ボスの死亡フラグ変更
 	 *	@author	kuu
 	 */

@@ -23,6 +23,8 @@
 #include "../../../../Manager/EffectManager.h"
 #include "../../../../Load/Audio/LoadAudio.h"
 #include "../../../../Manager/WeaponManager.h"
+#include "../../../../Component/Character/HPBarComponent.h"
+#include "../../../../Component/Character/BossHPBarComponentr.h"
 
  /*
   *	@brief	初期化処理
@@ -93,6 +95,25 @@ void InAction_Dungeon::Render() {
 	if (!isStart) return;
 
 	StageManager::GetInstance().Render();
+
+	auto& characters = CharacterManager::GetInstance().GetCharacterList();
+	// エネミーHPゲージ
+	for (auto& obj : characters) {
+		if (obj->name != GameConst::_CREATE_POSNAME_ENEMY)
+			continue;
+		auto HPBar = obj->GetComponent<HPBarComponent>();
+		if (HPBar != nullptr)
+			HPBar->ShowHPBar();
+	}
+	// ボスのHPゲージ
+	for (auto& obj : characters) {
+		if (obj->name != GameConst::_CREATE_POSNAME_BOSS)
+			continue;
+		auto HPBar = obj->GetComponent<BossHPBarComponent>();
+		if (HPBar != nullptr)
+			HPBar->ShowHPBar();
+	}
+
 #if _DEBUG
 	{
 		VECTOR pos1, pos2;
@@ -172,6 +193,7 @@ void InAction_Dungeon::Render() {
 	DrawFormatString(450, 60, GetColor(255, 255, 255), "Strength : %d", BaseStatus.base.strength);
 	DrawFormatString(450, 80, GetColor(255, 255, 255), "ResistTime : %d / %d", playerStatus.resistTime, BaseStatus.base.resistTime);
 #endif
+
 }
 /*
  *	@brief	片付け処理
