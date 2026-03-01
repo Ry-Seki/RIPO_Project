@@ -8,6 +8,7 @@
 
 #include "../../MenuBase.h"
 #include "../../../UI/Button/UIButtonBase.h"
+#include "../../../UI/Text/TextBase.h"
 #include "../../../UI/Sprite/Sprite.h"
 #include "../../../UI/EventSystem.h"
 #include "../../../GameEnum.h"
@@ -44,8 +45,10 @@ private:
 	float animTimer = 0.0f;
 	ItemData* targetItemData = nullptr;
 	EventSystem eventSystem;
-	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
+	std::vector<std::shared_ptr<TextBase>> textList;
+	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
+	std::vector<std::string> purchaseList;
 	std::function<void(int, int)> Callback = nullptr;
 
 	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/PurchaseCount/PurchaseMenuResources.json";

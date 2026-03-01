@@ -27,6 +27,28 @@
       ]
     }
   ],
+  "Text": [
+    {
+      "Name": "ShowMoney",
+      "Type": "Dynamic",
+      "UseFont": "NormalSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1550,
+        "Y": 490
+      }
+    },
+    {
+      "Name": "ResultRank",
+      "Type": "Dynamic",
+      "UseFont": "NormalSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1550,
+        "Y": 638
+      }
+    }
+  ],
   "Buttons": [
     {
       "Name": "Finish",

@@ -40,8 +40,9 @@ void MenuPurchaseCount::Initialize(Engine& engine) {
             eventSystem.RegisterButton(button.get());
         }
         eventSystem.Initialize(0);
-        buttonList = std::move(result.buttonList);
         spriteList = std::move(result.spriteList);
+        textList = std::move(result.textList);
+        buttonList = std::move(result.buttonList);
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             UIButtonBase* button = buttonList[i].get();
             if (!button) continue;
@@ -70,12 +71,16 @@ void MenuPurchaseCount::Open() {
     MenuBase::Open();
     purchaseCount = 0;
     purchaseMoney = 0;
+    const int white = GetColor(255, 255, 255);
     auto& money = MoneyManager::GetInstance();
     // アイテムデータの設定
     currentMoney = money.GetCurrentMoney();
     leastMoney = currentMoney;
     for (auto& button : buttonList) {
         button->Setup();
+    }
+    for (auto& text : textList) {
+        text->SetColor(white);
     }
     // 購入ボタンの制限
     if (currentMoney <= 0) {
@@ -143,13 +148,17 @@ void MenuPurchaseCount::Render() {
     for (auto& button : buttonList) {
         button->Render();
     }
+    const int white = GetColor(255, 255, 255);
     std::string money = std::to_string(leastMoney);
     std::string buyCount = std::to_string(purchaseCount);
     std::string buyMoney = std::to_string(purchaseMoney);
 
-    font.Draw("BuyItem", 1197, 620, money, GetColor(255, 255, 255));
-    font.Draw("BuyItem", 760, 544, buyCount, GetColor(255, 255, 255));
-    font.Draw("BuyItem", 1197, 544, buyMoney, GetColor(255, 255, 255));
+    textList[0]->SetText(money);
+    textList[1]->SetText(buyCount);
+    textList[2]->SetText(buyMoney);
+    for (auto& text : textList) {
+        text->Render();
+    }
 }
 /*
  *	@brief	メニューを閉じる
@@ -178,22 +187,29 @@ void MenuPurchaseCount::SelectButtonExecute(Engine& engine, int buttonIndex) {
     auto confirm = menu.GetMenu<MenuConfirm>();
 
     if (buttonIndex == 0) {
+        AudioUtility::PlaySE("DebugSE");
         AddPurchaseCount();
     }
     else if (buttonIndex == 1) {
+        AudioUtility::PlaySE("DebugSE");
         SubPurchaseCount();
     }
     else if (buttonIndex == 2) {
         AudioUtility::PlaySE("DebugSE");
         confirm->SetCallback([this, &menu](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
+                AudioUtility::PlaySE("DebugSE");
+                // 自身を閉じる
+                menu.CloseTopMenu();
                 // 購入処理
                 ConfirmPurchaseItem();
-                // メニューを閉じる
+                // このメニューを閉じる
                 menu.CloseTopMenu();
             }
-            // 二回閉じる必要があるためここでも閉じる
-            menu.CloseTopMenu();
+            else {
+                AudioUtility::PlaySE("DebugSE");
+                menu.CloseTopMenu();
+            }
         });
         menu.OpenMenu<MenuConfirm>();
     }
@@ -224,7 +240,7 @@ void MenuPurchaseCount::AddPurchaseCount() {
 
     if (currentMoney < price) return;
 
-    // 最大購入数の取得(TODO : 現在は苦し紛れのアイテム個数だが、武器は違うようにする)
+    // 最大購入数の取得
     int maxCount = 0;
     if (targetItemData->buyCount) {
         maxCount = 1;
