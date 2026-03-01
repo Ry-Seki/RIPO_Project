@@ -13,6 +13,7 @@
 #include "../../../Input/InputUtility.h"
 #include "../../../Save/SaveDataManager.h"
 #include "../../../UI/Button/SinglePressButton.h"
+#include "../../../UI/Text/Dynamic/DynamicText.h"
 #include "../../../GameConst.h"
 #include "../../../Engine.h"
 #include "../../../Scene/MainGameScene.h"
@@ -42,8 +43,9 @@ void MenuSelectDungeon::Initialize(Engine& engine) {
 			eventSystem.RegisterButton(button.get());
 		}
 		eventSystem.Initialize(0);
-		buttonList = std::move(result.buttonList);
 		spriteList = std::move(result.spriteList);
+		textList = std::move(result.textList);
+		buttonList = std::move(result.buttonList);
 		for (int i = 0, max = buttonList.size(); i < max; i++) {
 			UIButtonBase* button = buttonList[i].get();
 			if (!button) continue;
@@ -60,7 +62,7 @@ void MenuSelectDungeon::Initialize(Engine& engine) {
 			if (sprite->GetName() == "DungeonSprite") dungeonSprite = sprite.get();
 		}
 		eventSystem.LoadNavigation(navigation->GetData());
-		});
+	});
 }
 /*
  *	@brief	メニューを開く
@@ -79,13 +81,15 @@ void MenuSelectDungeon::Open() {
 	buttonList[2]->SetIsEnable(false);
 	buttonList[3]->SetIsEnable(false);
 
+	eventSystem.ApplySelection();
+	currentIndex = eventSystem.GetCurrentIndex();
+	CreateDungeonText();
+	SetupText();
 	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
 		// TODO : イベントごとに画像差し替え
-		eventSystem.ApplySelection();
-		currentIndex = eventSystem.GetCurrentIndex();
 		InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
-		});
+	});
 }
 /*
  *	@brief	更新処理
@@ -243,27 +247,73 @@ void MenuSelectDungeon::SelectButtonExecute(Engine& engine, int buttonIndex) {
 
 }
 /*
+ *	@brief		テキストの生成
+ */
+void MenuSelectDungeon::CreateDungeonText() {
+	DungeonInfoData& data = dungeonInfoList[currentIndex];
+	auto& font = FontManager::GetInstance();
+	int white = GetColor(255, 255, 255);
+
+	for (int i = 0; i < dungeonInfoList.size(); i++) {
+		DungeonTextSet set;
+
+		for (auto& text : textList) {
+			TextInfo info = text->GetTextInfo();
+
+			if (text->GetName() == "DungeonLevelText") {
+				set.level = std::make_shared<DynamicText>(info);
+				set.level->SetColor(white);
+			}
+			if (text->GetName() == "StrengthText") {
+				set.strength = std::make_shared<DynamicText>(info);
+				set.strength->SetColor(white);
+			}
+			if (text->GetName() == "TreasureCountText") {
+				set.treasureCount = std::make_shared<DynamicText>(info);
+				set.treasureCount->SetColor(white);
+			}
+			if (text->GetName() == "EventInfoText") {
+				set.eventDay = std::make_shared<DynamicText>(info);
+				set.eventDay->SetColor(white);
+			}
+		}
+		dungeonTextList.push_back(set);
+	}
+	std::string eventStart = std::to_string(data.eventStartDay);
+	std::string eventEnd = std::to_string(data.eventEndDay);
+	std::string eventDay = eventStart + " ～ " + eventEnd;
+
+}
+/*
+ *	@brief		テキストの準備前処理
+ */
+void MenuSelectDungeon::SetupText() {
+	for (int i = 0; i < dungeonTextList.size(); i++) {
+		DungeonInfoData& data = dungeonInfoList[i];
+		DungeonTextSet& dungeonInfo = dungeonTextList[i];
+
+		dungeonInfo.level->SetText(std::to_string(data.levelOfDanger));
+		dungeonInfo.treasureCount->SetText(std::to_string(data.treasureCount));
+		dungeonInfo.strength->SetText(std::to_string(data.necessaryStrength));
+		std::string eventDay;
+		eventDay.reserve(32);
+		eventDay += std::to_string(data.eventStartDay);
+		eventDay += " ～ ";
+		eventDay += std::to_string(data.eventEndDay);
+		dungeonInfo.eventDay->SetText(data.isEventDay ? eventDay : "NONE");
+	}
+}
+/*
  *	@brief		ダンジョン情報の描画
  */
 void MenuSelectDungeon::RenderDungeonInfo() {
 	if (currentIndex == -1) return;
 	auto& font = FontManager::GetInstance();
-	int white = GetColor(255, 255, 255);
-	DungeonInfoData data = dungeonInfoList[currentIndex];
-	std::string level = std::to_string(data.levelOfDanger);
-	std::string maxTreasure = std::to_string(data.treasureCount);
-	std::string eventStart = std::to_string(data.eventStartDay);
-	std::string eventEnd = std::to_string(data.eventEndDay);
-	std::string eventDay = eventStart + " / " + eventEnd;
-	std::string strength = std::to_string(data.necessaryStrength);
 
-	font.Draw("ElapsedDayFont", 1780, 480, level, white);
-	font.Draw("ElapsedDayFont", 1780, 580, strength, white);
-	font.Draw("ElapsedDayFont", 1780, 700, maxTreasure, white);
-	if (data.isEventDay) {
-		font.Draw("ElapsedDayFont", 1740, 810, eventDay, white);
-	}
-	else {
-		font.Draw("ElapsedDayFont", 1740, 810, "NONE", white);
-	}
+	DungeonTextSet& dungeonInfo = dungeonTextList[currentIndex];
+
+	dungeonInfo.level->Render();
+	dungeonInfo.treasureCount->Render();
+	dungeonInfo.strength->Render();
+	dungeonInfo.eventDay->Render();
 }

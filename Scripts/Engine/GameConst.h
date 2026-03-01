@@ -109,6 +109,9 @@ public:
 	//					SEの命名
 	//----------------------------------------------------
 	static constexpr const char* _TRAINING_SE = "trainingSE";			// トレーニング完了時のSE
+	static constexpr const char* _BOXMOVE_SE = "boxMoveSE";				// 箱が移動している時のSE
+	static constexpr const char* _BOXBROCK_SE = "beepSE";				// 箱が壁にあたった時のSE
+	static constexpr const char* _PARTCOP_SE = "copSE";					// 箱が目的位置についたときのSE
 
 
 };

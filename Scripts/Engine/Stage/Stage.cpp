@@ -57,8 +57,6 @@ void Stage::SetModelHandle(const int modelHandleBase) {
  *	更新
  */
 void Stage::Update() {
-	// ステージのオブジェクト更新
-
 }
 
 /*

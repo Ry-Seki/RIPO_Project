@@ -12,6 +12,7 @@
 #include "../../UI/EventSystem.h"
 #include "../../GameEnum.h"
 #include "../../GameConst.h"
+#include "../../UI/Text/TextBase.h"
 
 #include <functional>
 
@@ -27,10 +28,11 @@ private:
 
 	EventSystem eventSystem;
 
-	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
+	std::vector<std::shared_ptr<TextBase>> textList;
+	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	Sprite* elapsedDaySprite = nullptr;
-	
+
 	std::function<void(GameEnum::ActionType)> Callback = nullptr;
 
 	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/SelectAction/SelectActionMenuResources.json";
@@ -78,6 +80,10 @@ public:
 	void Resume() override;
 
 private:
+	/*
+	 *	@brief		テキストの生成
+	 */
+	void CreateElapsedDayText();
 	/*
 	 *	@brief		ボタンの押された時の処理
 	 *	@param[in]	int buttonIndex

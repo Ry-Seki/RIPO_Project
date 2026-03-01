@@ -71,15 +71,6 @@ public:
 	 */
 	void SetGravity(const bool setValue) { isGravity = setValue; }
 
-	/*
-	 *	d—Í‚ª‚©‚©‚Á‚Ä‚¢‚é‚©‚Ç‚¤‚©æ“¾‚·‚é
-	 *  @author oorui
-	 */
-	bool GetGravity()const { return isGravity; }
-
-	bool GetFirstFrame()const { return isFirstFrame; }
-
-	void SetFirstFrame(const bool setValue) { isFirstFrame = setValue; }
 
 };
 
