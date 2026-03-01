@@ -101,7 +101,7 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 	const float& capsuleRadius,
 	int enemyID) {
 	// 敵のベース作成
-   	GameObjectPtr enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
+   	enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	// アニメーターコンポーネント追加
 	enemy->AddComponent<AnimatorComponent>();
 	// HPバーコンポーネント追加
@@ -134,7 +134,7 @@ GameObjectPtr CharacterManager::GenerateBoss(
 	const float& capsuleRadius,
 	const int bossID) {
 	// ボスのベース作成
-	GameObjectPtr boss = CreateCharacter<BossComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
+	boss = CreateCharacter<BossComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
 	// アニメーターコンポーネント追加
 	boss->AddComponent<AnimatorComponent>();
 	// ボスのHPバーコンポーネント追加

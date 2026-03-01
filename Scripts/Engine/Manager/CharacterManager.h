@@ -23,6 +23,8 @@ private:;
 	   Engine* engine;
 	   GameObjectList createCharacterList;
 	   GameObjectPtr player;
+	   GameObjectPtr enemy;
+	   GameObjectPtr boss;
 
 	   bool bossDeathFlag = false;					// ボスの死亡フラグ
 
@@ -151,6 +153,18 @@ public:
 	 *  @author oorui
 	 */
 	GameObjectPtr GetPlayer()const { return player; }
+
+	/*
+	 *	通常エネミーの取得
+	 *  @author kuu
+	 */
+	GameObjectPtr GetEnemy()const { return enemy; }
+
+	/*
+	 *	ボスの取得
+	 *  @author kuu
+	 */
+	GameObjectPtr GetBoss()const { return boss; }
 
 	/*
 	 *	キャラクターリストの取得
