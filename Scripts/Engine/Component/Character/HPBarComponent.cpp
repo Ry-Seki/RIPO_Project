@@ -4,13 +4,13 @@
  */
 #include "HPBarComponent.h"
 #include "EnemyComponent.h"
+#include "../../Scene/Scene.h"
 
 /*
  *	コンストラクタ
  */
 HPBarComponent::HPBarComponent()
 	: player(nullptr)
-	, camera(nullptr)
 	, enemy(nullptr)
 	, maxHP(0)
 	, currentHP(0.0f)
@@ -26,8 +26,6 @@ void HPBarComponent::Start()
 {
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
-	camera = CameraManager::GetInstance().GetCamera();
-	if (camera == nullptr) return;
 	enemy = GetOwner();
 	if (enemy == nullptr) return;
 	//maxHP = enemy->GetComponent<EnemyComponent>()->GetEnemyMaxHP();
@@ -62,8 +60,26 @@ void HPBarComponent::Update(float deltaTime)
  */
 void HPBarComponent::ShowHPBar()
 {
-	// ダメージを受けるまで表示しない
-	if (enemy->GetComponent<EnemyComponent>()->GetFirstAttackFlag()) {
+	// 壁判定RayCast
+	Scene::RayCastHit hitInfo;
+	auto camera = CameraManager::GetInstance().GetCamera();
+	auto engine = camera->GetEngine();
+	if (!enemy)
+		return;
+	Ray enemyRay = { camera->position, Direction(camera->position, enemy->position) };
+	if (camera == nullptr) return;
+	auto enemy = GetOwner();
+	if (enemy == nullptr) return;
+	bool enemyHit = engine->GetCurrentScene()->RayCast(
+		enemyRay, hitInfo,
+		[this, camera, enemy](const ColliderBasePtr& col, float distance) {
+			// プレイヤーと自分以外のオブジェクト
+			return !col &&
+				distance < Distance(camera->position, enemy->position);
+		}
+	);
+	// 壁&ダメージ判定
+	if (!enemyHit && enemy->GetComponent<EnemyComponent>()->GetFirstAttackFlag()) {
 		VECTOR enemyPos = ToVECTOR(enemy->position);
 
 		// 敵の頭上

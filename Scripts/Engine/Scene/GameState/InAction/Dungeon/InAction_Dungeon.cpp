@@ -97,32 +97,17 @@ void InAction_Dungeon::Render() {
 
 	StageManager::GetInstance().Render();
 
-	// 壁判定RayCast
-	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
-	Scene::RayCastHit hitInfo;
-	auto engine = camera->GetEngine();
-	GameObjectPtr enemy = CharacterManager::GetInstance().GetEnemy();
-	Ray enemyRay = { camera->position, Direction(camera->position, enemy->position)};
-	bool enemyHit = engine->GetCurrentScene()->RayCast(
-		enemyRay, hitInfo,
-		[this](const ColliderBasePtr& col, float distance) {
-			// プレイヤーと自分以外のオブジェクト
-			return !col;
-		}
-	);
-
 	auto& characters = CharacterManager::GetInstance().GetCharacterList();
-	// 壁判定
-	if (enemyHit) {
-		// エネミーHPゲージ
-		for (auto& obj : characters) {
-			if (obj->name != GameConst::_CREATE_POSNAME_ENEMY)
-				continue;
-			auto HPBar = obj->GetComponent<HPBarComponent>();
-			if (HPBar != nullptr)
-				HPBar->ShowHPBar();
-		}
+
+	// エネミーHPゲージ
+	for (auto& obj : characters) {
+		if (obj->name != GameConst::_CREATE_POSNAME_ENEMY)
+			continue;
+		auto HPBar = obj->GetComponent<HPBarComponent>();
+		if (HPBar != nullptr)
+			HPBar->ShowHPBar();
 	}
+
 	// ボスのHPゲージ
 	for (auto& obj : characters) {
 		if (obj->name != GameConst::_CREATE_POSNAME_BOSS)
@@ -131,6 +116,7 @@ void InAction_Dungeon::Render() {
 		if (HPBar != nullptr)
 			HPBar->ShowHPBar();
 	}
+
 
 #if _DEBUG
 	{

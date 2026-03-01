@@ -12,7 +12,6 @@
 class BossHPBarComponent : public Component {
 private:
 	GameObjectPtr player;
-	GameObjectPtr camera;
 	GameObject* boss;
 	// ç≈ëÂHP
 	int maxHP;
