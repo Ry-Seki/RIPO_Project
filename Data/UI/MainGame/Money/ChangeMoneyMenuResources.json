@@ -27,6 +27,28 @@
       ]
     }
   ],
+  "Texts": [
+    {
+      "Name": "ResultRank",
+      "Type": "Dynamic",
+      "UseFont": "NormalSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 490,
+        "Y": 638
+      }
+    },
+    {
+      "Name": "ResultRank",
+      "Type": "Dynamic",
+      "UseFont": "NormalSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1550,
+        "Y": 638
+      }
+    }
+  ],
   "Buttons": [
     {
       "Name": "Continue",

@@ -9,6 +9,7 @@
 #include "../../MenuBase.h"
 #include "../../../UI/Button/UIButtonBase.h"
 #include "../../../UI/Sprite/Sprite.h"
+#include "../../../UI/Text/TextBase.h"
 #include "../../../UI/EventSystem.h"
 #include "../../../GameEnum.h"
 #include "../../../../Data/ItemCatalogData.h"
@@ -32,8 +33,9 @@ private:
 	int currentMoney = -1;
 	ItemCatalogData catalogData;
 	EventSystem eventSystem;
-	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
+	std::vector<std::shared_ptr<TextBase>> textList;
+	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	UIButtonBase* smgWeapon = nullptr;
 	UIButtonBase* exitButton = nullptr;
 	UIButtonBase* backButton = nullptr;
