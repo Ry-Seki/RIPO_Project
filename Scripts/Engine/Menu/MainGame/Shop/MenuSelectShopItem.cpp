@@ -152,11 +152,14 @@ void MenuSelectShopItem::Render() {
     ItemData* item;
     if (bool isGetItem = catalogData.TryGetItem(currentSlot, item)) {
         std::string itemPrice = std::to_string(item->price);
-        font.Draw("BuyItem", 1502, 289, itemPrice, GetColor(255, 255, 255));
+        textList[0]->SetText(itemPrice);
+        textList[0]->SetColor(GetColor(255, 255, 255));
+        textList[0]->Render();
     }
     std::string money = std::to_string(MoneyManager::GetInstance().GetCurrentMoney());
-    font.Draw("NormalSizeFont", 1611, 830, money, GetColor(75, 75, 75));
-
+    textList[1]->SetText(money);
+    textList[1]->SetColor(GetColor(75, 75, 75));
+    textList[1]->Render();
 }
 /*
  *	@brief	ƒƒjƒ…[‚ğ•Â‚¶‚é

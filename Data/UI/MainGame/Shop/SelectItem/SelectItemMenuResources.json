@@ -63,7 +63,7 @@
       }
     },
     {
-      "Name": "MoneyText",
+      "Name": "CurrentMoneyText",
       "Type": "Dynamic",
       "UseFont": "NormalSizeFont",
       "Alignment": "Left",

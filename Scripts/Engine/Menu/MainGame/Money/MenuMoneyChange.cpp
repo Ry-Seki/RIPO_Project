@@ -64,11 +64,15 @@ void MenuMoneyChange::Initialize(Engine& engine) {
  */
 void MenuMoneyChange::Open() {
     MenuBase::Open();
+    const int white = GetColor(255, 255, 255);
     for (auto& sprite : spriteList) {
         sprite->Setup();
     }
     for (auto& button : buttonList) {
         button->Setup();
+    }
+    for (auto& text : textList) {
+        text->SetColor(white);
     }
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
@@ -134,8 +138,12 @@ void MenuMoneyChange::Render() {
     }
     std::string showMoneyStr = std::to_string(randomMoney);
     std::string changeMoneyStr = std::to_string(changeMoney);
-    font.Draw("NormalSizeFont", 1550, 490, showMoneyStr, GetColor(255, 255, 255));
-    if(isAnimationEnd) font.Draw("NormalSizeFont", 1550, 638, changeMoneyStr, GetColor(255, 255, 255));
+
+    textList[0]->SetText(showMoneyStr);
+    textList[1]->SetText(changeMoneyStr);
+
+    textList[0]->Render();
+    if(isAnimationEnd) textList[1]->Render();
 }
 /*
  *	@brief	ƒƒjƒ…[‚ğ•Â‚¶‚é

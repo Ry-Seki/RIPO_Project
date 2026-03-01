@@ -26,7 +26,38 @@
         "Res/Menu/MainGame/Shop/Trealine_Shop_PurchaseCount.png"
       ]
     }
-
+  ],
+  "Texts": [
+    {
+      "Name": "LeastMoney",
+      "Type": "Dynamic",
+      "UseFont": "BuyItem",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1197,
+        "Y": 620
+      }
+    },
+    {
+      "Name": "BuyCount",
+      "Type": "Dynamic",
+      "UseFont": "BuyItem",
+      "Alignment": "Left",
+      "Position": {
+        "X": 760,
+        "Y": 544
+      }
+    },
+    {
+      "Name": "BuyMoney",
+      "Type": "Dynamic",
+      "UseFont": "BuyItem",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1197,
+        "Y": 544
+      }
+     }
   ],
   "Buttons": [
     {

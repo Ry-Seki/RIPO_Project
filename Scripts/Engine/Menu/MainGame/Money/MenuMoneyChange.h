@@ -7,8 +7,9 @@
 #define _MENU_MONEY_CHANGE_H_
 
 #include "../../MenuBase.h"
-#include "../../../UI/Button/UIButtonBase.h"
 #include "../../../UI/Sprite/Sprite.h"
+#include "../../../UI/Text/TextBase.h"
+#include "../../../UI/Button/UIButtonBase.h"
 #include "../../../UI/EventSystem.h"
 #include "../../../GameEnum.h"
 #include "../../../GameConst.h"
@@ -35,8 +36,9 @@ private:
 
 	EventSystem eventSystem;
 
-	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
+	std::vector<std::shared_ptr<TextBase>> textList;
+	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 
 	std::function<void()> Callback = nullptr;
 

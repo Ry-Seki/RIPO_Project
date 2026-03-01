@@ -9,8 +9,9 @@
 #include "../MenuBase.h"
 #include "../../../Data/ResultScoreData.h"
 #include "../../UI/EventSystem.h"
-#include "../../UI/Button/UIButtonBase.h"
 #include "../../UI/Sprite/Sprite.h"
+#include "../../UI/Text/TextBase.h"
+#include "../../UI/Button/UIButtonBase.h"
 #include "../../GameEnum.h"
 #include "../../GameConst.h"
 
@@ -27,8 +28,9 @@ private:
 	int animFrame = 0;
 	EventSystem eventSystem;
 
-	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
+	std::vector<std::shared_ptr<TextBase>> textList;
+	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 
 	ResultScoreData resultScore;
 	GameEnum::ResultRank rank = GameEnum::ResultRank::Invalid;
