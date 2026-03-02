@@ -131,3 +131,14 @@ void WorldProgressManager::ProcureEventTreasure(int dungeonID, int treasureID) {
     dungeon.eventTreasureFlagMap[treasureID] = true;
     SetProcureTreasureList(treasureID);
 }
+/*
+ *	@brief		ƒ_ƒ“ƒWƒ‡ƒ“•Ê’Êí‚¨•ó‚Ìó‘Ôæ“¾
+ *	@param[in]	int dungeonID
+ *	@return		int
+ */
+int WorldProgressManager::GetDungeonTreasureCount(int dungeonID){
+    auto& dungeon = GetDungeonProgressData(dungeonID);
+    if (dungeon.treasureFlagMap.empty()) return 0;
+
+    return dungeon.treasureFlagMap.size();
+}

@@ -189,14 +189,17 @@ void MenuSelectDungeon::SelectButtonExecute(Engine& engine, int buttonIndex) {
 		AudioUtility::PlaySE("DebugSE");
 		confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
 			if (result == GameEnum::ConfirmResult::Yes) {
+				menu.CloseTopMenu();
+				isInteractive = false;
 				FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
 				FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, dungeonID]() {
 					menu.CloseAllMenu();
 					if (Callback) Callback(dungeonID);
-					});
+				});
+			}else {
+				menu.CloseTopMenu();
 			}
-			menu.CloseTopMenu();
-			});
+		});
 		menu.OpenMenu<MenuConfirm>();
 	}
 	else if (buttonIndex == 1) {
@@ -204,14 +207,17 @@ void MenuSelectDungeon::SelectButtonExecute(Engine& engine, int buttonIndex) {
 		AudioUtility::PlaySE("DebugSE");
 		confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
 			if (result == GameEnum::ConfirmResult::Yes) {
+				menu.CloseTopMenu();
+				isInteractive = false;
 				FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
 				FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, dungeonID]() {
 					menu.CloseAllMenu();
 					if (Callback) Callback(dungeonID);
-					});
+				});
+			}else {
+				menu.CloseTopMenu();
 			}
-			menu.CloseTopMenu();
-			});
+		});
 		menu.OpenMenu<MenuConfirm>();
 	}
 	else if (buttonIndex == 2) {
@@ -219,14 +225,17 @@ void MenuSelectDungeon::SelectButtonExecute(Engine& engine, int buttonIndex) {
 		AudioUtility::PlaySE("DebugSE");
 		confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
 			if (result == GameEnum::ConfirmResult::Yes) {
+				menu.CloseTopMenu();
+				isInteractive = false;
 				FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
 				FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, dungeonID]() {
 					menu.CloseAllMenu();
 					if (Callback) Callback(dungeonID);
-					});
+				});
+			}else {
+				menu.CloseTopMenu();
 			}
-			menu.CloseTopMenu();
-			});
+		});
 		menu.OpenMenu<MenuConfirm>();
 	}
 	else if (buttonIndex == 3) {
@@ -234,17 +243,19 @@ void MenuSelectDungeon::SelectButtonExecute(Engine& engine, int buttonIndex) {
 		AudioUtility::PlaySE("DebugSE");
 		confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
 			if (result == GameEnum::ConfirmResult::Yes) {
+				menu.CloseTopMenu();
+				isInteractive = false;
 				FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
 				FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, dungeonID]() {
 					menu.CloseAllMenu();
 					if (Callback) Callback(dungeonID);
-					});
+				});
+			}else {
+				menu.CloseTopMenu();
 			}
-			menu.CloseTopMenu();
-			});
+		});
 		menu.OpenMenu<MenuConfirm>();
 	}
-
 }
 /*
  *	@brief		テキストの生成
