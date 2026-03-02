@@ -35,6 +35,7 @@ void MenuResultScore::Initialize(Engine& engine) {
         }
         eventSystem.Initialize(0);
         spriteList = std::move(result.spriteList);
+        textList = std::move(result.textList);
         buttonList = std::move(result.buttonList);
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             UIButtonBase* button = buttonList[i].get();
@@ -57,6 +58,7 @@ void MenuResultScore::Initialize(Engine& engine) {
 void MenuResultScore::Open() {
     MenuBase::Open();
     int playerScore = MoneyManager::GetInstance().GetCurrentMoney();
+    const int white = GetColor(255, 255, 255);
     rank = JudgeRank(playerScore);
     // ƒ{ƒ^ƒ“‚Ì€”õˆ—
     for (auto& sprite : spriteList) {
@@ -64,6 +66,9 @@ void MenuResultScore::Open() {
     }
     for (auto& button : buttonList) {
         button->Setup();
+    }
+    for (auto& text : textList) {
+        text->SetColor(white);
     }
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
@@ -126,8 +131,13 @@ void MenuResultScore::Render() {
     }
     std::string showMoneyStr = std::to_string(money.GetCurrentMoney());
     std::string scoreRank = ToRankString();
-    font.Draw("NormalSizeFont", 1550, 490, showMoneyStr, GetColor(255, 255, 255));
-    font.Draw("NormalSizeFont", 1550, 638, scoreRank, GetColor(255, 255, 255));
+
+    textList[0]->SetText(showMoneyStr);
+    textList[1]->SetText(scoreRank);
+
+    for (auto& text : textList) {
+        text->Render();
+    }
 
 }
 /*

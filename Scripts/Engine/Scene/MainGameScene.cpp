@@ -18,8 +18,6 @@
 #include "../Menu/MainGame/MenuInGame.h"
 #include "../Manager/EffectManager.h" 
 #include "../../Data/WeaponDataManager.h"
-#include "../Component/Character/HPBarComponent.h"
-#include "../Component/Character/BossHPBarComponentr.h"
 #include "../UI/PlayerUI/PlayerUI.h"
 #include "../Scripts/Engine/Manager/EnemyDataManager.h"
 #include "../Menu/Dungeon/DungeonTreasureUI.h"
@@ -102,23 +100,6 @@ void MainGameScene::Render() {
 			aabb->DebugRender();
 	}
 #endif
-
-	// エネミーHPゲージ
-	for (auto& obj : gameObjects) {
-		if (obj->name != GameConst::_CREATE_POSNAME_ENEMY)
-			continue;
-		auto HPBar = obj->GetComponent<HPBarComponent>();
-		if (HPBar != nullptr)
-			HPBar->ShowHPBar();
-	}
-	// ボスのHPゲージ
-	for (auto& obj : gameObjects) {
-		if (obj->name != GameConst::_CREATE_POSNAME_BOSS)
-			continue;
-		auto HPBar = obj->GetComponent<BossHPBarComponent>();
-		if (HPBar != nullptr)
-			HPBar->ShowHPBar();
-	}
 }
 /*
  *  @brief  メインシーン終了処理

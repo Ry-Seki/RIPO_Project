@@ -108,6 +108,9 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 			attackIsTriger = true;
 		}
 	}
+	if (other->GetOwner()->name == "Player") {
+		coolTime = 1;
+	}
 
 	// ƒ_ƒ[ƒW”»’è
 	if (!damageIsTriger && other->GetOwner()->name == "bullet") {
@@ -128,7 +131,6 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 			hitFlag = true;
 		}
 	}
-	coolTime = 1;
 }
 
 Vector3 EnemyComponent::DxForwardDir(const Vector3& rotation)
