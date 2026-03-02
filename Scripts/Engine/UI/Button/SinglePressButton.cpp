@@ -22,12 +22,15 @@ void SinglePressButton::Update(float unscaledDeltaTime) {
 
     UIButtonBase::Update(unscaledDeltaTime);
 
-    if (!inputHandle && inputState == GameEnum::ButtonInputState::Hover 
-		&& input.buttonDown[inputClickNum]) {
-		inputHandle = true;
-        OnPressDown();
-    }
-
+	// マウスHover時を優先する
+	if (!inputHandle && inputState == GameEnum::ButtonInputState::Hover) {
+		if (UpdateSelectButton) UpdateSelectButton();
+		// クリック判定
+		if (input.buttonDown[inputClickNum]) {
+			inputHandle = true;
+			OnPressDown();
+		}
+	}
     if (inputState == GameEnum::ButtonInputState::Press) {
 		// 押している間の処理
         OnPress(unscaledDeltaTime);
@@ -56,6 +59,7 @@ void SinglePressButton::Render() {
  */
 void SinglePressButton::OnPressDown() {
 	if (UpdateSelectButton) UpdateSelectButton();
+
 	inputState = GameEnum::ButtonInputState::Press;
 }
 /*
