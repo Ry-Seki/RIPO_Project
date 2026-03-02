@@ -91,7 +91,12 @@ public:
 	 *  @return		WorldProgressData&
 	 */
 	WorldProgressData& GetSaveData() const;
-
+	/*
+	 *	@brief		ƒ_ƒ“ƒWƒ‡ƒ“•Ê’Êí‚¨•ó‚Ìó‘Ôæ“¾
+	 *	@param[in]	int dungeonID
+	 *	@return		int
+	 */
+	int GetDungeonTreasureCount(int dungeonID);
 };
 
 #endif // !_WORLD_PROGRESS_MANAGER_H_
