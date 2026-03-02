@@ -251,10 +251,13 @@ void MenuSelectDungeon::SelectButtonExecute(Engine& engine, int buttonIndex) {
  */
 void MenuSelectDungeon::CreateDungeonText() {
 	DungeonInfoData& data = dungeonInfoList[currentIndex];
+	int dataSize = dungeonInfoList.size();
+	dungeonTextList.clear();
+	dungeonTextList.resize(dataSize);
 	auto& font = FontManager::GetInstance();
 	int white = GetColor(255, 255, 255);
 
-	for (int i = 0; i < dungeonInfoList.size(); i++) {
+	for (int i = 0; i < dataSize; i++) {
 		DungeonTextSet set;
 
 		for (auto& text : textList) {
@@ -277,7 +280,7 @@ void MenuSelectDungeon::CreateDungeonText() {
 				set.eventDay->SetColor(white);
 			}
 		}
-		dungeonTextList.push_back(set);
+		dungeonTextList[i] = set;
 	}
 	std::string eventStart = std::to_string(data.eventStartDay);
 	std::string eventEnd = std::to_string(data.eventEndDay);
@@ -288,7 +291,7 @@ void MenuSelectDungeon::CreateDungeonText() {
  *	@brief		テキストの準備前処理
  */
 void MenuSelectDungeon::SetupText() {
-	for (int i = 0; i < dungeonTextList.size(); i++) {
+	for (int i = 0, max = dungeonTextList.size(); i < max; i++) {
 		DungeonInfoData& data = dungeonInfoList[i];
 		DungeonTextSet& dungeonInfo = dungeonTextList[i];
 

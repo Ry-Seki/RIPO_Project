@@ -83,7 +83,7 @@ void MenuMiniGame::Update(Engine& engine, float unscaledDeltaTime) {
     // ミニゲーム終了時、その結果を反映
     if (miniGame->IsComplete()) {
         isStart = false;
-        AudioUtility::PlaySE("DebugSE");
+        AudioUtility::PlaySE("GoalSE");
         FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fade, [this]() {
             MenuManager::GetInstance().CloseTopMenu();
@@ -153,10 +153,13 @@ void MenuMiniGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
     auto confirm = menu.GetMenu<MenuConfirm>();
 
     if(buttonIndex == 0){
+        AudioUtility::PlaySE("DebugSE");
         Reset();
     } else if (buttonIndex == 1) {
+        AudioUtility::PlaySE("DebugSE");
         confirm->SetCallback([this, &menu](GameEnum::ConfirmResult result) {
             if (result == GameEnum::ConfirmResult::Yes) {
+                AudioUtility::PlaySE("DebugSE");
                 level = GameEnum::MiniGameLevel::Retire;
                 menu.CloseTopMenu();
                 isInteractive = false;
@@ -166,6 +169,7 @@ void MenuMiniGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
                     if (Callback) Callback(level);
                 });
             }else {
+                AudioUtility::PlaySE("DebugSE");
                 menu.CloseTopMenu();
             }
         });

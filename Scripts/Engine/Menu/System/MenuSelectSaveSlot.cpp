@@ -259,11 +259,13 @@ void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
  *	@brief	テキストの生成(セーブスロットのテキスト描画用)
  */
 void MenuSelectSaveSlot::CreateSlotText() {
+    int dataSize = gameDataList.size();
     slotTextList.clear();
+    slotTextList.resize(dataSize);
     const int slotSpacing = 205;
     const int white = GetColor(255, 255, 255);
 
-    for (int i = 0; i < gameDataList.size(); i++) {
+    for (int i = 0; i < dataSize; i++) {
         int offsetY = slotSpacing * i;
 
         SlotTextSet set;
@@ -294,7 +296,7 @@ void MenuSelectSaveSlot::CreateSlotText() {
                 set.treasure->SetColor(white);
             }
         }
-        slotTextList.push_back(set);
+        slotTextList[i] = set;
     }
 }
 /*
