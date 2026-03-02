@@ -63,7 +63,7 @@ private:
 	 * @param floors   è∞É|ÉäÉSÉìäiî[êÊ
 	 */
 	void ClassifyPolygons(
-		const MV1_COLL_RESULT_POLY_DIM& hitDim,
+		const MV1_COLL_RESULT_POLY_DIM* hitDim,
 		std::vector<MV1_COLL_RESULT_POLY*>& walls,
 		std::vector<MV1_COLL_RESULT_POLY*>& floors,
 		const Vector3& prevPos
@@ -80,9 +80,9 @@ private:
 	 */
 	void ProcessWallCollision(
 		Vector3& nowPos,
-		const Vector3& prevPos,
+		Vector3 prevPos,
 		float polyOffset,
-		const Vector3& MoveVec,
+		Vector3 MoveVec,
 		const std::vector<MV1_COLL_RESULT_POLY*>& walls,
 		bool moveFlag,
 		GameObject* other

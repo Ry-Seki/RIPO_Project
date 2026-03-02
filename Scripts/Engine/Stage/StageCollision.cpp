@@ -46,7 +46,7 @@ void StageCollision::UpdateCollision(GameObject* other, Vector3 moveVec) {
 	// 壁床ポリゴン分類
 	std::vector<MV1_COLL_RESULT_POLY*> walls, floors;
 	// 壁か床か振り分ける
-	ClassifyPolygons(*hitDim, walls, floors, prevPos);
+	ClassifyPolygons(hitDim.get(), walls, floors, prevPos);
 
 	// 床衝突処理
 	ProcessFloorCollision(nowPos, polyOffset, floors, other, moveVec);
@@ -125,30 +125,31 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> StageCollision::SetupCollision(
  * @param floors   床ポリゴン格納先
  */
 void StageCollision::ClassifyPolygons(
-	const MV1_COLL_RESULT_POLY_DIM& hitDim,
+	const MV1_COLL_RESULT_POLY_DIM* hitDim,
 	std::vector<MV1_COLL_RESULT_POLY*>& walls,
 	std::vector<MV1_COLL_RESULT_POLY*>& floors,
 	const Vector3& prevPos
 ) {
 
 	// 全ポリゴンをチェック
-	for (int i = 0; i < hitDim.HitNum; i++) {
+	for (int i = 0; i < hitDim->HitNum; i++) {
 		// ヒットしたポリゴンの配列
-		const auto& poly = hitDim.Dim[i];
+		auto& poly = hitDim->Dim[i];
 
 		// 壁
 		bool isWall = (poly.Normal.y < _POLYGON_HEIGHT);
 		// 床
 		bool isFloor = (poly.Normal.y >= _FLOOR_LIMIT);
+
 		// 壁かどうか
 		if (isFloor) {
 			// 壁ポリゴン配列に追加する
-			floors.push_back(const_cast<MV1_COLL_RESULT_POLY*>(&poly));
+			floors.push_back(&poly);
 		}
 
 		if (isWall) {
 			// 床ポリゴン配列に追加する
-			walls.push_back(const_cast<MV1_COLL_RESULT_POLY*>(&poly));
+			walls.push_back(&poly);
 		}
 	}
 
@@ -165,9 +166,9 @@ void StageCollision::ClassifyPolygons(
  */
 void StageCollision::ProcessWallCollision(
 	Vector3& nowPos,
-	const Vector3& prevPos,
+	Vector3 prevPos,
 	float polyOffset,
-	const Vector3& MoveVec,
+	Vector3 MoveVec,
 	const std::vector<MV1_COLL_RESULT_POLY*>& walls,
 	bool moveFlag,
 	GameObject* other
