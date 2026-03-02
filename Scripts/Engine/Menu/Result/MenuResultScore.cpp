@@ -211,6 +211,8 @@ std::string MenuResultScore::ToRankString() {
         case GameEnum::ResultRank::D:
             rankStr = 'D';
             break;
+        default:
+            rankStr = 'D';
     }
     return rankStr;
 }
