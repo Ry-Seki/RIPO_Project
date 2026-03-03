@@ -11,63 +11,56 @@
 #include <unordered_map>
 #include <memory>
 #include <string>
-#include <mutex>
 
 /*
- *  同じリソースの二重ロードを防ぐ
- *  キャッシュから既存リソースを取得可能
+ *  @brief  同じリソースの二重ロードを防ぐ
+ *          キャッシュから既存リソースを取得可能
  */
 class LoadRegistry {
 private:
     std::unordered_map<std::string, LoadBasePtr> registry; // キー → ロード済みリソース
-    mutable std::mutex mtx;                                // スレッド安全用
 
 public:
     /*
-     *  コンストラクタ
+     *  @brief  コンストラクタ
      */
     LoadRegistry() = default;
     /*
-     *  デストラクタ
+     *  @brief  デストラクタ
      */
     ~LoadRegistry() {
-		registry.clear();
+		Clear();
     }
 
 public:
     /*
-     *   リソースを登録
+     *  @brief      リソースを登録
      */
-    void Register(const std::string& key, const LoadBasePtr& resource) {
+    inline void Register(const std::string& key, const LoadBasePtr& resource) {
         if (!resource) return;
-        std::lock_guard<std::mutex> lock(mtx);
-        if (registry.find(key) == registry.end()) {
-            registry[key] = resource;
-        }
+        // キーを探す
+        if (registry.find(key) == registry.end()) registry[key] = resource;
     }
     /*
-     *  登録済みかを確認
+     *  @brief      登録済みかを確認
      *  @return     bool
      */ 
-    bool Exists(const std::string& key) const {
-        std::lock_guard<std::mutex> lock(mtx);
+    inline bool Exists(const std::string& key) const {
         return registry.find(key) != registry.end();
     }
     /*
-     *  登録済みリソースを取得
+     *  @brief      登録済みリソースを取得
      *  @return     LoadBasePtr
      */
-    LoadBasePtr Get(const std::string& key) const {
-        std::lock_guard<std::mutex> lock(mtx);
+    inline LoadBasePtr Get(const std::string& key) const {
         auto it = registry.find(key);
         if (it != registry.end()) return it->second;
         return nullptr;
     }
     /*
-     *  キャッシュ全削除
+     *  @brief  キャッシュ全削除
      */
-    void Clear() {
-        std::lock_guard<std::mutex> lock(mtx);
+    inline void Clear() {
         registry.clear();
     }
 };

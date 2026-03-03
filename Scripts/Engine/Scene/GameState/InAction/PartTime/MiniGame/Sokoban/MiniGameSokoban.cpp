@@ -321,21 +321,21 @@ void MiniGameSokoban::Close() {
  *	@return		std::string
  */
 std::string MiniGameSokoban::GetMiniGamePath() const {
-    std::string path;
+    std::string path = _SOKOBAN_PATH;
     switch (gameLevel) {
         case GameEnum::MiniGameLevel::Easy:
-            path = "Easy";
+            path += "Easy";
             break;
         case GameEnum::MiniGameLevel::Normal:
-            path = "Normal";
+            path += "Normal";
             break;
         case GameEnum::MiniGameLevel::Hard:
-            path = "Hard";
+            path += "Hard";
             break;
         default:
             return "";
     }
-    return _SOKOBAN_PATH + path;
+    return path;
 }
 /*
  *  @brief      ç¿ïWéwíËÇÃî†ÇÃéÊìæ

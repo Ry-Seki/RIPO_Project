@@ -882,6 +882,12 @@
     <ClCompile Include="Scripts\Engine\UI\Text\TextFactory.cpp">
       <Filter>ソース ファイル\Engine\UI\Text</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Camera\RotateCommand.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\LoadManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -1552,6 +1558,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\Text\TextFactory.h">
       <Filter>ヘッダー ファイル\Engine\UI\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Camera\RotateCommand.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

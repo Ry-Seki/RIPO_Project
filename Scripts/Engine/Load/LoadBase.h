@@ -11,36 +11,41 @@
 #include <iostream>
 
 
- /*
-  *	全てのロードクラスの基底クラス
-  */
+/*
+ *	@brief	全てのロードクラスの基底クラス
+ */
 class LoadBase {
 protected:
 	std::string filePath;		// ファイルパス
 	bool isLoaded = false;		// 読み込み完了フラグ
-	
+
 public:
 	/*
-	 *	コンストラクタ
-	 *	param[in]	const std::string& setFilePath	ファイルパス
+	 *	@brief		コンストラクタ
+	 *	@param[in]	const std::string& setFilePath	ファイルパス
 	 */
 	explicit LoadBase(const std::string& setFilePath) : filePath(setFilePath) {}
 	/*
-	 *	デストラクタ
+	 *	@brief		デストラクタ
 	 */
 	virtual ~LoadBase() = default;
 
 public:
 	/*
-	 *	データのロード処理
+	 *	@brief		データのロード処理
 	 */
 	virtual void Load() = 0;
-	/*
-	 *	アンロード
-	 */
-	inline virtual void Unload() { isLoaded = false; }
 
 public:
+	/*
+	 *	@brief		アンロード
+	 */
+	inline void Unload() { isLoaded = false; }
+	/*
+	 *	@brief		キャッシュするリソースか判定
+	 *	@return		bool
+	 */
+	inline virtual bool IsCash() { return false; }
 	/*
 	 *	ロード完了フラグ取得
 	 *  return	bool
