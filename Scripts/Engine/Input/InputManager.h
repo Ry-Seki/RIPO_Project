@@ -24,13 +24,12 @@ private:	//メンバ変数
 	char prevKeyState[256];
 	int nowMouseInput;
 	int prevMouseInput;
-	int nowMouseWheel;
-	int prevMouseWheel;
-	int nowMousePosX;
-	int prevMousePosX;
-	int nowMousePosY;
-	int prevMousePosY;
-	bool mouseVisible;
+	int nowMousePosX;		// 現在のマウス位置X
+	int prevMousePosX;		// 直前のマウス位置X
+	int nowMousePosY;		// 現在のマウス位置Y
+	int prevMousePosY;		// 直前のマウス位置Y
+	bool mouseVisible;		// マウスカーソルの表示非表示フラグ
+	bool prevInputMouse;	// 直前の入力がマウスかどうか
 	
 	std::unordered_map<GameEnum::ActionMap, std::shared_ptr<ActionMapBase>> actionMaps;		// 各アクションマップ
 private:	    //コンストラクタとデストラクタ
@@ -197,12 +196,21 @@ public: // アクションマップ関連
 
 public:
 	/*
-	 *	マウスの表示非表示切り替え
+	 *	マウスカーソルの表示非表示切り替え
 	 *	@param[in]	bool setVisible	切り替え先
+	 *  @outhor Riku
 	 */
 	inline void SetMouseVisible(bool setVisible) {
 		mouseVisible = setVisible;
 		SetMouseDispFlag(setVisible);
+	}
+	/*
+	 *	直前の入力がマウスかどうか取得
+	 *  @return bool
+	 *  @author Riku
+	 */
+	inline bool GetPrevInputMouse() {
+		return prevInputMouse;
 	}
 };
 
