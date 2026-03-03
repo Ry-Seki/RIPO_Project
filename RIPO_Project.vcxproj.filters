@@ -888,6 +888,9 @@
     <ClCompile Include="Scripts\Engine\Menu\System\Load\MenuLoadAnimation.cpp">
       <Filter>ソース ファイル\Engine\Menu\System</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\Effect\LoadEffect.cpp">
+      <Filter>ソース ファイル\Engine\Load</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -1561,6 +1564,9 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Menu\System\Load\MenuLoadAnimation.h">
       <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\Effect\LoadEffect.h">
+      <Filter>ヘッダー ファイル\Engine\Load</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

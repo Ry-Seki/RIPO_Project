@@ -36,10 +36,12 @@ public:
 
 public:
 	/*
-	 *	@brief		キャッシュするリソースか判定
-	 *	@return		bool
+	 *	@brief		拡大率の設定
+	 *	@param[in]	float setMagnification
 	 */
-	inline bool IsCash() override { return true; }
+	inline void SetMagnification(float setMagnification) {
+		magnification = setMagnification;
+	}
 	/*
 	 *	@brief		エフェクトハンドルの取得
 	 *	@return		int
