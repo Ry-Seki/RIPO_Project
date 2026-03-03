@@ -77,7 +77,9 @@ void InputManager::Update() {
 		if (key == 1)
 			prevInputMouse = false;
 	}
-	if (nowMouseInput != 0) {
+	if (nowMouseInput != 0 || 
+		prevMousePosX - nowMousePosX != 0 || 
+		prevMousePosY - nowMousePosY != 0) {
 		prevInputMouse = true;
 	}
 
