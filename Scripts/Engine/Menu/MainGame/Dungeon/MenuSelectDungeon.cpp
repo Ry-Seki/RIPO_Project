@@ -101,10 +101,13 @@ void MenuSelectDungeon::Update(Engine& engine, float unscaledDeltaTime) {
 		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::Out, FadeMode::Stop);
 		FadeManager::GetInstance().StartFade(fadeOut, [this]() {
 			MenuManager::GetInstance().OpenMenu<MenuInGame>();
-			});
+		});
 	}
 	// イベントシステムの更新
 	eventSystem.Update(unscaledDeltaTime);
+	currentIndex = eventSystem.GetCurrentIndex();
+	dungeonSprite->SetFrameIndex(currentIndex);
+
 	// ボタンの更新
 	for (auto& button : buttonList) {
 		if (button) button->Update(unscaledDeltaTime);
@@ -136,8 +139,6 @@ void MenuSelectDungeon::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
 		animFrame = (animFrame + 1) % frameCount;
 		sprite->SetFrameIndex(animFrame);
 	}
-	currentIndex = eventSystem.GetCurrentIndex();
-	dungeonSprite->SetFrameIndex(currentIndex);
 }
 /*
  *	@brief	描画処理
