@@ -35,11 +35,6 @@ public:
 	void Load() override;
 
 public:
-	/*
-	 *	@brief		キャッシュするリソースか判定
-	 *	@return		bool
-	 */
-	inline bool IsCash() override { return true; }
 	/* 
 	 *	モデルハンドルの取得
 	 *	return int

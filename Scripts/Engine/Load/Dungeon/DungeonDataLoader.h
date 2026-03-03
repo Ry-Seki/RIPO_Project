@@ -16,7 +16,7 @@
 /*
  *  @brief  ダンジョン概要データ読み込みクラス
  */
-class DungeonDataLoader : public LoadBase { 
+class DungeonDataLoader : public LoadBase { // ← LoadBase を継承
 private:
     LoadCSV csvLoader;
 

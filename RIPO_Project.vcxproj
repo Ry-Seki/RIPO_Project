@@ -199,9 +199,7 @@
     <ClCompile Include="Scripts\Engine\Load\Audio\LoadAudio.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Binary\LoadBinary.cpp" />
     <ClCompile Include="Scripts\Engine\Load\CSV\LoadCSV.cpp" />
-    <ClCompile Include="Scripts\Engine\Load\Effect\LoadEffect.cpp" />
     <ClCompile Include="Scripts\Engine\Load\JSON\LoadJSON.cpp" />
-    <ClCompile Include="Scripts\Engine\Load\LoadManager.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Model\LoadModel.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Sprite\LoadSprite.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\BulletManager.cpp" />
@@ -403,7 +401,6 @@
     <ClInclude Include="Scripts\Engine\Load\Audio\LoadAudio.h" />
     <ClInclude Include="Scripts\Engine\Load\Binary\LoadBinary.h" />
     <ClInclude Include="Scripts\Engine\Load\CSV\LoadCSV.h" />
-    <ClInclude Include="Scripts\Engine\Load\Effect\LoadEffect.h" />
     <ClInclude Include="Scripts\Engine\Load\JSON\LoadJSON.h" />
     <ClInclude Include="Scripts\Engine\Load\LoadBase.h" />
     <ClInclude Include="Scripts\Engine\Load\LoadManager.h" />

@@ -20,7 +20,10 @@ LoadSprite::~LoadSprite() {
 void LoadSprite::Load() {
 	// ‰æ‘œ‚Ì“Ç‚İ‚İ
 	graphHandle = LoadGraph(filePath.c_str());
-	if (graphHandle == -1) return;
+	if (graphHandle == -1) {
+		assert(false && "‰æ‘œ‚Ì“Ç‚İ‚İ¸”s");
+		return;
+	}
 
 	isLoaded = true;
 	DxLibResourcesManager::GetInstance().AddGraphHandle(graphHandle);

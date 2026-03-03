@@ -138,10 +138,10 @@ void EventSystem::LoadNavigation(const JSON& json) {
         Navigation navigation;
         const auto& value = itr.value();
 
-        navigation.left = value.value("Left", -1);
-        navigation.right = value.value("Right", -1);
-        navigation.up = value.value("Up", -1);
-        navigation.down = value.value("Down", -1);
+        navigation.left = value.value("Left", 0);
+        navigation.right = value.value("Right", 0);
+        navigation.up = value.value("Up", 0);
+        navigation.down = value.value("Down", 0);
 
         navigationMap.emplace(index, navigation);
     }
