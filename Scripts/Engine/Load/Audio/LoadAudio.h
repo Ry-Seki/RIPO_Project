@@ -36,11 +36,6 @@ public:
 
 public:
 	/*
-	 *	@brief		キャッシュするリソースか判定
-	 *	@return		bool
-	 */
-	inline bool IsCash() override { return true; }
-	/*
 	 *	@brief		モデルハンドルの取得
 	 *	@return		int
 	 */

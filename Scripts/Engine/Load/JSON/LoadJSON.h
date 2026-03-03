@@ -10,9 +10,10 @@
 #include "../../JSON.h"
 
 #include <fstream>
+#include <json.hpp>
 
 /*
- *	@brief	JSONファイルの読み込みクラス
+ *	JSONファイルの読み込みクラス
  */
 class LoadJSON : public LoadBase {
 private:
@@ -20,8 +21,8 @@ private:
 
 public:
 	/*
-	 *	@brief		コンストラクタ
-	 *	@param[in]	const std::string& setFilePath		ファイルパス
+	 *	コンストラクタ
+	 *	param[in]	const std::string& setFilePath		ファイルパス
 	 */
 	explicit LoadJSON(const std::string& setFilePath) : LoadBase(setFilePath){}
 

@@ -14,7 +14,7 @@
 #include <string>
 
 /*
- *	@brief	CSVファイルの読み込みクラス
+ *	CSVファイルの読み込みクラス
  */
 class LoadCSV : public LoadBase {
 private:
@@ -22,29 +22,28 @@ private:
 
 public:
 	/*
-	 *	@brief		コンストラクタ
-	 *	@param[in]	const std::string& setFilePath		ファイルパス
+	 *	コンストラクタ
+	 *	param[in]	const std::string& setFilePath		ファイルパス
 	 */
 	explicit LoadCSV(const std::string& setFilePath) : LoadBase(setFilePath) {}
 
 public:
 	/*
-	 *	@brief	読み込み処理
+	 *	読み込み処理
 	 */
 	void Load() override;
 
 public:
 	/*
-	 *	@brief		CSV文字列の解析処理
-	 *	@param[in]	const std::string& line		1行分の文字列
-	 *	@return		std::vector<std::string>	パース結果（1行分）
+	 *	CSV文字列の解析処理
+	 *	param[in]	const std::string& line		1行分の文字列
+	 *	return		std::vector<std::string>	パース結果（1行分）
 	 */
 	std::vector<std::string> ParseCSV(const std::string& line) const;
-
 public:
 	/*
-	 *	@brief		CSVデータの取得
-	 *  @return		const std::vector<std::vector<std::string>>
+	 *	CSVデータの取得
+	 *  return	const std::vector<std::vector<std::string>>
 	 */
 	inline const std::vector<std::vector<std::string>>& GetData() const { return csvData; }
 };
