@@ -31,6 +31,10 @@ private:
 	float viewDirection;
 	// SEの間隔
 	float coolTimeSE;
+	// SEの音量
+	float SEVolume;
+	// プレイヤーまでの距離
+	float playerDistance;
 	// プレイヤーの距離判定フラグ
 	bool closePlayer;
 	// プレイヤー追跡判定

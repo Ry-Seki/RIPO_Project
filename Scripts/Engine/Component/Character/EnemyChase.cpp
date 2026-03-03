@@ -24,12 +24,14 @@ EnemyChase::EnemyChase()
 	, moveSpeed(700.0f)
 	, viewAngle(60)
 	, viewDirection(3000)
-	, coolTimeSE(0.7f)
+	, coolTimeSE(0.4f)
+	, SEVolume(0.0f)
+	, playerDistance(0.0f)
 	, closePlayer(false)
 	, chasePlayer(false)
 	, ROTATE_SPEED(13.0f)
 	, DIFFERENCE_PLAYER(700)
-	, SE_DISTANCE(3000)	{
+	, SE_DISTANCE(4000)	{
 }
 
 void EnemyChase::Start(GameObject* enemy) {
@@ -47,6 +49,8 @@ void EnemyChase::Start(GameObject* enemy) {
 		chasePlayer = true;
 		// 視野角を360度にする
 		viewAngle = 180;
+		// クールタイムをなくす
+		coolTimeSE = 0;
 		enemyComponent->SetAttackFlag(false);
 	}
 }
@@ -64,6 +68,14 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime) {
 	auto modelRenderer = enemy->GetComponent<ModelRenderer>()->GetModelHandle();
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
+
+	// プレイヤーとの距離
+	playerDistance = Distance(player->position, enemy->position);
+	// 1～0に変換する
+	SEVolume = 1.0f - (playerDistance / SE_DISTANCE);
+	if (SEVolume < 0) {
+		SEVolume = 0;
+	}
 
 	// 目標判定
 	if (!player) return;
@@ -106,17 +118,19 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime) {
  */
 void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetChange, float deltaTime) {
 	// 一定の距離に近づいたら再生
-	if (Distance(player->position, enemy->position) < SE_DISTANCE) {
+	if (playerDistance < SE_DISTANCE) {
 		// SEのクールタイム
 		if (coolTimeSE < 0) {
 			// 歩行音を再生
+			AudioUtility::SetSEVolume(SEVolume);
 			AudioUtility::PlaySE("enemyWalkSE");
+			AudioUtility::SetSEVolume(1);
 			// プレイヤー追跡中はSEの間隔を短くする
 			if (player && wayPoint == player->position) {
 				coolTimeSE = 0.3;
 			}
 			else {
-				coolTimeSE = 0.7f;
+				coolTimeSE = 0.8f;
 			}
 		}
 	}
