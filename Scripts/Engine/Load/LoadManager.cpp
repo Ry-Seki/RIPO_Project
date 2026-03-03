@@ -46,5 +46,4 @@ void LoadManager::ActiveCallback() {
 
 void LoadManager::Clear() {
     loadRegistry.Clear();
-
 }
