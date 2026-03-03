@@ -50,7 +50,6 @@ void LoadAnimation_ProgressBackground::Render() {
 	}
 
 	// i’»ƒo[•`‰æ
-	float progress = LoadManager::GetInstance().GetProgress();
 	int barWidth = 400;
 	int barHeight = 20;
 	int barX = 200;
@@ -58,7 +57,6 @@ void LoadAnimation_ProgressBackground::Render() {
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 0);
 	DrawBox(barX, barY, barX + barWidth, barY + barHeight, GetColor(100, 100, 100), TRUE); // ”wŒi
-	DrawBox(barX, barY, barX + int(barWidth * progress), barY + barHeight, GetColor(0, 200, 0), TRUE); // i’»
 }
 /*
  *	‰ğ•úˆ—
