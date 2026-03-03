@@ -15,14 +15,13 @@ InputManager::InputManager()
 	: keyState()
 	, prevKeyState()
 	, nowMouseInput()
-	, prevMouseInput() 
-	, nowMouseWheel()
-	, prevMouseWheel()
+	, prevMouseInput()
 	, nowMousePosX()
 	, prevMousePosX()
 	, nowMousePosY()
 	, prevMousePosY()
-	, mouseVisible(true){
+	, mouseVisible(true)
+	, prevInputMouse(false){
 }
 /*
  *	デストラクタ
@@ -56,11 +55,6 @@ void InputManager::Update() {
 	//今のフレームのキー状態を取得
 	GetHitKeyStateAll(keyState);
 
-	// 1フレーム前のマウスホイールの回転量を保存
-	prevMouseWheel = nowMouseWheel;
-	// 現在のマウスホイールの回転量を取得
-	nowMouseWheel = GetMouseWheelRotVol();
-
 	// 1フレーム前のマウスの位置を保存
 	prevMousePosX = nowMousePosX;
 	prevMousePosY = nowMousePosY;
@@ -76,6 +70,15 @@ void InputManager::Update() {
 		// 1フレーム前位置は画面中央とする
 		prevMousePosX = windowWidthCenter;
 		prevMousePosY = windowHeightCenter;
+	}
+
+	// 直前の入力がマウスかどうか管理
+	for (auto key : keyState) {
+		if (key == 1)
+			prevInputMouse = false;
+	}
+	if (nowMouseInput != 0) {
+		prevInputMouse = true;
 	}
 
 	// 各アクションマップの更新処理
