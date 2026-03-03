@@ -7,6 +7,7 @@
 #define _MENU_SYSTEM_H_
 
 #include "../MenuBase.h"
+#include "../../UI/Sprite/Sprite.h"
 #include "../../UI/Button/UIButtonBase.h"
 #include "../../UI/EventSystem.h"
 
@@ -18,7 +19,10 @@ class Engine;
  */
 class MenuSystem : public MenuBase {
 private:
-	int currentIndex = -1;
+	float animTimer = 0.0f;
+	int animFrame = 0;
+
+	std::vector<std::shared_ptr<Sprite>> spriteList;
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	EventSystem eventSystem;
 
@@ -44,6 +48,10 @@ public:
 	 *	@brief	更新処理
 	 */
 	void Update(Engine& engine, float unscaledDeltaTime) override;
+	/*
+	 *	@brief	アニメーション等の更新
+	 */
+	void AnimUpdate(Engine& engine, float unscaledDeltaTime) override;
 	/*
 	 *	@brief	描画処理
 	 */

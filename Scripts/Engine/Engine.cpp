@@ -109,6 +109,7 @@ int Engine::Initialize() {
 void Engine::Teardown() {
 	if (initialized) {
 		initialized = false;
+		LoadManager::GetInstance().Clear();
 		DxLibResourcesManager::GetInstance().Teardown();
 		currentScene->Finalize(*this);
 	}

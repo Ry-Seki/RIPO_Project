@@ -39,6 +39,7 @@ void MenuSystem::Initialize(Engine& engine) {
             eventSystem.RegisterButton(button.get());
         }
         eventSystem.Initialize(0);
+        spriteList = std::move(result.spriteList);
         buttonList = std::move(result.buttonList);
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             UIButtonBase* button = buttonList[i].get();
@@ -60,13 +61,14 @@ void MenuSystem::Initialize(Engine& engine) {
  */
 void MenuSystem::Open() {
 	MenuBase::Open();
+    for (auto& sprite : spriteList) {
+        sprite->Setup();
+    }
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
 	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
-        currentIndex = -1;
-        // ボタンの準備処理
-        for (auto& button : buttonList) {
-            button->Setup();
-        }
         eventSystem.ApplySelection();
         InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
     });
@@ -93,12 +95,36 @@ void MenuSystem::Update(Engine& engine, float unscaledDeltaTime) {
     }
 }
 /*
+ *	@brief	アニメーション等の更新
+ */
+void MenuSystem::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
+    animTimer += unscaledDeltaTime;
+
+    if (animTimer < GameConst::UI_ANIM_INTERVAL) return;
+    animTimer = 0;
+
+    for (auto& sprite : spriteList) {
+        int frameCount = sprite->GetFrameCount();
+        if (frameCount <= 1) continue;
+
+        animFrame = (animFrame + 1) % frameCount;
+        sprite->SetFrameIndex(animFrame);
+    }
+}
+/*
  *	@brief	描画処理
  */
 void MenuSystem::Render() {
-	DrawFormatString(50, 70, GetColor(255, 255, 255), "System");
+    // スプライトの描画
+    for (auto& sprite : spriteList) {
+        if (!sprite->IsVisible()) continue;
+
+        sprite->Render();
+    }
     // ボタンの描画処理
     for (auto& button : buttonList) {
+        if (!button->IsVisible()) continue;
+
         button->Render();
     }
 }
