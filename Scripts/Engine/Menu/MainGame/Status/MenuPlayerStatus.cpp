@@ -168,9 +168,9 @@ void MenuPlayerStatus::ComparisonStatus() {
 
     constexpr int STATUS_COUNT = 4;
 
-    const float diffX = 1560.0f;   // +の位置
-    const float baseY = 424;    // HP のY
-    const float offsetY = 125;  // 各行間隔
+    const float diffX = 1560.0f;                // +の位置
+    const float baseY = 424;                    // HP のY
+    const float offsetY = 125;                  // 各行間隔
     const int white = GetColor(255, 255, 255);
 
     for (int i = 0; i < STATUS_COUNT; i++) {
@@ -194,7 +194,9 @@ void MenuPlayerStatus::ComparisonStatus() {
         );
     }
 }
-
+/*
+ *	@brief	コールバックの実行
+ */
 void MenuPlayerStatus::ExecuteCallback() {
     if (isCallback && Callback) {
         Callback();

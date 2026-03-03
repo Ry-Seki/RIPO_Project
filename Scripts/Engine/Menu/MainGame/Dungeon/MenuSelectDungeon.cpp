@@ -97,12 +97,6 @@ void MenuSelectDungeon::Open() {
 void MenuSelectDungeon::Update(Engine& engine, float unscaledDeltaTime) {
 	auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
 
-	if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)]) {
-		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fadeOut, [this]() {
-			MenuManager::GetInstance().OpenMenu<MenuInGame>();
-		});
-	}
 	// イベントシステムの更新
 	eventSystem.Update(unscaledDeltaTime);
 	currentIndex = eventSystem.GetCurrentIndex();
