@@ -19,6 +19,10 @@ private:
 	int modelHandle;
 	// SEの間隔
 	float coolTimeSE;
+	// SEの音量
+	float SEVolume;
+	// プレイヤーまでの距離
+	float playerDistance;
 	// 移動量
 	Vector3 moveVec;
 
@@ -30,6 +34,8 @@ private:
 	const float ROTATE_SPEED;
 	// 移動スピード
 	const float MOVE_SPEED;
+	// SEの聞こえる距離
+	const float SE_DISTANCE;
 
 public:
 	/*

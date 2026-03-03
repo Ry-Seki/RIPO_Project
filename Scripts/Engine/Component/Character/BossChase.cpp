@@ -23,10 +23,13 @@ BossChase::BossChase()
 	, animator(nullptr)
 	, modelHandle(-1)
 	, coolTimeSE(0.7f)
+	, SEVolume(1.0f)
+	, playerDistance(0.0f)
 	, PLAYER_DISTANCE(1700.0f)
 	, SHOOTING_PLAYER_DISTANCE(3000.0f)
 	, ROTATE_SPEED(3.0f)
-	, MOVE_SPEED(700.0f) {
+	, MOVE_SPEED(700.0f)
+	, SE_DISTANCE(10000) {
 }
 
 /*
@@ -58,10 +61,20 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 	animator->Update(deltaTime);
 	animator->Play(11, 10);
 
+	// プレイヤーとの距離
+	playerDistance = Distance(player->position, boss->position);
+	// 1～0に変換する
+	SEVolume = 1.0f - (playerDistance / SE_DISTANCE);
+	if (SEVolume < 0) {
+		SEVolume = 0;
+	}
+
 	coolTimeSE -= deltaTime;
 	if (coolTimeSE < 0) {
 		// 歩行音を再生
+		AudioUtility::SetSEVolume(SEVolume);
 		AudioUtility::PlaySE("bossWalkSE");
+		AudioUtility::SetSEVolume(1);
 		coolTimeSE = 1.5f;
 	}
 
