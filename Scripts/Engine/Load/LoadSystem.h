@@ -11,6 +11,9 @@
 #include <vector>
 #include <memory>
 
+/*
+ *  @brief  ロード実行処理
+ */
 class LoadSystem {
 private:
     std::vector<LoadBasePtr> loadList;              // ロードする配列
@@ -20,23 +23,19 @@ private:
 
 public:
     /*
-     *  コンストラクタ
+     *  @brief  コンストラクタ
      */
     LoadSystem() = default;
     /*
-     *  デストラクタ
+     *  @brief  デストラクタ
      */
     ~LoadSystem() { 
-        Clear();
-        for (auto& anim : animationList) {
-            if (anim) anim->Unload();
-        }
-        animationList.clear();
+        Teardown();
     }
 
 public:
     /*
-     *  更新処理
+     *  @brief  更新処理
      */
     void Update(float unscaledDeltaTime) {
         if (loadList.empty()) {
@@ -58,7 +57,7 @@ public:
         }
     }
     /*
-     *  描画処理
+     *  @brief  描画処理
      */
     void Render() {
         for (auto& anim : animationList) {
@@ -66,19 +65,31 @@ public:
         }
     }
     /*
-     *  ロードリストに追加
+     *  @brief  片付け処理
+     */
+    void Teardown() {
+        Clear();
+        for (auto& anim : animationList) {
+            if (anim) anim->Unload();
+        }
+        animationList.clear();
+    }
+    /*
+     *  @brief      ロードリストに追加
+     *  @param[in]  const LoadBasePtr& loader
      */
     void AddLoader(const LoadBasePtr& loader) {
         loadList.push_back(loader);
     }
     /*
-     *  アニメーションリストに追加
+     *  @brief      アニメーションリストに追加
+     *  @param[in]  const LoadAnimationPtr& anim
      */
     void AddAnimation(const LoadAnimationPtr& anim) {
         animationList.push_back(anim);
     }
     /*
-     *  メンバ変数のリセット
+     *  @brief  メンバ変数のリセット
      */
     void Clear() {
         isComplete = false;
@@ -88,28 +99,21 @@ public:
 
 public:
     /*
-     *  ロード中フラグの取得
+     *  @brief      ロード中判定
      *  @return     bool
      */
     inline bool IsLoading() const { return !isComplete && !loadList.empty(); }
     /*
-     *  ロード完了フラグの取得
+     *  @brief      ロード完了判定
      *  @return     bool
      */
     inline bool IsComplete() const { return isComplete || loadList.empty(); }
     /*
-     *  ロード進捗度の取得
-     *  @return     float
-     */
-    inline float GetProgress() const {
-        return loadList.empty() ? 1.0f : float(currentIndex) / float(loadList.size());
-    }
-    /*
-     *  ロード完了フラグの解除
+     *  @brief      ロード完了フラグの解除
      */
     inline void ResetCompleteFlag() { isComplete = false; }
     /*
-     *  ロード完了フラグの適応
+     *  @brief      ロード完了フラグの適応
      */
     inline void CompleteLoading() { isComplete = true; }
 };

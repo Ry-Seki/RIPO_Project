@@ -199,6 +199,7 @@
     <ClCompile Include="Scripts\Engine\Load\Audio\LoadAudio.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Binary\LoadBinary.cpp" />
     <ClCompile Include="Scripts\Engine\Load\CSV\LoadCSV.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\Effect\LoadEffect.cpp" />
     <ClCompile Include="Scripts\Engine\Load\JSON\LoadJSON.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Model\LoadModel.cpp" />
     <ClCompile Include="Scripts\Engine\Load\Sprite\LoadSprite.cpp" />
@@ -226,6 +227,7 @@
     <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\MenuResourcesFactory.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Result\MenuResultScore.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\System\Load\MenuLoadAnimation.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuConfirm.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuCredit.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuLoadMode.cpp" />
@@ -321,7 +323,6 @@
     <ClInclude Include="Scripts\Data\UI\Button\ButtonInfo.h" />
     <ClInclude Include="Scripts\Data\UI\MenuInfo.h" />
     <ClInclude Include="Scripts\Data\UI\Sprite\SpriteInfo.h" />
-    <ClInclude Include="Scripts\Data\UI\Text\Alignment\IAlignmentBase.h" />
     <ClInclude Include="Scripts\Data\UI\Text\TextInfo.h" />
     <ClInclude Include="Scripts\Data\WeaponDataManager.h" />
     <ClInclude Include="Scripts\Engine\Audio\AudioManager.h" />
@@ -401,6 +402,7 @@
     <ClInclude Include="Scripts\Engine\Load\Audio\LoadAudio.h" />
     <ClInclude Include="Scripts\Engine\Load\Binary\LoadBinary.h" />
     <ClInclude Include="Scripts\Engine\Load\CSV\LoadCSV.h" />
+    <ClInclude Include="Scripts\Engine\Load\Effect\LoadEffect.h" />
     <ClInclude Include="Scripts\Engine\Load\JSON\LoadJSON.h" />
     <ClInclude Include="Scripts\Engine\Load\LoadBase.h" />
     <ClInclude Include="Scripts\Engine\Load\LoadManager.h" />
@@ -433,6 +435,7 @@
     <ClInclude Include="Scripts\Engine\Menu\MenuManager.h" />
     <ClInclude Include="Scripts\Engine\Menu\MenuResourcesFactory.h" />
     <ClInclude Include="Scripts\Engine\Menu\Result\MenuResultScore.h" />
+    <ClInclude Include="Scripts\Engine\Menu\System\Load\MenuLoadAnimation.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuConfirm.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuCredit.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuLoadMode.h" />

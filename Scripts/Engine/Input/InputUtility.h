@@ -47,6 +47,14 @@ namespace InputUtility {
 	inline void GetMousePosition(int& mousePosX, int& mousePosY) {
 		InputManager::GetInstance().GetMousePosition(mousePosX, mousePosY);
 	}
+	/*
+	 *	直前の入力がマウスかどうか取得
+	 *  @return bool
+	 *  @author Riku
+	 */
+	inline bool GetPrevInputMouse() {
+		return InputManager::GetInstance().GetPrevInputMouse();
+	}
 }
 
 #endif // !_INPUT_UTILITY_H_

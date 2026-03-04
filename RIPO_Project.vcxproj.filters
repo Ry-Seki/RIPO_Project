@@ -882,6 +882,15 @@
     <ClCompile Include="Scripts\Engine\UI\Text\TextFactory.cpp">
       <Filter>ソース ファイル\Engine\UI\Text</Filter>
     </ClCompile>
+    <ClCompile Include="Scripts\Engine\Camera\RotateCommand.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Menu\System\Load\MenuLoadAnimation.cpp">
+      <Filter>ソース ファイル\Engine\Menu\System</Filter>
+    </ClCompile>
+    <ClCompile Include="Scripts\Engine\Load\Effect\LoadEffect.cpp">
+      <Filter>ソース ファイル\Engine\Load</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Engine\Engine.h">
@@ -1523,9 +1532,6 @@
     <ClInclude Include="Scripts\Engine\UI\Sprite\Sprite.h">
       <Filter>ヘッダー ファイル\Engine\UI\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Data\UI\Text\Alignment\IAlignmentBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\Sprite\SpriteFactory.h">
       <Filter>ヘッダー ファイル\Engine\UI\Sprite</Filter>
     </ClInclude>
@@ -1552,6 +1558,15 @@
     </ClInclude>
     <ClInclude Include="Scripts\Engine\UI\Text\TextFactory.h">
       <Filter>ヘッダー ファイル\Engine\UI\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Camera\RotateCommand.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Menu\System\Load\MenuLoadAnimation.h">
+      <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
+    </ClInclude>
+    <ClInclude Include="Scripts\Engine\Load\Effect\LoadEffect.h">
+      <Filter>ヘッダー ファイル\Engine\Load</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

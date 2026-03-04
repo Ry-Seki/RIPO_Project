@@ -17,7 +17,6 @@ public:
 	enum class InputType {
 		Key,			// キーボード
 		MouseButton,	// マウスのボタン
-		MouseWheel,		// マウスホイール
 		MouseMove,		// マウスの移動
 	};
 

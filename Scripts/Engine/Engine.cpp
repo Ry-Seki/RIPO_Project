@@ -109,6 +109,7 @@ int Engine::Initialize() {
 void Engine::Teardown() {
 	if (initialized) {
 		initialized = false;
+		LoadManager::GetInstance().Clear();
 		DxLibResourcesManager::GetInstance().Teardown();
 		currentScene->Finalize(*this);
 	}
@@ -184,13 +185,13 @@ void Engine::Render() {
 	// シーンの描画
 	if (currentScene) currentScene->Render();
 
+	// メニュー描画処理
+	MenuManager::GetInstance().Render();
+
 	// ロードフラグの取得
 	bool isLoading = LoadManager::GetInstance().IsLoading();
 	// ロード描画処理
 	if (isLoading) LoadManager::GetInstance().Render();
-
-	// メニュー描画処理
-	MenuManager::GetInstance().Render();
 
 	// フェード描画
 	FadeManager::GetInstance().Render();
