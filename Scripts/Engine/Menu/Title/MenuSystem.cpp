@@ -67,11 +67,9 @@ void MenuSystem::Open() {
     for (auto& button : buttonList) {
         button->Setup();
     }
-	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
-        eventSystem.ApplySelection();
-        InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
-    });
+    eventSystem.ApplySelection();
+    InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+  
 }
 /*
  *	@brief	更新処理
@@ -146,13 +144,9 @@ void MenuSystem::SelectButtonExecute(Engine& engine, int buttonIndex) {
             isVisible = false;
             menu.OpenMenu<MenuSettings>();
         });
-
     } else if (buttonIndex == 1) {
-        
+        // TODO : ゲームが完全に出来次第クレジットをオープンするようにする
     } else if (buttonIndex == 2) {
-        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            menu.CloseTopMenu();
-        });
+        menu.CloseTopMenu();
     }
 }
