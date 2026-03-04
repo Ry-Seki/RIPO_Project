@@ -23,6 +23,15 @@ struct AABB {
 };
 
 /*
+ *	有向境界ボックス(Y軸回転のみ)
+ */
+struct OBB {
+	Vector3 center;
+	float angle;
+	Vector3 size;
+};
+
+/*
  *	線分
  */
 struct Segment {
@@ -61,6 +70,7 @@ bool Intersect(const Capsule& a, const Capsule& b, Vector3& penetration);
 bool Intersect(const AABB& a, const AABB& b, Vector3& penetration);
 bool Intersect(const Capsule& capsule, const AABB& box, Vector3& penetration);
 bool Intersect(const AABB& box, const Capsule& capsule , Vector3& penetration);
+bool Intersect(const OBB& box, const Capsule& capsule , Vector3& penetration);
 bool Intersect(const std::variant<AABB, Capsule>& a, const std::variant<AABB, Capsule>& b, Vector3& penetration);
 // レイとの衝突判定
 bool RayIntersect(const Ray& ray, const AABB& box, float& distance);
