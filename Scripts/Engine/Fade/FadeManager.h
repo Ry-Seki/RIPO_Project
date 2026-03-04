@@ -10,6 +10,7 @@
 #include "../Singleton.h"
 
 #include <functional>
+#include <queue>
 
 /*
  *  フェード管理処理
