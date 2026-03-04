@@ -1,1588 +1,393 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine">
-      <UniqueIdentifier>{b6d27b81-161d-4bb3-b0f5-ddc27f63fda3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Character">
-      <UniqueIdentifier>{21ade5d8-8002-4f35-ba9c-5b9333c3f9fd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene">
-      <UniqueIdentifier>{896ddef5-f230-4537-a264-dcffef2cc9c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Load">
-      <UniqueIdentifier>{533811ef-5a14-42b7-99a8-31b694d26cc7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Stage">
-      <UniqueIdentifier>{d0570ce8-4016-4a87-a40b-25a42340f6e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Load\Animation">
-      <UniqueIdentifier>{bc742f61-1afc-40b4-914b-efe3763a7f05}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Audio">
-      <UniqueIdentifier>{bef3dd9e-9d20-4c8f-8581-0e0f1902c486}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Data">
-      <UniqueIdentifier>{891cb159-afb4-4a67-ae0d-15a8e9912cf3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\System">
-      <UniqueIdentifier>{5c2a2461-e2cf-4d1a-9f3f-66f8ac6afd29}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Data\Dungeon">
-      <UniqueIdentifier>{a2c6122f-53ba-45be-9960-7b5e94880d6f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Data\Player">
-      <UniqueIdentifier>{767e1437-2210-4e2a-bc5a-1eb73c967cf8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Data\Treasure">
-      <UniqueIdentifier>{f668c90f-e0f0-45ac-a115-3ed19572f904}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Data\Item">
-      <UniqueIdentifier>{01716cc6-c1af-4fde-914b-0c77c11406ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\System\Status">
-      <UniqueIdentifier>{5fafadf1-6e9c-44fc-a046-1ece6676d4b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\System\Item">
-      <UniqueIdentifier>{6b29716e-b408-47b3-b866-337b4201290e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Menu">
-      <UniqueIdentifier>{fb237d36-d490-4882-8646-60554dedd981}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Data\Save">
-      <UniqueIdentifier>{e75571c1-2bf6-45db-a66c-2429cc31db01}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState">
-      <UniqueIdentifier>{bfedba27-bada-456c-96e5-0b9ec26cd09b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\SelectAction">
-      <UniqueIdentifier>{b5847c31-305e-4bd9-8dee-c6d804d3c3a5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\SelectDetail">
-      <UniqueIdentifier>{f627e3c9-4436-47fd-8f84-e85510c5734b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\SelectDetail\Dungeon">
-      <UniqueIdentifier>{87bd4024-b06e-4fbd-a429-b750634765a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\SelectDetail\PartTime">
-      <UniqueIdentifier>{c5b1fd6d-fe5d-4ddb-857a-ba38345f6364}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\SelectDetail\Shop">
-      <UniqueIdentifier>{60a0f751-59e1-47d0-971b-bb72147423a9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\SelectDetail\Training">
-      <UniqueIdentifier>{1aad714b-aa94-49b0-bf2a-fc5ab801cb34}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\InAction">
-      <UniqueIdentifier>{b8ff712e-1099-49b0-9d26-c02652bdd82f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\InAction\Dungeon">
-      <UniqueIdentifier>{c5fee683-920a-48c6-b7ad-3df4ffa3d675}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\InAction\Training">
-      <UniqueIdentifier>{68574a6d-45ab-434e-9aa5-fb5f74b122c7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\InAction\Shop">
-      <UniqueIdentifier>{e8d03ef3-4323-4358-94ff-85154b4f84b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\InAction\PartTime">
-      <UniqueIdentifier>{9ed3e088-36f2-46c3-84ab-dcc15666671e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\ResultAction">
-      <UniqueIdentifier>{1412f007-4c82-45a1-a6bd-a82913aad37e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\ResultAction\Dungeon">
-      <UniqueIdentifier>{347be4e4-b568-42ac-b9e8-fd5d80280da5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\ResultAction\PartTime">
-      <UniqueIdentifier>{8dfa48d8-5d1b-4eaa-8251-c1ec627babe1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\ResultAction\Shop">
-      <UniqueIdentifier>{df429615-40eb-452c-abc7-6330a412b521}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\ResultAction\Training">
-      <UniqueIdentifier>{bca117c7-6023-4978-8002-c528ffd7ad59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\Tutorial">
-      <UniqueIdentifier>{307177be-ff08-459b-9dd7-44a5662de6ca}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\Pause">
-      <UniqueIdentifier>{51c6cbc7-eeb1-4f35-a525-b9d4064e6847}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\GameState\InAction\PartTime\Sokoban">
-      <UniqueIdentifier>{747895b9-7f46-4785-8fa1-549e76a3694e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Menu\Title">
-      <UniqueIdentifier>{d8709769-542c-40c5-9045-1362e3755acc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\SceneState">
-      <UniqueIdentifier>{dd3fbd29-e0d8-4c47-bfdf-01e02431907a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\SceneState\Standby">
-      <UniqueIdentifier>{550145f3-1df6-4cdf-ba6c-3106e2f67386}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\SceneState\Title">
-      <UniqueIdentifier>{a505d185-7035-4873-9dfa-51d1a6da9a46}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\SceneState\Tutorial">
-      <UniqueIdentifier>{f75b569b-f298-41cc-8186-3eecc562e0e5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\SceneState\MainGame">
-      <UniqueIdentifier>{586ae321-74c1-4a94-aea2-b1864c091483}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Scene\SceneState\Result">
-      <UniqueIdentifier>{831b1b94-607a-48a4-a322-58fe239fdac4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\System\World">
-      <UniqueIdentifier>{89a44cb6-af30-4525-b0a0-b0ab8012b2d1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\System\Save">
-      <UniqueIdentifier>{a26aeb35-6ccd-4ae2-9ccb-addca59519f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Input">
-      <UniqueIdentifier>{8c08fc70-fa43-487b-8244-c1fcd2fb04b7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\UI">
-      <UniqueIdentifier>{3b3e0b9f-aa6d-4356-b949-8258517b6ec8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Menu\System">
-      <UniqueIdentifier>{672ba505-2710-4874-b710-d73b61ceab5c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\System\Settings">
-      <UniqueIdentifier>{5fc2d27f-b4e0-4b73-8356-1966acfd99c9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Menu\MainGame">
-      <UniqueIdentifier>{bf2dded6-3e80-405e-8d1d-73c19f809445}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\UI\Button">
-      <UniqueIdentifier>{a88ec588-e67f-4bc2-9678-1247ccc5d9ed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Data\Menu">
-      <UniqueIdentifier>{33b2fbd0-413e-44a5-a0e6-0f8a4fa37812}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine">
-      <UniqueIdentifier>{a6e0d6dc-071b-401a-99ec-feec3b48933e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Fade">
-      <UniqueIdentifier>{5bc016e8-fe80-4132-b5c0-658df14ace1c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Character">
-      <UniqueIdentifier>{5242111f-caf1-446e-83f5-80cc00788ab9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Character\Player">
-      <UniqueIdentifier>{75a189b6-3745-4a0f-815c-45aeb67731df}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Component">
-      <UniqueIdentifier>{54ab25f9-264c-4207-bf54-7a589ccba9ea}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene">
-      <UniqueIdentifier>{25cc718d-8285-4907-a65e-79be9d91df32}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState">
-      <UniqueIdentifier>{9fa58c1c-9f26-4d0b-afdb-33d6be497d74}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction">
-      <UniqueIdentifier>{5bab4546-c784-4c80-9567-0bca72245ad3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\Dungeon">
-      <UniqueIdentifier>{249fa5e4-ad4f-4067-9d81-0243d862c0aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime">
-      <UniqueIdentifier>{896da2b7-d18f-45b3-839d-53a23db05321}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame">
-      <UniqueIdentifier>{0d5c76b3-04e0-475d-9c8c-cba0c3a23856}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban">
-      <UniqueIdentifier>{53efc34b-f7f4-4a0c-906a-1f11166e0b7c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\Shop">
-      <UniqueIdentifier>{24fddcd5-86dd-4426-a49d-b645f3780e49}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\InAction\Training">
-      <UniqueIdentifier>{66b9f025-c755-4eac-aed4-c54ce7ddbca6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail">
-      <UniqueIdentifier>{80d572c7-1307-4bce-86e8-062835dccd7b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Dungeon">
-      <UniqueIdentifier>{7d90da95-0d37-4069-8592-3130b7731ab2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Shop">
-      <UniqueIdentifier>{0d3ed3c0-02ec-4ee6-aaee-41c5abb98b3d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Training">
-      <UniqueIdentifier>{500abb44-b4d8-4e86-adb2-b942c77f28d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\PartTime">
-      <UniqueIdentifier>{cf99530e-db37-41ee-80ea-16a90cd616fb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\SelectAction">
-      <UniqueIdentifier>{1c7e79d4-6074-449c-bdaa-92ec7996c080}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\ResultAction">
-      <UniqueIdentifier>{e502c47b-3e6a-43ad-be03-72e45fc0e6a7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\ResultAction\Dungeon">
-      <UniqueIdentifier>{b42404ad-8448-4d28-b939-e1d187c08f81}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\ResultAction\PartTime">
-      <UniqueIdentifier>{04be1548-3c9a-4bef-96e3-13f2d0b85d06}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\ResultAction\Shop">
-      <UniqueIdentifier>{06ea7fef-bc5a-4c05-80da-b38edee1e271}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\ResultAction\Training">
-      <UniqueIdentifier>{73400c3c-4f39-4642-9cf5-f641c25b897a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\Tutorial">
-      <UniqueIdentifier>{8c28f7c7-e0e7-4db2-9db9-7709241ae385}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\GameState\Pause">
-      <UniqueIdentifier>{32e4b197-a7e4-4862-82c8-cc775e1317f5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState">
-      <UniqueIdentifier>{4a65e24f-a81a-4998-b9bd-367bc96d647d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\Standby">
-      <UniqueIdentifier>{2d7ce63c-2de8-499d-a014-8386a9caf991}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\Title">
-      <UniqueIdentifier>{fbb655bf-360d-47be-a7f5-320165b2b86f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\Tutorial">
-      <UniqueIdentifier>{53f3ff99-da7a-41a7-8154-fff79632532a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\MainGame">
-      <UniqueIdentifier>{07da5422-2cb1-4c46-a163-369e1b34e4d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Scene\SceneState\Result">
-      <UniqueIdentifier>{f9631148-fda3-47fc-ac53-748e627f4314}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Stage">
-      <UniqueIdentifier>{82d1ef68-d248-4de4-b257-2d438a50a784}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Load">
-      <UniqueIdentifier>{69b3473c-6403-469e-9dea-31f1b2cbdcd7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Load\Animation">
-      <UniqueIdentifier>{ffab97aa-c776-491b-834e-4773cbcd9620}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Input">
-      <UniqueIdentifier>{1a45a64e-7fa7-4173-b945-25cddacebb7b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Audio">
-      <UniqueIdentifier>{8b99aa5f-c92f-410b-8364-5698a7ae6bfe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Utility">
-      <UniqueIdentifier>{2711ac87-a2b7-4672-910f-906a1dee5423}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Menu">
-      <UniqueIdentifier>{fa4e7175-a830-4183-bca5-efe2091cd4e9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Menu\Title">
-      <UniqueIdentifier>{3719c741-c797-4156-bbec-e7f11c27e9fc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Menu\System">
-      <UniqueIdentifier>{132b202d-1468-4a07-8cc6-ba58b51fd1cf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Menu\MainGame">
-      <UniqueIdentifier>{5ea80fcf-06ba-4ebe-8f55-eb01f475a23b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\System">
-      <UniqueIdentifier>{64f747a7-ddd1-4bfc-8c39-8cbb5c510563}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\System\Money">
-      <UniqueIdentifier>{f2e7d909-1afd-44df-9645-61a68ddc5bf0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\System\Status">
-      <UniqueIdentifier>{020243a0-36cf-4eec-8ff4-8079e168b880}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\System\Item">
-      <UniqueIdentifier>{4de5ccba-ab5d-44b6-9b3e-93d3ce175d96}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\System\Save">
-      <UniqueIdentifier>{aac63f5d-d861-4147-a38d-8e51a32c3cb0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\System\World">
-      <UniqueIdentifier>{a2860f3b-903e-423c-9960-2de6dadcbcc9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\System\System">
-      <UniqueIdentifier>{a29d9118-1768-4dbf-a7c6-af09e87fe34f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Collision">
-      <UniqueIdentifier>{a14b27b8-e5d5-4065-9407-d4a3085a4c4e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\UI">
-      <UniqueIdentifier>{49b8f422-3391-475d-86e9-57aee797154d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\UI\Button">
-      <UniqueIdentifier>{db5d91ef-fc24-479a-ab49-755e61292c41}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Data\Menu\Button">
-      <UniqueIdentifier>{c8dce48c-7c19-4b3d-b5e1-8cc514cbe786}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Menu\Result">
-      <UniqueIdentifier>{7f52fea5-5734-4cbe-95ef-7ab7bce433ec}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Menu\Result">
-      <UniqueIdentifier>{a0acf34b-48a2-4142-b465-1fe006130abc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Data\Result">
-      <UniqueIdentifier>{efa82e4e-4707-44a5-bbc6-bd1d5bb83c85}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Menu\MainGame\Shop">
-      <UniqueIdentifier>{2b5929a6-6f6a-4bcf-911e-96876d325ecf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Menu\MainGame\Shop">
-      <UniqueIdentifier>{d9bc6d9e-c0bb-48c1-bbb3-0575ca52f52a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Menu\MainGame\Dungeon">
-      <UniqueIdentifier>{ea559f0e-5e3c-45b4-9ada-8aaf5e5e34da}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Menu\MainGame\Dungeon">
-      <UniqueIdentifier>{50fd960b-1a0e-46e0-be67-8661180ad80e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Menu\MainGame\Training">
-      <UniqueIdentifier>{3144b47a-c2f7-4db9-9732-02ee8bf82734}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Menu\MainGame\Training">
-      <UniqueIdentifier>{38aba5d6-5e3e-45b4-90fb-efc0d54fa156}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Menu\MainGame\Money">
-      <UniqueIdentifier>{4dfc28c9-9b0f-4e33-af69-e7b701a0a780}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Menu\MainGame\Money">
-      <UniqueIdentifier>{688a24e6-f157-46c6-8ec2-9963e5f7b5b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Menu\MainGame\Status">
-      <UniqueIdentifier>{ea8f333d-a46f-49c5-bb25-22d381dbf735}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Menu\MainGame\Status">
-      <UniqueIdentifier>{22e1ebfc-99f9-405d-aa98-7bfa7ca9d994}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\Menu\MainGame\PartTime">
-      <UniqueIdentifier>{ce7d92a8-c671-4c5d-92c9-4c60bcb8e1cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\Menu\MainGame\PartTime">
-      <UniqueIdentifier>{cc774162-245d-42b6-a988-ae8bc58408b1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\UI\PlayerUI">
-      <UniqueIdentifier>{4a377cb4-b6a1-41cf-8ea4-71c1f2ff6190}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\UI\Sprite">
-      <UniqueIdentifier>{0e08820e-3d26-4b06-b4bc-9bb450c834a0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\UI\Sprite">
-      <UniqueIdentifier>{79a4d307-5c51-46b9-a19f-fae4cffb6149}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\UI\Text">
-      <UniqueIdentifier>{401e9360-a062-4b01-b705-458262029769}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\UI\Text">
-      <UniqueIdentifier>{ef0f1fd5-6d93-496d-b7d5-1bcf803bdf7f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Data\Menu\Text">
-      <UniqueIdentifier>{9ebd1d1b-9300-4c65-806d-d3dd2754ae26}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Data\Menu\Sprite">
-      <UniqueIdentifier>{72261b83-7f30-4797-a4aa-1435e78276d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\UI\Text\Dynamic">
-      <UniqueIdentifier>{2c1c4474-b45a-43ae-9619-ae5e1ab31dc4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Engine\UI\Text\Static">
-      <UniqueIdentifier>{b9a6fec0-4222-48b6-8ca6-5ef74374e04c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\UI\Text\Dynamic">
-      <UniqueIdentifier>{d773bc02-7a73-4545-956a-7133bad0ac46}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Engine\UI\Text\Static">
-      <UniqueIdentifier>{163d122c-dd53-4d16-bf90-de6b1d62755f}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="Scripts\Data\DxLibResourcesManager.cpp" />
+    <ClCompile Include="Scripts\Data\TreasureDataList.cpp" />
+    <ClCompile Include="Scripts\Engine\Audio\AudioManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Audio\AudioSource.cpp" />
+    <ClCompile Include="Scripts\Engine\Audio\BGM\BGMManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Audio\BGM\BGMSource.cpp" />
+    <ClCompile Include="Scripts\Engine\Audio\SE\SEManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Audio\SE\SESource.cpp" />
+    <ClCompile Include="Scripts\Engine\Camera\EventCamera.cpp" />
+    <ClCompile Include="Scripts\Engine\Camera\MoveCommand.cpp" />
+    <ClCompile Include="Scripts\Engine\Camera\RotateCommand.cpp" />
+    <ClCompile Include="Scripts\Engine\Camera\WaitCommand.cpp" />
+    <ClCompile Include="Scripts\Engine\Collision\Collision.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\AABBCollider.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\AnimatorComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\CapsuleCollider.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\AllEnemyCommonModule.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\ArmActionComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\BossAttack.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\BossChase.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\BossComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\BossDeath.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\BossHPBarComponentr.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\BossShootingAttack.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\BossStandby.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\BulletComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyAttack.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyChase.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyDeath.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyStandby.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\EnemyTurn.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\HPBarComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\RevolverArm.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\SubmachineGunArm.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\Character\WeaponBase.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\EffectComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Engine.cpp" />
+    <ClCompile Include="Scripts\Engine\GameObject.cpp" />
+    <ClCompile Include="Scripts\Engine\Input\ActionMapBase.cpp" />
+    <ClCompile Include="Scripts\Engine\Input\InputManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Input\MenuActionMap.cpp" />
+    <ClCompile Include="Scripts\Engine\Input\PlayerActionMap.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\Audio\LoadAudio.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\Binary\LoadBinary.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\CSV\LoadCSV.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\Effect\LoadEffect.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\JSON\LoadJSON.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\Model\LoadModel.cpp" />
+    <ClCompile Include="Scripts\Engine\Load\Sprite\LoadSprite.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\BulletManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\CameraManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\CharacterManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\EffectManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\FontManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\GaugeManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\WeaponManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuPlayerDeath.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuInGame.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Money\MenuMoneyChange.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\PartTime\MenuMiniGame.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\PartTime\MenuSelectMiniGameLevel.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Status\MenuPlayerStatus.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MainGame\Training\MenuSelectTraining.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\MenuResourcesFactory.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\Result\MenuResultScore.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\System\Load\MenuLoadAnimation.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuConfirm.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuCredit.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuLoadMode.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuSaveMode.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuVolumeSettings.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\Title\MenuGameModeSelect.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\Title\MenuSelectNewGame.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\Title\MenuSelectLoadGame.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\Title\MenuSystem.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\Title\MenuTitle.cpp" />
+    <ClCompile Include="Scripts\Engine\Random.cpp" />
+    <ClCompile Include="Scripts\Engine\Save\SaveDataManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\DebugScene.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\ActionContext.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\GameStateMachine.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\DungeonCreater.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\FloorProcessor.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\InAction_Dungeon.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\GameState_InAction.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\PartTime\InAction_PartTime.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\MiniGameSokoban.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\SokobanMapManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\Shop\InAction_Shop.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\Training\InAction_Training.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\InitialTutorial\GameState_InitialTutorial.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\Pause\GameState_Pause.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\ResultAction\Dungeon\ResultAction_Dungeon.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\ResultAction\GameState_ResultAction.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\ResultAction\PartTime\ResultAction_PartTime.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\ResultAction\Shop\ResultAction_Shop.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\ResultAction\Training\ResultAction_Training.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectAction\GameState_SelectAction.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\Dungeon\SelectDetail_Dungeon.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\GameState_SelectDetail.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\PartTime\SelectDetail_PartTime.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\Shop\SelectDetail_Shop.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\Training\SelectDetail_Training.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\MainGameScene.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\ResultScene.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\Scene.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\StandbyScene.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp" />
+    <ClCompile Include="Scripts\Engine\Scene\TutorialScene.cpp" />
+    <ClCompile Include="Scripts\Engine\Stage\Stage.cpp" />
+    <ClCompile Include="Scripts\Engine\Stage\StageCollision.cpp" />
+    <ClCompile Include="Scripts\Engine\Stage\StageMemoryProfiler.cpp" />
+    <ClCompile Include="Scripts\Engine\Stage\StageObject\ExitPoint.cpp" />
+    <ClCompile Include="Scripts\Engine\Stage\StageObject\Stair.cpp" />
+    <ClCompile Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.cpp" />
+    <ClCompile Include="Scripts\Engine\StringUtility.cpp" />
+    <ClCompile Include="Scripts\Engine\System\Item\ItemManager.cpp" />
+    <ClCompile Include="Scripts\Engine\System\Settings\SettingsManager.cpp" />
+    <ClCompile Include="Scripts\Engine\System\Status\PlayerStatusManager.cpp" />
+    <ClCompile Include="Scripts\Engine\System\World\WorldProgressManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Time.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Button\ButtonFactory.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Button\LongPressButton.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Button\SinglePressButton.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Button\UIButtonBase.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\EventSystem.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\AmmoCountUI.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\DungeonMoneyUI.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\PlayerStatusUI.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\PlayerUI.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\PlayerUI\Reticle.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Sprite\Sprite.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Text\Dynamic\DynamicText.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Text\Static\StaticText.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Text\TextBase.cpp" />
+    <ClCompile Include="Scripts\Engine\UI\Text\TextFactory.cpp" />
+    <ClCompile Include="Scripts\Engine\VecMath.cpp" />
+    <ClCompile Include="Scripts\Engine\Vision.cpp" />
+    <ClCompile Include="Scripts\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Scripts\Main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Engine.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\GameObject.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Time.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\VecMath.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Manager\CharacterManager.cpp">
-      <Filter>ソース ファイル\Engine\Character</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\MainGameScene.cpp">
-      <Filter>ソース ファイル\Engine\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\Scene.cpp">
-      <Filter>ソース ファイル\Engine\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\TitleScene.cpp">
-      <Filter>ソース ファイル\Engine\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Manager\GameObjectManager.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp">
-      <Filter>ソース ファイル\Engine\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Stage\Stage.cpp">
-      <Filter>ソース ファイル\Engine\Stage</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Manager\CameraManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Load\Binary\LoadBinary.cpp">
-      <Filter>ソース ファイル\Engine\Load</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Load\CSV\LoadCSV.cpp">
-      <Filter>ソース ファイル\Engine\Load</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Load\JSON\LoadJSON.cpp">
-      <Filter>ソース ファイル\Engine\Load</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Load\Model\LoadModel.cpp">
-      <Filter>ソース ファイル\Engine\Load</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Load\Sprite\LoadSprite.cpp">
-      <Filter>ソース ファイル\Engine\Load</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.cpp">
-      <Filter>ソース ファイル\Engine\Load\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\CameraComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.cpp">
-      <Filter>ソース ファイル\Engine\Load\Animation</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\DebugScene.cpp">
-      <Filter>ソース ファイル\Engine\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\PlayerComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Stage\StageObject\ExitPoint.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\EnemyComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Audio\BGM\BGMSource.cpp">
-      <Filter>ソース ファイル\Engine\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Audio\SE\SESource.cpp">
-      <Filter>ソース ファイル\Engine\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Audio\BGM\BGMManager.cpp">
-      <Filter>ソース ファイル\Engine\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\HandArm.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Audio\SE\SEManager.cpp">
-      <Filter>ソース ファイル\Engine\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\AABBCollider.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\ArmActionComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Audio\AudioManager.cpp">
-      <Filter>ソース ファイル\Engine\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Stage\StageObject\Stair.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\BulletComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Manager\BulletManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Vision.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\RevolverArm.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\WeaponBase.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\StandbyScene.cpp">
-      <Filter>ソース ファイル\Engine\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\TutorialScene.cpp">
-      <Filter>ソース ファイル\Engine\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\ResultScene.cpp">
-      <Filter>ソース ファイル\Engine\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\AnimatorComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\EffectComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Load\Audio\LoadAudio.cpp">
-      <Filter>ソース ファイル\Engine\Load</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Manager\EffectManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Collision\Collision.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\CapsuleCollider.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\System\Status\PlayerStatusManager.cpp">
-      <Filter>ソース ファイル\Engine\System\Status</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\System\Item\ItemManager.cpp">
-      <Filter>ソース ファイル\Engine\System\Item</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MenuManager.cpp">
-      <Filter>ソース ファイル\Engine\Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\EnemyChase.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectAction\GameState_SelectAction.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\SelectAction</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\Dungeon\SelectDetail_Dungeon.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail\Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\Shop\SelectDetail_Shop.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail\Shop</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\PartTime\SelectDetail_PartTime.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail\PartTime</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\BossComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\EnemyAttack.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\EnemyTurn.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\BossAttack.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\BossChase.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\BossStandby.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\InAction_Dungeon.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\InAction\Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\Shop\InAction_Shop.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\InAction\Shop</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\PartTime\InAction_PartTime.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\InAction\PartTime</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\Training\InAction_Training.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\InAction\Training</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\GameState_InAction.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\InAction</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\GameState_SelectDetail.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\SelectDetail\Training\SelectDetail_Training.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\SelectDetail\Training</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\ResultAction\GameState_ResultAction.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\ResultAction</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\ResultAction\Dungeon\ResultAction_Dungeon.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\ResultAction\Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\ResultAction\Training\ResultAction_Training.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\ResultAction\Training</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\ResultAction\Shop\ResultAction_Shop.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\ResultAction\Shop</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\ResultAction\PartTime\ResultAction_PartTime.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\ResultAction\PartTime</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\DungeonCreater.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\InAction\Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\FloorProcessor.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\InAction\Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\GameStateMachine.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\InitialTutorial\GameState_InitialTutorial.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\Tutorial</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\Pause\GameState_Pause.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\Pause</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\StringUtility.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\MiniGameSokoban.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\InAction\PartTime\Sokoban</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\SokobanMapManager.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState\InAction\PartTime\Sokoban</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\Title\MenuTitle.cpp">
-      <Filter>ソース ファイル\Engine\Menu\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\Title\MenuGameModeSelect.cpp">
-      <Filter>ソース ファイル\Engine\Menu\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\Title\MenuSelectNewGame.cpp">
-      <Filter>ソース ファイル\Engine\Menu\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\Title\MenuSystem.cpp">
-      <Filter>ソース ファイル\Engine\Menu\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\System\World\WorldProgressManager.cpp">
-      <Filter>ソース ファイル\Engine\System\World</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Save\SaveDataManager.cpp">
-      <Filter>ソース ファイル\Engine\System\Save</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\BossDeath.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\EnemyDeath.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Input\ActionMapBase.cpp">
-      <Filter>ソース ファイル\Engine\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Input\PlayerActionMap.cpp">
-      <Filter>ソース ファイル\Engine\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Input\InputManager.cpp">
-      <Filter>ソース ファイル\Engine\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Input\MenuActionMap.cpp">
-      <Filter>ソース ファイル\Engine\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.cpp">
-      <Filter>ソース ファイル\Engine\Menu\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\EnemyStandby.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\System\MenuVolumeSettings.cpp">
-      <Filter>ソース ファイル\Engine\Menu\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Scene\GameState\ActionContext.cpp">
-      <Filter>ソース ファイル\Engine\Scene\GameState</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Data\DxLibResourcesManager.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\System\Settings\SettingsManager.cpp">
-      <Filter>ソース ファイル\Engine\System\Settings</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Stage\StageCollision.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Stage\StageMemoryProfiler.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuInGame.cpp">
-      <Filter>ソース ファイル\Engine\Menu\MainGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\Title\MenuSelectLoadGame.cpp">
-      <Filter>ソース ファイル\Engine\Menu\Title</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\System\MenuSaveMode.cpp">
-      <Filter>ソース ファイル\Engine\Menu\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\System\MenuLoadMode.cpp">
-      <Filter>ソース ファイル\Engine\Menu\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Manager\WeaponManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Button\LongPressButton.cpp">
-      <Filter>ソース ファイル\Engine\UI\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Button\SinglePressButton.cpp">
-      <Filter>ソース ファイル\Engine\UI\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Button\UIButtonBase.cpp">
-      <Filter>ソース ファイル\Engine\UI\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\EventSystem.cpp">
-      <Filter>ソース ファイル\Engine\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MenuResourcesFactory.cpp">
-      <Filter>ソース ファイル\Engine\Menu</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\System\MenuConfirm.cpp">
-      <Filter>ソース ファイル\Engine\Menu\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Audio\AudioSource.cpp">
-      <Filter>ソース ファイル\Engine\Audio</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\System\MenuCredit.cpp">
-      <Filter>ソース ファイル\Engine\Menu\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\HPBarComponent.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Manager\GaugeManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\Result\MenuResultScore.cpp">
-      <Filter>ソース ファイル\Engine\Menu\Result</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\SubmachineGunArm.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\PlayerUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Data\TreasureDataList.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\AmmoCountUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\Reticle.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\PlayerStatusUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.cpp">
-      <Filter>ソース ファイル\Engine\Menu\MainGame\Shop</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\BossHPBarComponentr.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.cpp">
-      <Filter>ソース ファイル\Engine\Menu\MainGame</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\BossShootingAttack.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.cpp">
-      <Filter>ソース ファイル\Engine\Menu\MainGame\Shop</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Camera\EventCamera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Camera\MoveCommand.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Manager\FontManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MainGame\Training\MenuSelectTraining.cpp">
-      <Filter>ソース ファイル\Engine\Menu\MainGame\Training</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MainGame\Money\MenuMoneyChange.cpp">
-      <Filter>ソース ファイル\Engine\Menu\MainGame\Money</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuPlayerDeath.cpp">
-      <Filter>ソース ファイル\Engine\Menu\MainGame\Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Random.cpp">
-      <Filter>ソース ファイル\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MainGame\Status\MenuPlayerStatus.cpp">
-      <Filter>ソース ファイル\Engine\Menu\MainGame\Status</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.cpp">
-      <Filter>ソース ファイル\Engine\Menu\MainGame\Dungeon</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MainGame\PartTime\MenuSelectMiniGameLevel.cpp">
-      <Filter>ソース ファイル\Engine\Menu\MainGame\PartTime</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Component\Character\AllEnemyCommonModule.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Button\ButtonFactory.cpp">
-      <Filter>ソース ファイル\Engine\UI\Button</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\MainGame\PartTime\MenuMiniGame.cpp">
-      <Filter>ソース ファイル\Engine\Menu\MainGame\PartTime</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Sprite\Sprite.cpp">
-      <Filter>ソース ファイル\Engine\UI\Sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Sprite\SpriteFactory.cpp">
-      <Filter>ソース ファイル\Engine\UI\Sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Camera\WaitCommand.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\DungeonMoneyUI.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Text\TextBase.cpp">
-      <Filter>ソース ファイル\Engine\UI\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Text\Dynamic\DynamicText.cpp">
-      <Filter>ソース ファイル\Engine\UI\Text\Dynamic</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Text\Static\StaticText.cpp">
-      <Filter>ソース ファイル\Engine\UI\Text\Static</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\UI\Text\TextFactory.cpp">
-      <Filter>ソース ファイル\Engine\UI\Text</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Camera\RotateCommand.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    <ClCompile Include="Scripts\Engine\Menu\System\Load\MenuLoadAnimation.cpp">
-      <Filter>ソース ファイル\Engine\Menu\System</Filter>
-    </ClCompile>
-    <ClCompile Include="Scripts\Engine\Load\Effect\LoadEffect.cpp">
-      <Filter>ソース ファイル\Engine\Load</Filter>
-    </ClCompile>
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Scripts\Engine\Engine.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\GameObject.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Singleton.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Time.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\VecMath.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Fade\BlackFade.h">
-      <Filter>ヘッダー ファイル\Engine\Fade</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Fade\FadeBase.h">
-      <Filter>ヘッダー ファイル\Engine\Fade</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Fade\FadeFactory.h">
-      <Filter>ヘッダー ファイル\Engine\Fade</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Fade\FadeManager.h">
-      <Filter>ヘッダー ファイル\Engine\Fade</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Manager\CharacterManager.h">
-      <Filter>ヘッダー ファイル\Engine\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Component.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\RenderComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\SpriteRenderer.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\Scene.h">
-      <Filter>ヘッダー ファイル\Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\MainGameScene.h">
-      <Filter>ヘッダー ファイル\Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\TitleScene.h">
-      <Filter>ヘッダー ファイル\Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageBase.h">
-      <Filter>ヘッダー ファイル\Engine\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Manager\GameObjectManager.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h">
-      <Filter>ヘッダー ファイル\Engine\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Input\InputManager.h">
-      <Filter>ヘッダー ファイル\Engine\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Manager\StageManager.h">
-      <Filter>ヘッダー ファイル\Engine\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\Stage.h">
-      <Filter>ヘッダー ファイル\Engine\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\LoadBase.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\LoadManager.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Manager\CameraManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\Binary\LoadBinary.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\CSV\LoadCSV.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\JSON\LoadJSON.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\Model\LoadModel.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\Sprite\LoadSprite.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.h">
-      <Filter>ヘッダー ファイル\Engine\Load\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.h">
-      <Filter>ヘッダー ファイル\Engine\Load\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimationBase.h">
-      <Filter>ヘッダー ファイル\Engine\Load\Animation</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\LoadSystem.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\DebugScene.h">
-      <Filter>ヘッダー ファイル\Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\LoadRegistry.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h">
-      <Filter>ヘッダー ファイル\Engine\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Audio\AudioSource.h">
-      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Audio\SE\SESource.h">
-      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Audio\BGM\BGMManager.h">
-      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Audio\BGM\BGMSource.h">
-      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h">
-      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Audio\AudioUtility.h">
-      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Audio\AudioManager.h">
-      <Filter>ヘッダー ファイル\Engine\Audio</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\CharacterUtility.h">
-      <Filter>ヘッダー ファイル\Engine\Character</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageUtility.h">
-      <Filter>ヘッダー ファイル\Engine\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectUtility.h">
-      <Filter>ヘッダー ファイル\Engine\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\GameObject\GameObjectUtility.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Vision.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageState.h">
-      <Filter>ヘッダー ファイル\Engine\Stage</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Fade\SpiralFade.h">
-      <Filter>ヘッダー ファイル\Engine\Fade</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Fade\TileFade.h">
-      <Filter>ヘッダー ファイル\Engine\Fade</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\StandbyScene.h">
-      <Filter>ヘッダー ファイル\Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\TutorialScene.h">
-      <Filter>ヘッダー ファイル\Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\ResultScene.h">
-      <Filter>ヘッダー ファイル\Engine\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MenuBase.h">
-      <Filter>ヘッダー ファイル\Engine\Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MenuManager.h">
-      <Filter>ヘッダー ファイル\Engine\Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\JSON.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\System\Money\MoneyManager.h">
-      <Filter>ヘッダー ファイル\Engine\System\Money</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Fade\InkSpreadFade.h">
-      <Filter>ヘッダー ファイル\Engine\Fade</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\Audio\LoadAudio.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\AABBCollider.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\AnimatorComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\BulletComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\CameraComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\EffectComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\ExitPoint.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\GravityComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\Stair.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\WeaponBase.h">
-      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\RevolverArm.h">
-      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h">
-      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Manager\BulletManager.h">
-      <Filter>ヘッダー ファイル\Engine\Character\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\CapsuleCollider.h">
-      <Filter>ヘッダー ファイル\Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Collision\ColliderBase.h">
-      <Filter>ヘッダー ファイル\Engine\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Collision\Collision.h">
-      <Filter>ヘッダー ファイル\Engine\Collision</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\System\Status\PlayerStatusManager.h">
-      <Filter>ヘッダー ファイル\Engine\System\Status</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\AutoJSONRegitry.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\System\Item\ItemManager.h">
-      <Filter>ヘッダー ファイル\Engine\System\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\PlayerStatusData.h">
-      <Filter>ヘッダー ファイル\Data\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\TreasureDataList.h">
-      <Filter>ヘッダー ファイル\Data\Treasure</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\ItemCatalogData.h">
-      <Filter>ヘッダー ファイル\Data\Item</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\SaveData.h">
-      <Filter>ヘッダー ファイル\Data\Save</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\Dungeon\DungeonData.h">
-      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\Dungeon\DungeonFloorData.h">
-      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\Dungeon\DungeonStageData.h">
-      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\Dungeon\DungeonResourceData.h">
-      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\EnemyChase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\GameEnum.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\GameStateBase.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectAction\GameState_SelectAction.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\SelectAction</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\GameState_SelectDetail.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\SelectDetail</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\SelectDetailBase.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\SelectDetail</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\Dungeon\SelectDetail_Dungeon.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\Training\SelectDetail_Training.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Training</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\Shop\SelectDetail_Shop.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\Shop</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\PartTime\SelectDetail_PartTime.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\SelectDetail\PartTime</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\BossComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\EnemyState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\EnemyTurn.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\BossAttack.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\BossChase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\BossStandby.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\BossState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\EnemyAttack.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\ActionContext.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\InActionBase.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\InAction_Dungeon.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\InAction_PartTime.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\Shop\InAction_Shop.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\Shop</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\Training\InAction_Training.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\Training</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\GameState_InAction.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\GameState_ResultAction.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\ResultAction</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\ResultActionBase.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\ResultAction</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\Dungeon\ResultAction_Dungeon.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\ResultAction\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\Training\ResultAction_Training.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\ResultAction\Training</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\Shop\ResultAction_Shop.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\ResultAction\Shop</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\PartTime\ResultAction_PartTime.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\ResultAction\PartTime</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\FloorProcessor.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\DungeonCreater.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\GameStateMachine.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\InitialTutorial\GameState_InitialTutorial.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\Tutorial</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\Pause\GameState_Pause.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\Pause</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\GameConst.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\StringUtility.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\MiniGameBase.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\MiniGameSokoban.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\SokobanMapCreater.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\SokobanMapManager.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\SceneState\SceneStateMachine.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\SceneState</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\Title\MenuTitle.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\Title\MenuGameModeSelect.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Save\SaveDataManager.h">
-      <Filter>ヘッダー ファイル\Engine\System\Save</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\Title\MenuSelectNewGame.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\Title\MenuSystem.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\Dungeon\DungeonProgressData.h">
-      <Filter>ヘッダー ファイル\Data\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\DxLibResourcesManager.h">
-      <Filter>ヘッダー ファイル\Data</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\System\World\WorldProgressManager.h">
-      <Filter>ヘッダー ファイル\Engine\System\World</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Scene\GameState\DungeonContext.h">
-      <Filter>ヘッダー ファイル\Engine\Scene\GameState</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\BossDeath.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\EnemyDeath.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Input\ActionMapBase.h">
-      <Filter>ヘッダー ファイル\Engine\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Input\PlayerActionMap.h">
-      <Filter>ヘッダー ファイル\Engine\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Input\InputUtility.h">
-      <Filter>ヘッダー ファイル\Engine\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Rect.h">
-      <Filter>ヘッダー ファイル\Engine\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\EventSystem.h">
-      <Filter>ヘッダー ファイル\Engine\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Input\MenuActionMap.h">
-      <Filter>ヘッダー ファイル\Engine\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\EnemyStandby.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Button\UIButtonBase.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Button\SinglePressButton.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Button\LongPressButton.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\System\MenuVolumeSettings.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\System\Settings\SettingsManager.h">
-      <Filter>ヘッダー ファイル\Engine\System\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\ArmBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageCollision.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageMemoryProfiler.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuInGame.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\MainGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\Title\MenuSelectLoadGame.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\Title</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\System\MenuSaveMode.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\System\MenuLoadMode.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MenuResourcesFactory.h">
-      <Filter>ヘッダー ファイル\Engine\Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\WeaponDataManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Manager\WeaponManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\System\MenuConfirm.h">
-      <Filter>ヘッダー ファイル\Engine\Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\UI\MenuInfo.h">
-      <Filter>ヘッダー ファイル\Data\Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\UI\Button\ButtonInfo.h">
-      <Filter>ヘッダー ファイル\Data\Menu\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Button\ButtonFactory.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\System\MenuCredit.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\HPBarComponent.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\GaugeBase.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Manager\GaugeManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\OnTreasureState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\TreasureState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\UnTreasureState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\Result\MenuResultScore.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\Result</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReticleUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Manager\EnemyDataManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\ResultScoreData.h">
-      <Filter>ヘッダー ファイル\Data\Result</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\AmmoCountUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUIBase.h">
-      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerStatusUI.h">
-      <Filter>ヘッダー ファイル\Engine\UI\PlayerUI</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Shop</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Shop</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\Dungeon\DungeonEntranceData.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\BossHPBarComponentr.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\MainGame</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\BossShootingAttack.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Camera\CameraCommand.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Camera\EventCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Camera\MoveCommand.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Manager\FontManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MainGame\Training\MenuSelectTraining.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Training</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MainGame\Money\MenuMoneyChange.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Money</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Random.h">
-      <Filter>ヘッダー ファイル\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuPlayerDeath.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Dungeon</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MainGame\Status\MenuPlayerStatus.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\MainGame\Status</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MainGame\PartTime\MenuSelectMiniGameLevel.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\MainGame\PartTime</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\MainGame\PartTime\MenuMiniGame.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\MainGame\PartTime</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\EnemyCommonModule.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Component\Character\AllEnemyCommonModule.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Sprite\Sprite.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Sprite\SpriteFactory.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\UI\Sprite\SpriteInfo.h">
-      <Filter>ヘッダー ファイル\Data\Menu\Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Data\UI\Text\TextInfo.h">
-      <Filter>ヘッダー ファイル\Data\Menu\Text</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Camera\WaitCommand.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\DungeonMoneyUI.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Text\TextBase.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Text</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Text\Dynamic\DynamicText.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Text\Dynamic</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Text\Static\StaticText.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Text\Static</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\UI\Text\TextFactory.h">
-      <Filter>ヘッダー ファイル\Engine\UI\Text</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Camera\RotateCommand.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-    <ClInclude Include="Scripts\Engine\Menu\System\Load\MenuLoadAnimation.h">
-      <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
-    </ClInclude>
-    <ClInclude Include="Scripts\Engine\Load\Effect\LoadEffect.h">
-      <Filter>ヘッダー ファイル\Engine\Load</Filter>
-=======
-    <ClInclude Include="Scripts\Engine\Stage\Tree\CLiner8Tree.h">
-      <Filter>ヘッダー ファイル</Filter>
->>>>>>> Stashed changes
-=======
-    <ClInclude Include="Scripts\Engine\Stage\Tree\CLiner8Tree.h">
-      <Filter>ヘッダー ファイル</Filter>
->>>>>>> Stashed changes
-    </ClInclude>
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonData.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonEntranceData.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonFloorData.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonProgressData.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonResourceData.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonStageData.h" />
+    <ClInclude Include="Scripts\Data\DxLibResourcesManager.h" />
+    <ClInclude Include="Scripts\Data\ItemCatalogData.h" />
+    <ClInclude Include="Scripts\Data\PlayerStatusData.h" />
+    <ClInclude Include="Scripts\Data\ResultScoreData.h" />
+    <ClInclude Include="Scripts\Data\SaveData.h" />
+    <ClInclude Include="Scripts\Data\TreasureDataList.h" />
+    <ClInclude Include="Scripts\Data\UI\Button\ButtonInfo.h" />
+    <ClInclude Include="Scripts\Data\UI\MenuInfo.h" />
+    <ClInclude Include="Scripts\Data\UI\Sprite\SpriteInfo.h" />
+    <ClInclude Include="Scripts\Data\UI\Text\TextInfo.h" />
+    <ClInclude Include="Scripts\Data\WeaponDataManager.h" />
+    <ClInclude Include="Scripts\Engine\Audio\AudioManager.h" />
+    <ClInclude Include="Scripts\Engine\Audio\AudioSource.h" />
+    <ClInclude Include="Scripts\Engine\Audio\AudioUtility.h" />
+    <ClInclude Include="Scripts\Engine\Audio\BGM\BGMManager.h" />
+    <ClInclude Include="Scripts\Engine\Audio\BGM\BGMSource.h" />
+    <ClInclude Include="Scripts\Engine\Audio\SE\SEManager.h" />
+    <ClInclude Include="Scripts\Engine\Audio\SE\SESource.h" />
+    <ClInclude Include="Scripts\Engine\AutoJSONRegitry.h" />
+    <ClInclude Include="Scripts\Engine\Camera\CameraCommand.h" />
+    <ClInclude Include="Scripts\Engine\Camera\EventCamera.h" />
+    <ClInclude Include="Scripts\Engine\Camera\MoveCommand.h" />
+    <ClInclude Include="Scripts\Engine\Camera\RotateCommand.h" />
+    <ClInclude Include="Scripts\Engine\Camera\WaitCommand.h" />
+    <ClInclude Include="Scripts\Engine\Collision\ColliderBase.h" />
+    <ClInclude Include="Scripts\Engine\Collision\Collision.h" />
+    <ClInclude Include="Scripts\Engine\Component\AABBCollider.h" />
+    <ClInclude Include="Scripts\Engine\Component\AnimatorComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\CameraComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\CapsuleCollider.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\AllEnemyCommonModule.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\ArmActionComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\ArmBase.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BossAttack.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BossChase.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BossComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BossDeath.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BossHPBarComponentr.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BossShootingAttack.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BossStandby.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BossState.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\BulletComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\CharacterUtility.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyAttack.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyChase.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyCommonModule.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyDeath.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyStandby.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyState.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyTurn.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\HandArm.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\HPBarComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\PlayerComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\RevolverArm.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\WeaponBase.h" />
+    <ClInclude Include="Scripts\Engine\Component\Component.h" />
+    <ClInclude Include="Scripts\Engine\Component\EffectComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\GaugeBase.h" />
+    <ClInclude Include="Scripts\Engine\Component\GravityComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h" />
+    <ClInclude Include="Scripts\Engine\Component\RenderComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\SpriteRenderer.h" />
+    <ClInclude Include="Scripts\Engine\Engine.h" />
+    <ClInclude Include="Scripts\Engine\Fade\BlackFade.h" />
+    <ClInclude Include="Scripts\Engine\Fade\FadeBase.h" />
+    <ClInclude Include="Scripts\Engine\Fade\FadeFactory.h" />
+    <ClInclude Include="Scripts\Engine\Fade\FadeManager.h" />
+    <ClInclude Include="Scripts\Engine\Fade\InkSpreadFade.h" />
+    <ClInclude Include="Scripts\Engine\Fade\SpiralFade.h" />
+    <ClInclude Include="Scripts\Engine\Fade\TileFade.h" />
+    <ClInclude Include="Scripts\Engine\GameConst.h" />
+    <ClInclude Include="Scripts\Engine\GameEnum.h" />
+    <ClInclude Include="Scripts\Engine\GameObject.h" />
+    <ClInclude Include="Scripts\Engine\GameObject\GameObjectUtility.h" />
+    <ClInclude Include="Scripts\Engine\Input\ActionMapBase.h" />
+    <ClInclude Include="Scripts\Engine\Input\InputManager.h" />
+    <ClInclude Include="Scripts\Engine\Input\InputUtility.h" />
+    <ClInclude Include="Scripts\Engine\Input\MenuActionMap.h" />
+    <ClInclude Include="Scripts\Engine\Input\PlayerActionMap.h" />
+    <ClInclude Include="Scripts\Engine\JSON.h" />
+    <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimationBase.h" />
+    <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ChangeBackground.h" />
+    <ClInclude Include="Scripts\Engine\Load\Animation\LoadAnimation_ProgressBackground.h" />
+    <ClInclude Include="Scripts\Engine\Load\Audio\LoadAudio.h" />
+    <ClInclude Include="Scripts\Engine\Load\Binary\LoadBinary.h" />
+    <ClInclude Include="Scripts\Engine\Load\CSV\LoadCSV.h" />
+    <ClInclude Include="Scripts\Engine\Load\Effect\LoadEffect.h" />
+    <ClInclude Include="Scripts\Engine\Load\JSON\LoadJSON.h" />
+    <ClInclude Include="Scripts\Engine\Load\LoadBase.h" />
+    <ClInclude Include="Scripts\Engine\Load\LoadManager.h" />
+    <ClInclude Include="Scripts\Engine\Load\LoadRegistry.h" />
+    <ClInclude Include="Scripts\Engine\Load\LoadSystem.h" />
+    <ClInclude Include="Scripts\Engine\Load\Model\LoadModel.h" />
+    <ClInclude Include="Scripts\Engine\Load\Sprite\LoadSprite.h" />
+    <ClInclude Include="Scripts\Engine\Manager\BulletManager.h" />
+    <ClInclude Include="Scripts\Engine\Manager\CameraManager.h" />
+    <ClInclude Include="Scripts\Engine\Manager\CharacterManager.h" />
+    <ClInclude Include="Scripts\Engine\Manager\EnemyDataManager.h" />
+    <ClInclude Include="Scripts\Engine\Manager\FontManager.h" />
+    <ClInclude Include="Scripts\Engine\Manager\GaugeManager.h" />
+    <ClInclude Include="Scripts\Engine\Manager\StageManager.h" />
+    <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
+    <ClInclude Include="Scripts\Engine\Manager\WeaponManager.h" />
+    <ClInclude Include="Scripts\Engine\Menu\Dungeon\DungeonTreasureUI.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuSelectDungeon.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Dungeon\MenuPlayerDeath.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuInGame.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\MenuSelectAction.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Money\MenuMoneyChange.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\PartTime\MenuMiniGame.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\PartTime\MenuSelectMiniGameLevel.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuPurchaseCount.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Shop\MenuSelectShopItem.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Status\MenuPlayerStatus.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MainGame\Training\MenuSelectTraining.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MenuBase.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MenuManager.h" />
+    <ClInclude Include="Scripts\Engine\Menu\MenuResourcesFactory.h" />
+    <ClInclude Include="Scripts\Engine\Menu\Result\MenuResultScore.h" />
+    <ClInclude Include="Scripts\Engine\Menu\System\Load\MenuLoadAnimation.h" />
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuConfirm.h" />
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuCredit.h" />
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuLoadMode.h" />
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuSaveMode.h" />
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.h" />
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuVolumeSettings.h" />
+    <ClInclude Include="Scripts\Engine\Menu\Title\MenuGameModeSelect.h" />
+    <ClInclude Include="Scripts\Engine\Menu\Title\MenuSelectNewGame.h" />
+    <ClInclude Include="Scripts\Engine\Menu\Title\MenuSelectLoadGame.h" />
+    <ClInclude Include="Scripts\Engine\Menu\Title\MenuSystem.h" />
+    <ClInclude Include="Scripts\Engine\Menu\Title\MenuTitle.h" />
+    <ClInclude Include="Scripts\Engine\Random.h" />
+    <ClInclude Include="Scripts\Engine\Save\SaveDataManager.h" />
+    <ClInclude Include="Scripts\Engine\Scene\DebugScene.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\ActionContext.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\DungeonContext.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\GameStateBase.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\GameStateMachine.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\DungeonCreater.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\FloorProcessor.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\Dungeon\InAction_Dungeon.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\GameState_InAction.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\InActionBase.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\InAction_PartTime.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\MiniGameBase.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\MiniGameSokoban.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\SokobanMapCreater.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\PartTime\MiniGame\Sokoban\SokobanMapManager.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\Shop\InAction_Shop.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InAction\Training\InAction_Training.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\InitialTutorial\GameState_InitialTutorial.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\Pause\GameState_Pause.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\Dungeon\ResultAction_Dungeon.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\GameState_ResultAction.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\PartTime\ResultAction_PartTime.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\ResultActionBase.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\Shop\ResultAction_Shop.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\ResultAction\Training\ResultAction_Training.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectAction\GameState_SelectAction.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\Dungeon\SelectDetail_Dungeon.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\GameState_SelectDetail.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\PartTime\SelectDetail_PartTime.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\SelectDetailBase.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\Shop\SelectDetail_Shop.h" />
+    <ClInclude Include="Scripts\Engine\Scene\GameState\SelectDetail\Training\SelectDetail_Training.h" />
+    <ClInclude Include="Scripts\Engine\Scene\MainGameScene.h" />
+    <ClInclude Include="Scripts\Engine\Scene\ResultScene.h" />
+    <ClInclude Include="Scripts\Engine\Scene\Scene.h" />
+    <ClInclude Include="Scripts\Engine\Scene\SceneState\SceneStateMachine.h" />
+    <ClInclude Include="Scripts\Engine\Scene\StandbyScene.h" />
+    <ClInclude Include="Scripts\Engine\Scene\TitleScene.h" />
+    <ClInclude Include="Scripts\Engine\Manager\GameObjectManager.h" />
+    <ClInclude Include="Scripts\Engine\Scene\TutorialScene.h" />
+    <ClInclude Include="Scripts\Engine\Singleton.h" />
+    <ClInclude Include="Scripts\Engine\Stage\Stage.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageBase.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageCollision.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageMemoryProfiler.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\ExitPoint.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectUtility.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Stair.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\OnTreasureState.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\Treasure.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\TreasureState.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\UnTreasureState.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageState.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageUtility.h" />
+    <ClInclude Include="Scripts\Engine\Stage\Tree\CLiner8Tree.h" />
+    <ClInclude Include="Scripts\Engine\StringUtility.h" />
+    <ClInclude Include="Scripts\Engine\System\Item\ItemManager.h" />
+    <ClInclude Include="Scripts\Engine\System\Money\MoneyManager.h" />
+    <ClInclude Include="Scripts\Engine\System\Settings\SettingsManager.h" />
+    <ClInclude Include="Scripts\Engine\System\Status\PlayerStatusManager.h" />
+    <ClInclude Include="Scripts\Engine\System\World\WorldProgressManager.h" />
+    <ClInclude Include="Scripts\Engine\Time.h" />
+    <ClInclude Include="Scripts\Engine\UI\Button\ButtonFactory.h" />
+    <ClInclude Include="Scripts\Engine\UI\Button\LongPressButton.h" />
+    <ClInclude Include="Scripts\Engine\UI\Button\SinglePressButton.h" />
+    <ClInclude Include="Scripts\Engine\UI\Button\UIButtonBase.h" />
+    <ClInclude Include="Scripts\Engine\UI\EventSystem.h" />
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\AmmoCountUI.h" />
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\DungeonMoneyUI.h" />
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerStatusUI.h" />
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUI.h" />
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUIBase.h" />
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.h" />
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.h" />
+    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReticleUI.h" />
+    <ClInclude Include="Scripts\Engine\UI\Rect.h" />
+    <ClInclude Include="Scripts\Engine\UI\Sprite\Sprite.h" />
+    <ClInclude Include="Scripts\Engine\UI\Sprite\SpriteFactory.h" />
+    <ClInclude Include="Scripts\Engine\UI\Text\Dynamic\DynamicText.h" />
+    <ClInclude Include="Scripts\Engine\UI\Text\Static\StaticText.h" />
+    <ClInclude Include="Scripts\Engine\UI\Text\TextBase.h" />
+    <ClInclude Include="Scripts\Engine\UI\Text\TextFactory.h" />
+    <ClInclude Include="Scripts\Engine\VecMath.h" />
+    <ClInclude Include="Scripts\Engine\Vision.h" />
+    <ClInclude Include="Scripts\Engine\Stage\CollisionTypes.h" />
   </ItemGroup>
 </Project>

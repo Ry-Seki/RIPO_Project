@@ -17,6 +17,7 @@
 
 using namespace CharacterUtility;
 
+
 /*
  *  コンストラクタ
  */
@@ -46,7 +47,7 @@ void Stage::SetModelHandle(const int modelHandleBase) {
 
 	// 当たり判定クラスの生成
 	collision = std::make_unique<StageCollision>(modelHandle);
-
+	BuildCollisionFromModel();
 #if _DEBUG
 	// メモリログに書き込む
 	StageMemoryProfiler::Log("当たり判定生成後");
@@ -76,7 +77,7 @@ void Stage::Render() {
 			// プレイヤーの直前の位置を計算
 			Vector3 prevPos = player->GetComponent<PlayerComponent>()->GetOwner()->position - player->GetComponent<PlayerComponent>()->GetMoveVec();
 			// ステージ当たり判定描画
-			collision->StageColliderRenderer(player.get(), player->GetComponent<PlayerComponent>()->GetMoveVec(), prevPos);
+			//collision->StageColliderRenderer(player.get(), player->GetComponent<PlayerComponent>()->GetMoveVec(), prevPos);
 		}
 #endif // _DEBUG
 
@@ -116,6 +117,40 @@ void Stage::UpdateCollision(GameObject* other, Vector3 MoveVec) {
 	// ステージの当たり判定を実行
 	collision->UpdateCollision(other, MoveVec);
 
+}
+
+
+void Stage::BuildCollisionFromModel() {
+	if (modelHandle < 0) return;
+
+	std::vector<Triangle> triangles;
+
+	ExtractTrianglesFromModel(triangles);
+
+	collision->BuildFromTriangles(triangles);
+}
+
+void Stage::ExtractTrianglesFromModel(std::vector<Triangle>& outTriangles) {
+	int meshNum = MV1GetMeshNum(modelHandle);
+
+	for (int i = 0; i < meshNum; ++i) {
+		int polyNum = MV1GetMeshTriangleNum(modelHandle, i);
+
+		for (int j = 0; j < polyNum; ++j) {
+			VECTOR pos[3];
+			//MV1GetMeshPolygonVertexPosition(modelHandle, i, j, pos);
+
+			Triangle tri;
+
+			tri.p0 = Vector3(pos[0].x, pos[0].y, pos[0].z);
+			tri.p1 = Vector3(pos[1].x, pos[1].y, pos[1].z);
+			tri.p2 = Vector3(pos[2].x, pos[2].y, pos[2].z);
+
+			tri.ComputeNormal();
+
+			outTriangles.push_back(tri);
+		}
+	}
 }
 
 

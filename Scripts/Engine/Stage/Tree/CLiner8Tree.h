@@ -393,6 +393,30 @@ protected:
 
 		return spaceNum;
 	}
+public:
+	void GetObjectsInAABB(
+		const Vector3& min,
+		const Vector3& max,
+		std::vector<T*>& result) {
+		result.clear();
+
+		for (auto& cell : m_cells) {
+			if (!cell) continue;
+
+			auto* node = cell->GetFirstObj();
+			while (node) {
+				T* obj = node->pObject;
+
+				if (!(obj->max.x < min.x || obj->min.x > max.x ||
+					obj->max.y < min.y || obj->min.y > max.y ||
+					obj->max.z < min.z || obj->min.z > max.z)) {
+					result.push_back(obj);
+				}
+
+				node = node->next;
+			}
+		}
+	}
 };
 
 #endif	_CLINER8TREE_H_

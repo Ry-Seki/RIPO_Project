@@ -11,6 +11,7 @@
 #include <DxLib.h>
 #include "../VecMath.h"
 #include "Tree/CLiner8Tree.h"
+#include "CollisionTypes.h"
 
  // 前方宣言
 class GameObject;
@@ -20,11 +21,13 @@ class GravityComponent;
 /*
  *	ポリゴンを八分木に登録するための構造体
  */
-struct DungeonPoly {
-	MV1_COLL_RESULT_POLY poly;   // DxLibポリゴン
-	Vector3 min;                 // AABB最小
-	Vector3 max;                 // AABB最大
+struct DungeonPoly
+{
+	Triangle tri;
+	Vector3 min;
+	Vector3 max;
 };
+
 
 /*
  *	ステージの当たり判定を行うクラス
@@ -61,13 +64,10 @@ public:
 	void UpdateCollision(GameObject* other, Vector3 moveVec);
 
 
+
+	void BuildFromTriangles(const std::vector<Triangle>& triangles);
+
 private:
-
-	/*
-	 *	八分木での空間構築
-	 */
-	void BuildSpatialTree();
-
 	/*
 	 * @brief 周囲ポリゴンの当たり判定を実行し、結果を返す
 	 * @param position  プレイヤー位置
@@ -122,8 +122,8 @@ private:
 	void ProcessWallCollision(
 		Vector3& nowPos,
 		Vector3 prevPos,
-		float polyOffset,
-		Vector3 MoveVec,
+		float,
+		Vector3 moveVec,
 		const std::vector<DungeonPoly*>& walls,
 		bool moveFlag,
 		GameObject* other
@@ -149,7 +149,7 @@ public:
 	 *	ステージデータの読み込み
 	 *  @pram const int modelHandle
 	 */
-	void SetModelHandle(const int modelHandle);
+	//void SetModelHandle(const int modelHandle);
 
 	/*
 	 *	ステージの当たり判定の描画
@@ -157,7 +157,7 @@ public:
 	 *  @param	Vector3		移動量
 	 *  @param	Vector3		直前の移動量
 	 */
-	void StageColliderRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos);
+	//void StageColliderRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos);
 
 
 };

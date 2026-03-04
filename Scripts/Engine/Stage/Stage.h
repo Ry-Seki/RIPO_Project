@@ -11,7 +11,8 @@
 #include <vector>
 #include "../VecMath.h"
 #include "../GameObject.h"
-
+#include "StageCollision.h"
+#include "CollisionTypes.h"
  // 前方宣言
 // class GameObject;
 class StageCollision;
@@ -45,6 +46,10 @@ private:
 	static constexpr Attenuation _POINT_ATTAN = { 0.0f, 0.0005f, 0.0f };
 	static constexpr DxLib::COLOR_F _POINT_SPC_COLOR = { 0.1f, 0.1f, 0.1f, 1.0f };	// ポイントライト スペキュラーカラー
 
+private:
+
+	void BuildCollisionFromModel();
+	void ExtractTrianglesFromModel(std::vector<Triangle>& outTriangles);
 
 
 public:

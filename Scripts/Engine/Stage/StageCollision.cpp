@@ -71,51 +71,36 @@ void StageCollision::UpdateCollision(GameObject* other, Vector3 moveVec) {
 /*
  *	八分木での空間構築
  */
-void StageCollision::BuildSpatialTree() {
-	// // ステージ全体AABB取得
-	// VECTOR minV, maxV;
-	// MV1GetBoundingBox(modelHandle, &minV, &maxV);
-	// 
-	// Vector3 min = FromVECTOR(minV);
-	// Vector3 max = FromVECTOR(maxV);
-	// 
-	// // レベル6程度で初期化
-	// m_tree.Init(6, min, max);
-	// 
-	// int meshCount = MV1GetMeshNum(modelHandle);
-	// 
-	// for (int i = 0; i < meshCount; ++i) {
-	// 	int polyCount = MV1GetMeshTriangleNum(modelHandle, i);
-	// 
-	// 	for (int j = 0; j < polyCount; ++j) {
-	// 		MV1_TRIANGLE tri;
-	// 		MV1GetMeshTriangle(modelHandle, i, j, &tri);
-	// 
-	// 		// ポリゴン生成
-	// 		auto poly = std::make_unique<DungeonPoly>();
-	// 
-	// 		poly->poly.Position[0] = tri.Position[0];
-	// 		poly->poly.Position[1] = tri.Position[1];
-	// 		poly->poly.Position[2] = tri.Position[2];
-	// 
-	// 		// AABB計算
-	// 		Vector3 p0 = FromVECTOR(tri.Position[0]);
-	// 		Vector3 p1 = FromVECTOR(tri.Position[1]);
-	// 		Vector3 p2 = FromVECTOR(tri.Position[2]);
-	// 
-	// 		poly->min = Min(Min(p0, p1), p2);
-	// 		poly->max = Max(Max(p0, p1), p2);
-	// 
-	// 		// 八分木登録用ノード生成
-	// 		auto node = std::make_unique<Object_For_Tree<DungeonPoly>>();
-	// 		node->pObject = poly.get();
-	// 
-	// 		m_tree.Regist(&poly->min, &poly->max, node.get());
-	// 
-	// 		m_stagePolys.push_back(std::move(poly));
-	// 		m_treeNodes.push_back(std::move(node));
-	// 	}
-	// }
+void StageCollision::BuildFromTriangles(
+	const std::vector<Triangle>& triangles) {
+	// ステージ全体AABB計算
+	Vector3 stageMin(FLT_MAX, FLT_MAX, FLT_MAX);
+	Vector3 stageMax(-FLT_MAX, -FLT_MAX, -FLT_MAX);
+
+	for (const auto& tri : triangles) {
+		stageMin = Min(stageMin, Min(Min(tri.p0, tri.p1), tri.p2));
+		stageMax = Max(stageMax, Max(Max(tri.p0, tri.p1), tri.p2));
+	}
+
+	m_tree.Init(6, stageMin, stageMax);
+
+	for (auto tri : triangles) {
+		tri.ComputeNormal();
+
+		auto poly = std::make_unique<DungeonPoly>();
+		poly->tri = tri;
+
+		poly->min = Min(Min(tri.p0, tri.p1), tri.p2);
+		poly->max = Max(Max(tri.p0, tri.p1), tri.p2);
+
+		auto node = std::make_unique<Object_For_Tree<DungeonPoly>>();
+		node->pObject = poly.get();
+
+		m_tree.Regist(&poly->min, &poly->max, node.get());
+
+		m_stagePolys.push_back(std::move(poly));
+		m_treeNodes.push_back(std::move(node));
+	}
 }
 
 /*
@@ -166,20 +151,11 @@ bool StageCollision::AABBOverlap(
 	return true;
 }
 
-std::vector<DungeonPoly*> StageCollision::GetPolygonsFromTree(const Vector3& min, const Vector3& max) {
+std::vector<DungeonPoly*> StageCollision::GetPolygonsFromTree(
+	const Vector3& min,
+	const Vector3& max) {
 	std::vector<DungeonPoly*> result;
-
-	// 衝突候補取得
-	std::vector<DungeonPoly*> pairs;
-	m_tree.GetAllCollisionList(pairs);
-
-	// 範囲内ポリゴンのみ抽出
-	for (auto* poly : pairs) {
-		if (AABBOverlap(min, max, poly->min, poly->max)) {
-			result.push_back(poly);
-		}
-	}
-
+	m_tree.GetObjectsInAABB(min, max, result);
 	return result;
 }
 
@@ -195,7 +171,7 @@ void StageCollision::ClassifyPolygons(
 	std::vector<DungeonPoly*>& floors
 ) {
 	for (auto* p : polys) {
-		float ny = p->poly.Normal.y;
+		float ny = p->tri.normal.y;
 
 		if (ny >= _FLOOR_LIMIT)
 			floors.push_back(p);
@@ -217,90 +193,62 @@ void StageCollision::ClassifyPolygons(
 void StageCollision::ProcessWallCollision(
 	Vector3& nowPos,
 	Vector3 prevPos,
-	float polyOffset,
-	Vector3 MoveVec,
+	float,
+	Vector3 moveVec,
 	const std::vector<DungeonPoly*>& walls,
 	bool moveFlag,
 	GameObject* other
 ) {
-	// 壁が存在しなければ抜ける
-	if (walls.empty()) return;
-
-	// カプセルコンポーネントの取得
 	auto capsule = other->GetComponent<CapsuleCollider>();
-	// カプセルを取得できなければ抜ける
-	if (!capsule)return;
+	if (!capsule) return;
 
-	// カプセルの半径を取得
-	float capsuleRadius = capsule->capsule.radius;
+	float radius = capsule->capsule.radius;
 
-	// ワールド座標に変換したカプセルの下端
-	Vector3 capLower = nowPos + capsule->capsule.segment.startPoint;
-	// ワールド座標に変換したカプセルの上端
-	Vector3 capTop = nowPos + capsule->capsule.segment.endPoint;
+	Vector3 capStart = nowPos + capsule->capsule.segment.startPoint;
+	Vector3 capEnd = nowPos + capsule->capsule.segment.endPoint;
+	Vector3 capCenter = (capStart + capEnd) * 0.5f;
 
-	// 壁ポリゴンの配列分回す
 	for (auto* poly : walls) {
-		// 三角形の 3 頂点
-		Vector3 p0 = FromVECTOR(poly->poly.Position[0]);
-		Vector3 p1 = FromVECTOR(poly->poly.Position[1]);
-		Vector3 p2 = FromVECTOR(poly->poly.Position[2]);
+		Vector3 nearest = Nearest(
+			capCenter,
+			poly->tri.p0,
+			poly->tri.p1,
+			poly->tri.p2);
 
-
-		// カプセル中心点
-		Vector3 capCenter = (capLower + capTop) * _HALF;
-
-		// 最近接点を求める
-		Vector3 nearest = Nearest(capCenter, p0, p1, p2);
-
-		// どれだけ貫通しているかを求める
 		Vector3 diff = capCenter - nearest;
-
 		float dist = Magnitude(diff);
 
-		// カプセルが触れていないなら処理しない
-		float penetrate = capsuleRadius - dist;
-		if (penetrate <= Vector3::zero.y) continue;
+		float penetration = radius - dist;
+		if (penetration <= 0.0f) continue;
 
 		Vector3 pushDir = Normalized(diff);
 
-		//// 水平方向のみ押し出す
-		//if (poly->HitPosition.y > prevPos.y + _POLYGON_HEIGHT) {
-		//	pushDir.y = 0.0f;
-		//
-		//}
+		nowPos += pushDir * penetration;
 
-		// 水平方向のみで押し戻す
-		if (Magnitude(pushDir) > 0.0f) {
-			pushDir = Normalized(pushDir);
-			nowPos += pushDir * penetrate;
-		}
-
-		// 新しいカプセル位置
-		capLower = nowPos + capsule->capsule.segment.startPoint;
-		capTop = nowPos + capsule->capsule.segment.endPoint;
+		capStart = nowPos + capsule->capsule.segment.startPoint;
+		capEnd = nowPos + capsule->capsule.segment.endPoint;
+		capCenter = (capStart + capEnd) * 0.5f;
 	}
 
+	// --- スライド処理 ---
 	if (moveFlag) {
-		// 元の移動ベクトル
-		Vector3 moveVec = MoveVec;
-
-		// 壁の向きを一つにまとめる
 		Vector3 avgNormal = Vector3::zero;
 		int count = 0;
 
-		//// ポリゴンの法線を足していく
-		//for (auto* poly : walls) {
-		//	// 法線をVector3型に直し、乗算
-		//	avgNormal += FromVECTOR(poly->Normal);
-		//	count++;
-		//}
-		// 正規化した長さに変換
-		avgNormal = Normalized((avgNormal / (float)count));
+		for (auto* poly : walls) {
+			avgNormal += poly->tri.normal;
+			count++;
+		}
 
-		// 移動ベクトルと壁の向きの内積
-		float dot = Vector3::Dot(moveVec, avgNormal);
+		if (count > 0) {
+			avgNormal = (avgNormal / (float)count).Normalized();
+			float dot = Dot(moveVec, avgNormal);
 
+			if (dot < 0.0f) {
+				Vector3 slideVec = moveVec - avgNormal * dot;
+				nowPos = prevPos + slideVec;
+			}
+		}
 	}
 }
 
@@ -318,91 +266,45 @@ void StageCollision::ProcessFloorCollision(
 	GameObject* other,
 	Vector3 moveVec
 ) {
-	// 床がなければ落下
+	auto gravity = other->GetComponent<GravityComponent>();
+	auto capsule = other->GetComponent<CapsuleCollider>();
+
+	if (!gravity || !capsule) return;
+
 	if (floors.empty()) {
-		auto gravity = other->GetComponent<GravityComponent>();
-		if (gravity) {
-			gravity->SetGroundingFrag(false);
-		}
+		gravity->SetGroundingFrag(false);
 		return;
 	}
-	// 接地点の最大値
-	float MaxY = -FLT_MAX;
-	// 接地しているかどうか
-	bool isGround = false;
 
-	// 重力コンポーネントの取得
-	auto hitGrounding = other->GetComponent<GravityComponent>();
-	if (!hitGrounding) return;
+	float maxY = -FLT_MAX;
+	bool grounded = false;
 
-	// カプセルコンポーネント取得
-	auto capsule = other->GetComponent<CapsuleCollider>();
-	if (!capsule) return;
-
-	float prevY = nowPos.y - moveVec.y;
-
-	// ワールド座標での下端
 	Vector3 capStart = nowPos + capsule->capsule.segment.startPoint;
-	// ワールド座標での上端
-	Vector3 capEnd = nowPos + capsule->capsule.segment.endPoint;
-	// カプセル中心点
-	Vector3 capCenter = (capStart + capEnd) * _HALF;
-	// カプセルの半径
-	float capsuleRadius = capsule->capsule.radius;
+	float radius = capsule->capsule.radius;
 
-	Vector3 checkPos = capStart + Vector3(moveVec.x, 0.0f, moveVec.z);
-
-
-	// 貫通しているかどうかを見る
 	for (auto* poly : floors) {
-		// 三角形の 3 頂点
-		Vector3 p0 = FromVECTOR(poly->poly.Position[0]);
-		Vector3 p1 = FromVECTOR(poly->poly.Position[1]);
-		Vector3 p2 = FromVECTOR(poly->poly.Position[2]);
+		Vector3 nearest = Nearest(
+			capStart,
+			poly->tri.p0,
+			poly->tri.p1,
+			poly->tri.p2);
 
-		// 中心点と三角形の最近接点を求める
-		Vector3 nearest = Nearest(checkPos, p0, p1, p2);
+		float dist = Distance(capStart, nearest);
 
-		// 最近接点との差分と距離
-		Vector3 diff = checkPos - nearest;
-		float dist = Magnitude(diff);
-		// 「前フレームより極端に高い床」は無視
-		if (nearest.y > prevY + GameConst::PLAYER_HIT_HEIGHT * 0.1f) {
-			continue;
-		}
-		// カプセルの半径以下なら接地
-		const float EPS = _HALF;
-		if (dist <= capsuleRadius) {
-			// 接地判定
-			if (!isGround || MaxY < nearest.y) {
-				isGround = true;
-				MaxY = nearest.y;
+		if (dist <= radius) {
+			if (nearest.y > maxY) {
+				maxY = nearest.y;
+				grounded = true;
 			}
 		}
 	}
 
-	// 地面から離れていた場合は接地判定を行わない
-	if (hitGrounding->GetFallSpeed() < 0) {
-		hitGrounding->SetGroundingFrag(false);
-		return;
-	}
-
-	// 接地しているかどうかの判定を重力コンポーネントに渡す
-	if (isGround) {
-		// 対象がいなければいけない位置
-		float desiredY = (MaxY + (capsuleRadius - capsule->capsule.segment.startPoint.y));
-
-		// 壁から押し出されたとき対策
-		// 床よりもしたに押し出された場合、押し戻す
-		if (nowPos.y < MaxY) {
-			nowPos.y = desiredY;
-		}
-		// 接地している
-		hitGrounding->SetGroundingFrag(true);
+	if (grounded) {
+		nowPos.y = maxY + (radius - capsule->capsule.segment.startPoint.y);
+		gravity->SetGroundingFrag(true);
 	}
 	else {
-		// 接地していない
-		hitGrounding->SetGroundingFrag(false);
+		gravity->SetGroundingFrag(false);
 	}
 
 }
