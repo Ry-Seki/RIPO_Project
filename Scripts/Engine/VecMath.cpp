@@ -132,6 +132,24 @@ Vector3 Vector3::ForwardDir(const Vector3& rotation) {
 }
 
 /*
+ *	Y軸回転
+ *	@param[in]	vec		回転させたいベクトル
+ *	@param[in]	angle	回転角
+ *	@return Vector3
+ *  @author Riku
+ */
+Vector3 Vector3::RotateY(const Vector3& vec, float angle) {
+	float cosA = cos(angle);
+	float sinA = sin(angle);
+	
+	return {
+		vec.x * cosA - vec.z * sinA,
+		vec.y,
+		vec.x * sinA + vec.z * cosA
+	};
+}
+
+/*
  *	各成分を指定範囲内に制限する
  *	@param[in]  v1   対象のベクトル
  *	@param[in]  min  下限値ベクトル
@@ -366,6 +384,10 @@ Vector3 Direction(const Vector3& from, const Vector3& to) {
 
 Vector3 ForwardDir(const Vector3& rotation) {
 	return Vector3::ForwardDir(rotation);
+}
+
+Vector3 RotateY(const Vector3& vec, float angle) {
+	return Vector3::RotateY(vec, angle);
 }
 
 Vector3 Offset(const Vector3& v1, const Vector3& v2) {
