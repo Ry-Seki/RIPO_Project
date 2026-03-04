@@ -13,6 +13,7 @@
 #define Deg2Rad (Pi / 180.0f)
 #define Rad2Deg (180.0f / Pi)
 
+
  //	Vector2
 struct Vector2 { float x, y; };
 //	Vector3
@@ -246,6 +247,22 @@ struct Vector3 {
 	 *  @param[in]  v2,v3,v4	三角形の3頂点
 	 */
 	static Vector3 Nearest(const Vector3& senterPos, const Vector3& v1, const Vector3& v2, const Vector3& v3);
+
+	/*
+	 *  各成分ごとの最小値を返す
+	 *  @param[in] v1 1つ目のベクトル
+	 *  @param[in] v2 2つ目のベクトル
+	 *  @return Vector3
+	 */
+	static Vector3 Min(const Vector3& v1, const Vector3& v2);
+
+	/*
+	 *  各成分ごとの最大値を返す
+	 *  @param[in] v1 1つ目のベクトル
+	 *  @param[in] v2 2つ目のベクトル
+	 *  @return Vector3
+	 */
+	static Vector3 Max(const Vector3& v1, const Vector3& v2);
 };
 
 /*
@@ -377,6 +394,23 @@ Vector3 Slerp(const Vector3& a, const Vector3& b, float t);
  *  @param[in]  v2,v3,v4	三角形の3頂点
  */
 Vector3 Nearest(const Vector3& senterPos, const Vector3& v1, const Vector3& v2, const Vector3& v3);
+
+/*
+ *  各成分ごとの最小値を返す
+ *  @param[in] v1 1つ目のベクトル
+ *  @param[in] v2 2つ目のベクトル
+ *  @return Vector3
+ */
+Vector3 Min(const Vector3& v1, const Vector3& v2);
+
+
+/*
+ *  各成分ごとの最大値を返す
+ *  @param[in] v1 1つ目のベクトル
+ *  @param[in] v2 2つ目のベクトル
+ *  @return Vector3
+ */
+Vector3 Max(const Vector3& v1, const Vector3& v2);
 
 /*
  *	定数ベクトル

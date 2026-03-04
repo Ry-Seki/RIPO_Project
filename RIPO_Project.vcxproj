@@ -504,6 +504,7 @@
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Treasure\UnTreasureState.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageState.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageUtility.h" />
+    <ClInclude Include="Scripts\Engine\Stage\Tree\CLiner8Tree.h" />
     <ClInclude Include="Scripts\Engine\StringUtility.h" />
     <ClInclude Include="Scripts\Engine\System\Item\ItemManager.h" />
     <ClInclude Include="Scripts\Engine\System\Money\MoneyManager.h" />
