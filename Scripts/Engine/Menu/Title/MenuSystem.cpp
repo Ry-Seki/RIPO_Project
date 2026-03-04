@@ -141,7 +141,6 @@ void MenuSystem::SelectButtonExecute(Engine& engine, int buttonIndex) {
     if (buttonIndex == 0) {
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            isVisible = false;
             menu.OpenMenu<MenuSettings>();
         });
     } else if (buttonIndex == 1) {
