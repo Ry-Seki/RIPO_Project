@@ -13,12 +13,6 @@ AnimatorComponent::AnimatorComponent()
 	, isPlaying(false) {
 }
 
-AnimatorComponent::~AnimatorComponent() {
-	for (auto* anim : pAnimations) {
-		delete anim;
-	}
-	pAnimations.clear();
-}
 
 /*
   *	@function	Update
@@ -29,7 +23,7 @@ void AnimatorComponent::Update(float deltaTime) {
 	if (attachIndex < 0) return;
 
 	// 現在のアニメーションを取得
-	AnimatorClip* anim = pAnimations[currentAnimation];
+	AnimatorClip* anim = pAnimations[currentAnimation].get();
 	if (!anim) return;
 
 	// アニメーションの再生時間を進める
@@ -81,9 +75,15 @@ void AnimatorComponent::LoadIndex(bool isLoop, int transition) {
 
 	// モデルに含まれる全アニメーションを登録
 	for (int i = 0; i < animCount; ++i) {
-		auto* clip = new AnimatorClip(i, isLoop, transition);
+
+		// make_uniqueで安全に生成
+		auto clip = std::make_unique<AnimatorClip>(i, isLoop, transition);
+
+		// アニメーションの終了時間を取得
 		clip->exitAnimTime = MV1GetAnimTotalTime(animModelHandle, i);
-		pAnimations.push_back(clip);
+
+		// vectorへ所有権を移動
+		pAnimations.push_back(std::move(clip));
 	}
 
 }
@@ -110,7 +110,7 @@ void AnimatorComponent::Play(int index, float speed) {
 	// 現在のアニメーションに設定する
 	currentAnimation = index;
 	// アニメーションハンドルに登録
-	auto* anim = pAnimations[index];
+	auto* anim = pAnimations[index].get();
 
 	// アニメーションの再生時間を初期化
 	anim->playAnimTime = 0.0f;
