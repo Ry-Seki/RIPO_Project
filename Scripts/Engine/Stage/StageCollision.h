@@ -10,11 +10,21 @@
 #include <vector>
 #include <DxLib.h>
 #include "../VecMath.h"
+#include "Tree/CLiner8Tree.h"
 
  // 前方宣言
 class GameObject;
 class CapsuleCollider;
 class GravityComponent;
+
+/*
+ *	ポリゴンを八分木に登録するための構造体
+ */
+struct DungeonPoly {
+	MV1_COLL_RESULT_POLY poly;   // DxLibポリゴン
+	Vector3 min;                 // AABB最小
+	Vector3 max;                 // AABB最大
+};
 
 /*
  *	ステージの当たり判定を行うクラス
@@ -28,6 +38,12 @@ private:
 	static constexpr float _POLYGON_HEIGHT = 0.9f;				// 壁の角度
 	static constexpr float _FLOOR_LIMIT = 0.5f;					// 床の角度
 
+	// 線形八分木マネージャー
+	CLiner8TreeManager<DungeonPoly> m_tree;
+
+	// 登録済みポリゴン管理
+	std::vector<std::unique_ptr<DungeonPoly>> m_stagePolys;
+	std::vector<std::unique_ptr<Object_For_Tree<DungeonPoly>>> m_treeNodes;
 
 public:
 	/*
@@ -48,12 +64,38 @@ public:
 private:
 
 	/*
+	 *	八分木での空間構築
+	 */
+	void BuildSpatialTree();
+
+	/*
 	 * @brief 周囲ポリゴンの当たり判定を実行し、結果を返す
 	 * @param position  プレイヤー位置
 	 * @param MoveVec   移動ベクトル
 	 * @return std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> コリジョン結果構造体
 	 */
-	std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> SetupCollision(GameObject* other, Vector3 MoveVec);
+	std::vector<DungeonPoly*> SetupCollision(GameObject* other, Vector3 MoveVec);
+
+
+	std::vector<DungeonPoly*> GetPolygonsFromTree(
+		const Vector3& min,
+		const Vector3& max
+	);
+
+	/*
+	 * @brief AABB同士が重なっているか判定する
+	 * @param[in] minA  Aの最小座標
+	 * @param[in] maxA  Aの最大座標
+	 * @param[in] minB  Bの最小座標
+	 * @param[in] maxB  Bの最大座標
+	 * @return true 重なっている
+	 * @return false 重なっていない
+	 */
+	bool AABBOverlap(
+		const Vector3& minA,
+		const Vector3& maxA,
+		const Vector3& minB,
+		const Vector3& maxB);
 
 
 	/**
@@ -63,10 +105,9 @@ private:
 	 * @param floors   床ポリゴン格納先
 	 */
 	void ClassifyPolygons(
-		const MV1_COLL_RESULT_POLY_DIM* hitDim,
-		std::vector<MV1_COLL_RESULT_POLY*>& walls,
-		std::vector<MV1_COLL_RESULT_POLY*>& floors,
-		const Vector3& prevPos
+		const std::vector<DungeonPoly*>& polys,
+		std::vector<DungeonPoly*>& walls,
+		std::vector<DungeonPoly*>& floors
 	);
 
 	/**
@@ -83,7 +124,7 @@ private:
 		Vector3 prevPos,
 		float polyOffset,
 		Vector3 MoveVec,
-		const std::vector<MV1_COLL_RESULT_POLY*>& walls,
+		const std::vector<DungeonPoly*>& walls,
 		bool moveFlag,
 		GameObject* other
 	);
@@ -97,7 +138,7 @@ private:
 	void ProcessFloorCollision(
 		Vector3& nowPos,
 		float polyOffset,
-		const std::vector<MV1_COLL_RESULT_POLY*>& floors,
+		const std::vector<DungeonPoly*>& floors,
 		GameObject* other,
 		Vector3 moveVec
 	);
