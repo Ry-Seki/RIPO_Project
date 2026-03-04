@@ -54,7 +54,7 @@ struct AnimatorClip {
 class AnimatorComponent : public Component {
 private:
 	int animModelHandle;					// アニメーションのモデルハンドル
-	std::vector<std::unique_ptr<AnimatorClip>> pAnimations;	// アニメーションのハンドル
+	std::vector<std::shared_ptr<AnimatorClip>> pAnimations;	// アニメーションのハンドル
 
 	int currentAnimation;					// 現在のアニメーション
 	int attachIndex;						// アタッチ番号
