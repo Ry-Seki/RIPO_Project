@@ -82,7 +82,7 @@ void BulletManager::BulletShot(
 	GameObject* shotOwner,
 	const float speed,
 	const float damage,
-	const float destroyTime = 3) {
+	const float destroyTime) {
 	// 弾生成 
 	BulletComponentPtr bullet = GenerateBullet(BULLET_NAME, position, rotation, BULLET_AABB_MIN, BULLET_AABB_MAX);
 	// セットアップ
