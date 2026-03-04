@@ -15,7 +15,7 @@ private:
 	GameObject* bullet;
 	float destroyTimeCount;		// ’e‚ª”jŠü‚³‚ê‚éŠÔ
 	Vector3 moveDirection;		// ˆÚ“®•ûŒü
-	GameObject* shotOwner;	// ËŒ‚Ò
+	GameObject* shotOwner;		// ËŒ‚Ò
 	float hitDamage;			// “–‚½‚Á‚½‚É—^‚¦‚éƒ_ƒ[ƒW
 	float moveSpeed;			// ’e‚Ì‘¬‚³
 
@@ -41,13 +41,15 @@ public:
 	 *	@param	setOwner		ËŒ‚Ò
 	 *	@param	setDamage		“–‚½‚Á‚½‚É—^‚¦‚éƒ_ƒ[ƒW
 	 *	@param	setSpeed		’e‚Ì‘¬‚³
+	 *	@param	setDestroyTime	’e‚ªÁ‚¦‚éŠÔ
 	 */
 	void Setup(
 		Vector3 setDirection,
 		Vector3 setScale,
 		GameObject* setOwner,
 		float setDamage,
-		float setSpeed);
+		float setSpeed,
+		float setDestroyTime);
 
 public:
 	inline float GetHitDamage() { return hitDamage; }
