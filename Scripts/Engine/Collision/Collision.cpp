@@ -506,7 +506,7 @@ bool Intersect(const Capsule & a, const Capsule & b, Vector3 & penetration) {
 
 /*
  *  カプセル対AABBの交差判定
- *  @param[in]  Capsule cap			判定対象1
+ *  @param[in]  Capsule capsule		判定対象1
  *  @param[in]  AABB	box			判定対象2
  *  @param[out] Vector3 penetration 貫通ベクトル
  */
@@ -568,11 +568,37 @@ bool Intersect(const Capsule& capsule, const AABB& box, Vector3& penetration) {
 /*
  *  AABB対カプセルの交差判定
  *  @param[in]  AABB	box			判定対象1
- *  @param[in]  Capsule cap			判定対象2
+ *  @param[in]  Capsule capsule		判定対象2
  *  @param[out] Vector3 penetration 貫通ベクトル
  */
 bool Intersect(const AABB& box, const Capsule& capsule, Vector3& penetration) {
 	return Intersect(capsule, box, penetration);
+}
+/*
+ *  OBB対カプセルの交差判定
+ *  @param[in]  OBB		box			判定対象1
+ *  @param[in]  Capsule capsule		判定対象2
+ *  @param[out] Vector3 penetration 貫通ベクトル
+ */
+bool Intersect(const OBB& box, const Capsule& capsule, Vector3& penetration) {
+	// カプセルをOBBローカル空間へ変換
+	Segment localSegment;
+	// OBBの中心を原点にする
+	Vector3 localStart = capsule.segment.startPoint - box.center;
+	Vector3 localEnd = capsule.segment.endPoint - box.center;
+	// OBBの回転を打ち消す
+	localSegment.startPoint = RotateY(localStart, -box.angle);
+	localSegment.endPoint = RotateY(localEnd, -box.angle);
+	// ローカルカプセル
+	Capsule localCapsule;
+	localCapsule.segment = localSegment;
+	localCapsule.radius = capsule.radius;
+	// OBBをAABBに変換
+	AABB localBox;
+	localBox.min = -box.size;
+	localBox.max = box.size;
+
+	return false;
 }
 
 /*
