@@ -395,4 +395,4 @@ protected:
 	}
 };
 
-#endif
+#endif	_CLINER8TREE_H_

@@ -886,12 +886,15 @@
       <Filter>ソース ファイル</Filter>
     </ClCompile>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <ClCompile Include="Scripts\Engine\Menu\System\Load\MenuLoadAnimation.cpp">
       <Filter>ソース ファイル\Engine\Menu\System</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Load\Effect\LoadEffect.cpp">
       <Filter>ソース ファイル\Engine\Load</Filter>
     </ClCompile>
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
   </ItemGroup>
@@ -1566,11 +1569,16 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <ClInclude Include="Scripts\Engine\Menu\System\Load\MenuLoadAnimation.h">
       <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\Load\Effect\LoadEffect.h">
       <Filter>ヘッダー ファイル\Engine\Load</Filter>
+=======
+    <ClInclude Include="Scripts\Engine\Stage\Tree\CLiner8Tree.h">
+      <Filter>ヘッダー ファイル</Filter>
+>>>>>>> Stashed changes
 =======
     <ClInclude Include="Scripts\Engine\Stage\Tree\CLiner8Tree.h">
       <Filter>ヘッダー ファイル</Filter>
