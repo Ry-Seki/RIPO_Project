@@ -22,6 +22,13 @@
 #include "../../../Manager/FontManager.h"
 
 /*
+ *  @brief  ファイルパスの名前空間
+ */
+namespace {
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Status/StatusMenuResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Status/StatusMenuNavigation.json";
+}
+/*
  *	@brief	初期化処理
  */
 void MenuPlayerStatus::Initialize(Engine& engine) {
@@ -37,8 +44,9 @@ void MenuPlayerStatus::Initialize(Engine& engine) {
             eventSystem.RegisterButton(button.get());
         }
         eventSystem.Initialize(0);
-        buttonList = std::move(result.buttonList);
         spriteList = std::move(result.spriteList);
+        textList = std::move(result.textList);
+        buttonList = std::move(result.buttonList);
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             UIButtonBase* button = buttonList[i].get();
             if (!button) continue;
@@ -51,6 +59,7 @@ void MenuPlayerStatus::Initialize(Engine& engine) {
                 SelectButtonExecute(engine);
             });
         }
+        SortStatusText();
         eventSystem.LoadNavigation(navigation->GetData());
     });
 }
@@ -60,12 +69,22 @@ void MenuPlayerStatus::Initialize(Engine& engine) {
 void MenuPlayerStatus::Open() {
     MenuBase::Open();
     for (auto& sprite : spriteList) {
+        if (!sprite) continue;
+
         sprite->Setup();
     }
+    for (auto& text : textList) {
+        if (!text) continue;
+
+        text->Setup();
+    }
     for (auto& button : buttonList) {
+        if (!button) continue;
+
         button->Setup();
     }
     currentStatus = PlayerStatusManager::GetInstance().GetPlayerStatusData();
+    ComparisonStatus();
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
         eventSystem.ApplySelection();
@@ -82,7 +101,9 @@ void MenuPlayerStatus::Update(Engine& engine, float unscaledDeltaTime) {
     eventSystem.Update(unscaledDeltaTime);
     // ボタンの更新
     for (auto& button : buttonList) {
-        if (button) button->Update(unscaledDeltaTime);
+        if (!button) continue;
+
+        button->Update(unscaledDeltaTime);
     }
     // 現在選択されているボタンの取得
     auto button = eventSystem.GetCurrentSelectButton();
@@ -103,6 +124,8 @@ void MenuPlayerStatus::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer = 0;
 
     for (auto& sprite : spriteList) {
+        if (!sprite) continue;
+
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
 
@@ -115,17 +138,20 @@ void MenuPlayerStatus::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
  */
 void MenuPlayerStatus::Render() {
     for (auto& sprite : spriteList) {
-        if (!sprite->IsVisible()) continue;
+        if (!sprite || !sprite->IsVisible()) continue;
+
         sprite->Render();
     }
     for (auto& button : buttonList) {
-        if (!button->IsVisible()) continue;
+        if (!button || !button->IsVisible()) continue;
+
         button->Render();
     }
-    // 現在ステータスの描画
-    CurrentStatusRender();
-    // ステータスの比較
-    if (isCallback) ComparisonStatus();
+    for (auto& text : textList) {
+        if (!text) continue;
+
+        text->Render();
+    }
 }
 /*
  *	@brief	メニューを閉じる
@@ -150,12 +176,7 @@ void MenuPlayerStatus::SelectButtonExecute(Engine& engine) {
  *	@brief	現在のステータスの描画
  */
 void MenuPlayerStatus::CurrentStatusRender() {
-    auto& font = FontManager::GetInstance();
-    constexpr int STATUS_COUNT = 4;
-
-    for (int i = 0; i < STATUS_COUNT; i++) {
-        font.Draw("MiniSizeFont", 1425, 424 + 125 * i, std::to_string(currentStatus.base[i]).c_str(), GetColor(255, 255, 255));
-    }
+    
 }
 /*
  *	@brief	ステータスの比較処理
@@ -165,33 +186,31 @@ void MenuPlayerStatus::ComparisonStatus() {
 
     const PlayerStatusValue& prev = prevStatus.base;
     const PlayerStatusValue& current = currentStatus.base;
+    const int _STATUS_COUNT = 4;
+    const std::string _INVALID = "";
 
-    constexpr int STATUS_COUNT = 4;
-
-    const float diffX = 1560.0f;                // +の位置
-    const float baseY = 424;                    // HP のY
-    const float offsetY = 125;                  // 各行間隔
-    const int white = GetColor(255, 255, 255);
-
-    for (int i = 0; i < STATUS_COUNT; i++) {
-        font.Draw("MiniSizeFont", 1170, 424 + 125 * i, std::to_string(prev[i]).c_str(), white);
-
+    for (int i = 0; i < _STATUS_COUNT; i++) {
+        std::string prevText = std::to_string(prev[i]);
+        std::string currentText = std::to_string(current[i]);
+        // 現在のステータスと前回のステータスの差の比較
         int diff = current[i] - prev[i];
+        // コールバックがない場合は現在ステータスのみにする
+        if (!isCallback) {
+            prevTextList[i]->SetText(_INVALID);
+            currentTextList[i]->SetText(currentText);
+            continue;
+        }
+        // 差がない場合は前のステータスのみを失くす
+        if (diff == 0) {
+            prevTextList[i]->SetText(prevText);
+            currentTextList[i]->SetText(currentText);
+            continue;
+        }
+        std::string diffText = (diff > 0 ? "+" : _INVALID) + std::to_string(diff);
+        currentText += diffText;
 
-        if (diff == 0) continue;
-
-        // +表記
-        std::string diffText = (diff > 0 ? "+" : "") + std::to_string(diff);
-
-        float posY = baseY + offsetY * i;
-
-        font.Draw(
-            "MiniSizeFont",
-            diffX,
-            posY,
-            diffText.c_str(),
-            GetColor(255, 255, 255)
-        );
+        prevTextList[i]->SetText(prevText);
+        currentTextList[i]->SetText(currentText);
     }
 }
 /*
@@ -203,5 +222,28 @@ void MenuPlayerStatus::ExecuteCallback() {
     } else {
         FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeIn);
+    }
+}
+/*
+ *	@brief	前と現在のステータステキストを振り分ける
+ */
+void MenuPlayerStatus::SortStatusText() {
+    prevTextList.clear();
+    currentTextList.clear();
+
+    const int white = GetColor(255, 255, 255);
+
+    for (auto& text : textList) {
+        if (!text) continue;
+
+        text->SetColor(white);
+        const std::string& name = text->GetName();
+        // 名前で分ける
+        if (name.starts_with("Prev")) {
+            prevTextList.push_back(text.get());
+        }
+        else if (name.starts_with("Current")) {
+            currentTextList.push_back(text.get());
+        }
     }
 }

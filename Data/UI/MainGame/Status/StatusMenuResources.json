@@ -67,6 +67,46 @@
         "X": 1170,
         "Y": 799
       }
+    },
+    {
+      "Name": "CurrentHPText",
+      "Type": "Dynamic",
+      "UseFont": "MiniSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1500,
+        "Y": 424
+      }
+    },
+    {
+      "Name": "CurrentStaminaText",
+      "Type": "Dynamic",
+      "UseFont": "MiniSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1500,
+        "Y": 549
+      }
+    },
+    {
+      "Name": "CurrentStrengthText",
+      "Type": "Dynamic",
+      "UseFont": "MiniSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1500,
+        "Y": 674
+      }
+    },
+    {
+      "Name": "CurrentResistTimeText",
+      "Type": "Dynamic",
+      "UseFont": "MiniSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1500,
+        "Y": 799
+      }
     }
   ],
   "Buttons": [
