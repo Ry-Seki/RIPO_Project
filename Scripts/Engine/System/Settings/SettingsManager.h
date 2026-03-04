@@ -25,12 +25,14 @@ class SettingsManager : public Singleton<SettingsManager> {
 	friend class Singleton<SettingsManager>;
 
 private:
-    float mouseSensitivity = 0.0f;
-    float masterVolume = 0.0f;
-    float bgmVolume = 0.0f;
-    float seVolume = 0.0f;
+    int mouseSensitivity = 0;
+    int masterVolume = 0;
+    int bgmVolume = 0;
+    int seVolume = 0;
 
     static constexpr const char* _SETTING_DATA_PATH = "SaveData/Settings.json";
+    static constexpr const int _MAX_VOLUME = 10;
+    static constexpr float _DEVIDE_MAX_VOLUME = 1.0f / 10.0f;
 
 public:
     /*
@@ -96,83 +98,83 @@ public:
     }
     /*
      *  @brief      É}ÉXÉ^Å[âπó ÇÃéÊìæ
-     *  @return     float(0.0fÅ`1.0f)
+     *  @return     int(10íiäK)
      */
-    inline float GetMasterVolume() const{ return masterVolume; }
+    inline int GetMasterVolume() const{ return masterVolume; }
     /*
      *  @brief      É}ÉXÉ^Å[âπó ÇÃê›íË
-     *  @param[in]  float setValue(0.0fÅ`1.0f)
+     *  @param[in]  int setValue(0Å`10)
      */
-    inline void SetMasterVolume(float setValue) {
-        masterVolume = std::clamp(setValue, 0.0f, 1.0f);
-        AudioUtility::SetMasterVolume(masterVolume);
+    inline void SetMasterVolume(int setValue) {
+        masterVolume = std::clamp(setValue, 0, _MAX_VOLUME);
+        AudioUtility::SetMasterVolume(masterVolume * _DEVIDE_MAX_VOLUME);
     }
     /*
      *  @brief      É}ÉXÉ^Å[âπó ÇÃè„è∏
-     *  @param[in]  float setValue
+     *  @param[in]  int setValue
      */
-    inline void AddMasterVolume(float setValue) {
+    inline void AddMasterVolume(int setValue) {
         SetMasterVolume(masterVolume + setValue);
     }
     /*
      *  @brief      É}ÉXÉ^Å[âπó ÇÃí·â∫
-     *  @param[in]  float setValue
+     *  @param[in]  int setValue
      */
-    inline void SubMasterVolume(float setValue) {
+    inline void SubMasterVolume(int setValue) {
         SetMasterVolume(masterVolume - setValue);
     }
     /*
      *  @brief      BGMâπó ÇÃéÊìæ
-     *  @return     float(0.0fÅ`1.0f)
+     *  @return     int(10íiäK)
      */
-    inline float GetBGMVolume() const { return bgmVolume; }
+    inline int GetBGMVolume() const { return bgmVolume; }
     /*
      *  @brief      BGMâπó ÇÃê›íË
-     *  @param[in]  float setValue(0.0fÅ`1.0f)
+     *  @param[in]  int setValue(0Å`10)
      */
-    inline void SetBGMVolume(float setValue) {
-        bgmVolume = std::clamp(setValue, 0.0f, 1.0f);
-        AudioUtility::SetBGMVolume(bgmVolume);
+    inline void SetBGMVolume(int setValue) {
+        bgmVolume = std::clamp(setValue, 0, _MAX_VOLUME);
+        AudioUtility::SetBGMVolume(bgmVolume * _DEVIDE_MAX_VOLUME);
     }
     /*
      *  @brief      BGMâπó ÇÃè„è∏
-     *  @param[in]  flaot setValue
+     *  @param[in]  int setValue
      */
-    inline void AddBGMVolume(float setValue) {
+    inline void AddBGMVolume(int setValue) {
         SetBGMVolume(bgmVolume + setValue);
     }
     /*
      *  @brief      BGMâπó ÇÃí·â∫
-     *  @param[in]  float setValue
+     *  @param[in]  int setValue
      */
-    inline void SubBGMVolume(float setValue) {
+    inline void SubBGMVolume(int setValue) {
         SetBGMVolume(bgmVolume - setValue);
     }
     /*
      *  @brief      SEâπó ÇÃéÊìæ
-     *  @return     float(0.0fÅ`1.0f)
+     *  @return     int(0Å`10)
      */
-    inline float GetSEVolume() const{ return seVolume; }
+    inline int GetSEVolume() const{ return seVolume; }
     /*
      *  @brief      SEâπó ÇÃê›íË
-     *  @param[in]  float setVolume(0.0fÅ`1.0f)
+     *  @param[in]  int setVolume(0Å`10)
      */
-    inline void SetSEVolume(float setValue) {
-        seVolume = std::clamp(setValue, 0.0f, 1.0f);
-        AudioUtility::SetSEVolume(seVolume);
+    inline void SetSEVolume(int setValue) {
+        seVolume = std::clamp(setValue, 0, _MAX_VOLUME);
+        AudioUtility::SetSEVolume(seVolume * _DEVIDE_MAX_VOLUME);
     }
     /*
      *  @brief      SEâπó ÇÃè„è∏
-     *  @param[in]  float setValue
+     *  @param[in]  int setValue
      */
-    inline void AddSEVolume(float setValue) {
+    inline void AddSEVolume(int setValue) {
         SetSEVolume(seVolume + setValue);
     }
     /*
      *  @brief      SEâπó ÇÃí·â∫
-     *  @param[in]  float setValue
+     *  @param[in]  int setValue
      */
-    inline void SubSEVolume(float setValue) {
+    inline void SubSEVolume(int setValue) {
         SetSEVolume(seVolume - setValue);
     }
 };

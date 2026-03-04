@@ -5,7 +5,7 @@
 
 #include "MenuInGame.h"
 #include "../MenuManager.h"
-#include "../System/MenuSettings.h"
+#include "../System/MenuVolumeSettings.h"
 #include "../System/MenuSaveMode.h"
 #include "../System/MenuLoadMode.h"
 #include "../../UI/Button/SinglePressButton.h"
@@ -176,7 +176,7 @@ void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
         AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            menu.OpenMenu<MenuSettings>();
+            menu.OpenMenu<MenuVolumeSettings>();
         });
     } else if (buttonIndex == 3) {
         isInteractive = false;

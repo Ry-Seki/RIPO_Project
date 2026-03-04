@@ -1,153 +1,204 @@
 {
-  "BackGround": {
-    "Resources": [
 
-    ]
-  },
+  "Sprites": [
+    {
+      "Name": "BackGround",
+      "Rect": {
+        "X": 0,
+        "Y": 0,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/BackGround/Trealine_LoadBackground_black1.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black2.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black3.jpg"
+      ]
+    },
+    {
+      "Name": "SettingsVolume",
+      "Rect": {
+        "X": 63,
+        "Y": 25,
+        "Width": 804,
+        "Height": 840
+      },
+      "Resources": [
+        "Res/Menu/System/Settings/Volume/Trealine_SettingsVolume.png"
+      ]
+    }
+  ],
+  "Texts": [
+    {
+      "Name": "MasterVolumeText",
+      "Type": "Dynamic",
+      "UseFont": "NormalSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1322,
+        "Y": 330
+      }
+    },
+    {
+      "Name": "BGMVolumeText",
+      "Type": "Dynamic",
+      "UseFont": "NormalSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1322,
+        "Y": 556
+      }
+    },
+    {
+      "Name": "SEVolumeText",
+      "Type": "Dynamic",
+      "UseFont": "NormalSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1332,
+        "Y": 790
+      }
+    }
+  ],
   "Buttons": [
-    {
-      "Name": "SubSensitivity",
-      "Type": "LongPress",
-      "Position": {
-        "X": 200,
-        "Y": 50
-      },
-      "Rect": {
-        "X": 200,
-        "Y": 50,
-        "Width": 50,
-        "Height": 50
-      },
-      "Resources": {
-      }
-    },
-    {
-      "Name": "AddSensitivity",
-      "Type": "LongPress",
-      "Position": {
-        "X": 400,
-        "Y": 50
-      },
-      "Rect": {
-        "X": 400,
-        "Y": 50,
-        "Width": 50,
-        "Height": 50
-      },
-      "Resources": {
-      }
-    },
     {
       "Name": "SubMasterVolume",
       "Type": "LongPress",
       "Position": {
-        "X": 200,
-        "Y": 150
+        "X": 974,
+        "Y": 273
       },
       "Rect": {
-        "X": 200,
-        "Y": 150,
-        "Width": 50,
-        "Height": 50
+        "X": 974,
+        "Y": 273,
+        "Width": 185,
+        "Height": 217
       },
       "Resources": {
+        "Idle": "Res/Menu/System/Settings/Volume/Trealine_ChangeSubValueButton.png",
+        "Hover": "Res/Menu/System/Settings/Volume/Trealine_ChangeSubValueButton.png",
+        "Press": "Res/Menu/System/Settings/Volume/Trealine_ChangeSubValueButton_Press.png",
+        "Select": "Res/Menu/System/Settings/Volume/Trealine_ChangeSubValueButton_Select.png"
       }
     },
     {
       "Name": "AddMasterVolume",
       "Type": "LongPress",
       "Position": {
-        "X": 400,
-        "Y": 150
+        "X": 1577,
+        "Y": 273
       },
       "Rect": {
-        "X": 400,
-        "Y": 150,
-        "Width": 50,
-        "Height": 50
+        "X": 1577,
+        "Y": 273,
+        "Width": 185,
+        "Height": 217
       },
       "Resources": {
+        "Idle": "Res/Menu/System/Settings/Volume/Trealine_ChangeAddValueButton.png",
+        "Hover": "Res/Menu/System/Settings/Volume/Trealine_ChangeAddValueButton.png",
+        "Press": "Res/Menu/System/Settings/Volume/Trealine_ChangeAddValueButton_Press.png",
+        "Select": "Res/Menu/System/Settings/Volume/Trealine_ChangeAddValueButton_Select.png"
       }
     },
     {
       "Name": "SubBGMVolume",
       "Type": "LongPress",
       "Position": {
-        "X": 200,
-        "Y": 250
+        "X": 974,
+        "Y": 502
       },
       "Rect": {
-        "X": 200,
-        "Y": 250,
-        "Width": 50,
-        "Height": 50
+        "X": 974,
+        "Y": 502,
+        "Width": 185,
+        "Height": 217
       },
       "Resources": {
+        "Idle": "Res/Menu/System/Settings/Volume/Trealine_ChangeSubValueButton.png",
+        "Hover": "Res/Menu/System/Settings/Volume/Trealine_ChangeSubValueButton.png",
+        "Press": "Res/Menu/System/Settings/Volume/Trealine_ChangeSubValueButton_Press.png",
+        "Select": "Res/Menu/System/Settings/Volume/Trealine_ChangeSubValueButton_Select.png"
       }
     },
     {
       "Name": "AddBGMVolume",
       "Type": "LongPress",
       "Position": {
-        "X": 400,
-        "Y": 250
+        "X": 1577,
+        "Y": 502
       },
       "Rect": {
-        "X": 400,
-        "Y": 250,
-        "Width": 50,
-        "Height": 50
+        "X": 1577,
+        "Y": 502,
+        "Width": 185,
+        "Height": 217
       },
       "Resources": {
+        "Idle": "Res/Menu/System/Settings/Volume/Trealine_ChangeAddValueButton.png",
+        "Hover": "Res/Menu/System/Settings/Volume/Trealine_ChangeAddValueButton.png",
+        "Press": "Res/Menu/System/Settings/Volume/Trealine_ChangeAddValueButton_Press.png",
+        "Select": "Res/Menu/System/Settings/Volume/Trealine_ChangeAddValueButton_Select.png"
       }
     },
     {
       "Name": "SubSEVolume",
       "Type": "LongPress",
       "Position": {
-        "X": 200,
-        "Y": 350
+        "X": 974,
+        "Y": 731
       },
       "Rect": {
-        "X": 200,
-        "Y": 350,
-        "Width": 50,
-        "Height": 50
+        "X": 974,
+        "Y": 731,
+        "Width": 185,
+        "Height": 217
       },
       "Resources": {
+        "Idle": "Res/Menu/System/Settings/Volume/Trealine_ChangeSubValueButton.png",
+        "Hover": "Res/Menu/System/Settings/Volume/Trealine_ChangeSubValueButton.png",
+        "Press": "Res/Menu/System/Settings/Volume/Trealine_ChangeSubValueButton_Press.png",
+        "Select": "Res/Menu/System/Settings/Volume/Trealine_ChangeSubValueButton_Select.png"
       }
     },
     {
       "Name": "AddSEVolume",
       "Type": "LongPress",
       "Position": {
-        "X": 400,
-        "Y": 350
+        "X": 1577,
+        "Y": 731
       },
       "Rect": {
-        "X": 400,
-        "Y": 350,
-        "Width": 50,
-        "Height": 50
+        "X": 1577,
+        "Y": 731,
+        "Width": 185,
+        "Height": 217
       },
       "Resources": {
+        "Idle": "Res/Menu/System/Settings/Volume/Trealine_ChangeAddValueButton.png",
+        "Hover": "Res/Menu/System/Settings/Volume/Trealine_ChangeAddValueButton.png",
+        "Press": "Res/Menu/System/Settings/Volume/Trealine_ChangeAddValueButton_Press.png",
+        "Select": "Res/Menu/System/Settings/Volume/Trealine_ChangeAddValueButton_Select.png"
       }
     },
     {
       "Name": "Back",
       "Type": "Single",
       "Position": {
-        "X": 500,
-        "Y": 450
+        "X": 1655,
+        "Y": 967
       },
       "Rect": {
-        "X": 500,
-        "Y": 450,
-        "Width": 200,
-        "Height": 80
+        "X": 1655,
+        "Y": 967,
+        "Width": 209,
+        "Height": 93
       },
       "Resources": {
-
+        "Idle": "Res/Menu/System/Settings/Volume/Trealine_BackButton.png",
+        "Hover": "Res/Menu/System/Settings/Volume/Trealine_BackButton.png",
+        "Press": "Res/Menu/System/Settings/Volume/Trealine_BackButton_Press.png",
+        "Select": "Res/Menu/System/Settings/Volume/Trealine_BackButton_Select.png"
       }
     }
   ]

@@ -711,7 +711,7 @@
     <ClCompile Include="Scripts\Engine\Component\Character\EnemyStandby.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scripts\Engine\Menu\System\MenuSettings.cpp">
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuVolumeSettings.cpp">
       <Filter>ソース ファイル\Engine\Menu\System</Filter>
     </ClCompile>
     <ClCompile Include="Scripts\Engine\Scene\GameState\ActionContext.cpp">
@@ -1367,7 +1367,7 @@
     <ClInclude Include="Scripts\Engine\UI\Button\LongPressButton.h">
       <Filter>ヘッダー ファイル\Engine\UI\Button</Filter>
     </ClInclude>
-    <ClInclude Include="Scripts\Engine\Menu\System\MenuSettings.h">
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuVolumeSettings.h">
       <Filter>ヘッダー ファイル\Engine\Menu\System</Filter>
     </ClInclude>
     <ClInclude Include="Scripts\Engine\System\Settings\SettingsManager.h">

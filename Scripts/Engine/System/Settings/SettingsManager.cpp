@@ -12,9 +12,9 @@
  */
 void SettingsManager::Initialize() {
     Load();
-    AudioUtility::SetMasterVolume(masterVolume);
-    AudioUtility::SetBGMVolume(bgmVolume);
-    AudioUtility::SetSEVolume(seVolume);
+    AudioUtility::SetMasterVolume(masterVolume * _DEVIDE_MAX_VOLUME);
+    AudioUtility::SetBGMVolume(bgmVolume * _DEVIDE_MAX_VOLUME);
+    AudioUtility::SetSEVolume(seVolume * _DEVIDE_MAX_VOLUME);
 }
 /*
  *  @brief      セーブ処理
@@ -52,10 +52,10 @@ bool SettingsManager::Load() {
 
     // 初回起動はデフォルト生成
     if (!std::filesystem::exists(path)) {
-        mouseSensitivity = 1.0f;
-        masterVolume = 1.0f;
-        bgmVolume = 1.0f;
-        seVolume = 1.0f;
+        mouseSensitivity = _MAX_VOLUME;
+        masterVolume = _MAX_VOLUME;
+        bgmVolume = _MAX_VOLUME;
+        seVolume = _MAX_VOLUME;
         Save();
         return true;
     }
@@ -71,10 +71,10 @@ bool SettingsManager::Load() {
 
     const JSON& settings = root["Settings"];
 
-    mouseSensitivity = settings.value("mouseSensitivity", 1.0f);
-    masterVolume = settings.value("masterVolume", 1.0f);
-    bgmVolume = settings.value("bgmVolume", 1.0f);
-    seVolume = settings.value("seVolume", 1.0f);
+    mouseSensitivity = settings.value("mouseSensitivity", _MAX_VOLUME);
+    masterVolume = settings.value("masterVolume", _MAX_VOLUME);
+    bgmVolume = settings.value("bgmVolume", _MAX_VOLUME);
+    seVolume = settings.value("seVolume", _MAX_VOLUME);
 
     return true;
 }

@@ -20,6 +20,7 @@ class FadeManager : public Singleton<FadeManager>{
 private:
     FadeBasePtr currentFade;
     std::function<void()> onFadeFinished; // フェード終了時のコールバック
+    std::queue<std::function<void()>> onFadeFinishList;
 
 private:
     /*

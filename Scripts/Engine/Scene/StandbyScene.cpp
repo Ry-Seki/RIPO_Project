@@ -11,7 +11,7 @@
 #include "../Menu/MenuManager.h"
 #include "../Menu/System/MenuLoadMode.h"
 #include "../Menu/System/MenuSaveMode.h"
-#include "../Menu/System/MenuSettings.h"
+#include "../Menu/System/MenuVolumeSettings.h"
 #include "../Load/Sprite/LoadSprite.h"
 #include "../Load/LoadManager.h"
 #include "../Load/Animation/LoadAnimation_ChangeBackground.h"
@@ -35,7 +35,7 @@ void StandbyScene::Initialize(Engine& engine) {
 	auto& menu = MenuManager::GetInstance();
 	menu.GetMenu<MenuLoadMode>();
 	menu.GetMenu<MenuSaveMode>();
-	menu.GetMenu<MenuSettings>();
+	menu.GetMenu<MenuVolumeSettings>();
 	std::vector<std::shared_ptr<LoadSprite>> loadBGList;
 	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black1.jpg"));
 	loadBGList.push_back(LoadManager::GetInstance().LoadResource<LoadSprite>("Res/BackGround/Trealine_LoadBackground_black2.jpg"));

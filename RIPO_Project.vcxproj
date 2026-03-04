@@ -233,7 +233,7 @@
     <ClCompile Include="Scripts\Engine\Menu\System\MenuLoadMode.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuSaveMode.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.cpp" />
-    <ClCompile Include="Scripts\Engine\Menu\System\MenuSettings.cpp" />
+    <ClCompile Include="Scripts\Engine\Menu\System\MenuVolumeSettings.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuGameModeSelect.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuSelectNewGame.cpp" />
     <ClCompile Include="Scripts\Engine\Menu\Title\MenuSelectLoadGame.cpp" />
@@ -441,7 +441,7 @@
     <ClInclude Include="Scripts\Engine\Menu\System\MenuLoadMode.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuSaveMode.h" />
     <ClInclude Include="Scripts\Engine\Menu\System\MenuSelectSaveSlot.h" />
-    <ClInclude Include="Scripts\Engine\Menu\System\MenuSettings.h" />
+    <ClInclude Include="Scripts\Engine\Menu\System\MenuVolumeSettings.h" />
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuGameModeSelect.h" />
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuSelectNewGame.h" />
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuSelectLoadGame.h" />
