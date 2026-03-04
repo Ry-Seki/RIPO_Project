@@ -15,6 +15,7 @@
 	class BossShootingAttack : public BossState {
 	private:
 		std::shared_ptr<AnimatorComponent> animator;
+		std::shared_ptr<BossComponent> bossComponent;
 		GameObjectPtr player;
 		float coolTime;
 		// ’eŒ‚‚¿ƒtƒ‰ƒO
@@ -43,6 +44,14 @@
 		 */
 		virtual void Update(GameObject* boss, float deltaTime) override;
 
+	private:
+		/*
+		 *	ËŒ‚UŒ‚
+		 *	param[in]	GameObject*	boss
+		 *  param[in]	float		deltaTime
+		 *  param[in]	float		shotSpeed	’e‚Ì”­Ë‘¬“x
+		 */
+		void ShootingAttack(GameObject* boss, float deltaTime, float shotSpeed);
 
 };
 

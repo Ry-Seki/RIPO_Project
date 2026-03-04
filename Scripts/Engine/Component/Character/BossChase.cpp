@@ -21,14 +21,15 @@ using namespace StageUtility;
 BossChase::BossChase()
 	: player(nullptr)
 	, animator(nullptr)
+	, bossComponent(nullptr)
 	, modelHandle(-1)
 	, coolTimeSE(0.7f)
 	, SEVolume(1.0f)
 	, playerDistance(0.0f)
-	, PLAYER_DISTANCE(1700.0f)
-	, SHOOTING_PLAYER_DISTANCE(3000.0f)
+	, moveSpeed(0.0f)
+	, closeRangeAttackDistance(0.0f)
+	, longRangeAttackDistance(0.0f)
 	, ROTATE_SPEED(3.0f)
-	, MOVE_SPEED(700.0f)
 	, SE_DISTANCE(10000) {
 }
 
@@ -41,8 +42,30 @@ void BossChase::Start(GameObject* boss) {
 	if (player == nullptr) return;
 	animator = boss->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
+	bossComponent = boss->GetComponent<BossComponent>();
 
-	boss->GetComponent<BossComponent>()->SetMoveFrag(true);
+	bossComponent->SetMoveFrag(true);
+
+	switch (bossComponent->GetBossID())
+	{
+	case 101:
+
+		moveSpeed = 700.0f;
+		closeRangeAttackDistance = 1700.0f;
+		longRangeAttackDistance = 3000.0f;
+
+		break;
+
+	case 102:
+
+		moveSpeed = 1000.0f;
+		closeRangeAttackDistance = 1000.0f;
+		longRangeAttackDistance = 4000.0f;
+
+		break;
+	default:
+		break;
+	}
 }
 
 /*
@@ -58,7 +81,6 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
 
-	animator->Update(deltaTime);
 	animator->Play(11, 10);
 
 	// プレイヤーとの距離
@@ -78,16 +100,32 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 		coolTimeSE = 1.5f;
 	}
 
-	auto bossComponent = boss->GetComponent<BossComponent>();
-
 	ChaseWayPoint(boss, player->position, deltaTime);
 
-	// 射程距離判定
-	if (PLAYER_DISTANCE > Distance(player->position, boss->position)) {
-		bossComponent->SetState(new BossAttack());
-	}
-	else if (SHOOTING_PLAYER_DISTANCE > Distance(player->position, boss->position)) {
-		bossComponent->SetState(new BossShootingAttack());
+	switch (bossComponent->GetBossID())
+	{
+	case 101:
+
+		// 射程距離判定
+		if (closeRangeAttackDistance > Distance(player->position, boss->position)) {
+			bossComponent->SetState(new BossAttack());
+		}
+		else if (longRangeAttackDistance > Distance(player->position, boss->position)) {
+			bossComponent->SetState(new BossShootingAttack());
+		}
+
+		break;
+
+	case 102:
+
+		if (closeRangeAttackDistance > Distance(player->position, boss->position) ||
+			longRangeAttackDistance < Distance(player->position, boss->position)) {
+			bossComponent->SetState(new BossAttack());
+		}
+		
+		break;
+	default:
+		break;
 	}
 }
 
@@ -123,8 +161,8 @@ void BossChase::ChaseWayPoint(GameObject* boss, Vector3 wayPoint, float deltaTim
 	float moveZ = 0;
 	// プレイヤーの手前で止まる
 	if (player && wayPoint == player->position) {
-		moveX += direction.x * MOVE_SPEED * deltaTime;
-		moveZ += direction.z * MOVE_SPEED * deltaTime;
+		moveX += direction.x * moveSpeed * deltaTime;
+		moveZ += direction.z * moveSpeed * deltaTime;
 		boss->position.x += moveX;
 		boss->position.z += moveZ;
 	}

@@ -14,11 +14,13 @@
   */
 BossAttack::BossAttack()
 	: animator(nullptr)
+	, bossComponent(nullptr)
 	, coolTime(0)
 	, FirstEffectFlag(false)
 	, FirstSEFlag(false)
 	, MAX_COOL_TIME(3)
 	, ANIMATION_SPEED(1250)
+	, MOVE_SPEED(1500.0f)
 {
 }
 
@@ -31,6 +33,9 @@ void BossAttack::Start(GameObject* boss)
 	animator = boss->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
 	coolTime = MAX_COOL_TIME;
+	bossComponent = boss->GetComponent<BossComponent>();
+
+	playerDirection = bossComponent->GetBossToPlayerDirection();
 }
 
 /*
@@ -40,13 +45,42 @@ void BossAttack::Start(GameObject* boss)
  */
 void BossAttack::Update(GameObject* boss, float deltaTime)
 {
-	auto bossComponent = boss->GetComponent<BossComponent>();
 	// モデルハンドルのセット
 	auto modelRenderer = boss->GetComponent<ModelRenderer>()->GetModelHandle();
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
 
-	//auto animations = ANIMATION_SPEED * deltaTime;
+	coolTime -= deltaTime;
+
+	// 攻撃中は被ダメ判定は取らない
+	bossComponent->SetHitFlag(true);
+
+	switch (bossComponent->GetBossID())
+	{
+	case 101:
+
+		RangeAttack(boss, deltaTime);
+
+		break;
+
+	case 102:
+
+		HeadlongAttack(boss, deltaTime);
+
+		break;
+	default:
+		break;
+	}
+
+}
+
+/*
+ *	範囲攻撃
+ *	param[in]	GameObject* boss
+ *	param[in]	float		deltaTime
+ */
+void BossAttack::RangeAttack(GameObject* boss, float deltaTime)
+{
 	animator->Play(3, ANIMATION_SPEED * deltaTime);
 
 	// 攻撃の当たり判定
@@ -55,12 +89,8 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 	const Vector3 aabbMin = { -500, 0, -500 };
 	const Vector3 aabbMax = { 500, 50, 500 };
 
-	bossComponent->SetHitFlag(true);
-
-
 	// アニメーションが終わるまで待ちたい
 	// 仮
-	coolTime -= deltaTime;
 	if (coolTime <= 1.85f) {
 		if (!FirstEffectFlag) {
 			// エフェクトを出す
@@ -89,4 +119,20 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 		// 状態遷移
 		bossComponent->SetState(new BossStandby());
 	}
+}
+
+/*
+ *	範囲攻撃
+ *	param[in]	GameObject* boss
+ *	param[in]	float		deltaTime
+ */
+void BossAttack::HeadlongAttack(GameObject* boss, float deltaTime)
+{
+	animator->Play(3, ANIMATION_SPEED * deltaTime);
+
+	// プレイヤーがいた方向に突進
+	auto posX = playerDirection.x * MOVE_SPEED * deltaTime;
+	auto posZ = playerDirection.z * MOVE_SPEED * deltaTime;
+	boss->position.x += posX;
+	boss->position.y += posZ;
 }

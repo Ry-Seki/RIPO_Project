@@ -136,6 +136,11 @@ public:
 	inline int GetBossAttack() const { return status.attack; }
 
 	/*
+	 *	IDの取得
+	 */
+	inline int GetBossID() const { return status.ID; }
+
+	/*
 	 *	討伐金データの取得
 	 */
 	inline int GetBossDataBounty() const { return status.bounty; }
@@ -172,15 +177,10 @@ public:
 	 */
 	inline void SetBossAttackTimeFlag(bool setValue) { bossAttackTimeFlag = setValue; }
 
-	///*
-	// *	IDの取得
-	// */
-	//inline int GetBossID() const { return ID; }
-
-	///*
-	// *	IDの変更
-	// */
-	//inline void SetBossID(int setValue) { ID = setValue; }
+	/*
+	 *	ボスから見たプレイヤーの方向
+	 */
+	inline Vector3 GetBossToPlayerDirection() { return Direction(boss->position, player->position); }
 };
 
 #endif // !_BOSSCOMPONENT_H_

@@ -15,6 +15,7 @@ class BossChase : public BossState {
 private:
 	GameObjectPtr player;
 	std::shared_ptr<AnimatorComponent> animator;
+	std::shared_ptr<BossComponent> bossComponent;
 	// モデルハンドル
 	int modelHandle;
 	// SEの間隔
@@ -23,17 +24,17 @@ private:
 	float SEVolume;
 	// プレイヤーまでの距離
 	float playerDistance;
+	// 移動スピード
+	float moveSpeed;
+	// 近距離攻撃用プレイヤー検知距離
+	float closeRangeAttackDistance;
+	// 遠距離攻撃用プレイヤー検知距離
+	float longRangeAttackDistance;
 	// 移動量
 	Vector3 moveVec;
 
-	// 近距離攻撃用プレイヤー検知距離
-	const float PLAYER_DISTANCE;
-	// 遠距離攻撃用プレイヤー検知距離
-	const float SHOOTING_PLAYER_DISTANCE;
 	// 回転スピード
 	const float ROTATE_SPEED;
-	// 移動スピード
-	const float MOVE_SPEED;
 	// SEの聞こえる距離
 	const float SE_DISTANCE;
 
