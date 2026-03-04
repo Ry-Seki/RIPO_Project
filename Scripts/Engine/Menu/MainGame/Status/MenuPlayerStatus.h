@@ -7,8 +7,9 @@
 #define _MENU_PLAYER_STATUS_H_
 
 #include "../../MenuBase.h"
-#include "../../../UI/Button/UIButtonBase.h"
 #include "../../../UI/Sprite/Sprite.h"
+#include "../../../UI/Text/TextBase.h"
+#include "../../../UI/Button/UIButtonBase.h"
 #include "../../../UI/EventSystem.h"
 #include "../../../GameEnum.h"
 #include "../../../GameConst.h"
@@ -32,13 +33,13 @@ private:
 	PlayerStatusData prevStatus;
 	EventSystem eventSystem;
 
-	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
+	std::vector<std::shared_ptr<TextBase>> textList;
+	std::vector<TextBase*> prevTextList;
+	std::vector<TextBase*> currentTextList;
+	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 
 	std::function<void()> Callback = nullptr;
-
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Status/StatusMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Status/StatusMenuNavigation.json";
 
 public:
 	/*
@@ -89,6 +90,10 @@ private:
 	 *	@brief	コールバックの実行
 	 */
 	void ExecuteCallback();
+	/*
+	 *	@brief	前と現在のステータステキストを振り分ける
+	 */
+	void SortStatusText();
 
 public:
 	/*
