@@ -42,11 +42,11 @@ Vector3 PointToSegmentMinLength(const Vector3& point, const Segment& segment, fl
  *	@param[in]	AABB	aabb	最近接点を調べるAABB
  *  @return		Vector3			最近接点の座標
  */
-Vector3 PointToAABBMinLength(const Vector3& point, const AABB& box) {
+Vector3 PointToAABBMinLength(const Vector3& point, const AABB& aabb) {
 	return {
-		Clamp(point.x, box.min.x, box.max.x),
-		Clamp(point.y, box.min.y, box.max.y),
-		Clamp(point.z, box.min.z, box.max.z)
+		Clamp(point.x, aabb.min.x, aabb.max.x),
+		Clamp(point.y, aabb.min.y, aabb.max.y),
+		Clamp(point.z, aabb.min.z, aabb.max.z)
 	};
 }
 
@@ -191,24 +191,24 @@ void SegmentBetweenMinLength(const Segment& a, const Segment& b, Vector3& aMinPo
  *	1つの軸のスラブ判定
  *	@param[in]	float	start		軸単位の線の開始点
  *	@param[in]	float	direction	線の向く方向
- *	@param[in]	float	boxMin		軸単位のAABBの最小点
- *	@param[in]	float	boxMax		軸単位のAABBの最大点
+ *	@param[in]	float	aabbMin		軸単位のAABBの最小点
+ *	@param[in]	float	aabbMax		軸単位のAABBの最大点
  *	@param[out]	float	segMinRatio 線分の有効区間の開始点
  *	@param[out]	float	segMaxRatio	線分の有効区間の終了点
  *  @return		bool				交差するかどうか
  */
-bool IntersectSlab(float start, float direction, float boxMin, float boxMax, float& segMinRatio, float& segMaxRatio) {
+bool IntersectSlab(float start, float direction, float aabbMin, float aabbMax, float& segMinRatio, float& segMaxRatio) {
 	// 限りなく平行に近いなら
 	if (fabs(direction) < EPSILON) {
-		// 線分の開始点がその軸上でboxの中になければ交差はしていない
-		return (start >= boxMin && start <= boxMax);
+		// 線分の開始点がその軸上でaabbの中になければ交差はしていない
+		return (start >= aabbMin && start <= aabbMax);
 	}
 
 	// dirの逆数(除算をできるだけ避けるため)
 	float reciprocalDir = 1.0f / direction;
 	// スラブに到達する地点
-	float enterRatio = (boxMin - start) * reciprocalDir;
-	float exitRatio = (boxMax - start) * reciprocalDir;
+	float enterRatio = (aabbMin - start) * reciprocalDir;
+	float exitRatio = (aabbMax - start) * reciprocalDir;
 
 	// enterRatio <= exitRatio にする(方向によっては逆転する可能性があるため)
 	if (enterRatio > exitRatio)
@@ -227,16 +227,16 @@ bool IntersectSlab(float start, float direction, float boxMin, float boxMax, flo
 /*
  *  線分からAABBへの最近接点
  *  @param[in]	Segment segment		最近接点を調べる線分
- *  @param[in]	AABB	box			最近接点を調べるAABB
+ *  @param[in]	AABB	aabb			最近接点を調べるAABB
  *	@param[out] Vector3	segMinPoint	線分の最近接点座標
- *	@param[out]	Vector3	boxMinPoint	AABBの最近接点座標
+ *	@param[out]	Vector3	aabbMinPoint	AABBの最近接点座標
  *  @param[out]	float	minLengthSq	最近接点間の長さ2乗
  */
-void SegmentToAABBMinLength(const Segment& segment, const AABB& box, Vector3& segMinPoint, Vector3& boxMinPoint, float& minLengthSq) {
+void SegmentToAABBMinLength(const Segment& segment, const AABB& aabb, Vector3& segMinPoint, Vector3& aabbMinPoint, float& minLengthSq) {
 	Vector3 segStart = segment.startPoint;
 	Vector3 segEnd = segment.endPoint;
-	Vector3 boxMin = box.min;
-	Vector3 boxMax = box.max;
+	Vector3 aabbMin = aabb.min;
+	Vector3 aabbMax = aabb.max;
 	// 線分の方向ベクトル(非正規化)
 	Vector3 segDir = segEnd - segStart;
 	// より小さい値を探していくため初期値は最大
@@ -252,13 +252,13 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB& box, Vector3& se
 
 		// 各軸のスラブ判定
 		// xスラブ
-		if (!IntersectSlab(segStart.x, segDir.x, boxMin.x, boxMax.x, segMinRatio, segMaxRatio))
+		if (!IntersectSlab(segStart.x, segDir.x, aabbMin.x, aabbMax.x, segMinRatio, segMaxRatio))
 			return false;
 		// yスラブ
-		if (!IntersectSlab(segStart.y, segDir.y, boxMin.y, boxMax.y, segMinRatio, segMaxRatio))
+		if (!IntersectSlab(segStart.y, segDir.y, aabbMin.y, aabbMax.y, segMinRatio, segMaxRatio))
 			return false;
 		// zスラブ
-		if (!IntersectSlab(segStart.z, segDir.z, boxMin.z, boxMax.z, segMinRatio, segMaxRatio))
+		if (!IntersectSlab(segStart.z, segDir.z, aabbMin.z, aabbMax.z, segMinRatio, segMaxRatio))
 			return false;
 
 		// 全ての軸で交差しているなら線分とAABBは交差している
@@ -270,7 +270,7 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB& box, Vector3& se
 	Vector3 intersect;
 	if (IntersectSegmentAABB(intersect)) {
 		segMinPoint = intersect;
-		boxMinPoint = intersect;
+		aabbMinPoint = intersect;
 		minLengthSq = 0;
 		return;
 	}
@@ -278,21 +278,21 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB& box, Vector3& se
 	// 線分の端点からAABBへの最近接点
 
 	// 現状の最短より短ければ値更新
-	auto CheckCandidate = [&](const Vector3& segPoint, const Vector3& boxPoint) {
-		float lengthSq = Dot((segPoint - boxPoint), (segPoint - boxPoint));
+	auto CheckCandidate = [&](const Vector3& segPoint, const Vector3& aabbPoint) {
+		float lengthSq = Dot((segPoint - aabbPoint), (segPoint - aabbPoint));
 		if (lengthSq < minLengthSq) {
 			segMinPoint = segPoint;
-			boxMinPoint = boxPoint;
+			aabbMinPoint = aabbPoint;
 			minLengthSq = lengthSq;
 		}
 	};
 
 	// 線分の開始点からAABB
-	Vector3 startMinPoint = PointToAABBMinLength(segStart, box);
+	Vector3 startMinPoint = PointToAABBMinLength(segStart, aabb);
 	CheckCandidate(segStart, startMinPoint);
 
 	// 線分の終了点からAABB
-	Vector3 engMinPoint = PointToAABBMinLength(segEnd, box);
+	Vector3 engMinPoint = PointToAABBMinLength(segEnd, aabb);
 	CheckCandidate(segEnd, engMinPoint);
 
 	// AABBの8コーナーから線分への最近接点
@@ -306,14 +306,14 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB& box, Vector3& se
 	};
 
 	// 8つのコーナーで最近接点を求める
-	CheckCorner(boxMin.x, boxMin.y, boxMin.z);
-	CheckCorner(boxMax.x, boxMin.y, boxMin.z);
-	CheckCorner(boxMin.x, boxMax.y, boxMin.z);
-	CheckCorner(boxMax.x, boxMax.y, boxMin.z);
-	CheckCorner(boxMin.x, boxMin.y, boxMax.z);
-	CheckCorner(boxMax.x, boxMin.y, boxMax.z);
-	CheckCorner(boxMin.x, boxMax.y, boxMax.z);
-	CheckCorner(boxMax.x, boxMax.y, boxMax.z);
+	CheckCorner(aabbMin.x, aabbMin.y, aabbMin.z);
+	CheckCorner(aabbMax.x, aabbMin.y, aabbMin.z);
+	CheckCorner(aabbMin.x, aabbMax.y, aabbMin.z);
+	CheckCorner(aabbMax.x, aabbMax.y, aabbMin.z);
+	CheckCorner(aabbMin.x, aabbMin.y, aabbMax.z);
+	CheckCorner(aabbMax.x, aabbMin.y, aabbMax.z);
+	CheckCorner(aabbMin.x, aabbMax.y, aabbMax.z);
+	CheckCorner(aabbMax.x, aabbMax.y, aabbMax.z);
 
 	// AABBの12辺から線分への最近接点
 
@@ -327,22 +327,22 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB& box, Vector3& se
 	};
 
 	// x方向の4辺
-	CheckEdge({ boxMin.x, boxMin.y, boxMin.z }, { boxMax.x, boxMin.y, boxMin.z });
-	CheckEdge({ boxMin.x, boxMin.y, boxMax.z }, { boxMax.x, boxMin.y, boxMax.z });
-	CheckEdge({ boxMin.x, boxMax.y, boxMin.z }, { boxMax.x, boxMax.y, boxMin.z });
-	CheckEdge({ boxMin.x, boxMax.y, boxMax.z }, { boxMax.x, boxMax.y, boxMax.z });
+	CheckEdge({ aabbMin.x, aabbMin.y, aabbMin.z }, { aabbMax.x, aabbMin.y, aabbMin.z });
+	CheckEdge({ aabbMin.x, aabbMin.y, aabbMax.z }, { aabbMax.x, aabbMin.y, aabbMax.z });
+	CheckEdge({ aabbMin.x, aabbMax.y, aabbMin.z }, { aabbMax.x, aabbMax.y, aabbMin.z });
+	CheckEdge({ aabbMin.x, aabbMax.y, aabbMax.z }, { aabbMax.x, aabbMax.y, aabbMax.z });
 
 	// y方向の4辺
-	CheckEdge({ boxMin.x, boxMin.y, boxMin.z }, { boxMin.x, boxMax.y, boxMin.z });
-	CheckEdge({ boxMax.x, boxMin.y, boxMin.z }, { boxMax.x, boxMax.y, boxMin.z });
-	CheckEdge({ boxMin.x, boxMin.y, boxMax.z }, { boxMin.x, boxMax.y, boxMax.z });
-	CheckEdge({ boxMax.x, boxMin.y, boxMax.z }, { boxMax.x, boxMax.y, boxMax.z });
+	CheckEdge({ aabbMin.x, aabbMin.y, aabbMin.z }, { aabbMin.x, aabbMax.y, aabbMin.z });
+	CheckEdge({ aabbMax.x, aabbMin.y, aabbMin.z }, { aabbMax.x, aabbMax.y, aabbMin.z });
+	CheckEdge({ aabbMin.x, aabbMin.y, aabbMax.z }, { aabbMin.x, aabbMax.y, aabbMax.z });
+	CheckEdge({ aabbMax.x, aabbMin.y, aabbMax.z }, { aabbMax.x, aabbMax.y, aabbMax.z });
 
 	// z方向の4辺
-	CheckEdge({ boxMin.x, boxMin.y, boxMin.z }, { boxMin.x, boxMin.y, boxMax.z });
-	CheckEdge({ boxMax.x, boxMin.y, boxMin.z }, { boxMax.x, boxMin.y, boxMax.z });
-	CheckEdge({ boxMin.x, boxMax.y, boxMin.z }, { boxMin.x, boxMax.y, boxMax.z });
-	CheckEdge({ boxMax.x, boxMax.y, boxMin.z }, { boxMax.x, boxMax.y, boxMax.z });
+	CheckEdge({ aabbMin.x, aabbMin.y, aabbMin.z }, { aabbMin.x, aabbMin.y, aabbMax.z });
+	CheckEdge({ aabbMax.x, aabbMin.y, aabbMin.z }, { aabbMax.x, aabbMin.y, aabbMax.z });
+	CheckEdge({ aabbMin.x, aabbMax.y, aabbMin.z }, { aabbMin.x, aabbMax.y, aabbMax.z });
+	CheckEdge({ aabbMax.x, aabbMax.y, aabbMin.z }, { aabbMax.x, aabbMax.y, aabbMax.z });
 
 	// AABBの6面から線分への交点
 
@@ -364,16 +364,16 @@ void SegmentToAABBMinLength(const Segment& segment, const AABB& box, Vector3& se
 		int axisB = (i + 2) % 3;
 
 		// 他の軸がAABB内に収まっているかどうか
-		if (segPoint[axisA] < boxMin[axisA] || segPoint[axisA] > boxMax[axisA]) return;
-		if (segPoint[axisB] < boxMin[axisB] || segPoint[axisB] > boxMax[axisB]) return;
+		if (segPoint[axisA] < aabbMin[axisA] || segPoint[axisA] > aabbMax[axisA]) return;
+		if (segPoint[axisB] < aabbMin[axisB] || segPoint[axisB] > aabbMax[axisB]) return;
 		
 		CheckCandidate(segPoint, segPoint);
 	};
 
 	// 6つの面を順番に確認
 	for (int i = 0; i < 3; i++) {
-		CheckFace(boxMin[i], i);
-		CheckFace(boxMax[i], i);
+		CheckFace(aabbMin[i], i);
+		CheckFace(aabbMax[i], i);
 	}
 
 	return;
@@ -507,14 +507,14 @@ bool Intersect(const Capsule & a, const Capsule & b, Vector3 & penetration) {
 /*
  *  カプセル対AABBの交差判定
  *  @param[in]  Capsule capsule		判定対象1
- *  @param[in]  AABB	box			判定対象2
+ *  @param[in]  AABB	aabb			判定対象2
  *  @param[out] Vector3 penetration 貫通ベクトル
  */
-bool Intersect(const Capsule& capsule, const AABB& box, Vector3& penetration) {
-	Vector3 segMinPoint, boxMinPoint;
+bool Intersect(const Capsule& capsule, const AABB& aabb, Vector3& penetration) {
+	Vector3 segMinPoint, aabbMinPoint;
 	float minLengthSq;
 	// カプセルの線分とAABBの最近接点を求める
-	SegmentToAABBMinLength(capsule.segment, box, segMinPoint, boxMinPoint, minLengthSq);
+	SegmentToAABBMinLength(capsule.segment, aabb, segMinPoint, aabbMinPoint, minLengthSq);
 
 	// カプセルの半径とその2乗
 	float radius = capsule.radius;
@@ -525,7 +525,7 @@ bool Intersect(const Capsule& capsule, const AABB& box, Vector3& penetration) {
 
 	// 貫通距離を出す
 	// 2つの最近接点間の差ベクトル
-	Vector3 difference = segMinPoint - boxMinPoint;
+	Vector3 difference = segMinPoint - aabbMinPoint;
 	// 最近接点間の長さ
 	float minLength = sqrt(minLengthSq);
 
@@ -536,9 +536,9 @@ bool Intersect(const Capsule& capsule, const AABB& box, Vector3& penetration) {
 	}
 	// 最近接点間の長さが限りなく0に近い場合はAABBの中心からカプセル中心方向で比較
 	else {
-		Vector3 boxCenter = (box.min + box.max) * 0.5f;
+		Vector3 aabbCenter = (aabb.min + aabb.max) * 0.5f;
 		Vector3 capCenter = (capsule.segment.startPoint + capsule.segment.endPoint) * 0.5f;
-		Vector3 centerDir = capCenter - boxCenter;
+		Vector3 centerDir = capCenter - aabbCenter;
 
 		float cdx = fabsf(centerDir.x);
 		float cdy = fabsf(centerDir.y);
@@ -565,62 +565,98 @@ bool Intersect(const Capsule& capsule, const AABB& box, Vector3& penetration) {
 	penetration = direction * depth;
 	return true;
 }
-/*
- *  AABB対カプセルの交差判定
- *  @param[in]  AABB	box			判定対象1
- *  @param[in]  Capsule capsule		判定対象2
- *  @param[out] Vector3 penetration 貫通ベクトル
- */
-bool Intersect(const AABB& box, const Capsule& capsule, Vector3& penetration) {
-	return Intersect(capsule, box, penetration);
-}
+
 /*
  *  OBB対カプセルの交差判定
- *  @param[in]  OBB		box			判定対象1
+ *  @param[in]  OBB		obb			判定対象1
  *  @param[in]  Capsule capsule		判定対象2
  *  @param[out] Vector3 penetration 貫通ベクトル
  */
-bool Intersect(const OBB& box, const Capsule& capsule, Vector3& penetration) {
+bool Intersect(const OBB& obb, const Capsule& capsule, Vector3& penetration) {
+	// OBBのローカル空間でOBBをAABBとして判定する
 	// カプセルをOBBローカル空間へ変換
-	Segment localSegment;
 	// OBBの中心を原点にする
-	Vector3 localStart = capsule.segment.startPoint - box.center;
-	Vector3 localEnd = capsule.segment.endPoint - box.center;
+	Vector3 localStart = capsule.segment.startPoint - obb.center;
+	Vector3 localEnd = capsule.segment.endPoint - obb.center;
 	// OBBの回転を打ち消す
-	localSegment.startPoint = RotateY(localStart, -box.angle);
-	localSegment.endPoint = RotateY(localEnd, -box.angle);
+	Segment localSegment;
+	localSegment.startPoint = RotateY(localStart, -obb.angle);
+	localSegment.endPoint = RotateY(localEnd, -obb.angle);
 	// ローカルカプセル
 	Capsule localCapsule;
 	localCapsule.segment = localSegment;
 	localCapsule.radius = capsule.radius;
+	
 	// OBBをAABBに変換
-	AABB localBox;
-	localBox.min = -box.size;
-	localBox.max = box.size;
+	AABB localAABB;
+	localAABB.min = -obb.size;
+	localAABB.max = obb.size;
+	
+	// カプセル対AABBで判定
+	Vector3 localPenetration;
+	if (!Intersect(localCapsule, localAABB, localPenetration))
+		return false;
 
-	return false;
+	// 貫通ベクトルをワールドへ変換
+	penetration = RotateY(localPenetration, obb.angle);
+	return true;
 }
 
 /*
  *  コライダー同士の交差判定
- *  @param[in]  std::variant<AABB, Capsule> a			判定対象1
- *  @param[in]  std::variant<AABB, Capsule> b			判定対象2
- *  @param[out] Vector3						penetration	貫通ベクトル
+ *  @param[in]  std::variant<AABB, OBB, Capsule> a	判定対象1
+ *  @param[in]  std::variant<AABB, OBB, Capsule> b	判定対象2
+ *  @param[out] Vector3	penetration					貫通ベクトル
  */
-bool Intersect(const std::variant<AABB, Capsule>& a, const std::variant<AABB, Capsule>& b, Vector3& penetration) {
+bool Intersect(const std::variant<AABB, OBB, Capsule>& a, const std::variant<AABB, OBB, Capsule>& b, Vector3& penetration) {
 	// 各対象のコライダーを判別し、それに合った交差判定を呼ぶ
+	// AABB対
 	if (auto aabbA = std::get_if<AABB>(&a)) {
+		// AABB
 		if (auto aabbB = std::get_if<AABB>(&b)) {
 			return Intersect(*aabbA, *aabbB, penetration);
 		}
+		// OBB
+		else if (auto obbB = std::get_if<OBB>(&b)) {
+			// 現状は必要ないのでAABB対OBBは無し
+			penetration = V_ZERO;
+			return false;
+		}
+		// カプセル
 		else if (auto capsuleB = std::get_if<Capsule>(&b)) {
-			return Intersect(*aabbA, *capsuleB, penetration);
+			return Intersect(*capsuleB, *aabbA, penetration);
 		}
 	}
+	// OBB対
+	else if (auto obbA = std::get_if<OBB>(&a)) {
+		// AABB
+		if (auto aabbB = std::get_if<AABB>(&b)) {
+			// 現状は必要ないのでOBB対AABBは無し
+			penetration = V_ZERO;
+			return false;
+		}
+		// OBB
+		else if (auto obbB = std::get_if<OBB>(&b)) {
+			// 現状は必要ないのでOBB対OBBは無し
+			penetration = V_ZERO;
+			return false;
+		}
+		// カプセル
+		else if (auto capsuleB = std::get_if<Capsule>(&b)) {
+			return Intersect(*obbA, *capsuleB, penetration);
+		}
+	}
+	// カプセル対
 	else if (auto capsuleA = std::get_if<Capsule>(&a)) {
+		// AABB
 		if (auto aabbB = std::get_if<AABB>(&b)) {
 			return Intersect(*capsuleA, *aabbB, penetration);
 		}
+		// OBB
+		else if (auto obbB = std::get_if<OBB>(&b)) {
+			return Intersect(*obbB, *capsuleA, penetration);
+		}
+		// カプセル
 		else if (auto capsuleB = std::get_if<Capsule>(&b)) {
 			return Intersect(*capsuleA, *capsuleB, penetration);
 		}
@@ -630,23 +666,23 @@ bool Intersect(const std::variant<AABB, Capsule>& a, const std::variant<AABB, Ca
 /*
  *  レイとAABBの交差判定
  *  @param[in]  Ray		ray			判定対象1
- *  @param[in]  AABB	box			判定対象2
+ *  @param[in]  AABB	aabb			判定対象2
  *  @param[out] float	distance	交点までの距離
  */
-bool RayIntersect(const Ray& ray, const AABB& box, float& distance) {
+bool RayIntersect(const Ray& ray, const AABB& aabb, float& distance) {
 	float segMinRatio = 0;
 	float segMaxRatio = MAX_DISTANCE;
 
 	// xスラブ
-	if (!IntersectSlab(ray.start.x, ray.direction.x, box.min.x, box.max.x, segMinRatio, segMaxRatio))
+	if (!IntersectSlab(ray.start.x, ray.direction.x, aabb.min.x, aabb.max.x, segMinRatio, segMaxRatio))
 		return false;
 
 	// yスラブ
-	if (!IntersectSlab(ray.start.y, ray.direction.y, box.min.y, box.max.y, segMinRatio, segMaxRatio))
+	if (!IntersectSlab(ray.start.y, ray.direction.y, aabb.min.y, aabb.max.y, segMinRatio, segMaxRatio))
 		return false;
 
 	// zスラブ
-	if (!IntersectSlab(ray.start.z, ray.direction.z, box.min.z, box.max.z, segMinRatio, segMaxRatio))
+	if (!IntersectSlab(ray.start.z, ray.direction.z, aabb.min.z, aabb.max.z, segMinRatio, segMaxRatio))
 		return false;
 
 	// 交点までの距離を保存
@@ -690,14 +726,17 @@ bool RayIntersect(const Ray& ray, const Capsule& capsule, float& distance) {
 
 /*
  *  レイとコライダーの交差判定
- *  @param[in]	Ray							ray			判定対象1
- *  @param[in]	std::variant<AABB, Capsule>	collider	判定対象2
- *	@param[out]	float						distance	交点までの距離
+ *  @param[in]	Ray									ray			判定対象1
+ *  @param[in]	std::variant<AABB, OBB, Capsule>	collider	判定対象2
+ *	@param[out]	float								distance	交点までの距離
  */
-bool RayIntersect(const Ray& ray, const std::variant<AABB, Capsule>& collider, float& distance) {
+bool RayIntersect(const Ray& ray, const std::variant<AABB, OBB, Capsule>& collider, float& distance) {
 	// 各対象のコライダーを判別し、それに合った交差判定を呼ぶ
 	if (auto aabb = std::get_if<AABB>(&collider)) {
 		return RayIntersect(ray, *aabb, distance);
+	}
+	else if (auto obb = std::get_if<OBB>(&collider)) {
+		return RayIntersect(ray, *obb, distance);
 	}
 	else if (auto capsule = std::get_if<Capsule>(&collider)) {
 		return RayIntersect(ray, *capsule, distance);

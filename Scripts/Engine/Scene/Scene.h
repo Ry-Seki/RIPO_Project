@@ -23,7 +23,7 @@ public:
     // ワールド座標系のコライダーを表す構造体
     struct WorldCollider {
         ColliderBasePtr origin;
-        std::variant<AABB, Capsule> world;
+        std::variant<AABB, OBB, Capsule> world;
     };
     using WorldColliderPtr = std::shared_ptr<WorldCollider>;
     using WorldColliderList = std::vector<WorldColliderPtr>;

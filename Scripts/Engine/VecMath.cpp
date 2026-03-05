@@ -139,8 +139,9 @@ Vector3 Vector3::ForwardDir(const Vector3& rotation) {
  *  @author Riku
  */
 Vector3 Vector3::RotateY(const Vector3& vec, float angle) {
-	float cosA = cos(angle);
-	float sinA = sin(angle);
+	float rad = angle * Deg2Rad;
+	float cosA = cos(rad);
+	float sinA = sin(rad);
 	
 	return {
 		vec.x * cosA - vec.z * sinA,
