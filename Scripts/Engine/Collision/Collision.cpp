@@ -736,7 +736,8 @@ bool RayIntersect(const Ray& ray, const std::variant<AABB, OBB, Capsule>& collid
 		return RayIntersect(ray, *aabb, distance);
 	}
 	else if (auto obb = std::get_if<OBB>(&collider)) {
-		return RayIntersect(ray, *obb, distance);
+		// 現状は必要ないのでOBBのレイキャストは無し
+		return false;
 	}
 	else if (auto capsule = std::get_if<Capsule>(&collider)) {
 		return RayIntersect(ray, *capsule, distance);

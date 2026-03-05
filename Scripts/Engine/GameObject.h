@@ -10,6 +10,7 @@
 #include "Collision/ColliderBase.h"
 #include "Component/AABBCollider.h"
 #include "Component/CapsuleCollider.h"
+#include "Component/OBBCollider.h"
 #include "VecMath.h"
 
 #include <memory>
