@@ -22,8 +22,9 @@ struct EntranceData {
 	std::string name = "";
 	Vector3 position = V_ZERO;
 	Vector3 rotation = V_ZERO;
-	Vector3 AABBmin = V_ZERO;
-	Vector3 AABBmax = V_ZERO;
+	Vector3 center = V_ZERO;
+	float angle = 0.0f;
+	Vector3 size = V_ZERO;
 };
 
 class DungeonEntranceData {
@@ -33,8 +34,9 @@ private:
 	static constexpr const char* _FLOOR = "Floor";
 	static constexpr const char* _POSITION = "position";
 	static constexpr const char* _ROTATION = "rotation";
-	static constexpr const char* _MIN = "AABBmin";
-	static constexpr const char* _MAX = "AABBmax";
+	static constexpr const char* _CENTER = "center";
+	static constexpr const char* _ANGLE = "angle";
+	static constexpr const char* _SIZE = "size";
 public:
 	/*
 	 *	@brief	コンストラクタ
@@ -105,18 +107,23 @@ public:
 				data.rotation.z = entranceArray[i][_ROTATION][2];
 			}
 
-			// AABB最小値を取得
-			if (entranceArray[i].contains(_MIN) && entranceArray[i][_MIN].is_array()) {
-				data.AABBmin.x = entranceArray[i][_MIN][0];
-				data.AABBmin.y = entranceArray[i][_MIN][1];
-				data.AABBmin.z = entranceArray[i][_MIN][2];
+			// 中央値を取得
+			if (entranceArray[i].contains(_CENTER) && entranceArray[i][_CENTER].is_array()) {
+				data.center.x = entranceArray[i][_CENTER][0];
+				data.center.y = entranceArray[i][_CENTER][1];
+				data.center.z = entranceArray[i][_CENTER][2];
 			}
 
-			// AABB最大値を取得
-			if (entranceArray[i].contains(_MAX) && entranceArray[i][_MAX].is_array()) {
-				data.AABBmax.x = entranceArray[i][_MAX][0];
-				data.AABBmax.y = entranceArray[i][_MAX][1];
-				data.AABBmax.z = entranceArray[i][_MAX][2];
+			// 角度を取得
+			if (entranceArray[i].contains(_ANGLE) && entranceArray[i][_ANGLE].is_array()) {
+				data.angle = entranceArray[i][_ANGLE];
+			}
+
+			// サイズを取得
+			if (entranceArray[i].contains(_SIZE) && entranceArray[i][_SIZE].is_array()) {
+				data.size.x = entranceArray[i][_SIZE][0];
+				data.size.y = entranceArray[i][_SIZE][1];
+				data.size.z = entranceArray[i][_SIZE][2];
 			}
 			dungeonEntranceMap[floorID].push_back(data);
 		}

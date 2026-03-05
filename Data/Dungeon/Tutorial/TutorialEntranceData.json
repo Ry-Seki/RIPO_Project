@@ -6,8 +6,9 @@
           "name": "Goal",
           "positoin": 0,
           "rotation": 0,
-          "AABBmin": [ -3000, -500, -300 ],
-          "AABBmax": [ 3000, 800, 300 ]
+          "center": [ 0, 200, 0 ],
+          "angle": 0.0,
+          "size": [ 1000, 1000, 10 ]
         }
       ]
     }
