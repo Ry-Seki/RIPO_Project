@@ -16,6 +16,7 @@ private:
 	std::shared_ptr<AnimatorComponent> animator;
 	std::shared_ptr<BossComponent> bossComponent;
 	float coolTime;
+	float elapsedTime;
 	// エフェクトを一回しか出さないためのフラグ
 	bool FirstEffectFlag;
 	// 音を一回しか鳴らさないためのフラグ
@@ -56,6 +57,13 @@ private:
 	 *	param[in]	float		deltaTime
 	 */
 	void RangeAttack(GameObject* boss, float deltaTime);
+
+	/*
+	 *	前方攻撃
+	 *	param[in]	GameObject* boss
+	 *	param[in]	float		deltaTime
+	 */
+	void ForwardAttack(GameObject* boss, float deltaTime);
 
 	/*
 	 *	突進攻撃

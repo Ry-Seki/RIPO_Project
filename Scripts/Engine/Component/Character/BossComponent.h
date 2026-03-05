@@ -39,6 +39,10 @@ private:
 	bool hitFlag = false;
 	// 攻撃中判定フラグ
 	bool bossAttackTimeFlag = false;
+	// 近距離攻撃範囲判定
+	bool closeRangeAttackDistanceFlag = false;
+	// 遠距離攻撃範囲判定
+	bool longRangeAttackDistanceFlag = false;
 	// 定位置
 	Vector3 homePosition;
 	// 移動量
@@ -146,6 +150,11 @@ public:
 	inline int GetBossDataBounty() const { return status.bounty; }
 
 	/*
+	 *	攻撃衝突判定の取得
+	 */
+	inline bool GetAttackIsTriger() const { return attackIsTriger; }
+
+	/*
 	 *	行動フラグの取得
 	 */
 	inline bool GetMoveFrag() const { return moveFrag; }
@@ -176,6 +185,26 @@ public:
 	 *	攻撃中フラグの変更
 	 */
 	inline void SetBossAttackTimeFlag(bool setValue) { bossAttackTimeFlag = setValue; }
+
+	/*
+	 *	近距離攻撃範囲判定の取得
+	 */
+	inline bool GetCloseRangeAttackDistanceFlag() const { return closeRangeAttackDistanceFlag; }
+
+	/*
+	 *	近距離攻撃範囲判定の変更
+	 */
+	inline void SetCloseRangeAttackDistanceFlag(bool setValue) { closeRangeAttackDistanceFlag = setValue; }
+
+	/*
+	 *	遠距離攻撃範囲判定の取得
+	 */
+	inline bool GetLongRangeAttackDistanceFlag() const { return longRangeAttackDistanceFlag; }
+
+	/*
+	 *	遠距離攻撃範囲判定の変更
+	 */
+	inline void SetLongRangeAttackDistanceFlag(bool setValue) { longRangeAttackDistanceFlag = setValue; }
 
 	/*
 	 *	ボスから見たプレイヤーの方向

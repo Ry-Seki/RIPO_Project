@@ -117,9 +117,14 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 		break;
 
 	case 102:
-
-		if (closeRangeAttackDistance > Distance(player->position, boss->position) ||
-			longRangeAttackDistance < Distance(player->position, boss->position)) {
+		// ‹ß‹——£”»’è“à
+		if (closeRangeAttackDistance > Distance(player->position, boss->position)) {
+			bossComponent->SetCloseRangeAttackDistanceFlag(true);
+			bossComponent->SetState(new BossAttack());
+		}
+		// ‰“‹——£”»’èŠO
+		if (longRangeAttackDistance < Distance(player->position, boss->position)) {
+			bossComponent->SetLongRangeAttackDistanceFlag(true);
 			bossComponent->SetState(new BossAttack());
 		}
 		

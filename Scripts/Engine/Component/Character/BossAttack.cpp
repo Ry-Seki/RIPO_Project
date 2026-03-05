@@ -16,11 +16,12 @@ BossAttack::BossAttack()
 	: animator(nullptr)
 	, bossComponent(nullptr)
 	, coolTime(0)
+	, elapsedTime(0)
 	, FirstEffectFlag(false)
 	, FirstSEFlag(false)
 	, MAX_COOL_TIME(3)
 	, ANIMATION_SPEED(1250)
-	, MOVE_SPEED(1500.0f)
+	, MOVE_SPEED(6000.0f)
 {
 }
 
@@ -65,7 +66,13 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 
 	case 102:
 
-		HeadlongAttack(boss, deltaTime);
+		// falseになって手先に進んでない
+		if (bossComponent->GetCloseRangeAttackDistanceFlag()) {
+			ForwardAttack(boss, deltaTime);
+		}
+		else if (bossComponent->GetLongRangeAttackDistanceFlag()) {
+			HeadlongAttack(boss, deltaTime);
+		}
 
 		break;
 	default:
@@ -122,17 +129,78 @@ void BossAttack::RangeAttack(GameObject* boss, float deltaTime)
 }
 
 /*
- *	範囲攻撃
+ *	前方攻撃
+ *	param[in]	GameObject* boss
+ *	param[in]	float		deltaTime
+ */
+void BossAttack::ForwardAttack(GameObject* boss, float deltaTime)
+{
+	Vector3 direction = bossComponent->GetBossToPlayerDirection();
+	// AABBコライダーを前方に置く
+	auto aabbCollider = boss->GetComponent<AABBCollider>();
+	float value = 100;
+	Vector3 aabbDirection = { value * direction.x, 0, value * direction.z };
+	const Vector3 aabbMin = { -100, 0, -100 };
+	const Vector3 aabbMax = { 100, 300, 100 };
+
+	if (coolTime <= 1.5f) {
+		// 前方に当たり判定を出す
+		aabbCollider->aabb = { aabbMin + aabbDirection, aabbMax + aabbDirection };
+		if (!FirstSEFlag) {
+			// 効果音を出す
+			AudioUtility::PlaySE("enemyAttackSE");
+			FirstSEFlag = true;
+		}
+		// 攻撃中判定開始
+		bossComponent->SetBossAttackTimeFlag(true);
+	}
+	if (coolTime <= 1.3f) {
+		aabbCollider->aabb = { Vector3::zero, Vector3::zero };
+		// 攻撃中判定終了
+		bossComponent->SetBossAttackTimeFlag(false);
+	}
+	if (coolTime <= 0.7f) {
+		// 待機アニメーション
+		animator->Play(7, 5000 * deltaTime);
+	}
+	// 待機再生中は攻撃アニメーションは再生しない
+	else {
+		// 攻撃アニメーション
+		animator->Play(2, 5000 * deltaTime);
+	}
+	if (coolTime <= 0) {
+		bossComponent->SetCloseRangeAttackDistanceFlag(false);
+		// 状態遷移
+		bossComponent->SetState(new BossStandby());
+	}
+}
+
+/*
+ *	突進攻撃
  *	param[in]	GameObject* boss
  *	param[in]	float		deltaTime
  */
 void BossAttack::HeadlongAttack(GameObject* boss, float deltaTime)
 {
-	animator->Play(3, ANIMATION_SPEED * deltaTime);
+	animator->Play(11, 5000 * deltaTime);
 
+	// 攻撃中判定開始
+	bossComponent->SetBossAttackTimeFlag(true);
+	elapsedTime += deltaTime;
+	boss->rotation.y = atan2(playerDirection.x, playerDirection.z) + Pi;
 	// プレイヤーがいた方向に突進
 	auto posX = playerDirection.x * MOVE_SPEED * deltaTime;
 	auto posZ = playerDirection.z * MOVE_SPEED * deltaTime;
 	boss->position.x += posX;
-	boss->position.y += posZ;
+	boss->position.z += posZ;
+
+	if (bossComponent->GetAttackIsTriger() || elapsedTime > 1) {
+		// 攻撃中判定終了
+		bossComponent->SetBossAttackTimeFlag(false);
+		bossComponent->SetLongRangeAttackDistanceFlag(false);
+		// 状態遷移
+		bossComponent->SetState(new BossStandby());
+	}
 }
+
+
