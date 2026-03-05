@@ -77,6 +77,7 @@ void Stage::Render() {
 			Vector3 prevPos = player->GetComponent<PlayerComponent>()->GetOwner()->position - player->GetComponent<PlayerComponent>()->GetMoveVec();
 			// ステージ当たり判定描画
 			collision->StageColliderRenderer(player.get(), player->GetComponent<PlayerComponent>()->GetMoveVec(), prevPos);
+			collision->DrawSpatialGrid();
 		}
 #endif // _DEBUG
 

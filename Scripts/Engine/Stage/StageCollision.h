@@ -10,11 +10,20 @@
 #include <vector>
 #include <DxLib.h>
 #include "../VecMath.h"
+#include <unordered_map>
 
  // 前方宣言
 class GameObject;
 class CapsuleCollider;
 class GravityComponent;
+
+
+/*
+ *	グリッド構造体
+ */
+struct GridCell {
+	std::vector<MV1_COLL_RESULT_POLY*> polygons; // このセルに属するポリゴン
+};
 
 /*
  *	ステージの当たり判定を行うクラス
@@ -27,7 +36,11 @@ private:
 	static constexpr float _HALF = 0.5f;						// 半分
 	static constexpr float _POLYGON_HEIGHT = 0.9f;				// 壁の角度
 	static constexpr float _FLOOR_LIMIT = 0.5f;					// 床の角度
-
+	std::vector<MV1_COLL_RESULT_POLY> stagePolygons;			// グリッドの実態
+	static constexpr float _GRID_SIZE = 8000.0f;					// グリッドのサイズ
+	std::unordered_map<long long, GridCell> spatialGrid;		// 3次元グリッド
+	// グリッド座標の最大範囲
+	static constexpr int GRID_OFFSET = 1 << 19;
 
 public:
 	/*
@@ -44,6 +57,26 @@ public:
 	 */
 	void UpdateCollision(GameObject* other, Vector3 moveVec);
 
+	/*
+	 *	3D座標をキーに変換する
+	 */
+	long long MakeKey(int x, int y, int z) const {
+		// 負数対策のためオフセット
+		long long xx = (long long)(x + GRID_OFFSET);
+		long long yy = (long long)(y + GRID_OFFSET);
+		long long zz = (long long)(z + GRID_OFFSET);
+
+		return (xx << 40) | (yy << 20) | zz;
+	}
+
+	/*
+	 *	キーから3D座標を復元する
+	 */
+	void DecodeKey(long long key, int& x, int& y, int& z) {
+		x = (int)((key >> 40) & ((1 << 20) - 1)) - GRID_OFFSET;
+		y = (int)((key >> 20) & ((1 << 20) - 1)) - GRID_OFFSET;
+		z = (int)(key & ((1 << 20) - 1)) - GRID_OFFSET;
+	}
 
 private:
 
@@ -102,6 +135,15 @@ private:
 		Vector3 moveVec
 	);
 
+	/*
+	 *	グリッドを構築
+	 */
+	void BuildSpatialGrid();
+	/*
+	 *	近傍セルのみ取得
+	 */
+	std::vector<MV1_COLL_RESULT_POLY*> QueryNearbyPolygons(Vector3 center, float radius);
+
 public:
 
 	/*
@@ -118,6 +160,7 @@ public:
 	 */
 	void StageColliderRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos);
 
+	void DrawSpatialGrid();
 
 };
 

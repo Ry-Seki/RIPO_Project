@@ -15,7 +15,7 @@
   */
 StageCollision::StageCollision(int modelHandle)
 	:modelHandle(modelHandle) {
-
+	BuildSpatialGrid();
 }
 
 /*
@@ -72,49 +72,81 @@ void StageCollision::UpdateCollision(GameObject* other, Vector3 moveVec) {
 std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> StageCollision::SetupCollision(
 	GameObject* other,
 	Vector3 MoveVec) {
-	// 対象がいない場合は抜ける
-	if (!other) return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
-	// モデルがロードされていない場合も抜ける
-	if (modelHandle < 0) return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
+	// 判定結果格納用
+	auto hitDim = std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
+	hitDim->HitNum = 0;
 
-	// 移動していない場合、最小範囲で当たり判定を検知
+	// 対象が無い場合は空で返す
+	if (!other) return hitDim;
+
+	// モデル未ロードなら空で返す
+	if (modelHandle < 0) return hitDim;
+
+	// カプセル取得
+	auto capsule = other->GetComponent<CapsuleCollider>();
+	if (!capsule) return hitDim;
+
 	Vector3 effectiveMove = MoveVec;
+
+	// 極小移動ならゼロ扱い
 	if (Magnitude(effectiveMove) < _CHARACTER_MOVEVEC_MIN) {
 		effectiveMove = Vector3::zero;
 	}
 
-	// 移動方向の単位ベクトル
-	Vector3 forward = Vector3::zero;
-	// 移動距離の長さ
 	float moveLen = effectiveMove.Magnitude();
+
+	Vector3 forward = Vector3::zero;
+
+	// 移動方向を正規化
 	if (moveLen > 0.0f) {
 		forward = Normalized(effectiveMove);
 	}
 
-	// カプセルの取得
-	auto capsule = other->GetComponent<CapsuleCollider>();
-	if (!capsule)return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
-
-	// カプセルの要素をワールド座標に変換
-
-	// 下端
 	Vector3 capLower = other->position + capsule->capsule.segment.startPoint;
-	// 上端
 	Vector3 capTop = other->position + capsule->capsule.segment.endPoint;
-	// 中心点
 	Vector3 capCenter = (capLower + capTop) * _HALF;
-	// 半径
+
 	float radius = capsule->capsule.radius;
 
-	// 前方限定の球判定用中心
+	// 移動を考慮したスイープ球
 	Vector3 sphereCenter = capCenter + forward * (moveLen * _HALF);
-
-	// 球の半径
 	float sphereRadius = radius + moveLen * _HALF;
 
-	auto hitDim = std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
-	*hitDim = MV1CollCheck_Sphere(modelHandle, -1, ToVECTOR(sphereCenter), sphereRadius);
 
+	std::vector<MV1_COLL_RESULT_POLY*> nearbyPolys =
+		QueryNearbyPolygons(sphereCenter, sphereRadius);
+
+	if (nearbyPolys.empty())
+		return hitDim;
+
+	for (auto* poly : nearbyPolys) {
+		// 三角形頂点取得
+		Vector3 p0 = FromVECTOR(poly->Position[0]);
+		Vector3 p1 = FromVECTOR(poly->Position[1]);
+		Vector3 p2 = FromVECTOR(poly->Position[2]);
+
+		// 球中心と三角形の最近接点を求める
+		Vector3 nearest = Nearest(sphereCenter, p0, p1, p2);
+
+		// 中心との差分
+		Vector3 diff = sphereCenter - nearest;
+
+		float dist = Magnitude(diff);
+
+		// 半径以内なら衝突
+		if (dist <= sphereRadius) {
+			if (hitDim->HitNum < 256) {
+				// 結果配列に追加
+				hitDim->Dim[hitDim->HitNum] = *poly;
+				hitDim->HitNum++;
+			}
+
+			//if (hitDim->HitNum < MV1_COLL_RESULT_POLY::) {
+			//	hitDim->Dim[hitDim->HitNum++] = *poly;
+			//}
+		}
+	}
+	// printfDx("near poly = %d\n", nearbyPolys.size());
 	return hitDim;
 }
 
@@ -300,7 +332,7 @@ void StageCollision::ProcessFloorCollision(
 	// カプセルの半径
 	float capsuleRadius = capsule->capsule.radius;
 
-	Vector3 checkPos = capStart + Vector3(moveVec.x, 0.0f, moveVec.z);
+	Vector3 checkPos = capStart + Vector3(0.0f, capsuleRadius, 0.0f);
 
 
 	// 貫通しているかどうかを見る
@@ -355,6 +387,110 @@ void StageCollision::ProcessFloorCollision(
 		hitGrounding->SetGroundingFrag(false);
 	}
 
+	printfDx("floor count = %d\n", floors.size());
+
+}
+
+/*
+ *	近傍セルのみ取得
+ */
+std::vector<MV1_COLL_RESULT_POLY*> StageCollision::QueryNearbyPolygons(Vector3 center, float radius) {
+	std::vector<MV1_COLL_RESULT_POLY*> result;
+
+	// 球のAABB計算
+	Vector3 min = center - Vector3(radius, radius, radius);
+	Vector3 max = center + Vector3(radius, radius, radius);
+
+	int minX = (int)floor(min.x / _GRID_SIZE);
+	int maxX = (int)floor(max.x / _GRID_SIZE);
+	int minY = (int)floor(min.y / _GRID_SIZE);
+	int maxY = (int)floor(max.y / _GRID_SIZE);
+	int minZ = (int)floor(min.z / _GRID_SIZE);
+	int maxZ = (int)floor(max.z / _GRID_SIZE);
+
+	// 該当セルのみチェック
+	for (int x = minX; x <= maxX; ++x)
+		for (int y = minY; y <= maxY; ++y)
+			for (int z = minZ; z <= maxZ; ++z) {
+				long long key = MakeKey(x, y, z);
+
+				auto it = spatialGrid.find(key);
+				if (it != spatialGrid.end()) {
+					// セル内ポリゴンを追加
+					result.insert(result.end(),
+						it->second.polygons.begin(),
+						it->second.polygons.end());
+				}
+			}
+
+	return result;
+}
+
+void StageCollision::BuildSpatialGrid() {
+	int meshIndex = MV1GetMeshNum(modelHandle);
+	// ステージ全体のポリゴン数を取得
+	int triangleList = 0;
+	int listNum = MV1GetTriangleListNum(modelHandle);
+	int totalPoly = 0;
+	// まず総ポリゴン数を数える
+	for (int list = 0; list < listNum; list++) {
+		totalPoly += MV1GetTriangleListPolygonNum(modelHandle, list);
+	}
+	stagePolygons.reserve(totalPoly);
+	for (int list = 0; list < listNum; list++) {
+
+		int polyNum = MV1GetTriangleListPolygonNum(modelHandle, list);
+
+		for (int i = 0; i < polyNum; ++i) {
+
+			// 新しいポリゴンを追加
+			stagePolygons.emplace_back();
+
+			auto& poly = stagePolygons.back();
+
+			VECTOR v[3];
+
+			// 三角形頂点取得
+			MV1GetTriangleListPolygonVertexPosition(
+				modelHandle,
+				list,
+				i,
+				v,
+				NULL
+			);
+
+			poly.Position[0] = v[0];
+			poly.Position[1] = v[1];
+			poly.Position[2] = v[2];
+
+			Vector3 p0 = FromVECTOR(v[0]);
+			Vector3 p1 = FromVECTOR(v[1]);
+			Vector3 p2 = FromVECTOR(v[2]);
+
+			// AABB最小・最大計算
+			Vector3 min = Min(Min(p0, p1), p2);
+			Vector3 max = Max(Max(p0, p1), p2);
+
+			// AABBが含まれるセル範囲を計算
+			int minX = (int)floor(min.x / _GRID_SIZE);
+			int maxX = (int)floor(max.x / _GRID_SIZE);
+			int minY = (int)floor(min.y / _GRID_SIZE);
+			int maxY = (int)floor(max.y / _GRID_SIZE);
+			int minZ = (int)floor(min.z / _GRID_SIZE);
+			int maxZ = (int)floor(max.z / _GRID_SIZE);
+
+			// その範囲のセルすべてに登録
+			for (int x = minX; x <= maxX; ++x)
+				for (int y = minY; y <= maxY; ++y)
+					for (int z = minZ; z <= maxZ; ++z) {
+						long long key = MakeKey(x, y, z);
+
+						// セルにポリゴン追加
+						spatialGrid[key].polygons.push_back(&poly);
+					}
+		}
+	}
+	//printfDx("grid cell count = %d\n", spatialGrid.size());
 }
 
 
@@ -404,4 +540,57 @@ void StageCollision::StageColliderRenderer(GameObject* other, Vector3 MoveVec, V
 
 	// 使用した衝突判定データを解放
 	MV1CollResultPolyDimTerminate(*hitDim);
+}
+
+/*
+ * グリッドを描画する
+ */
+void StageCollision::DrawSpatialGrid() {
+	unsigned int color = GetColor(0, 150, 255);
+
+	// spatialGridの全セルを描画
+	for (auto& cell : spatialGrid) {
+		int x, y, z;
+
+		// キーからグリッド座標取得
+		DecodeKey(cell.first, x, y, z);
+
+		// セルのワールド座標
+		Vector3 minPos(
+			x * _GRID_SIZE,
+			y * _GRID_SIZE,
+			z * _GRID_SIZE
+		);
+
+		Vector3 maxPos = minPos + Vector3(_GRID_SIZE, _GRID_SIZE, _GRID_SIZE);
+
+		// VECTORに変換
+		VECTOR v0 = VGet(minPos.x, minPos.y, minPos.z);
+		VECTOR v1 = VGet(maxPos.x, minPos.y, minPos.z);
+		VECTOR v2 = VGet(maxPos.x, minPos.y, maxPos.z);
+		VECTOR v3 = VGet(minPos.x, minPos.y, maxPos.z);
+
+		VECTOR v4 = VGet(minPos.x, maxPos.y, minPos.z);
+		VECTOR v5 = VGet(maxPos.x, maxPos.y, minPos.z);
+		VECTOR v6 = VGet(maxPos.x, maxPos.y, maxPos.z);
+		VECTOR v7 = VGet(minPos.x, maxPos.y, maxPos.z);
+
+		// 下
+		DrawLine3D(v0, v1, color);
+		DrawLine3D(v1, v2, color);
+		DrawLine3D(v2, v3, color);
+		DrawLine3D(v3, v0, color);
+
+		// 上
+		DrawLine3D(v4, v5, color);
+		DrawLine3D(v5, v6, color);
+		DrawLine3D(v6, v7, color);
+		DrawLine3D(v7, v4, color);
+
+		// 縦
+		DrawLine3D(v0, v4, color);
+		DrawLine3D(v1, v5, color);
+		DrawLine3D(v2, v6, color);
+		DrawLine3D(v3, v7, color);
+	}
 }
