@@ -27,7 +27,7 @@ void SelectDetail_Dungeon::Initialize() {
 	auto& menu = MenuManager::GetInstance();
 	auto dungeonMenu = menu.GetMenu<MenuSelectDungeon>();
 	dungeonMenu->SetCallback([this](int dungeonID) {
-		StartDungeonDataLoad(dungeonID);
+		DecideDungeonDetail(dungeonID);
 	});
 
 	LoadManager& load = LoadManager::GetInstance();
@@ -54,49 +54,7 @@ void SelectDetail_Dungeon::Setup() {
  *	@brief	更新処理
  */
 void SelectDetail_Dungeon::Update(float deltaTime) {
-	if (dungeonDataList.empty()) return;
 
-	if (!inputHandle && CheckHitKey(KEY_INPUT_1)) {
-		// SEの再生
-		AudioUtility::PlaySE("DebugSE");
-		dungeonID = 1;
-		inputHandle = true;
-		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fade, [this]() {
-			StartDungeonDataLoad(dungeonID);
-		});
-	}
-	if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
-		// SEの再生
-		AudioUtility::PlaySE("DebugSE");
-		dungeonID = 2;
-		inputHandle = true;
-		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fade, [this]() {
-			StartDungeonDataLoad(dungeonID);
-		});
-	}
-	if (!inputHandle && CheckHitKey(KEY_INPUT_3)) {
-		// SEの再生
-		AudioUtility::PlaySE("DebugSE");
-		dungeonID = 3;
-		inputHandle = true;
-		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fade, [this]() {
-			StartDungeonDataLoad(dungeonID);
-											 });
-	}
-	if (!inputHandle && CheckHitKey(KEY_INPUT_4)) {
-		// SEの再生
-		AudioUtility::PlaySE("DebugSE");
-		dungeonID = 4;
-		inputHandle = true;
-		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fade, [this]() {
-			StartDungeonDataLoad(dungeonID);
-											 });
-	}
-	if (CheckHitKey(KEY_INPUT_1) == 0) inputHandle = false;
 }
 /*
  *	@brief	描画処理
@@ -107,7 +65,6 @@ void SelectDetail_Dungeon::Render() {
  *	@brief	片付け処理
  */
 void SelectDetail_Dungeon::Teardown() {
-	inputHandle = false;
 }
 /*
  *	@brief	お宝イベント査定
@@ -126,6 +83,19 @@ void SelectDetail_Dungeon::AssessmentTreasureEvent() {
 			if (data.isEventDay) data.isEventDay = false;
 		}
 		dungeonDataList[i] = data;
+	}
+}
+/*
+ *	@brief		ダンジョン決定処理
+ *	@param[in]	int dungeonID
+ */
+void SelectDetail_Dungeon::DecideDungeonDetail(int dungeonID) {
+	// ダンジョンIDが無効な数字ならアクション選択に戻る
+	if (dungeonID == -1 || dungeonID >= dungeonDataList.size()) {
+		owner->GetOwner()->ChageState(GameEnum::GameState::SelectAction);
+	}else {
+		// ダンジョンの読み込み開始
+		StartDungeonDataLoad(dungeonID);
 	}
 }
 /*

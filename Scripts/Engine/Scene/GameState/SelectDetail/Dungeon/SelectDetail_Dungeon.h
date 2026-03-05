@@ -56,7 +56,13 @@ public:
 
 private:
 	/*
+	 *	@brief		ダンジョン決定処理
+	 *	@param[in]	int dungeonID
+	 */
+	void DecideDungeonDetail(int dungeonID);
+	/*
 	 *	@brief		ダンジョンデータのロード開始
+	 *	@param[in]	int dungeonID
 	 */
 	void StartDungeonDataLoad(int dungeonID);
 	/*

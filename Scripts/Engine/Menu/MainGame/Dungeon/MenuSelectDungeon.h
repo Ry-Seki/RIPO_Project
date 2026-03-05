@@ -13,11 +13,10 @@
 #include "../../../UI/EventSystem.h"
 #include "../../../GameEnum.h"
 #include "../../../GameConst.h"
-
+#include "../../../../Data/Dungeon/DungeonData.h"
 #include <functional>
 
 // 前方宣言
-struct DungeonInfoData;
 
 /*
  *	@brief	ダンジョン選択メニュー
@@ -27,19 +26,40 @@ public:
 	using TextBasePtr = std::shared_ptr<TextBase>;
 
 private:
-	struct DungeonTextSet {
-		TextBasePtr level;
-		TextBasePtr treasureCount;
-		TextBasePtr strength;
-		TextBasePtr eventDay;
+	/*
+	 *	@brief	ダンジョンボタン構造体
+	 */
+	struct DungeonButtonEntry {
+		int dungeonID = -1;					// -1 = Back
+		UIButtonBase* button = nullptr;		// ボタン
 	};
+	/*
+	 *	@brief	ダンジョンイベント構造体
+	 */
+	struct DungeonEventEntry {
+		TextBase* eventInfo = nullptr;		// イベント情報
+		UIButtonBase* button = nullptr;		// イベント対象ボタン
+		Sprite* eventSprite = nullptr;		// イベント用画像
+	};
+	/*
+	 *	@brief	ダンジョンメニュー構造体
+	 */
+	struct DungeonMenuEntry {
+		DungeonInfoData info;               // ダンジョンデータ
+		TextBase* level	= nullptr;			// ダンジョンのレベル
+		TextBase* strength = nullptr;		// 最小-最大Strength
+		TextBase* treasureCount = nullptr;	// お宝情報テキスト
+		TextBase* eventInfo = nullptr;		// イベント情報
+	};
+
 private:
 	int currentIndex = -1;
+	int prevIndex = -1;
 	float animTimer = 0.0f;
 	int animFrame = 0;
 
 	std::vector<DungeonInfoData> dungeonInfoList;
-	std::vector<std::string> dungeonString;
+
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<Sprite>> spriteList;
@@ -47,12 +67,10 @@ private:
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	Sprite* dungeonSprite = nullptr;
 
-	std::vector<DungeonTextSet> dungeonTextList;
+	std::vector<DungeonButtonEntry> dungeonButtonList;
+	std::vector<DungeonMenuEntry> dungeonMenuList;
 
 	std::function<void(int)> Callback = nullptr;
-
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Dungeon/SelectDungeon/SelectDungeonMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame//Dungeon/SelectDungeon/SelectDungeonMenuNavigation.json";
 
 public:
 	/*
@@ -95,7 +113,7 @@ private:
 	 *	@brief		ボタンの押された時の処理
 	 *	@param[in]	int buttonIndex
 	 */
-	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	void SelectButtonExecute(int buttonIndex);
 	/*
 	 *	@brief		テキストの生成
 	 */
@@ -108,13 +126,25 @@ private:
 	 *	@brief		ダンジョン情報の描画
 	 */
 	void RenderDungeonInfo();
+	/*
+	 *	@brief		フェード後->コールバックの実行処理
+	 *	@param[in]	int dungeonID
+	 */
+	void StartFadeEndCallback(int dungeonID);
+	/*
+	 *	@brief		確認メニューを開く
+	 *	@param[in]	int dungeonID
+	 */
+	void OpenConfirmMenu(int dungeonID);
 
 public:
 	/*
-	 *	@brief		半日フラグの設定
+	 *	@brief		ダンジョン情報データの設定
 	 *	@param[in]	const std::vector<DungeonInfoData>& setData
 	 */
-	inline void SetInfoData(const std::vector<DungeonInfoData>& setData) { dungeonInfoList = setData; }
+	inline void SetInfoData(const std::vector<DungeonInfoData>& setData) {
+		dungeonInfoList = setData;
+	}
 	/*
 	 *	@brief		コールバックの設定
 	 *	@param[in]	std::function<void(int)> setCallback

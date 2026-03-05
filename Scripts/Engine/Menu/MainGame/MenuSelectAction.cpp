@@ -211,20 +211,12 @@ void MenuSelectAction::SelectButtonExecute(Engine& engine, int buttonIndex) {
     if (buttonIndex == 0) {
         AudioUtility::PlaySE("DebugSE");
         type = GameEnum::ActionType::Dungeon;
-        confirm->SetCallback([this, &menu, &engine, type](GameEnum::ConfirmResult result){
-            if (result == GameEnum::ConfirmResult::Yes) {
-                menu.CloseTopMenu();
-                isInteractive = false;
-                FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fade, [this, &menu, type]() {
-                    menu.CloseTopMenu();
-                    if (Callback) Callback(type);
-                });
-            } else {
-                menu.CloseTopMenu();
-            }
+        isInteractive = false;
+        FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fade, [this, &menu, type]() {
+            menu.CloseTopMenu();
+            if (Callback) Callback(type);
         });
-        menu.OpenMenu<MenuConfirm>();
     }else if(buttonIndex == 1){
         AudioUtility::PlaySE("DebugSE");
         type = GameEnum::ActionType::Training;
