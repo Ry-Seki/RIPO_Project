@@ -8,6 +8,7 @@
 #include "../Component/ModelRenderer.h"
 #include "../Component/SpriteRenderer.h"
 #include "../Component/AABBCollider.h"
+#include "../Component/OBBCollider.h"
 #include "../Component/CapsuleCollider.h"
 #include "../Manager/StageManager.h"
 #include <algorithm>
@@ -172,6 +173,19 @@ std::vector<Scene::WorldColliderList> Scene::ChangeGameObjectWorldColliders() {
 				originAABB.max += obj->position;
 				// ワールド座標保存
 				worldList[i]->world = originAABB;
+			}
+			// OBBColliderのワールド座標変換
+			else if (auto obb = std::dynamic_pointer_cast<OBBCollider>(obj->colliders[i])) {
+				// オリジナルのコライダーをコピー
+				worldList[i]->origin = obb;
+				// ワールド座標に変換
+				OBB originOBB = obb->obb;
+				// スケール適応
+				originOBB.size = Vector3::Scale(originOBB.size, obj->scale);
+				// ポジション適応
+				originOBB.center += obj->position;
+				// ワールド座標保存
+				worldList[i]->world = originOBB;
 			}
 			// CapsuleColliderのワールド座標変換
 			else if (auto capsule = std::dynamic_pointer_cast<CapsuleCollider>(obj->colliders[i])) {
