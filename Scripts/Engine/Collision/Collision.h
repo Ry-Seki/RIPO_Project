@@ -73,6 +73,7 @@ bool Intersect(const OBB& obb, const Capsule& capsule, Vector3& penetration);
 bool Intersect(const std::variant<AABB, OBB, Capsule>& a, const std::variant<AABB, OBB, Capsule>& b, Vector3& penetration);
 // レイとの衝突判定
 bool RayIntersect(const Ray& ray, const AABB& aabb, float& distance);
+bool RayIntersect(const Ray& ray, const OBB& obb, float& distance);
 bool RayIntersect(const Ray& ray, const Capsule& capsule, float& distance);
 bool RayIntersect(const Ray& ray, const std::variant<AABB, OBB, Capsule>& collider, float& distance);
 // DxLibの関数を使ったレイとモデルの衝突判定

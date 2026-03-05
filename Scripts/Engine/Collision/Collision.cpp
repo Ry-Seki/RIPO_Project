@@ -691,6 +691,16 @@ bool RayIntersect(const Ray& ray, const AABB& aabb, float& distance) {
 }
 
 /*
+ *  レイとOBBの交差判定
+ *  @param[in]	Ray		ray			判定対象1
+ *  @param[in]	Capsule	capsule		判定対象2
+ *	@param[out]	float	distance	交点までの距離
+ */
+bool RayIntersect(const Ray& ray, const OBB& obb, float& distance) {
+	return false;
+}
+
+/*
  *  レイとカプセルの交差判定
  *  @param[in]	Ray		ray			判定対象1
  *  @param[in]	Capsule	capsule		判定対象2
