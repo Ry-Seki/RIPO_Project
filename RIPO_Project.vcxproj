@@ -188,6 +188,7 @@
     <ClCompile Include="Scripts\Engine\Component\Character\WeaponBase.cpp" />
     <ClCompile Include="Scripts\Engine\Component\EffectComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\OBBCollider.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Engine\Input\ActionMapBase.cpp" />
@@ -376,6 +377,7 @@
     <ClInclude Include="Scripts\Engine\Component\GaugeBase.h" />
     <ClInclude Include="Scripts\Engine\Component\GravityComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h" />
+    <ClInclude Include="Scripts\Engine\Component\OBBCollider.h" />
     <ClInclude Include="Scripts\Engine\Component\RenderComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\SpriteRenderer.h" />
     <ClInclude Include="Scripts\Engine\Engine.h" />

@@ -110,6 +110,11 @@ void GameObjectManager::SetObjectColliderFlag(bool setColliderFlag) {
 		if (aabbCollider) {
 			aabbCollider->isCollider = setColliderFlag;
 		}
+		// OBBコライダーの取得
+		auto obbCollider = object->GetComponent<OBBCollider>();
+		if (obbCollider) {
+			obbCollider->isCollider = setColliderFlag;
+		}
 		// カプセルコライダーの取得
 		auto capsuleCollider = object->GetComponent<CapsuleCollider>();
 		if (capsuleCollider) {
