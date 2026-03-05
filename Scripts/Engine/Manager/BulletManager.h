@@ -64,6 +64,7 @@ public:
 	 *  @param	shotOwner	ËŒ‚Ò
 	 *  @param	speed		’e‚Ì‘¬“x
 	 *  @param	damage		’e‚Ìƒ_ƒ[ƒW
+	 *	@param	destroyTime	’e‚ªÁ‚¦‚éŠÔ
 	 */
 	void BulletShot(
 		const Vector3& position,
@@ -72,7 +73,8 @@ public:
 		const Vector3& direction,
 		GameObject* shotOwner,
 		const float speed,
-		const float damage);
+		const float damage,
+		const float destroyTime = 3);
 
 };
 

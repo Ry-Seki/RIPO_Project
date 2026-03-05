@@ -4,48 +4,60 @@
       "Name": "Settings",
       "Type": "Single",
       "Position": {
-        "X": 100,
-        "Y": 350
+        "X": 369,
+        "Y": 725
       },
       "Rect": {
-        "X": 100,
-        "Y": 350,
-        "Width": 100,
-        "Height": 80
+        "X": 369,
+        "Y": 725,
+        "Width": 468,
+        "Height": 89
       },
       "Resources": {
+        "Idle": "Res/Menu/Title/System/Trealine_SelectSettingsModeButton.png",
+        "Hover": "Res/Menu/Title/System/Trealine_SelectSettingsModeButton.png",
+        "Press": "Res/Menu/Title/System/Trealine_SelectSettingsModeButton_Press.png",
+        "Select": "Res/Menu/Title/System/Trealine_SelectSettingsModeButton_Select.png"
       }
     },
     {
       "Name": "Credit",
       "Type": "Single",
       "Position": {
-        "X": 400,
-        "Y": 350
+        "X": 1075,
+        "Y": 725
       },
       "Rect": {
-        "X": 400,
-        "Y": 350,
-        "Width": 100,
-        "Height": 80
+        "X": 1075,
+        "Y": 725,
+        "Width": 468,
+        "Height": 89
       },
       "Resources": {
+        "Idle": "Res/Menu/Title/System/Trealine_SelectCreditsModeButton.png",
+        "Hover": "Res/Menu/Title/System/Trealine_SelectCreditsModeButton.png",
+        "Press": "Res/Menu/Title/System/Trealine_SelectCreditsModeButton_Press.png",
+        "Select": "Res/Menu/Title/System/Trealine_SelectCreditsModeButton_Select.png"
       }
     },
     {
       "Name": "Back",
       "Type": "Single",
       "Position": {
-        "X": 400,
-        "Y": 450
+        "X": 820,
+        "Y": 930
       },
       "Rect": {
-        "X": 400,
-        "Y": 450,
-        "Width": 100,
-        "Height": 80
+        "X": 820,
+        "Y": 930,
+        "Width": 288,
+        "Height": 89
       },
       "Resources": {
+        "Idle": "Res/Menu/Title/System/Trealine_SelectBackButton.png",
+        "Hover": "Res/Menu/Title/System/Trealine_SelectBackButton.png",
+        "Press": "Res/Menu/Title/System/Trealine_SelectButton_Select.png",
+        "Select": "Res/Menu/Title/System/Trealine_SelectButton_Press.png"
       }
     }
   ]

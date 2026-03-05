@@ -4,7 +4,7 @@
  */
 #include "MenuPurchaseCount.h"
 #include "../../MenuManager.h"
-#include "../../System/MenuSettings.h"
+#include "../../System/MenuVolumeSettings.h"
 #include "../../System/MenuSaveMode.h"
 #include "../../System/MenuLoadMode.h"
 #include "../../../UI/Button/SinglePressButton.h"

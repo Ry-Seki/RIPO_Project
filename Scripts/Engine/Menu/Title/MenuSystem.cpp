@@ -9,7 +9,7 @@
 #include "../../Audio/AudioUtility.h"
 #include "../../Engine.h"
 #include "../../Scene/MainGameScene.h"
-#include "../System/MenuSettings.h"
+#include "../System/MenuVolumeSettings.h"
 #include "../../Load/LoadManager.h"
 #include "../../Load/JSON/LoadJSON.h"
 #include "../../Load/Sprite/LoadSprite.h"
@@ -67,11 +67,9 @@ void MenuSystem::Open() {
     for (auto& button : buttonList) {
         button->Setup();
     }
-	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
-        eventSystem.ApplySelection();
-        InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
-    });
+    eventSystem.ApplySelection();
+    InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
+  
 }
 /*
  *	@brief	更新処理
@@ -135,24 +133,30 @@ void MenuSystem::Close(Engine& engine) {
 	MenuBase::Close(engine);
 }
 /*
+ *	@brief	メニューを再開
+ */
+void MenuSystem::Resume() {
+    MenuBase::Resume();
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
+}
+/*
  *	@brief		ボタンの押された時の処理
  *	@param[in]	int buttonIndex
  */
 void MenuSystem::SelectButtonExecute(Engine& engine, int buttonIndex) {
     auto& menu = MenuManager::GetInstance();
     if (buttonIndex == 0) {
+        AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            isVisible = false;
-            menu.OpenMenu<MenuSettings>();
+            menu.OpenMenu<MenuVolumeSettings>();
         });
-
     } else if (buttonIndex == 1) {
-        
+        // TODO : ゲームが完全に出来次第クレジットをオープンするようにする
     } else if (buttonIndex == 2) {
-        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            menu.CloseTopMenu();
-        });
+        AudioUtility::PlaySE("DebugSE");
+        menu.CloseTopMenu();
     }
 }

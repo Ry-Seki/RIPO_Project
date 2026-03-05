@@ -27,6 +27,88 @@
       ]
     }
   ],
+  "Texts": [
+    {
+      "Name": "PrevHPText",
+      "Type": "Dynamic",
+      "UseFont": "MiniSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1170,
+        "Y": 424
+      }
+    },
+    {
+      "Name": "PrevStaminaText",
+      "Type": "Dynamic",
+      "UseFont": "MiniSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1170,
+        "Y": 549
+      }
+    },
+    {
+      "Name": "PrevStrengthText",
+      "Type": "Dynamic",
+      "UseFont": "MiniSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1170,
+        "Y": 674
+      }
+    },
+    {
+      "Name": "PrevResistTimeText",
+      "Type": "Dynamic",
+      "UseFont": "MiniSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1170,
+        "Y": 799
+      }
+    },
+    {
+      "Name": "CurrentHPText",
+      "Type": "Dynamic",
+      "UseFont": "MiniSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1500,
+        "Y": 424
+      }
+    },
+    {
+      "Name": "CurrentStaminaText",
+      "Type": "Dynamic",
+      "UseFont": "MiniSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1500,
+        "Y": 549
+      }
+    },
+    {
+      "Name": "CurrentStrengthText",
+      "Type": "Dynamic",
+      "UseFont": "MiniSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1500,
+        "Y": 674
+      }
+    },
+    {
+      "Name": "CurrentResistTimeText",
+      "Type": "Dynamic",
+      "UseFont": "MiniSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1500,
+        "Y": 799
+      }
+    }
+  ],
   "Buttons": [
     {
       "Name": "Close",

@@ -54,10 +54,6 @@ void MenuGameModeSelect::Initialize(Engine& engine) {
 				SelectButtonExecute(engine, i);
 			});
 		}
-		for (auto& sprite : spriteList) {
-			if (sprite->GetName() == "SelectTitleMenu_BackGround")
-				backgroundSprite = sprite.get();
-		}
 		eventSystem.LoadNavigation(navigation->GetData());
 	});
 
@@ -123,16 +119,13 @@ void MenuGameModeSelect::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
  *	@brief	描画処理
  */
 void MenuGameModeSelect::Render() {
-	if (backgroundSprite->IsVisible()) {
-		backgroundSprite->Render();
+	for (auto& sprite : spriteList) {
+		if (!sprite->IsVisible()) continue;
+		sprite->Render();
 	}
 	for (auto& button : buttonList) {
 		if (!button->IsVisible()) continue;
 		button->Render();
-	}
-	for (auto& sprite : spriteList) {
-		if (sprite.get() == backgroundSprite || !sprite->IsVisible()) continue;
-		sprite->Render();
 	}
 }
 /*
@@ -140,6 +133,15 @@ void MenuGameModeSelect::Render() {
  */
 void MenuGameModeSelect::Close(Engine& engine) {
 	MenuBase::Close(engine);
+}
+/*
+ *	@brief	メニューを中断
+ */
+void MenuGameModeSelect::Suspend() {
+	MenuBase::Suspend();
+	for (auto& button : buttonList) {
+		button->SetIsVisible(false);
+	}
 }
 /*
  *	@brief	メニューを再開
@@ -177,10 +179,7 @@ void MenuGameModeSelect::SelectButtonExecute(Engine& engine, int buttonIndex) {
 		});
 	} else if (buttonIndex == 2) {
 		AudioUtility::PlaySE("DebugSE");
-		FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-			menu.OpenMenu<MenuSystem>();
-		});
+		menu.OpenMenu<MenuSystem>();
 	} else if (buttonIndex == 3) {
 		CheckEndGame(engine);
 	}

@@ -132,6 +132,24 @@ Vector3 Vector3::ForwardDir(const Vector3& rotation) {
 }
 
 /*
+ *	Y軸回転
+ *	@param[in]	vec		回転させたいベクトル
+ *	@param[in]	angle	回転角
+ *	@return Vector3
+ *  @author Riku
+ */
+Vector3 Vector3::RotateY(const Vector3& vec, float angle) {
+	float cosA = cos(angle);
+	float sinA = sin(angle);
+	
+	return {
+		vec.x * cosA - vec.z * sinA,
+		vec.y,
+		vec.x * sinA + vec.z * cosA
+	};
+}
+
+/*
  *	各成分を指定範囲内に制限する
  *	@param[in]  v1   対象のベクトル
  *	@param[in]  min  下限値ベクトル
@@ -310,6 +328,32 @@ Vector3 Vector3::Nearest(const Vector3& senterPos, const Vector3& v1, const Vect
 
 }
 
+/*
+ *  各成分ごとの最小値を求める
+ *  v1.x と v2.x を比較して小さい方を返す
+ *  y,z も同様に比較する
+ */
+Vector3 Vector3::Min(const Vector3& v1, const Vector3& v2) {
+	return Vector3(
+		(v1.x < v2.x) ? v1.x : v2.x, // x成分の最小値
+		(v1.y < v2.y) ? v1.y : v2.y, // y成分の最小値
+		(v1.z < v2.z) ? v1.z : v2.z  // z成分の最小値
+	);
+}
+
+/*
+ *  各成分ごとの最大値を求める
+ *  v1.x と v2.x を比較して大きい方を返す
+ *  y,z も同様に比較する
+ */
+Vector3 Vector3::Max(const Vector3& v1, const Vector3& v2) {
+	return Vector3(
+		(v1.x > v2.x) ? v1.x : v2.x, // x成分の最大値
+		(v1.y > v2.y) ? v1.y : v2.y, // y成分の最大値
+		(v1.z > v2.z) ? v1.z : v2.z  // z成分の最大値
+	);
+}
+
 Vector3 Scale(const Vector3& v1, const Vector3& v2) {
 	return Vector3::Scale(v1, v2);
 }
@@ -342,6 +386,10 @@ Vector3 ForwardDir(const Vector3& rotation) {
 	return Vector3::ForwardDir(rotation);
 }
 
+Vector3 RotateY(const Vector3& vec, float angle) {
+	return Vector3::RotateY(vec, angle);
+}
+
 Vector3 Offset(const Vector3& v1, const Vector3& v2) {
 	return Vector3::Offset(v1, v2);
 }
@@ -364,6 +412,14 @@ Vector3 Slerp(const Vector3& a, const Vector3& b, float t) {
 
 Vector3 Nearest(const Vector3& senterPos, const Vector3& v1, const Vector3& v2, const Vector3& v3) {
 	return Vector3::Nearest(senterPos, v1, v2, v3);
+}
+
+Vector3 Min(const Vector3& v1, const Vector3& v2) {
+	return Vector3::Min(v1, v2);
+}
+
+Vector3 Max(const Vector3& v1, const Vector3& v2) {
+	return Vector3::Max(v1, v2);
 }
 
 const Vector3 V_ZERO = Vector3::zero;

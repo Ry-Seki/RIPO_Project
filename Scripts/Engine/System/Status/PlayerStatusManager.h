@@ -30,7 +30,9 @@ private:
 	/*
 	 *	コンストラクタ
 	 */
-	PlayerStatusManager() = default;
+	PlayerStatusManager() {
+		playerStatus = {};
+	}
 	/*
 	 *	デストラクタ
 	 */

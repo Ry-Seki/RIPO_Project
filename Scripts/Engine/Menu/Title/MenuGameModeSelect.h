@@ -20,14 +20,13 @@ class Engine;
  *	@brief	ゲームモードを選択するメニュー
  */
 class MenuGameModeSelect : public MenuBase {
-	int currentSlot = -1;
 	float animTimer = 0.0f;
 	int animFrame = 0;
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
-	Sprite* backgroundSprite = nullptr;
+
 	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Title/SelectGameMode/SelectGameModeMenuResources.json";
 	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/SelectGameMode/SelectGameModeMenuNavigation.json";
 
@@ -62,6 +61,10 @@ public:
 	 *	@brief	メニューを閉じる
 	 */
 	void Close(Engine& engine) override;
+	/*
+	 *	@brief	メニューを中断
+	 */
+	void Suspend() override;
 	/*
 	 *	@brief	メニューを再開
 	 */

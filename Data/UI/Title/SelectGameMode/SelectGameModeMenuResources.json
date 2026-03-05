@@ -1,18 +1,6 @@
 {
   "Sprites": [
     {
-      "Name": "SelectTitleMenu",
-      "Rect": {
-        "X": 135,
-        "Y": 637,
-        "Width": 1537,
-        "Height": 362
-      },
-      "Resources": [
-        "Res/Menu/Title/Trealine_SelectGameMode.png"
-      ]
-    },
-    {
       "Name": "SelectTitleMenu_BackGround",
       "Rect": {
         "X": 135,
@@ -21,7 +9,7 @@
         "Height": 362
       },
       "Resources": [
-        "Res/Menu/Title/Trealine_SelectGameMode_Background.png"
+        "Res/Menu/Title/SelectGameMode/Trealine_SelectGameMode_Background.png"
       ]
     }
   ],
@@ -40,8 +28,10 @@
         "Height": 90
       },
       "Resources": {
-        "Press": "Res/Menu/Title/Trealine_SelectGameMode_Selected_Button.png",
-        "Select": "Res/Menu/Title/Trealine_SelectGameMode_Selected_Button.png"
+        "Idle": "Res/Menu/Title/SelectGameMode/Trealine_SelectNewGameButton.png",
+        "Hover": "Res/Menu/Title/SelectGameMode/Trealine_SelectNewGameButton.png",
+        "Press": "Res/Menu/Title/SelectGameMode/Trealine_SelectNewGameButton_Press.png",
+        "Select": "Res/Menu/Title/SelectGameMode/Trealine_SelectNewGameButton_Select.png"
       }
     },
     {
@@ -58,8 +48,10 @@
         "Height": 90
       },
       "Resources": {
-        "Press": "Res/Menu/Title/Trealine_SelectGameMode_Selected_Button.png",
-        "Select": "Res/Menu/Title/Trealine_SelectGameMode_Selected_Button.png"
+        "Idle": "Res/Menu/Title/SelectGameMode/Trealine_SelectLoadGameButton.png",
+        "Hover": "Res/Menu/Title/SelectGameMode/Trealine_SelectLoadGameButton.png",
+        "Press": "Res/Menu/Title/SelectGameMode/Trealine_SelectLoadGameButton_Press.png",
+        "Select": "Res/Menu/Title/SelectGameMode/Trealine_SelectLoadGameButton_Select.png"
       }
     },
     {
@@ -76,8 +68,10 @@
         "Height": 90
       },
       "Resources": {
-        "Press": "Res/Menu/Title/Trealine_SelectGameMode_Selected_SystemButton.png",
-        "Select": "Res/Menu/Title/Trealine_SelectGameMode_Selected_SystemButton.png"
+        "Idle": "Res/Menu/Title/SelectGameMode/Trealine_SelectSystemButton.png",
+        "Hover": "Res/Menu/Title/SelectGameMode/Trealine_SelectSystemButton.png",
+        "Press": "Res/Menu/Title/SelectGameMode/Trealine_SelectSystemButton_Press.png",
+        "Select": "Res/Menu/Title/SelectGameMode/Trealine_SelectSystemButton_Select.png"
       }
     },
     {
@@ -94,8 +88,10 @@
         "Height": 83
       },
       "Resources": {
-        "Press": "Res/Menu/Title/Trealine_SelectGameMode_Selected_EndGameButton.png",
-        "Select": "Res/Menu/Title/Trealine_SelectGameMode_Selected_EndGameButton.png"
+        "Idle": "Res/Menu/Title/SelectGameMode/Trealine_SelectEndGameButton.png",
+        "Hover": "Res/Menu/Title/SelectGameMode/Trealine_SelectEndGameButton.png",
+        "Press": "Res/Menu/Title/SelectGameMode/Trealine_SelectEndGameButton_Press.png",
+        "Select": "Res/Menu/Title/SelectGameMode/Trealine_SelectEndGameButton_Select.png"
       }
     }
   ]

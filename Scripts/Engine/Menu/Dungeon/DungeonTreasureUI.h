@@ -14,6 +14,13 @@
 #include <unordered_map>
 class Engine;
 
+namespace {
+	constexpr const char* _TREASUREUIDATA_FILEPATH = "Data/UI/Dungeon/Treasure/TreasureUI.json";	// お宝UIのデータのパス
+	constexpr const char* _TRESUREUIJSON_NAME = "TreasureUI";		// お宝のjsonの階層名
+	constexpr const char* _INTERACTUI_FILEPATH = "Res/TreasureUI/interactUI.png";				// インタラクトUIのパス
+
+}
+
 /*
  *	ダンジョン中のお宝の必要筋力値UIを出す
  */
@@ -27,9 +34,7 @@ private:
 	int ownerObjectID = -1;						// 表示を許可されているTreasure
 	int interactUI;								// インタラクトUI
 	bool isInteract = false;					// インタラクトUI表示圏内かどうか
-	static constexpr const char* _TREASUREUIDATA_FILEPATH = "Data/UI/Dungeon/Treasure/TreasureUI.json";	// お宝UIのデータのパス
-	static constexpr const char* _TRESUREUIJSON_NAME = "TreasureUI";		// お宝のjsonの階層名
-	static constexpr const char* _INTERACTUI_FILEPATH = "Res/TreasureUI/interactUI.png";				// インタラクトUIのパス
+
 
 public:
 

@@ -302,6 +302,17 @@ namespace GameEnum {
 		Max
 	};
 	/*
+	 *	@brief	‰¹—Ê‚ÌŽí—Þ
+	 */
+	enum class VolumeType {
+		Invalid = -1,
+		Master,
+		BGM,
+		SE,
+
+		Max
+	};
+	/*
 	 *	@brief	•¶Žš‚Ì‘µ‚¢‚ÌŽí—Þ
 	 *	@author	Seki
 	 */

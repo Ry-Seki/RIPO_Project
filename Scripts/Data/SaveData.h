@@ -40,13 +40,13 @@ struct WorldProgressData {
 	std::vector<int> getTreasureIDList;								// お宝ID管理（累計管理用）
 };
 /*
- *	@brief	設定データ
+ *	@brief	設定データ TODO : 入力と音量で分ける
  */
 struct SettingsData {
-	float mouseSensitivity;
-	float masterVolume;
-	float bgmVolume;
-	float seVolume;
+	int mouseSensitivity;
+	int masterVolume;
+	int bgmVolume;
+	int seVolume;
 };
 /*
  *	@brief	セーブデータ

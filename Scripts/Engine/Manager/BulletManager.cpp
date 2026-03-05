@@ -72,6 +72,7 @@ void BulletManager::Initialize(Engine & setEngine) {
  *	@param	direction	射撃方向
  *  @param	speed		弾の速度
  *  @param	damage		弾のダメージ
+ *	@param	destroyTime	弾が消える時間
  */
 void BulletManager::BulletShot(
 	const Vector3& position,
@@ -80,9 +81,10 @@ void BulletManager::BulletShot(
 	const Vector3& direction,
 	GameObject* shotOwner,
 	const float speed,
-	const float damage) {
+	const float damage,
+	const float destroyTime) {
 	// 弾生成 
 	BulletComponentPtr bullet = GenerateBullet(BULLET_NAME, position, rotation, BULLET_AABB_MIN, BULLET_AABB_MAX);
 	// セットアップ
-	bullet->Setup(direction, scale, shotOwner, damage, speed);
+	bullet->Setup(direction, scale, shotOwner, damage, speed, destroyTime);
 }

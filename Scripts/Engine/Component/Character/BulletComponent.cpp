@@ -22,10 +22,11 @@ using namespace GameObjectUtility;
 using namespace CharacterUtility;
 
 BulletComponent::BulletComponent()
-	: destroyTimeCount(3)
+	: destroyTimeCount(0)
+	, moveDirection(V_ZERO)
 	, bullet(nullptr)
 	, hitDamage(0.0f)
-
+	, shotOwner(nullptr)
 	, moveSpeed(10000) {
 }
 
@@ -59,17 +60,20 @@ void BulletComponent::OnCollision(const std::shared_ptr<Component>& self, const 
  *	@param	setOwner		ŽËŒ‚ŽÒ
  *	@param	setDamage		“–‚½‚Á‚½Žž‚É—^‚¦‚éƒ_ƒ[ƒW
  *	@param	setSpeed		’e‚Ì‘¬‚³
+ *	@param	setDestroyTime	’e‚ªÁ‚¦‚éŽžŠÔ
  */
 void BulletComponent::Setup(
 	Vector3 setDirection,
 	Vector3 setScale, 
 	GameObject* setOwner,
 	float setDamage,
-	float setSpeed) {
+	float setSpeed,
+	float setDestroyTime) {
 	moveDirection = setDirection;
 	shotOwner = setOwner;
 	hitDamage = setDamage;
 	moveSpeed = setSpeed;
 	bullet = GetOwner();
 	bullet->scale = setScale;
+	destroyTimeCount = setDestroyTime;
 }
