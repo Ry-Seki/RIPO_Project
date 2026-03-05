@@ -19,6 +19,7 @@
 #include "../../../../Menu/MainGame/Dungeon/MenuSelectDungeon.h"
 #include "../../../../Menu/MenuManager.h"
 #include "../../../../System/Money/MoneyManager.h"
+#include "../../../../System/World/WorldProgressManager.h"
 
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -141,14 +142,18 @@ void SelectDetail_Dungeon::SetDungeonData(const std::vector<std::shared_ptr<Load
  */
 std::vector<DungeonInfoData> SelectDetail_Dungeon::ToDungeonInfoData() {
 	std::vector<DungeonInfoData> dataList;
+	auto& world = WorldProgressManager::GetInstance();
 	for (int i = 1, max = dungeonDataList.size(); i < max; i++) {
 		DungeonInfoData data{};
+		data.isEventClear = world.GetEventTreasureCount(i) > 0;
 		data.isEventDay = dungeonDataList[i].isEventDay;
 		data.eventStartDay = dungeonDataList[i].eventStartDay;
 		data.eventEndDay = dungeonDataList[i].eventEndDay;
 		data.levelOfDanger = dungeonDataList[i].levelOfDanger;
-		data.necessaryStrength = dungeonDataList[i].necessaryStrength;
-		data.treasureCount = dungeonDataList[i].treasureCount;
+		data.minStrength = dungeonDataList[i].minStrength;
+		data.maxStrength = dungeonDataList[i].maxStrength;
+		data.treasureCount = world.GetDungeonTreasureCount(i);
+		data.maxTreasureCount = dungeonDataList[i].treasureCount;
 		dataList.push_back(data);
 	}
 	return dataList;
