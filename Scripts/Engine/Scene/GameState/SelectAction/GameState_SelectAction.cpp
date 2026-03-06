@@ -12,6 +12,8 @@
 #include "../../../Menu/MenuManager.h"
 #include "../../../Menu/MainGame/MenuInGame.h"
 #include "../../../Menu/MainGame/MenuSelectAction.h"
+#include "../../../Menu/MainGame/Status/MenuPlayerStatus.h"
+#include "../../../System/Status/PlayerStatusManager.h"
 
 #include <DxLib.h>
 
@@ -28,10 +30,9 @@ void GameState_SelectAction::Initialize(Engine& engine) {
  *	@brief	準備前処理
  */
 void GameState_SelectAction::Setup() {
-    inputHandle = false;
     auto& context = owner->GetActionContext();
-    context.actionType = GameEnum::ActionType::Invalid;
     auto& menu = MenuManager::GetInstance();
+    context.actionType = GameEnum::ActionType::Invalid;
     auto selectMenu = menu.GetMenu<MenuSelectAction>();
     selectMenu->SetElapsedDay(context.elapsedDay);
     selectMenu->SetIsHalf(context.isHalf);
@@ -59,8 +60,18 @@ void GameState_SelectAction::Teardown() {
  *	@param[in]	GameEnum::ActionType type
  */
 void GameState_SelectAction::DecideActionType(GameEnum::ActionType type) {
-    auto& context = owner->GetActionContext();
-    context.actionType = type;
-    AudioUtility::StopBGM();
-    owner->ChageState(GameEnum::GameState::SelectDetail);
+    auto& menu = MenuManager::GetInstance();
+    // Maxの場合はステータス画面を開く 
+    if (type == GameEnum::ActionType::Max) {
+        auto status = menu.GetMenu<MenuPlayerStatus>();
+        status->SetIsCallback(false);
+        status->SetPrevStatusData(PlayerStatusManager::GetInstance().GetPlayerStatusData());
+        menu.OpenMenu<MenuPlayerStatus>();
+    } else {
+        auto& context = owner->GetActionContext();
+        context.actionType = type;
+        AudioUtility::StopBGM();
+        menu.CloseTopMenu();        // アクション選択メニュー
+        owner->ChageState(GameEnum::GameState::SelectDetail);
+    }
 }

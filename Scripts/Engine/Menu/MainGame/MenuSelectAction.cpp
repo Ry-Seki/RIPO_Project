@@ -22,13 +22,19 @@
 #include "../System/MenuConfirm.h"
 #include "MenuInGame.h"
 #include "../../Manager/FontManager.h"
-#include "../../System/Status/PlayerStatusManager.h"
-#include "Status/MenuPlayerStatus.h"
 #include "../../System/Money/MoneyManager.h"
 #include "../../Load/Audio/LoadAudio.h"
 
 #include <DxLib.h>
 
+/*
+ *  @brief  ファイルパスの名前空間
+ */
+namespace {
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/SelectAction/SelectActionMenuResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/SelectAction/SelectActionMenuNavigation.json";
+    constexpr const char* _SELECTMENU_BGMPATH = "Res/Audio/BGM/Title/MenuBGM.mp3";
+}
 /*
  *	@brief	初期化処理
  */
@@ -48,16 +54,25 @@ void MenuSelectAction::Initialize(Engine& engine) {
         spriteList = std::move(result.spriteList);
         textList = std::move(result.textList);
         buttonList = std::move(result.buttonList);
+        const int actionMin = static_cast<int>(GameEnum::ActionType::Dungeon);
+        const int actionMax = static_cast<int>(GameEnum::ActionType::Max);
+
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             UIButtonBase* button = buttonList[i].get();
             if (!button) continue;
-
+            // アクションIDの取得
+            int typeID = (i < actionMax - 1) ? actionMin + i : actionMax;
+            // それをアクションタイプに変換
+            GameEnum::ActionType type = static_cast<GameEnum::ActionType>(typeID);
+            // アクションボタンリストに登録
+            actionButtonList.push_back({type, button});
+            // ボタンの実行処理を登録
+            button->RegisterOnClick([this, type]() {
+                SelectButtonExecute(type);
+            });
+            // ボタンに navigation 更新処理を登録
             button->RegisterUpdateSelectButton([this, button]() {
                 eventSystem.UpdateSelectButton(button);
-            });
-
-            button->RegisterOnClick([this, &engine, i]() {
-                SelectButtonExecute(engine, i);
             });
         }
         for (auto& sprite : spriteList) {
@@ -201,64 +216,22 @@ void MenuSelectAction::CreateElapsedDayText() {
 }
 /*
  *	@brief		ボタンの押された時の処理
- *	@param[in]	int buttonIndex
+ *	@param[in]	GameEnum::ActionType type
  */
-void MenuSelectAction::SelectButtonExecute(Engine& engine, int buttonIndex) {
+void MenuSelectAction::SelectButtonExecute(GameEnum::ActionType type) {
+    AudioUtility::PlaySE("DebugSE");
+    StartFadeEndCallback(type);
+}
+/*
+ *	@brief		フェード後->コールバックの実行処理
+ *	@param[in]	GameEnum::ActionType type
+ */
+void MenuSelectAction::StartFadeEndCallback(GameEnum::ActionType type) {
     auto& menu = MenuManager::GetInstance();
-    auto confirm = menu.GetMenu<MenuConfirm>();
-    GameEnum::ActionType type = GameEnum::ActionType::Invalid;
 
-    if (buttonIndex == 0) {
-        AudioUtility::PlaySE("DebugSE");
-        type = GameEnum::ActionType::Dungeon;
-        isInteractive = false;
-        FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fade, [this, &menu, type]() {
-            menu.CloseTopMenu();
-            if (Callback) Callback(type);
-        });
-    }else if(buttonIndex == 1){
-        AudioUtility::PlaySE("DebugSE");
-        type = GameEnum::ActionType::Training;
-        confirm->SetCallback([this, &menu, &engine, type](GameEnum::ConfirmResult result) {
-            if (result == GameEnum::ConfirmResult::Yes) {
-                menu.CloseTopMenu();
-                isInteractive = false;
-                FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fade, [this, &menu, type]() {
-                    menu.CloseTopMenu();
-                    if (Callback) Callback(type);
-                });
-            }else {
-                menu.CloseTopMenu();
-            }
-        });
-        menu.OpenMenu<MenuConfirm>();
-    } else if (buttonIndex == 2) {
-        isInteractive = false;
-        AudioUtility::PlaySE("DebugSE");
-        type = GameEnum::ActionType::Shop;
-        FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fade, [this, &menu, type]() {
-            menu.CloseTopMenu();
-            if (Callback) Callback(type);
-        }); 
-    } else if (buttonIndex == 3) {
-        isInteractive = false;
-        AudioUtility::PlaySE("DebugSE");
-        type = GameEnum::ActionType::PartTime;
-        FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fade, [this, &menu, type]() {
-            menu.CloseTopMenu();
-            if (Callback) Callback(type);
-        });
-    }else if (buttonIndex == 4) {
-        isInteractive = false;
-        AudioUtility::PlaySE("DebugSE");
-        auto& menu = MenuManager::GetInstance();
-        auto status = menu.GetMenu<MenuPlayerStatus>();
-        status->SetIsCallback(false);
-        status->SetPrevStatusData(PlayerStatusManager::GetInstance().GetPlayerStatusData());
-        menu.OpenMenu<MenuPlayerStatus>();
-    }
+    isInteractive = false;
+    FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+    FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, type]() {
+        if (Callback) Callback(type);
+    });
 }

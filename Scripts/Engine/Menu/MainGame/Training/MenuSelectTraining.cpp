@@ -55,24 +55,19 @@ void MenuSelectTraining::Initialize(Engine& engine) {
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             UIButtonBase* button = buttonList[i].get();
             if (!button) continue;
-
-            GameEnum::PlayerStatusType type = 
-                static_cast<GameEnum::PlayerStatusType>(i);
-            
+            // トレーニングIDの取得
             int typeID = (i < statusMax - 1) ? statusMin + i : back;
-
-            type = static_cast<GameEnum::PlayerStatusType>(typeID);
-
-            trainingButtonList.push_back({
-                type,
-                button
-            });
-            button->RegisterUpdateSelectButton([this, button]() {
-                eventSystem.UpdateSelectButton(button);
-            });
-
+            // それをステータスタイプに変換
+            GameEnum::PlayerStatusType type = static_cast<GameEnum::PlayerStatusType>(typeID);
+            // トレーニングボタンリストに登録
+            trainingButtonList.push_back({type, button});
+            // ボタンの実行処理を登録
             button->RegisterOnClick([this, type]() {
                 SelectButtonExecute(type);
+            });
+            // ボタンに navigation 更新処理を登録
+            button->RegisterUpdateSelectButton([this, button]() {
+                eventSystem.UpdateSelectButton(button);
             });
         }
         eventSystem.LoadNavigation(navigation->GetData());

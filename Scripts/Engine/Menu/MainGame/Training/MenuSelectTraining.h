@@ -24,8 +24,9 @@ private:
 	 *	@brief	トレーニングボタン構造体
 	 */
 	struct TrainingButtonEntry {
-		GameEnum::PlayerStatusType type;	// ステータスの種類
-		UIButtonBase* button;				// ボタン
+		GameEnum::PlayerStatusType type 
+			= GameEnum::PlayerStatusType::Invalid;	// ステータスの種類
+		UIButtonBase* button = nullptr;				// ボタン
 	};
 
 private:

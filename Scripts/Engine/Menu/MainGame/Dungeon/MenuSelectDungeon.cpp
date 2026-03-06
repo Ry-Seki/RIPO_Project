@@ -60,14 +60,10 @@ void MenuSelectDungeon::Initialize(Engine& engine) {
 		for (int i = 0, max = buttonList.size(); i < max; i++) {
 			UIButtonBase* button = buttonList[i].get();
 			if (!button) continue;
-
 			// ダンジョンIDの取得
 			int dungeonID = (i < dungeonMax - 1) ? dungeonMin + i : back;
 			// ダンジョンボタンリストに登録
-			dungeonButtonList.push_back({
-				dungeonID,
-				buttonList[i].get()
-			});
+			dungeonButtonList.push_back({dungeonID, button});
 			// ボタンの実行処理を登録
 			button->RegisterOnClick([this, dungeonID]() {
 				SelectButtonExecute(dungeonID);
