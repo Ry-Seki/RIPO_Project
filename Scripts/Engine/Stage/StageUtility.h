@@ -49,7 +49,7 @@ namespace StageUtility {
 	 *	@return		std::vector<Vector3>
 	 */
 	inline std::unordered_map<int, Vector3> GetEnemySpwanPos() {
-		return StageManager::GetInstance().GetEnemySpwanPos();
+		return StageManager::GetInstance().GetEnemySpawnPos();
 	}
 	/*
 	 *	ボスの初期生成位置の取得
@@ -57,7 +57,7 @@ namespace StageUtility {
 	 *	@return		std::vector<Vector3>
 	 */
 	inline std::unordered_map<int, Vector3> GetBossSpwanPos() {
-		return StageManager::GetInstance().GetBossSpwanPos();
+		return StageManager::GetInstance().GetBossSpawnPos();
 	}
 	/*
 	 *  お宝の生成位置の取得

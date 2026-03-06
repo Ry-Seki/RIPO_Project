@@ -147,13 +147,13 @@ public:
 	/*
 	 *	敵の初期生成位置の取得
 	 */
-	std::unordered_map<int, Vector3> GetEnemySpwanPos()const;
+	std::unordered_map<int, Vector3> GetEnemySpawnPos()const;
 
 	/*
 	 *　ボスの初期生成位置の取得
 	 *  author	kuu
 	 */
-	std::unordered_map<int, Vector3> GetBossSpwanPos()const;
+	std::unordered_map<int, Vector3> GetBossSpawnPos()const;
 
 	/*
 	 * お宝の生成位置の取得
