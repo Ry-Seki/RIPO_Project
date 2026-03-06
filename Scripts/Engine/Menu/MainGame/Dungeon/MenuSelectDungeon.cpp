@@ -54,12 +54,15 @@ void MenuSelectDungeon::Initialize(Engine& engine) {
 		spriteList = std::move(result.spriteList);
 		textList = std::move(result.textList);
 		buttonList = std::move(result.buttonList);
+		const int back = static_cast<int>(GameEnum::MainDungeonType::Invalid);
+		const int dungeonMin = static_cast<int>(GameEnum::MainDungeonType::Dungeon1);
+		const int dungeonMax = static_cast<int>(GameEnum::MainDungeonType::Max);
 		for (int i = 0, max = buttonList.size(); i < max; i++) {
 			UIButtonBase* button = buttonList[i].get();
 			if (!button) continue;
 
 			// ダンジョンIDの取得
-			int dungeonID = (i < 4) ? i + 1 : -1;
+			int dungeonID = (i < dungeonMax - 1) ? dungeonMin + i : back;
 			// ダンジョンボタンリストに登録
 			dungeonButtonList.push_back({
 				dungeonID,
@@ -69,7 +72,7 @@ void MenuSelectDungeon::Initialize(Engine& engine) {
 			button->RegisterOnClick([this, dungeonID]() {
 				SelectButtonExecute(dungeonID);
 			});
-			// ボタンにnavigation更新処理を登録
+			// ボタンに navigation 更新処理を登録
 			button->RegisterUpdateSelectButton([this, button]() {
 				eventSystem.UpdateSelectButton(button);
 			});
@@ -193,12 +196,9 @@ void MenuSelectDungeon::Resume() {
 }
 /*
  *	@brief		ボタンの押された時の処理
- *	@param[in]	int buttonIndex
+ *	@param[in]	int dungeonID
  */
-void MenuSelectDungeon::SelectButtonExecute(int buttonIndex) {
-	auto& menu = MenuManager::GetInstance();
-	int dungeonID = buttonIndex;
-
+void MenuSelectDungeon::SelectButtonExecute(int dungeonID) {
 	AudioUtility::PlaySE("DebugSE");
 	// 戻る
 	if (dungeonID == -1) {
@@ -301,7 +301,7 @@ void MenuSelectDungeon::StartFadeEndCallback(int dungeonID) {
 
 	isInteractive = false;
 	FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-	FadeManager::GetInstance().StartFade(fadeOut,[this, dungeonID, &menu]() {
+	FadeManager::GetInstance().StartFade(fadeOut,[this, &menu, dungeonID]() {
 		menu.CloseTopMenu();	// このメニュー
 		if (Callback) Callback(dungeonID);
 	});

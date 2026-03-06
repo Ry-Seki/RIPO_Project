@@ -109,9 +109,9 @@ public:
 private:
 	/*
 	 *	@brief		ボタンの押された時の処理
-	 *	@param[in]	int buttonIndex
+	 *	@param[in]	int dungeonID
 	 */
-	void SelectButtonExecute(int buttonIndex);
+	void SelectButtonExecute(int dungeonID);
 	/*
 	 *	@brief		テキストの生成
 	 */

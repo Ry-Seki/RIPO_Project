@@ -20,6 +20,15 @@
  */
 class MenuSelectTraining : public MenuBase {
 private:
+	/*
+	 *	@brief	トレーニングボタン構造体
+	 */
+	struct TrainingButtonEntry {
+		GameEnum::PlayerStatusType type;	// ステータスの種類
+		UIButtonBase* button;				// ボタン
+	};
+
+private:
 	int animFrame = 0;
 	float animTimer = 0.0f;
 	int elapsedDay = -1;
@@ -29,10 +38,9 @@ private:
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 
-	std::function<void(GameEnum::PlayerStatusType)> Callback = nullptr;
+	std::vector<TrainingButtonEntry> trainingButtonList;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Training/SelectTraining/SelectTrainingMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Training/SelectTraining/SelectTrainingMenuNavigation.json";
+	std::function<void(GameEnum::PlayerStatusType)> Callback = nullptr;
 
 public:
 	/*
@@ -69,9 +77,19 @@ public:
 private:
 	/*
 	 *	@brief		ボタンの押された時の処理
-	 *	@param[in]	int buttonIndex
+	 *	@param[in]	GameEnum::PlayerStatusType type
 	 */
-	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	void SelectButtonExecute(GameEnum::PlayerStatusType type);
+	/*
+	 *	@brief		フェード後->コールバックの実行処理
+	 *	@param[in]	GameEnum::PlayerStatusType type
+	 */
+	void StartFadeEndCallback(GameEnum::PlayerStatusType type);
+	/*
+	 *	@brief		確認メニューを開く
+	 *	@param[in]	GameEnum::PlayerStatusType type
+	 */
+	void OpenConfirmMenu(GameEnum::PlayerStatusType type);
 
 public:
 	/*
