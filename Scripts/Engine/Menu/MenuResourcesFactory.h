@@ -6,7 +6,6 @@
 #ifndef _MENU_RESOURCES_FACTORY_H_
 #define _MENU_RESOURCES_FACTORY_H_
 
-#include "../Engine.h"
 #include "../JSON.h"
 
 // ‘O•ûéŒ¾
