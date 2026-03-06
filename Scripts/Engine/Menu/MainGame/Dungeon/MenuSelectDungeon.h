@@ -43,7 +43,7 @@ private:
 	 */
 	struct DungeonMenuEntry {
 		DungeonInfoData info;               // ダンジョンデータ
-		TextBase* level	= nullptr;			// ダンジョンのレベル
+		TextBase* level = nullptr;			// ダンジョンのレベル
 		TextBase* strength = nullptr;		// 最小-最大Strength
 		TextBase* treasureCount = nullptr;	// お宝情報テキスト
 		TextBase* eventInfo = nullptr;		// イベント情報
