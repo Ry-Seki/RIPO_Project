@@ -115,7 +115,7 @@ public:
 			}
 
 			// Šp“x‚ðŽæ“¾
-			if (entranceArray[i].contains(_ANGLE) && entranceArray[i][_ANGLE].is_array()) {
+			if (entranceArray[i].contains(_ANGLE)) {
 				data.angle = entranceArray[i][_ANGLE];
 			}
 
