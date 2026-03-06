@@ -51,8 +51,6 @@ private:
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
-		const Vector3& AABBMin,
-		const Vector3& AABBMax,
 		GameObjectPtr& stageObject,
 		int setTreasureID = -1
 	);
@@ -75,8 +73,9 @@ public:
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
-		const Vector3& AABBMin,
-		const Vector3& AABBMax);
+		const Vector3& center,
+		const float& angle,
+		const Vector3& size);
 
 	/*
 	 *	お宝生成
@@ -109,8 +108,9 @@ public:
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
-		const Vector3& AABBMin,
-		const Vector3& AABBMax
+		const Vector3& center,
+		const float& angle,
+		const Vector3& size
 	);
 	/*
 	 *	ID指定のステージオブジェクト削除

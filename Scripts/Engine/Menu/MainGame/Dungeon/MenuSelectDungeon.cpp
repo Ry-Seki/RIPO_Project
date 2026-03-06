@@ -24,9 +24,17 @@
 #include "../MenuInGame.h"
 #include "../../../Manager/FontManager.h"
 #include "../../../../Data/Dungeon/DungeonData.h"
+#include "../../../System/World/WorldProgressManager.h"
 
 #include <DxLib.h>
 
+/*
+ *	@brief	ファイルパスの名前空間
+ */
+namespace {
+	constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Dungeon/SelectDungeon/SelectDungeonMenuResources.json";
+	constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame//Dungeon/SelectDungeon/SelectDungeonMenuNavigation.json";
+}
  /*
   *	@brief	初期化処理
   */
@@ -46,17 +54,24 @@ void MenuSelectDungeon::Initialize(Engine& engine) {
 		spriteList = std::move(result.spriteList);
 		textList = std::move(result.textList);
 		buttonList = std::move(result.buttonList);
+		const int back = static_cast<int>(GameEnum::MainDungeonType::Invalid);
+		const int dungeonMin = static_cast<int>(GameEnum::MainDungeonType::Dungeon1);
+		const int dungeonMax = static_cast<int>(GameEnum::MainDungeonType::Max);
 		for (int i = 0, max = buttonList.size(); i < max; i++) {
 			UIButtonBase* button = buttonList[i].get();
 			if (!button) continue;
-
+			// ダンジョンIDの取得
+			int dungeonID = (i < dungeonMax - 1) ? dungeonMin + i : back;
+			// ダンジョンボタンリストに登録
+			dungeonButtonList.push_back({dungeonID, button});
+			// ボタンの実行処理を登録
+			button->RegisterOnClick([this, dungeonID]() {
+				SelectButtonExecute(dungeonID);
+			});
+			// ボタンに navigation 更新処理を登録
 			button->RegisterUpdateSelectButton([this, button]() {
 				eventSystem.UpdateSelectButton(button);
-				});
-
-			button->RegisterOnClick([this, &engine, i]() {
-				SelectButtonExecute(engine, i);
-				});
+			});
 		}
 		for (auto& sprite : spriteList) {
 			if (sprite->GetName() == "DungeonSprite") dungeonSprite = sprite.get();
@@ -78,13 +93,14 @@ void MenuSelectDungeon::Open() {
 		button->Setup();
 	}
 	// TODO : ダンジョン3, 4を閉じる
-	buttonList[2]->SetIsEnable(false);
-	buttonList[3]->SetIsEnable(false);
+	//buttonList[2]->SetIsEnable(false);
+	//buttonList[3]->SetIsEnable(false);
 
 	eventSystem.ApplySelection();
 	currentIndex = eventSystem.GetCurrentIndex();
-	CreateDungeonText();
-	SetupText();
+	prevIndex = currentIndex;
+	CreateDungeonInfoData();
+	SetupDungeonInfo();
 	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
 		// TODO : イベントごとに画像差し替え
@@ -100,7 +116,12 @@ void MenuSelectDungeon::Update(Engine& engine, float unscaledDeltaTime) {
 	// イベントシステムの更新
 	eventSystem.Update(unscaledDeltaTime);
 	currentIndex = eventSystem.GetCurrentIndex();
-	dungeonSprite->SetFrameIndex(currentIndex);
+	// 選択されているボタンが変更されたら文字の再設定
+	if (prevIndex != currentIndex) {
+		prevIndex = currentIndex;
+		SetupDungeonInfo();
+	}
+
 
 	// ボタンの更新
 	for (auto& button : buttonList) {
@@ -142,7 +163,6 @@ void MenuSelectDungeon::Render() {
 		if (!sprite->IsVisible() || sprite.get() == dungeonSprite) continue;
 		sprite->Render();
 	}
-	dungeonSprite->Render();
 	for (auto& button : buttonList) {
 		if (!button->IsVisible()) continue;
 		button->Render();
@@ -167,162 +187,157 @@ void MenuSelectDungeon::Resume() {
 		button->Setup();
 	}
 	// TODO : ダンジョン3, 4を閉じる
-	buttonList[2]->SetIsEnable(false);
-	buttonList[3]->SetIsEnable(false);
+	//buttonList[2]->SetIsEnable(false);
+	//buttonList[3]->SetIsEnable(false);
 }
 /*
  *	@brief		ボタンの押された時の処理
- *	@param[in]	int buttonIndex
+ *	@param[in]	int dungeonID
  */
-void MenuSelectDungeon::SelectButtonExecute(Engine& engine, int buttonIndex) {
-	auto& menu = MenuManager::GetInstance();
-	auto confirm = menu.GetMenu<MenuConfirm>();
-	int dungeonID = 0;
-
-	if (buttonIndex == 0) {
-		dungeonID = 1;
-		AudioUtility::PlaySE("DebugSE");
-		confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
-			if (result == GameEnum::ConfirmResult::Yes) {
-				menu.CloseTopMenu();
-				isInteractive = false;
-				FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-				FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, dungeonID]() {
-					menu.CloseAllMenu();
-					if (Callback) Callback(dungeonID);
-				});
-			}else {
-				menu.CloseTopMenu();
-			}
-		});
-		menu.OpenMenu<MenuConfirm>();
+void MenuSelectDungeon::SelectButtonExecute(int dungeonID) {
+	AudioUtility::PlaySE("DebugSE");
+	// 戻る
+	if (dungeonID == -1) {
+		StartFadeEndCallback(dungeonID);
+		return;
 	}
-	else if (buttonIndex == 1) {
-		dungeonID = 2;
-		AudioUtility::PlaySE("DebugSE");
-		confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
-			if (result == GameEnum::ConfirmResult::Yes) {
-				menu.CloseTopMenu();
-				isInteractive = false;
-				FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-				FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, dungeonID]() {
-					menu.CloseAllMenu();
-					if (Callback) Callback(dungeonID);
-				});
-			}else {
-				menu.CloseTopMenu();
-			}
-		});
-		menu.OpenMenu<MenuConfirm>();
-	}
-	else if (buttonIndex == 2) {
-		dungeonID = 3;
-		AudioUtility::PlaySE("DebugSE");
-		confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
-			if (result == GameEnum::ConfirmResult::Yes) {
-				menu.CloseTopMenu();
-				isInteractive = false;
-				FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-				FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, dungeonID]() {
-					menu.CloseAllMenu();
-					if (Callback) Callback(dungeonID);
-				});
-			}else {
-				menu.CloseTopMenu();
-			}
-		});
-		menu.OpenMenu<MenuConfirm>();
-	}
-	else if (buttonIndex == 3) {
-		dungeonID = 4;
-		AudioUtility::PlaySE("DebugSE");
-		confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
-			if (result == GameEnum::ConfirmResult::Yes) {
-				menu.CloseTopMenu();
-				isInteractive = false;
-				FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-				FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, dungeonID]() {
-					menu.CloseAllMenu();
-					if (Callback) Callback(dungeonID);
-				});
-			}else {
-				menu.CloseTopMenu();
-			}
-		});
-		menu.OpenMenu<MenuConfirm>();
-	}
+	// 確認メニューを開く
+	OpenConfirmMenu(dungeonID);
 }
 /*
- *	@brief		テキストの生成
+ *	@brief		ダンジョン情報データの生成
  */
-void MenuSelectDungeon::CreateDungeonText() {
-	DungeonInfoData& data = dungeonInfoList[currentIndex];
-	int dataSize = dungeonInfoList.size();
-	dungeonTextList.clear();
-	dungeonTextList.resize(dataSize);
-	auto& font = FontManager::GetInstance();
+void MenuSelectDungeon::CreateDungeonInfoData() {
+	dungeonMenuList.clear();
+
 	int white = GetColor(255, 255, 255);
 
-	for (int i = 0; i < dataSize; i++) {
-		DungeonTextSet set;
+	for (auto& data : dungeonInfoList) {
+		MenuSelectDungeon::DungeonMenuEntry entry;
+		entry.info = data;
 
 		for (auto& text : textList) {
-			TextInfo info = text->GetTextInfo();
-
 			if (text->GetName() == "DungeonLevelText") {
-				set.level = std::make_shared<DynamicText>(info);
-				set.level->SetColor(white);
+				entry.level = text.get();
+				entry.level->SetColor(white);
 			}
-			if (text->GetName() == "StrengthText") {
-				set.strength = std::make_shared<DynamicText>(info);
-				set.strength->SetColor(white);
+			else if (text->GetName() == "StrengthText") {
+				entry.strength = text.get();
+				entry.strength->SetColor(white);
 			}
-			if (text->GetName() == "TreasureCountText") {
-				set.treasureCount = std::make_shared<DynamicText>(info);
-				set.treasureCount->SetColor(white);
+			else if (text->GetName() == "TreasureCountText") {
+				entry.treasureCount = text.get();
+				entry.treasureCount->SetColor(white);
 			}
-			if (text->GetName() == "EventInfoText") {
-				set.eventDay = std::make_shared<DynamicText>(info);
-				set.eventDay->SetColor(white);
+			else if (text->GetName() == "EventInfoText") {
+				entry.eventInfo = text.get();
+				entry.eventInfo->SetColor(white);
 			}
 		}
-		dungeonTextList[i] = set;
+		dungeonMenuList.push_back(entry);
 	}
-	std::string eventStart = std::to_string(data.eventStartDay);
-	std::string eventEnd = std::to_string(data.eventEndDay);
-	std::string eventDay = eventStart + " ～ " + eventEnd;
-
 }
 /*
  *	@brief		テキストの準備前処理
  */
-void MenuSelectDungeon::SetupText() {
-	for (int i = 0, max = dungeonTextList.size(); i < max; i++) {
-		DungeonInfoData& data = dungeonInfoList[i];
-		DungeonTextSet& dungeonInfo = dungeonTextList[i];
+void MenuSelectDungeon::SetupDungeonInfo() {
+	if (currentIndex < 0 || currentIndex >= dungeonMenuList.size()) return;
+	// ダンジョン画像の設定
+	dungeonSprite->SetFrameIndex(currentIndex);
+	// ダンジョン情報テキストの設定
+	auto& entry = dungeonMenuList[currentIndex];
+	entry.level->SetText(std::to_string(entry.info.levelOfDanger));
+	entry.strength->SetText(
+		std::to_string(entry.info.minStrength)
+		+ " ～ "
+		+ std::to_string(entry.info.maxStrength));
+	entry.treasureCount->SetText(
+		std::to_string(entry.info.treasureCount)
+		+ " ～ "
+		+ std::to_string(entry.info.maxTreasureCount));
 
-		dungeonInfo.level->SetText(std::to_string(data.levelOfDanger));
-		dungeonInfo.treasureCount->SetText(std::to_string(data.treasureCount));
-		dungeonInfo.strength->SetText(std::to_string(data.necessaryStrength));
-		std::string eventDay;
-		eventDay.reserve(32);
-		eventDay += std::to_string(data.eventStartDay);
-		eventDay += " ～ ";
-		eventDay += std::to_string(data.eventEndDay);
-		dungeonInfo.eventDay->SetText(data.isEventDay ? eventDay : "NONE");
+	std::string eventStr = "";
+	if (entry.info.isEventClear) {
+		eventStr = "Complete!";
+	}else {
+		if (entry.info.isEventDay) {
+			eventStr = std::to_string(entry.info.eventStartDay)
+				+ " ～ "
+				+ std::to_string(entry.info.eventEndDay);
+		}
 	}
+	entry.eventInfo->SetText(eventStr);
 }
 /*
  *	@brief		ダンジョン情報の描画
  */
 void MenuSelectDungeon::RenderDungeonInfo() {
-	if (currentIndex == -1) return;
-	auto& font = FontManager::GetInstance();
+	if (currentIndex < 0 || currentIndex >= dungeonButtonList.size()) return;
 
-	DungeonTextSet& dungeonInfo = dungeonTextList[currentIndex];
+	int dungeonID = dungeonButtonList[currentIndex].dungeonID;
 
-	dungeonInfo.level->Render();
-	dungeonInfo.treasureCount->Render();
-	dungeonInfo.strength->Render();
-	dungeonInfo.eventDay->Render();
+	// 戻るボタンなら描画しない
+	if (dungeonID <= 0) return;
+
+	dungeonSprite->Render();
+
+	DungeonMenuEntry& entry = dungeonMenuList[currentIndex];
+	if (entry.level) entry.level->Render();
+	if (entry.strength) entry.strength->Render();
+	if (entry.treasureCount) entry.treasureCount->Render();
+	if (entry.eventInfo) entry.eventInfo->Render();
+}
+
+/*
+ *	@brief		フェード後->コールバックの実行処理
+ *	@param[in]	int dungeonID
+ */
+void MenuSelectDungeon::StartFadeEndCallback(int dungeonID) {
+	auto& menu = MenuManager::GetInstance();
+
+	isInteractive = false;
+	FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fadeOut,[this, &menu, dungeonID]() {
+		menu.CloseTopMenu();	// このメニュー
+		if (Callback) Callback(dungeonID);
+	});
+}
+/*
+ *	@brief		確認メニューを開く
+ *	@param[in]	int dungeonID
+ */
+void MenuSelectDungeon::OpenConfirmMenu(int dungeonID) {
+	auto& menu = MenuManager::GetInstance();
+	auto confirm = menu.GetMenu<MenuConfirm>();
+
+	confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
+		menu.CloseTopMenu();
+		if (result != GameEnum::ConfirmResult::Yes) return;
+		// フェード開始
+		StartFadeEndCallback(dungeonID);
+	});
+	menu.OpenMenu<MenuConfirm>();
+}
+/*
+ *	@brief		イベント情報を整理
+ *	@param[in]	DungeonMenuEntry& entry
+ */
+void MenuSelectDungeon::SortDungeonMenuEntry(DungeonMenuEntry& entry) {
+	std::string eventStr = "";
+	// すでに獲得していた場合、クリアとする
+	if (entry.info.isEventClear) {
+		eventStr = "Complete!";
+	}
+	else {
+		// もしイベント中なら、イベント日を入れる
+		if (entry.info.isEventDay) {
+
+			eventStr = std::to_string(entry.info.eventStartDay)
+				+ " ～ "
+				+ std::to_string(entry.info.eventEndDay);
+		}else {
+			eventStr = "NONE";
+		}
+	}
+	entry.dungeonEvent.eventText->SetText(eventStr);
 }

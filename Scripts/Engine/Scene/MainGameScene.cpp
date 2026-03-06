@@ -13,6 +13,7 @@
 #include "../System/Money/MoneyManager.h"
 #include "../System/Status/PlayerStatusManager.h"
 #include "../Component/CapsuleCollider.h"
+#include "../Component/OBBCollider.h"
 #include "../Save/SaveDataManager.h"
 #include "../Menu/MenuManager.h"
 #include "../Menu/MainGame/MenuInGame.h"
@@ -87,6 +88,9 @@ void MainGameScene::Render() {
 		auto aabb = obj->GetComponent<AABBCollider>();
 		if (aabb != nullptr)
 			aabb->DebugRender();
+		auto obb = obj->GetComponent<OBBCollider>();
+		if (obb != nullptr)
+			obb->DebugRender();
 		auto capsule = obj->GetComponent<CapsuleCollider>();
 		if (capsule != nullptr)
 			capsule->DebugRender();

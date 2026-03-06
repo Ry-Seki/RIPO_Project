@@ -40,6 +40,18 @@
         "Res/Menu/MainGame/Dungeon/Trealine_Dungeon3.png",
         "Res/Menu/MainGame/Dungeon/Trealine_Dungeon4.png"
       ]
+    },
+    {
+      "Name": "EventSprite",
+      "Rect": {
+        "X": 65,
+        "Y": 189,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/Menu/MainGame/Dungeon/Trealine_EventSprite.png"
+      ]
     }
   ],
   "Texts": [
@@ -49,7 +61,7 @@
       "UseFont": "ElapsedDayFont",
       "Alignment": "Left",
       "Position": {
-        "X": 1780,
+        "X": 1670,
         "Y": 480
       }
     },
@@ -59,7 +71,7 @@
       "UseFont": "ElapsedDayFont",
       "Alignment": "Left",
       "Position": {
-        "X": 1780,
+        "X": 1670,
         "Y": 580
       }
     },
@@ -69,7 +81,7 @@
       "UseFont": "ElapsedDayFont",
       "Alignment": "Left",
       "Position": {
-        "X": 1780,
+        "X": 1670,
         "Y": 700
       }
     },
@@ -79,7 +91,7 @@
       "UseFont": "ElapsedDayFont",
       "Alignment": "Left",
       "Position": {
-        "X": 1740,
+        "X": 1670,
         "Y": 810
       }
     }
@@ -89,14 +101,14 @@
       "Name": "Dungeon1",
       "Type": "Single",
       "Position": {
-        "X": 34,
-        "Y": 175
+        "X": 97,
+        "Y": 189
       },
       "Rect": {
-        "X": 34,
-        "Y": 175,
-        "Width": 436,
-        "Height": 125
+        "X": 97,
+        "Y": 189,
+        "Width": 486,
+        "Height": 126
       },
       "Resources": {
         "Idle": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon1_Button.png",
@@ -109,14 +121,14 @@
       "Name": "Dungeon2",
       "Type": "Single",
       "Position": {
-        "X": 525,
-        "Y": 175
+        "X": 673,
+        "Y": 189
       },
       "Rect": {
-        "X": 525,
-        "Y": 175,
-        "Width": 436,
-        "Height": 125
+        "X": 673,
+        "Y": 189,
+        "Width": 312,
+        "Height": 126
       },
       "Resources": {
         "Idle": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon2_Button.png",
@@ -129,14 +141,14 @@
       "Name": "Dungeon3",
       "Type": "Single",
       "Position": {
-        "X": 1016,
-        "Y": 175
+        "X": 1075,
+        "Y": 189
       },
       "Rect": {
-        "X": 1016,
-        "Y": 175,
-        "Width": 436,
-        "Height": 125
+        "X": 1075,
+        "Y": 189,
+        "Width": 312,
+        "Height": 126
       },
       "Resources": {
         "Idle": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon3_Button.png",
@@ -150,14 +162,14 @@
       "Name": "Dungeon4",
       "Type": "Single",
       "Position": {
-        "X": 1510,
-        "Y": 175
+        "X": 1477,
+        "Y": 189
       },
       "Rect": {
-        "X": 1510,
-        "Y": 175,
-        "Width": 436,
-        "Height": 125
+        "X": 1477,
+        "Y": 189,
+        "Width": 312,
+        "Height": 126
       },
       "Resources": {
         "Idle": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon4_Button.png",
@@ -165,6 +177,26 @@
         "Press": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon4_Button_Select.png",
         "Select": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon4_Button_Select.png",
         "Disable": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon4_Button_Disable.png"
+      }
+    },
+    {
+      "Name": "Back",
+      "Type": "Single",
+      "Position": {
+        "X": 1639,
+        "Y": 963
+      },
+      "Rect": {
+        "X": 1639,
+        "Y": 963,
+        "Width": 243,
+        "Height": 101
+      },
+      "Resources": {
+        "Idle": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon_BackButton.png",
+        "Hover": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon_BackButton.png",
+        "Press": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon_BackButton_Press.png",
+        "Select": "Res/Menu/MainGame/Dungeon/Trealine_SelectDungeon_BackButton_Select.png"
       }
     }
   ]

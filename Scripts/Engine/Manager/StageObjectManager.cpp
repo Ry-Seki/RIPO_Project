@@ -28,17 +28,12 @@ StageObjectBasePtr StageObjectManager::CreateStageObject(
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation,
-	const Vector3& AABBMin,
-	const Vector3& AABBMax,
 	GameObjectPtr& stageObject,
 	int setTreasreID) {
 	// 未使用のオブジェクト取得
 	stageObject = GetUnuseObject();
 	// ステージオブジェクト生成
 	StageObjectBasePtr createStageObj = stageObject->AddComponent<T>();
-	// コライダー生成
-	AABBColliderPtr collider = stageObject->AddComponent<AABBCollider>();
-	collider->aabb = { AABBMin, AABBMax };
 	// ID設定
 	createStageObj->SetTreasureID(setTreasreID);
 	// データのセット
@@ -53,12 +48,15 @@ void StageObjectManager::GenerateExit(
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation,
-	const Vector3& AABBMin,
-	const Vector3& AABBMax) {
+	const Vector3& center,
+	const float& angle,
+	const Vector3& size) {
 	GameObjectPtr createExitPoint;
 	// 生成ステージオブジェクトの空きをチェック
 	// リストの空きに生成
-	CreateStageObject<ExitPoint>(name, position, rotation, AABBMin, AABBMax, createExitPoint);
+	CreateStageObject<ExitPoint>(name, position, rotation, createExitPoint);
+	OBBColliderPtr collider = createExitPoint->AddComponent<OBBCollider>();
+	collider->obb = { center,angle,size };
 	exitPoint = createExitPoint->GetComponent<ExitPoint>().get();
 	// オブジェクトのリストに保存
 	createStageObjectList.push_back(createExitPoint);
@@ -85,9 +83,10 @@ void StageObjectManager::GenerateTreasure(
 	GameObjectPtr treasure;
 	// 生成ステージオブジェクトの空きをチェック
 	// リストの空きに生成
-	CreateStageObject<Treasure>(name, position, rotation, AABBMin, AABBMax, treasure, setTreasureID);
+	CreateStageObject<Treasure>(name, position, rotation, treasure, setTreasureID);
 	treasure->AddComponent<ModelRenderer>();
-
+	AABBColliderPtr collider = treasure->AddComponent<AABBCollider>();
+	collider->aabb = { AABBMin,AABBMax };
 	auto component = treasure->GetComponent<Treasure>();
 	if (component) {
 		TreasureStatusData data{};
@@ -114,12 +113,16 @@ void StageObjectManager::GenerateStair(
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation,
-	const Vector3& AABBMin,
-	const Vector3& AABBMax) {
+	const Vector3& center,
+	const float& angle,
+	const Vector3& size
+	) {
 	GameObjectPtr createStair;
 	// リストの空きに生成
-	CreateStageObject<Stair>(name, position, rotation, AABBMin, AABBMax, createStair);
+	CreateStageObject<Stair>(name, position, rotation, createStair);
 	stairList.push_back(createStair->GetComponent<Stair>().get());
+	OBBColliderPtr collider = createStair->AddComponent<OBBCollider>();
+	collider->obb = { center,angle,size };
 	// オブジェクトのリストに保存
 	createStageObjectList.push_back(createStair);
 	// シーンが持つゲームオブジェクト配列に入れる

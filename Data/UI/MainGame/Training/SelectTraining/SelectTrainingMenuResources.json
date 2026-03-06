@@ -17,10 +17,10 @@
     {
       "Name": "Training_Detail",
       "Rect": {
-        "X": 70,
-        "Y": 50,
-        "Width": 1850,
-        "Height": 1015
+        "X": 47,
+        "Y": 29,
+        "Width": 1240,
+        "Height": 152
       },
       "Resources": [
         "Res/Menu/MainGame/Training/Trealine_Training_Training_Info.png"
@@ -32,20 +32,20 @@
       "Name": "HP",
       "Type": "Single",
       "Position": {
-        "X": 70,
-        "Y": 194
+        "X": 913,
+        "Y": 240
       },
       "Rect": {
-        "X": 70,
-        "Y": 194,
-        "Width": 618,
-        "Height": 206
+        "X": 981,
+        "Y": 275,
+        "Width": 443,
+        "Height": 112
       },
       "Resources": {
-        "Idle": "Res/Menu/MainGame/Training/Trealine_Training_HPButton.png",
-        "Hover": "Res/Menu/MainGame/Training/Trealine_Training_HPButton.png",
-        "Press": "Res/Menu/MainGame/Training/Trealine_Training_HPButton_Select.png",
-        "Select": "Res/Menu/MainGame/Training/Trealine_Training_HPButton_Select.png"
+        "Idle": "Res/Menu/MainGame/Shop/Trealine_Shop_HPUpGradeButton.png",
+        "Hover": "Res/Menu/MainGame/Shop/Trealine_Shop_HPUpGradeButton.png",
+        "Press": "Res/Menu/MainGame/Shop/Trealine_Shop_HPUpGradeButton_Press.png",
+        "Select": "Res/Menu/MainGame/Shop/Trealine_Shop_HPUpGradeButton_Select.png"
       }
     },
     {
@@ -53,59 +53,80 @@
       "Type": "Single",
       "Position": {
         "X": 913,
-        "Y": 346
+        "Y": 379
       },
       "Rect": {
-        "X": 913,
-        "Y": 346,
-        "Width": 1006,
-        "Height": 171
+        "X": 981,
+        "Y": 414,
+        "Width": 594,
+        "Height": 112
       },
       "Resources": {
-        "Idle": "Res/Menu/MainGame/Training/Trealine_Training_StaminaButton.png",
-        "Hover": "Res/Menu/MainGame/Training/Trealine_Training_StaminaButton.png",
-        "Press": "Res/Menu/MainGame/Training/Trealine_Training_StaminaButton_Select.png",
-        "Select": "Res/Menu/MainGame/Training/Trealine_Training_StaminaButton_Select.png"
+        "Idle": "Res/Menu/MainGame/Shop/Trealine_Shop_StaminaUpGradeButton.png",
+        "Hover": "Res/Menu/MainGame/Shop/Trealine_Shop_StaminaUpGradeButton.png",
+        "Press": "Res/Menu/MainGame/Shop/Trealine_Shop_StaminaUpGradeButton_Press.png",
+        "Select": "Res/Menu/MainGame/Shop/Trealine_Shop_StaminaUpGradeButton_Select.png"
       }
     },
     {
       "Name": "Strength",
       "Type": "Single",
       "Position": {
-        "X": 71,
-        "Y": 495
+        "X": 913,
+        "Y": 518
       },
       "Rect": {
-        "X": 71,
-        "Y": 495,
-        "Width": 950,
-        "Height": 188
+        "X": 981,
+        "Y": 554,
+        "Width": 639,
+        "Height": 112
       },
       "Resources": {
-        "Idle": "Res/Menu/MainGame/Training/Trealine_Training_StrengthButton.png",
-        "Hover": "Res/Menu/MainGame/Training/Trealine_Training_StrengthButton.png",
-        "Press": "Res/Menu/MainGame/Training/Trealine_Training_StrengthButton_Select.png",
-        "Select": "Res/Menu/MainGame/Training/Trealine_Training_StrengthButton_Select.png"
+        "Idle": "Res/Menu/MainGame/Shop/Trealine_Shop_StrengthUpGradeButton.png",
+        "Hover": "Res/Menu/MainGame/Shop/Trealine_Shop_StrengthUpGradeButton.png",
+        "Press": "Res/Menu/MainGame/Shop/Trealine_Shop_StrengthUpGradeButton_Press.png",
+        "Select": "Res/Menu/MainGame/Shop/Trealine_Shop_StrengthUpGradeButton_Select.png"
       }
     },
     {
       "Name": "ResistTime",
       "Type": "Single",
       "Position": {
-        "X": 715,
-        "Y": 765
+        "X": 913,
+        "Y": 657
       },
       "Rect": {
-        "X": 715,
-        "Y": 765,
-        "Width": 1024,
-        "Height": 213
+        "X": 981,
+        "Y": 693,
+        "Width": 665,
+        "Height": 112
       },
       "Resources": {
-        "Idle": "Res/Menu/MainGame/Training/Trealine_Training_ResistTimeButton.png",
-        "Hover": "Res/Menu/MainGame/Training/Trealine_Training_ResistTimeButton.png",
-        "Press": "Res/Menu/MainGame/Training/Trealine_Training_ResistTimeButton_Select.png",
-        "Select": "Res/Menu/MainGame/Training/Trealine_Training_ResistTimeButton_Select.png"
+        "Idle": "Res/Menu/MainGame/Shop/Trealine_Shop_ResistTimeUpGradeButton.png",
+        "Hover": "Res/Menu/MainGame/Shop/Trealine_Shop_ResistTimeUpGradeButton.png",
+        "Press": "Res/Menu/MainGame/Shop/Trealine_Shop_ResistTimeUpGradeButton_Press.png",
+        "Select": "Res/Menu/MainGame/Shop/Trealine_Shop_ResistTimeUpGradeButton_Select.png"
+      }
+    },
+    {
+      "Name": "Back",
+      "Type": "Single",
+      "Position": {
+        "X": 1550,
+        "Y": 940
+      },
+      "Rect": {
+        "X": 1550,
+        "Y": 940,
+        "Width": 247,
+        "Height": 116
+      },
+      "Resources": {
+        "Idle": "Res/Menu/MainGame/Shop/Trealine_Shop_BackButton.png",
+        "Hover": "Res/Menu/MainGame/Shop/Trealine_Shop_BackButton.png",
+        "Press": "Res/Menu/MainGame/Shop/Trealine_Shop_BackButton_Press.png",
+        "Select": "Res/Menu/MainGame/Shop/Trealine_Shop_BackButton_Select.png",
+        "Disable": "Res/Menu/MainGame/Shop/Trealine_Shop_BackButton_Disable.png"
       }
     }
   ]

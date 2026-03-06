@@ -147,7 +147,10 @@ void MenuSelectShopItem::Render() {
         sprite->Render();
     }
     for (int i = buttonList.size() - 1; i >= 0; i--) {
-        buttonList[i]->Render();
+        auto& button = buttonList[i];
+        if (!button || !button->IsVisible()) continue;
+
+        button->Render();
     }
     ItemData* item;
     if (bool isGetItem = catalogData.TryGetItem(currentSlot, item)) {

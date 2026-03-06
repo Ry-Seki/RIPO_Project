@@ -22,6 +22,14 @@
 #include "../../System/MenuConfirm.h"
 #include "../MenuInGame.h"
 
+
+/*
+ *  @brief  ファイルパスの名前空間
+ */
+namespace {
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Training/SelectTraining/SelectTrainingMenuResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Training/SelectTraining/SelectTrainingMenuNavigation.json";
+}
 /*
  *	@brief	初期化処理
  */
@@ -38,18 +46,28 @@ void MenuSelectTraining::Initialize(Engine& engine) {
             eventSystem.RegisterButton(button.get());
         }
         eventSystem.Initialize(0);
-        buttonList = std::move(result.buttonList);
         spriteList = std::move(result.spriteList);
+        buttonList = std::move(result.buttonList);
+        const int back = static_cast<int>(GameEnum::PlayerStatusType::Invalid);
+        const int statusMin = static_cast<int>(GameEnum::PlayerStatusType::HP);
+        const int statusMax = static_cast<int>(GameEnum::PlayerStatusType::Max);
+
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             UIButtonBase* button = buttonList[i].get();
             if (!button) continue;
-
+            // トレーニングIDの取得
+            int typeID = (i < statusMax - 1) ? statusMin + i : back;
+            // それをステータスタイプに変換
+            GameEnum::PlayerStatusType type = static_cast<GameEnum::PlayerStatusType>(typeID);
+            // トレーニングボタンリストに登録
+            trainingButtonList.push_back({type, button});
+            // ボタンの実行処理を登録
+            button->RegisterOnClick([this, type]() {
+                SelectButtonExecute(type);
+            });
+            // ボタンに navigation 更新処理を登録
             button->RegisterUpdateSelectButton([this, button]() {
                 eventSystem.UpdateSelectButton(button);
-            });
-
-            button->RegisterOnClick([this, &engine, i]() {
-                SelectButtonExecute(engine, i);
             });
         }
         eventSystem.LoadNavigation(navigation->GetData());
@@ -127,10 +145,13 @@ void MenuSelectTraining::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
 void MenuSelectTraining::Render() {
     for (auto& sprite : spriteList) {
         if (!sprite->IsVisible()) continue;
+
         sprite->Render();
     }
-    for (auto& button : buttonList) {
-        if (!button->IsVisible()) continue;
+    for (int i = buttonList.size() - 1; i >= 0; i--) {
+        auto& button = buttonList[i];
+        if (!button || !button->IsVisible()) continue;
+
         button->Render();
     }
 }
@@ -140,71 +161,48 @@ void MenuSelectTraining::Render() {
 void MenuSelectTraining::Close(Engine& engine) {
     MenuBase::Close(engine);
     AudioUtility::StopBGM();
-
 }
 /*
  *	@brief		ボタンの押された時の処理
- *	@param[in]	int buttonIndex
+ *	@param[in]	GameEnum::PlayerStatusType type
  */
-void MenuSelectTraining::SelectButtonExecute(Engine& engine, int buttonIndex) {
+void MenuSelectTraining::SelectButtonExecute(GameEnum::PlayerStatusType type) {
+    AudioUtility::PlaySE("DebugSE");
+    // 戻る
+    if (type == GameEnum::PlayerStatusType::Invalid) {
+        StartFadeEndCallback(type);
+        return;
+    }
+    // 確認メニューを開く
+    OpenConfirmMenu(type);
+}
+/*
+ *	@brief		フェード後->コールバックの実行処理
+ *	@param[in]	GameEnum::PlayerStatusType type
+ */
+void MenuSelectTraining::StartFadeEndCallback(GameEnum::PlayerStatusType type) {
+    auto& menu = MenuManager::GetInstance();
+
+    isInteractive = false;
+    FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+    FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, type]() {
+        menu.CloseTopMenu();	// このメニュー
+        if (Callback) Callback(type);
+    });
+}
+/*
+ *	@brief		確認メニューを開く
+ *	@param[in]	GameEnum::PlayerStatusType type
+ */
+void MenuSelectTraining::OpenConfirmMenu(GameEnum::PlayerStatusType type) {
     auto& menu = MenuManager::GetInstance();
     auto confirm = menu.GetMenu<MenuConfirm>();
-    GameEnum::PlayerStatusType type = GameEnum::PlayerStatusType::Invalid;
-    if (buttonIndex == 0) {
-        type = GameEnum::PlayerStatusType::HP;
-        AudioUtility::PlaySE("DebugSE");
-        confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
-            if (result == GameEnum::ConfirmResult::Yes) {
-                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, type]() {
-                    menu.CloseAllMenu();
-                    if (Callback) Callback(type);
-                });
-            }
-            menu.CloseTopMenu();
-        });
-        menu.OpenMenu<MenuConfirm>();
-    } else if(buttonIndex == 1){
-        type = GameEnum::PlayerStatusType::Stamina;
-        AudioUtility::PlaySE("DebugSE");
-        confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
-            if (result == GameEnum::ConfirmResult::Yes) {
-                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, type]() {
-                    menu.CloseAllMenu();
-                    if (Callback) Callback(type);
-                });
-            }
-            menu.CloseTopMenu();
-        });
-        menu.OpenMenu<MenuConfirm>();
-    }else if(buttonIndex == 2){
-        type = GameEnum::PlayerStatusType::Strength;
-        AudioUtility::PlaySE("DebugSE");
-        confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
-            if (result == GameEnum::ConfirmResult::Yes) {
-                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, type]() {
-                    menu.CloseAllMenu();
-                    if (Callback) Callback(type);
-                });
-            }
-            menu.CloseTopMenu();
-        });
-        menu.OpenMenu<MenuConfirm>();
-    }else if(buttonIndex == 3){
-        type = GameEnum::PlayerStatusType::ResistTime;
-        AudioUtility::PlaySE("DebugSE");
-        confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
-            if (result == GameEnum::ConfirmResult::Yes) {
-                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, type]() {
-                    menu.CloseAllMenu();
-                    if (Callback) Callback(type);
-                });
-            }
-            menu.CloseTopMenu();
-        });
-        menu.OpenMenu<MenuConfirm>();
-    }
+
+    confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
+        menu.CloseTopMenu();
+        if (result != GameEnum::ConfirmResult::Yes) return;
+        // フェード開始
+        StartFadeEndCallback(type);
+    });
+    menu.OpenMenu<MenuConfirm>();
 }

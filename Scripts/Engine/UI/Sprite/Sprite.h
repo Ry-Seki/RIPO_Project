@@ -82,6 +82,14 @@ public:
 	 *	@param[in]	const std::string& setName
 	 */
 	inline void SetName(const std::string& setName) { name = setName; }
+	/*
+	 *	@brief		À•W‚Ìİ’è
+	 *	@param[in]	int setX, setY
+	 */
+	inline void SetPosition(int setX, int setY) {
+		rect.x = setX;
+		rect.y = setY;
+	}
 };
 
 #endif // !_SPRITE_H_

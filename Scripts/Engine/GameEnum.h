@@ -59,6 +59,19 @@ namespace GameEnum {
 		Max
 	};
 	/*
+	 *	@brief	ダンジョンの種類
+	 *	@author	Seki
+	 */
+	enum class MainDungeonType {
+		Invalid = -1,
+		Tutorial,
+		Dungeon1,
+		Dungeon2,
+		Dungeon3,
+		Dungeon4,
+		Max
+	};
+	/*
 	 *	@brief	プレイヤーのステータスの種類
 	 *  @author	Seki
 	 */

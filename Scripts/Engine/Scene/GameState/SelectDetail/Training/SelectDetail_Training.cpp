@@ -58,6 +58,15 @@ void SelectDetail_Training::Teardown() {
  */
 void SelectDetail_Training::DecideTrainingType(GameEnum::PlayerStatusType type) {
 	auto& context = owner->GetOwner()->GetActionContext();
-	context.statusType = type;
-	owner->GetOwner()->ChageState(GameEnum::GameState::ResultAction);
+	GameEnum::GameState state = GameEnum::GameState::Invalid;
+	// 無効ならアクション選択に戻る
+	if (type == GameEnum::PlayerStatusType::Invalid) {
+		state = GameEnum::GameState::SelectAction;
+		owner->GetOwner()->ChageState(state);
+	}else {
+		// 結果に進む
+		state = GameEnum::GameState::ResultAction;
+		context.statusType = type;
+		owner->GetOwner()->ChageState(state);
+	}
 }
