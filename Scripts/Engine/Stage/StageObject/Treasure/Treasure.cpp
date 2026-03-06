@@ -30,7 +30,10 @@ Treasure::Treasure()
  *	デストラクタ
  */
 Treasure::~Treasure() {
-
+	if (pViewingEffect) {
+		pViewingEffect->EffectStop();
+		pViewingEffect = nullptr;
+	}
 }
 void Treasure::Start() {
 }
