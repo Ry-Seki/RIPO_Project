@@ -191,8 +191,8 @@ void MenuSelectDungeon::Resume() {
 		button->Setup();
 	}
 	// TODO : ダンジョン3, 4を閉じる
-	buttonList[2]->SetIsEnable(false);
-	buttonList[3]->SetIsEnable(false);
+	//buttonList[2]->SetIsEnable(false);
+	//buttonList[3]->SetIsEnable(false);
 }
 /*
  *	@brief		ボタンの押された時の処理
