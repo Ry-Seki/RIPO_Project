@@ -15,6 +15,7 @@
 #include "../../Load/Audio/LoadAudio.h"
 #include "../../Load/Model/LoadModel.h"
 #include "../../Audio/AudioUtility.h"
+#include "../../Manager/StageManager.h"
 #include "CharacterUtility.h"
 #include "DxLib.h"
 
@@ -30,8 +31,9 @@ PlayerComponent::PlayerComponent()
 	, staminaHealCoolTime(0.0f)
 	, staminaChangePoint(0.0f)
 	, resistTimePoint(0.0f)
+	, resistDownSpeed(0.0f)
 	, moveDirectionY(0.0f)
-	, workSECoolTime(0.0f)
+	, walkSECoolTime(0.0f)
 	, canAvoid(true)
 	, isAvoid(false)
 	, hasResolvedInitialGrounding(false)
@@ -57,22 +59,25 @@ PlayerComponent::PlayerComponent()
 	, WORK_SE_COOL_TIME_MAX(33.0f){}
 
 void PlayerComponent::Start() {
+	animator = GetOwner()->GetComponent<AnimatorComponent>();
 	// プレイヤーの基礎ステータスを受け取る
 	status = PlayerStatusManager::GetInstance().GetPlayerStatusData().base;
 
-	animator = GetOwner()->GetComponent<AnimatorComponent>();
-	
+	// ダンジョンによって耐性値減少スピードを変える
+	int dungeonID = StageManager::GetInstance().GetCurrentStage()->GetDungeonID();
+	resistDownSpeed = dungeonID;
+
 	auto playerModel = LoadManager::GetInstance().LoadResource<LoadModel>("Res/Model/Player/RIPO_Model.mv1");
 	auto avoidSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Avoid.mp3");
 	auto changeWeaponSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/ChangeWeapon.mp3");
-	auto workSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Work.mp3");
+	auto walkSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Work.mp3");
 	auto jumpSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Jump.mp3");
 	auto bulletHitSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/BulletHit.mp3");
-	LoadManager::GetInstance().SetOnComplete([this, playerModel, avoidSE, changeWeaponSE, workSE, jumpSE, bulletHitSE]() {
+	LoadManager::GetInstance().SetOnComplete([this, playerModel, avoidSE, changeWeaponSE, walkSE, jumpSE, bulletHitSE]() {
 		SetModelHandle(playerModel->GetHandle());
 		RegisterSEHandle("avoidSE", avoidSE->GetHandle());
 		RegisterSEHandle("changeWeaponSE", changeWeaponSE->GetHandle());
-		RegisterSEHandle("workSE", workSE->GetHandle());
+		RegisterSEHandle("walkSE", walkSE->GetHandle());
 		RegisterSEHandle("jumpSE", jumpSE->GetHandle());
 		RegisterSEHandle("bulletHitSE", bulletHitSE->GetHandle());
 	});
@@ -104,7 +109,7 @@ void PlayerComponent::Update(float deltaTime) {
 	}
 
 	// 耐性値を削っていく
-	resistTimePoint -= deltaTime;
+	resistTimePoint -= deltaTime * resistDownSpeed;
 	if (resistTimePoint <= -1) {
 		if (status.resistTime > 0) {
 			status.resistTime -= 1;
@@ -253,12 +258,12 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	// SE再生
 	if (gravity->GetGroundingFrag() && moveVec != V_ZERO) {
 		// SE再生クールタイム
-		if (workSECoolTime >= WORK_SE_COOL_TIME_MAX) {
-			PlaySE("workSE");
-			workSECoolTime = 0;
+		if (walkSECoolTime >= WORK_SE_COOL_TIME_MAX) {
+			PlaySE("walkSE");
+			walkSECoolTime = 0;
 		}
 		else {
-			workSECoolTime += deltaTime * moveSpeed * 0.066f;
+			walkSECoolTime += deltaTime * moveSpeed * 0.066f;
 		}
 	}
 }
