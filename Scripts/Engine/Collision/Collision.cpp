@@ -579,18 +579,21 @@ bool Intersect(const OBB& obb, const Capsule& capsule, Vector3& penetration) {
 	Vector3 localStart = capsule.segment.startPoint - obb.center;
 	Vector3 localEnd = capsule.segment.endPoint - obb.center;
 	// OBBの回転を打ち消す
-	Segment localSegment;
-	localSegment.startPoint = RotateY(localStart, -obb.angle);
-	localSegment.endPoint = RotateY(localEnd, -obb.angle);
+	Segment localSegment = {
+		RotateY(localStart, -obb.angle),
+		RotateY(localEnd, -obb.angle)
+	};
 	// ローカルカプセル
-	Capsule localCapsule;
-	localCapsule.segment = localSegment;
-	localCapsule.radius = capsule.radius;
+	Capsule localCapsule = {
+		localSegment,
+		capsule.radius
+	};
 	
 	// OBBをAABBに変換
-	AABB localAABB;
-	localAABB.min = -obb.size;
-	localAABB.max = obb.size;
+	AABB localAABB = {
+		-obb.size,
+		obb.size
+	};
 	
 	// カプセル対AABBで判定
 	Vector3 localPenetration;
@@ -666,7 +669,7 @@ bool Intersect(const std::variant<AABB, OBB, Capsule>& a, const std::variant<AAB
 /*
  *  レイとAABBの交差判定
  *  @param[in]  Ray		ray			判定対象1
- *  @param[in]  AABB	aabb			判定対象2
+ *  @param[in]  AABB	aabb		判定対象2
  *  @param[out] float	distance	交点までの距離
  */
 bool RayIntersect(const Ray& ray, const AABB& aabb, float& distance) {
@@ -688,6 +691,35 @@ bool RayIntersect(const Ray& ray, const AABB& aabb, float& distance) {
 	// 交点までの距離を保存
 	distance = segMinRatio;
 	return true;
+}
+
+/*
+ *  レイとOBBの交差判定
+ *  @param[in]	Ray		ray			判定対象1
+ *  @param[in]	Capsule	capsule		判定対象2
+ *	@param[out]	float	distance	交点までの距離
+ */
+bool RayIntersect(const Ray& ray, const OBB& obb, float& distance) {
+	// OBBのローカル空間でOBBをAABBとして判定する
+	// レイをOBBのローカルへ変換
+	Vector3 localStart = ray.start - obb.center;
+	// OBBの回転を打ち消す
+	localStart = RotateY(localStart, -obb.angle);
+	Vector3 localDir = RotateY(ray.direction, -obb.angle);
+	// ローカルレイ
+	Ray localRay = {
+		localStart,
+		localDir
+	};
+	
+	// OBBをAABBに変換
+	AABB localAABB = {
+		-obb.size,
+		obb.size
+	};
+
+	// AABBのレイキャストで判定
+	return RayIntersect(localRay, localAABB, distance);
 }
 
 /*
@@ -732,13 +764,15 @@ bool RayIntersect(const Ray& ray, const Capsule& capsule, float& distance) {
  */
 bool RayIntersect(const Ray& ray, const std::variant<AABB, OBB, Capsule>& collider, float& distance) {
 	// 各対象のコライダーを判別し、それに合った交差判定を呼ぶ
+	// ABB
 	if (auto aabb = std::get_if<AABB>(&collider)) {
 		return RayIntersect(ray, *aabb, distance);
 	}
+	// OBB
 	else if (auto obb = std::get_if<OBB>(&collider)) {
-		// 現状は必要ないのでOBBのレイキャストは無し
-		return false;
+		return RayIntersect(ray, *obb, distance);
 	}
+	// Capsule
 	else if (auto capsule = std::get_if<Capsule>(&collider)) {
 		return RayIntersect(ray, *capsule, distance);
 	}

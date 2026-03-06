@@ -49,9 +49,9 @@ void DebugScene::Initialize(Engine& engine) {
 	for (int i = 0; i < 2; i++) {
 		treasure[i] = StageObjectManager::GetInstance().GetStageObject(i);
 	}
-	StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
+	StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, 0.0f,{ 500,800,10 });
 	auto stair = StageObjectManager::GetInstance().GetStageObject(2);
-	StageObjectManager::GetInstance().GenerateExit("exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
+	StageObjectManager::GetInstance().GenerateExit("exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, 0.0f,{ 1000,700,10 });
 	auto exit = StageObjectManager::GetInstance().GetStageObject(3);
 
 	load.SetOnComplete(
