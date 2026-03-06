@@ -87,12 +87,13 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 		GenerateStair(stairDataList[i].name,
 					  stairDataList[i].position,
 					  stairDataList[i].rotation,
-					  stairDataList[i].AABBmin,
-					  stairDataList[i].AABBmax);
+					  stairDataList[i].center,
+					  stairDataList[i].angle,
+					  stairDataList[i].size);
 	}
 	// 出口の生成処理
 	for (int i = 0; i < goalCount; i++) {
-		GenerateExit(goalData.name, goalData.position, goalData.rotation, goalData.AABBmin, goalData.AABBmax);
+		GenerateExit(goalData.name, goalData.position, goalData.rotation, goalData.center, goalData.angle,goalData.size);
 	}
 
 	// ステージハンドルの設定
@@ -271,12 +272,14 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 		GenerateStair(stairDataList[i].name,
 					  stairDataList[i].position,
 					  stairDataList[i].rotation,
-					  stairDataList[i].AABBmin,
-					  stairDataList[i].AABBmax);
+					  stairDataList[i].center,
+					  stairDataList[i].angle,
+					  stairDataList[i].size
+			);
 	}
 	// 出口の生成処理
 	for (int i = 0; i < goalCount; i++) {
-		GenerateExit(goalData.name, goalData.position, goalData.rotation, goalData.AABBmin, goalData.AABBmax);
+		GenerateExit(goalData.name, goalData.position, goalData.rotation, goalData.center, goalData.angle,goalData.size);
 	}
 	// オブジェクトの設定
 	Vector3 respawnPos = GetRespawnPos();

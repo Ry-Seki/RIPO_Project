@@ -94,8 +94,8 @@ void MenuSelectDungeon::Open() {
 		button->Setup();
 	}
 	// TODO : ƒ_ƒ“ƒWƒ‡ƒ“3, 4‚ð•Â‚¶‚é
-	buttonList[2]->SetIsEnable(false);
-	buttonList[3]->SetIsEnable(false);
+	//buttonList[2]->SetIsEnable(false);
+	//buttonList[3]->SetIsEnable(false);
 
 	eventSystem.ApplySelection();
 	currentIndex = eventSystem.GetCurrentIndex();

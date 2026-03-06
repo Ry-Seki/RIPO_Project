@@ -25,9 +25,10 @@ namespace StageObjectUtility {
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
-		const Vector3& AABBMin,
-		const Vector3& AABBMax) {
-		StageObjectManager::GetInstance().GenerateExit(name, position, rotation, AABBMin, AABBMax);
+		const Vector3& center,
+		const float& angle,
+		const Vector3& size) {
+		StageObjectManager::GetInstance().GenerateExit(name, position, rotation, center, angle,size);
 	}
 	/*
 	 *	お宝生成
@@ -59,10 +60,11 @@ namespace StageObjectUtility {
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
-		const Vector3& AABBMin,
-		const Vector3& AABBMax
+		const Vector3& center,
+		const float& angle,
+		const Vector3& size
 	) {
-		StageObjectManager::GetInstance().GenerateStair(name, position, rotation, AABBMin, AABBMax);
+		StageObjectManager::GetInstance().GenerateStair(name, position, rotation, center, angle, size);
 	}
 	/*
 	 *	ID指定のステージオブジェクト削除
