@@ -13,8 +13,16 @@
 #define Deg2Rad (Pi / 180.0f)
 #define Rad2Deg (180.0f / Pi)
 
+ // 浮動小数点比較用の誤差
+constexpr float VEC_EPSILON = 0.00001f;
 
- //	Vector2
+// 浮動小数点をほぼ等しいかで比較する関数
+inline bool NearlyEqual(float a, float b) {
+	// 2つの値の差がEPSILONより小さければ同じとみなす
+	return fabs(a - b) <= VEC_EPSILON;
+}
+
+//	Vector2
 struct Vector2 { float x, y; };
 //	Vector3
 struct Vector3 {
@@ -32,10 +40,12 @@ struct Vector3 {
 	static Vector3 back;		// {  0.0f, 0.0f,-1.0f }
 
 	bool operator==(const Vector3& v)const {
-		return { x == v.x && y == v.y && z == v.z };
+		return NearlyEqual(x, v.x) &&
+			NearlyEqual(y, v.y) &&
+			NearlyEqual(z, v.z);
 	};
 	bool operator!=(const Vector3& v)const {
-		return { x != v.x || y != v.y || z != v.z };
+		return !(*this == v);
 	};
 
 	Vector3 operator+(const Vector3& v)const {
@@ -48,6 +58,12 @@ struct Vector3 {
 		return { x * v, y * v, z * v };
 	};
 	Vector3 operator/(float v) {
+		// 0割防止
+		if (NearlyEqual(v, 0.0f)) {
+			// 0割の場合はゼロベクトルを返す
+			return Vector3::zero;
+		}
+
 		return { x / v, y / v, z / v };
 	};
 
@@ -73,6 +89,14 @@ struct Vector3 {
 		return *this;
 	};
 	Vector3& operator /= (float v) {
+
+		// 0割防止
+		if (NearlyEqual(v, 0.0f)) {
+			// 0割の場合はゼロベクトルを返す
+			return Vector3::zero;
+		}
+
+
 		x /= v;
 		y /= v;
 		z /= v;
@@ -82,7 +106,7 @@ struct Vector3 {
 
 
 
-	Vector3 operator-() const{
+	Vector3 operator-() const {
 		return { -x,-y,-z };
 	};
 
@@ -191,7 +215,7 @@ struct Vector3 {
 	 *	@return Vector3
 	 */
 	static Vector3 RotateY(const Vector3& vec, float angle);
-	
+
 	/*
 	 *	各成分を指定範囲内に制限する
 	 *	@param[in]  v1   対象のベクトル
