@@ -22,9 +22,6 @@
  *	@brief	ダンジョン選択メニュー
  */
 class MenuSelectDungeon : public MenuBase {
-public:
-	using TextBasePtr = std::shared_ptr<TextBase>;
-
 private:
 	/*
 	 *	@brief	ダンジョンボタン構造体
@@ -37,9 +34,9 @@ private:
 	 *	@brief	ダンジョンイベント構造体
 	 */
 	struct DungeonEventEntry {
-		TextBase* eventInfo = nullptr;		// イベント情報
-		UIButtonBase* button = nullptr;		// イベント対象ボタン
-		Sprite* eventSprite = nullptr;		// イベント用画像
+		UIButtonBase* button = nullptr;	// イベント対象ボタン
+		Sprite* eventSprite = nullptr;	// イベント用画像
+		TextBase* eventText = nullptr;	// イベント情報
 	};
 	/*
 	 *	@brief	ダンジョンメニュー構造体
@@ -50,6 +47,7 @@ private:
 		TextBase* strength = nullptr;		// 最小-最大Strength
 		TextBase* treasureCount = nullptr;	// お宝情報テキスト
 		TextBase* eventInfo = nullptr;		// イベント情報
+		DungeonEventEntry dungeonEvent;		// ダンジョンイベント
 	};
 
 private:
@@ -117,11 +115,11 @@ private:
 	/*
 	 *	@brief		テキストの生成
 	 */
-	void CreateDungeonText();
+	void CreateDungeonInfoData();
 	/*
 	 *	@brief		テキストの準備前処理
 	 */
-	void SetupText();
+	void SetupDungeonInfo();
 	/*
 	 *	@brief		ダンジョン情報の描画
 	 */
@@ -136,6 +134,11 @@ private:
 	 *	@param[in]	int dungeonID
 	 */
 	void OpenConfirmMenu(int dungeonID);
+	/*
+	 *	@brief		イベント情報を整理
+	 *	@param[in]	DungeonMenuEntry& entry
+	 */
+	void SortDungeonMenuEntry(DungeonMenuEntry& entry);
 
 public:
 	/*

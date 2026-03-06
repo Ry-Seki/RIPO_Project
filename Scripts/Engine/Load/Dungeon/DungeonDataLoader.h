@@ -45,7 +45,7 @@ public:
         // ヘッダ行をスキップしてCSVを変換
         for (size_t i = 1; i < csvData.size(); ++i) {
             const auto& row = csvData[i];
-            if (row.size() < 8) continue;
+            if (row.size() < 9) continue;
 
             DungeonData data;
             data.dungeonID = std::stoi(row[0]);
@@ -53,9 +53,10 @@ public:
             data.eventStartDay = std::stoi(row[2]);
             data.eventEndDay = std::stoi(row[3]);
             data.levelOfDanger = std::stoi(row[4]);
-            data.necessaryStrength = std::stoi(row[5]);
-            data.treasureCount = std::stoi(row[6]);
-            data.dungeonPath = row[7];
+            data.minStrength = std::stoi(row[5]);
+            data.maxStrength = std::stoi(row[6]);
+            data.treasureCount = std::stoi(row[7]);
+            data.dungeonPath = row[8];
 
             dungeonList.push_back(data);
         }
