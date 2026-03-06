@@ -59,7 +59,7 @@ void BossChase::Start(GameObject* boss) {
 	case 102:
 
 		moveSpeed = 1000.0f;
-		closeRangeAttackDistance = 1000.0f;
+		closeRangeAttackDistance = 800.0f;
 		longRangeAttackDistance = 4000.0f;
 
 		break;

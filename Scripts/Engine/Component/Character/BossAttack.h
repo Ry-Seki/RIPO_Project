@@ -24,7 +24,6 @@ private:
 	// プレイヤーの方向保存用
 	Vector3 playerDirection;
 
-	const float MAX_COOL_TIME;
 	const float ANIMATION_SPEED;
 	// 移動スピード
 	const float MOVE_SPEED;

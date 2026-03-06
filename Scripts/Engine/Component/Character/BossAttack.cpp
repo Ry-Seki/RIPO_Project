@@ -19,7 +19,6 @@ BossAttack::BossAttack()
 	, elapsedTime(0)
 	, FirstEffectFlag(false)
 	, FirstSEFlag(false)
-	, MAX_COOL_TIME(3)
 	, ANIMATION_SPEED(1250)
 	, MOVE_SPEED(6000.0f)
 {
@@ -33,10 +32,27 @@ void BossAttack::Start(GameObject* boss)
 {
 	animator = boss->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
-	coolTime = MAX_COOL_TIME;
 	bossComponent = boss->GetComponent<BossComponent>();
 
 	playerDirection = bossComponent->GetBossToPlayerDirection();
+
+	switch (bossComponent->GetBossID())
+	{
+	case 101:
+
+		coolTime = 3;
+
+		break;
+
+	case 102:
+
+		coolTime = 2;
+		elapsedTime = 0;
+
+		break;
+	default:
+		break;
+	}
 }
 
 /*
@@ -66,7 +82,6 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 
 	case 102:
 
-		// falseになって手先に進んでない
 		if (bossComponent->GetCloseRangeAttackDistanceFlag()) {
 			ForwardAttack(boss, deltaTime);
 		}
@@ -138,7 +153,7 @@ void BossAttack::ForwardAttack(GameObject* boss, float deltaTime)
 	Vector3 direction = bossComponent->GetBossToPlayerDirection();
 	// AABBコライダーを前方に置く
 	auto aabbCollider = boss->GetComponent<AABBCollider>();
-	float value = 100;
+	float value = 200;
 	Vector3 aabbDirection = { value * direction.x, 0, value * direction.z };
 	const Vector3 aabbMin = { -100, 0, -100 };
 	const Vector3 aabbMax = { 100, 300, 100 };
@@ -182,24 +197,27 @@ void BossAttack::ForwardAttack(GameObject* boss, float deltaTime)
  */
 void BossAttack::HeadlongAttack(GameObject* boss, float deltaTime)
 {
-	animator->Play(11, 5000 * deltaTime);
-
-	// 攻撃中判定開始
-	bossComponent->SetBossAttackTimeFlag(true);
-	elapsedTime += deltaTime;
 	boss->rotation.y = atan2(playerDirection.x, playerDirection.z) + Pi;
-	// プレイヤーがいた方向に突進
-	auto posX = playerDirection.x * MOVE_SPEED * deltaTime;
-	auto posZ = playerDirection.z * MOVE_SPEED * deltaTime;
-	boss->position.x += posX;
-	boss->position.z += posZ;
+	elapsedTime += deltaTime;
 
-	if (bossComponent->GetAttackIsTriger() || elapsedTime > 1) {
-		// 攻撃中判定終了
-		bossComponent->SetBossAttackTimeFlag(false);
-		bossComponent->SetLongRangeAttackDistanceFlag(false);
-		// 状態遷移
-		bossComponent->SetState(new BossStandby());
+	if (elapsedTime >= 1.5f) {
+		animator->Play(11, 5000 * deltaTime);
+
+		// 攻撃中判定開始
+		bossComponent->SetBossAttackTimeFlag(true);
+		// プレイヤーがいた方向に突進
+		auto posX = playerDirection.x * MOVE_SPEED * deltaTime;
+		auto posZ = playerDirection.z * MOVE_SPEED * deltaTime;
+		boss->position.x += posX;
+		boss->position.z += posZ;
+
+		if (bossComponent->GetAttackIsTriger() || elapsedTime > 3.0f) {
+			// 攻撃中判定終了
+			bossComponent->SetBossAttackTimeFlag(false);
+			bossComponent->SetLongRangeAttackDistanceFlag(false);
+			// 状態遷移
+			bossComponent->SetState(new BossStandby());
+		}
 	}
 }
 
