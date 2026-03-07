@@ -7,6 +7,8 @@
 #define _EFFECT_COMPONENT_H_
 #include"Component.h"
 #include "../VecMath.h"
+
+
  /*
   *	エフェクトオブジェクト
   * エフェクトの再生などを行う用
@@ -25,19 +27,24 @@ public:
 	 *  @param		resourcehandle	再生するエフェクトの本体
 	 */
 	EffectComponent(int& _resourceHandle, bool isLoop);
-	~EffectComponent() = default;
+	~EffectComponent();
 
 public:
 
 	/*
+	 *	更新
+	 */
+	void Update();
+
+	/*
 	 *	エフェクト再生
 	 */
-	void EffectRenderer();
+	void EffectUpdate();
 
 	/*
 	 *	エフェクト停止
 	 */
-	void EffectAllStop();
+	void CheckEffectFinished();
 
 	/*
 	 *	指定エフェクト停止
@@ -48,7 +55,7 @@ public:
 	 * 描画処理
 	 */
 	void Render();
-
+		
 public:
 	/*
 	 *	座標の変更

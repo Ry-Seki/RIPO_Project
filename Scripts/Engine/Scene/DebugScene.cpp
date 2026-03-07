@@ -66,7 +66,7 @@ void DebugScene::Initialize(Engine& engine) {
 			int modelHandle = playerModel->GetHandle();
 			CharacterManager::GetInstance().SetModelHandle(player.get(), modelHandle);
 			player->position = StageManager::GetInstance().GetStartPos();
-			std::unordered_map<int,Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpwanPos();
+			std::unordered_map<int,Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpawnPos();
 			int enemyModelHandle = enemyModel->GetHandle();
 			size_t enemySpawnCount = enemySpawnPos.size();
 			for (int i = 0; i < enemy.size(); i++) {

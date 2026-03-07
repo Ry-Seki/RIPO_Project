@@ -84,11 +84,25 @@ namespace GameEnum {
 		Max
 	};
 	/*
+	 *	@brief	アイテムの種類
+	 */
+	enum class ShopItemType {
+		Invalid = -1,
+		HPGradeUp,
+		StaminaGradeUp,
+		StrengthGradeUp,
+		ResistTimeGradeUp,
+		SMGGum,
+
+		Max
+	};
+	/*
 	 *	@brief	ショップでの行動
 	 *	@author	Seki
 	 */
 	enum class ShopActionType {
 		Invalid = -1,
+		Buy,
 		Exit,
 		Back,
 
@@ -337,5 +351,18 @@ namespace GameEnum {
 
 		Max
 	};
+
+	/*
+	 *	エフェクトの再生タイプ
+	 */
+	enum class EffectType {
+		Invalid = -1,
+		Play,
+		Stop,
+		Loop,
+
+		Max
+	};
+
 }
 #endif // !_GAME_ENUM_H_
