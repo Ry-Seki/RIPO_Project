@@ -6,6 +6,7 @@
 #define _VISION_H_
 
 #include "Collision/Collision.h"
+#include "GameObject.h"
 
 /*
  *	‹ŠEˆ—
@@ -15,6 +16,6 @@
  *	param[in]	float viewAngle				‹–ìŠp‚Ì”¼Šp
  *	param[in]	float viewDistance			‹ŠE‚Ì‹——£
  */
-bool Vision(const GameObjectPtr beholder, const Vector3& direction, const Vector3& targetPos, float viewAngle, float viewDistance);
+bool Vision(const GameObject* beholder, const Vector3& direction, const Vector3& targetPos, float viewAngle, float viewDistance);
 
 #endif // !_VISION_H_

@@ -15,19 +15,21 @@
  *	param[in]	float viewAngle				視野角の半角
  *	param[in]	float viewDistance			視界の距離
  */
-bool Vision(const GameObjectPtr beholder, const Vector3& direction, const Vector3& targetPos, float viewAngle, float viewDistance) {
+bool Vision(const GameObject* beholder, const Vector3& direction, const Vector3& targetPos, float viewAngle, float viewDistance) {
 	// 壁判定RayCast
 	Scene::RayCastHit hitInfo;
 	auto engine = beholder->GetEngine();
-	Ray enemyRay = { beholder->position, Direction(beholder->position, targetPos) };
-	bool enemyHit = engine->GetCurrentScene()->RayCast(
-		enemyRay, hitInfo,
-		[this, camera, enemy](const ColliderBasePtr& col, float distance) {
+	Ray ray = { beholder->position, Direction(beholder->position, targetPos) };
+	bool hit = engine->GetCurrentScene()->RayCast(
+		ray, hitInfo,
+		[beholder, targetPos](const ColliderBasePtr& col, float distance) {
 			// プレイヤーと自分以外のオブジェクト
 			return !col &&
-				distance < Distance(camera->position, enemy->position);
+				distance < Distance(beholder->position, targetPos);
 		}
 	);
+	if (hit)
+		return false;
 
 	// 自身と目標の距離
 	float distance = Distance(targetPos, beholder->position);

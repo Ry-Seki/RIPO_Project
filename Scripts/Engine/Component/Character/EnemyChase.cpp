@@ -83,7 +83,7 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime) {
 	if (enemyComponent->GetHitFlag()) {
 		SetTargetPlayer(enemy, deltaTime);
 	}
-	bool vision = Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, viewAngle, viewDirection);
+	bool vision = Vision(enemy, -ForwardDir(enemy->rotation), player->position, viewAngle, viewDirection);
 	// Ž‹ŠE”»’è
 	if (vision) {
 		enemyComponent->SetHitFlag(false);
