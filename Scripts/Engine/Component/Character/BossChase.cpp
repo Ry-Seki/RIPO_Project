@@ -27,6 +27,7 @@ BossChase::BossChase()
 	, SEVolume(1.0f)
 	, playerDistance(0.0f)
 	, moveSpeed(0.0f)
+	, animationSpeed(0.0f)
 	, closeRangeAttackDistance(0.0f)
 	, longRangeAttackDistance(0.0f)
 	, ROTATE_SPEED(3.0f)
@@ -51,6 +52,7 @@ void BossChase::Start(GameObject* boss) {
 	case 101:
 
 		moveSpeed = 700.0f;
+		animationSpeed = 1200.0f;
 		closeRangeAttackDistance = 1700.0f;
 		longRangeAttackDistance = 3000.0f;
 
@@ -59,6 +61,7 @@ void BossChase::Start(GameObject* boss) {
 	case 102:
 
 		moveSpeed = 1000.0f;
+		animationSpeed = 1714.29f;
 		closeRangeAttackDistance = 800.0f;
 		longRangeAttackDistance = 4000.0f;
 
@@ -81,7 +84,7 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
 
-	animator->Play(11, 10);
+	animator->Play(11, animationSpeed * deltaTime);
 
 	// ƒvƒŒƒCƒ„[‚Æ‚Ì‹——£
 	playerDistance = Distance(player->position, boss->position);
@@ -101,8 +104,7 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 	}
 
 	ChaseWayPoint(boss, player->position, deltaTime);
-
-	switch (bossComponent->GetBossID())
+		switch (bossComponent->GetBossID())
 	{
 	case 101:
 

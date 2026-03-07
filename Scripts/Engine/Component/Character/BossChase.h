@@ -26,6 +26,8 @@ private:
 	float playerDistance;
 	// 移動スピード
 	float moveSpeed;
+	// アニメーション再生スピード
+	float animationSpeed;
 	// 近距離攻撃用プレイヤー検知距離
 	float closeRangeAttackDistance;
 	// 遠距離攻撃用プレイヤー検知距離
