@@ -55,6 +55,7 @@ void BossChase::Start(GameObject* boss) {
 		animationSpeed = 1200.0f;
 		closeRangeAttackDistance = 1700.0f;
 		longRangeAttackDistance = 3000.0f;
+		coolTimeSE = 0.7f;
 
 		break;
 
@@ -64,6 +65,7 @@ void BossChase::Start(GameObject* boss) {
 		animationSpeed = 1714.29f;
 		closeRangeAttackDistance = 800.0f;
 		longRangeAttackDistance = 4000.0f;
+		coolTimeSE = 0.7f;
 
 		break;
 	default:
@@ -95,13 +97,6 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 	}
 
 	coolTimeSE -= deltaTime;
-	if (coolTimeSE < 0) {
-		// •às‰¹‚ðÄ¶
-		AudioUtility::SetSEVolume(SEVolume);
-		AudioUtility::PlaySE("bossWalkSE");
-		AudioUtility::SetSEVolume(1);
-		coolTimeSE = 1.5f;
-	}
 
 	ChaseWayPoint(boss, player->position, deltaTime);
 		switch (bossComponent->GetBossID())
@@ -116,6 +111,14 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 			bossComponent->SetState(new BossShootingAttack());
 		}
 
+		if (coolTimeSE < 0) {
+			// •às‰¹‚ðÄ¶
+			AudioUtility::SetSEVolume(SEVolume);
+			AudioUtility::PlaySE("bossWalkSE");
+			AudioUtility::SetSEVolume(1);
+			coolTimeSE = 1.5f;
+		}
+
 		break;
 
 	case 102:
@@ -128,6 +131,14 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 		if (longRangeAttackDistance < Distance(player->position, boss->position)) {
 			bossComponent->SetLongRangeAttackDistanceFlag(true);
 			bossComponent->SetState(new BossAttack());
+		}
+
+		if (coolTimeSE < 0) {
+			// •às‰¹‚ðÄ¶
+			AudioUtility::SetSEVolume(SEVolume);
+			AudioUtility::PlaySE("bossWalkSE");
+			AudioUtility::SetSEVolume(1);
+			coolTimeSE = 1.0f;
 		}
 		
 		break;
