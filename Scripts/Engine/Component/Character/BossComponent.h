@@ -29,6 +29,8 @@ private:
 	int ID = -1;
 	// クールタイム
 	float coolTime;
+	// ランダム攻撃のクールタイム
+	float randomCoolTime;
 	// 攻撃衝突判定フラグ
 	bool attackIsTriger;
 	// ダメージ衝突判定フラグ
@@ -210,6 +212,16 @@ public:
 	 *	ボスから見たプレイヤーの方向
 	 */
 	inline Vector3 GetBossToPlayerDirection() { return Direction(boss->position, player->position); }
+	
+	/*
+	 *	ランダムクールタイムの取得
+	 */
+	inline float GetRandomCoolTime() const { return randomCoolTime; }
+
+	/*
+	 *	ランダムクールタイムの変更
+	 */
+	inline void SetRandomCoolTime(float setValue) { randomCoolTime = setValue; }
 };
 
 #endif // !_BOSSCOMPONENT_H_

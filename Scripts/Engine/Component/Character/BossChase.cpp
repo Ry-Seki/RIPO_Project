@@ -68,6 +68,16 @@ void BossChase::Start(GameObject* boss) {
 		coolTimeSE = 0.7f;
 
 		break;
+
+	case 104:
+
+		moveSpeed = 1000.0f;
+		animationSpeed = 1714.29f;
+		closeRangeAttackDistance = 800.0f;
+		longRangeAttackDistance = 4000.0f;
+		coolTimeSE = 0.7f;
+
+		break;
 	default:
 		break;
 	}
@@ -99,7 +109,7 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 	coolTimeSE -= deltaTime;
 
 	ChaseWayPoint(boss, player->position, deltaTime);
-		switch (bossComponent->GetBossID())
+	switch (bossComponent->GetBossID())
 	{
 	case 101:
 
@@ -147,6 +157,37 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 
 		// ステージ3ボスはchaseしない
 		bossComponent->SetState(new BossShootingAttack());
+
+		break;
+
+	case 104:
+
+		// 以下すて４
+		// ランダムで突進
+		if (bossComponent->GetRandomCoolTime() >= 700) {
+			bossComponent->SetRandomCoolTime(0);
+			bossComponent->SetLongRangeAttackDistanceFlag(true);
+			bossComponent->SetState(new BossAttack());
+		}
+		else {
+			// 近距離判定内
+			if (closeRangeAttackDistance > Distance(player->position, boss->position)) {
+				bossComponent->SetCloseRangeAttackDistanceFlag(true);
+				bossComponent->SetState(new BossAttack());
+			}
+			// 遠距離判定外
+			if (longRangeAttackDistance < Distance(player->position, boss->position)) {
+				bossComponent->SetState(new BossShootingAttack());
+			}
+		}
+
+		if (coolTimeSE < 0) {
+			// 歩行音を再生
+			AudioUtility::SetSEVolume(SEVolume);
+			AudioUtility::PlaySE("bossWalkSE");
+			AudioUtility::SetSEVolume(1);
+			coolTimeSE = 1.0f;
+		}
 
 		break;
 	default:

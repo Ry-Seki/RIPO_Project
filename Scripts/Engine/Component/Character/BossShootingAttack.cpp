@@ -59,6 +59,16 @@ void BossShootingAttack::Start(GameObject* boss)
 		}
 
 		break;
+
+	case 104:
+		coolTime = MAX_COOL_TIME;
+
+		// エフェクトを出す
+		EffectManager::GetInstance().Instantiate("BossShootEffect", boss->position);
+		// 射撃待機音を出す
+		AudioUtility::PlaySE("bossShootActiveSE");
+
+		break;
 	default:
 		break;
 	}
@@ -94,6 +104,11 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 		else {
 			ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime);
 		}
+
+		break;
+	case 104:
+
+		ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime);
 
 		break;
 	default:

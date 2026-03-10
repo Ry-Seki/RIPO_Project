@@ -50,6 +50,13 @@ void BossAttack::Start(GameObject* boss)
 		elapsedTime = 0;
 
 		break;
+
+	case 104:
+
+		coolTime = 2;
+		elapsedTime = 0;
+
+		break;
 	default:
 		break;
 	}
@@ -81,6 +88,16 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 		break;
 
 	case 102:
+
+		if (bossComponent->GetCloseRangeAttackDistanceFlag()) {
+			ForwardAttack(boss, deltaTime);
+		}
+		else if (bossComponent->GetLongRangeAttackDistanceFlag()) {
+			HeadlongAttack(boss, deltaTime);
+		}
+
+		break;
+	case 104:
 
 		if (bossComponent->GetCloseRangeAttackDistanceFlag()) {
 			ForwardAttack(boss, deltaTime);
