@@ -19,7 +19,7 @@ private:
 	float hitDamage;			// “–‚½‚Á‚½‚É—^‚¦‚éƒ_ƒ[ƒW
 	float moveSpeed;			// ’e‚Ì‘¬‚³
 	
-	const int MOVE_STEP;					// ˆÚ“®‚ğ‚Ç‚ê‚¾‚¯‚Ş‚©
+	const int MOVE_STEP;		// ˆÚ“®‚ğ‚Ç‚ê‚¾‚¯‚Ş‚©
 
 public:
 	BulletComponent();
