@@ -15,7 +15,11 @@ BossShootingAttack::BossShootingAttack()
 	, bossComponent(nullptr)
 	, player(nullptr)
 	, coolTime(0)
+	, rapidCoolTime(0)
 	, shootFlag(false)
+	, secondFlag(false)
+	, thirdFlag(false)
+	, direction(Vector3::zero)
 	, MAX_COOL_TIME(2.3f)
 {
 }
@@ -27,11 +31,37 @@ void BossShootingAttack::Start(GameObject* boss)
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
 	bossComponent = boss->GetComponent<BossComponent>();
-	coolTime = MAX_COOL_TIME;
-	// エフェクトを出す
-	EffectManager::GetInstance().Instantiate("BossShootEffect", boss->position);
-	// 射撃待機音を出す
-	AudioUtility::PlaySE("bossShootActiveSE");
+
+	switch (bossComponent->GetBossID())
+	{
+	case 101:
+		coolTime = MAX_COOL_TIME;
+
+		// エフェクトを出す
+		EffectManager::GetInstance().Instantiate("BossShootEffect", boss->position);
+		// 射撃待機音を出す
+		AudioUtility::PlaySE("bossShootActiveSE");
+
+		break;
+
+	case 103:
+		coolTime = MAX_COOL_TIME;
+
+		// HP半分以下で攻撃変化
+		if (bossComponent->GetBossHP() <= bossComponent->GetBossMaxHP() / 2) {
+			rapidCoolTime = 0.3f;
+		}
+		else {
+			// エフェクトを出す
+			EffectManager::GetInstance().Instantiate("BossShootEffect", boss->position);
+			// 射撃待機音を出す
+			AudioUtility::PlaySE("bossShootActiveSE");
+		}
+
+		break;
+	default:
+		break;
+	}
 }
 
 void BossShootingAttack::Update(GameObject* boss, float deltaTime)
@@ -44,7 +74,31 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 	// 攻撃中は被ダメ判定は取らない
 	bossComponent->SetHitFlag(true);
 
-	ShootingAttack(boss, deltaTime, 10000);
+	direction = bossComponent->GetBossToPlayerDirection();
+
+	switch (bossComponent->GetBossID())
+	{
+	case 101:
+
+		ShootingAttack(boss, deltaTime, 1000000 * deltaTime);
+
+		break;
+
+	case 103:
+
+		// HP半分以下で攻撃変化
+		if (bossComponent->GetBossHP() <= bossComponent->GetBossMaxHP() / 2) {
+			SlowBall(boss, deltaTime, 100000 * deltaTime);
+			RapidFire(boss, deltaTime, 1000000 * deltaTime);
+		}
+		else {
+			ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime);
+		}
+
+		break;
+	default:
+		break;
+	}
 	
 }
 
@@ -56,8 +110,6 @@ void BossShootingAttack::ShootingAttack(GameObject* boss, float deltaTime, float
 	// 仮
 	coolTime -= deltaTime;
 	if (coolTime <= 1.5f) {
-		// 攻撃処理
-		Vector3 direction = Direction(boss->position, player->position);
 		if (!shootFlag) {
 			// 弾発射
 			BulletManager::GetInstance().BulletShot(
@@ -69,7 +121,7 @@ void BossShootingAttack::ShootingAttack(GameObject* boss, float deltaTime, float
 				shotSpeed,
 				bossComponent->GetBossAttack()
 			);
-			// 射撃待機音を出す
+			// 射撃音を出す
 			AudioUtility::PlaySE("bossShootAttackSE");
 			shootFlag = true;
 		}
@@ -79,5 +131,127 @@ void BossShootingAttack::ShootingAttack(GameObject* boss, float deltaTime, float
 		bossComponent->SetHitFlag(false);
 		// 状態遷移
 		bossComponent->SetState(new BossStandby());
+	}
+}
+
+void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, float shotSpeed)
+{
+	animator->Play(0, 2000 * deltaTime);
+
+	// アニメーションが終わるまで待ちたい
+	// 仮
+	coolTime -= deltaTime;
+	if (coolTime <= 1.5f) {
+		if (!shootFlag) {
+			// 弾発射
+			BulletManager::GetInstance().BulletShot(
+				{ boss->position.x, boss->position.y + 250, boss->position.z },
+				boss->rotation,
+				{ 1.0f, 1.0f, 1.0f },
+				direction,
+				boss,
+				shotSpeed,
+				bossComponent->GetBossAttack()
+			);
+			// 射撃音を出す
+			AudioUtility::PlaySE("bossShootAttackSE");
+			shootFlag = true;
+		}
+	}
+	if (coolTime <= 1.2f) {
+		if (!secondFlag) {
+			// 弾発射
+			BulletManager::GetInstance().BulletShot(
+				{ boss->position.x, boss->position.y + 250, boss->position.z },
+				boss->rotation,
+				{ 1.0f, 1.0f, 1.0f },
+				direction,
+				boss,
+				shotSpeed,
+				bossComponent->GetBossAttack()
+			);
+			// 射撃音を出す
+			AudioUtility::PlaySE("bossShootAttackSE");
+			secondFlag = true;
+		}
+	}
+	if (coolTime <= 0.9f) {
+		if (!thirdFlag) {
+			// 弾発射
+			BulletManager::GetInstance().BulletShot(
+				{ boss->position.x, boss->position.y + 250, boss->position.z },
+				boss->rotation,
+				{ 1.0f, 1.0f, 1.0f },
+				direction,
+				boss,
+				shotSpeed,
+				bossComponent->GetBossAttack()
+			);
+			// 射撃音を出す
+			AudioUtility::PlaySE("bossShootAttackSE");
+			thirdFlag = true;
+		}
+	}
+	if (coolTime <= 0) {
+		shootFlag = false;
+		bossComponent->SetHitFlag(false);
+		// 状態遷移
+		bossComponent->SetState(new BossStandby());
+	}
+}
+
+void BossShootingAttack::RapidFire(GameObject* boss, float deltaTime, float shotSpeed)
+{
+	animator->Play(0, 20000 * deltaTime);
+
+	// アニメーションが終わるまで待ちたい
+	rapidCoolTime -= deltaTime;
+	if (rapidCoolTime <= 0.3f) {
+		if (!shootFlag) {
+			// 弾発射
+			BulletManager::GetInstance().BulletShot(
+				{ boss->position.x, boss->position.y + 250, boss->position.z },
+				boss->rotation,
+				{ 1.0f, 1.0f, 1.0f },
+				direction,
+				boss,
+				shotSpeed,
+				bossComponent->GetBossAttack()
+			);
+			// 射撃音を出す
+			AudioUtility::PlaySE("bossShootAttackSE");
+			shootFlag = true;
+		}
+	}
+	if (rapidCoolTime <= 0) {
+		shootFlag = false;
+		bossComponent->SetHitFlag(false);
+		// 状態遷移
+		bossComponent->SetState(new BossStandby());
+	}
+}
+
+void BossShootingAttack::SlowBall(GameObject* boss, float deltaTime, float shotSpeed)
+{
+	rapidCoolTime -= deltaTime;
+	if (rapidCoolTime <= 0.3f) {
+		if (!shootFlag) {
+			// 弾発射
+			BulletManager::GetInstance().BulletShot(
+				{ boss->position.x, boss->position.y + 250, boss->position.z },
+				boss->rotation,
+				{ 1.0f, 1.0f, 1.0f },
+				direction,
+				boss,
+				shotSpeed,
+				bossComponent->GetBossAttack(),
+				10
+			);
+			shootFlag = true;
+		}
+	}
+	if (rapidCoolTime <= 0) {
+		shootFlag = false;
+		bossComponent->SetHitFlag(false);
 	}
 }

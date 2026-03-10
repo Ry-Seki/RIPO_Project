@@ -142,6 +142,13 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 		}
 		
 		break;
+
+	case 103:
+
+		// ステージ3ボスはchaseしない
+		bossComponent->SetState(new BossShootingAttack());
+
+		break;
 	default:
 		break;
 	}

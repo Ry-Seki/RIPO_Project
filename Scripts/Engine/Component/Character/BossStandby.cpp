@@ -8,6 +8,7 @@
 #include "BossComponent.h"
 #include "../../Manager/CameraManager.h"
 #include "BossChase.h"
+#include "BossShootingAttack.h"
 
 /*
  *	ƒRƒ“ƒXƒgƒ‰ƒNƒ^
@@ -50,9 +51,23 @@ void BossStandby::Update(GameObject* boss, float deltaTime)
 
 	auto bossComponent = boss->GetComponent<BossComponent>();
 
- 	//animator->Play(7, 10);
-	// ó‘Ô‘JˆÚ
-	if (Vision(boss, -ForwardDir(boss->rotation), player->position, 180, viewAngle)) {
-		boss->GetComponent<BossComponent>()->SetState(new BossChase());
+	switch (bossComponent->GetBossID())
+	{
+	case 103:
+
+		// ó‘Ô‘JˆÚ
+		if (Vision(boss, -ForwardDir(boss->rotation), player->position, 180, viewAngle)) {
+			boss->GetComponent<BossComponent>()->SetState(new BossShootingAttack());
+		}
+
+		break;
+	default:
+
+		// ó‘Ô‘JˆÚ
+		if (Vision(boss, -ForwardDir(boss->rotation), player->position, 180, viewAngle)) {
+			boss->GetComponent<BossComponent>()->SetState(new BossChase());
+		}
+
+		break;
 	}
 }
