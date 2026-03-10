@@ -52,6 +52,7 @@ void BulletComponent::Update(float deltaTime) {
 			// エフェクトを出す
 			EffectManager::GetInstance().Instantiate("BulletEliminationEffect", bullet->position);
 			ResetObject(bullet);
+			return;
 		}
 	}
 
