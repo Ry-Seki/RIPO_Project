@@ -16,6 +16,9 @@
       "0": "Sponer_0",
       "1": "Sponer_1",
       "2": "Sponer_2"
+    },
+    "BossSpawnPos": {
+      "0": "Sponer_0"
     }
   },
   "Treasure": {
