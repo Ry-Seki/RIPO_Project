@@ -103,7 +103,7 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 	auto baseSEVolume = AudioUtility::GetSEVolume();
 	// 1Å`0Ç…ïœä∑Ç∑ÇÈ
 	SEVolume = 1.0f - (playerDistance / SE_DISTANCE);
-	//SEVolume = SEVolume * baseSEVolume;
+	SEVolume = SEVolume * baseSEVolume;
 	if (SEVolume < 0) {
 		SEVolume = 0;
 	}
