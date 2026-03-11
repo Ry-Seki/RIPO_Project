@@ -248,7 +248,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 
 	// “G‚ÌÄ¶¬
 	for (int i = 0; i < enemyCount; i++) {
-		GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, { 0, 180 * Deg2Rad, 0 }, { -100, 0, -100 }, { 100, 300, 100 }, { 0, 100, 0 }, { 0,  400,  0 }, 200, dungeonID);
+		GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, { 0, 180 * Deg2Rad, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 100, 0 }, { 0,  400,  0 }, 200, dungeonID);
 	}
 	// ƒ{ƒX‚Ì¶¬ˆ—
 	for (int i = 0; i < bossCount; i++) {
