@@ -135,6 +135,15 @@ void MenuVolumeSettings::Close(Engine& engine) {
     MenuBase::Close(engine);
 }
 /*
+ *	@brief	メニューを再開
+ */
+void MenuVolumeSettings::Resume() {
+    MenuBase::Resume();
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
+}
+/*
  *	@brief		ボタンの押された時の処理
  *	@param[in]	int buttonIndex
  */
