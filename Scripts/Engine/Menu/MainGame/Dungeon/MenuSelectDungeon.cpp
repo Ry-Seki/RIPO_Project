@@ -253,7 +253,7 @@ void MenuSelectDungeon::SetupDungeonInfo() {
 		+ std::to_string(entry.info.maxStrength));
 	entry.treasureCount->SetText(
 		std::to_string(entry.info.treasureCount)
-		+ " ` "
+		+ " / "
 		+ std::to_string(entry.info.maxTreasureCount));
 
 	std::string eventStr = "";
@@ -264,6 +264,9 @@ void MenuSelectDungeon::SetupDungeonInfo() {
 			eventStr = std::to_string(entry.info.eventStartDay)
 				+ " ` "
 				+ std::to_string(entry.info.eventEndDay);
+		}
+		else {
+			eventStr = "NONE";
 		}
 	}
 	entry.eventInfo->SetText(eventStr);
