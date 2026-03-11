@@ -19,6 +19,7 @@ BossShootingAttack::BossShootingAttack()
 	, shootFlag(false)
 	, secondFlag(false)
 	, thirdFlag(false)
+	, slowFlag(false)
 	, direction(Vector3::zero)
 	, MAX_COOL_TIME(2.3f)
 {
@@ -98,7 +99,7 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 
 		// HP”¼•ªˆÈ‰º‚ÅUŒ‚•Ï‰»
 		if (bossComponent->GetBossHP() <= bossComponent->GetBossMaxHP() / 2) {
-			SlowBall(boss, deltaTime, 100000 * deltaTime);
+			SlowBall(boss, deltaTime, 100000 * deltaTime, 0.3f, 0.3f);
 			RapidFire(boss, deltaTime, 1000000 * deltaTime);
 		}
 		else {
@@ -108,6 +109,7 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 		break;
 	case 104:
 
+		SlowBall(boss, deltaTime, 300000 * deltaTime, 0.3f, 0.3f);
 		ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime);
 
 		break;
@@ -248,11 +250,11 @@ void BossShootingAttack::RapidFire(GameObject* boss, float deltaTime, float shot
 	}
 }
 
-void BossShootingAttack::SlowBall(GameObject* boss, float deltaTime, float shotSpeed)
+void BossShootingAttack::SlowBall(GameObject* boss, float deltaTime, float shotSpeed, float coolTime, float fireTime)
 {
-	rapidCoolTime -= deltaTime;
-	if (rapidCoolTime <= 0.3f) {
-		if (!shootFlag) {
+	coolTime -= deltaTime;
+	if (coolTime <= fireTime) {
+		if (!slowFlag) {
 			// ’e”­ŽË
 			BulletManager::GetInstance().BulletShot(
 				{ boss->position.x, boss->position.y + 250, boss->position.z },
@@ -264,11 +266,11 @@ void BossShootingAttack::SlowBall(GameObject* boss, float deltaTime, float shotS
 				bossComponent->GetBossAttack(),
 				10
 			);
-			shootFlag = true;
+			slowFlag = true;
 		}
 	}
-	if (rapidCoolTime <= 0) {
-		shootFlag = false;
+	if (coolTime <= 0) {
+		slowFlag = false;
 		bossComponent->SetHitFlag(false);
 	}
 }

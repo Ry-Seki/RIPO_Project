@@ -23,6 +23,7 @@
 		bool shootFlag;
 		bool secondFlag;
 		bool thirdFlag;
+		bool slowFlag;
 		// プレイヤーの方向
 		Vector3 direction;
 
@@ -79,8 +80,10 @@
 		 *	param[in]	GameObject*	boss
 		 *  param[in]	float		deltaTime
 		 *  param[in]	float		shotSpeed	弾の発射速度
+		 *	param[in]	float		coolTime	弾のクールタイム
+		 *	param[in]	float		fireTime	coolTime-fireTimeが発射までの時間(coolTimeと同数にすればディレイなし)
 		 */
-		void SlowBall(GameObject* boss, float deltaTime, float shotSpeed);
+		void SlowBall(GameObject* boss, float deltaTime, float shotSpeed, float coolTime, float fireTime);
 
 };
 
