@@ -42,10 +42,6 @@ private:
 
 	std::function<void()> Callback = nullptr;
 
-	static constexpr float _CHANGE_DURATION = 3.0f;
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Money/ChangeMoneyMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Money/ChangeMoneyMenuNavigation.json";
-
 public:
 	/*
 	 *	@brief	デストラクタ

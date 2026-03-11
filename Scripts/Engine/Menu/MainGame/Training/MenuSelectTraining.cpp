@@ -33,7 +33,7 @@ namespace {
     /*
      *  @brief  ステータスの種類マップ
      */
-    const std::unordered_map<std::string, GameEnum::PlayerStatusType> StatusTypeMap = {
+    const std::unordered_map<std::string, GameEnum::PlayerStatusType> statusTypeMap = {
         {"HP", GameEnum::PlayerStatusType::HP},
         {"Stamina", GameEnum::PlayerStatusType::Stamina},
         {"Strength", GameEnum::PlayerStatusType::Strength},
@@ -49,18 +49,20 @@ namespace {
             = GameEnum::PlayerStatusType::Invalid;
     };
     /*
-     *	@brief	プレイヤーのステータスの種類識別
+     *	@brief	    プレイヤーのステータスの種類識別
+     *  @param[in]  const std::string& typeKey
+     *  @return     GameEnum::PlayerStatusType
      */
     GameEnum::PlayerStatusType StringToPlayerStatusType(const std::string& typeKey) {
-        auto it = StatusTypeMap.find(typeKey);
+        auto itr = statusTypeMap.find(typeKey);
 
-        if (it != StatusTypeMap.end())
-            return it->second;
+        if (itr != statusTypeMap.end()) return itr->second;
 
         return GameEnum::PlayerStatusType::Invalid;
     }
     /*
-     *  @brief  
+     *  @brief      JSON->トレーニングボタン情報へ変換
+     *  @param[in]  const JSON& json
      */
     std::vector<TrainingButtonData> ParseTrainingButtonData(const JSON& json) {
         std::vector<TrainingButtonData> result;
@@ -77,7 +79,6 @@ namespace {
 
             result.push_back(entry);
         }
-
         return result;
     }
 }
@@ -97,15 +98,15 @@ void MenuSelectTraining::Initialize(Engine& engine) {
         // メニューUIの所有権移動
         spriteList = std::move(result.spriteList);
         buttonList = std::move(result.buttonList);
+        // ボタンの登録
+        for (auto& entry : buttonList) {
+            if (!entry) continue;
 
-        for (auto& button : buttonList) {
-            if (!button) continue;
-
-            UIButtonBase* buttonPtr = button.get();
+            UIButtonBase* button = entry.get();
             // ボタンの登録
-            eventSystem.RegisterButton(buttonPtr);
+            eventSystem.RegisterButton(button);
             // マップに登録
-            buttonMap[buttonPtr->GetName()] = buttonPtr;
+            buttonMap[button->GetName()] = button;
         }
         // イベントシステムの初期化
         eventSystem.Initialize(0);
@@ -275,8 +276,8 @@ void MenuSelectTraining::SetupTrainingButtons(const JSON& json) {
  *	@return		UIButtonBase*
  */
 UIButtonBase* MenuSelectTraining::FindButtonByName(const std::string& buttonName) {
-    auto it = buttonMap.find(buttonName);
-    if (it == buttonMap.end()) return nullptr;
+    auto itr = buttonMap.find(buttonName);
+    if (itr == buttonMap.end()) return nullptr;
 
-    return it->second;
+    return itr->second;
 }
