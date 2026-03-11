@@ -100,8 +100,10 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 
 	// プレイヤーとの距離
 	playerDistance = Distance(player->position, boss->position);
+	auto baseSEVolume = AudioUtility::GetSEVolume();
 	// 1～0に変換する
 	SEVolume = 1.0f - (playerDistance / SE_DISTANCE);
+	//SEVolume = SEVolume * baseSEVolume;
 	if (SEVolume < 0) {
 		SEVolume = 0;
 	}
@@ -125,7 +127,7 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 			// 歩行音を再生
 			AudioUtility::SetSEVolume(SEVolume);
 			AudioUtility::PlaySE("bossWalkSE");
-			AudioUtility::SetSEVolume(1);
+			AudioUtility::SetSEVolume(baseSEVolume);
 			coolTimeSE = 1.5f;
 		}
 
@@ -147,7 +149,7 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 			// 歩行音を再生
 			AudioUtility::SetSEVolume(SEVolume);
 			AudioUtility::PlaySE("bossWalkSE");
-			AudioUtility::SetSEVolume(1);
+			AudioUtility::SetSEVolume(baseSEVolume);
 			coolTimeSE = 1.0f;
 		}
 		
@@ -185,7 +187,7 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 			// 歩行音を再生
 			AudioUtility::SetSEVolume(SEVolume);
 			AudioUtility::PlaySE("bossWalkSE");
-			AudioUtility::SetSEVolume(1);
+			AudioUtility::SetSEVolume(baseSEVolume);
 			coolTimeSE = 1.0f;
 		}
 

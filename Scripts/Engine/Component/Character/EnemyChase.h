@@ -33,6 +33,8 @@ private:
 	float coolTimeSE;
 	// SEの音量
 	float SEVolume;
+	// 元のSEの音量
+	float baseSEVolume;
 	// プレイヤーまでの距離
 	float playerDistance;
 	// プレイヤーの距離判定フラグ
