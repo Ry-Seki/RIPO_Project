@@ -17,6 +17,8 @@
 #include "../Character/ArmActionComponent.h"
 #include "../Character/WeaponBase.h"
 #include "../../Manager/EffectManager.h"
+#include "../../Manager/StageManager.h"
+#include "../CapsuleCollider.h"
 
 using namespace GameObjectUtility;
 using namespace CharacterUtility;
@@ -27,14 +29,32 @@ BulletComponent::BulletComponent()
 	, bullet(nullptr)
 	, hitDamage(0.0f)
 	, shotOwner(nullptr)
-	, moveSpeed(10000) {
+	, moveSpeed(10000) 
+	, MOVE_STEP(10){
 }
 
 void BulletComponent::Update(float deltaTime) {
   	if (!bullet) return;
 	
-	// 着弾地点に進む
-	bullet->position += moveDirection * moveSpeed * deltaTime;
+	// すり抜け対策の為刻んで移動
+	for (int i = 0; i < MOVE_STEP; i++) {
+		// 着弾地点に進む
+		bullet->position += moveDirection * (moveSpeed / MOVE_STEP) *deltaTime;
+
+		// ステージとの当たり判定
+		auto stageHandle = StageManager::GetInstance().GetCurrentStageHandle();
+		auto collider = GetOwner()->GetComponent<CapsuleCollider>();
+		VECTOR pos1 = ToVECTOR(collider->capsule.segment.startPoint + bullet->position);
+		VECTOR pos2 = ToVECTOR(collider->capsule.segment.endPoint + bullet->position);
+		float radius = collider->capsule.radius;
+		auto hit = MV1CollCheck_Capsule(stageHandle, -1, pos1, pos2, radius);
+		if (hit.HitNum > 0) {
+			// エフェクトを出す
+			EffectManager::GetInstance().Instantiate("BulletEliminationEffect", bullet->position);
+			ResetObject(bullet);
+			return;
+		}
+	}
 
 	// 破棄カウントダウン
 	destroyTimeCount -= deltaTime;

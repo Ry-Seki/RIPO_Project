@@ -21,14 +21,16 @@ using namespace StageUtility;
 BossChase::BossChase()
 	: player(nullptr)
 	, animator(nullptr)
+	, bossComponent(nullptr)
 	, modelHandle(-1)
 	, coolTimeSE(0.7f)
 	, SEVolume(1.0f)
 	, playerDistance(0.0f)
-	, PLAYER_DISTANCE(1700.0f)
-	, SHOOTING_PLAYER_DISTANCE(3000.0f)
+	, moveSpeed(0.0f)
+	, animationSpeed(0.0f)
+	, closeRangeAttackDistance(0.0f)
+	, longRangeAttackDistance(0.0f)
 	, ROTATE_SPEED(3.0f)
-	, MOVE_SPEED(700.0f)
 	, SE_DISTANCE(10000) {
 }
 
@@ -41,8 +43,44 @@ void BossChase::Start(GameObject* boss) {
 	if (player == nullptr) return;
 	animator = boss->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
+	bossComponent = boss->GetComponent<BossComponent>();
 
-	boss->GetComponent<BossComponent>()->SetMoveFrag(true);
+	bossComponent->SetMoveFrag(true);
+
+	switch (bossComponent->GetBossID())
+	{
+	case 101:
+
+		moveSpeed = 700.0f;
+		animationSpeed = 1200.0f;
+		closeRangeAttackDistance = 1700.0f;
+		longRangeAttackDistance = 3000.0f;
+		coolTimeSE = 0.7f;
+
+		break;
+
+	case 102:
+
+		moveSpeed = 1000.0f;
+		animationSpeed = 1714.29f;
+		closeRangeAttackDistance = 800.0f;
+		longRangeAttackDistance = 4000.0f;
+		coolTimeSE = 0.7f;
+
+		break;
+
+	case 104:
+
+		moveSpeed = 1000.0f;
+		animationSpeed = 1714.29f;
+		closeRangeAttackDistance = 800.0f;
+		longRangeAttackDistance = 4000.0f;
+		coolTimeSE = 0.7f;
+
+		break;
+	default:
+		break;
+	}
 }
 
 /*
@@ -58,8 +96,7 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
 
-	animator->Update(deltaTime);
-	animator->Play(11, 10);
+	animator->Play(11, animationSpeed * deltaTime);
 
 	// プレイヤーとの距離
 	playerDistance = Distance(player->position, boss->position);
@@ -70,24 +107,91 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 	}
 
 	coolTimeSE -= deltaTime;
-	if (coolTimeSE < 0) {
-		// 歩行音を再生
-		AudioUtility::SetSEVolume(SEVolume);
-		AudioUtility::PlaySE("bossWalkSE");
-		AudioUtility::SetSEVolume(1);
-		coolTimeSE = 1.5f;
-	}
-
-	auto bossComponent = boss->GetComponent<BossComponent>();
 
 	ChaseWayPoint(boss, player->position, deltaTime);
+	switch (bossComponent->GetBossID())
+	{
+	case 101:
 
-	// 射程距離判定
-	if (PLAYER_DISTANCE > Distance(player->position, boss->position)) {
-		bossComponent->SetState(new BossAttack());
-	}
-	else if (SHOOTING_PLAYER_DISTANCE > Distance(player->position, boss->position)) {
+		// 射程距離判定
+		if (closeRangeAttackDistance > Distance(player->position, boss->position)) {
+			bossComponent->SetState(new BossAttack());
+		}
+		else if (longRangeAttackDistance > Distance(player->position, boss->position)) {
+			bossComponent->SetState(new BossShootingAttack());
+		}
+
+		if (coolTimeSE < 0) {
+			// 歩行音を再生
+			AudioUtility::SetSEVolume(SEVolume);
+			AudioUtility::PlaySE("bossWalkSE");
+			AudioUtility::SetSEVolume(1);
+			coolTimeSE = 1.5f;
+		}
+
+		break;
+
+	case 102:
+		// 近距離判定内
+		if (closeRangeAttackDistance > Distance(player->position, boss->position)) {
+			bossComponent->SetCloseRangeAttackDistanceFlag(true);
+			bossComponent->SetState(new BossAttack());
+		}
+		// 遠距離判定外
+		if (longRangeAttackDistance < Distance(player->position, boss->position)) {
+			bossComponent->SetLongRangeAttackDistanceFlag(true);
+			bossComponent->SetState(new BossAttack());
+		}
+
+		if (coolTimeSE < 0) {
+			// 歩行音を再生
+			AudioUtility::SetSEVolume(SEVolume);
+			AudioUtility::PlaySE("bossWalkSE");
+			AudioUtility::SetSEVolume(1);
+			coolTimeSE = 1.0f;
+		}
+		
+		break;
+
+	case 103:
+
+		// ステージ3ボスはchaseしない
 		bossComponent->SetState(new BossShootingAttack());
+
+		break;
+
+	case 104:
+
+		// 以下すて４
+		// ランダムで突進
+		if (bossComponent->GetRandomCoolTime() >= 700) {
+			bossComponent->SetRandomCoolTime(0);
+			bossComponent->SetLongRangeAttackDistanceFlag(true);
+			bossComponent->SetState(new BossAttack());
+		}
+		else {
+			// 近距離判定内
+			if (closeRangeAttackDistance > Distance(player->position, boss->position)) {
+				bossComponent->SetCloseRangeAttackDistanceFlag(true);
+				bossComponent->SetState(new BossAttack());
+			}
+			// 遠距離判定外
+			if (longRangeAttackDistance < Distance(player->position, boss->position)) {
+				bossComponent->SetState(new BossShootingAttack());
+			}
+		}
+
+		if (coolTimeSE < 0) {
+			// 歩行音を再生
+			AudioUtility::SetSEVolume(SEVolume);
+			AudioUtility::PlaySE("bossWalkSE");
+			AudioUtility::SetSEVolume(1);
+			coolTimeSE = 1.0f;
+		}
+
+		break;
+	default:
+		break;
 	}
 }
 
@@ -123,8 +227,8 @@ void BossChase::ChaseWayPoint(GameObject* boss, Vector3 wayPoint, float deltaTim
 	float moveZ = 0;
 	// プレイヤーの手前で止まる
 	if (player && wayPoint == player->position) {
-		moveX += direction.x * MOVE_SPEED * deltaTime;
-		moveZ += direction.z * MOVE_SPEED * deltaTime;
+		moveX += direction.x * moveSpeed * deltaTime;
+		moveZ += direction.z * moveSpeed * deltaTime;
 		boss->position.x += moveX;
 		boss->position.z += moveZ;
 	}
