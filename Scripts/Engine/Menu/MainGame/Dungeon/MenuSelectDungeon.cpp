@@ -33,60 +33,96 @@ namespace {
 	 *	@brief	ファイルパスの名前空間
 	 */
 	constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Dungeon/SelectDungeon/SelectDungeonMenuResources.json";
-	constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame//Dungeon/SelectDungeon/SelectDungeonMenuNavigation.json";
+	constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Dungeon/SelectDungeon/SelectDungeonMenuNavigation.json";
+	constexpr const char* _DUNGEON_BUTTON_DATA_PATH = "Data/UI/MainGame/Dungeon/SelectDungeon/DungeonButton.json";
 
 	/*
 	 *	@brief	ダンジョンの種類マップ
 	 */
-	const std::unordered_map<std::string, GameEnum::MainDungeonType> StatusTypeMap = {
-		{"", GameEnum::MainDungeonType::Dungeon1},
-		{"", GameEnum::MainDungeonType::Dungeon1},
-		{"", GameEnum::MainDungeonType::Dungeon1},
-		{"", GameEnum::MainDungeonType::Dungeon1},
-		{"", GameEnum::MainDungeonType::Invalid}
+	const std::unordered_map<std::string, GameEnum::MainDungeonType> dungeonTypeMap = {
+		{"Dungeon1", GameEnum::MainDungeonType::Dungeon1},
+		{"Dungeon2", GameEnum::MainDungeonType::Dungeon2},
+		{"Dungeon3", GameEnum::MainDungeonType::Dungeon3},
+		{"Dungeon4", GameEnum::MainDungeonType::Dungeon4},
+		{"Back", GameEnum::MainDungeonType::Invalid}
 	};
+	/*
+	 *	@brief	ダンジョンボタン構造体
+	 */
+	struct DungeonButtonData {
+		std::string name = "";
+		GameEnum::MainDungeonType type
+			= GameEnum::MainDungeonType::Invalid;
+	};
+	/*
+	 *	@brief		ダンジョンの種類識別
+	 *	@param[in]	const std::string& typeKey
+	 *	@return		GameEnum::MainDungeonType
+	 */
+	GameEnum::MainDungeonType StringToDungeonType(const std::string& typeKey) {
+		auto itr = dungeonTypeMap.find(typeKey);
+
+		if (itr != dungeonTypeMap.end()) return itr->second;
+
+		return GameEnum::MainDungeonType::Invalid;
+	}
+	/*
+	 *  @brief      JSON->ダンジョンボタン情報へ変換
+	 *  @param[in]  const JSON& json
+	 */
+	std::vector<DungeonButtonData> ParseDungeonButtonData(const JSON& json) {
+		std::vector<DungeonButtonData> result;
+
+		auto array = json["DungeonButtons"];
+
+		for (auto& node : array) {
+			DungeonButtonData entry;
+
+			entry.name = node["ButtonName"].get<std::string>();
+
+			std::string typeString = node["DungeonType"].get<std::string>();
+			entry.type = StringToDungeonType(typeString);
+
+			result.push_back(entry);
+		}
+		return result;
+	}
 }
  /*
   *	@brief	初期化処理
   */
 void MenuSelectDungeon::Initialize(Engine& engine) {
 	auto& load = LoadManager::GetInstance();
+
 	auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
 	auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
+	auto buttonData = load.LoadResource<LoadJSON>(_DUNGEON_BUTTON_DATA_PATH);
 
-	load.SetOnComplete([this, &engine, menuJSON, navigation]() {
+	load.SetOnComplete([this, &engine, menuJSON, navigation, buttonData]() {
+		// メニューのUI生成
 		MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
-		for (auto& button : result.buttonList) {
-			if (!button) continue;
-
-			eventSystem.RegisterButton(button.get());
-		}
-		eventSystem.Initialize(0);
+		// メニューUIの所有権移動
 		spriteList = std::move(result.spriteList);
 		textList = std::move(result.textList);
 		buttonList = std::move(result.buttonList);
-		const int back = static_cast<int>(GameEnum::MainDungeonType::Invalid);
-		const int dungeonMin = static_cast<int>(GameEnum::MainDungeonType::Dungeon1);
-		const int dungeonMax = static_cast<int>(GameEnum::MainDungeonType::Max);
-		for (int i = 0, max = buttonList.size(); i < max; i++) {
-			UIButtonBase* button = buttonList[i].get();
-			if (!button) continue;
-			// ダンジョンIDの取得
-			int dungeonID = (i < dungeonMax - 1) ? dungeonMin + i : back;
-			// ダンジョンボタンリストに登録
-			dungeonButtonList.push_back({dungeonID, button});
-			// ボタンの実行処理を登録
-			button->RegisterOnClick([this, dungeonID]() {
-				SelectButtonExecute(dungeonID);
-			});
-			// ボタンに navigation 更新処理を登録
-			button->RegisterUpdateSelectButton([this, button]() {
-				eventSystem.UpdateSelectButton(button);
-			});
+		// ボタンの登録
+		for (auto& entry : buttonList) {
+			if (!entry) continue;
+			UIButtonBase* button = entry.get();
+			// ボタンの登録
+			eventSystem.RegisterButton(button);
+			// マップに登録
+			buttonMap[button->GetName()] = button;
 		}
+		// ダンジョン画像の取得
 		for (auto& sprite : spriteList) {
 			if (sprite->GetName() == "DungeonSprite") dungeonSprite = sprite.get();
 		}
+		// イベントシステムの初期化
+		eventSystem.Initialize(0);
+		// ボタンの準備前処理
+		SetupDungeonButtons(buttonData->GetData());
+		// イベントシステムのnavigationの設定
 		eventSystem.LoadNavigation(navigation->GetData());
 	});
 }
@@ -103,18 +139,16 @@ void MenuSelectDungeon::Open() {
 	for (auto& button : buttonList) {
 		button->Setup();
 	}
-	// TODO : ダンジョン3, 4を閉じる
-	//buttonList[2]->SetIsEnable(false);
-	//buttonList[3]->SetIsEnable(false);
-
 	eventSystem.ApplySelection();
+	// 現在のボタンの要素数の取得
 	currentIndex = eventSystem.GetCurrentIndex();
 	prevIndex = currentIndex;
+	// ダンジョンテキストの生成
 	CreateDungeonInfoData();
+	// ダンジョン情報の準備前処理
 	SetupDungeonInfo();
 	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
-		// TODO : イベントごとに画像差し替え
 		InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
 	});
 }
@@ -132,8 +166,6 @@ void MenuSelectDungeon::Update(Engine& engine, float unscaledDeltaTime) {
 		prevIndex = currentIndex;
 		SetupDungeonInfo();
 	}
-
-
 	// ボタンの更新
 	for (auto& button : buttonList) {
 		if (button) button->Update(unscaledDeltaTime);
@@ -197,9 +229,6 @@ void MenuSelectDungeon::Resume() {
 	for (auto& button : buttonList) {
 		button->Setup();
 	}
-	// TODO : ダンジョン3, 4を閉じる
-	//buttonList[2]->SetIsEnable(false);
-	//buttonList[3]->SetIsEnable(false);
 }
 /*
  *	@brief		ボタンの押された時の処理
@@ -223,28 +252,31 @@ void MenuSelectDungeon::CreateDungeonInfoData() {
 
 	int white = GetColor(255, 255, 255);
 
-	for (auto& data : dungeonInfoList) {
-		MenuSelectDungeon::DungeonMenuEntry entry;
-		entry.info = data;
+	TextBase* level = nullptr;
+	TextBase* strength = nullptr;
+	TextBase* treasure = nullptr;
+	TextBase* eventInfo = nullptr;
 
-		for (auto& text : textList) {
-			if (text->GetName() == "DungeonLevelText") {
-				entry.level = text.get();
-				entry.level->SetColor(white);
-			}
-			else if (text->GetName() == "StrengthText") {
-				entry.strength = text.get();
-				entry.strength->SetColor(white);
-			}
-			else if (text->GetName() == "TreasureCountText") {
-				entry.treasureCount = text.get();
-				entry.treasureCount->SetColor(white);
-			}
-			else if (text->GetName() == "EventInfoText") {
-				entry.eventInfo = text.get();
-				entry.eventInfo->SetColor(white);
-			}
-		}
+	for (auto& text : textList) {
+		if (!text) continue;
+		// 色の設定
+		text->SetColor(white);
+		// テキストの設定
+		if (text->GetName() == "DungeonLevelText") level = text.get();
+		else if (text->GetName() == "StrengthText") strength = text.get();
+		else if (text->GetName() == "TreasureCountText") treasure = text.get();
+		else if (text->GetName() == "EventInfoText") eventInfo = text.get();
+	}
+	// 情報データの数dungeonMenuListを追加する
+	for (auto& data : dungeonInfoList) {
+		DungeonMenuEntry entry;
+
+		entry.info = data;
+		entry.level = level;
+		entry.strength = strength;
+		entry.treasureCount = treasure;
+		entry.eventInfo = eventInfo;
+
 		dungeonMenuList.push_back(entry);
 	}
 }
@@ -267,35 +299,22 @@ void MenuSelectDungeon::SetupDungeonInfo() {
 		+ " / "
 		+ std::to_string(entry.info.maxTreasureCount));
 
-	std::string eventStr = "";
-	if (entry.info.isEventClear) {
-		eventStr = "Complete!";
-	}else {
-		if (entry.info.isEventDay) {
-			eventStr = std::to_string(entry.info.eventStartDay)
-				+ " ～ "
-				+ std::to_string(entry.info.eventEndDay);
-		}
-		else {
-			eventStr = "NONE";
-		}
-	}
-	entry.eventInfo->SetText(eventStr);
+	SortDungeonMenuEntry(entry);
 }
 /*
  *	@brief		ダンジョン情報の描画
  */
 void MenuSelectDungeon::RenderDungeonInfo() {
-	if (currentIndex < 0 || currentIndex >= dungeonButtonList.size()) return;
+	if (currentIndex < 0 || currentIndex >= dungeonMenuList.size()) return;
 
-	int dungeonID = dungeonButtonList[currentIndex].dungeonID;
-
-	// 戻るボタンなら描画しない
-	if (dungeonID <= 0) return;
+	// ダンジョンの種類の取得
+	auto dungeonType = static_cast<GameEnum::MainDungeonType>(currentIndex);
+	if (dungeonType == GameEnum::MainDungeonType::Invalid) return;
 
 	dungeonSprite->Render();
 
-	DungeonMenuEntry& entry = dungeonMenuList[currentIndex];
+	auto& entry = dungeonMenuList[currentIndex];
+
 	if (entry.level) entry.level->Render();
 	if (entry.strength) entry.strength->Render();
 	if (entry.treasureCount) entry.treasureCount->Render();
@@ -308,7 +327,6 @@ void MenuSelectDungeon::RenderDungeonInfo() {
  */
 void MenuSelectDungeon::StartFadeEndCallback(int dungeonID) {
 	auto& menu = MenuManager::GetInstance();
-
 	isInteractive = false;
 	FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeOut,[this, &menu, dungeonID]() {
@@ -345,7 +363,6 @@ void MenuSelectDungeon::SortDungeonMenuEntry(DungeonMenuEntry& entry) {
 	else {
 		// もしイベント中なら、イベント日を入れる
 		if (entry.info.isEventDay) {
-
 			eventStr = std::to_string(entry.info.eventStartDay)
 				+ " ～ "
 				+ std::to_string(entry.info.eventEndDay);
@@ -353,5 +370,38 @@ void MenuSelectDungeon::SortDungeonMenuEntry(DungeonMenuEntry& entry) {
 			eventStr = "NONE";
 		}
 	}
-	entry.dungeonEvent.eventText->SetText(eventStr);
+	entry.eventInfo->SetText(eventStr);
+}
+/*
+ *	@brief		ダンジョンボタンの準備前処理
+ *	@param[in]	const JSON& json
+ */
+void MenuSelectDungeon::SetupDungeonButtons(const JSON& json) {
+	auto dungeonData = ParseDungeonButtonData(json);
+
+	for (const auto& entry : dungeonData) {
+		UIButtonBase* button = FindButtonByName(entry.name);
+		if (!button) continue;
+		const auto type = entry.type;
+		int dungeonID = static_cast<int>(type);
+		// ボタン実行処理の登録
+		button->RegisterOnClick([this, dungeonID]() {
+			SelectButtonExecute(dungeonID);
+		});
+		// ボタンに navigation 更新処理を登録
+		button->RegisterUpdateSelectButton([this, button]() {
+			eventSystem.UpdateSelectButton(button);
+		});
+	}
+}
+/*
+ *	@brief		名前でのボタン検索
+ *	@param[in]	const std::string& buttonName
+ *	@return		UIButtonBase*
+ */
+UIButtonBase* MenuSelectDungeon::FindButtonByName(const std::string& buttonName) {
+	auto itr = buttonMap.find(buttonName);
+	if (itr == buttonMap.end()) return nullptr;
+
+	return itr->second;
 }

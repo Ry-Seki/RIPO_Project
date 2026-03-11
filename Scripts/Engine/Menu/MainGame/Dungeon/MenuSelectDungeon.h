@@ -21,22 +21,14 @@
 /*
  *	@brief	ダンジョン選択メニュー
  */
-class MenuSelectDungeon : public MenuBase {
+class MenuSelectDungeon : public MenuBase {	
 private:
-	/*
-	 *	@brief	ダンジョンボタン構造体
-	 */
-	struct DungeonButtonEntry {
-		int dungeonID = -1;					// -1 = Back
-		UIButtonBase* button = nullptr;		// ボタン
-	};
 	/*
 	 *	@brief	ダンジョンイベント構造体
 	 */
 	struct DungeonEventEntry {
 		UIButtonBase* button = nullptr;	// イベント対象ボタン
 		Sprite* eventSprite = nullptr;	// イベント用画像
-		TextBase* eventText = nullptr;	// イベント情報
 	};
 	/*
 	 *	@brief	ダンジョンメニュー構造体
@@ -51,10 +43,7 @@ private:
 	};
 
 private:
-	int currentIndex = -1;
 	int prevIndex = -1;
-	float animTimer = 0.0f;
-	int animFrame = 0;
 
 	std::vector<DungeonInfoData> dungeonInfoList;
 
@@ -65,8 +54,8 @@ private:
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	Sprite* dungeonSprite = nullptr;
 
-	std::vector<DungeonButtonEntry> dungeonButtonList;
 	std::vector<DungeonMenuEntry> dungeonMenuList;
+	std::unordered_map<std::string, UIButtonBase*> buttonMap;
 
 	std::function<void(int)> Callback = nullptr;
 
@@ -139,6 +128,17 @@ private:
 	 *	@param[in]	DungeonMenuEntry& entry
 	 */
 	void SortDungeonMenuEntry(DungeonMenuEntry& entry);
+	/*
+	 *	@brief		ダンジョンボタンの準備前処理
+	 *	@param[in]	const JSON& json
+	 */
+	void SetupDungeonButtons(const JSON& json);
+	/*
+	 *	@brief		名前でのボタン検索
+	 *	@param[in]	const std::string& buttonName
+	 *	@return		UIButtonBase*
+	 */
+	UIButtonBase* FindButtonByName(const std::string& buttonName);
 
 public:
 	/*

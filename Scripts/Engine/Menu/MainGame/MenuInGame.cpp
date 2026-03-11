@@ -133,7 +133,6 @@ void MenuInGame::Render() {
  */
 void MenuInGame::Close(Engine& engine) {
     MenuBase::Close(engine);
-    AudioUtility::StopBGM();
 }
 /*
  *	@brief	ƒƒjƒ…[‚ğ’†’f
