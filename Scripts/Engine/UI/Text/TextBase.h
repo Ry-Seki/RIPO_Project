@@ -74,6 +74,14 @@ public:
 	inline void SetColor(int setColor) {
 		color = setColor;
 	}
+	/*
+	 *	@brief		ç¿ïWÇÃê›íË
+	 *	@param[in]	int x, int y
+	 */
+	inline void SetPosition(int setX, int setY) {
+		textInfo.x = setX;
+		textInfo.y = setY;
+	}
 };
 
 #endif // !_TEXT_BASE_H_

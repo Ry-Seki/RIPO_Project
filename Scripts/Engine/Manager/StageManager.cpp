@@ -200,7 +200,7 @@ std::vector<Vector3> StageManager::GetGoalPos() const {
 /*
  *	敵の初期生成位置の取得
  */
-std::unordered_map<int, Vector3> StageManager::GetEnemySpwanPos() const {
+std::unordered_map<int, Vector3> StageManager::GetEnemySpawnPos() const {
 	// 敵IDと生成位置を保持する連想配列
 	std::unordered_map<int, Vector3> enemySpawnPosition;
 
@@ -284,7 +284,7 @@ std::unordered_map<int, Vector3> StageManager::GetEnemySpwanPos() const {
 /*
  *	ボスの生成位置の取得
  */
-std::unordered_map<int, Vector3> StageManager::GetBossSpwanPos() const {
+std::unordered_map<int, Vector3> StageManager::GetBossSpawnPos() const {
 	// ボスIDと生成位置を保持する連想配列
 	std::unordered_map<int, Vector3> bossSpawnPosition;
 

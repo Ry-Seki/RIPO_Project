@@ -27,6 +27,13 @@
 #include "../../../Manager/FontManager.h"
 
 /*
+ *  @brief  ファイルパスの名前空間
+ */
+namespace {
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/SelectItem/SelectItemMenuResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Shop/SelectItem/SelectItemMenuNavigation.json";
+}
+/*
  *	@brief	初期化処理
  */
 void MenuSelectShopItem::Initialize(Engine& engine) {
@@ -147,7 +154,10 @@ void MenuSelectShopItem::Render() {
         sprite->Render();
     }
     for (int i = buttonList.size() - 1; i >= 0; i--) {
-        buttonList[i]->Render();
+        auto& button = buttonList[i];
+        if (!button || !button->IsVisible()) continue;
+
+        button->Render();
     }
     ItemData* item;
     if (bool isGetItem = catalogData.TryGetItem(currentSlot, item)) {

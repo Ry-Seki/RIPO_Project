@@ -26,6 +26,7 @@ EnemyChase::EnemyChase()
 	, viewDirection(3000)
 	, coolTimeSE(0.4f)
 	, SEVolume(0.0f)
+	, baseSEVolume(0.0f)
 	, playerDistance(0.0f)
 	, closePlayer(false)
 	, chasePlayer(false)
@@ -72,7 +73,9 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime) {
 	// プレイヤーとの距離
 	playerDistance = Distance(player->position, enemy->position);
 	// 1～0に変換する
+	baseSEVolume = AudioUtility::GetSEVolume();
 	SEVolume = 1.0f - (playerDistance / SE_DISTANCE);
+	SEVolume = SEVolume * baseSEVolume;
 	if (SEVolume < 0) {
 		SEVolume = 0;
 	}
@@ -83,7 +86,7 @@ void EnemyChase::Update(GameObject* enemy, float deltaTime) {
 	if (enemyComponent->GetHitFlag()) {
 		SetTargetPlayer(enemy, deltaTime);
 	}
-	bool vision = Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, viewAngle, viewDirection);
+	bool vision = Vision(enemy, -ForwardDir(enemy->rotation), player->position, viewAngle, viewDirection);
 	// 視界判定
 	if (vision) {
 		enemyComponent->SetHitFlag(false);
@@ -124,7 +127,7 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 			// 歩行音を再生
 			AudioUtility::SetSEVolume(SEVolume);
 			AudioUtility::PlaySE("enemyWalkSE");
-			AudioUtility::SetSEVolume(1);
+			AudioUtility::SetSEVolume(baseSEVolume);
 			// プレイヤー追跡中はSEの間隔を短くする
 			if (player && wayPoint == player->position) {
 				coolTimeSE = 0.3;

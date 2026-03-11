@@ -19,6 +19,7 @@
 #include "../../../../Menu/MainGame/Dungeon/MenuSelectDungeon.h"
 #include "../../../../Menu/MenuManager.h"
 #include "../../../../System/Money/MoneyManager.h"
+#include "../../../../System/World/WorldProgressManager.h"
 
 /*
  *	@brief	初期化処理
@@ -27,7 +28,7 @@ void SelectDetail_Dungeon::Initialize() {
 	auto& menu = MenuManager::GetInstance();
 	auto dungeonMenu = menu.GetMenu<MenuSelectDungeon>();
 	dungeonMenu->SetCallback([this](int dungeonID) {
-		StartDungeonDataLoad(dungeonID);
+		DecideDungeonDetail(dungeonID);
 	});
 
 	LoadManager& load = LoadManager::GetInstance();
@@ -54,49 +55,7 @@ void SelectDetail_Dungeon::Setup() {
  *	@brief	更新処理
  */
 void SelectDetail_Dungeon::Update(float deltaTime) {
-	if (dungeonDataList.empty()) return;
 
-	if (!inputHandle && CheckHitKey(KEY_INPUT_1)) {
-		// SEの再生
-		AudioUtility::PlaySE("DebugSE");
-		dungeonID = 1;
-		inputHandle = true;
-		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fade, [this]() {
-			StartDungeonDataLoad(dungeonID);
-		});
-	}
-	if (!inputHandle && CheckHitKey(KEY_INPUT_2)) {
-		// SEの再生
-		AudioUtility::PlaySE("DebugSE");
-		dungeonID = 2;
-		inputHandle = true;
-		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fade, [this]() {
-			StartDungeonDataLoad(dungeonID);
-		});
-	}
-	if (!inputHandle && CheckHitKey(KEY_INPUT_3)) {
-		// SEの再生
-		AudioUtility::PlaySE("DebugSE");
-		dungeonID = 3;
-		inputHandle = true;
-		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fade, [this]() {
-			StartDungeonDataLoad(dungeonID);
-											 });
-	}
-	if (!inputHandle && CheckHitKey(KEY_INPUT_4)) {
-		// SEの再生
-		AudioUtility::PlaySE("DebugSE");
-		dungeonID = 4;
-		inputHandle = true;
-		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Tile, 1.2f, FadeDirection::Out, FadeMode::Stop);
-		FadeManager::GetInstance().StartFade(fade, [this]() {
-			StartDungeonDataLoad(dungeonID);
-											 });
-	}
-	if (CheckHitKey(KEY_INPUT_1) == 0) inputHandle = false;
 }
 /*
  *	@brief	描画処理
@@ -107,7 +66,6 @@ void SelectDetail_Dungeon::Render() {
  *	@brief	片付け処理
  */
 void SelectDetail_Dungeon::Teardown() {
-	inputHandle = false;
 }
 /*
  *	@brief	お宝イベント査定
@@ -126,6 +84,19 @@ void SelectDetail_Dungeon::AssessmentTreasureEvent() {
 			if (data.isEventDay) data.isEventDay = false;
 		}
 		dungeonDataList[i] = data;
+	}
+}
+/*
+ *	@brief		ダンジョン決定処理
+ *	@param[in]	int dungeonID
+ */
+void SelectDetail_Dungeon::DecideDungeonDetail(int dungeonID) {
+	// ダンジョンIDが無効な数字ならアクション選択に戻る
+	if (dungeonID == -1 || dungeonID >= dungeonDataList.size()) {
+		owner->GetOwner()->ChageState(GameEnum::GameState::SelectAction);
+	}else {
+		// ダンジョンの読み込み開始
+		StartDungeonDataLoad(dungeonID);
 	}
 }
 /*
@@ -171,14 +142,18 @@ void SelectDetail_Dungeon::SetDungeonData(const std::vector<std::shared_ptr<Load
  */
 std::vector<DungeonInfoData> SelectDetail_Dungeon::ToDungeonInfoData() {
 	std::vector<DungeonInfoData> dataList;
+	auto& world = WorldProgressManager::GetInstance();
 	for (int i = 1, max = dungeonDataList.size(); i < max; i++) {
 		DungeonInfoData data{};
+		data.isEventClear = world.GetEventTreasureCount(i) > 0;
 		data.isEventDay = dungeonDataList[i].isEventDay;
 		data.eventStartDay = dungeonDataList[i].eventStartDay;
 		data.eventEndDay = dungeonDataList[i].eventEndDay;
 		data.levelOfDanger = dungeonDataList[i].levelOfDanger;
-		data.necessaryStrength = dungeonDataList[i].necessaryStrength;
-		data.treasureCount = dungeonDataList[i].treasureCount;
+		data.minStrength = dungeonDataList[i].minStrength;
+		data.maxStrength = dungeonDataList[i].maxStrength;
+		data.treasureCount = world.GetDungeonTreasureCount(i);
+		data.maxTreasureCount = dungeonDataList[i].treasureCount;
 		dataList.push_back(data);
 	}
 	return dataList;

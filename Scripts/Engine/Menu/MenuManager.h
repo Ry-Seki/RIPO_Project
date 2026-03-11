@@ -122,13 +122,6 @@ public:
 			menu->Open();
 		}
 	}
-
-public:
-	/*
-	 *	@brief		フォントの取得
-	 *	@param[in]	使用するフォントの名前
-	 */
-	
 };
 
 #endif // !_MENU_MANAGER_H_

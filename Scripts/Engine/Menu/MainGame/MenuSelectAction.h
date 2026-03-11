@@ -21,6 +21,15 @@
  */
 class MenuSelectAction : public MenuBase {
 private:
+	/*
+	 *	@brief	アクションボタン構造体
+	 */
+	struct ActionButtonEntry {
+		GameEnum::ActionType type = GameEnum::ActionType::Invalid;	// アクションの種類
+		UIButtonBase* button = nullptr;								// ボタン
+	};
+
+private:
 	int animFrame = 0;
 	float animTimer = 0.0f;
 	int elapsedDay = -1;
@@ -33,11 +42,8 @@ private:
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	Sprite* elapsedDaySprite = nullptr;
 
+	std::vector<ActionButtonEntry> actionButtonList;
 	std::function<void(GameEnum::ActionType)> Callback = nullptr;
-
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/SelectAction/SelectActionMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/SelectAction/SelectActionMenuNavigation.json";
-	static constexpr const char* _SELECTMENU_BGMPATH = "Res/Audio/BGM/Title/MenuBGM.mp3";
 
 public:
 	/*
@@ -86,9 +92,14 @@ private:
 	void CreateElapsedDayText();
 	/*
 	 *	@brief		ボタンの押された時の処理
-	 *	@param[in]	int buttonIndex
+	 *	@param[in]	GameEnum::ActionType type
 	 */
-	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	void SelectButtonExecute(GameEnum::ActionType type);
+	/*
+	 *	@brief		フェード後->コールバックの実行処理
+	 *	@param[in]	GameEnum::ActionType type
+	 */
+	void StartFadeEndCallback(GameEnum::ActionType type);
 
 public:
 	/*

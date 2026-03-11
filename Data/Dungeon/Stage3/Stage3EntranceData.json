@@ -7,16 +7,18 @@
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": [ -1000, -500, -100 ],
-          "AABBmax": [ 100, 800, 100 ]
+          "center": [ 0, 100, 0 ],
+          "angle": 30.0,
+          "size": [ 600, 600, 200 ]
         },
         {
           "MoveID": 2,
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": [ -500, -500, -10 ],
-          "AABBmax": [ 500, 800, 10 ]
+          "center": [ 0, 100, -100 ],
+          "angle": 10.0,
+          "size": [ 600, 600, 400 ]
         }
       ],
       "Goal": [
@@ -24,8 +26,9 @@
           "name": "Goal",
           "position": 0,
           "rotation": 0,
-          "AABBmin": [ -313, -500, -389 ],
-          "AABBmax": [ 313, 800, 389 ]
+          "center": [ 0, 100, 0 ],
+          "angle": 50.0,
+          "size": [ 600, 600, 50 ]
         }
       ]
     },
@@ -36,8 +39,9 @@
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": [ -500, -500, -10 ],
-          "AABBmax": [ 500, 800, 10 ]
+          "center": [ 0, 100, 0 ],
+          "angle": 30.0,
+          "size": [ 600, 600, 600 ]
         }
       ]
     },
@@ -48,8 +52,9 @@
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": [ -500, -500, -10 ],
-          "AABBmax": [ 500, 800, 10 ]
+          "center": [ 0, 100, 0 ],
+          "angle": 0.0,
+          "size": [ 600, 600, 200 ]
         }
       ]
     }

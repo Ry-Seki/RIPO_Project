@@ -92,11 +92,17 @@ public:
 	 */
 	WorldProgressData& GetSaveData() const;
 	/*
-	 *	@brief		ダンジョン別通常お宝の状態取得
+	 *	@brief		ダンジョン別通常お宝の数取得
 	 *	@param[in]	int dungeonID
 	 *	@return		int
 	 */
 	int GetDungeonTreasureCount(int dungeonID);
+	/*
+	 *	@brief		ダンジョン別イベントお宝取得判定
+	 *	@param[in]	int dungeonID
+	 *	@return		bool
+	 */
+	int GetEventTreasureCount(int dungeonID);
 };
 
 #endif // !_WORLD_PROGRESS_MANAGER_H_

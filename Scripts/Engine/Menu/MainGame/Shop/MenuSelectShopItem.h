@@ -42,8 +42,6 @@ private:
 	std::function<void(GameEnum::ShopActionType)> Callback = nullptr;
 	std::function<bool()> IsBuyItem = nullptr;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/SelectItem/SelectItemMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Shop/SelectItem/SelectItemMenuNavigation.json";
 public:
 	/*
 	 *	@brief	デストラクタ

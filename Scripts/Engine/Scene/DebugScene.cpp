@@ -49,9 +49,9 @@ void DebugScene::Initialize(Engine& engine) {
 	for (int i = 0; i < 2; i++) {
 		treasure[i] = StageObjectManager::GetInstance().GetStageObject(i);
 	}
-	StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, { 500,800,10 });
+	StageObjectManager::GetInstance().GenerateStair("stair", { 0,0,0 }, { 0,0,0 }, { -500,-500,-10 }, 0.0f,{ 500,800,10 });
 	auto stair = StageObjectManager::GetInstance().GetStageObject(2);
-	StageObjectManager::GetInstance().GenerateExit("exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, { 1000,700,10 });
+	StageObjectManager::GetInstance().GenerateExit("exit", { 0,0,0 }, { 0,0,0 }, { -1000,-700,-10 }, 0.0f,{ 1000,700,10 });
 	auto exit = StageObjectManager::GetInstance().GetStageObject(3);
 
 	load.SetOnComplete(
@@ -66,7 +66,7 @@ void DebugScene::Initialize(Engine& engine) {
 			int modelHandle = playerModel->GetHandle();
 			CharacterManager::GetInstance().SetModelHandle(player.get(), modelHandle);
 			player->position = StageManager::GetInstance().GetStartPos();
-			std::unordered_map<int,Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpwanPos();
+			std::unordered_map<int,Vector3> enemySpawnPos = StageManager::GetInstance().GetEnemySpawnPos();
 			int enemyModelHandle = enemyModel->GetHandle();
 			size_t enemySpawnCount = enemySpawnPos.size();
 			for (int i = 0; i < enemy.size(); i++) {

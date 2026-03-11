@@ -142,3 +142,14 @@ int WorldProgressManager::GetDungeonTreasureCount(int dungeonID){
 
     return dungeon.treasureFlagMap.size();
 }
+/*
+ *	@brief		ダンジョン別イベントお宝の数取得
+ *	@param[in]	int dungeonID
+ *	@return		int
+ */
+int WorldProgressManager::GetEventTreasureCount(int dungeonID) {
+    auto& dungeon = GetDungeonProgressData(dungeonID);
+    if (dungeon.eventTreasureFlagMap.empty()) return 0;
+
+    return dungeon.eventTreasureFlagMap.size();
+}

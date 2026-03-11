@@ -7,8 +7,9 @@
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": [ -500, -500, -1000 ],
-          "AABBmax": [ 500, 800, 1000 ]
+          "center": [ 0, 200, 0 ],
+          "angle": 85.0,
+          "size": [ 800, 800, 200 ]
         }
       ],
       "Goal": [
@@ -16,8 +17,9 @@
           "name": "Goal",
           "position": 0,
           "rotation": 0,
-          "AABBmin": [ -500, -500, -500 ],
-          "AABBmax": [ 500, 800, 500 ]
+          "center": [ 0, 100, 0 ],
+          "angle": 0.0,
+          "size": [ 600, 600, 200 ]
         }
       ]
     },
@@ -28,16 +30,18 @@
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": [ -100, -100, -100 ],
-          "AABBmax": [ 100, 100, 100 ]
+          "center": [ 0, 100, 0 ],
+          "angle": 120.0,
+          "size": [ 600, 600, 200 ]
         },
         {
           "MoveID": 2,
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": [ -700, -500, -1000 ],
-          "AABBmax": [ 700, 800, 1000 ]
+          "center": [ 400, 200, -400 ],
+          "angle": 60.0,
+          "size": [ 800, 900, 800 ]
         }
       ]
     },
@@ -48,16 +52,18 @@
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": [ -700, -500, -1000 ],
-          "AABBmax": [ 700, 800, 1000 ]
+          "center": [ 0, 100, 0 ],
+          "angle": 30.0,
+          "size": [ 600, 600, 200 ]
         },
         {
           "MoveID": 3,
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": [ -700, -500, -1000 ],
-          "AABBmax": [ 700, 800, 1000 ]
+          "center": [ 0, 100, 0 ],
+          "angle": 30.0,
+          "size": [ 600, 600, 200 ]
         }
       ]
     },
@@ -68,17 +74,18 @@
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": 0,
-          "AABBmax": 0
+          "center": [ 0, 100, 0 ],
+          "angle": 30.0,
+          "size": [ 600, 600, 200 ]
         },
         {
           "MoveID": 4,
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": 0,
-          "AABBmax": 0
-
+          "center": [ 0, 100, 0 ],
+          "angle": 30.0,
+          "size": [ 600, 600, 200 ]
         }
       ]
     },
@@ -89,8 +96,9 @@
           "name": "Stair",
           "position": 0,
           "rotation": 0,
-          "AABBmin": 0,
-          "AABBmax": 0
+          "center": [ 0, 100, 0 ],
+          "angle": 30.0,
+          "size": [ 600, 600, 200 ]
         }
       ]
     }

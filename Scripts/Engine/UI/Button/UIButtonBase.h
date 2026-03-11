@@ -199,6 +199,14 @@ public:
 			selectState = GameEnum::ButtonSelectState::Invalid;
 		}
 	}
+	/*
+	 *	@brief		À•W‚Ìİ’è
+	 *	@param[in]	int setY, int setY
+	 */
+	inline void SetPosition(int setX, int setY) {
+		x = setX;
+		y = setY;
+	}
 };
 
 #endif // !_UI_BUTTON_BASE_H_
