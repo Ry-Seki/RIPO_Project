@@ -1,0 +1,24 @@
+{
+  "TrainingButtons": [
+    {
+      "ButtonName": "HP",
+      "StatusType": "HP"
+    },
+    {
+      "ButtonName": "Stamina",
+      "StatusType": "Stamina"
+    },
+    {
+      "ButtonName": "Strength",
+      "StatusType": "Strength"
+    },
+    {
+      "ButtonName": "ResistTime",
+      "StatusType": "ResistTime"
+    },
+    {
+      "ButtonName": "Back",
+      "StatusType": "Invalid"
+    }
+  ]
+}

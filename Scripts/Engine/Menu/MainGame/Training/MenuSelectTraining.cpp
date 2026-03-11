@@ -29,49 +29,96 @@
 namespace {
     constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Training/SelectTraining/SelectTrainingMenuResources.json";
     constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Training/SelectTraining/SelectTrainingMenuNavigation.json";
+    constexpr const char* _TRAING_BUTTON_DATA_PATH = "Data/UI/MainGame/Training/SelectTraining/TrainingButtonData.json";
+}
+/*
+ *	@brief	トレーニングボタン名前空間
+ */
+namespace {
+    /*
+     *  ステータスの種類マップ
+     */
+    const std::unordered_map<std::string, GameEnum::PlayerStatusType> StatusTypeMap = {
+        {"HP", GameEnum::PlayerStatusType::HP},
+        {"Stamina", GameEnum::PlayerStatusType::Stamina},
+        {"Strength", GameEnum::PlayerStatusType::Strength},
+        {"ResistTime", GameEnum::PlayerStatusType::ResistTime},
+        {"Invalid", GameEnum::PlayerStatusType::Invalid}
+    };
+    /*
+     *  @brief  トレーニングボタン構造体
+     */
+    struct TrainingButtonData {
+        std::string name = "";
+        GameEnum::PlayerStatusType type
+            = GameEnum::PlayerStatusType::Invalid;
+    };
+    /*
+     *	@brief	プレイヤーのステータスの種類識別
+     */
+    GameEnum::PlayerStatusType StringToPlayerStatusType(const std::string& typeKey) {
+        auto it = StatusTypeMap.find(typeKey);
+
+        if (it != StatusTypeMap.end())
+            return it->second;
+
+        return GameEnum::PlayerStatusType::Invalid;
+    }
+    /*
+     *  @brief  
+     */
+    std::vector<TrainingButtonData> ParseTrainingButtonData(const JSON& json) {
+        std::vector<TrainingButtonData> result;
+
+        auto array = json["TrainingButtons"];
+
+        for (auto& node : array) {
+            TrainingButtonData entry;
+
+            entry.name = node["ButtonName"].get<std::string>();
+
+            std::string typeString = node["StatusType"].get<std::string>();
+            entry.type = StringToPlayerStatusType(typeString);
+
+            result.push_back(entry);
+        }
+
+        return result;
+    }
 }
 /*
  *	@brief	初期化処理
  */
 void MenuSelectTraining::Initialize(Engine& engine) {
     auto& load = LoadManager::GetInstance();
+
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
+    auto buttonData = load.LoadResource<LoadJSON>(_TRAING_BUTTON_DATA_PATH);
 
-    load.SetOnComplete([this, &engine, menuJSON, navigation]() {
+    load.SetOnComplete([this, &engine, menuJSON, navigation, buttonData]() {
+        // メニューのUI生成
         MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
-        for (auto& button : result.buttonList) {
-            if (!button) continue;
-
-            eventSystem.RegisterButton(button.get());
-        }
-        eventSystem.Initialize(0);
+        // メニューUIの所有権移動
         spriteList = std::move(result.spriteList);
         buttonList = std::move(result.buttonList);
-        const int back = static_cast<int>(GameEnum::PlayerStatusType::Invalid);
-        const int statusMin = static_cast<int>(GameEnum::PlayerStatusType::HP);
-        const int statusMax = static_cast<int>(GameEnum::PlayerStatusType::Max);
 
-        for (int i = 0, max = buttonList.size(); i < max; i++) {
-            UIButtonBase* button = buttonList[i].get();
+        for (auto& button : buttonList) {
             if (!button) continue;
-            // トレーニングIDの取得
-            int typeID = (i < statusMax - 1) ? statusMin + i : back;
-            // それをステータスタイプに変換
-            GameEnum::PlayerStatusType type = static_cast<GameEnum::PlayerStatusType>(typeID);
-            // トレーニングボタンリストに登録
-            trainingButtonList.push_back({type, button});
-            // ボタンの実行処理を登録
-            button->RegisterOnClick([this, type]() {
-                SelectButtonExecute(type);
-            });
-            // ボタンに navigation 更新処理を登録
-            button->RegisterUpdateSelectButton([this, button]() {
-                eventSystem.UpdateSelectButton(button);
-            });
+
+            UIButtonBase* buttonPtr = button.get();
+            // ボタンの登録
+            eventSystem.RegisterButton(buttonPtr);
+            // マップに登録
+            buttonMap[buttonPtr->GetName()] = buttonPtr;
         }
+        // イベントシステムの初期化
+        eventSystem.Initialize(0);
+        // ボタンの準備前処理
+        SetupTrainingButtons(buttonData->GetData());
+        // イベントシステムのnavigationの設定
         eventSystem.LoadNavigation(navigation->GetData());
-    });
+     });
 }
 /*
  *	@brief	メニューを開く
@@ -199,10 +246,42 @@ void MenuSelectTraining::OpenConfirmMenu(GameEnum::PlayerStatusType type) {
     auto confirm = menu.GetMenu<MenuConfirm>();
 
     confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
-        menu.CloseTopMenu();
+        menu.CloseTopMenu();    // 確認メニュー
         if (result != GameEnum::ConfirmResult::Yes) return;
         // フェード開始
         StartFadeEndCallback(type);
     });
     menu.OpenMenu<MenuConfirm>();
+}
+/*
+ *	@brief		トレーニングボタンの準備前処理
+ *	@param[in]	const JSON& json
+ */
+void MenuSelectTraining::SetupTrainingButtons(const JSON& json) {
+    auto trainingData = ParseTrainingButtonData(json);
+
+    for (const auto& entry : trainingData) {
+        UIButtonBase* button = FindButtonByName(entry.name);
+        if (!button) continue;
+        const auto type = entry.type;
+        // ボタン実行処理の登録
+        button->RegisterOnClick([this, type]() {
+            SelectButtonExecute(type);
+        });
+        // ボタンに navigation 更新処理を登録
+        button->RegisterUpdateSelectButton([this, button]() {
+            eventSystem.UpdateSelectButton(button);
+        });
+    }
+}
+/*
+ *	@brief		名前でのボタン検索
+ *	@param[in]	const std::string& buttonName
+ *	@return		UIButtonBase*
+ */
+UIButtonBase* MenuSelectTraining::FindButtonByName(const std::string& buttonName) {
+    auto it = buttonMap.find(buttonName);
+    if (it == buttonMap.end()) return nullptr;
+
+    return it->second;
 }

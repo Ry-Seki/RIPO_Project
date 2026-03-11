@@ -61,7 +61,7 @@ void MenuSelectAction::Initialize(Engine& engine) {
             UIButtonBase* button = buttonList[i].get();
             if (!button) continue;
             // アクションIDの取得
-            int typeID = (i < actionMax - 1) ? actionMin + i : actionMax;
+            int typeID = (i < actionMax) ? actionMin + i : actionMax;
             // それをアクションタイプに変換
             GameEnum::ActionType type = static_cast<GameEnum::ActionType>(typeID);
             // アクションボタンリストに登録

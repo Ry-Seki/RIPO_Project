@@ -311,7 +311,7 @@ void MenuSelectDungeon::OpenConfirmMenu(int dungeonID) {
 	auto confirm = menu.GetMenu<MenuConfirm>();
 
 	confirm->SetCallback([this, &menu, dungeonID](GameEnum::ConfirmResult result) {
-		menu.CloseTopMenu();
+		menu.CloseTopMenu();	// 確認メニュー
 		if (result != GameEnum::ConfirmResult::Yes) return;
 		// フェード開始
 		StartFadeEndCallback(dungeonID);

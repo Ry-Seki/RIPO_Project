@@ -20,16 +20,6 @@
  */
 class MenuSelectTraining : public MenuBase {
 private:
-	/*
-	 *	@brief	トレーニングボタン構造体
-	 */
-	struct TrainingButtonEntry {
-		GameEnum::PlayerStatusType type 
-			= GameEnum::PlayerStatusType::Invalid;	// ステータスの種類
-		UIButtonBase* button = nullptr;				// ボタン
-	};
-
-private:
 	int animFrame = 0;
 	float animTimer = 0.0f;
 	int elapsedDay = -1;
@@ -38,8 +28,7 @@ private:
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
-
-	std::vector<TrainingButtonEntry> trainingButtonList;
+	std::unordered_map<std::string, UIButtonBase*> buttonMap;
 
 	std::function<void(GameEnum::PlayerStatusType)> Callback = nullptr;
 
@@ -91,6 +80,17 @@ private:
 	 *	@param[in]	GameEnum::PlayerStatusType type
 	 */
 	void OpenConfirmMenu(GameEnum::PlayerStatusType type);
+	/*
+	 *	@brief		トレーニングボタンの準備前処理
+	 *	@param[in]	const JSON& json
+	 */
+	void SetupTrainingButtons(const JSON& json);
+	/*
+	 *	@brief		名前でのボタン検索
+	 *	@param[in]	const std::string& buttonName
+	 *	@return		UIButtonBase*
+	 */
+	UIButtonBase* FindButtonByName(const std::string& buttonName);
 
 public:
 	/*

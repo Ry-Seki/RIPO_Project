@@ -16,6 +16,8 @@
 #include "../../../Data/UI/MenuInfo.h"
 #include "../../Scene/TitleScene.h"
 #include "../../Manager/FontManager.h"
+#include "../../Engine.h"
+
 #include <DxLib.h>
 
 /*

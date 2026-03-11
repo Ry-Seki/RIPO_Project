@@ -27,6 +27,13 @@
 #include "../../../Manager/FontManager.h"
 
 /*
+ *  @brief  ファイルパスの名前空間
+ */
+namespace {
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/SelectItem/SelectItemMenuResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Shop/SelectItem/SelectItemMenuNavigation.json";
+}
+/*
  *	@brief	初期化処理
  */
 void MenuSelectShopItem::Initialize(Engine& engine) {
