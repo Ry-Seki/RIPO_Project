@@ -93,7 +93,7 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 			ForwardAttack(boss, deltaTime);
 		}
 		else if (bossComponent->GetLongRangeAttackDistanceFlag()) {
-			HeadlongAttack(boss, deltaTime);
+			HeadlongAttack(boss, deltaTime, 1.5f);
 		}
 
 		break;
@@ -103,7 +103,7 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 			ForwardAttack(boss, deltaTime);
 		}
 		else if (bossComponent->GetLongRangeAttackDistanceFlag()) {
-			HeadlongAttack(boss, deltaTime);
+			HeadlongAttack(boss, deltaTime, 0.5f);
 		}
 
 		break;
@@ -212,12 +212,13 @@ void BossAttack::ForwardAttack(GameObject* boss, float deltaTime)
  *	param[in]	GameObject* boss
  *	param[in]	float		deltaTime
  */
-void BossAttack::HeadlongAttack(GameObject* boss, float deltaTime)
+void BossAttack::HeadlongAttack(GameObject* boss, float deltaTime, float attackStateTime)
 {
 	boss->rotation.y = atan2(playerDirection.x, playerDirection.z) + Pi;
 	elapsedTime += deltaTime;
 
-	if (elapsedTime >= 1.5f) {
+	animator->Play(11, 10 * deltaTime);
+	if (elapsedTime >= attackStateTime) {
 		animator->Play(11, 5000 * deltaTime);
 
 		// UŒ‚’†”»’èŠJŽn
@@ -228,7 +229,7 @@ void BossAttack::HeadlongAttack(GameObject* boss, float deltaTime)
 		boss->position.x += posX;
 		boss->position.z += posZ;
 
-		if (bossComponent->GetAttackIsTriger() || elapsedTime > 3.0f) {
+		if (elapsedTime > attackStateTime + 1.5f) {
 			// UŒ‚’†”»’èI—¹
 			bossComponent->SetBossAttackTimeFlag(false);
 			bossComponent->SetLongRangeAttackDistanceFlag(false);
