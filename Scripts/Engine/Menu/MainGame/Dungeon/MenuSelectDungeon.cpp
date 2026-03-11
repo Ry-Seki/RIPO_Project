@@ -28,12 +28,23 @@
 
 #include <DxLib.h>
 
-/*
- *	@brief	ファイルパスの名前空間
- */
 namespace {
+	/*
+	 *	@brief	ファイルパスの名前空間
+	 */
 	constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Dungeon/SelectDungeon/SelectDungeonMenuResources.json";
 	constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame//Dungeon/SelectDungeon/SelectDungeonMenuNavigation.json";
+
+	/*
+	 *	@brief	ダンジョンの種類マップ
+	 */
+	const std::unordered_map<std::string, GameEnum::MainDungeonType> StatusTypeMap = {
+		{"", GameEnum::MainDungeonType::Dungeon1},
+		{"", GameEnum::MainDungeonType::Dungeon1},
+		{"", GameEnum::MainDungeonType::Dungeon1},
+		{"", GameEnum::MainDungeonType::Dungeon1},
+		{"", GameEnum::MainDungeonType::Invalid}
+	};
 }
  /*
   *	@brief	初期化処理

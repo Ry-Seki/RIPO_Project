@@ -211,6 +211,7 @@ void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
 
     // もし一番下のボタンの場合、それは戻るボタン
     if (currentSlot > GameConst::SELECT_SAVE_SLOT_MAX) {
+        isInteractive = false;
         AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
