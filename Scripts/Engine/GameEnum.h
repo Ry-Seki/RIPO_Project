@@ -32,6 +32,16 @@ namespace GameEnum {
 		Max
 	};
 	/*
+	 *	@brief	システムメニューの種類
+	 */
+	enum class SystemMenuType {
+		Invalid = -1,
+		Settings,
+		Credit,
+
+		Max
+	};
+	/*
 	 *	@brief	メインゲーム状態
 	 *  @author	Seki
 	 */

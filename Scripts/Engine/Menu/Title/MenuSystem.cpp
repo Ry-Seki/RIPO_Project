@@ -20,9 +20,68 @@
 #include "../../Menu/MenuManager.h"
 #include "../../GameConst.h"
 #include "../../System/Settings/SettingsManager.h"
+#include "../System/MenuCredit.h"
 
 #include <DxLib.h>
 
+namespace {
+    /*
+     *  @brief  ファイルパスの名前空間
+     */
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Title/SelectGameMode/System/SystemResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/SelectGameMode/System/SystemNavigation.json";
+    constexpr const char* _SYSTEM_BUTTON_DATA_PATH = "Data/UI/Title/SelectGameMode/System/SystemButton.json";
+
+    /*
+     *  @brief  システムの種類マップ
+     */
+    const std::unordered_map<std::string, GameEnum::SystemMenuType> systemTypeMap = {
+        { "Settings", GameEnum::SystemMenuType::Settings },
+        { "Credit", GameEnum::SystemMenuType::Credit },
+        { "Back", GameEnum::SystemMenuType::Invalid }
+    };
+    /*
+     *  @brief  システムボタン構造体
+     */
+    struct SystemButtonData {
+        std::string name = "";
+        GameEnum::SystemMenuType type
+            = GameEnum::SystemMenuType::Invalid;
+    };
+    /*
+     *	@brief	    システムの種類識別
+     *  @param[in]  const std::string& typeKey
+     *  @return     GameEnum::SystemMenuType
+     */
+    GameEnum::SystemMenuType StringToPlayerStatusType(const std::string& typeKey) {
+        auto itr = systemTypeMap.find(typeKey);
+
+        if (itr != systemTypeMap.end()) return itr->second;
+
+        return GameEnum::SystemMenuType::Invalid;
+    }
+    /*
+     *  @brief      JSON->トレーニングボタン情報へ変換
+     *  @param[in]  const JSON& json
+     */
+    std::vector<SystemButtonData> ParseTrainingButtonData(const JSON& json) {
+        std::vector<SystemButtonData> result;
+
+        auto array = json["SystemButtons"];
+
+        for (auto& node : array) {
+            SystemButtonData entry;
+
+            entry.name = node["ButtonName"].get<std::string>();
+
+            std::string typeString = node["SystemType"].get<std::string>();
+            entry.type = StringToPlayerStatusType(typeString);
+
+            result.push_back(entry);
+        }
+        return result;
+    }
+}
 /*
  *	@brief	初期化処理
  */
@@ -30,29 +89,28 @@ void MenuSystem::Initialize(Engine& engine) {
     auto& load = LoadManager::GetInstance();
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
+    auto buttonData = load.LoadResource<LoadJSON>(_SYSTEM_BUTTON_DATA_PATH);
 
-    load.SetOnComplete([this, &engine, menuJSON, navigation]() {
+    load.SetOnComplete([this, &engine, menuJSON, navigation, buttonData]() {
+        // メニューのUI生成
         MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
-        for (auto& button : result.buttonList) {
-            if (!button) continue;
-
-            eventSystem.RegisterButton(button.get());
-        }
-        eventSystem.Initialize(0);
+        // メニューUIの所有権移動
         spriteList = std::move(result.spriteList);
         buttonList = std::move(result.buttonList);
-        for (int i = 0, max = buttonList.size(); i < max; i++) {
-            UIButtonBase* button = buttonList[i].get();
-            if (!button) continue;
+        for (auto& entry : buttonList) {
+            if (!entry) continue;
 
-            button->RegisterUpdateSelectButton([this, button]() {
-                eventSystem.UpdateSelectButton(button);
-            });
-
-            button->RegisterOnClick([this, &engine, i]() {
-                SelectButtonExecute(engine, i);
-            });
+            UIButtonBase* button = entry.get();
+            // ボタンの登録
+            eventSystem.RegisterButton(button);
+            // マップに登録
+            buttonMap[button->GetName()] = button;
         }
+        // イベントシステムの初期化
+        eventSystem.Initialize(0);
+        // ボタンの準備前処理
+        SetupTrainingButtons(buttonData->GetData());
+        // ボタンの登録
         eventSystem.LoadNavigation(navigation->GetData());
     });
 }
@@ -69,7 +127,6 @@ void MenuSystem::Open() {
     }
     eventSystem.ApplySelection();
     InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
-  
 }
 /*
  *	@brief	更新処理
@@ -143,20 +200,62 @@ void MenuSystem::Resume() {
 }
 /*
  *	@brief		ボタンの押された時の処理
- *	@param[in]	int buttonIndex
+ *	@param[in]	GameEnum::SystemMenuType type
  */
-void MenuSystem::SelectButtonExecute(Engine& engine, int buttonIndex) {
+void MenuSystem::SelectButtonExecute(GameEnum::SystemMenuType type) {
     auto& menu = MenuManager::GetInstance();
-    if (buttonIndex == 0) {
-        AudioUtility::PlaySE("DebugSE");
-        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            menu.OpenMenu<MenuVolumeSettings>();
-        });
-    } else if (buttonIndex == 1) {
-        // TODO : ゲームが完全に出来次第クレジットをオープンするようにする
-    } else if (buttonIndex == 2) {
-        AudioUtility::PlaySE("DebugSE");
-        menu.CloseTopMenu();
+    FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+
+    switch (type) {
+        case GameEnum::SystemMenuType::Invalid:
+            AudioUtility::PlaySE("DebugSE");
+            menu.CloseTopMenu();
+            break;
+        case GameEnum::SystemMenuType::Settings:
+            AudioUtility::PlaySE("DebugSE");
+            isInteractive = false;
+            FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+                menu.OpenMenu<MenuVolumeSettings>();
+            });
+            break;
+        case GameEnum::SystemMenuType::Credit:
+            AudioUtility::PlaySE("DebugSE");
+            isInteractive = false;
+            menu.OpenMenu<MenuCredit>();
+            break;
+        default:
+            break;
     }
+}
+/*
+ *	@brief		システムボタンの準備前処理
+ *	@param[in]	const JSON& json
+ */
+void MenuSystem::SetupTrainingButtons(const JSON& json) {
+    auto systemData = ParseTrainingButtonData(json);
+
+    for (const auto& entry : systemData) {
+        UIButtonBase* button = FindButtonByName(entry.name);
+        if (!button) continue;
+        const auto type = entry.type;
+        // ボタン実行処理の登録
+        button->RegisterOnClick([this, type]() {
+            SelectButtonExecute(type);
+        });
+        // ボタンに navigation 更新処理を登録
+        button->RegisterUpdateSelectButton([this, button]() {
+            eventSystem.UpdateSelectButton(button);
+        });
+    }
+}
+/*
+ *	@brief		名前でのボタン検索
+ *	@param[in]	const std::string& buttonName
+ *	@return		UIButtonBase*
+ */
+UIButtonBase* MenuSystem::FindButtonByName(const std::string& buttonName) {
+    auto itr = buttonMap.find(buttonName);
+    if (itr == buttonMap.end()) return nullptr;
+
+    return itr->second;
 }

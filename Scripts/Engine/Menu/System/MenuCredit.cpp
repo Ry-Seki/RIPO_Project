@@ -4,6 +4,7 @@
  */
 
 #include "MenuCredit.h"
+#include "../MenuManager.h"
 
 /*
  *	@brief	初期化処理
@@ -14,6 +15,7 @@ void MenuCredit::Initialize(Engine& engine) {
  *	@brief	メニューを開く
  */
 void MenuCredit::Open() {
+	MenuManager::GetInstance().CloseTopMenu();
 }
 /*
  *	@brief	更新処理
