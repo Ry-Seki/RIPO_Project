@@ -164,7 +164,6 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 
 	case 104:
 
-		// ˆÈ‰º‚·‚Ä‚S
 		// ƒ‰ƒ“ƒ_ƒ€‚Å“Ëi
 		if (bossComponent->GetRandomCoolTime() >= 700) {
 			bossComponent->SetRandomCoolTime(0);

@@ -19,6 +19,7 @@ BossAttack::BossAttack()
 	, elapsedTime(0)
 	, FirstEffectFlag(false)
 	, FirstSEFlag(false)
+	, playerDirection(Vector3::zero)
 	, ANIMATION_SPEED(1250)
 	, MOVE_SPEED(6000.0f)
 {
@@ -33,8 +34,6 @@ void BossAttack::Start(GameObject* boss)
 	animator = boss->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
 	bossComponent = boss->GetComponent<BossComponent>();
-
-	playerDirection = bossComponent->GetBossToPlayerDirection();
 
 	switch (bossComponent->GetBossID())
 	{
@@ -167,11 +166,10 @@ void BossAttack::RangeAttack(GameObject* boss, float deltaTime)
  */
 void BossAttack::ForwardAttack(GameObject* boss, float deltaTime)
 {
-	Vector3 direction = bossComponent->GetBossToPlayerDirection();
 	// AABBコライダーを前方に置く
 	auto aabbCollider = boss->GetComponent<AABBCollider>();
 	float value = 200;
-	Vector3 aabbDirection = { value * direction.x, 0, value * direction.z };
+	Vector3 aabbDirection = { value * playerDirection.x, 0, value * playerDirection.z };
 	const Vector3 aabbMin = { -100, 0, -100 };
 	const Vector3 aabbMax = { 100, 300, 100 };
 
@@ -219,6 +217,9 @@ void BossAttack::HeadlongAttack(GameObject* boss, float deltaTime, float attackS
 
 	animator->Play(11, 10 * deltaTime);
 	if (elapsedTime >= attackStateTime) {
+		if (playerDirection == Vector3::zero) {
+			playerDirection = bossComponent->GetBossToPlayerDirection();
+		}
 		animator->Play(11, 5000 * deltaTime);
 
 		// 攻撃中判定開始
