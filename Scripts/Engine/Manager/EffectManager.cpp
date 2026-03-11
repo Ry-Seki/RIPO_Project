@@ -85,33 +85,26 @@ EffectComponent* EffectManager::Instantiate(std::string name, Vector3 _pos) {
  */
 void EffectManager::Update() {
 
-	// エフェクト再生
-	for (auto pEffe : pEffectList) {
-		if (pEffe == nullptr || !pEffe->IsVisile())continue;
-		// エフェクト再生
-		pEffe->EffectRenderer();
+	// 各エフェクトの更新
+	for (auto pEffect : pEffectList) {
+		if (pEffect == nullptr) continue;
+
+		pEffect->Update();
 	}
 
-	// エフェクト更新
+	// Effekseer本体の更新
 	UpdateEffekseer3D();
 
-	// エフェクト終了判定
-	for (auto pEffe : pEffectList) {
-		if (pEffe == nullptr || !pEffe->IsVisile())continue;
-		// エフェクト停止
-		pEffe->EffectAllStop();
-	}
-
-
-	// エフェクトのリストから再生されていないエフェクトを削除
+	// 再生終了したエフェクトを削除
 	std::erase_if(pEffectList, [](EffectComponent* e) {
+
 		if (!e->IsVisile()) {
 			delete e;
 			return true;
 		}
+
 		return false;
-		}
-	);
+		});
 
 
 }

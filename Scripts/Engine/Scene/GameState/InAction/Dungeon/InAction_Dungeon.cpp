@@ -55,6 +55,7 @@ void InAction_Dungeon::Setup() {
 	floorProcessor.CreateFloor(context, isStart, treasureIDList);
 	InputUtility::SetMouseVisible(false);
 	WeaponManager::GetInstance().Initialize();
+	StageManager::GetInstance().GetCurrentStage()->SetDungeonID(context.dungeonID);
 }
 /*
  *	@brief	XVˆ—

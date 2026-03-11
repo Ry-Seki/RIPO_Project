@@ -60,6 +60,7 @@ void DungeonTreasureUI::Update(Engine& engine, float deltaTime) {
  */
 void DungeonTreasureUI::Open() {
 	MenuBase::Open();
+	isInteractive = false;
 }
 
 /*

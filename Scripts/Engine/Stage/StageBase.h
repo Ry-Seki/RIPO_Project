@@ -17,9 +17,11 @@ class StageBase {
 protected:
 	// モデルハンドル
 	int modelHandle;
+	// ダンジョンID
+	int dungeonID;
 public:
 	// コンストラクタ
-	StageBase() : modelHandle(-1) {}
+	StageBase() : modelHandle(-1), dungeonID(-1) {}
 	virtual ~StageBase() = default;
 
 protected:
@@ -62,6 +64,19 @@ public:
 	 *  @return modelHandle
 	 */
 	virtual int GetStageModelHandle()const { return modelHandle; }
+
+public:
+	/*
+	 *	ダンジョンIDの取得
+	 *	@author Riku
+	 */
+	inline int GetDungeonID() const { return dungeonID; }
+
+	/*
+	 *	ダンジョンIDのセット
+	 *	@author Riku
+	 */
+	inline void SetDungeonID(const int setDungeonID) { dungeonID = setDungeonID; }
 
 };
 

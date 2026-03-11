@@ -5,7 +5,7 @@
 
 #include "BulletManager.h"
 #include "GameObjectManager.h"
-#include "../Component/AABBCollider.h"
+#include "../Component/CapsuleCollider.h"
 #include "../Component/ModelRenderer.h"
 #include "../Load/LoadManager.h"
 
@@ -15,33 +15,37 @@ BulletManager::BulletManager()
 	: engine(nullptr)
 
 	, BULLET_NAME("bullet")
-	, BULLET_AABB_MIN({ -10, 0, -10 })
-	, BULLET_AABB_MAX({ 10, 20, 10 })
+	, BULLET_CAPSULE_START(V_ZERO)
+	, BULLET_CAPSULE_END(V_ZERO)
+	, BULLET_CAPSULE_RADIUS(15)
 {}
 
 /*
- *	弾生成
- *	@param	name		弾の名前
- *	@param	position	生成位置
- *	@param	rotation	生成角度
- *	@param	AABBMin		AABBの各軸における最小値
- *	@param	AABBMax		AABBの各軸における最大値
- *  @return	BulletComponentPtr
- */
+	 *	弾生成
+	 *	@param	name			弾の名前
+	 *	@param	position		生成位置
+	 *	@param	rotation		生成角度
+	 *	@param	capsuleStart	カプセル線分の開始位置
+	 *	@param	capsuleEnd		カプセル線分の終り位置
+	 *  @param	capsuleRadius	カプセルの半径
+	 *  @return	BulletComponentPtr
+	 */
 BulletComponentPtr BulletManager::GenerateBullet(
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation,
-	const Vector3& AABBMin,
-	const Vector3& AABBMax) {
+	const Vector3& capsuleStart,
+	const Vector3& capsuleEnd,
+	const float capsuleRadius) {
 	// 未使用状態のオブジェクト取得
 	GameObjectPtr createBullet = GameObjectManager::GetInstance().GetUnuseObject();
 	if (createBullet == nullptr) return nullptr;
 	// 弾生成
 	BulletComponentPtr bullet = createBullet->AddComponent<BulletComponent>();
 	// コライダー生成
-	AABBColliderPtr collider = createBullet->AddComponent<AABBCollider>();
-	collider->aabb = { AABBMin, AABBMax };
+	CapsuleColliderPtr collider = createBullet->AddComponent<CapsuleCollider>();
+	Segment segment = { capsuleStart, capsuleEnd };
+	collider->capsule = { segment, capsuleRadius };
 	collider->isCollider = true;
 	// モデルコンポーネントの追加
 	auto component = createBullet->AddComponent<ModelRenderer>();
@@ -84,7 +88,7 @@ void BulletManager::BulletShot(
 	const float damage,
 	const float destroyTime) {
 	// 弾生成 
-	BulletComponentPtr bullet = GenerateBullet(BULLET_NAME, position, rotation, BULLET_AABB_MIN, BULLET_AABB_MAX);
+	BulletComponentPtr bullet = GenerateBullet(BULLET_NAME, position, rotation, BULLET_CAPSULE_START, BULLET_CAPSULE_END, BULLET_CAPSULE_RADIUS);
 	// セットアップ
 	bullet->Setup(direction, scale, shotOwner, damage, speed, destroyTime);
 }

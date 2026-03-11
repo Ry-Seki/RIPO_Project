@@ -351,5 +351,18 @@ namespace GameEnum {
 
 		Max
 	};
+
+	/*
+	 *	エフェクトの再生タイプ
+	 */
+	enum class EffectType {
+		Invalid = -1,
+		Play,
+		Stop,
+		Loop,
+
+		Max
+	};
+
 }
 #endif // !_GAME_ENUM_H_

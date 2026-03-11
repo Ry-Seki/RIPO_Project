@@ -23,8 +23,9 @@ private:
 	std::shared_ptr<LoadModel> bulletModel;
 
 	const std::string BULLET_NAME;  // 弾の名前
-	const Vector3 BULLET_AABB_MIN;	// 弾のAABBMin
-	const Vector3 BULLET_AABB_MAX;	// 弾のAABBMax
+	const Vector3 BULLET_CAPSULE_START;	// 弾のCapsuleのStart
+	const Vector3 BULLET_CAPSULE_END;	// 弾のCapsuleのEnd
+	const float BULLET_CAPSULE_RADIUS;	// 弾のCapsuleの半径
 
 
 private:
@@ -34,19 +35,21 @@ private:
 private:
 	/*
 	 *	弾生成
-	 *	@param	name		弾の名前
-	 *	@param	position	生成位置
-	 *	@param	rotation	生成角度
-	 *	@param	AABBMin		AABBの各軸における最小値
-	 *	@param	AABBMax		AABBの各軸における最大値
+	 *	@param	name			弾の名前
+	 *	@param	position		生成位置
+	 *	@param	rotation		生成角度
+	 *	@param	capsuleStart	カプセル線分の開始位置
+	 *	@param	capsuleEnd		カプセル線分の終り位置
+	 *  @param	capsuleRadius	カプセルの半径
 	 *  @return	BulletComponentPtr
 	 */
 	BulletComponentPtr GenerateBullet(
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
-		const Vector3& AABBMin,
-		const Vector3& AABBMax);
+		const Vector3& capsuleStart,
+		const Vector3& capsuleEnd,
+		const float capsuleRadius);
 
 public:
 	/*

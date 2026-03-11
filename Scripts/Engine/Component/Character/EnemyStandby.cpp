@@ -67,7 +67,7 @@ void EnemyStandby::Update(GameObject* enemy, float deltaTime)
 		}
 
 		// Ž‹ŠE”»’è
-		if (player && Vision(enemy->position, -ForwardDir(enemy->rotation), player->position, 30, 2000)) {
+		if (player && Vision(enemy, -ForwardDir(enemy->rotation), player->position, 30, 2000)) {
 			enemyComponent->SetState(new EnemyChase());
 		}
 	}

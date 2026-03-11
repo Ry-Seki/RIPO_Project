@@ -15,10 +15,16 @@
 	class BossShootingAttack : public BossState {
 	private:
 		std::shared_ptr<AnimatorComponent> animator;
+		std::shared_ptr<BossComponent> bossComponent;
 		GameObjectPtr player;
 		float coolTime;
+		float rapidCoolTime;
 		// 弾撃ちフラグ
 		bool shootFlag;
+		bool secondFlag;
+		bool thirdFlag;
+		// プレイヤーの方向
+		Vector3 direction;
 
 		const float MAX_COOL_TIME;
 
@@ -43,6 +49,38 @@
 		 */
 		virtual void Update(GameObject* boss, float deltaTime) override;
 
+	private:
+		/*
+		 *	射撃攻撃
+		 *	param[in]	GameObject*	boss
+		 *  param[in]	float		deltaTime
+		 *  param[in]	float		shotSpeed	弾の発射速度
+		 */
+		void ShootingAttack(GameObject* boss, float deltaTime, float shotSpeed);
+
+		/*
+		 *	3点バースト射撃攻撃
+		 *	param[in]	GameObject*	boss
+		 *  param[in]	float		deltaTime
+		 *  param[in]	float		shotSpeed	弾の発射速度
+		 */
+		void ThreeRoundBurst(GameObject* boss, float deltaTime, float shotSpeed);
+
+		/*
+		 *	連射攻撃
+		 *	param[in]	GameObject*	boss
+		 *  param[in]	float		deltaTime
+		 *  param[in]	float		shotSpeed	弾の発射速度
+		 */
+		void RapidFire(GameObject* boss, float deltaTime, float shotSpeed);
+
+		/*
+		 *	サブ弾幕用低速攻撃
+		 *	param[in]	GameObject*	boss
+		 *  param[in]	float		deltaTime
+		 *  param[in]	float		shotSpeed	弾の発射速度
+		 */
+		void SlowBall(GameObject* boss, float deltaTime, float shotSpeed);
 
 };
 

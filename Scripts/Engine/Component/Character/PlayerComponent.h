@@ -21,8 +21,9 @@ private:
 	float staminaHealCoolTime;						// スタミナが回復し始めるまでの時間
 	float staminaChangePoint;						// スタミナの回復＆消費を調節するためのfloat型変数
 	float resistTimePoint;							// 耐性値の減少を調節するためのfloat型変数
+	float resistDownSpeed;							// 耐性値の減少スピード
 	float moveDirectionY;							// y軸の移動方向
-	float workSECoolTime;							// 歩きSEのクールタイム
+	float walkSECoolTime;							// 歩きSEのクールタイム
 	Vector3 moveVec;								// プレイヤーの移動量
 	bool canAvoid;									// 回避可能か否か
 	bool isAvoid;									// 回避中か否か

@@ -31,6 +31,7 @@ BossComponent::BossComponent(BossState* initState)
 	, modelHandle(-1)
 	, HP(0)
 	, coolTime(3)
+	, randomCoolTime(0)
 	, attackIsTriger(false)
 	, damageIsTriger(false)
 	, moveFrag(false)
@@ -92,6 +93,11 @@ void BossComponent::Update(float deltaTime)
 	state->Update(boss, deltaTime);
 
 	coolTime -= deltaTime;
+	// ランダム挙動を細かくするための二重乱数
+	auto randMax = GetRand(5);
+	auto randTime = GetRand(randMax * 1000000);
+	randTime = randTime / 1000000;
+	randomCoolTime += randTime;
 
 	// ステージとの当たり判定
 	StageManager::GetInstance().StageCollider(boss, moveVec);

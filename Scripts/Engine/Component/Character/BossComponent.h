@@ -29,6 +29,8 @@ private:
 	int ID = -1;
 	// クールタイム
 	float coolTime;
+	// ランダム攻撃のクールタイム
+	float randomCoolTime;
 	// 攻撃衝突判定フラグ
 	bool attackIsTriger;
 	// ダメージ衝突判定フラグ
@@ -39,6 +41,10 @@ private:
 	bool hitFlag = false;
 	// 攻撃中判定フラグ
 	bool bossAttackTimeFlag = false;
+	// 近距離攻撃範囲判定
+	bool closeRangeAttackDistanceFlag = false;
+	// 遠距離攻撃範囲判定
+	bool longRangeAttackDistanceFlag = false;
 	// 定位置
 	Vector3 homePosition;
 	// 移動量
@@ -136,9 +142,19 @@ public:
 	inline int GetBossAttack() const { return status.attack; }
 
 	/*
+	 *	IDの取得
+	 */
+	inline int GetBossID() const { return status.ID; }
+
+	/*
 	 *	討伐金データの取得
 	 */
 	inline int GetBossDataBounty() const { return status.bounty; }
+
+	/*
+	 *	攻撃衝突判定の取得
+	 */
+	inline bool GetAttackIsTriger() const { return attackIsTriger; }
 
 	/*
 	 *	行動フラグの取得
@@ -172,15 +188,40 @@ public:
 	 */
 	inline void SetBossAttackTimeFlag(bool setValue) { bossAttackTimeFlag = setValue; }
 
-	///*
-	// *	IDの取得
-	// */
-	//inline int GetBossID() const { return ID; }
+	/*
+	 *	近距離攻撃範囲判定の取得
+	 */
+	inline bool GetCloseRangeAttackDistanceFlag() const { return closeRangeAttackDistanceFlag; }
 
-	///*
-	// *	IDの変更
-	// */
-	//inline void SetBossID(int setValue) { ID = setValue; }
+	/*
+	 *	近距離攻撃範囲判定の変更
+	 */
+	inline void SetCloseRangeAttackDistanceFlag(bool setValue) { closeRangeAttackDistanceFlag = setValue; }
+
+	/*
+	 *	遠距離攻撃範囲判定の取得
+	 */
+	inline bool GetLongRangeAttackDistanceFlag() const { return longRangeAttackDistanceFlag; }
+
+	/*
+	 *	遠距離攻撃範囲判定の変更
+	 */
+	inline void SetLongRangeAttackDistanceFlag(bool setValue) { longRangeAttackDistanceFlag = setValue; }
+
+	/*
+	 *	ボスから見たプレイヤーの方向
+	 */
+	inline Vector3 GetBossToPlayerDirection() { return Direction(boss->position, player->position); }
+	
+	/*
+	 *	ランダムクールタイムの取得
+	 */
+	inline float GetRandomCoolTime() const { return randomCoolTime; }
+
+	/*
+	 *	ランダムクールタイムの変更
+	 */
+	inline void SetRandomCoolTime(float setValue) { randomCoolTime = setValue; }
 };
 
 #endif // !_BOSSCOMPONENT_H_
