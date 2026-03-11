@@ -49,49 +49,49 @@
   },
   "AhoBard": {
     "ID": 8,
-    "Value": 308,
+    "Value": 300,
     "Effect": "treasureViewing",
     "Strength": 1
   },
   "StatueWithBrokenRoundHead": {
     "ID": 9,
-    "Value": 309,
+    "Value": 300,
     "Effect": "treasureViewing",
     "Strength": 1
   },
   "Hukurou": {
     "ID": 10,
-    "Value": 310,
+    "Value": 300,
     "Effect": "treasureViewing",
     "Strength": 1
   },
   "AhoDog": {
     "ID": 11,
-    "Value": 311,
+    "Value": 300,
     "Effect": "treasureViewing",
     "Strength": 1
   },
   "HasStatue": {
     "ID": 12,
-    "Value": 312,
+    "Value": 300,
     "Effect": "treasureViewing",
     "Strength": 1
   },
   "RapaStatue": {
     "ID": 13,
-    "Value": 313,
+    "Value": 300,
     "Effect": "treasureViewing",
     "Strength": 1
   },
   "HumanStatue_kuu": {
     "ID": 14,
-    "Value": 314,
+    "Value": 300,
     "Effect": "treasureViewing",
     "Strength": 1
   },
   "LightStatue": {
     "ID": 15,
-    "Value": 315,
+    "Value": 300,
     "Effect": "treasureViewing",
     "Strength": 1
   },
