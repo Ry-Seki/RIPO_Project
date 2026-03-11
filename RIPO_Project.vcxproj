@@ -309,6 +309,7 @@
     <ClCompile Include="Scripts\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonCreatePosData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonEntranceData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonFloorData.h" />
