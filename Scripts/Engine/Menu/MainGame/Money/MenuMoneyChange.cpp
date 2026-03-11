@@ -22,6 +22,12 @@
 #include "../../../Random.h"
 #include "../../../Manager/FontManager.h"
 
+namespace {
+    static constexpr float _CHANGE_DURATION = 1.0f;
+    static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Money/ChangeMoneyMenuResources.json";
+    static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Money/ChangeMoneyMenuNavigation.json";
+}
+
 /*
  *	@brief	‰Šú‰»ˆ—
  */

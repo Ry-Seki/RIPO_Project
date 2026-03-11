@@ -1,0 +1,24 @@
+{
+  "DungeonButtons": [
+    {
+      "ButtonName": "Dungeon1",
+      "DungeonType": "Dungeon1"
+    },
+    {
+      "ButtonName": "Dungeon2",
+      "DungeonType": "Dungeon2"
+    },
+    {
+      "ButtonName": "Dungeon3",
+      "DungeonType": "Dungeon3"
+    },
+    {
+      "ButtonName": "Dungeon4",
+      "DungeonType": "Dungeon4"
+    },
+    {
+      "ButtonName": "Back",
+      "DungeonType": "Invalid"
+    }
+  ]
+}
