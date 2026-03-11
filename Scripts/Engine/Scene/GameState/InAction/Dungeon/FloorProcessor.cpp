@@ -206,9 +206,11 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart, std::v
 		case 3:
 			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM01);
 			AudioUtility::PlayBGM();
+			break;
 		case 4:
 			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM02);
 			AudioUtility::PlayBGM();
+			break;
 		}
 	});
 }
@@ -295,14 +297,15 @@ std::vector<std::vector<int>> FloorProcessor::GetAllSpawnTreasureIDTable() {
 	// 通常お宝獲得状況マップの取得
 	auto& normalIDList = treasureIDList[GameConst::NORMAL_TREASURE_INDEX];
 	auto& normalTreasureIDMap = dungeonProgressData.treasureFlagMap;
-	if (normalTreasureIDMap.empty()) return treasureIDList;
-	// 取得済みIDを生成候補から除外
-	normalIDList.erase(
-		std::remove_if(normalIDList.begin(), normalIDList.end(),
-		[&](int treasureID) {
-		auto itr = normalTreasureIDMap.find(treasureID);
-		return itr != normalTreasureIDMap.end() && itr->second;
-	}), normalIDList.end());
+	if (!normalTreasureIDMap.empty()) {
+		// 取得済みIDを生成候補から除外
+		normalIDList.erase(
+			std::remove_if(normalIDList.begin(), normalIDList.end(),
+			[&](int treasureID) {
+				auto itr = normalTreasureIDMap.find(treasureID);
+				return itr != normalTreasureIDMap.end() && itr->second;
+		}), normalIDList.end());
+	}
 
 	if (!isEventDay) return treasureIDList;
 
@@ -387,15 +390,15 @@ std::vector<std::vector<int>> FloorProcessor::GetSpawnTreasureIDTable() {
 	result[normal] = GetNormalTreasureIDTable();
 	// お宝獲得状況マップを取得
 	auto& getTreasureIDMap = dungeonProgressData.treasureFlagMap;
-	if(getTreasureIDMap.empty()) return result;
-	// 取得済みIDを生成候補から除外
-	result[normal].erase(
-		std::remove_if(result[normal].begin(), result[normal].end(),
-		[&](int treasureID) {
-		auto itr = getTreasureIDMap.find(treasureID);
-		return itr != getTreasureIDMap.end() && itr->second;
+	if (!getTreasureIDMap.empty()) {
+		// 取得済みIDを生成候補から除外
+		result[normal].erase(
+			std::remove_if(result[normal].begin(), result[normal].end(),
+			[&](int treasureID) {
+				auto itr = getTreasureIDMap.find(treasureID);
+				return itr != getTreasureIDMap.end() && itr->second;
 		}), result[normal].end());
-
+	}
 	if (!isEventDay) return result;
 
 	// 生成する通常お宝IDリストを取得
@@ -408,8 +411,8 @@ std::vector<std::vector<int>> FloorProcessor::GetSpawnTreasureIDTable() {
 	result[event].erase(
 		std::remove_if(result[event].begin(), result[event].end(),
 		[&](int treasureID) {
-		auto itr = eventTreasureIDMap.find(treasureID);
-		return itr != eventTreasureIDMap.end() && itr->second;
+			auto itr = eventTreasureIDMap.find(treasureID);
+			return itr != eventTreasureIDMap.end() && itr->second;
 		}), result[event].end());
 
 	return result;	// 結果を反映した物を返す
