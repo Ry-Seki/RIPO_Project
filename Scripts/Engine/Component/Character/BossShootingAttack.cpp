@@ -151,6 +151,7 @@ void BossShootingAttack::ShootingAttack(GameObject* boss, float deltaTime, float
 
 void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, float shotSpeed)
 {
+	boss->rotation.y = atan2(direction.x, direction.z) + Pi;
 	animator->Play(0, 2000 * deltaTime);
 
 	// アニメーションが終わるまで待ちたい
@@ -217,6 +218,7 @@ void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, floa
 
 void BossShootingAttack::RapidFire(GameObject* boss, float deltaTime, float shotSpeed)
 {
+	boss->rotation.y = atan2(direction.x, direction.z) + Pi;
 	animator->Play(0, 20000 * deltaTime);
 
 	// アニメーションが終わるまで待ちたい
