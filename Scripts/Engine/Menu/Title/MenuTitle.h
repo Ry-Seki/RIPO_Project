@@ -28,9 +28,6 @@ class MenuTitle : public MenuBase{
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 	Sprite* startGameSprite = nullptr;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Title/StartGame/TitleResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/StartGame/TitleNavigation.json";
-
 public:
 	/*
 	 *	@brief	デストラクタ
@@ -71,18 +68,11 @@ public:
 	 */
 	void Resume() override;
 
-public:
-	/*
-	 *	@brief		ロード済みデータのセット
-	 *  @prarm[in]	int setHandle
-	 */
-	void SetupData(int setHandle);
 private:
 	/*
-	 *	@brief		ボタンの押された時の処理
-	 *	@param[in]	int buttonIndex
+	 *	@brief	ボタンの押された時の処理
 	 */
-	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	void SelectButtonExecute();
 
 };
 

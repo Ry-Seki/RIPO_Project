@@ -15,6 +15,14 @@
 #include "../../Fade/FadeManager.h"
 #include "../../Audio/AudioUtility.h"
 #include "../../Input/InputUtility.h"
+
+/*
+ *	@brief	ファイルパスの名前空間
+ */
+namespace {
+	constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Title/StartGame/TitleMenuResources.json";
+	constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/StartGame/TitleMenuNavigation.json";
+}
 /*
  *	@brief	初期化処理
  */
@@ -41,8 +49,8 @@ void MenuTitle::Initialize(Engine& engine) {
 				eventSystem.UpdateSelectButton(button);
 			});
 
-			button->RegisterOnClick([this, &engine, i]() {
-				SelectButtonExecute(engine, i);
+			button->RegisterOnClick([this]() {
+				SelectButtonExecute();
 			});
 		}
 		for (auto& sprite : spriteList) {
@@ -156,16 +164,10 @@ void MenuTitle::Resume() {
 	startGameSprite->SetIsVisible(true);
 }
 /*
- *	@brief		ロード済みデータのセット
- *  @prarm[in]	int setHandle
+ *	@brief		ボタンの押された時の処理
  */
-void MenuTitle::SetupData(int setHandle) {
-}
-
-void MenuTitle::SelectButtonExecute(Engine& engine, int buttonIndex) {
-	if (buttonIndex == 0) {
-		AudioUtility::PlaySE("DebugSE");
-		inputHandle = true;
-		MenuManager::GetInstance().OpenMenu<MenuGameModeSelect>();
-	}
+void MenuTitle::SelectButtonExecute() {
+	AudioUtility::PlaySE("DebugSE");
+	inputHandle = true;
+	MenuManager::GetInstance().OpenMenu<MenuGameModeSelect>();
 }
