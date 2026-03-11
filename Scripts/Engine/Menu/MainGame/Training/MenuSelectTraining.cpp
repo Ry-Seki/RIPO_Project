@@ -22,28 +22,23 @@
 #include "../../System/MenuConfirm.h"
 #include "../MenuInGame.h"
 
-
-/*
- *  @brief  ファイルパスの名前空間
- */
 namespace {
+    /*
+     *  @brief  ファイルパスの名前空間
+     */
     constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Training/SelectTraining/SelectTrainingMenuResources.json";
     constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Training/SelectTraining/SelectTrainingMenuNavigation.json";
     constexpr const char* _TRAING_BUTTON_DATA_PATH = "Data/UI/MainGame/Training/SelectTraining/TrainingButtonData.json";
-}
-/*
- *	@brief	トレーニングボタン名前空間
- */
-namespace {
+
     /*
-     *  ステータスの種類マップ
+     *  @brief  ステータスの種類マップ
      */
     const std::unordered_map<std::string, GameEnum::PlayerStatusType> StatusTypeMap = {
         {"HP", GameEnum::PlayerStatusType::HP},
         {"Stamina", GameEnum::PlayerStatusType::Stamina},
         {"Strength", GameEnum::PlayerStatusType::Strength},
         {"ResistTime", GameEnum::PlayerStatusType::ResistTime},
-        {"Invalid", GameEnum::PlayerStatusType::Invalid}
+        {"Back", GameEnum::PlayerStatusType::Invalid}
     };
     /*
      *  @brief  トレーニングボタン構造体
