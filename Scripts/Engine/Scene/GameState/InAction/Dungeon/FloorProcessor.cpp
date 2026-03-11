@@ -203,6 +203,12 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart, std::v
 			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM02);
 			AudioUtility::PlayBGM();
 			break;
+		case 3:
+			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM01);
+			AudioUtility::PlayBGM();
+		case 4:
+			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM02);
+			AudioUtility::PlayBGM();
 		}
 	});
 }
