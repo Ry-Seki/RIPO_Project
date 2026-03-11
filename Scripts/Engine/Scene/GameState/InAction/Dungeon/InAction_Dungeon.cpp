@@ -244,8 +244,10 @@ void InAction_Dungeon::CalculationDungeon(int dungeonID, bool isEventDay) {
 	auto& world = WorldProgressManager::GetInstance();
 	auto& character = CharacterManager::GetInstance();
 	// ボスの討伐フラグ
-	if (character.GetBossDeathFlag()) world.SetIsBossDefeated(dungeonID);
-	character.SetBossDeathFlag(false);
+	if (character.GetBossDeathFlag()) {
+		world.SetIsBossDefeated(dungeonID);
+		character.SetBossDeathFlag(false);
+	}
 	// お宝IDの取得
 	int treasureID = floorProcessor.GetHoldTreasureID();
 	if (treasureID == -1) return;
