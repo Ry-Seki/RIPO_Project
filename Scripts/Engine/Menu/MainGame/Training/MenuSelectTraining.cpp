@@ -48,8 +48,7 @@ namespace {
      */
     struct TrainingButtonData {
         std::string name = "";
-        PlayerStatusType type
-            = PlayerStatusType::Invalid;
+        PlayerStatusType type = PlayerStatusType::Invalid;
     };
     /*
      *	@brief	    プレイヤーのステータスの種類識別
@@ -245,6 +244,7 @@ void MenuSelectTraining::OpenConfirmMenu(GameEnum::PlayerStatusType type) {
     auto confirm = menu.GetMenu<MenuConfirm>();
 
     confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
+        AudioUtility::PlaySE("DebugSE");
         menu.CloseTopMenu();    // 確認メニュー
         if (result != GameEnum::ConfirmResult::Yes) return;
         // フェード開始

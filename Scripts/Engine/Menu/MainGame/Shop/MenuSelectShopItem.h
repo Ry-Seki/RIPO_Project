@@ -26,6 +26,7 @@ class Engine;
  */
 class MenuSelectShopItem : public MenuBase {
 private:
+	int currentSlot = -1;
 	int selectItemID = -1;
 	int currentMoney = -1;
 	ItemCatalogData catalogData;

@@ -32,33 +32,35 @@ namespace {
     constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/SelectGameMode/System/SystemNavigation.json";
     constexpr const char* _SYSTEM_BUTTON_DATA_PATH = "Data/UI/Title/SelectGameMode/System/SystemButton.json";
 
+    // 別名定義
+    using SystemMode = GameEnum::SystemMode;
+
     /*
      *  @brief  システムの種類マップ
      */
-    const std::unordered_map<std::string, GameEnum::SystemMenuType> systemTypeMap = {
-        { "Settings", GameEnum::SystemMenuType::Settings },
-        { "Credit", GameEnum::SystemMenuType::Credit },
-        { "Back", GameEnum::SystemMenuType::Invalid }
+    const std::unordered_map<std::string, SystemMode> systemTypeMap = {
+        { "Settings", SystemMode::Settings },
+        { "Credit", SystemMode::Credit },
+        { "Back", SystemMode::Invalid }
     };
     /*
      *  @brief  システムボタン構造体
      */
     struct SystemButtonData {
         std::string name = "";
-        GameEnum::SystemMenuType type
-            = GameEnum::SystemMenuType::Invalid;
+        SystemMode type = SystemMode::Invalid;
     };
     /*
      *	@brief	    システムの種類識別
      *  @param[in]  const std::string& typeKey
-     *  @return     GameEnum::SystemMenuType
+     *  @return     SystemMenuType
      */
-    GameEnum::SystemMenuType StringToPlayerStatusType(const std::string& typeKey) {
+    SystemMode StringToPlayerStatusType(const std::string& typeKey) {
         auto itr = systemTypeMap.find(typeKey);
 
         if (itr != systemTypeMap.end()) return itr->second;
 
-        return GameEnum::SystemMenuType::Invalid;
+        return GameEnum::SystemMode::Invalid;
     }
     /*
      *  @brief      JSON->トレーニングボタン情報へ変換
@@ -109,7 +111,7 @@ void MenuSystem::Initialize(Engine& engine) {
         // イベントシステムの初期化
         eventSystem.Initialize(0);
         // ボタンの準備前処理
-        SetupTrainingButtons(buttonData->GetData());
+        SetupSystemButtons(buttonData->GetData());
         // ボタンの登録
         eventSystem.LoadNavigation(navigation->GetData());
     });
@@ -202,23 +204,23 @@ void MenuSystem::Resume() {
  *	@brief		ボタンの押された時の処理
  *	@param[in]	GameEnum::SystemMenuType type
  */
-void MenuSystem::SelectButtonExecute(GameEnum::SystemMenuType type) {
+void MenuSystem::SelectButtonExecute(GameEnum::SystemMode type) {
     auto& menu = MenuManager::GetInstance();
     FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
 
     switch (type) {
-        case GameEnum::SystemMenuType::Invalid:
+        case GameEnum::SystemMode::Invalid:
             AudioUtility::PlaySE("DebugSE");
             menu.CloseTopMenu();
             break;
-        case GameEnum::SystemMenuType::Settings:
+        case GameEnum::SystemMode::Settings:
             AudioUtility::PlaySE("DebugSE");
             isInteractive = false;
             FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
                 menu.OpenMenu<MenuVolumeSettings>();
             });
             break;
-        case GameEnum::SystemMenuType::Credit:
+        case GameEnum::SystemMode::Credit:
             AudioUtility::PlaySE("DebugSE");
             isInteractive = false;
             menu.OpenMenu<MenuCredit>();
@@ -231,7 +233,7 @@ void MenuSystem::SelectButtonExecute(GameEnum::SystemMenuType type) {
  *	@brief		システムボタンの準備前処理
  *	@param[in]	const JSON& json
  */
-void MenuSystem::SetupTrainingButtons(const JSON& json) {
+void MenuSystem::SetupSystemButtons(const JSON& json) {
     auto systemData = ParseTrainingButtonData(json);
 
     for (const auto& entry : systemData) {

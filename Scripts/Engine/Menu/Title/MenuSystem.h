@@ -67,7 +67,7 @@ private:
 	 *	@brief		ボタンの押された時の処理
 	 *	@param[in]	GameEnum::SystemMenuType type
 	 */
-	void SelectButtonExecute(GameEnum::SystemMenuType type);
+	void SelectButtonExecute(GameEnum::SystemMode type);
 	/*
 	 *	@brief		システムボタンの準備前処理
 	 *	@param[in]	const JSON& json

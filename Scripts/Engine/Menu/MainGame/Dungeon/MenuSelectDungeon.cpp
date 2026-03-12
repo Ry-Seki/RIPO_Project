@@ -36,39 +36,42 @@ namespace {
 	constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Dungeon/SelectDungeon/SelectDungeonMenuNavigation.json";
 	constexpr const char* _DUNGEON_BUTTON_DATA_PATH = "Data/UI/MainGame/Dungeon/SelectDungeon/DungeonButton.json";
 
+	// 別名定義
+	using DungeonType = GameEnum::DungeonType;
+
 	/*
 	 *	@brief	ダンジョンの種類マップ
 	 */
-	const std::unordered_map<std::string, GameEnum::MainDungeonType> dungeonTypeMap = {
-		{"Dungeon1", GameEnum::MainDungeonType::Dungeon1},
-		{"Dungeon2", GameEnum::MainDungeonType::Dungeon2},
-		{"Dungeon3", GameEnum::MainDungeonType::Dungeon3},
-		{"Dungeon4", GameEnum::MainDungeonType::Dungeon4},
-		{"Back", GameEnum::MainDungeonType::Invalid}
+	const std::unordered_map<std::string, GameEnum::DungeonType> dungeonTypeMap = {
+		{ "Dungeon1", DungeonType::Dungeon1 },
+		{ "Dungeon2", DungeonType::Dungeon2 },
+		{ "Dungeon3", DungeonType::Dungeon3 },
+		{ "Dungeon4", DungeonType::Dungeon4 },
+		{ "Back", DungeonType::Invalid }
 	};
 	/*
 	 *	@brief	ダンジョンボタン構造体
 	 */
 	struct DungeonButtonData {
 		std::string name = "";
-		GameEnum::MainDungeonType type
-			= GameEnum::MainDungeonType::Invalid;
+		DungeonType type = DungeonType::Invalid;
 	};
 	/*
 	 *	@brief		ダンジョンの種類識別
 	 *	@param[in]	const std::string& typeKey
-	 *	@return		GameEnum::MainDungeonType
+	 *	@return		DungeonType
 	 */
-	GameEnum::MainDungeonType StringToDungeonType(const std::string& typeKey) {
+	DungeonType StringToDungeonType(const std::string& typeKey) {
 		auto itr = dungeonTypeMap.find(typeKey);
 
 		if (itr != dungeonTypeMap.end()) return itr->second;
 
-		return GameEnum::MainDungeonType::Invalid;
+		return DungeonType::Invalid;
 	}
 	/*
 	 *  @brief      JSON->ダンジョンボタン情報へ変換
 	 *  @param[in]  const JSON& json
+	 *	@return		std::vector<DungeonButtonData>
 	 */
 	std::vector<DungeonButtonData> ParseDungeonButtonData(const JSON& json) {
 		std::vector<DungeonButtonData> result;
@@ -308,8 +311,8 @@ void MenuSelectDungeon::RenderDungeonInfo() {
 	if (currentIndex < 0 || currentIndex >= dungeonMenuList.size()) return;
 
 	// ダンジョンの種類の取得
-	auto dungeonType = static_cast<GameEnum::MainDungeonType>(currentIndex);
-	if (dungeonType == GameEnum::MainDungeonType::Invalid) return;
+	auto dungeonType = static_cast<GameEnum::DungeonType>(currentIndex);
+	if (dungeonType == GameEnum::DungeonType::Invalid) return;
 
 	dungeonSprite->Render();
 

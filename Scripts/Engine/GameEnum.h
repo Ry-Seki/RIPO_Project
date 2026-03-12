@@ -29,12 +29,14 @@ namespace GameEnum {
 		NewGame,		// ニューゲーム
 		LoadGame,		// ロードゲーム
 		System,			// システム
+		EndGame,		// ゲームの終了
 		Max
 	};
 	/*
 	 *	@brief	システムメニューの種類
+	 *	@author	Seki
 	 */
-	enum class SystemMenuType {
+	enum class SystemMode {
 		Invalid = -1,
 		Settings,
 		Credit,
@@ -72,7 +74,7 @@ namespace GameEnum {
 	 *	@brief	ダンジョンの種類
 	 *	@author	Seki
 	 */
-	enum class MainDungeonType {
+	enum class DungeonType {
 		Invalid = -1,
 		Tutorial,
 		Dungeon1,
@@ -91,19 +93,6 @@ namespace GameEnum {
 		Stamina,		// スタミナ
 		Strength,		// 力
 		ResistTime,		// 抵抗力
-		Max
-	};
-	/*
-	 *	@brief	アイテムの種類
-	 */
-	enum class ShopItemType {
-		Invalid = -1,
-		HPGradeUp,
-		StaminaGradeUp,
-		StrengthGradeUp,
-		ResistTimeGradeUp,
-		SMGGum,
-
 		Max
 	};
 	/*
@@ -340,6 +329,7 @@ namespace GameEnum {
 	};
 	/*
 	 *	@brief	音量の種類
+	 *	@author	Seki
 	 */
 	enum class VolumeType {
 		Invalid = -1,

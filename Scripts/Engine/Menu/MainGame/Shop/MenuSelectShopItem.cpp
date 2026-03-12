@@ -41,11 +41,7 @@ namespace {
      *  @brief  ショップの種類マップ
      */
     const std::unordered_map<std::string, ShopActionType> shopActionTypeMap = {
-        { "HPUpGrade", ShopActionType::Buy },
-        { "StaminaUpGrade", ShopActionType::Buy },
-        { "StrengthUpGrade", ShopActionType::Buy },
-        { "ResistTimeUpGrade", ShopActionType::Buy },
-        { "SubmachineGun", ShopActionType::Buy },
+        { "Buy", ShopActionType::Buy },
         { "Exit", ShopActionType::Exit },
         { "Back", ShopActionType::Back },
     };
@@ -85,7 +81,8 @@ namespace {
             entry.itemID = node["ItemID"].get<int>();
             entry.name = node["ButtonName"].get<std::string>();
 
-            entry.type = StringToShopAction(entry.name);
+            std::string typeString = node["ShopActionType"].get<std::string>();
+            entry.type = StringToShopAction(typeString);
 
             result.push_back(entry);
         }

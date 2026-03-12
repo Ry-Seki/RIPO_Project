@@ -30,8 +30,6 @@ private:
 	};
 
 private:
-	int animFrame = 0;
-	float animTimer = 0.0f;
 	int elapsedDay = -1;
 	bool isHalf = false;
 
