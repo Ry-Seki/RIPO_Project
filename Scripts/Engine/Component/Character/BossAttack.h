@@ -68,8 +68,9 @@ private:
 	 *	“ËiUŒ‚
 	 *	param[in]	GameObject* boss
 	 *	param[in]	float		deltaTime
+	 *	param[in]	float		attackStateTime
 	 */
-	void HeadlongAttack(GameObject* boss, float deltaTime);
+	void HeadlongAttack(GameObject* boss, float deltaTime, float attackStateTime);
 };
 
 #endif // !_BOSSATTACK_H_
