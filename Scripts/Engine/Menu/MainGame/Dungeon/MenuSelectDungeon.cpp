@@ -99,7 +99,7 @@ void MenuSelectDungeon::Initialize(Engine& engine) {
 	auto buttonData = load.LoadResource<LoadJSON>(_DUNGEON_BUTTON_DATA_PATH);
 
 	load.SetOnComplete([this, &engine, menuJSON, navigation, buttonData]() {
-		// メニューのUI生成
+		// メニューUI生成
 		MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
 		// メニューUIの所有権移動
 		spriteList = std::move(result.spriteList);

@@ -19,9 +19,6 @@ class Engine;
  */
 class MenuSystem : public MenuBase {
 private:
-	float animTimer = 0.0f;
-	int animFrame = 0;
-
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 
@@ -71,8 +68,11 @@ private:
 	 *	@param[in]	GameEnum::SystemMenuType type
 	 */
 	void SelectButtonExecute(GameEnum::SystemMenuType type);
-
-	void SetupTrainingButtons(const JSON& json);
+	/*
+	 *	@brief		システムボタンの準備前処理
+	 *	@param[in]	const JSON& json
+	 */
+	void SetupSystemButtons(const JSON& json);
 	/*
 	 *	@brief		名前でのボタン検索
 	 *	@param[in]	const std::string& buttonName

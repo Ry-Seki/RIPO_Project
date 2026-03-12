@@ -17,7 +17,7 @@
 #include <vector>
 #include <memory>
 #include <functional>
-
+#include <unordered_map>
  // 前方宣言
 class Engine;
 
@@ -26,9 +26,6 @@ class Engine;
  */
 class MenuSelectShopItem : public MenuBase {
 private:
-	int currentSlot = -1;
-	int animFrame = 0;
-	float animTimer = 0.0f;
 	int selectItemID = -1;
 	int currentMoney = -1;
 	ItemCatalogData catalogData;
@@ -36,9 +33,9 @@ private:
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 	std::vector<std::shared_ptr<TextBase>> textList;
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
-	UIButtonBase* smgWeapon = nullptr;
-	UIButtonBase* exitButton = nullptr;
-	UIButtonBase* backButton = nullptr;
+
+	std::unordered_map<std::string, UIButtonBase*> buttonMap;
+
 	std::function<void(GameEnum::ShopActionType)> Callback = nullptr;
 	std::function<bool()> IsBuyItem = nullptr;
 
@@ -81,9 +78,30 @@ public:
 private:
 	/*
 	 *	@brief		ボタンの押された時の処理
-	 *	@param[in]	int buttonIndex
+	 *	@param[in]	GameEnum::ShopActionType type
+	 *  @param[in]  int itemID
 	 */
-	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	void SelectButtonExecute(GameEnum::ShopActionType type, int itemID);
+	/*
+	 *	@brief		確認メニューを開く
+	 *	@param[in]	GameEnum::ShopActionType type
+	 */
+	void OpenConfirmMenu(GameEnum::ShopActionType type);
+	/*
+	 *	@brief		ショップボタンの準備前処理
+	 *	@param[in]	const JSON& json
+	 */
+	void SetupShopButtons(const JSON& json);
+	/*
+	 *	@brief		ショップボタンの更新処理
+	 */
+	void UpdateButtonState();
+	/*
+	 *	@brief		名前でのボタン検索
+	 *	@param[in]	const std::string& buttonName
+	 *	@return		UIButtonBase*
+	 */
+	UIButtonBase* FindButtonByName(const std::string& buttonName);
 
 public:
 	/*
