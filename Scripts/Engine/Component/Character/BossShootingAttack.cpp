@@ -91,12 +91,14 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 	{
 	case 101:
 
+		boss->rotation.y = atan2(direction.x, direction.z) + Pi;
 		ShootingAttack(boss, deltaTime, 1000000 * deltaTime);
 
 		break;
 
 	case 103:
 
+		boss->rotation.y = atan2(direction.x, direction.z) + Pi;
 		// HP半分以下で攻撃変化
 		if (bossComponent->GetBossHP() <= bossComponent->GetBossMaxHP() / 2) {
 			SlowBall(boss, deltaTime, 100000 * deltaTime, 0.3f, 0.3f);
@@ -109,6 +111,7 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 		break;
 	case 104:
 
+		boss->rotation.y = atan2(direction.x, direction.z) + Pi;
 		SlowBall(boss, deltaTime, 300000 * deltaTime, 0.3f, 0.3f);
 		ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime);
 
@@ -153,7 +156,6 @@ void BossShootingAttack::ShootingAttack(GameObject* boss, float deltaTime, float
 
 void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, float shotSpeed)
 {
-	boss->rotation.y = atan2(direction.x, direction.z) + Pi;
 	animator->Play(0, 2000 * deltaTime);
 
 	// アニメーションが終わるまで待ちたい
@@ -220,7 +222,6 @@ void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, floa
 
 void BossShootingAttack::RapidFire(GameObject* boss, float deltaTime, float shotSpeed)
 {
-	boss->rotation.y = atan2(direction.x, direction.z) + Pi;
 	animator->Play(0, 20000 * deltaTime);
 
 	// アニメーションが終わるまで待ちたい
