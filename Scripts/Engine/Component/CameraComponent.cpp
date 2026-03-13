@@ -21,7 +21,7 @@ CameraComponent::CameraComponent()
 	, CAMERA_ROTATION_X_MAX(1.5f)
 	, CAMERA_ROTATION_X_MIN(-1.5f)
 	, PLAYER_HEAD_HEIGHT(310)
-	, DEFAULT_DEBUG_MOVE_SPEED(1500.0f) {}
+	, DEFAULT_DEBUG_MOVE_SPEED(2000.0f) {}
 
 /*
  *	Å‰‚ÌUpdate‚Ì’¼‘O‚ÉŒÄ‚Ño‚³‚ê‚éˆ—
@@ -133,7 +133,6 @@ void CameraComponent::Update(float deltaTime) {
 		break;
 	}
 	}
-
 
 	// ƒJƒƒ‰‚Ìİ’è‚É”½‰f‚·‚é
 	SetCameraPositionAndAngle(

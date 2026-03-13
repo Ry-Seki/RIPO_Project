@@ -27,7 +27,10 @@ WeaponBase::WeaponBase()
 	, reloadingTimeMax(0)
 	, shotCoolTime(0)
     , shotCoolTimeMax(0)
-	, reload(false) {	
+	, reload(false) 
+
+	, BULLET_SCALE(0.5f, 0.5f, 0.5f)
+	, BULLET_SPEED(10000.0f){
 }
 
 /*
@@ -51,7 +54,7 @@ void WeaponBase::ArmUpdate(float deltaTime, ActionMapBase::ActionState action, E
 
 	 // 手動リロード開始
 	int reload = static_cast<int>(GameEnum::PlayerAction::BulletReload);
-	if (action.buttonDown[reload] && weapon->ammoCount != weapon->ammoCountMax) {
+	if (action.buttonDown[reload] && weapon->ammoCount != weapon->ammoCountMax && !weapon->reload) {
 		weapon->reload = true;
 		PlaySE("reloadSE");
 	}
@@ -87,8 +90,8 @@ void WeaponBase::ShotBullet(Engine* engine) {
 	// 弾発射
 	BulletManager::GetInstance().BulletShot(
 		camera->position, camera->rotation, 
-		{ 0.5f, 0.5f, 0.5f }, moveDirection,
-		GetPlayer().get(), 10000, hitDamage);
+		BULLET_SCALE, moveDirection,
+		GetPlayer().get(), BULLET_SPEED, hitDamage);
 
 	PlaySE("shotSE");	
 }

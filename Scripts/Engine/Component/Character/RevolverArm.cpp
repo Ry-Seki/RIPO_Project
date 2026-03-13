@@ -40,7 +40,7 @@ void RevolverArm::WeaponUpdate(float deltaTime, ActionMapBase::ActionState actio
 				ammoCount -= 1;
 			}
 			// ’e‚ª‚È‚©‚Á‚½‚çƒŠƒ[ƒh
-			else {
+			else if (!reload){
 				reload = true;
 				PlaySE("reloadSE");
 			}
