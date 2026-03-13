@@ -302,6 +302,7 @@ namespace GameEnum {
 		FPS,
 		TPS,
 		Event,
+		Debug,
 
 		Max
 	};
