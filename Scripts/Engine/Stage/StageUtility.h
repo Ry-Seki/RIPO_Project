@@ -43,22 +43,8 @@ namespace StageUtility {
 	inline std::vector<Vector3> GetGoalPos() {
 		return StageManager::GetInstance().GetGoalPos();
 	}
-	/*
-	 *	敵の初期生成位置の取得
-	 *  @param[out]	std::vector<int>& IDList
-	 *	@return		std::vector<Vector3>
-	 */
-	inline std::unordered_map<int, Vector3> GetEnemySpwanPos() {
-		return StageManager::GetInstance().GetEnemySpawnPos();
-	}
-	/*
-	 *	ボスの初期生成位置の取得
-	 *  @param[out]	std::vector<int>& IDList
-	 *	@return		std::vector<Vector3>
-	 */
-	inline std::unordered_map<int, Vector3> GetBossSpwanPos() {
-		return StageManager::GetInstance().GetBossSpawnPos();
-	}
+	
+	
 	/*
 	 *  お宝の生成位置の取得
 	 *  @return		std::vector<Vector3>
@@ -73,20 +59,7 @@ namespace StageUtility {
 	inline std::vector<Vector3> GetPointLightPos() {
 		return StageManager::GetInstance().GetPointLightPos();
 	}
-	/*
-	 *	階層移動用階段位置の取得
-	 *  @return		Vector3
-	 */
-	inline std::vector<Vector3> GetStairsPos() {
-		return StageManager::GetInstance().GetStairsPos();
-	}
-
-	/*
-	 *	リスポーン位置の取得
-	 */
-	inline Vector3 GetRespawnPos() {
-		return StageManager::GetInstance().GetRespawnPos();
-	}
+	
 
 	/*
 	 *	jsonの変更
@@ -94,6 +67,10 @@ namespace StageUtility {
 	 */
 	inline void SetStageJSONData(JSON setJSON) {
 		StageManager::GetInstance().SetStageJSONData(setJSON);
+	}
+
+	inline int GetCurrentStageHandle() {
+		return StageManager::GetInstance().GetCurrentStageHandle();
 	}
 };
 

@@ -119,7 +119,7 @@ public:
 	/*
 	 *	@brief	データクリア
 	 */
-	void Clear() {
+	void ClearCreatePosData() {
 		dungeonCreatePosMap.clear();
 	}
 
@@ -128,7 +128,7 @@ public:
 	 *  @param[in]	json		読み込むJSONデータ
 	 *  @param[in]	dungeonID	現在のダンジョンID
 	 */
-	void LoadFromJSON(const JSON& json, int dungeonID) {
+	void LoadFromJSON(const JSON& json, int dungeonID, int floorID) {
 		auto& data = dungeonCreatePosMap[dungeonID];
 
 		LoadStartPos(json, data);		// 開始位置の設定
@@ -300,19 +300,58 @@ private:
 		data.respawn.position = GetFramePosition(frameName);
 	}
 
+	/*
+	 *	@brief		お宝位置取得
+	 *	@param[in]	
+	 */
+	void LoadTreasure(const JSON& json, CreatePosData& data, int floorID) {
+		if (!json.contains(GameConst::_CREATE_POSNAME_TREASURE))return;
+		
+		const auto& treasure = json[GameConst::_CREATE_POSNAME_TREASURE];
+		if (!treasure.contains(GameConst::_CREATE_POSITION_SPAWN))return;
+		// ルートを設定
+		const auto& spawnRoot = json[GameConst::_CREATE_POSNAME_TREASURE][GameConst::_CREATE_POSITION_SPAWN];
+
+		// 階層が存在するかどうか
+		// 引数の階層IDを文字列に変換
+		const std::string setKey = std::to_string(floorID);
+		if (!spawnRoot.contains(setKey)) return;
+		// お宝の生成位置を階層別に取得
+		const auto& spawnObj = spawnRoot[setKey];
+
+
+		// お宝毎のフレームを探す
+		for (auto it = spawnObj.begin(); it != spawnObj.end(); ++it) {
+
+			// お宝のIDをint型に変換して取得
+			int treasureID = std::stoi(it.key());
+			// フレーム名を取得
+			const std::string frameName = it.value().get<std::string>();
+
+			// データを追加
+			data.treasure.position.emplace(
+				treasureID,
+				GetFramePosition(frameName)
+			);
+
+		}
+	}
+
 public:
 
 	/*
 	 * 各データ取得
 	 */
 
-	const CreatePosData* GetCreatePosData(int dungeonID) const {
+	bool GetCreatePosData(int dungeonID, CreatePosData& data)  {
 		auto it = dungeonCreatePosMap.find(dungeonID);
 
 		if (it == dungeonCreatePosMap.end())
-			return nullptr;
+			return false;
 
-		return &it->second;
+		data = it->second;
+
+		return true;
 	}
 };
 

@@ -10,9 +10,11 @@
 #include "../../../../../Data/Dungeon/DungeonResourceData.h"
 #include "../../../../../Data/Dungeon/DungeonProgressData.h"
 #include "../../../../../Data/Dungeon/DungeonEntranceData.h"
+#include "../../../../../Data/Dungeon/DungeonCreatePosData.h"
 #include "../../../../GameConst.h"
 
 #include <vector>
+#include <unordered_map>
 
 /*
  *	@brief	ダンジョン生成クラス
@@ -26,6 +28,8 @@ private:
 	EntranceData goalData;
 	DungeonResourceData dungeonResourceData;
 	DungeonEntranceData dungeonEntranceData;
+	DungeonCreatePosData dungeonCreatePosData;
+	CreatePosData  createPosDataList;
 
 private:
 
@@ -77,7 +81,8 @@ public:
 	 */
 	inline void SetDungeonData(FloorData& setFloorData,
 							   DungeonResourceData& setResourceData,
-							   DungeonEntranceData& setEntranceData) {
+							   DungeonEntranceData& setEntranceData
+		) {
 		floorData = setFloorData;
 		dungeonResourceData = setResourceData;
 		dungeonEntranceData = setEntranceData;

@@ -163,7 +163,7 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart, std::v
 		floorData.TryGetFloorData(currentFloor, setFloorData);
 		// 階段、出口データの設定
 		entranceData.LoadFromJSON(resourceData.stageFloorResource->GetData());
-
+		
 		setFloorData.isFirst = false;
 		// ボスを生成するか判定
 		if (dungeonProgressData.isBossDefeated) setFloorData.bossSpawnCount = 0;

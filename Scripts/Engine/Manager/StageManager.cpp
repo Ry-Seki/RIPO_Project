@@ -9,7 +9,6 @@
 #include "../GameConst.h"
 #include "../Stage/StageMemoryProfiler.h"
 #include "../StringUtility.h"
-
  /*
   *  コンストラクタ
   */
@@ -65,6 +64,7 @@ void StageManager::ChangeStage() {
 
 
 	loadedStage->SetModelHandle(currentHandle);
+
 }
 
 /*
@@ -194,174 +194,6 @@ std::vector<Vector3> StageManager::GetGoalPos() const {
 	result.push_back(FromVECTOR(framePos));
 	// 座標を返す
 	return result;
-
-}
-
-/*
- *	敵の初期生成位置の取得
- */
-std::unordered_map<int, Vector3> StageManager::GetEnemySpawnPos() const {
-	// 敵IDと生成位置を保持する連想配列
-	std::unordered_map<int, Vector3> enemySpawnPosition;
-
-	// ステージ未ロードなら空で返す
-	if (!loadedStage) return enemySpawnPosition;
-
-	// ステージモデルのハンドル取得
-	int modelHandle = loadedStage->GetStageModelHandle();
-	if (modelHandle == -1) return enemySpawnPosition;
-
-	// EnemyのSpawnPosが存在しなければ空で返す
-	if (!json.contains(GameConst::_CREATE_POSNAME_ENEMY) ||
-		!json[GameConst::_CREATE_POSNAME_ENEMY].contains(GameConst::_CREATE_POSITION_SPAWN)) {
-		return enemySpawnPosition;
-	}
-
-	const auto& spawnRoot = json[GameConst::_CREATE_POSNAME_ENEMY][GameConst::_CREATE_POSITION_SPAWN];
-
-	if (spawnRoot.is_object()) {
-
-		// 中身がすべて string の場合は旧形式として扱う
-		bool isOldFormat = true;
-		for (auto it = spawnRoot.begin(); it != spawnRoot.end(); ++it) {
-			if (!it.value().is_string()) {
-				isOldFormat = false;
-				break;
-			}
-		}
-
-		if (isOldFormat) {
-			for (auto it = spawnRoot.begin(); it != spawnRoot.end(); ++it) {
-
-				// 敵IDを取得
-				int enemyID = std::stoi(it.key());
-				const std::string frameName = it.value().get<std::string>();
-
-				// フレーム検索
-				int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
-				if (frameIndex == -1) continue;
-
-				// 座標取得
-				VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
-
-				// 連想配列に追加
-				enemySpawnPosition.emplace(enemyID, FromVECTOR(framePos));
-			}
-
-			return enemySpawnPosition;
-		}
-	}
-
-	for (auto stageIt = spawnRoot.begin(); stageIt != spawnRoot.end(); ++stageIt) {
-
-		const auto& enemyObj = stageIt.value();
-		if (!enemyObj.is_object()) continue;
-
-		for (auto enemyIt = enemyObj.begin(); enemyIt != enemyObj.end(); ++enemyIt) {
-
-			// 敵IDを取得
-			int enemyID = std::stoi(enemyIt.key());
-			if (!enemyIt.value().is_string()) continue;
-
-			const std::string frameName = enemyIt.value().get<std::string>();
-
-			// フレーム検索
-			int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
-			if (frameIndex == -1) continue;
-
-			// 座標取得
-			VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
-
-			// 連想配列に追加
-			enemySpawnPosition.emplace(enemyID, FromVECTOR(framePos));
-		}
-	}
-
-	return enemySpawnPosition;
-
-}
-
-/*
- *	ボスの生成位置の取得
- */
-std::unordered_map<int, Vector3> StageManager::GetBossSpawnPos() const {
-	// ボスIDと生成位置を保持する連想配列
-	std::unordered_map<int, Vector3> bossSpawnPosition;
-
-	// ステージ未ロードなら空で返す
-	if (!loadedStage)return bossSpawnPosition;
-
-	// ステージモデルのハンドル取得
-	int modelHandle = loadedStage->GetStageModelHandle();
-	if (modelHandle == -1)return bossSpawnPosition;
-
-	// ボスのSpawnPosが存在しなければ空で返す
-	if (!json.contains(GameConst::_CREATE_POSNAME_ENEMY) ||
-		!json[GameConst::_CREATE_POSNAME_ENEMY].contains(GameConst::_CREATE_POSITION_BOSSSPAWN)) {
-		return bossSpawnPosition;
-	}
-
-	const auto& spawnRoot = json[GameConst::_CREATE_POSNAME_ENEMY][GameConst::_CREATE_POSITION_BOSSSPAWN];
-
-	if (spawnRoot.is_object()) {
-		// 中身がすべてstringの場合は旧形式として扱う
-		bool isOldFormat = true;
-		for (auto it = spawnRoot.begin(); it != spawnRoot.end(); ++it) {
-			if (!it.value().is_string()) {
-				isOldFormat = false;
-				break;
-			}
-		}
-
-		if (isOldFormat) {
-			for (auto it = spawnRoot.begin(); it != spawnRoot.end(); ++it) {
-
-				// 敵IDを取得
-				int enemyID = std::stoi(it.key());
-				const std::string frameName = it.value().get<std::string>();
-
-				// フレーム検索
-				int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
-				if (frameIndex == -1) continue;
-
-				// 座標取得
-				VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
-
-				// 連想配列に追加
-				bossSpawnPosition.emplace(enemyID, FromVECTOR(framePos));
-			}
-			// ボスの出現位置を返す
-			return bossSpawnPosition;
-		}
-	}
-
-	for (auto stageIt = spawnRoot.begin(); stageIt != spawnRoot.end(); ++stageIt) {
-
-		const auto& enemyObj = stageIt.value();
-		if (!enemyObj.is_object()) continue;
-
-		for (auto enemyIt = enemyObj.begin(); enemyIt != enemyObj.end(); ++enemyIt) {
-
-			// 敵IDを取得
-			int enemyID = std::stoi(enemyIt.key());
-			if (!enemyIt.value().is_string()) continue;
-
-			const std::string frameName = enemyIt.value().get<std::string>();
-
-			// フレーム検索
-			int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
-			if (frameIndex == -1) continue;
-
-			// 座標取得
-			VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
-
-			// 連想配列に追加
-			bossSpawnPosition.emplace(enemyID, FromVECTOR(framePos));
-		}
-	}
-
-	// ボスの出現位置を返す
-	return bossSpawnPosition;
 
 }
 

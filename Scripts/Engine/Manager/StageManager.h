@@ -16,6 +16,7 @@
 #include "../Stage/StageState.h"
 #include "../Component/Character/ArmActionComponent.h"
 #include "../Component/Character/CharacterUtility.h"
+#include "../Scripts/Data/Dungeon/DungeonCreatePosData.h"
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -44,8 +45,6 @@ private:
 	StageState stageState;				// ステージの状態保持
 
 	std::unique_ptr<StageBase> loadedStage;	// 読み込み済みステージデータ
-
-
 	EnemySpawnPoint enemySpawnID;
 
 
