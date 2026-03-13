@@ -20,10 +20,6 @@
  */
 class MenuSelectTraining : public MenuBase {
 private:
-	int animFrame = 0;
-	float animTimer = 0.0f;
-	int elapsedDay = -1;
-
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;

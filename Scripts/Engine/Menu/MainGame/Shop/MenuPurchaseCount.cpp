@@ -24,6 +24,20 @@
 #include "../../../Manager/FontManager.h"
 #include "../../../Audio/AudioUtility.h"
 
+namespace {
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/PurchaseCount/PurchaseMenuResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Shop/PurchaseCount/PurchaseMenuNavigation.json";
+
+    enum class ButtonType {
+        Invalid = -1,
+        AddButton,
+        SubButton,
+        BuyButton,
+        CancelButton,
+        Max
+    };
+}
+
 /*
  *	@brief	‰Šú‰»ˆ—
  */
@@ -56,7 +70,7 @@ void MenuPurchaseCount::Initialize(Engine& engine) {
             });
         }
         // w“üƒ{ƒ^ƒ“—v‘f”‚Ìİ’è
-        buyButtonIndex = static_cast<int>(MenuPurchaseCount::ButtonType::BuyButton);
+        buyButtonIndex = static_cast<int>(ButtonType::BuyButton);
         eventSystem.LoadNavigation(navigation->GetData());
     });
     auto buySE = load.LoadResource<LoadAudio>("Res/Audio/SE/BuyItem.mp3");

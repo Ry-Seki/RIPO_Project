@@ -26,16 +26,6 @@ struct ItemData;
  */
 class MenuPurchaseCount : public MenuBase {
 private:
-	enum class ButtonType {
-		Invalid = -1,
-		AddButton,
-		SubButton,
-		BuyButton,
-		CancelButton,
-		Max
-	};
-
-private:
 	int buyButtonIndex = -1;
 	int purchaseCount = -1;
 	int currentMoney = -1;
@@ -50,9 +40,6 @@ private:
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::string> purchaseList;
 	std::function<void(int, int)> Callback = nullptr;
-
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/PurchaseCount/PurchaseMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Shop/PurchaseCount/PurchaseMenuNavigation.json";
 
 public:
 	/*

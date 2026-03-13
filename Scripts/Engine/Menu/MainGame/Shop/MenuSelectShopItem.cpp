@@ -26,12 +26,68 @@
 #include "../../../Audio/AudioUtility.h"
 #include "../../../Manager/FontManager.h"
 
-/*
- *  @brief  ファイルパスの名前空間
- */
 namespace {
+    /*
+     *  @brief  ファイルパスの名前空間
+     */
     constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/SelectItem/SelectItemMenuResources.json";
     constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Shop/SelectItem/SelectItemMenuNavigation.json";
+    constexpr const char* _SHOP_ITEM_BUTTON_PATH = "Data/UI/MainGame/Shop/SelectItem/ShopButtonData.json";
+
+    // 別名定義
+    using ShopActionType = GameEnum::ShopActionType;
+
+    /*
+     *  @brief  ショップの種類マップ
+     */
+    const std::unordered_map<std::string, ShopActionType> shopActionTypeMap = {
+        { "Buy", ShopActionType::Buy },
+        { "Exit", ShopActionType::Exit },
+        { "Back", ShopActionType::Back },
+    };
+    /*
+     *  @brief  ショップボタン構造体
+     */
+    struct ShopButtonData {
+        int itemID = -1;
+        std::string name = "";
+        ShopActionType type = ShopActionType::Invalid;
+    };
+    /*
+     *  @brief      ショップ行動の種類識別
+     *  @param[in]  const std::string& typeKey
+     *  @return     ShopActionType
+     */
+    ShopActionType StringToShopAction(const std::string& typeKey) {
+        auto itr = shopActionTypeMap.find(typeKey);
+
+        if (itr != shopActionTypeMap.end()) return itr->second;
+
+        return ShopActionType::Invalid;
+    }
+    /*
+     *  @brief      JSON->ショップボタン情報へ変換
+     *  @param[in]  const JSON& json
+     *  @return     std::vector<ShopButtonData>
+     */
+    std::vector<ShopButtonData> ParseShopButtonData(const JSON& json) {
+        std::vector<ShopButtonData> result;
+
+        auto array = json["ShopButtons"];
+
+        for (const auto& node : array) {
+            ShopButtonData entry;
+
+            entry.itemID = node["ItemID"].get<int>();
+            entry.name = node["ButtonName"].get<std::string>();
+
+            std::string typeString = node["ShopActionType"].get<std::string>();
+            entry.type = StringToShopAction(typeString);
+
+            result.push_back(entry);
+        }
+        return result;
+    }
 }
 /*
  *	@brief	初期化処理
@@ -40,36 +96,33 @@ void MenuSelectShopItem::Initialize(Engine& engine) {
     auto& load = LoadManager::GetInstance();
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
-    load.SetOnComplete([this, &engine, menuJSON, navigation]() {
-        MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
-        for (auto& button : result.buttonList) {
-            if (!button) continue;
+    auto buttonData = load.LoadResource<LoadJSON>(_SHOP_ITEM_BUTTON_PATH);
 
-            eventSystem.RegisterButton(button.get());
-        }
-        eventSystem.Initialize(0);
+    load.SetOnComplete([this, &engine, menuJSON, navigation, buttonData]() {
+        // メニューUIの生成
+        MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
+        // メニューUIの所有権移動
         spriteList = std::move(result.spriteList);
         textList = std::move(result.textList);
         buttonList = std::move(result.buttonList);
-        for (int i = 0, max = buttonList.size(); i < max; i++) {
-            UIButtonBase* button = buttonList[i].get();
-            if (!button) continue;
 
-            button->RegisterUpdateSelectButton([this, button]() {
-                eventSystem.UpdateSelectButton(button);
-            });
+        // ボタンの登録
+        for (const auto& entry : buttonList) {
+            if (!entry) continue;
 
-            button->RegisterOnClick([this, &engine, i]() {
-                SelectButtonExecute(engine, i);
-            });
+            UIButtonBase* button = entry.get();
+            // ボタンの登録
+            eventSystem.RegisterButton(button);
+            // マップに登録
+            buttonMap[button->GetName()] = button;
         }
-        for (auto& button : buttonList) {
-            if (button->GetName() == "SubmachineGun") smgWeapon = button.get();
-            else if (button->GetName() == "Exit") exitButton = button.get();
-            else if (button->GetName() == "Back") backButton = button.get();
-        }
+        eventSystem.Initialize(0);
+        // イベントシステムの初期化
+        eventSystem.Initialize(0);
+        // ボタンの準備前処理
+        SetupShopButtons(buttonData->GetData());
+        // イベントシステムのnavigationの設定
         eventSystem.LoadNavigation(navigation->GetData());
-
     });
 }
 /* 
@@ -88,15 +141,7 @@ void MenuSelectShopItem::Open() {
     for (auto& button : buttonList) {
         button->Setup();
     }
-    // すでにSMGを解放していたら、選択不可能状態にする
-    if (WeaponManager::GetInstance().IsSubmachineGun()) smgWeapon->SetIsEnable(false);
-
-    if (IsBuyItem()) {
-        backButton->SetIsEnable(false);
-    } else {
-        exitButton->SetIsEnable(false);
-    }
-
+    UpdateButtonState();
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
         eventSystem.ApplySelection();
@@ -186,53 +231,103 @@ void MenuSelectShopItem::Resume() {
     for (auto& button : buttonList) {
         button->Setup();
     }
-    if (WeaponManager::GetInstance().IsSubmachineGun()
-        && smgWeapon->IsEnable()) {
-        smgWeapon->SetIsEnable(false);
-    }
-    if (IsBuyItem()) {
-        backButton->SetIsEnable(false);
-    }else {
-        exitButton->SetIsEnable(false);
-    }
-
+    UpdateButtonState();
     eventSystem.ApplySelection();
 }
 /*
  *	@brief		ボタンの押された時の処理
- *	@param[in]	int buttonIndex
+ *	@param[in]	GameEnum::ShopActionType type
+ *  @param[in]  int itemID
  */
-void MenuSelectShopItem::SelectButtonExecute(Engine& engine, int buttonIndex) {
-    int itemID = buttonIndex;
+void MenuSelectShopItem::SelectButtonExecute(GameEnum::ShopActionType type, int itemID) {
     auto& menu = MenuManager::GetInstance();
-    ItemData* item;
-    GameEnum::ShopActionType type = GameEnum::ShopActionType::Invalid;
+    AudioUtility::PlaySE("DebugSE");
 
-    if (bool isGetItem = catalogData.TryGetItem(currentSlot, item)) {
-        AudioUtility::PlaySE("DebugSE");
+    // ボタンの種類が買い物だった場合
+    if (type == GameEnum::ShopActionType::Buy) {
+        ItemData* item;
+        // アイテムの取得
+        if (!catalogData.TryGetItem(itemID, item)) return;
+        // 購入個数のメニューを開く
         auto purchase = menu.GetMenu<MenuPurchaseCount>();
         purchase->SetItemData(item);
         menu.OpenMenu<MenuPurchaseCount>();
-    } else {
-        if (buttonIndex == buttonList.size() - 1) {
-            type = GameEnum::ShopActionType::Back;
-        } else {
-            type = GameEnum::ShopActionType::Exit;
-        }
-
-        AudioUtility::PlaySE("DebugSE");
-        auto confirm = menu.GetMenu<MenuConfirm>();
-        confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
-            if (result == GameEnum::ConfirmResult::Yes) {
-                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, type]() {
-                    menu.CloseAllMenu();
-                    if (Callback) Callback(type);
-                });
-            } else {
-                menu.CloseTopMenu();
-            }
-        });
-        menu.OpenMenu<MenuConfirm>();
+    } else{
+        // 確認メニューを開く
+        OpenConfirmMenu(type);
     }
+}
+/*
+ *	@brief		確認メニューを開く
+ *	@param[in]	GameEnum::ShopActionType type
+ */
+void MenuSelectShopItem::OpenConfirmMenu(GameEnum::ShopActionType type) {
+    auto& menu = MenuManager::GetInstance();
+    auto confirm = menu.GetMenu<MenuConfirm>();
+
+    confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
+        menu.CloseTopMenu();	// 確認メニュー
+        if (result != GameEnum::ConfirmResult::Yes) return;
+        isInteractive = false;
+        // フェード後->コールバックの実行
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, type]() {
+            menu.CloseTopMenu();	// このメニュー
+            if (Callback) Callback(type);
+        });
+    });
+    menu.OpenMenu<MenuConfirm>();
+}
+/*
+ *	@brief		ショップボタンの準備前処理
+ *	@param[in]	const JSON& json
+ */
+void MenuSelectShopItem::SetupShopButtons(const JSON& json) {
+    auto shopData = ParseShopButtonData(json);
+
+    for (const auto& entry : shopData) {
+        UIButtonBase* button = FindButtonByName(entry.name);
+        if (!button) continue;
+        const auto type = entry.type;
+        const int itemID = entry.itemID;
+        // ボタン実行処理の登録
+        button->RegisterOnClick([this, type, itemID]() {
+            SelectButtonExecute(type, itemID);
+        });
+        // ボタンに navigation 更新処理を登録
+        button->RegisterUpdateSelectButton([this, button]() {
+            eventSystem.UpdateSelectButton(button);
+        });
+    }
+}
+/*
+ *	@brief		ショップボタンの更新処理
+ */
+void MenuSelectShopItem::UpdateButtonState() {
+    // すでにSMGを解放していたら、選択不可能状態にする
+    UIButtonBase* button = nullptr;
+    if (WeaponManager::GetInstance().IsSubmachineGun()) {
+        button = FindButtonByName("SubmachineGun");
+        button->SetIsEnable(false);
+    }
+    // すでに購入済みか判定
+    if (IsBuyItem()) {
+        button = FindButtonByName("Back");
+        button->SetIsEnable(false);
+    }
+    else {
+        button = FindButtonByName("Exit");
+        button->SetIsEnable(false);
+    }
+}
+/*
+ *	@brief		名前でのボタン検索
+ *	@param[in]	const std::string& buttonName
+ *	@return		UIButtonBase*
+ */
+UIButtonBase* MenuSelectShopItem::FindButtonByName(const std::string& buttonName) {
+    auto itr = buttonMap.find(buttonName);
+    if (itr == buttonMap.end()) return nullptr;
+
+    return itr->second;
 }
