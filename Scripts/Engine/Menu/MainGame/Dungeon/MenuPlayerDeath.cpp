@@ -17,6 +17,13 @@
 #include "../../MenuManager.h"
 
 /*
+ *  @brief  定数の名前空間
+ */
+namespace {
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Dungeon/Result/PlayerDeathMenuResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Dungeon/Result/PlayerDeathMenuNavigation.json";
+}
+/*
  *	@brief	初期化処理
  */
 void MenuPlayerDeath::Initialize(Engine& engine) {
@@ -25,27 +32,28 @@ void MenuPlayerDeath::Initialize(Engine& engine) {
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
 
     load.SetOnComplete([this, &engine, menuJSON, navigation]() {
+        // メニューUI生成
         MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
-        for (auto& button : result.buttonList) {
-            if (!button) continue;
-
-            eventSystem.RegisterButton(button.get());
-        }
-        eventSystem.Initialize(0);
+        // メニューUIの所有権移動
         buttonList = std::move(result.buttonList);
         spriteList = std::move(result.spriteList);
-        for (int i = 0, max = buttonList.size(); i < max; i++) {
-            UIButtonBase* button = buttonList[i].get();
+        // ボタンの登録
+        for (auto& button : buttonList) {
             if (!button) continue;
-
-            button->RegisterUpdateSelectButton([this, button]() {
-                eventSystem.UpdateSelectButton(button);
+            // ボタンの登録
+            eventSystem.RegisterButton(button.get());
+            // ボタンの実行処理登録
+            button->RegisterOnClick([this]() {
+                SelectButtonExecute();
             });
-
-            button->RegisterOnClick([this, &engine]() {
-                SelectButtonExecute(engine);
+            // ボタンに navigation 更新処理を登録
+            button->RegisterUpdateSelectButton([this, button]() {
+                eventSystem.UpdateSelectButton(button.get());
             });
         }
+        // イベントシステムの初期化
+        eventSystem.Initialize(0);
+        // イベントシステムのnavigationの設定
         eventSystem.LoadNavigation(navigation->GetData());
     });
 }
@@ -135,7 +143,7 @@ void MenuPlayerDeath::Resume() {
 /*
  *	@brief	ボタンの押された時の処理
  */
-void MenuPlayerDeath::SelectButtonExecute(Engine& engine) {
+void MenuPlayerDeath::SelectButtonExecute() {
     AudioUtility::PlaySE("DebugSE");
     auto& menu = MenuManager::GetInstance();
     FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);

@@ -1,0 +1,16 @@
+{
+  "SystemButtons": [
+    {
+      "ButtonName": "Settings",
+      "SystemType": "Settings"
+    },
+    {
+      "ButtonName": "Credit",
+      "SystemType": "Credit"
+    },
+    {
+      "ButtonName": "Back",
+      "SystemType": "Invalid"
+    }
+  ]
+}

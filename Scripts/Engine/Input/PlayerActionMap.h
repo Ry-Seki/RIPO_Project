@@ -2,12 +2,10 @@
  *	@file	PlayerActionMap.h
  *	@author	Riku
  */
-#ifndef _PLAYER_ACTION_MAP_H_
-#define _PLAYER_ACTION_MAP_H_
+#ifndef _PLAYERACTIONMAP_H_
+#define _PLAYERACTIONMAP_H_
 
 #include "ActionMapBase.h"
-
-#include <unordered_map>
 
 /*
  *	@brief	ÉvÉåÉCÉÑÅ[ëÄçÏÇÃActionMap
@@ -24,4 +22,4 @@ public:
 	void Initialize() override;
 };
 
-#endif // !_PLAYER_ACTION_MAP_H_
+#endif // !_PLAYERACTIONMAP_H_

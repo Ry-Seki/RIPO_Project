@@ -128,7 +128,7 @@ void PlayerComponent::Update(float deltaTime) {
 	// HPがなくなったら死亡
 	if (status.HP <= 0) {
 		auto cameraState = CameraManager::GetInstance().GetCameraState();
-		if (cameraState != GameEnum::CameraState::Event && cameraState != GameEnum::CameraState::Invalid) {
+		if (cameraState == GameEnum::CameraState::TPS || cameraState == GameEnum::CameraState::FPS) {
 			// 視点変更イベント再生
 			CameraManager::GetInstance().CameraEventPlay(GameEnum::CameraEvent::Dead);
 			// プレイヤーの描画モデル変更
@@ -167,6 +167,17 @@ void PlayerComponent::Update(float deltaTime) {
 	}
 	// ステージとの当たり判定
 	StageManager::GetInstance().StageCollider(player, moveVec);
+
+	// デバック用カメラ切り替え
+#if _DEBUG
+	if (action.buttonDown[static_cast<int>(GameEnum::PlayerAction::ChangeDebugCamera)]) {
+		// アクションマップの切り替え
+		SetActionMapIsActive(GameEnum::ActionMap::DebugCameraAction, true);
+		SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, false);
+		// カメラステートの切り替え
+		CameraManager::GetInstance().SetCameraState(GameEnum::CameraState::Debug);
+	}
+#endif
 }
 
 void PlayerComponent::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
