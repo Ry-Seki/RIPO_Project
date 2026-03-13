@@ -19,15 +19,12 @@ class Engine;
  */
 class MenuSystem : public MenuBase {
 private:
-	float animTimer = 0.0f;
-	int animFrame = 0;
-
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
-	EventSystem eventSystem;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Title/SelectGameMode/System/SystemResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/SelectGameMode/System/SystemNavigation.json";
+	std::unordered_map<std::string, UIButtonBase*> buttonMap;
+
+	EventSystem eventSystem;
 
 public:
 	/*
@@ -68,9 +65,20 @@ public:
 private:
 	/*
 	 *	@brief		ボタンの押された時の処理
-	 *	@param[in]	int buttonIndex
+	 *	@param[in]	GameEnum::SystemMenuType type
 	 */
-	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	void SelectButtonExecute(GameEnum::SystemMode type);
+	/*
+	 *	@brief		システムボタンの準備前処理
+	 *	@param[in]	const JSON& json
+	 */
+	void SetupSystemButtons(const JSON& json);
+	/*
+	 *	@brief		名前でのボタン検索
+	 *	@param[in]	const std::string& buttonName
+	 *	@return		UIButtonBase*
+	 */
+	UIButtonBase* FindButtonByName(const std::string& buttonName);
 
 };
 

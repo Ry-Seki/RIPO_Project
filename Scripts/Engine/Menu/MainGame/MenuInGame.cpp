@@ -22,6 +22,18 @@
 #include "../../Audio/AudioUtility.h"
 #include "../../Load/Audio/LoadAudio.h"
 
+namespace {
+    /*
+     *  @brief  ファイルパス
+     */
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/InGame/InGameMenuResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/InGame/InGameMenuNavigation.json";
+
+    /*
+     *  @brief  インゲームメニューの種類マップ
+     */
+    // const std::unordered_map<std::string,>
+}
 /*
  *	@brief	初期化処理
  */

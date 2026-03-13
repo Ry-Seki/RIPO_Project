@@ -14,6 +14,8 @@
 #include "../../../GameEnum.h"
 #include "../../../GameConst.h"
 #include "../../../../Data/Dungeon/DungeonData.h"
+
+#include <unordered_map>
 #include <functional>
 
 // ‘O•ûéŒ¾

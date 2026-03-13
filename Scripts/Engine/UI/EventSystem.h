@@ -73,6 +73,11 @@ private:
 	 *	@return		bool
 	 */
 	int FindNextEnableButton(int index, GameEnum::NavigationDir dir);
+	/*
+	 *	@brief		‚·‚Å‚É‰Ÿ‚³‚ê‚Ä‚¢‚éƒ{ƒ^ƒ“‚ª‚ ‚é‚©”»’è
+	 *	@return		bool
+	 */
+	bool IsPressButton();
 
 public:
 	/*

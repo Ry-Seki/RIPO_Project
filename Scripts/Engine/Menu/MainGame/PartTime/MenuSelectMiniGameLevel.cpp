@@ -20,6 +20,69 @@
 #include "../../MenuManager.h"
 #include "../../System/MenuConfirm.h"
 
+namespace {
+    /*
+     *  @brief  ファイルパス
+     */
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/PartTime/SelectLevel/SelectLevelMenuResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/PartTime/SelectLevel/SelectLevelMenuNavigation.json";
+    constexpr const char* _LEVEL_BUTTON_DATA_PATH = "Data/UI/MainGame/PartTime/SelectLevel/LevelButtonData.json";
+
+    // 別名定義
+    using MiniGameLevel = GameEnum::MiniGameLevel;
+
+    /*
+     *  @brief  ミニゲーム難易度の種類マップ
+     */
+    const std::unordered_map<std::string, MiniGameLevel> levelTypeMap = {
+        { "Easy", MiniGameLevel::Easy },
+        { "Normal", MiniGameLevel::Normal },
+        { "Hard", MiniGameLevel::Hard },
+        { "Back", MiniGameLevel::Invalid },
+    };
+    /*
+     *  @brief  ミニゲーム難易度ボタン構造体
+     */
+    struct LevelButtonData {
+        std::string name = "";
+        MiniGameLevel level = MiniGameLevel::Invalid;
+    };
+    /*
+     *  @brief      ミニゲーム難易度の種類識別
+     *  @param[in]  const std::string& typeKey
+     *  @return     MiniGameLevel
+     */
+    MiniGameLevel StringToMiniGameLevel(const std::string& typeKey) {
+        auto itr = levelTypeMap.find(typeKey);
+
+        if (itr != levelTypeMap.end()) return itr->second;
+
+        return MiniGameLevel::Invalid;
+    }
+    /*
+     *  @brief      JSON->難易度ボタン情報へ変換
+     *  @param[in]  const JSON& json
+     *	@return		std::vector<LevelButtonData>
+     */
+    std::vector<LevelButtonData> ParseLevelButtonData(const JSON& json) {
+        std::vector<LevelButtonData> result;
+
+        auto array = json["LevelButtons"];
+
+        for (auto& node : array) {
+            LevelButtonData entry;
+
+            entry.name = node["ButtonName"].get<std::string>();
+
+            std::string typeString = node["MiniGameLevel"].get<std::string>();
+            entry.level = StringToMiniGameLevel(typeString);
+
+            result.push_back(entry);
+        }
+        return result;
+    }
+}
+
 /*
  *	@brief	初期化処理
  */
@@ -27,29 +90,29 @@ void MenuSelectMiniGameLevel::Initialize(Engine& engine) {
     auto& load = LoadManager::GetInstance();
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
+    auto buttonData = load.LoadResource<LoadJSON>(_LEVEL_BUTTON_DATA_PATH);
 
-    load.SetOnComplete([this, &engine, menuJSON, navigation]() {
+    load.SetOnComplete([this, &engine, menuJSON, navigation, buttonData]() {
+        // メニューUI生成
         MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
-        for (auto& button : result.buttonList) {
-            if (!button) continue;
-
-            eventSystem.RegisterButton(button.get());
-        }
-        eventSystem.Initialize(0);
-        buttonList = std::move(result.buttonList);
+        // メニューUIの所有権移動
         spriteList = std::move(result.spriteList);
-        for (int i = 0, max = buttonList.size(); i < max; i++) {
-            UIButtonBase* button = buttonList[i].get();
-            if (!button) continue;
+        buttonList = std::move(result.buttonList);
+        // ボタンの登録
+        for (const auto& entry : buttonList) {
+            if (!entry) continue;
 
-            button->RegisterUpdateSelectButton([this, button]() {
-                eventSystem.UpdateSelectButton(button);
-            });
-
-            button->RegisterOnClick([this, &engine, i]() {
-                SelectButtonExecute(engine, i);
-            });
+            UIButtonBase* button = entry.get();
+            // ボタンの登録
+            eventSystem.RegisterButton(button);
+            // マップに登録
+            buttonMap[button->GetName()] = button;
         }
+        // イベントシステムの初期化
+        eventSystem.Initialize(0);
+        // ボタンの準備前処理
+        SetupLevelButtons(buttonData->GetData());
+        // イベントシステムのnavigationの設定
         eventSystem.LoadNavigation(navigation->GetData());
     });
 }
@@ -138,84 +201,79 @@ void MenuSelectMiniGameLevel::Resume() {
 }
 /*
  *	@brief		ボタンの押された時の処理
- *	@param[in]	int buttonIndex
+ *	@param[in]	GameEnum::MiniGameLevel level
  */
-void MenuSelectMiniGameLevel::SelectButtonExecute(Engine& engine, int buttonIndex) {
-    GameEnum::MiniGameLevel level = GameEnum::MiniGameLevel::Invalid;
+void MenuSelectMiniGameLevel::SelectButtonExecute(GameEnum::MiniGameLevel level) {
+    auto& menu = MenuManager::GetInstance();
+    AudioUtility::PlaySE("DebugSE");
+    // 戻る
+    if (level == GameEnum::MiniGameLevel::Invalid) {
+        StartFadeEndCallback(level);
+        return;
+    }
+    // 確認メニューを開く
+    OpenConfirmMenu(level);
+}
+/*
+ *	@brief		フェード後->コールバックの実行処理
+ *	@param[in]	GameEnum::MiniGameLevel level
+ */
+void MenuSelectMiniGameLevel::StartFadeEndCallback(GameEnum::MiniGameLevel level) {
+    auto& menu = MenuManager::GetInstance();
+
+    isInteractive = false;
+    FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+    FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, level]() {
+        menu.CloseTopMenu();	// このメニュー
+        if (Callback) Callback(level);
+    });
+}
+/*
+ *	@brief		確認メニューを開く
+ *	@param[in]	GameEnum::MiniGameLevel level
+ */
+void MenuSelectMiniGameLevel::OpenConfirmMenu(GameEnum::MiniGameLevel level) {
     auto& menu = MenuManager::GetInstance();
     auto confirm = menu.GetMenu<MenuConfirm>();
 
-    if (buttonIndex == 0) {
-        level = GameEnum::MiniGameLevel::Easy;
+    confirm->SetCallback([this, &menu, level](GameEnum::ConfirmResult result) {
         AudioUtility::PlaySE("DebugSE");
-        confirm->SetCallback([this, &menu, level](GameEnum::ConfirmResult result) {
-            if (result == GameEnum::ConfirmResult::Yes) {
-                menu.CloseTopMenu();
-                isInteractive = false;
-                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, level]() {
-                    menu.CloseTopMenu();
-                    if (Callback) Callback(level);
-                });
-            }
-            else {
-                menu.CloseTopMenu();
-            }
+        menu.CloseTopMenu();    // 確認メニュー
+        if (result != GameEnum::ConfirmResult::Yes) return;
+        // フェード開始
+        StartFadeEndCallback(level);
+    });
+    menu.OpenMenu<MenuConfirm>();
+}
+/*
+ *	@brief		難易度ボタンの準備前処理
+ *	@param[in]	const JSON& json
+ */
+void MenuSelectMiniGameLevel::SetupLevelButtons(const JSON& json) {
+    auto trainingData = ParseLevelButtonData(json);
+
+    for (const auto& entry : trainingData) {
+        UIButtonBase* button = FindButtonByName(entry.name);
+        if (!button) continue;
+        const auto level = entry.level;
+        // ボタン実行処理の登録
+        button->RegisterOnClick([this, level]() {
+            SelectButtonExecute(level);
         });
-        menu.OpenMenu<MenuConfirm>();
-    } else if (buttonIndex == 1) {
-        level = GameEnum::MiniGameLevel::Normal;
-        AudioUtility::PlaySE("DebugSE");
-        confirm->SetCallback([this, &menu, level](GameEnum::ConfirmResult result) {
-            if (result == GameEnum::ConfirmResult::Yes) {
-                menu.CloseTopMenu();
-                isInteractive = false;
-                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, level]() {
-                    menu.CloseTopMenu();
-                    if (Callback) Callback(level);
-                });
-            }
-            else {
-                menu.CloseTopMenu();
-            }
+        // ボタンに navigation 更新処理を登録
+        button->RegisterUpdateSelectButton([this, button]() {
+            eventSystem.UpdateSelectButton(button);
         });
-        menu.OpenMenu<MenuConfirm>();
-    } else if (buttonIndex == 2) {
-        level = GameEnum::MiniGameLevel::Hard;
-        AudioUtility::PlaySE("DebugSE");
-        confirm->SetCallback([this, &menu, level](GameEnum::ConfirmResult result) {
-            if (result == GameEnum::ConfirmResult::Yes) {
-                menu.CloseTopMenu();
-                isInteractive = false;
-                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, level]() {
-                    menu.CloseTopMenu();
-                    if (Callback) Callback(level);
-                });
-            }
-            else {
-                menu.CloseTopMenu();
-            }
-        });
-        menu.OpenMenu<MenuConfirm>();
     }
-    else if (buttonIndex == 3) {
-        level = GameEnum::MiniGameLevel::Invalid;
-        AudioUtility::PlaySE("DebugSE");
-        confirm->SetCallback([this, &menu, level](GameEnum::ConfirmResult result) {
-            if (result == GameEnum::ConfirmResult::Yes) {
-                menu.CloseTopMenu();
-                isInteractive = false;
-                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, level]() {
-                    menu.CloseTopMenu();
-                    if (Callback) Callback(level);
-                });
-            } else {
-                menu.CloseTopMenu();
-            }
-        });
-        menu.OpenMenu<MenuConfirm>();
-    }
+}
+/*
+ *	@brief		名前でのボタン検索
+ *	@param[in]	const std::string& buttonName
+ *	@return		UIButtonBase*
+ */
+UIButtonBase* MenuSelectMiniGameLevel::FindButtonByName(const std::string& buttonName) {
+    auto itr = buttonMap.find(buttonName);
+    if (itr == buttonMap.end()) return nullptr;
+
+    return itr->second;
 }

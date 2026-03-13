@@ -15,56 +15,75 @@ void PlayerActionMap::Initialize() {
 	AddAxisButton(
 		static_cast<int>(GameEnum::PlayerAction::ForwardMove),
 		{ InputType::Key, KEY_INPUT_W },
-		{ InputType::Key, KEY_INPUT_S });
+		{ InputType::Key, KEY_INPUT_S }
+	);
 	// 右移動
 	AddAxisButton(
 		static_cast<int>(GameEnum::PlayerAction::RightMove),
 		{ InputType::Key, KEY_INPUT_D },
-		{ InputType::Key, KEY_INPUT_A });
+		{ InputType::Key, KEY_INPUT_A }
+	);
 	// ダッシュ
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::Run),
-		{ InputType::Key, KEY_INPUT_LSHIFT });
+		{ InputType::Key, KEY_INPUT_LSHIFT }
+	);
 	// 回避
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::Avoid),
-		{ InputType::Key, KEY_INPUT_LCONTROL });
+		{ InputType::Key, KEY_INPUT_LCONTROL }
+	);
 	// ジャンプ
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::Jump),
-		{ InputType::Key, KEY_INPUT_SPACE });
+		{ InputType::Key, KEY_INPUT_SPACE }
+	);
 	// 射撃
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::Shot),
-		{ InputType::MouseButton, MOUSE_INPUT_LEFT });
+		{ InputType::MouseButton, MOUSE_INPUT_LEFT }
+	);
 	// お宝持ち上げ
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::Lift),
-		{ InputType::MouseButton, MOUSE_INPUT_RIGHT });
+		{ InputType::MouseButton, MOUSE_INPUT_RIGHT }
+	);
 	// メニューを開く
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::OpenMenu),
-		{ InputType::Key, KEY_INPUT_ESCAPE });
+		{ InputType::Key, KEY_INPUT_ESCAPE }
+	);
 	// 銃のリロード
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::BulletReload),
-		{ InputType::Key, KEY_INPUT_R });
+		{ InputType::Key, KEY_INPUT_R }
+	);
 	// 武器1
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::FirstWeapon),
-		{ InputType::Key, KEY_INPUT_1 });
+		{ InputType::Key, KEY_INPUT_1 }
+	);
 	// 武器2
 	AddButton(
 		static_cast<int>(GameEnum::PlayerAction::SecondWeapon),
-		{ InputType::Key, KEY_INPUT_2 });
-	// カメラのX軸移動
+		{ InputType::Key, KEY_INPUT_2 }
+	);
+	// カメラのX軸回転
 	AddAxisValue(
-		static_cast<int>(GameEnum::PlayerAction::CameraMoveX),
-		{ InputType::MouseMove, static_cast<int>(MouseMove::X) });
-	// カメラのY軸移動
+		static_cast<int>(GameEnum::PlayerAction::CameraRotateX),
+		{ InputType::MouseMove, static_cast<int>(MouseMove::X) }
+	);
+	// カメラのY軸回転
 	AddAxisValue(
-		static_cast<int>(GameEnum::PlayerAction::CameraMoveY),
-		{ InputType::MouseMove, static_cast<int>(MouseMove::Y) });
+		static_cast<int>(GameEnum::PlayerAction::CameraRotateY),
+		{ InputType::MouseMove, static_cast<int>(MouseMove::Y) }
+	);
+	// デバックカメラに切り替え
+	AddButton(
+		static_cast<int>(GameEnum::PlayerAction::ChangeDebugCamera),
+		{ InputType::Key, KEY_INPUT_RCONTROL }
+	);
+	
 
 	// 値の初期化
 	state.axis[static_cast<int>(GameEnum::PlayerAction::ForwardMove)] = 0.0f;
@@ -79,8 +98,9 @@ void PlayerActionMap::Initialize() {
 	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::BulletReload)] = false;
 	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::FirstWeapon)] = false;
 	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::SecondWeapon)] = false;
-	state.axis[static_cast<int>(GameEnum::PlayerAction::CameraMoveX)] = 0.0f;
-	state.axis[static_cast<int>(GameEnum::PlayerAction::CameraMoveY)] = 0.0f;
+	state.axis[static_cast<int>(GameEnum::PlayerAction::CameraRotateX)] = 0.0f;
+	state.axis[static_cast<int>(GameEnum::PlayerAction::CameraRotateY)] = 0.0f;
+	state.buttonDown[static_cast<int>(GameEnum::PlayerAction::ChangeDebugCamera)] = false;
 
 	isActive = false;
 }

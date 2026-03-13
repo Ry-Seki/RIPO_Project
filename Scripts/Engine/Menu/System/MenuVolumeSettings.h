@@ -34,11 +34,6 @@ private:
 	EventSystem eventSystem;
 
 	std::vector<int> volumeTextList;
-	static constexpr const float _MOVE_VALUE = 0.1f;
-	static constexpr const int _UI_MAX_VOLUME = 10;
-
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/System/Settings/SettingsResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/Settings/SettingsNavigation.json";
 
 public:
 	/*

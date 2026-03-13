@@ -21,6 +21,7 @@ private:
 	const float CAMERA_ROTATION_X_MAX;		// カメラの角度のxの最大
 	const float CAMERA_ROTATION_X_MIN;		// カメラの角度のxの最小
 	const float PLAYER_HEAD_HEIGHT;			// プレイヤーの頭の高さ
+	const float DEFAULT_DEBUG_MOVE_SPEED;	// デバックの移動速度のデフォルト
 
 public:
 	EventCameraPtr eventCamera;		// イベントカメラ
@@ -48,6 +49,12 @@ public:
 	 *	カメラの状態取得
 	 */
 	inline GameEnum::CameraState GetState() const { return state; }
+
+private:
+	/*
+	 *	カメラの回転
+	 */
+	void CameraRotate(GameObject* camera, float axisX, float axisY);
 };
 // 別名定義
 using CameraComponentPtr = std::shared_ptr<CameraComponent>;
