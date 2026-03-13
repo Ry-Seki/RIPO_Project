@@ -3,8 +3,8 @@
  *  @author Riku
  */
 
-#ifndef _ACTION_MAP_BASE_H_
-#define _ACTION_MAP_BASE_H_
+#ifndef _ACTIONMAPBASE_H_
+#define _ACTIONMAPBASE_H_
 
 #include <unordered_map>
 
@@ -115,4 +115,4 @@ public:
 	virtual void Initialize() = 0;
 };
 
-#endif // !_ACTION_MAP_BASE_H_
+#endif // !_ACTIONMAPBASE_H_

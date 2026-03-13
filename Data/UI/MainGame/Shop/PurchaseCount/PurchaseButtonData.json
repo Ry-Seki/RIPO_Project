@@ -1,0 +1,20 @@
+{
+  "PurchaseButtons": [
+    {
+      "ButtonName": "AddCount",
+      "PurchaseButtonType": "AddCount"
+    },
+    {
+      "ButtonName": "SubCount",
+      "PurchaseButtonType": "SubCount"
+    },
+    {
+      "ButtonName": "Buy",
+      "PurchaseButtonType": "Buy"
+    },
+    {
+      "ButtonName": "Cancel",
+      "PurchaseButtonType": "Cancel"
+    }
+  ]
+}

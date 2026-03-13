@@ -15,7 +15,7 @@
 void DxLibResourcesManager::Teardown() {
 	// エフェクトの解放
 	for (auto& effect : effectHandleList) {
-		DeleteEffekseerEffect(effect);
+		if(effect != -1) DeleteEffekseerEffect(effect);
 	}
 	effectHandleList.clear();
 	// モデルの解放
@@ -35,6 +35,4 @@ void DxLibResourcesManager::Teardown() {
 	audioHandleList.clear();
 	// フォントの解放
 	FontManager::GetInstance().ReleaseAll();
-
-
 }

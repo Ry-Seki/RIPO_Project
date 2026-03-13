@@ -33,9 +33,6 @@ private:
 
 	std::function<void()> Callback = nullptr;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Dungeon/Result/PlayerDeathMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Dungeon/Result/PlayerDeathMenuNavigation.json";
-
 public:
 	/*
 	 *	@brief	デストラクタ
@@ -76,7 +73,7 @@ private:
 	/*
 	 *	@brief	ボタンの押された時の処理
 	 */
-	void SelectButtonExecute(Engine& engine);
+	void SelectButtonExecute();
 
 public:
 	/*

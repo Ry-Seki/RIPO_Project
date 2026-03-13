@@ -24,52 +24,55 @@
 
 namespace {
     /*
-     *  @brief  ファイルパスの名前空間
+     *  @brief  ファイルパス
      */
     constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Training/SelectTraining/SelectTrainingMenuResources.json";
     constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Training/SelectTraining/SelectTrainingMenuNavigation.json";
     constexpr const char* _TRAING_BUTTON_DATA_PATH = "Data/UI/MainGame/Training/SelectTraining/TrainingButtonData.json";
 
+    // 別名定義
+    using PlayerStatusType = GameEnum::PlayerStatusType;
+
     /*
      *  @brief  ステータスの種類マップ
      */
-    const std::unordered_map<std::string, GameEnum::PlayerStatusType> statusTypeMap = {
-        {"HP", GameEnum::PlayerStatusType::HP},
-        {"Stamina", GameEnum::PlayerStatusType::Stamina},
-        {"Strength", GameEnum::PlayerStatusType::Strength},
-        {"ResistTime", GameEnum::PlayerStatusType::ResistTime},
-        {"Back", GameEnum::PlayerStatusType::Invalid}
+    const std::unordered_map<std::string, PlayerStatusType> statusTypeMap = {
+        {"HP", ::PlayerStatusType::HP},
+        {"Stamina", ::PlayerStatusType::Stamina},
+        {"Strength", ::PlayerStatusType::Strength},
+        {"ResistTime", ::PlayerStatusType::ResistTime},
+        {"Back", ::PlayerStatusType::Invalid}
     };
     /*
      *  @brief  トレーニングボタン構造体
      */
     struct TrainingButtonData {
         std::string name = "";
-        GameEnum::PlayerStatusType type
-            = GameEnum::PlayerStatusType::Invalid;
+        PlayerStatusType type = PlayerStatusType::Invalid;
     };
     /*
-     *	@brief	    プレイヤーのステータスの種類識別
+     *	@brief	    プレイヤーステータスの種類識別
      *  @param[in]  const std::string& typeKey
-     *  @return     GameEnum::PlayerStatusType
+     *  @return     PlayerStatusType
      */
-    GameEnum::PlayerStatusType StringToPlayerStatusType(const std::string& typeKey) {
+    PlayerStatusType StringToPlayerStatusType(const std::string& typeKey) {
         auto itr = statusTypeMap.find(typeKey);
 
         if (itr != statusTypeMap.end()) return itr->second;
 
-        return GameEnum::PlayerStatusType::Invalid;
+        return PlayerStatusType::Invalid;
     }
     /*
      *  @brief      JSON->トレーニングボタン情報へ変換
      *  @param[in]  const JSON& json
+     *  @return     std::vector<TrainingButtonData>
      */
     std::vector<TrainingButtonData> ParseTrainingButtonData(const JSON& json) {
         std::vector<TrainingButtonData> result;
 
         auto array = json["TrainingButtons"];
 
-        for (auto& node : array) {
+        for (const auto& node : array) {
             TrainingButtonData entry;
 
             entry.name = node["ButtonName"].get<std::string>();
@@ -93,13 +96,13 @@ void MenuSelectTraining::Initialize(Engine& engine) {
     auto buttonData = load.LoadResource<LoadJSON>(_TRAING_BUTTON_DATA_PATH);
 
     load.SetOnComplete([this, &engine, menuJSON, navigation, buttonData]() {
-        // メニューのUI生成
+        // メニューUI生成
         MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
         // メニューUIの所有権移動
         spriteList = std::move(result.spriteList);
         buttonList = std::move(result.buttonList);
         // ボタンの登録
-        for (auto& entry : buttonList) {
+        for (const auto& entry : buttonList) {
             if (!entry) continue;
 
             UIButtonBase* button = entry.get();
@@ -242,6 +245,7 @@ void MenuSelectTraining::OpenConfirmMenu(GameEnum::PlayerStatusType type) {
     auto confirm = menu.GetMenu<MenuConfirm>();
 
     confirm->SetCallback([this, &menu, type](GameEnum::ConfirmResult result) {
+        AudioUtility::PlaySE("DebugSE");
         menu.CloseTopMenu();    // 確認メニュー
         if (result != GameEnum::ConfirmResult::Yes) return;
         // フェード開始

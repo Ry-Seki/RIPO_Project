@@ -24,6 +24,9 @@ void EventSystem::Initialize(int startIndex) {
  *	@brief	更新処理
  */
 void EventSystem::Update(float unscaledDeltaTime) {
+	// すでに押されているボタンがある場合は更新しない
+	if (IsPressButton()) return;
+
 	auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
 	float vertical = input.axis[static_cast<int>(GameEnum::MenuAction::Vertical)];
 	float horizontal = input.axis[static_cast<int>(GameEnum::MenuAction::Horizontal)];
@@ -123,6 +126,18 @@ int EventSystem::FindNextEnableButton(int fromIndex, GameEnum::NavigationDir dir
 	}
 
 	return fromIndex;
+}
+/*
+ *	@brief		すでに押されているボタンがあるか判定
+ *	@return		bool
+ */
+bool EventSystem::IsPressButton() {
+	for (const auto& button : buttonList) {
+		if (!button) continue;
+
+		if (button->GetInputState() == GameEnum::ButtonInputState::Press) return true;
+	}
+	return false;
 }
 /*
  *	@brief		移動の道筋データの設定

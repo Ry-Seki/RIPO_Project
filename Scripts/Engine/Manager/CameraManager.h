@@ -53,7 +53,7 @@ public:
 	/*
 	 *	追従するターゲットをセット
 	 */
-	inline void SetTarget(GameObjectPtr setTarget) { target = setTarget; }
+	inline void SetTarget(const GameObjectPtr setTarget) { target = setTarget; }
 	/*
 	 *	追従するターゲットをゲット
 	 */
@@ -66,6 +66,10 @@ public:
 	 *	カメラの状態取得
 	 */
 	inline GameEnum::CameraState GetCameraState() const { return cameraComponent->GetState(); }
+	/*
+	 *	カメラの状態セット
+	 */
+	inline void SetCameraState(const GameEnum::CameraState setState) { cameraComponent->SetState(setState); }
 };
 
 #endif // !_CAMERAMANAGER_H_

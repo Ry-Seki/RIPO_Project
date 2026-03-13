@@ -61,8 +61,9 @@ public:
 	 *	@brief		ダンジョン終了集計
 	 *  @param[in]	int dungeonID
 	 *  @param[in]	bool isEventDay
+	 *	@param[in]	bool isPlayerDead
 	 */
-	void CalculationDungeon(int dungeonID, bool isEventDay);
+	void CalculationDungeon(int dungeonID, bool isEventDay, bool isPlayerDead);
 };
 
 #endif // !_IN_ACTION_DUNGEON_H_

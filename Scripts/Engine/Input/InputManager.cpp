@@ -6,6 +6,7 @@
 #include "InputManager.h"
 #include "PlayerActionMap.h"
 #include "MenuActionMap.h"
+#include "DebugCameraActionMap.h"
 #include "../GameConst.h"
 
 /*
@@ -36,6 +37,7 @@ void InputManager::Initialize() {
 	// 全ての入力受付の生成
 	actionMaps[GameEnum::ActionMap::PlayerAction] = std::make_shared<PlayerActionMap>();
 	actionMaps[GameEnum::ActionMap::MenuAction] = std::make_shared<MenuActionMap>();
+	actionMaps[GameEnum::ActionMap::DebugCameraAction] = std::make_shared<DebugCameraActionMap>();
 	for (auto [mapNum, actionMap] : actionMaps) {
 		// 全アクションマップの初期化
 		actionMap->Initialize();

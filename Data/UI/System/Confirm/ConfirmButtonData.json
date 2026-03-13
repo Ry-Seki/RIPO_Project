@@ -1,0 +1,12 @@
+{
+  "ConfirmButtons": [
+    {
+      "ButtonName": "Confirm",
+      "ConfirmResult": "Yes"
+    },
+    {
+      "ButtonName": "Cancel",
+      "ConfirmResult": "No"
+    }
+  ]
+}

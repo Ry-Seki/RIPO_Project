@@ -32,30 +32,31 @@ void MenuTitle::Initialize(Engine& engine) {
 	auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
 
 	load.SetOnComplete([this, &engine, menuJSON, navigation]() {
+		// メニューUI生成
 		MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
-		for (auto& button : result.buttonList) {
-			if (!button) continue;
-
-			eventSystem.RegisterButton(button.get());
-		}
-		eventSystem.Initialize(0);
+		// メニューUIの所有権移動
 		buttonList = std::move(result.buttonList);
 		spriteList = std::move(result.spriteList);
-		for (int i = 0, max = buttonList.size(); i < max; i++) {
-			UIButtonBase* button = buttonList[i].get();
+		// ボタンの登録
+		for (const auto& button : buttonList) {
 			if (!button) continue;
-
-			button->RegisterUpdateSelectButton([this, button]() {
-				eventSystem.UpdateSelectButton(button);
-			});
-
+			// ボタンの登録
+			eventSystem.RegisterButton(button.get());
+			// ボタン実行処理の登録
 			button->RegisterOnClick([this]() {
 				SelectButtonExecute();
+			});
+			// ボタンに navigation 更新処理を登録
+			button->RegisterUpdateSelectButton([this, button]() {
+				eventSystem.UpdateSelectButton(button.get());
 			});
 		}
 		for (auto& sprite : spriteList) {
 			if (sprite->GetName() == "StartGame") startGameSprite = sprite.get();
 		}
+		// イベントシステムの初期化
+		eventSystem.Initialize(0);
+		// イベントシステムのnavigationの設定
 		eventSystem.LoadNavigation(navigation->GetData());
 	 });
 }
