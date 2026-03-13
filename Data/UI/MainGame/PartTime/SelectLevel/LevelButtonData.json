@@ -1,0 +1,20 @@
+{
+  "LevelButtons": [
+    {
+      "ButtonName": "Easy",
+      "MiniGameLevel": "Easy"
+    },
+    {
+      "ButtonName": "Normal",
+      "MiniGameLevel": "Normal"
+    },
+    {
+      "ButtonName": "Hard",
+      "MiniGameLevel": "Hard"
+    },
+    {
+      "ButtonName": "Back",
+      "MiniGameLevel": "Back"
+    }
+  ]
+}

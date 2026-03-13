@@ -24,9 +24,6 @@ class Engine;
  */
 class MenuMoneyChange : public MenuBase {
 private:
-	int currentIndex = -1;
-	float animTimer = 0.0f;
-	int animFrame = 0;
 	int prevMoney = -1;
 	int currentMoney = -1;
 	int changeMoney = -1;
@@ -81,9 +78,8 @@ public:
 private:
 	/*
 	 *	@brief		ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—
-	 *	@param[in]	int buttonIndex
 	 */
-	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	void SelectButtonExecute();
 	/*
 	 *	@brief		ûx‚Ì‰‰o
 	 *	@return		bool
@@ -118,7 +114,6 @@ public:
 	inline void SetCallback(std::function<void()> setCallback) {
 		Callback = setCallback;
 	}
-
 };
 
 #endif // !_MENU_MONEY_CHANGE_H_

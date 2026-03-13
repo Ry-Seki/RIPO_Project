@@ -23,6 +23,13 @@ class MiniGameBase;
  */
 class MenuMiniGame : public MenuBase {
 public:
+	enum class MiniGameButtonType {
+		Invalid = -1,
+		Reset,
+		Retire,
+		Max
+	};
+	// •Ê–¼’è‹`
 	using MiniGamePtr = std::shared_ptr<MiniGameBase>;
 
 private:
@@ -39,9 +46,6 @@ private:
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 
 	std::function<void(GameEnum::MiniGameLevel)> Callback = nullptr;
-
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/PartTime/MiniGame/MiniGameMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/PartTime/MiniGame/MiniGameMenuNavigation.json";
 
 public:
 	/*

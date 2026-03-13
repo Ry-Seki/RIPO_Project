@@ -24,7 +24,7 @@
 
 namespace {
     /*
-     *  @brief  ファイルパスの名前空間
+     *  @brief  ファイルパス
      */
     constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Training/SelectTraining/SelectTrainingMenuResources.json";
     constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Training/SelectTraining/SelectTrainingMenuNavigation.json";
@@ -51,7 +51,7 @@ namespace {
         PlayerStatusType type = PlayerStatusType::Invalid;
     };
     /*
-     *	@brief	    プレイヤーのステータスの種類識別
+     *	@brief	    プレイヤーステータスの種類識別
      *  @param[in]  const std::string& typeKey
      *  @return     PlayerStatusType
      */
@@ -65,6 +65,7 @@ namespace {
     /*
      *  @brief      JSON->トレーニングボタン情報へ変換
      *  @param[in]  const JSON& json
+     *  @return     std::vector<TrainingButtonData>
      */
     std::vector<TrainingButtonData> ParseTrainingButtonData(const JSON& json) {
         std::vector<TrainingButtonData> result;

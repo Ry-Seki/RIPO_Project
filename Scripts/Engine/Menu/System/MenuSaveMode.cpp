@@ -35,7 +35,7 @@ void MenuSaveMode::Update(Engine& engine, float unscaledDeltaTime) {
  *	@brief	•`‰æˆ—
  */  
 void MenuSaveMode::Render() {
-	DrawFormatString(50, 100, GetColor(255, 255, 255), "MenuSaveMode");
+
 }
 /*
  *	@brief	ƒƒjƒ…[‚ğ•Â‚¶‚é

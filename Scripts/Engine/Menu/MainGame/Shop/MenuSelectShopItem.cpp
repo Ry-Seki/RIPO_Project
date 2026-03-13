@@ -252,7 +252,10 @@ void MenuSelectShopItem::SelectButtonExecute(GameEnum::ShopActionType type, int 
         auto purchase = menu.GetMenu<MenuPurchaseCount>();
         purchase->SetItemData(item);
         menu.OpenMenu<MenuPurchaseCount>();
-    } else{
+    } else if(type == GameEnum::ShopActionType::Back){
+        menu.CloseTopMenu();	// このメニュー
+        if (Callback) Callback(type);
+    } else {
         // 確認メニューを開く
         OpenConfirmMenu(type);
     }
@@ -308,16 +311,16 @@ void MenuSelectShopItem::UpdateButtonState() {
     UIButtonBase* button = nullptr;
     if (WeaponManager::GetInstance().IsSubmachineGun()) {
         button = FindButtonByName("SubmachineGun");
-        button->SetIsEnable(false);
+        if (button) button->SetIsEnable(false);
     }
     // すでに購入済みか判定
     if (IsBuyItem()) {
         button = FindButtonByName("Back");
-        button->SetIsEnable(false);
+        if(button) button->SetIsEnable(false);
     }
     else {
         button = FindButtonByName("Exit");
-        button->SetIsEnable(false);
+        if(button) button->SetIsEnable(false);
     }
 }
 /*

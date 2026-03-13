@@ -23,18 +23,13 @@ class Engine;
  */
 class MenuSelectMiniGameLevel : public MenuBase {
 private:
-	float animTimer = 0.0f;
-	int animFrame = 0;
-
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
+	std::unordered_map<std::string, UIButtonBase*> buttonMap;
 
 	std::function<void(GameEnum::MiniGameLevel)> Callback = nullptr;
-
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/PartTime/SelectLevel/SelectLevelMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/PartTime/SelectLevel/SelectLevelMenuNavigation.json";
 
 public:
 	/*
@@ -75,9 +70,30 @@ public:
 private:
 	/*
 	 *	@brief		ボタンの押された時の処理
-	 *	@param[in]	int buttonIndex
+	 *	@param[in]	GameEnum::MiniGameLevel level
 	 */
-	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	void SelectButtonExecute(GameEnum::MiniGameLevel level);
+	/*
+	 *	@brief		フェード後->コールバックの実行処理
+	 *	@param[in]	GameEnum::MiniGameLevel level
+	 */
+	void StartFadeEndCallback(GameEnum::MiniGameLevel level);
+	/*
+	 *	@brief		確認メニューを開く
+	 *	@param[in]	GameEnum::MiniGameLevel level
+	 */
+	void OpenConfirmMenu(GameEnum::MiniGameLevel level);
+	/*
+	 *	@brief		難易度ボタンの準備前処理
+	 *	@param[in]	const JSON& json
+	 */
+	void SetupLevelButtons(const JSON& json);
+	/*
+	 *	@brief		名前でのボタン検索
+	 *	@param[in]	const std::string& buttonName
+	 *	@return		UIButtonBase*
+	 */
+	UIButtonBase* FindButtonByName(const std::string& buttonName);
 
 public:
 	/*

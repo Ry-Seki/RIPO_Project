@@ -25,8 +25,20 @@ struct ItemData;
  *	@brief	アイテムの購入数を調整するメニュー
  */
 class MenuPurchaseCount : public MenuBase {
+public:
+	/*
+	 *	@brief	購入ボタンの種類
+	 */
+	enum class PurchaseButtonType {
+		Invalid = -1,
+		AddButton,
+		SubButton,
+		BuyButton,
+		CancelButton,
+		Max
+	};
+
 private:
-	int buyButtonIndex = -1;
 	int purchaseCount = -1;
 	int currentMoney = -1;
 	int purchaseMoney = -1;
@@ -38,6 +50,7 @@ private:
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 	std::vector<std::shared_ptr<TextBase>> textList;
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
+	std::unordered_map<std::string, UIButtonBase*> buttonMap;
 	std::vector<std::string> purchaseList;
 	std::function<void(int, int)> Callback = nullptr;
 
@@ -80,9 +93,9 @@ public:
 private:
 	/*
 	 *	@brief		ボタンの押された時の処理
-	 *	@param[in]	int buttonIndex
+	 *	@param[in]	PurchaseButtonType type
 	 */
-	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	void SelectButtonExecute(PurchaseButtonType type);
 	/*
 	 *	@brief		購入の確定
 	 */
@@ -95,6 +108,17 @@ private:
 	 *	@brief		アイテムの購入個数を一つ減少
 	 */
 	void SubPurchaseCount();
+	/*
+	 *	@brief		購入ボタンの準備前処理
+	 *	@param[in]	const JSON& json
+	 */
+	void SetupPurchaseButtons(const JSON& json);
+	/*
+	 *	@brief		名前でのボタン検索
+	 *	@param[in]	const std::string& buttonName
+	 *	@return		UIButtonBase*
+	 */
+	UIButtonBase* FindButtonByName(const std::string& buttonName);
 
 public:
 	/*

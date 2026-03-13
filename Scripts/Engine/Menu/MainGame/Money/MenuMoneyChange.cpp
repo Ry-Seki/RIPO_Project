@@ -22,10 +22,14 @@
 #include "../../../Random.h"
 #include "../../../Manager/FontManager.h"
 
+/*
+ *  @brief  定数の名前空間
+ */
 namespace {
-    static constexpr float _CHANGE_DURATION = 1.0f;
-    static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Money/ChangeMoneyMenuResources.json";
-    static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Money/ChangeMoneyMenuNavigation.json";
+    constexpr float _CHANGE_DURATION = 1.0f;
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Money/ChangeMoneyMenuResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Money/ChangeMoneyMenuNavigation.json";
+    constexpr const char* _GET_MONEY_SE_PATH = "Res/Audio/SE/GetMoney.mp3";
 }
 
 /*
@@ -35,34 +39,34 @@ void MenuMoneyChange::Initialize(Engine& engine) {
     auto& load = LoadManager::GetInstance();
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
+    auto getSE = load.LoadResource<LoadAudio>(_GET_MONEY_SE_PATH);
 
-    load.SetOnComplete([this, &engine, menuJSON, navigation]() {
+    load.SetOnComplete([this, &engine, menuJSON, navigation, getSE]() {
+        // メニューUI生成
         MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
-        for (auto& button : result.buttonList) {
-            if (!button) continue;
-
-            eventSystem.RegisterButton(button.get());
-        }
-        eventSystem.Initialize(0);
+        // メニューUIの所有権移動
         spriteList = std::move(result.spriteList);
         textList = std::move(result.textList);
         buttonList = std::move(result.buttonList);
-        for (int i = 0, max = buttonList.size(); i < max; i++) {
-            UIButtonBase* button = buttonList[i].get();
+        // ボタンの登録
+        for (const auto& button : buttonList) {
             if (!button) continue;
-
-            button->RegisterUpdateSelectButton([this, button]() {
-                eventSystem.UpdateSelectButton(button);
+            // ボタンの登録
+            eventSystem.RegisterButton(button.get());
+            // ボタン実行処理の登録
+            button->RegisterOnClick([this]() {
+                SelectButtonExecute();
             });
-
-            button->RegisterOnClick([this, &engine, i]() {
-                SelectButtonExecute(engine, i);
+            // ボタンに navigation 更新処理を登録
+            button->RegisterUpdateSelectButton([this, button]() {
+                eventSystem.UpdateSelectButton(button.get());
             });
         }
+        // イベントシステムの初期化
+        eventSystem.Initialize(0);
+        // イベントシステムのnavigationの設定
         eventSystem.LoadNavigation(navigation->GetData());
-    });
-    auto getSE = load.LoadResource<LoadAudio>("Res/Audio/SE/GetMoney.mp3");
-    load.SetOnComplete([this, getSE]() {
+        // SEの登録
         AudioUtility::RegisterSEHandle("GetMoney", getSE->GetHandle());
     });
 }
@@ -95,11 +99,14 @@ void MenuMoneyChange::Update(Engine& engine, float unscaledDeltaTime) {
 
     // イベントシステムの更新
     eventSystem.Update(unscaledDeltaTime);
-    // ボタンの更新
-    for (auto& button : buttonList) {
-        if (button) button->Update(unscaledDeltaTime);
-    }
+    // アニメーション処理
     if (isAnimationEnd) {
+        // ボタンの更新
+        for (auto& button : buttonList) {
+            if (!button) continue;
+
+            button->Update(unscaledDeltaTime);
+        }
         // 現在選択されているボタンの取得
         auto button = eventSystem.GetCurrentSelectButton();
         if (!button) return;
@@ -175,9 +182,8 @@ void MenuMoneyChange::Resume() {
 }
 /*
  *	@brief		ボタンの押された時の処理
- *	@param[in]	int buttonIndex
  */
-void MenuMoneyChange::SelectButtonExecute(Engine& engine, int buttonIndex) {
+void MenuMoneyChange::SelectButtonExecute() {
     AudioUtility::PlaySE("DebugSE");
     auto& menu = MenuManager::GetInstance();
     FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
@@ -185,7 +191,6 @@ void MenuMoneyChange::SelectButtonExecute(Engine& engine, int buttonIndex) {
         menu.CloseAllMenu();
         if (Callback) Callback();
     });
-
 }
 /*
  *	@brief		収支の演出
