@@ -26,7 +26,7 @@
 
 namespace {
 	/*
-	 *	@brief	ファイルパスの名前空間
+	 *	@brief	ファイルパス
 	 */
 	constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Title/SelectGameMode/SelectGameModeMenuResources.json";
 	constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/SelectGameMode/SelectGameModeMenuNavigation.json";

@@ -30,7 +30,7 @@
 
 namespace {
 	/*
-	 *	@brief	ファイルパスの名前空間
+	 *	@brief	ファイルパス
 	 */
 	constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Dungeon/SelectDungeon/SelectDungeonMenuResources.json";
 	constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Dungeon/SelectDungeon/SelectDungeonMenuNavigation.json";
@@ -42,7 +42,7 @@ namespace {
 	/*
 	 *	@brief	ダンジョンの種類マップ
 	 */
-	const std::unordered_map<std::string, GameEnum::DungeonType> dungeonTypeMap = {
+	const std::unordered_map<std::string, DungeonType> dungeonTypeMap = {
 		{ "Dungeon1", DungeonType::Dungeon1 },
 		{ "Dungeon2", DungeonType::Dungeon2 },
 		{ "Dungeon3", DungeonType::Dungeon3 },

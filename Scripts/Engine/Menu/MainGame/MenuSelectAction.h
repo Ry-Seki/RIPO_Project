@@ -21,15 +21,6 @@
  */
 class MenuSelectAction : public MenuBase {
 private:
-	/*
-	 *	@brief	アクションボタン構造体
-	 */
-	struct ActionButtonEntry {
-		GameEnum::ActionType type = GameEnum::ActionType::Invalid;	// アクションの種類
-		UIButtonBase* button = nullptr;								// ボタン
-	};
-
-private:
 	int elapsedDay = -1;
 	bool isHalf = false;
 
@@ -39,8 +30,8 @@ private:
 	std::vector<std::shared_ptr<TextBase>> textList;
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	Sprite* elapsedDaySprite = nullptr;
-
-	std::vector<ActionButtonEntry> actionButtonList;
+	std::unordered_map<std::string, UIButtonBase*> buttonMap;
+	
 	std::function<void(GameEnum::ActionType)> Callback = nullptr;
 
 public:
@@ -94,10 +85,21 @@ private:
 	 */
 	void SelectButtonExecute(GameEnum::ActionType type);
 	/*
+	 *	@brief		アクションボタンの準備前処理
+	 *	@param[in]	const JSON& json
+	 */
+	void SetupActionButtons(const JSON& json);
+	/*
 	 *	@brief		フェード後->コールバックの実行処理
 	 *	@param[in]	GameEnum::ActionType type
 	 */
 	void StartFadeEndCallback(GameEnum::ActionType type);
+	/*
+	 *	@brief		名前でのボタン検索
+	 *	@param[in]	const std::string& buttonName
+	 *	@return		UIButtonBase*
+	 */
+	UIButtonBase* FindButtonByName(const std::string& buttonName);
 
 public:
 	/*

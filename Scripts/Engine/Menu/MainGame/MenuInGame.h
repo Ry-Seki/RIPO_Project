@@ -24,15 +24,11 @@ class Engine;
 class MenuInGame : public MenuBase {
 private:
 	int currentSlot = -1;
-	float animTimer = -1;
-	int animFrame = -1;
+
+	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
-	EventSystem eventSystem;
-
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/InGame/InGameMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/InGame/InGameMenuNavigation.json";
 
 public:
 	/*

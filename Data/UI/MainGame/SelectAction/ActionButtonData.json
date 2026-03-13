@@ -1,0 +1,24 @@
+{
+  "ActionButtons": [
+    {
+      "ButtonName": "Dungeon",
+      "ActionType": "Dungeon"
+    },
+    {
+      "ButtonName": "Training",
+      "ActionType": "Training"
+    },
+    {
+      "ButtonName": "Shop",
+      "ActionType": "Shop"
+    },
+    {
+      "ButtonName": "PartTime",
+      "ActionType": "PartTime"
+    },
+    {
+      "ButtonName": "Status",
+      "ActionType": "Status"
+    }
+  ]
+}
