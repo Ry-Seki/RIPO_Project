@@ -192,6 +192,7 @@
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Engine\Input\ActionMapBase.cpp" />
+    <ClCompile Include="Scripts\Engine\Input\DebugCameraActionMap.cpp" />
     <ClCompile Include="Scripts\Engine\Input\InputManager.cpp" />
     <ClCompile Include="Scripts\Engine\Input\MenuActionMap.cpp" />
     <ClCompile Include="Scripts\Engine\Input\PlayerActionMap.cpp" />
@@ -393,6 +394,7 @@
     <ClInclude Include="Scripts\Engine\GameObject.h" />
     <ClInclude Include="Scripts\Engine\GameObject\GameObjectUtility.h" />
     <ClInclude Include="Scripts\Engine\Input\ActionMapBase.h" />
+    <ClInclude Include="Scripts\Engine\Input\DebugCameraActionMap.h" />
     <ClInclude Include="Scripts\Engine\Input\InputManager.h" />
     <ClInclude Include="Scripts\Engine\Input\InputUtility.h" />
     <ClInclude Include="Scripts\Engine\Input\MenuActionMap.h" />

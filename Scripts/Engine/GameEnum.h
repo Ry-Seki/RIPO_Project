@@ -212,27 +212,44 @@ namespace GameEnum {
 		Incalid = -1,
 		PlayerAction,
 		MenuAction,
+		DebugCameraAction,
 		Max
 	};
 	/*
-	 *	@brief	プレイヤーの行動
+	 *	@brief	プレイヤーの入力
 	 *	@author	Riku
 	 */
 	enum class PlayerAction {
 		Invalid = -1,
-		ForwardMove,	// 前移動
-		RightMove,		// 右移動
-		Run,			// ダッシュ
-		Avoid,			// 回避
-		Jump,			// ジャンプ
-		Shot,			// 射撃
-		Lift,			// お宝持ち上げ
-		OpenMenu,		// メニューを開く
-		BulletReload,	// 銃のリロード
-		FirstWeapon,	// 武器1
-		SecondWeapon,	// 武器2
-		CameraMoveX,	// カメラのX軸移動
-		CameraMoveY,	// カメラのY軸移動
+		ForwardMove,		// 前移動
+		RightMove,			// 右移動
+		Run,				// ダッシュ
+		Avoid,				// 回避
+		Jump,				// ジャンプ
+		Shot,				// 射撃
+		Lift,				// お宝持ち上げ
+		OpenMenu,			// メニューを開く
+		BulletReload,		// 銃のリロード
+		FirstWeapon,		// 武器1
+		SecondWeapon,		// 武器2
+		CameraRotateX,		// カメラのX軸回転
+		CameraRotateY,		// カメラのY軸回転
+		ChangeDebugCamera,	// デバッグ用カメラに切り替え
+
+		Max
+	};
+	/*
+	 *	@brief	デバッグカメラの入力
+	 *  @author Riku
+	 */
+	enum class DebugCameraAction {
+		ForwardMove,		// 前移動
+		RightMove,			// 右移動
+		UpMove,				// 上移動
+		Run,				// ダッシュ
+		RotateX,			// X軸回転
+		RotateY,			// Y軸回転
+		ChangePlayerAction,	// プレイヤー操作に切り替え
 
 		Max
 	};
