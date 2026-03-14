@@ -235,8 +235,6 @@ void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
                 }
             });
             menu.OpenMenu<MenuConfirm>();
-
-			// TODO : 確定メニューを表示
             break;
 
         case GameEnum::SaveSlotMenuMode::Load:

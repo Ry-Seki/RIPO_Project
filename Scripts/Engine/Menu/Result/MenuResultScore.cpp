@@ -168,7 +168,6 @@ void MenuResultScore::SelectButtonExecute(Engine& engine, int buttonIndex) {
         if (result == GameEnum::ConfirmResult::Yes) {
             FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
             FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
-                // TODO : ‚¨‹à‚ÌƒŠƒZƒbƒg
                 menu.CloseAllMenu();
                 engine.SetNextScene(std::make_shared<TitleScene>());
             });
