@@ -32,12 +32,6 @@ private:
 	SaveData currentSaveData;							// 現在プレイ中のスロット
 	SaveData autoSaveData;								// オートセーブ専用
 
-	const std::string _SAVE_FILE_PATH = "SaveData/";	// ファイルパス
-	const std::string _JSON_PATH = ".json";				// JSON拡張子
-	const std::string _AUTO_SAVE = "AutoSave";			// オートセーブ
-
-	const int _SAVE_VERSION = 1;						// 将来のバージョン管理用
-
 private:
 	/*
 	 *	@brief	コンストラクタ
@@ -189,6 +183,22 @@ public:
 	 *	@brief	データの初期化
 	 */
 	void InitSaveData();
+	/*
+	 *	@brief		ファイルパスを生成
+	 *	@param[in]	const std::string& slotPath
+	 *	@return		std::string
+	 */
+	std::string MakeFilePath(const std::string& slotPath);
+	/*
+	 *	@brief		最小スロット数の取得
+	 *	@return		int
+	 */
+	int GetMinSaveSlot() const;
+	/*
+	 *	@brief		最大スロット数の取得
+	 *	@return		int
+	 */
+	int GetMaxSaveSlot() const;
 
 public:
 	/*
@@ -196,12 +206,6 @@ public:
 	 *	@return		int
 	 */
 	inline int GetCurrentSlot() const { return currentSlotIndex; }
-	/*
-	 *	@brief		ファイルパスを生成
-	 *	@param[in]	const std::string& slotPath
-	 *	@return		std::string
-	 */
-	inline std::string MakeFilePath(const std::string& slotPath) { return _SAVE_FILE_PATH + slotPath + _JSON_PATH; }
 	/*
 	 *	@brief		セーブデータの取得
 	 *	@return		SaveData&

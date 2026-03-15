@@ -21,6 +21,10 @@
 #include "../../Fade/FadeFactory.h"
 #include "../../UI/Text/Dynamic/DynamicText.h"
 
+namespace {
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/System/SaveLoad/SaveSlotResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/System/SaveLoad/SaveSlotNavigation.json";
+}
 /*
  *	@brief	初期化処理
  */
@@ -210,7 +214,7 @@ void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
     auto confirm = menu.GetMenu<MenuConfirm>();
 
     // もし一番下のボタンの場合、それは戻るボタン
-    if (currentSlot > GameConst::SELECT_SAVE_SLOT_MAX) {
+    if (currentSlot > save.GetMaxSaveSlot()) {
         isInteractive = false;
         AudioUtility::PlaySE("DebugSE");
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::Out, FadeMode::Stop);
@@ -235,6 +239,8 @@ void MenuSelectSaveSlot::SelectButtonExecute(Engine& engine, int slotIndex) {
                 }
             });
             menu.OpenMenu<MenuConfirm>();
+
+			// TODO : 確定メニューを表示
             break;
 
         case GameEnum::SaveSlotMenuMode::Load:
