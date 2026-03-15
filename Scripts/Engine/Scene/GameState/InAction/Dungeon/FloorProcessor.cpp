@@ -385,36 +385,45 @@ std::vector<int> FloorProcessor::GetEventTreasureIDTable() {
  */
 std::vector<std::vector<int>> FloorProcessor::GetSpawnTreasureIDTable() {
 	std::vector<std::vector<int>> result(GameConst::TREASURE_TYPE_INDEX);
+	// プレイヤーが所持しているお宝IDを取得
+	int holdTreasureID = GetHoldTreasureID();
+
 	// 生成する通常お宝IDリストを取得
 	int normal = GameConst::NORMAL_TREASURE_INDEX;
 	result[normal] = GetNormalTreasureIDTable();
 	// お宝獲得状況マップを取得
 	auto& getTreasureIDMap = dungeonProgressData.treasureFlagMap;
-	if (!getTreasureIDMap.empty()) {
-		// 取得済みIDを生成候補から除外
-		result[normal].erase(
-			std::remove_if(result[normal].begin(), result[normal].end(),
-			[&](int treasureID) {
-				auto itr = getTreasureIDMap.find(treasureID);
-				return itr != getTreasureIDMap.end() && itr->second;
-		}), result[normal].end());
-	}
+	// 取得済みIDを生成候補から除外
+	result[normal].erase(
+		std::remove_if(result[normal].begin(), result[normal].end(),
+		[&](int treasureID) {
+			auto itr = getTreasureIDMap.find(treasureID);
+			// すでにお宝を取得済みか判定
+			bool isCollected = (itr != getTreasureIDMap.end() && itr->second);
+			// プレイヤー所持判定
+			bool isHolding = (treasureID == holdTreasureID);
+			return isCollected || isHolding;
+	}), result[normal].end());
+	
 	if (!isEventDay) return result;
 
-	// 生成する通常お宝IDリストを取得
+	// 生成するイベントお宝IDリストを取得
 	int event = GameConst::EVENT_TREASURE_INDEX;
 	result[event] = GetEventTreasureIDTable();
 	// お宝獲得状況マップを取得
 	auto& eventTreasureIDMap = dungeonProgressData.eventTreasureFlagMap;
-	if(eventTreasureIDMap.empty()) return result;
 	// 取得済みIDを生成候補から除外
 	result[event].erase(
 		std::remove_if(result[event].begin(), result[event].end(),
 		[&](int treasureID) {
 			auto itr = eventTreasureIDMap.find(treasureID);
-			return itr != eventTreasureIDMap.end() && itr->second;
-		}), result[event].end());
-
+			// すでにお宝を取得済みか判定
+			bool isCollected = (itr != eventTreasureIDMap.end() && itr->second);
+			// プレイヤー所持判定
+			bool isHolding = (treasureID == holdTreasureID);
+			return isCollected || isHolding;
+	}), result[event].end());
+	
 	return result;	// 結果を反映した物を返す
 }
 /*
