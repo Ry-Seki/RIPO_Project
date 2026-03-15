@@ -228,8 +228,8 @@ void InAction_Dungeon::EndDungeon() {
 	InputUtility::SetMouseVisible(true);
 	InputUtility::SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, false);
 	auto& context = owner->GetOwner()->GetActionContext();
-	CalculationDungeon(context.dungeonID, context.isCurrentEvent);
 	context.isPlayerDead = IsPlayerDead();
+	CalculationDungeon(context.dungeonID, context.isCurrentEvent, context.isPlayerDead);
 	context.isCurrentEvent = false;
 	context.dungeonStageData.ClearDungeonStageMap();
 	floorProcessor.EndDungeon();
@@ -239,8 +239,9 @@ void InAction_Dungeon::EndDungeon() {
  *	@brief		ダンジョン終了集計
  *  @param[in]	int dungeonID
  *  @param[in]	bool isEventDay
+ *	@param[in]	bool isPlayerDead
  */
-void InAction_Dungeon::CalculationDungeon(int dungeonID, bool isEventDay) {
+void InAction_Dungeon::CalculationDungeon(int dungeonID, bool isEventDay, bool isPlayerDead) {
 	auto& world = WorldProgressManager::GetInstance();
 	auto& character = CharacterManager::GetInstance();
 	// ボスの討伐フラグ
@@ -248,6 +249,9 @@ void InAction_Dungeon::CalculationDungeon(int dungeonID, bool isEventDay) {
 		world.SetIsBossDefeated(dungeonID);
 		character.SetBossDeathFlag(false);
 	}
+	// プレイヤーが死亡していた場合、お宝は更新しない
+	if (isPlayerDead) return;
+
 	// お宝IDの取得
 	int treasureID = floorProcessor.GetHoldTreasureID();
 	if (treasureID == -1) return;

@@ -29,11 +29,10 @@ private:
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
+	std::unordered_map<std::string, UIButtonBase*> buttonMap;
+
 	std::function<void(GameEnum::ConfirmResult)> Callback = nullptr;
-
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/System/Confirm/ConfirmResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/Confirm/ConfirmNavigation.json";
-
+	
 public:
 	/*
 	 *	@brief	デストラクタ
@@ -77,9 +76,20 @@ public:
 private:
 	/*
 	 *	@brief		ボタンの押された時の処理
-	 *	@param[in]	int buttonIndex
+	 *	@param[in]	GameEnum::ConfirmResult result
 	 */
-	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	void SelectButtonExecute(GameEnum::ConfirmResult result);
+	/*
+	 *	@brief		確認ボタンの準備前処理
+	 *	@param[in]	const JSON& json
+	 */
+	void SetupConfirmButtons(const JSON& json);
+	/*
+	 *	@brief		名前でのボタン検索
+	 *	@param[in]	const std::string& buttonName
+	 *	@return		UIButtonBase*
+	 */
+	UIButtonBase* FindButtonByName(const std::string& buttonName);
 
 public:
 	/*

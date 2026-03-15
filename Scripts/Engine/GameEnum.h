@@ -71,6 +71,19 @@ namespace GameEnum {
 		Max
 	};
 	/*
+	 *	@brief	インゲームメニューの種類
+	 *	@author	Seki
+	 */
+	enum class InGameMenuType {
+		Invalid = -1,
+		Load,
+		Save,
+		Settings,
+		ReturnTitle,
+
+		Max
+	};
+	/*
 	 *	@brief	ダンジョンの種類
 	 *	@author	Seki
 	 */
@@ -120,6 +133,15 @@ namespace GameEnum {
 		Max
 	};
 	/*
+	 *	@brief	ミニゲームボタンの種類
+	 *	@author	Seki
+	 */
+	enum class MiniGameButtonType {
+		Invalid = -1,
+		Reset,
+		Retire,
+	};
+	/*
 	 *	@brief	リザルトランク
 	 *	@author	Seki
 	 */
@@ -137,6 +159,7 @@ namespace GameEnum {
 	 *	@author	Seki
 	 */
 	enum class SaveSlotMenuMode {
+		Invalid = -1,
 		Save,
 		Load
 	};
@@ -201,6 +224,7 @@ namespace GameEnum {
 	 *	@author	Seki
 	 */
 	enum class ConfirmResult {
+		Invalid = -1,
 		Yes,
 		No
 	};
