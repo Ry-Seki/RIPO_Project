@@ -311,12 +311,14 @@ std::vector<std::vector<int>> FloorProcessor::GetAllSpawnTreasureIDTable() {
 	// イベントお宝獲得状況マップの取得
 	auto& eventIDList = treasureIDList[GameConst::EVENT_TREASURE_INDEX];
 	auto& eventTreasureIDMap = dungeonProgressData.eventTreasureFlagMap;
-	eventIDList.erase(
-		std::remove_if(eventIDList.begin(), eventIDList.end(),
-		[&](int treasureID) {
-		auto itr = eventTreasureIDMap.find(treasureID);
-		return itr != eventTreasureIDMap.end() && itr->second;
-	}),eventIDList.end());
+	if (!eventTreasureIDMap.empty()) {
+		eventIDList.erase(
+			std::remove_if(eventIDList.begin(), eventIDList.end(),
+			[&](int treasureID) {
+			auto itr = eventTreasureIDMap.find(treasureID);
+			return itr != eventTreasureIDMap.end() && itr->second;
+		}),eventIDList.end());
+	}
 
 	return treasureIDList;	// 結果を反映した物を返す
 }
