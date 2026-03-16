@@ -24,8 +24,8 @@ private:
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
+	Sprite* currentSelect = nullptr;
 	std::unordered_map<std::string, UIButtonBase*> buttonMap;
-
 	std::function<void(GameEnum::PlayerStatusType)> Callback = nullptr;
 
 public:
@@ -59,6 +59,10 @@ public:
 	 *	@brief	メニューを閉じる
 	 */
 	void Close(Engine& engine) override;
+	/*
+	 *	@brief	メニューを再開
+	 */
+	void Resume() override;
 
 private:
 	/*

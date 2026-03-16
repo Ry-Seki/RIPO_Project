@@ -15,7 +15,7 @@
  */
 class Sprite {
 private:
-	int currentIndex = -1;
+	int currentFrame = -1;
 	bool isVisible = false;
 	std::vector<int> graphHandleList;
 	Rect rect;
@@ -47,12 +47,17 @@ public:
 	 */
 	inline void SetIsVisible(bool setFlag) { isVisible = setFlag; }
 	/*
-	 *	@brief		現在の画像番号の設定
+	 *	@brief		画像の要素数を取得
 	 *	@return		int
 	 */
 	inline int GetFrameCount() const {
 		return static_cast<int>(graphHandleList.size());
 	}
+	/*
+	 *	@brief		現在の画像番号の設定
+	 *	@return		int
+	 */
+	inline int GetCurrentFrame() const { return currentFrame; }
 	/*
 	 *	@brief		現在の画像番号を設定
 	 *	@param[in]	int index
@@ -60,7 +65,7 @@ public:
 	inline void SetFrameIndex(int index) {
 		if (index < 0) return;
 
-		currentIndex = index;
+		currentFrame = index;
 	}
 	/*
 	 *	@brief		画像のサイズ設定
