@@ -78,6 +78,7 @@ public:
 	static constexpr const char* _CREATE_POSITION_STARTPOS = "StartPos";			// スタートスポーンポジションの名前
 	static constexpr const char* _CREATE_POSITION_STAIRPOS = "StairsPos";			// 階段スポーンポジションの名前
 	static constexpr const char* _CREATE_POSITION_LIGHTPOS = "LightPos";			// 階段スポーンポジションの名前
+	static constexpr const char* _CREATE_POSITION_RESPAWNPOS = "RespawnPos";		// 再生成位置の名前
 
 	//----------------------------------------------------
 	//					お宝の名前
