@@ -30,7 +30,7 @@ WeaponBase::WeaponBase()
 	, reload(false) 
 
 	, BULLET_SCALE(0.5f, 0.5f, 0.5f)
-	, BULLET_SPEED(10000.0f){
+	, BULLET_SPEED(30000.0f){
 }
 
 /*

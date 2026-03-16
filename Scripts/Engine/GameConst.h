@@ -16,13 +16,13 @@ public:
 	//----------------------------------------------------
 	//				プレイヤー関連の定数
 	//----------------------------------------------------
-	static constexpr   int PLAYER_MAX_HITCOLL = 1024;		 // 処理するコリジョンポリゴンの最大数
-	static constexpr float PLAYER_ENUM_DEFAULT_SIZE = 20000.0f;	 // 周囲のポリゴン検出に使用するサイズ
-	static constexpr float PLAYER_HIT_HEIGHT = 200.0f;		 // 当たり判定カプセルの半径 
-	static constexpr const char* _STATUS_KEY = "InitStatus";	 // プレイヤーのステータスキー
-	static constexpr const char* _RASE_KEY = "RiseValue";	 // プレイヤーのステータス上昇値のキー
+	static constexpr   int PLAYER_MAX_HITCOLL = 1024;			// 処理するコリジョンポリゴンの最大数
+	static constexpr float PLAYER_ENUM_DEFAULT_SIZE = 20000.0f;	// 周囲のポリゴン検出に使用するサイズ
+	static constexpr float PLAYER_HIT_HEIGHT = 200.0f;			// 当たり判定カプセルの半径 
+	static constexpr const char* _STATUS_KEY = "InitStatus";	// プレイヤーのステータスキー
+	static constexpr const char* _RASE_KEY = "RiseValue";		// プレイヤーのステータス上昇値のキー
 
-	static constexpr const char* STATUS_PART[4] = {			 // プレイヤーの各ステータスキー
+	static constexpr const char* STATUS_PART[4] = {				// プレイヤーの各ステータスキー
 		"HP",
 		"Stamina",
 		"Strength",
