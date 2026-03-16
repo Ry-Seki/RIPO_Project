@@ -170,7 +170,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	}
 	if (treasureCount > 0) {
 		// お宝の生成位置の取得
-		std::unordered_map<int, Vector3> treasureSpawnPos = GetTreasureSpwanPos(floorID);
+		std::unordered_map<int, Vector3> treasureSpawnPos = createPosDataList.treasure.position;
 
 		// お宝オブジェクトの取得
 		GameObjectList treasureList = GetObjectByName(GameConst::_CREATE_POSNAME_TREASURE);
@@ -351,7 +351,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	}
 	if (treasureCount > 0) {
 		// お宝の生成位置の取得
-		std::unordered_map<int, Vector3> treasureSpawnPos = GetTreasureSpwanPos(floorID);
+		std::unordered_map<int, Vector3> treasureSpawnPos = createPosDataList.treasure.position;
 		// お宝オブジェクトの取得
 		GameObjectList treasureList = GetObjectByName(GameConst::_CREATE_POSNAME_TREASURE);
 		// お宝の設定

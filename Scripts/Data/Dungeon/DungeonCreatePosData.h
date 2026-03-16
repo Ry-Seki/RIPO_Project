@@ -131,13 +131,14 @@ public:
 	void LoadFromJSON(const JSON& json, int dungeonID, int floorID) {
 		auto& data = dungeonCreatePosMap[dungeonID];
 
-		LoadStartPos(json, data);		// 開始位置の設定
-		LoadGoalPos(json, data);		// 出口位置の設定
-		LoadEnemySpawn(json, data);		// 敵生成位置の設定
-		LoadBossSpawn(json, data);		// ボス生成位置の設定
-		LoadPointLight(json, data);		// ポイントライト生成位置の設定
-		LoadStairs(json, data);			// 階段生成位置の設定
-		LoadRespawn(json, data);		// リスポーン生成位置の設定
+		LoadStartPos(json, data);			// 開始位置の設定
+		LoadGoalPos(json, data);			// 出口位置の設定
+		LoadEnemySpawn(json, data);			// 敵生成位置の設定
+		LoadBossSpawn(json, data);			// ボス生成位置の設定
+		LoadPointLight(json, data);			// ポイントライト生成位置の設定
+		LoadStairs(json, data);				// 階段生成位置の設定
+		LoadRespawn(json, data);			// リスポーン生成位置の設定
+		LoadTreasure(json, data, floorID);	// お宝生成位置の設定
 	}
 
 private:
@@ -302,7 +303,9 @@ private:
 
 	/*
 	 *	@brief		お宝位置取得
-	 *	@param[in]	
+	 *	@param[in]	json	読み込むjsonデータ
+	 *  @param[in]	data	設定先のデータ
+	 *	@param[in]	flooriD	階層のID
 	 */
 	void LoadTreasure(const JSON& json, CreatePosData& data, int floorID) {
 		if (!json.contains(GameConst::_CREATE_POSNAME_TREASURE))return;
