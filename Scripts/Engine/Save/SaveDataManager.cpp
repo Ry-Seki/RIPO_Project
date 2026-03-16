@@ -11,6 +11,15 @@
 #include "../Scene/GameState/ActionContext.h"
 #include "../Manager/WeaponManager.h"
 
+namespace {
+    constexpr int _SAVE_VERSION = 1;						// 将来のバージョン管理用
+    constexpr int _SELECT_SAVE_SLOT_MIN = 1;                // 最小の選択スロット
+    constexpr int _SELECT_SAVE_SLOT_MAX = 3;                // 最大の選択スロット
+    constexpr const char* _SLOT_STRING = "Slot";            // スロット
+    constexpr const char* _SAVE_FILE_PATH = "SaveData/";	// ファイルパス
+    constexpr const char* _JSON_PATH = ".json";				// JSON拡張子
+    constexpr const char* _AUTO_SAVE = "AutoSave";			// オートセーブ
+}
 /*
  *	@brief	初期化処理
  */
@@ -19,7 +28,12 @@ void SaveDataManager::Initialize() {
         std::filesystem::create_directories(_SAVE_FILE_PATH);
     }
     // 各スロットが存在しなければ初期データで作成
-    const std::vector<std::string> slots = { "Slot1", "Slot2", "Slot3", _AUTO_SAVE };
+    std::vector<std::string> slots;
+    for (int i = _SELECT_SAVE_SLOT_MIN; i <= _SELECT_SAVE_SLOT_MAX; i++) {
+        std::string slot = _SLOT_STRING + std::to_string(i);
+        slots.push_back(slot);
+    }
+    slots.push_back(_AUTO_SAVE);
     for (const auto& slot : slots) {
         const std::string path = MakeFilePath(slot);
         if (!std::filesystem::exists(path)) {
@@ -296,9 +310,9 @@ bool SaveDataManager::AutoSaveLoad() {
  *	@param[in]	int selectSlot
  */
 void SaveDataManager::SelectSlot(int selectSlot) {
-    if (selectSlot >= 1 && selectSlot <= 3) {
+    if (selectSlot >= _SELECT_SAVE_SLOT_MIN && selectSlot <= _SELECT_SAVE_SLOT_MAX) {
         currentSlotIndex = selectSlot;
-        currentSlotPath = "Slot" + std::to_string(selectSlot);
+        currentSlotPath = _SLOT_STRING + std::to_string(selectSlot);
     } else {
         currentSlotIndex = 0;
         currentSlotPath = _AUTO_SAVE;
@@ -313,8 +327,8 @@ bool SaveDataManager::Exists(int selectSlot) {
     SaveData data{};
     std::string slot = "";
     // スロット番号が有効か判定
-    if (selectSlot >= GameConst::SELECT_SAVE_SLOT_MIN && selectSlot <= GameConst:: SELECT_SAVE_SLOT_MAX) {
-        slot = "Slot" + std::to_string(selectSlot);
+    if (selectSlot >= _SELECT_SAVE_SLOT_MIN && selectSlot <= _SELECT_SAVE_SLOT_MAX) {
+        slot = _SLOT_STRING + std::to_string(selectSlot);
     } else {
         slot = _AUTO_SAVE;
     }
@@ -370,7 +384,7 @@ void SaveDataManager::ApplyLoadData(ActionContext& context) {
  */
 std::vector<bool> SaveDataManager::GetAllSlotIsUsed() {
     std::vector<bool> result;
-    for (int i = 0; i <= GameConst::SELECT_SAVE_SLOT_MAX; i++) {
+    for (int i = 0; i <= _SELECT_SAVE_SLOT_MAX; i++) {
         result.push_back(Exists(i));
     }
     return result;
@@ -393,10 +407,9 @@ std::vector<SaveData> SaveDataManager::GetAllSlotData() {
         }
     }
     // 通常スロット
-    for (int i = GameConst::SELECT_SAVE_SLOT_MIN;
-         i <= GameConst::SELECT_SAVE_SLOT_MAX; i++) {
+    for (int i = _SELECT_SAVE_SLOT_MIN; i <= _SELECT_SAVE_SLOT_MAX; i++) {
         SaveData data{};
-        std::string slot = "Slot" + std::to_string(i);
+        std::string slot = _SLOT_STRING + std::to_string(i);
 
         if (Load(data, slot)) {
             result.push_back(data);
@@ -426,7 +439,7 @@ void SaveDataManager::ResetClearSaveData() {
     WorldProgressManager::GetInstance().SetWorldProgressData(worldData);
 
     data.game.currentMoney = 0;
-    data.game.elapsedDay = 1;
+    data.game.elapsedDay++;
     data.game.isHalfDay = false;
     data.game.isClear = false;
     data.game.isWeapon = false;
@@ -449,4 +462,26 @@ void SaveDataManager::InitSaveData() {
     SaveData data{};
     currentSaveData = data;
     Save(data, currentSlotPath);
+}
+/*
+ *	@brief		ファイルパスを生成
+ *	@param[in]	const std::string& slotPath
+ *	@return		std::string
+ */
+std::string SaveDataManager::MakeFilePath(const std::string& slotPath) {
+    return _SAVE_FILE_PATH + slotPath + _JSON_PATH;
+}
+/*
+ *	@brief		最小スロット数の取得
+ *	@return		int
+ */
+int SaveDataManager::GetMinSaveSlot() const {
+    return _SELECT_SAVE_SLOT_MIN;
+}
+/*
+ *	@brief		最大スロット数の取得
+ *	@return		int
+ */
+int SaveDataManager::GetMaxSaveSlot() const {
+    return _SELECT_SAVE_SLOT_MAX;
 }
