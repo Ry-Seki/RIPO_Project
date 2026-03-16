@@ -23,6 +23,13 @@ public:
 	};
 	// すべてのエネミーのステータスデータ
 	std::unordered_map<int, EnemyStatus> enemyStatus;
+	/*struct BossScale {
+		Vector3 stage1Boss;
+		Vector3 stage2Boss;
+		Vector3 stage3Boss;
+		Vector3 stage4Boss;
+	};
+	std::unordered_map<Vector3, BossScale> bossScale;*/
 
 	// jsonデータのファイルパス
 	const std::string ENEMY_DATA_PATH = "Data/Enemy/EnemyStatusData.json";
@@ -89,6 +96,39 @@ public:
 	 */
 	inline EnemyStatus GetEnemyData(GameEnum::EnemyType enemy) {
 		return enemyStatus[static_cast<int>(enemy)];
+	}
+
+	/*
+	 *	ボスの大きさ取得
+	 */
+	inline Vector3 GetBossScale() {
+		for (int i = 0; i < static_cast<int>(GameEnum::EnemyType::Max); i++) {
+			auto enemyName = enemiesName[static_cast<GameEnum::EnemyType>(i)];
+
+			Vector3 bossScale = Vector3::zero;
+			switch (enemyStatus[i].ID)
+			{
+			case 101:
+				bossScale = { 3, 3, 3 };
+				return bossScale;
+				break;
+			case 102:
+				bossScale = { 6, 6, 6 };
+				return bossScale;
+				break;
+			case 103:
+				bossScale = { 1, 1, 1 };
+				return bossScale;
+				break;
+			case 104:
+				bossScale = { 4, 4, 4 };
+				return bossScale;
+				break;
+			default:
+				return bossScale;
+				break;
+			}
+		}
 	}
 
 };

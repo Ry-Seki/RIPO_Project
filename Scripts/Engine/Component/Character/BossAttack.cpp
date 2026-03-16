@@ -19,6 +19,7 @@ BossAttack::BossAttack()
 	, elapsedTime(0)
 	, FirstEffectFlag(false)
 	, FirstSEFlag(false)
+	, headlongAnimation(0)
 	, playerDirection(Vector3::zero)
 	, ANIMATION_SPEED(1250)
 	, MOVE_SPEED(6000.0f)
@@ -40,6 +41,7 @@ void BossAttack::Start(GameObject* boss)
 	case 101:
 
 		coolTime = 3;
+		headlongAnimation = 11;
 
 		break;
 
@@ -47,6 +49,7 @@ void BossAttack::Start(GameObject* boss)
 
 		coolTime = 2;
 		elapsedTime = 0;
+		headlongAnimation = 4;
 
 		break;
 
@@ -215,12 +218,12 @@ void BossAttack::HeadlongAttack(GameObject* boss, float deltaTime, float attackS
 	boss->rotation.y = atan2(playerDirection.x, playerDirection.z) + Pi;
 	elapsedTime += deltaTime;
 
-	animator->Play(11, 10 * deltaTime);
+	animator->Play(headlongAnimation, 10 * deltaTime);
 	if (elapsedTime >= attackStateTime) {
 		if (playerDirection == Vector3::zero) {
 			playerDirection = bossComponent->GetBossToPlayerDirection();
 		}
-		animator->Play(11, 5000 * deltaTime);
+		animator->Play(headlongAnimation, 5000 * deltaTime);
 
 		// UŒ‚’†”»’èŠJŽn
 		bossComponent->SetBossAttackTimeFlag(true);

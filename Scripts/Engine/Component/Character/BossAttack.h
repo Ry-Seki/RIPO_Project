@@ -21,6 +21,8 @@ private:
 	bool FirstEffectFlag;
 	// 音を一回しか鳴らさないためのフラグ
 	bool FirstSEFlag;
+	// 突進アニメーションの番号
+	int headlongAnimation;
 	// プレイヤーの方向保存用
 	Vector3 playerDirection;
 
