@@ -1,0 +1,39 @@
+{
+  "ShopButtons": [
+    {
+      "ItemID": 0,
+      "ButtonName": "HPUpGrade",
+      "ShopActionType": "Buy"
+    },
+    {
+      "ItemID": 1,
+      "ButtonName": "StaminaUpGrade",
+      "ShopActionType": "Buy"
+    },
+    {
+      "ItemID": 2,
+      "ButtonName": "StrengthUpGrade",
+      "ShopActionType": "Buy"
+    },
+    {
+      "ItemID": 3,
+      "ButtonName": "ResistTimeUpGrade",
+      "ShopActionType": "Buy"
+    },
+    {
+      "ItemID": 4,
+      "ButtonName": "SubmachineGun",
+      "ShopActionType": "Buy"
+    },
+    {
+      "ItemID": -1,
+      "ButtonName": "Exit",
+      "ShopActionType": "Exit"
+    },
+    {
+      "ItemID": -1,
+      "ButtonName": "Back",
+      "ShopActionType": "Back"
+    }
+  ]
+}
