@@ -64,14 +64,16 @@
 		 *	param[in]	GameObject*	boss
 		 *  param[in]	float		deltaTime
 		 *  param[in]	float		shotSpeed	弾の発射速度
+		 *	param[in]	float		positionY	自分の位置からYポジションを加減する値
 		 */
-		void ThreeRoundBurst(GameObject* boss, float deltaTime, float shotSpeed);
+		void ThreeRoundBurst(GameObject* boss, float deltaTime, float shotSpeed, float positionY);
 
 		/*
 		 *	連射攻撃
 		 *	param[in]	GameObject*	boss
 		 *  param[in]	float		deltaTime
 		 *  param[in]	float		shotSpeed	弾の発射速度
+		 *	param[in]	float		positionY	自分の位置からYポジションを加減する値
 		 */
 		void RapidFire(GameObject* boss, float deltaTime, float shotSpeed);
 
