@@ -378,6 +378,7 @@
     <ClInclude Include="Scripts\Engine\Component\GaugeBase.h" />
     <ClInclude Include="Scripts\Engine\Component\GravityComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h" />
+    <ClInclude Include="Scripts\Engine\Component\MoveComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\OBBCollider.h" />
     <ClInclude Include="Scripts\Engine\Component\RenderComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\SpriteRenderer.h" />
