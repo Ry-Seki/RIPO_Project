@@ -9,6 +9,7 @@
 #include "../Load/JSON/LoadJSON.h"
 #include "../Load/LoadManager.h"
 #include "../GameEnum.h"
+#include "../VecMath.h"
 #include <unordered_map>
 #include <string>
 
@@ -101,33 +102,30 @@ public:
 	/*
 	 *	ƒ{ƒX‚Ì‘å‚«‚³Žæ“¾
 	 */
-	inline Vector3 GetBossScale() {
-		for (int i = 0; i < static_cast<int>(GameEnum::EnemyType::Max); i++) {
-			auto enemyName = enemiesName[static_cast<GameEnum::EnemyType>(i)];
+	inline Vector3 GetBossScale(int dungeonID) {
 
-			Vector3 bossScale = Vector3::zero;
-			switch (enemyStatus[i].ID)
-			{
-			case 101:
-				bossScale = { 3, 3, 3 };
-				return bossScale;
-				break;
-			case 102:
-				bossScale = { 6, 6, 6 };
-				return bossScale;
-				break;
-			case 103:
-				bossScale = { 1, 1, 1 };
-				return bossScale;
-				break;
-			case 104:
-				bossScale = { 4, 4, 4 };
-				return bossScale;
-				break;
-			default:
-				return bossScale;
-				break;
-			}
+		Vector3 bossScale = Vector3::zero;
+		switch (dungeonID)
+		{
+		case 1:
+			bossScale = { 3, 3, 3 };
+			return bossScale;
+			break;
+		case 2:
+			bossScale = { 6, 6, 6 };
+			return bossScale;
+			break;
+		case 3:
+			bossScale = { 1, 1, 1 };
+			return bossScale;
+			break;
+		case 4:
+			bossScale = { 4, 4, 4 };
+			return bossScale;
+			break;
+		default:
+			return bossScale;
+			break;
 		}
 	}
 

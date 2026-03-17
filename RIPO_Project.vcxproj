@@ -364,6 +364,7 @@
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyChase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyCommonModule.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\Character\EnemyDataUtility.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyDeath.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyStandby.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyState.h" />
