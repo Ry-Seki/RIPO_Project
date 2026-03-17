@@ -17,6 +17,7 @@
 
 #include <vector>
 #include <memory>
+#include <cassert>
 
 // 前方宣言
 class Engine;
@@ -25,10 +26,13 @@ class Engine;
  *	@brief	セーブスロットを選択するメニュー
  */
 class MenuSelectSaveSlot : public MenuBase {
-public:
+private:
 	using TextBasePtr = std::shared_ptr<TextBase>;
 
-private:
+public:
+	/*
+	 *	@brief	セーブスロット情報データ
+	 */
 	struct SlotTextSet {
 		TextBasePtr elapsedDay;
 		TextBasePtr halfDay;
@@ -36,11 +40,16 @@ private:
 		TextBasePtr money;
 		TextBasePtr treasure;
 	};
+	/*
+	 *	@brief	セーブスロットボタン構造体
+	 */
+	struct SaveSlotButtonEntry {
+		int slotIndex = -1;
+		UIButtonBase* button = nullptr;
+		SlotTextSet text;
+	};
 
 private:
-	int currentSlot = -1;
-	float animTimer = 0.0f;
-	int animFrame = 0;
 	GameEnum::SaveSlotMenuMode saveMode;
 	EventSystem eventSystem;
 
@@ -49,7 +58,7 @@ private:
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 
 	Sprite* saveLoadSprite = nullptr;
-	std::vector<SlotTextSet> slotTextList;
+	std::vector<SaveSlotButtonEntry> slotButtonList;
 
 	std::vector<GameProgressData> gameDataList;
 	std::vector<bool> isUsedList;
@@ -87,12 +96,45 @@ public:
 	 */
 	void Resume() override;
 
+public:
+	/*
+	 *	@brief		セーブ処理
+	 *  @param[in]  int slotIndex
+	 */
+	void ExecuteSave(int slotIndex, Engine& engine);
+	/*
+	 *	@brief		ロード処理
+	 *  @param[in]  int slotIndex
+	 */
+	void ExecuteLoad(int slotIndex, Engine& engine);
+	/*
+	 *	@brief		セーブモード時の処理
+	 */
+	void ExecuteSaveMode();
+	/*
+	 *	@brief		ロードモード時の処理
+	 */
+	void ExecuteLoadMove();
+
 private:
 	/*
 	 *	@brief		ボタンのコールバック登録
 	 *	@param[in]	int slotIndex
 	 */
-	void SelectButtonExecute(Engine& engine, int slotIndex);
+	void SelectButtonExecute(int slotIndex, Engine& engine);
+	/*
+	 *	@brief		戻る処理
+	 */
+	void ExecuteBack();
+	/*
+	 *	@brief		確認メニューを開く
+	 *	@param[in]	int slotIndex
+	 */
+	void OpenConfirmMenu(int slotIndex, Engine& engine);
+	/*
+	 *	@brief		セーブスロットボタンの準備前処理
+	 */
+	void InitializeSaveSlotButtons(Engine& engine);
 	/*
 	 *	@brief	テキストの生成(セーブスロットのテキスト描画用)
 	 */
@@ -100,11 +142,32 @@ private:
 	/*
 	 *	@brief	テキストの準備前処理
 	 */
-	void SetupText();
+	void SetupAllSlotText();
+	/*
+	 *	@brief	スロットボタンの状態更新処理
+	 */
+	void UpdateSlotButtonState();
 	/*
 	 *	@brief		セーブスロット情報の描画
 	 */
 	void RenderSlotInfo();
+	/*
+	 *	@brief		セーブスロットテキストの更新
+	 *	@param[in]	const GameProgressData& data
+	 *	@param[in]	SlotTextSet& text
+	 */
+	void UpdateSlotText(const GameProgressData& data, SlotTextSet& text);
+	/*
+	 *	@brief		セーブスロット情報の更新
+	 *	@param[in]	SaveSlotButtonEntry& entry
+	 */
+	void UpdateSaveSlot(SaveSlotButtonEntry& entry);
+	/*
+	 *	@brief		プレイ時間の変換処理
+	 *	@param[in]	int playTime
+	 *	@return		std::string
+	 */
+	std::string ChangePlayTimeText(int playTime);
 
 public:
 	/*
