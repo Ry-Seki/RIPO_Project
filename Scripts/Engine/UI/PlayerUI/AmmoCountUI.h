@@ -9,8 +9,12 @@
 #include "PlayerUIBase.h"
 
 class AmmoCountUI : public PlayerUIBase {
+private:
+	const float WIDTH_POS_RATIO;	// ‰¡•‚É‘Î‚·‚éˆÊ’u‚ÌŠ„‡
+	const float HEIGHT_POS_RATIO;	// c•‚É‘Î‚·‚éˆÊ’u‚ÌŠ„‡
+
 public:
-	AmmoCountUI() = default;
+	AmmoCountUI();
 	~AmmoCountUI() = default;
 
 public:

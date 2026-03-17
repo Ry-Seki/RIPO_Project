@@ -10,6 +10,11 @@
 #include "../../Manager/CameraManager.h"
 #include "../../GameEnum.h"
 
+AmmoCountUI::AmmoCountUI() 
+	: WIDTH_POS_RATIO(0.8f)
+	, HEIGHT_POS_RATIO(0.85f)
+{}
+
 /*
  *	‰Šú‰»ˆ—
  */
@@ -28,13 +33,14 @@ void AmmoCountUI::Render() {
 	if (!weapon)
 		return;
 	// ”Žš‚ª1Œ…‚Ìê‡‚Í‹ó”’‚ð’Ç‰Á‚Å•`‰æ
-	float posX = GameConst::WINDOW_WIDTH * 0.8f;
-	float posY = GameConst::WINDOW_HEIGHT * 0.85f;
+	float posX = GameConst::WINDOW_WIDTH * WIDTH_POS_RATIO;
+	float posY = GameConst::WINDOW_HEIGHT * HEIGHT_POS_RATIO;
 	std::string ammoCount = std::to_string(weapon->ammoCount);
 	if (weapon->ammoCount < 10)
 		ammoCount = " " + ammoCount;
 	std::string ammoCountMax = std::to_string(weapon->ammoCountMax);
 	if (weapon->ammoCountMax < 10)
 		ammoCountMax = " " + ammoCountMax;
-	FontManager::GetInstance().Draw("ammo", posX, posY, ammoCount + " / " + ammoCountMax, GetColor(255, 255, 255));
+	auto w = GameConst::COLOR_WHITE;
+	FontManager::GetInstance().Draw("ammo", posX, posY, ammoCount + " / " + ammoCountMax, GetColor(w.x, w.y, w.z));
 }

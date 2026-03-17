@@ -55,7 +55,7 @@ public:
 	//				ステージ関連の定数
 	//----------------------------------------------------
 	static constexpr int HIT_TRYNUM = 16;								// 壁押し出し処理の最大試行回数
-	static constexpr float HIT_SLIDE_LENGTH = 50.0f;						// 一度の壁押し出し処理でスライドさせる距離
+	static constexpr float HIT_SLIDE_LENGTH = 50.0f;					// 一度の壁押し出し処理でスライドさせる距離
 	static constexpr const float VIEW_RADIUS = 60.0f;					// 取得範囲
 
 
@@ -90,9 +90,11 @@ public:
 	//----------------------------------------------------
 	//					色
 	//----------------------------------------------------
-	const unsigned int WHITE = GetColor(255, 255, 255);
-	const unsigned int GRAY = GetColor(75, 75, 75);
-	const unsigned int BRACK = GetColor(0, 0, 0);
+	static constexpr VECTOR COLOR_WHITE = { 255, 255, 255 };			// 白
+	static constexpr VECTOR COLOR_GRAY = { 75, 75, 75 };				// 灰
+	static constexpr VECTOR COLOR_BRACK = { 0, 0, 0 };					// 黒
+	static constexpr VECTOR COLOR_PURPLE = { 175, 50, 190 };			// 紫
+	static constexpr VECTOR COLOR_YELLOW_GREEN = { 210, 255, 145 };		// 黄緑
 	//----------------------------------------------------
 	//					BGMの命名
 	//----------------------------------------------------
