@@ -33,6 +33,7 @@ namespace {
     // 別名定義
     using PlayerStatusType = GameEnum::PlayerStatusType;
 
+    std::vector<PlayerStatusType> typeList;
     /*
      *  @brief  ステータスの種類マップ
      */
@@ -111,6 +112,12 @@ void MenuSelectTraining::Initialize(Engine& engine) {
             // マップに登録
             buttonMap[button->GetName()] = button;
         }
+
+        for (const auto& sprite : spriteList) {
+            if (!sprite || sprite->GetName() != "Character_Detail") continue;
+
+            currentSelect = sprite.get();
+        }
         // イベントシステムの初期化
         eventSystem.Initialize(0);
         // ボタンの準備前処理
@@ -156,6 +163,8 @@ void MenuSelectTraining::Update(Engine& engine, float unscaledDeltaTime) {
     for (auto& button : buttonList) {
         if (button) button->Update(unscaledDeltaTime);
     }
+    // 現在取得されているボタン要素数を取得
+    currentIndex = eventSystem.GetCurrentIndex();
     // 現在選択されているボタンの取得
     auto button = eventSystem.GetCurrentSelectButton();
     if (!button) return;
@@ -175,15 +184,18 @@ void MenuSelectTraining::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer = 0;
 
     for (auto& sprite : spriteList) {
-        if (!sprite) continue;
+        if (!sprite || sprite.get() == currentSelect) continue;
 
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
 
-        animFrame = (animFrame + 1) % frameCount;
-        sprite->SetFrameIndex(animFrame);
+        int aminFrame = sprite->GetCurrentFrame();
+        aminFrame = (aminFrame + 1) % frameCount;
+        sprite->SetFrameIndex(aminFrame);
     }
-
+    auto type = typeList[currentIndex];
+    int index = static_cast<int>(type) + 1;
+    currentSelect->SetFrameIndex(index);
 }
 /*
  *	@brief	描画処理
@@ -207,6 +219,15 @@ void MenuSelectTraining::Render() {
 void MenuSelectTraining::Close(Engine& engine) {
     MenuBase::Close(engine);
     AudioUtility::StopBGM();
+}
+/*
+ *	@brief	メニューを再開
+ */
+void MenuSelectTraining::Resume() {
+    MenuBase::Resume();
+    for (auto& button : buttonList) {
+        button->Setup();
+    }
 }
 /*
  *	@brief		ボタンの押された時の処理
@@ -272,6 +293,7 @@ void MenuSelectTraining::SetupTrainingButtons(const JSON& json) {
         button->RegisterUpdateSelectButton([this, button]() {
             eventSystem.UpdateSelectButton(button);
         });
+        typeList.push_back(type);
     }
 }
 /*

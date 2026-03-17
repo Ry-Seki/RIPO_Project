@@ -11,7 +11,7 @@
  *	@brief	€”õ‘Oˆ—
  */
 void Sprite::Setup() {
-	currentIndex = 0;
+	currentFrame = 0;
 	isVisible = true;
 }
 /*
@@ -19,7 +19,7 @@ void Sprite::Setup() {
  */
 void Sprite::Render() {
 	if (!isVisible) return;
-	if (currentIndex < 0 || graphHandleList.empty()) return;
+	if (currentFrame < 0 || graphHandleList.empty()) return;
 
-	DrawGraph(rect.x, rect.y, graphHandleList[currentIndex], TRUE);
+	DrawGraph(rect.x, rect.y, graphHandleList[currentFrame], TRUE);
 }
