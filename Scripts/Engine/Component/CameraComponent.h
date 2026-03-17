@@ -15,12 +15,12 @@
 class CameraComponent : public Component {
 private:
 	float sensitivity;				// 感度
-	float playerDistancePos;		// プレイヤーから離れる距離
 	GameEnum::CameraState state;	// カメラの状態
 
 	const float CAMERA_ROTATION_X_MAX;		// カメラの角度のxの最大
 	const float CAMERA_ROTATION_X_MIN;		// カメラの角度のxの最小
 	const float PLAYER_HEAD_HEIGHT;			// プレイヤーの頭の高さ
+	const float TPS_PLAYER_DISTANCE_POS;	// プレイヤーから離れる距離
 	const float DEFAULT_DEBUG_MOVE_SPEED;	// デバックの移動速度のデフォルト
 
 public:
@@ -49,6 +49,10 @@ public:
 	 *	カメラの状態取得
 	 */
 	inline GameEnum::CameraState GetState() const { return state; }
+	/*
+	 *	TPSカメラの位置取得
+	 */
+	Vector3 GetTPSCameraPosition(GameObjectPtr player);
 
 private:
 	/*

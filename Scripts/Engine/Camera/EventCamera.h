@@ -14,8 +14,14 @@
 
 class EventCamera {
 private:
-	GameEnum::CameraEvent eventNum;
-	int commandCount;
+	GameEnum::CameraEvent eventNum;	// イベント番号
+	int commandCount;				// 何個目のコマンドか
+
+	const float CHANGE_VIEW_EVENT_MOVE_TIME;
+	const float DEAD_EVENT_ROTATE_VALUE;
+	const float DEAD_EVENT_ROTATE_TIME;
+	const float DEAD_EVENT_MOVE_TIME;
+	const float DEAD_EVENT_WAIT_TIME;
 
 	struct Event {
 		CameraCommandList commands;			// イベントを構成するコマンド群
@@ -37,6 +43,17 @@ public:
 	 *	更新処理
 	 */
 	void Update(GameObject* camera, float deltaTime);
+
+private:
+	/*
+	 *	FPS→TPS遷移イベントの設定
+	 */
+	void ChangeViewEventSetting(GameObject* camera);
+
+	/*
+	 *	死亡イベントの設定
+	 */
+	void DeadEventSetting(GameObject* camera);
 };
 // 別名定義
 using EventCameraPtr = std::shared_ptr<EventCamera>;

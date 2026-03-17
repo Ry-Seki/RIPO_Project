@@ -12,6 +12,15 @@
 
 using namespace CharacterUtility;
 
+ResistTimeGaugeUI::ResistTimeGaugeUI() 
+	: GAUGE_START_WIDTH_POS_RATIO(0.2f)
+	, GAUGE_START_HEIGHT_POS_RATIO(0.93f)
+	, GAUGE_END_POS_X_MOVE_RATE(0.6f)
+	, GAUGE_END_HEIGHT_POS_RATIO(0.95f)
+	, GRAPH_WIDTH_POS_RATIO(0.1f)
+	, GRAPH_HEIGHT_POS_RATIO(0.9f)
+{}
+
 /*
  *	初期化処理
  */
@@ -27,21 +36,27 @@ void ResistTimeGaugeUI::Initialize() {
  *	描画処理
  */
 void ResistTimeGaugeUI::Render() {
-	// 描画位置計算
+	// ゲージ描画位置計算
 	float playerResist = static_cast<float>(GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus().resistTime);
 	float baseResist = static_cast<float>(PlayerStatusManager::GetInstance().GetPlayerStatusData().base.resistTime);
-	float posSX = GameConst::WINDOW_WIDTH * 0.2f;
-	float posSY = GameConst::WINDOW_HEIGHT * 0.93f;
-	float changeValue = 0.2f;
+	float posSX = GameConst::WINDOW_WIDTH * GAUGE_START_WIDTH_POS_RATIO;
+	float posSY = GameConst::WINDOW_HEIGHT * GAUGE_START_HEIGHT_POS_RATIO;
+	// ゲージの横幅はプレイヤーのレジスト状況に応じて減っていく
+	float changeValue = GAUGE_START_WIDTH_POS_RATIO;
 	if (playerResist > 0)
-		changeValue = 0.2f + (playerResist / baseResist) * 0.6f;
+		changeValue = GAUGE_START_WIDTH_POS_RATIO + ((playerResist / baseResist) * GAUGE_END_POS_X_MOVE_RATE);
 	float posEX = GameConst::WINDOW_WIDTH * changeValue;
-	float posEY = GameConst::WINDOW_HEIGHT * 0.95f;
+	float posEY = GameConst::WINDOW_HEIGHT * GAUGE_END_HEIGHT_POS_RATIO;
+	
 	// ゲージ描画
-	DrawBox(posSX, posSY, posEX, posEY, GetColor(213, 255, 147), TRUE);
+	auto yg = GameConst::COLOR_YELLOW_GREEN;
+	DrawBox(posSX, posSY, posEX, posEY, GetColor(yg.x, yg.y, yg.z), TRUE);
+	
+	// 画像描画位置計算
+	float graphX = GameConst::WINDOW_WIDTH * GRAPH_WIDTH_POS_RATIO;
+	float graphY = GameConst::WINDOW_HEIGHT * GRAPH_HEIGHT_POS_RATIO;
+	
 	// 画像描画
-	float graphX = GameConst::WINDOW_WIDTH * 0.1f;
-	float graphY = GameConst::WINDOW_HEIGHT * 0.9f;
 	DrawGraph(graphX, graphY, resistTimeGraphHandle, TRUE);
 }
 
