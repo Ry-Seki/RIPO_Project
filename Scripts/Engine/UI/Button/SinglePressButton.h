@@ -19,6 +19,7 @@
  */
 class SinglePressButton : public UIButtonBase {
 private:
+	bool inputHandle = false;
 
 public:
 	/*
@@ -39,6 +40,10 @@ public:
 	 *	@brief	‰Šú‰»ˆ—
 	 */
 	void Initialize() override;
+	/*
+	 *	@brief	€”õ‘Oˆ—
+	 */
+	void Setup() override;
 	/*
 	 *	@brief	XVˆ—
 	 */

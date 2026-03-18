@@ -90,6 +90,11 @@ public:
 
 public:
 	/*
+	 *	@brief		メニューの上書き(対象メニューが開いている状態で新たに開けるか)判定
+	 *	@return		bool
+	 */
+	inline virtual bool IsBlocking() const { return false; }
+	/*
 	 *	@brief		描画判定
 	 *	@return		bool
 	 */

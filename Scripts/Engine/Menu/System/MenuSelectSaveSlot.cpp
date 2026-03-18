@@ -113,8 +113,6 @@ void MenuSelectSaveSlot::Open () {
     MenuBase::Open();
     // セーブスロットの使用状態の取得
     auto& save = SaveDataManager::GetInstance();
-    gameDataList.clear();
-    gameDataList.reserve(save.GetMaxSaveSlot());
 
     for (auto& sprite : spriteList) {
         sprite->Setup();
@@ -124,25 +122,10 @@ void MenuSelectSaveSlot::Open () {
         button->Setup();
     }
     saveLoadSprite->SetFrameIndex(static_cast<int>(saveMode));
-    // セーブデータの取得
-    auto allData = save.GetAllSlotData();
-    gameDataList.clear();
-
-    for (const auto& data : allData) {
-        gameDataList.push_back(data.game);
-    }
-
-    isUsedList = save.GetAllSlotIsUsed();
+    // セーブデータの準備前処理
+    SetupSaveSlotData();
     // ロード時、セーブスロットが未使用だった場合選択不可にする
-    switch(saveMode) {
-    case GameEnum::SaveSlotMenuMode::Save:
-        ExecuteSaveMode();
-        break;
-
-    case GameEnum::SaveSlotMenuMode::Load:
-        ExecuteLoadMove();
-        break;
-    }
+    if (saveMode == GameEnum::SaveSlotMenuMode::Load) UpdateSlotButtonState();
     // スロットテキストの生成
     CreateSlotText();
     // スロットテキストの準備前処理
@@ -220,25 +203,10 @@ void MenuSelectSaveSlot::Resume() {
     for (auto& button : buttonList) {
         button->Setup();
     }
-    auto& save = SaveDataManager::GetInstance();
-    auto allData = save.GetAllSlotData();
-    gameDataList.clear();
-
-    for (const auto& data : allData) {
-        gameDataList.push_back(data.game);
-    }
-
-    isUsedList = save.GetAllSlotIsUsed();
-    // ロード時、セーブスロットが未使用だった場合選択不可にする
-    switch (saveMode) {
-        case GameEnum::SaveSlotMenuMode::Save:
-            ExecuteSaveMode();
-            break;
-
-        case GameEnum::SaveSlotMenuMode::Load:
-            ExecuteLoadMove();
-            break;
-    }
+    // セーブデータの準備前処理
+    SetupSaveSlotData();
+    // ロード時のみセーブスロットの使用状態判定
+    if (saveMode == GameEnum::SaveSlotMenuMode::Load) UpdateSlotButtonState();
 }
 /*
  *	@brief		セーブ処理
@@ -274,25 +242,6 @@ void MenuSelectSaveSlot::ExecuteLoad(int slotIndex, Engine& engine) {
     }
 }
 /*
- *	@brief		セーブモード時の処理
- */
-void MenuSelectSaveSlot::ExecuteSaveMode() {
-    auto& save = SaveDataManager::GetInstance();
-
-    gameDataList.clear();
-    auto allData = save.GetAllSlotData();
-
-    for (const auto& data : allData) {
-        gameDataList.push_back(data.game);
-    }
-}
-/*
- *	@brief		ロードモード時の処理
- */
-void MenuSelectSaveSlot::ExecuteLoadMove() {
-    UpdateSlotButtonState();
-}
-/*
  *	@brief		ボタンのコールバック登録
  *	@param[in]	int slotIndex
  */
@@ -311,6 +260,7 @@ void MenuSelectSaveSlot::SelectButtonExecute(int slotIndex, Engine& engine) {
  *	@brief		戻る処理
  */
 void MenuSelectSaveSlot::ExecuteBack() {
+    isInteractive = false;
     auto& menu = MenuManager::GetInstance();
     FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::Out, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
@@ -364,14 +314,30 @@ void MenuSelectSaveSlot::InitializeSaveSlotButtons(Engine& engine) {
     }
 }
 /*
+ *	@brief		セーブスロットデータの準備前処理
+ */
+void MenuSelectSaveSlot::SetupSaveSlotData() {
+    auto& save = SaveDataManager::GetInstance();
+    int sizeMax = save.GetMaxSaveSlot();
+    slotDataList.clear();
+    slotDataList.resize(sizeMax);
+    // スロットデータの取得
+    auto slotData = save.GetAllSlotData();
+    // 使用状態の取得
+    auto usedData = save.GetAllSlotIsUsed();
+    for (int i = 0; i < sizeMax; i++) {
+        slotDataList[i].data = slotData[i].game;
+        slotDataList[i].isUsed = usedData[i];
+    }
+}
+/*
  *	@brief	テキストの生成(セーブスロットのテキスト描画用)
  */
 void MenuSelectSaveSlot::CreateSlotText() {
-    int dataSize = gameDataList.size();
     const int slotSpacing = 205;
     const int white = GetColor(255, 255, 255);
 
-    for (int i = 0; i < dataSize; i++) {
+    for (int i = 0, max = slotDataList.size(); i < max; i++) {
         int offsetY = slotSpacing * i;
 
         SlotTextSet set;
@@ -399,11 +365,10 @@ void MenuSelectSaveSlot::CreateSlotText() {
  */
 void MenuSelectSaveSlot::SetupAllSlotText() {
     // テキストの中身の文字列の設定
-    int dataSize = gameDataList.size();
-    for (int i = 0; i < dataSize; i++) {
-        if (!isUsedList[i]) continue;
+    for (int i = 0, max = slotDataList.size(); i < max; i++) {
+        if (!slotDataList[i].isUsed) continue;
 
-        auto& data = gameDataList[i];
+        auto& data = slotDataList[i].data;
         auto& slot = slotButtonList[i].text;
 
         UpdateSlotText(data, slot);
@@ -414,12 +379,10 @@ void MenuSelectSaveSlot::SetupAllSlotText() {
  */
 void MenuSelectSaveSlot::UpdateSlotButtonState() {
     auto& save = SaveDataManager::GetInstance();
-    isUsedList = save.GetAllSlotIsUsed();
-    int slotCount = save.GetMaxSaveSlot();
-    for (int i = 0; i < slotCount; i++) {
+    for (int i = 0, max = save.GetMaxSaveSlot(); i < max; i++) {
         auto& button = slotButtonList[i].button;
         if (!button) continue;
-        button->SetIsEnable(isUsedList[i]);
+        button->SetIsEnable(slotDataList[i].isUsed);
     }
 }
 /*
@@ -458,7 +421,7 @@ void MenuSelectSaveSlot::UpdateSaveSlot(SaveSlotButtonEntry& entry) {
     // 進行データの取得
     auto& progressData = save.GetCurrentSaveData().game;
     // 進行データの更新
-    gameDataList[slotIndex] = progressData;
+    slotDataList[slotIndex].data = progressData;
     // テキストの内容を更新
     UpdateSlotText(progressData, slotButtonList[slotIndex].text);
 }

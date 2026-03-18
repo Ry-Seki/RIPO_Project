@@ -15,6 +15,13 @@ void SinglePressButton::Initialize() {
 	UIButtonBase::Initialize();
 }
 /*
+ *	@brief	€”õ‘Oˆ—
+ */
+void SinglePressButton::Setup() {
+	UIButtonBase::Setup();
+	inputHandle = false;
+}
+/*
  *	@brief	XVˆ—
  */
 void SinglePressButton::Update(float unscaledDeltaTime) {
@@ -35,7 +42,7 @@ void SinglePressButton::Update(float unscaledDeltaTime) {
 		// ‰Ÿ‚µ‚Ä‚¢‚éŠÔ‚Ìˆ—
         OnPress(unscaledDeltaTime);
 		// —£‚³‚ê‚½uŠÔ
-        if (OnReleasedUp()) OnPressUp();
+		if (OnReleasedUp()) OnPressUp(); 
     }
 }
 /*
@@ -72,9 +79,12 @@ void SinglePressButton::OnPress(float unscaledDeltaTime) {
  *	@brief	—£‚µ‚½uŠÔ
  */
 void SinglePressButton::OnPressUp() {
+	if (!isHover) {
+		inputHandle = false;
+		inputState = GameEnum::ButtonInputState::Idle;
+		return;
+	}
 	if (inputState != GameEnum::ButtonInputState::Press) return;
-
-	inputState = GameEnum::ButtonInputState::Idle;
 
 	OnClickEvent();
 }

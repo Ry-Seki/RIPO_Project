@@ -23,7 +23,7 @@ protected:
 	int inputClickNum = -1;
 	bool isEnable = false;
 	bool isVisible = false;
-	bool inputHandle = false;
+	bool isHover = false;
 	GameEnum::ButtonInputState inputState = GameEnum::ButtonInputState::Invalid;
 	GameEnum::ButtonSelectState selectState = GameEnum::ButtonSelectState::Invalid;
 
@@ -137,7 +137,11 @@ public:
 	 *	@param[in]	bool setFlag
 	 */
 	inline void SetIsVisible(bool setFlag) { isVisible = setFlag; }
-
+	/*
+	 *	@brief		マウスがボタンに触れているか判定
+	 *	@return		bool
+	 */
+	inline bool IsHover() const { return isHover; }
 	/*
 	 *	@brief		ボタン状態の取得
 	 *	@return		GameEnum::ButtonInputState

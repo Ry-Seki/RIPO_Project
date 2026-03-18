@@ -31,7 +31,7 @@ private:
 
 public:
 	/*
-	 *	@brief	セーブスロット情報データ
+	 *	@brief	セーブスロット情報テキスト構造体
 	 */
 	struct SlotTextSet {
 		TextBasePtr elapsedDay;
@@ -48,6 +48,13 @@ public:
 		UIButtonBase* button = nullptr;
 		SlotTextSet text;
 	};
+	/*
+	 *	@brief	セーブスロットデータ構造体
+	 */
+	struct SaveSlotData {
+		GameProgressData data;
+		bool isUsed = false;
+	};
 
 private:
 	GameEnum::SaveSlotMenuMode saveMode;
@@ -60,8 +67,7 @@ private:
 	Sprite* saveLoadSprite = nullptr;
 	std::vector<SaveSlotButtonEntry> slotButtonList;
 
-	std::vector<GameProgressData> gameDataList;
-	std::vector<bool> isUsedList;
+	std::vector<SaveSlotData> slotDataList;
 
 	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/System/SaveLoad/SaveSlotResources.json";
 	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/SaveLoad/SaveSlotNavigation.json";
@@ -107,14 +113,6 @@ public:
 	 *  @param[in]  int slotIndex
 	 */
 	void ExecuteLoad(int slotIndex, Engine& engine);
-	/*
-	 *	@brief		セーブモード時の処理
-	 */
-	void ExecuteSaveMode();
-	/*
-	 *	@brief		ロードモード時の処理
-	 */
-	void ExecuteLoadMove();
 
 private:
 	/*
@@ -135,6 +133,10 @@ private:
 	 *	@brief		セーブスロットボタンの準備前処理
 	 */
 	void InitializeSaveSlotButtons(Engine& engine);
+	/*
+	 *	@brief		セーブスロットデータの準備前処理
+	 */
+	void SetupSaveSlotData();
 	/*
 	 *	@brief	テキストの生成(セーブスロットのテキスト描画用)
 	 */

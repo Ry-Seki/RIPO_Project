@@ -28,7 +28,6 @@ void UIButtonBase::Initialize() {
 void UIButtonBase::Setup() {
 	isEnable = true;
 	isVisible = true;
-	inputHandle = false;
 	inputState = GameEnum::ButtonInputState::Idle;
 }
 /*
@@ -41,7 +40,7 @@ void UIButtonBase::Update(float unscaledDeltaTime) {
 	InputUtility::GetMousePosition(mouseX, mouseY);
 
 	// G‚ê‚Ä‚¢‚é‚©”»’è
-	bool isHover = rect.IsHovered(mouseX, mouseY);
+	isHover = rect.IsHovered(mouseX, mouseY);
 	if (inputState != GameEnum::ButtonInputState::Press) {
 		if (isHover) {
 			inputState = GameEnum::ButtonInputState::Hover;
@@ -112,7 +111,7 @@ GameEnum::ButtonRendererState UIButtonBase::GetRendererState() const {
 	return GameEnum::ButtonRendererState::Idle;
 }
 /*
- *	@brief		‰Ÿ‚µ‚Ä‚¢‚½‚à‚Ì‚ª—£‚ê‚½uŠÔ‚ğ”»’è
+ *	@brief		ƒ{ƒ^ƒ“‚ÉG‚ê‚Ä‚¢‚éó‘Ô‚ÅA‰Ÿ‚µ‚Ä‚¢‚½‚à‚Ì‚ª—£‚ê‚½uŠÔ‚ğ”»’è
  *	@return		bool
  */
 bool UIButtonBase::OnReleasedUp() const {
