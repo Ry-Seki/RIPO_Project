@@ -22,9 +22,6 @@ using namespace CharacterUtility;
  */
 Stage::Stage()
 	: StageBase()
-	, lightDirection(0.2f, -20.0f, 0.3f)	// 光源の向き
-	, pointLightColor(1.0f, 0.8f, 0.6f)		// ポイントライトの色
-	, pointLightRange(10000.0f)				// ポイントライトの範囲
 {
 	modelHandle = -1;
 }
@@ -64,8 +61,6 @@ void Stage::Update() {
  */
 void Stage::Render() {
 	if (modelHandle >= 0) {
-		// ライトをセット
-		LightSettings();
 		// モデルの描画
 		MV1DrawModel(modelHandle);
 
@@ -118,34 +113,4 @@ void Stage::UpdateCollision(GameObject* other, Vector3 MoveVec) {
 
 }
 
-
-/*
- *	ステージのライトの設定
- */
-void Stage::LightSettings() {
-
-	// 古いライトを全て削除
-	DeleteLightHandleAll();
-
-	// マップ全体のライト設定
-	// アンビエントカラーの設定
-	SetLightAmbColor(_MAP_AMB_COLOR);
-	// ライトの方向を設定する
-	SetLightDirection(ToVECTOR(lightDirection));
-	SetLightDifColor(_MAP_DIF_COLOR);
-	SetLightSpcColor(_MAP_SPC_COLOR);
-
-	// ポイントライト設定
-	pointLightPos = StageManager::GetInstance().GetPointLightPos();
-	// ポイントライトがおける場所がある分、ポイントライトを配置する
-	for (const auto& pos : pointLightPos) {
-		// ポイントライトのハンドルを作成
-		int pLight = CreatePointLightHandle(ToVECTOR(pos), pointLightRange, _POINT_ATTAN.Atten0, _POINT_ATTAN.Atten1, _POINT_ATTAN.Atten2);
-		// ポイントライトの色を指定する
-		SetLightDifColorHandle(pLight, GetColorF(pointLightColor.x, pointLightColor.y, pointLightColor.z, Vector3::one.x));
-		SetLightSpcColorHandle(pLight, _POINT_SPC_COLOR);
-		SetLightEnableHandle(pLight, TRUE);
-	}
-
-}
 

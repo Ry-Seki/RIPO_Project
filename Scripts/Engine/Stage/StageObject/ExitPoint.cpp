@@ -30,6 +30,13 @@ ExitPoint::ExitPoint()
 	, onTrigger(false) {
 }
 
+ExitPoint::~ExitPoint() {
+	if (pViewingEffect) {
+		pViewingEffect->EffectStop();
+		pViewingEffect = nullptr;
+	}
+}
+
 /*
  *	更新
  */
@@ -119,7 +126,7 @@ void ExitPoint::OnCollision(const std::shared_ptr<Component>& self, const std::s
 				if (!player)return;
 
 				// プレイヤーの位置をそのダンジョンのスタート位置に戻す
-				player->position = GetStartPos();
+				player->position = startPos;
 				// プレイヤーの入力受付を開始
 				SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, true);
 

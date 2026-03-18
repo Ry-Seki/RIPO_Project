@@ -30,70 +30,23 @@ namespace StageUtility {
 	}
 
 	/*
-	 *	スタート位置の取得
-	 *  @return		Vector3
-	 */
-	inline Vector3 GetStartPos() {
-		return StageManager::GetInstance().GetStartPos();
-	}
-	/*
-	 *	ゴール位置の取得
-	 *  @return		Vector3
-	 */
-	inline std::vector<Vector3> GetGoalPos() {
-		return StageManager::GetInstance().GetGoalPos();
-	}
-	/*
-	 *	敵の初期生成位置の取得
-	 *  @param[out]	std::vector<int>& IDList
-	 *	@return		std::vector<Vector3>
-	 */
-	inline std::unordered_map<int, Vector3> GetEnemySpwanPos() {
-		return StageManager::GetInstance().GetEnemySpawnPos();
-	}
-	/*
-	 *	ボスの初期生成位置の取得
-	 *  @param[out]	std::vector<int>& IDList
-	 *	@return		std::vector<Vector3>
-	 */
-	inline std::unordered_map<int, Vector3> GetBossSpwanPos() {
-		return StageManager::GetInstance().GetBossSpawnPos();
-	}
-	/*
-	 *  お宝の生成位置の取得
-	 *  @return		std::vector<Vector3>
-	 */
-	inline std::unordered_map<int, Vector3> GetTreasureSpwanPos(int setValue) {
-		return StageManager::GetInstance().GetTreasureSpawnPos(setValue);
-	}
-	/*
-	 *	ポイントライト生成位置の取得
-	 *  @return		std::vector<Vector3>
-	 */
-	inline std::vector<Vector3> GetPointLightPos() {
-		return StageManager::GetInstance().GetPointLightPos();
-	}
-	/*
-	 *	階層移動用階段位置の取得
-	 *  @return		Vector3
-	 */
-	inline std::vector<Vector3> GetStairsPos() {
-		return StageManager::GetInstance().GetStairsPos();
-	}
-
-	/*
-	 *	リスポーン位置の取得
-	 */
-	inline Vector3 GetRespawnPos() {
-		return StageManager::GetInstance().GetRespawnPos();
-	}
-
-	/*
 	 *	jsonの変更
 	 *  @param[in]	JSON setJSON
 	 */
 	inline void SetStageJSONData(JSON setJSON) {
 		StageManager::GetInstance().SetStageJSONData(setJSON);
+	}
+
+	inline int GetCurrentStageHandle() {
+		return StageManager::GetInstance().GetCurrentStageHandle();
+	}
+
+	/*
+	 *	ライトの座標設定
+	 *  @param[in]	setValue	ライトの座標
+	 */
+	inline void SetLightPos(std::vector<Vector3> setValue) {
+		StageManager::GetInstance().SetLightPos(setValue);
 	}
 };
 

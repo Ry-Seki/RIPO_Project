@@ -16,6 +16,7 @@
 #include "../Stage/StageState.h"
 #include "../Component/Character/ArmActionComponent.h"
 #include "../Component/Character/CharacterUtility.h"
+#include "../Scripts/Data/Dungeon/DungeonCreatePosData.h"
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -28,6 +29,12 @@ using namespace CharacterUtility;
 struct EnemySpawnPoint {
 	int id;           // スポーンID
 	Vector3 pos;      // 座標
+};
+
+struct Attenuation {
+	float Atten0;
+	float Atten1;
+	float Atten2;
 };
 
 /*
@@ -44,9 +51,13 @@ private:
 	StageState stageState;				// ステージの状態保持
 
 	std::unique_ptr<StageBase> loadedStage;	// 読み込み済みステージデータ
-
-
 	EnemySpawnPoint enemySpawnID;
+
+	static constexpr Attenuation _POINT_ATTAN = { 0.0f, 0.0005f, 0.0f };	// Attan
+	Vector3 lightDirection;				// ライトの距離
+	Vector3 pointLightColor;			// 色
+	std::vector<Vector3>pointLightPos;	// 位置
+	float pointLightRange;				// 効果範囲
 
 
 private:
@@ -67,6 +78,11 @@ private:
 		// 渡された関数を実行
 		func(*loadedStage);
 	}
+
+	/*
+	 *	ステージライトの設定
+	 */
+	void LightSettings();
 
 public:
 
@@ -133,48 +149,6 @@ public:
 	 *  現在のステージの実態の取得
 	 */
 	StageBase* GetCurrentStage() const { return loadedStage.get(); }
-
-	/*
-	 *	スタート位置の取得
-	 */
-	Vector3 GetStartPos()const;
-
-	/*
-	 * ゴール位置の取得
-	 */
-	std::vector<Vector3> GetGoalPos()const;
-
-	/*
-	 *	敵の初期生成位置の取得
-	 */
-	std::unordered_map<int, Vector3> GetEnemySpawnPos()const;
-
-	/*
-	 *　ボスの初期生成位置の取得
-	 *  author	kuu
-	 */
-	std::unordered_map<int, Vector3> GetBossSpawnPos()const;
-
-	/*
-	 * お宝の生成位置の取得
-	 */
-	std::unordered_map<int, Vector3> GetTreasureSpawnPos(int setValue)const;
-
-	/*
-	 *	ポイントライト生成位置の取得
-	 */
-	std::vector<Vector3> GetPointLightPos()const;
-
-	/*
-	 *	階層移動用階段位置の取得
-	 */
-	std::vector<Vector3> GetStairsPos()const;
-
-	/*
-	 *	階段手前のリスポーン場所の取得
-	 */
-	Vector3 GetRespawnPos()const;
-
 	/*
 	 *	jsonの変更
 	 */
@@ -202,7 +176,11 @@ public:
 	 *  @return	enemySpawnID
 	 */
 	int GetEnemySpawnID()const { return enemySpawnID.id; }
-
+	/*
+	 *	ライトの座標設定
+	 *  @param[in]	setValue	ライトの座標
+	 */
+	void SetLightPos(std::vector<Vector3> setValue) { pointLightPos = setValue; }
 
 };
 

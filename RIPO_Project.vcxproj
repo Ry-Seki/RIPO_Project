@@ -188,6 +188,7 @@
     <ClCompile Include="Scripts\Engine\Component\Character\WeaponBase.cpp" />
     <ClCompile Include="Scripts\Engine\Component\EffectComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\MoveComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\OBBCollider.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
@@ -310,6 +311,7 @@
     <ClCompile Include="Scripts\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scripts\Data\Dungeon\DungeonCreatePosData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonEntranceData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonFloorData.h" />
@@ -379,6 +381,7 @@
     <ClInclude Include="Scripts\Engine\Component\GaugeBase.h" />
     <ClInclude Include="Scripts\Engine\Component\GravityComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h" />
+    <ClInclude Include="Scripts\Engine\Component\MoveComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\OBBCollider.h" />
     <ClInclude Include="Scripts\Engine\Component\RenderComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\SpriteRenderer.h" />
@@ -500,6 +503,7 @@
     <ClInclude Include="Scripts\Engine\Stage\StageCollision.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageMemoryProfiler.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\ExitPoint.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Respawn.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectUtility.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Stair.h" />

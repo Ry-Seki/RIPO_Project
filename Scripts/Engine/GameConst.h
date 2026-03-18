@@ -78,6 +78,7 @@ public:
 	static constexpr const char* _CREATE_POSITION_STARTPOS = "StartPos";			// スタートスポーンポジションの名前
 	static constexpr const char* _CREATE_POSITION_STAIRPOS = "StairsPos";			// 階段スポーンポジションの名前
 	static constexpr const char* _CREATE_POSITION_LIGHTPOS = "LightPos";			// 階段スポーンポジションの名前
+	static constexpr const char* _CREATE_POSITION_RESPAWNPOS = "RespawnPos";		// 再生成位置の名前
 
 	//----------------------------------------------------
 	//					お宝の名前
@@ -95,6 +96,15 @@ public:
 	static constexpr VECTOR COLOR_BRACK = { 0, 0, 0 };					// 黒
 	static constexpr VECTOR COLOR_PURPLE = { 175, 50, 190 };			// 紫
 	static constexpr VECTOR COLOR_YELLOW_GREEN = { 210, 255, 145 };		// 黄緑
+	static constexpr VECTOR COLOR_GREEN = { 0, 255, 0 };				// 緑
+	static constexpr VECTOR COLOR_YELLOW = { 255, 255, 0 };				// 黄
+	static constexpr VECTOR COLOR_RED = { 255, 0, 0 };					// 赤
+
+	static constexpr DxLib::COLOR_F _MAP_DIF_COLOR = { 1.5f, 1.5f, 1.3f, 1.0f };	// マップ全体のライト ディフューズカラー
+	static constexpr DxLib::COLOR_F _MAP_AMB_COLOR = { 0.2f, 0.25f, 0.3f, 1 };		// マップ全体のライト アンビエントカラー
+	static constexpr DxLib::COLOR_F _MAP_SPC_COLOR = { 0.2f, 0.2f, 0.2f, 1 };		// マップ全体のライト スペキュラーカラー
+
+	static constexpr DxLib::COLOR_F _POINT_SPC_COLOR = { 0.1f, 0.1f, 0.1f, 1.0f };	// ポイントライト スペキュラーカラー
 	//----------------------------------------------------
 	//					BGMの命名
 	//----------------------------------------------------
