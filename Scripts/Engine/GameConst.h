@@ -16,13 +16,13 @@ public:
 	//----------------------------------------------------
 	//				プレイヤー関連の定数
 	//----------------------------------------------------
-	static constexpr   int PLAYER_MAX_HITCOLL = 1024;		 // 処理するコリジョンポリゴンの最大数
-	static constexpr float PLAYER_ENUM_DEFAULT_SIZE = 20000.0f;	 // 周囲のポリゴン検出に使用するサイズ
-	static constexpr float PLAYER_HIT_HEIGHT = 200.0f;		 // 当たり判定カプセルの半径 
-	static constexpr const char* _STATUS_KEY = "InitStatus";	 // プレイヤーのステータスキー
-	static constexpr const char* _RASE_KEY = "RiseValue";	 // プレイヤーのステータス上昇値のキー
+	static constexpr   int PLAYER_MAX_HITCOLL = 1024;			// 処理するコリジョンポリゴンの最大数
+	static constexpr float PLAYER_ENUM_DEFAULT_SIZE = 20000.0f;	// 周囲のポリゴン検出に使用するサイズ
+	static constexpr float PLAYER_HIT_HEIGHT = 200.0f;			// 当たり判定カプセルの半径 
+	static constexpr const char* _STATUS_KEY = "InitStatus";	// プレイヤーのステータスキー
+	static constexpr const char* _RASE_KEY = "RiseValue";		// プレイヤーのステータス上昇値のキー
 
-	static constexpr const char* STATUS_PART[4] = {			 // プレイヤーの各ステータスキー
+	static constexpr const char* STATUS_PART[4] = {				// プレイヤーの各ステータスキー
 		"HP",
 		"Stamina",
 		"Strength",
@@ -48,8 +48,6 @@ public:
 	static constexpr int MAX_SE_INDEX = 16;
 	static constexpr float FPS = 60.0f;
 	static constexpr float frameTime = 1.0f / FPS;
-	static constexpr int SELECT_SAVE_SLOT_MIN = 1;
-	static constexpr int SELECT_SAVE_SLOT_MAX = 3;
 	static constexpr float UI_ANIM_INTERVAL = 0.25f;
 	static constexpr int END_DAY = 30;
 
@@ -57,7 +55,7 @@ public:
 	//				ステージ関連の定数
 	//----------------------------------------------------
 	static constexpr int HIT_TRYNUM = 16;								// 壁押し出し処理の最大試行回数
-	static constexpr float HIT_SLIDE_LENGTH = 50.0f;						// 一度の壁押し出し処理でスライドさせる距離
+	static constexpr float HIT_SLIDE_LENGTH = 50.0f;					// 一度の壁押し出し処理でスライドさせる距離
 	static constexpr const float VIEW_RADIUS = 60.0f;					// 取得範囲
 
 
@@ -80,6 +78,7 @@ public:
 	static constexpr const char* _CREATE_POSITION_STARTPOS = "StartPos";			// スタートスポーンポジションの名前
 	static constexpr const char* _CREATE_POSITION_STAIRPOS = "StairsPos";			// 階段スポーンポジションの名前
 	static constexpr const char* _CREATE_POSITION_LIGHTPOS = "LightPos";			// 階段スポーンポジションの名前
+	static constexpr const char* _CREATE_POSITION_RESPAWNPOS = "RespawnPos";		// 再生成位置の名前
 
 	//----------------------------------------------------
 	//					お宝の名前
@@ -92,9 +91,20 @@ public:
 	//----------------------------------------------------
 	//					色
 	//----------------------------------------------------
-	const unsigned int WHITE = GetColor(255, 255, 255);
-	const unsigned int GRAY = GetColor(75, 75, 75);
-	const unsigned int BRACK = GetColor(0, 0, 0);
+	static constexpr VECTOR COLOR_WHITE = { 255, 255, 255 };			// 白
+	static constexpr VECTOR COLOR_GRAY = { 75, 75, 75 };				// 灰
+	static constexpr VECTOR COLOR_BRACK = { 0, 0, 0 };					// 黒
+	static constexpr VECTOR COLOR_PURPLE = { 175, 50, 190 };			// 紫
+	static constexpr VECTOR COLOR_YELLOW_GREEN = { 210, 255, 145 };		// 黄緑
+	static constexpr VECTOR COLOR_GREEN = { 0, 255, 0 };				// 緑
+	static constexpr VECTOR COLOR_YELLOW = { 255, 255, 0 };				// 黄
+	static constexpr VECTOR COLOR_RED = { 255, 0, 0 };					// 赤
+
+	static constexpr DxLib::COLOR_F _MAP_DIF_COLOR = { 1.5f, 1.5f, 1.3f, 1.0f };	// マップ全体のライト ディフューズカラー
+	static constexpr DxLib::COLOR_F _MAP_AMB_COLOR = { 0.2f, 0.25f, 0.3f, 1 };		// マップ全体のライト アンビエントカラー
+	static constexpr DxLib::COLOR_F _MAP_SPC_COLOR = { 0.2f, 0.2f, 0.2f, 1 };		// マップ全体のライト スペキュラーカラー
+
+	static constexpr DxLib::COLOR_F _POINT_SPC_COLOR = { 0.1f, 0.1f, 0.1f, 1.0f };	// ポイントライト スペキュラーカラー
 	//----------------------------------------------------
 	//					BGMの命名
 	//----------------------------------------------------

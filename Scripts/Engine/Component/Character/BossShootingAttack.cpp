@@ -19,6 +19,7 @@ BossShootingAttack::BossShootingAttack()
 	, shootFlag(false)
 	, secondFlag(false)
 	, thirdFlag(false)
+	, slowFlag(false)
 	, direction(Vector3::zero)
 	, MAX_COOL_TIME(2.3f)
 {
@@ -90,25 +91,29 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 	{
 	case 101:
 
+		boss->rotation.y = atan2(direction.x, direction.z) + Pi;
 		ShootingAttack(boss, deltaTime, 1000000 * deltaTime);
 
 		break;
 
 	case 103:
 
+		boss->rotation.y = atan2(direction.x, direction.z) + Pi;
 		// HP半分以下で攻撃変化
 		if (bossComponent->GetBossHP() <= bossComponent->GetBossMaxHP() / 2) {
-			SlowBall(boss, deltaTime, 100000 * deltaTime);
+			SlowBall(boss, deltaTime, 100000 * deltaTime, 0.3f, 0.3f);
 			RapidFire(boss, deltaTime, 1000000 * deltaTime);
 		}
 		else {
-			ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime);
+			ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime, 400);
 		}
 
 		break;
 	case 104:
 
-		ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime);
+		boss->rotation.y = atan2(direction.x, direction.z) + Pi;
+		SlowBall(boss, deltaTime, 300000 * deltaTime, 0.3f, 0.3f);
+		ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime, 250);
 
 		break;
 	default:
@@ -149,9 +154,8 @@ void BossShootingAttack::ShootingAttack(GameObject* boss, float deltaTime, float
 	}
 }
 
-void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, float shotSpeed)
+void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, float shotSpeed, float positionY)
 {
-	boss->rotation.y = atan2(direction.x, direction.z) + Pi;
 	animator->Play(0, 2000 * deltaTime);
 
 	// アニメーションが終わるまで待ちたい
@@ -161,7 +165,7 @@ void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, floa
 		if (!shootFlag) {
 			// 弾発射
 			BulletManager::GetInstance().BulletShot(
-				{ boss->position.x, boss->position.y + 250, boss->position.z },
+				{ boss->position.x, boss->position.y + positionY, boss->position.z },
 				boss->rotation,
 				{ 1.0f, 1.0f, 1.0f },
 				direction,
@@ -178,7 +182,7 @@ void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, floa
 		if (!secondFlag) {
 			// 弾発射
 			BulletManager::GetInstance().BulletShot(
-				{ boss->position.x, boss->position.y + 250, boss->position.z },
+				{ boss->position.x, boss->position.y + positionY, boss->position.z },
 				boss->rotation,
 				{ 1.0f, 1.0f, 1.0f },
 				direction,
@@ -195,7 +199,7 @@ void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, floa
 		if (!thirdFlag) {
 			// 弾発射
 			BulletManager::GetInstance().BulletShot(
-				{ boss->position.x, boss->position.y + 250, boss->position.z },
+				{ boss->position.x, boss->position.y + positionY, boss->position.z },
 				boss->rotation,
 				{ 1.0f, 1.0f, 1.0f },
 				direction,
@@ -218,7 +222,6 @@ void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, floa
 
 void BossShootingAttack::RapidFire(GameObject* boss, float deltaTime, float shotSpeed)
 {
-	boss->rotation.y = atan2(direction.x, direction.z) + Pi;
 	animator->Play(0, 20000 * deltaTime);
 
 	// アニメーションが終わるまで待ちたい
@@ -248,11 +251,11 @@ void BossShootingAttack::RapidFire(GameObject* boss, float deltaTime, float shot
 	}
 }
 
-void BossShootingAttack::SlowBall(GameObject* boss, float deltaTime, float shotSpeed)
+void BossShootingAttack::SlowBall(GameObject* boss, float deltaTime, float shotSpeed, float coolTime, float fireTime)
 {
-	rapidCoolTime -= deltaTime;
-	if (rapidCoolTime <= 0.3f) {
-		if (!shootFlag) {
+	coolTime -= deltaTime;
+	if (coolTime <= fireTime) {
+		if (!slowFlag) {
 			// 弾発射
 			BulletManager::GetInstance().BulletShot(
 				{ boss->position.x, boss->position.y + 250, boss->position.z },
@@ -264,11 +267,11 @@ void BossShootingAttack::SlowBall(GameObject* boss, float deltaTime, float shotS
 				bossComponent->GetBossAttack(),
 				10
 			);
-			shootFlag = true;
+			slowFlag = true;
 		}
 	}
-	if (rapidCoolTime <= 0) {
-		shootFlag = false;
+	if (coolTime <= 0) {
+		slowFlag = false;
 		bossComponent->SetHitFlag(false);
 	}
 }

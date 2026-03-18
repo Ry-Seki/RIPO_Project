@@ -38,7 +38,7 @@ void SubmachineGunArm::WeaponUpdate(float deltaTime, ActionMapBase::ActionState 
 			shotCoolTime = shotCoolTimeMax;
 			ammoCount -= 1;
 		}
-		else if (action.buttonDown[shot]) {
+		else if (action.buttonDown[shot] && !reload) {
 			// ’e‚ª‚È‚©‚Á‚½‚çƒŠƒ[ƒh
 			reload = true;
 			PlaySE("reloadSE");

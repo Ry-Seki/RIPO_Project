@@ -11,12 +11,16 @@
 #include "../../../../Stage/StageUtility.h"
 #include "../../../../Stage/StageObject/StageObjectUtility.h"
 #include "../../../../Stage/StageObject/Treasure/Treasure.h"
+#include "../../../../Component/Character/EnemyDataUtility.h"
 #include "../../../../GameConst.h"
+#include "../../../../Stage/StageObject/Respawn.h"
+
 
 using namespace GameObjectUtility;
 using namespace CharacterUtility;
 using namespace StageUtility;
 using namespace StageObjectUtility;
+using namespace EnemyDataUtility;
 
 /*
  *	@brief		初期化処理
@@ -39,6 +43,7 @@ void DungeonCreater::Teardown() {
 	stairDataList.clear();
 	dungeonResourceData.ClearResourceData();
 	dungeonEntranceData.ClearEntranceData();
+	dungeonCreatePosData.ClearCreatePosData();
 }
 /*
  *	@brief		ダンジョン生成
@@ -50,6 +55,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	this->dungeonID = dungeonID;
 	// エントランスデータの取得
 	dungeonEntranceData.TryGetEntranceData(floorID, entranceDataList);
+
 	// 階段、出口データの分離処理
 	SeparateEntranceData();
 	// オブジェクトの生成
@@ -105,6 +111,10 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	LoadStage(stageHandleList);
 	// ステージボーンデータの設定
 	SetStageJSONData(dungeonResourceData.stageBoneResource->GetData());
+	int handle = GetCurrentStageHandle();
+	dungeonCreatePosData.SetModelHandle(handle);
+	dungeonCreatePosData.LoadFromJSON(dungeonResourceData.stageBoneResource->GetData(), dungeonID, floorID);
+	dungeonCreatePosData.GetCreatePosData(dungeonID, createPosDataList);
 
 	// プレイヤーの設定
 	// モデルの取得
@@ -113,12 +123,12 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	auto player = GetUseObject(0);
 	if (!player) return;
 	// 位置の設定
-	player->position = GetStartPos();
+	player->position = createPosDataList.start.position;
 	// モデルの設定
 	SetCharacterModel(player.get(), playerHandle);
 
 	// 敵の生成位置の取得
-	std::unordered_map<int, Vector3> enemySpawnPos = GetEnemySpwanPos();
+	std::unordered_map<int, Vector3> enemySpawnPos = createPosDataList.enemy.position;
 	// 敵の取得
 	std::vector<GameObjectPtr> enemyList = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
 	// モデルハンドルの取得
@@ -144,7 +154,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	}
 	if (bossCount > 0) {
 		// ボスの生成位置の取得
-		std::unordered_map<int, Vector3> bossSpawnPos = GetBossSpwanPos();
+		std::unordered_map<int, Vector3> bossSpawnPos =createPosDataList.boss.position;
 		// ボスの取得
 		std::vector<GameObjectPtr> bossList = GetObjectByName("Boss");
 		// モデルハンドルの取得
@@ -157,14 +167,14 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 			if (!bossCharacter) continue;
 
 			bossCharacter->position = bossSpawnPos[0];
-			bossCharacter->scale = { 3, 3, 3 };
+			bossCharacter->scale = GetBossScale(dungeonID);
 			// モデルの設定
 			SetCharacterModel(bossCharacter.get(), bossHandle);
 		}
 	}
 	if (treasureCount > 0) {
 		// お宝の生成位置の取得
-		std::unordered_map<int, Vector3> treasureSpawnPos = GetTreasureSpwanPos(floorID);
+		std::unordered_map<int, Vector3> treasureSpawnPos = createPosDataList.treasure.position;
 
 		// お宝オブジェクトの取得
 		GameObjectList treasureList = GetObjectByName(GameConst::_CREATE_POSNAME_TREASURE);
@@ -197,7 +207,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	auto stairMoveData = dungeonResourceData.stageFloorResource->GetData();
 	// 階段の設定
 	// 生成位置の取得
-	std::vector<Vector3> stairSpawnPos = GetStairsPos();
+	std::vector<Vector3> stairSpawnPos = createPosDataList.stair.position;
 	// 階段の設定
 	for (int i = 0; i < stairCount; i++) {
 		if (stairList.size() <= 0) break;
@@ -214,14 +224,18 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	// 出口の設定
 	GameObjectList exitList = GetObjectByName(GameConst::_CREATE_POSNAME_GOAL);
 	// 生成位置の取得
-	std::vector<Vector3> exitSpawnPos = GetGoalPos();
+	std::vector<Vector3> exitSpawnPos = createPosDataList.goal.position;
+	
 	for (int i = 0; i < goalCount; i++) {
 		if (exitList.size() <= 0) break;
 		auto exit = exitList[i];
 		if (!exit) continue;
-
+		// 出口にスタート位置の情報を渡す
+		exit->GetComponent<ExitPoint>()->SetDungeonCreateData(createPosDataList.start.position);
 		exit->position = exitSpawnPos[i];
 	}
+	// ライトの座標をStageManagerに渡す
+	SetLightPos(createPosDataList.light.position);
 }
 /*
  *	@brief		ダンジョンの再生成
@@ -238,7 +252,10 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	dungeonEntranceData.TryGetEntranceData(floorID, entranceDataList);
 	// 階段、出口データの分離処理
 	SeparateEntranceData();
-
+	int handle = GetCurrentStageHandle();
+	dungeonCreatePosData.SetModelHandle(handle);
+	dungeonCreatePosData.LoadFromJSON(dungeonResourceData.stageBoneResource->GetData(), dungeonID, floorID);
+	dungeonCreatePosData.GetCreatePosData(dungeonID, createPosDataList);
 	// オブジェクトの再生成
 	int enemyCount = floorData.enemySpawnCount;
 	int bossCount = floorData.bossSpawnCount;
@@ -281,17 +298,9 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	for (int i = 0; i < goalCount; i++) {
 		GenerateExit(goalData.name, goalData.position, goalData.rotation, goalData.center, goalData.angle,goalData.size);
 	}
-	// オブジェクトの設定
-	Vector3 respawnPos = GetRespawnPos();
-	// プレイヤー
-	// プレイヤーオブジェクトの取得
-	auto player = GetUseObject(0);
-	if (!player) return;
-	// 位置の設定
-	player->position = respawnPos;
 
 	// 敵
-	std::unordered_map<int, Vector3> enemySpawnPos = GetEnemySpwanPos();
+	std::unordered_map<int, Vector3> enemySpawnPos = createPosDataList.enemy.position;
 	// 敵の取得
 	GameObjectList enemyList = GetObjectByName(GameConst::_CREATE_POSNAME_ENEMY);
 	// モデルハンドルの取得
@@ -322,7 +331,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	}
 	if (bossCount > 0) {
 		// ボスの生成位置の取得
-		std::unordered_map<int, Vector3> bossSpawnPos = GetBossSpwanPos();
+		std::unordered_map<int, Vector3> bossSpawnPos = createPosDataList.boss.position;
 		// ボスの取得
 		std::vector<GameObjectPtr> bossList = GetObjectByName("Boss");
 		// モデルハンドルの取得
@@ -335,14 +344,14 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 			if (!bossCharacter) continue;
 
 			bossCharacter->position = bossSpawnPos[0];
-			bossCharacter->scale = { 3, 3, 3 };
+			bossCharacter->scale = GetBossScale(dungeonID);
 			// モデルの設定
 			SetCharacterModel(bossCharacter.get(), bossHandle);
 		}
 	}
 	if (treasureCount > 0) {
 		// お宝の生成位置の取得
-		std::unordered_map<int, Vector3> treasureSpawnPos = GetTreasureSpwanPos(floorID);
+		std::unordered_map<int, Vector3> treasureSpawnPos = createPosDataList.treasure.position;
 		// お宝オブジェクトの取得
 		GameObjectList treasureList = GetObjectByName(GameConst::_CREATE_POSNAME_TREASURE);
 		// お宝の設定
@@ -383,7 +392,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	// 階段の遷移先IDデータの取得
 	auto stairMoveData = dungeonResourceData.stageFloorResource->GetData();
 	// 生成位置の取得
-	std::vector<Vector3> stairSpawnPos = GetStairsPos();
+	std::vector<Vector3> stairSpawnPos = createPosDataList.stair.position;
 	// 階段の設定
 	for (int i = 0; i < stairCount; i++) {
 		if (stairList.size() <= 0) break;
@@ -399,17 +408,28 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 		stairComponent->SetStairID(stairID);
 	}
 
+	// プレイヤー
+	// プレイヤーオブジェクトの取得
+	auto player = GetUseObject(0);
+	if (!player) return;
+
+	player->position = createPosDataList.respawn.position[0];
+
 	// 出口の設定
 	GameObjectList exitList = GetObjectByName(GameConst::_CREATE_POSNAME_GOAL);
 	// 生成位置の取得
-	std::vector<Vector3> exitSpawnPos = GetGoalPos();
+	std::vector<Vector3> exitSpawnPos = createPosDataList.goal.position;
 	for (int i = 0; i < goalCount; i++) {
 		if (exitList.size() <= 0) break;
 		auto exit = exitList[i];
 		if (!exit) continue;
-
+		// 出口にスタート位置の情報を渡す
+		exit->GetComponent<ExitPoint>()->SetDungeonCreateData(createPosDataList.start.position);
 		exit->position = exitSpawnPos[i];
 	}
+
+	// ライトの座標をStageManagerに渡す
+	SetLightPos(createPosDataList.light.position);
 }
 /*
  *	@brief	階段、出口のデータの設定

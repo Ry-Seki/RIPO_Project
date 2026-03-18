@@ -142,6 +142,7 @@ void MenuMiniGame::Render() {
 void MenuMiniGame::Close(Engine& engine) {
     MenuBase::Close(engine);
     miniGame = nullptr;
+    AudioUtility::StopBGM();
 }
 /*
  *	@brief	ƒƒjƒ…[‚ğÄŠJ

@@ -9,6 +9,7 @@
 #include "../Load/JSON/LoadJSON.h"
 #include "../Load/LoadManager.h"
 #include "../GameEnum.h"
+#include "../VecMath.h"
 #include <unordered_map>
 #include <string>
 
@@ -23,6 +24,13 @@ public:
 	};
 	// すべてのエネミーのステータスデータ
 	std::unordered_map<int, EnemyStatus> enemyStatus;
+	/*struct BossScale {
+		Vector3 stage1Boss;
+		Vector3 stage2Boss;
+		Vector3 stage3Boss;
+		Vector3 stage4Boss;
+	};
+	std::unordered_map<Vector3, BossScale> bossScale;*/
 
 	// jsonデータのファイルパス
 	const std::string ENEMY_DATA_PATH = "Data/Enemy/EnemyStatusData.json";
@@ -89,6 +97,36 @@ public:
 	 */
 	inline EnemyStatus GetEnemyData(GameEnum::EnemyType enemy) {
 		return enemyStatus[static_cast<int>(enemy)];
+	}
+
+	/*
+	 *	ボスの大きさ取得
+	 */
+	inline Vector3 GetBossScale(int dungeonID) {
+
+		Vector3 bossScale = Vector3::zero;
+		switch (dungeonID)
+		{
+		case 1:
+			bossScale = { 3, 3, 3 };
+			return bossScale;
+			break;
+		case 2:
+			bossScale = { 6, 6, 6 };
+			return bossScale;
+			break;
+		case 3:
+			bossScale = { 0.4, 0.4, 0.4 };
+			return bossScale;
+			break;
+		case 4:
+			bossScale = { 4, 4, 4 };
+			return bossScale;
+			break;
+		default:
+			return bossScale;
+			break;
+		}
 	}
 
 };

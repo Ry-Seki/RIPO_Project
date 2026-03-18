@@ -23,6 +23,7 @@
 		bool shootFlag;
 		bool secondFlag;
 		bool thirdFlag;
+		bool slowFlag;
 		// プレイヤーの方向
 		Vector3 direction;
 
@@ -63,14 +64,16 @@
 		 *	param[in]	GameObject*	boss
 		 *  param[in]	float		deltaTime
 		 *  param[in]	float		shotSpeed	弾の発射速度
+		 *	param[in]	float		positionY	自分の位置からYポジションを加減する値
 		 */
-		void ThreeRoundBurst(GameObject* boss, float deltaTime, float shotSpeed);
+		void ThreeRoundBurst(GameObject* boss, float deltaTime, float shotSpeed, float positionY);
 
 		/*
 		 *	連射攻撃
 		 *	param[in]	GameObject*	boss
 		 *  param[in]	float		deltaTime
 		 *  param[in]	float		shotSpeed	弾の発射速度
+		 *	param[in]	float		positionY	自分の位置からYポジションを加減する値
 		 */
 		void RapidFire(GameObject* boss, float deltaTime, float shotSpeed);
 
@@ -79,8 +82,10 @@
 		 *	param[in]	GameObject*	boss
 		 *  param[in]	float		deltaTime
 		 *  param[in]	float		shotSpeed	弾の発射速度
+		 *	param[in]	float		coolTime	弾のクールタイム
+		 *	param[in]	float		fireTime	coolTime-fireTimeが発射までの時間(coolTimeと同数にすればディレイなし)
 		 */
-		void SlowBall(GameObject* boss, float deltaTime, float shotSpeed);
+		void SlowBall(GameObject* boss, float deltaTime, float shotSpeed, float coolTime, float fireTime);
 
 };
 

@@ -1,5 +1,5 @@
 /*
- *	@file	WeaopnBase.h
+ *	@file	WeaponBase.h
  *  @author Riku
  */
 
@@ -29,6 +29,9 @@ public:
 	float shotCoolTime;				// 射撃のクールタイム
 	float shotCoolTimeMax;			// 射撃のクールタイムの最大
 	bool reload;					// リロードフラグ
+
+	const Vector3 BULLET_SCALE;		// 弾のサイズ
+	const float BULLET_SPEED;		// 弾のスピード
 
 public:
 	WeaponBase();

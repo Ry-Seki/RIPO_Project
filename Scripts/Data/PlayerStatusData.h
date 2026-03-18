@@ -6,8 +6,10 @@
 #ifndef _PLAYER_STATUS_DATA_H_
 #define _PLAYER_STATUS_DATA_H_
 
+#include "../Engine/GameEnum.h";
+
 /*
- *	プレイヤーのステータス値
+ *	@brief	プレイヤーのステータス値
  */
 struct PlayerStatusValue {
 	int HP;
@@ -41,7 +43,7 @@ struct PlayerStatusValue {
 	 *	@brief	構造体のサイズの取得
 	 *	@return	int
 	 */
-	 int Length() { return 4; }
+	 int Length() { return static_cast<int>(GameEnum::PlayerStatusType::Max); }
 };
 /*
  *	プレイヤーのステータスデータ

@@ -30,15 +30,17 @@ void ReticleUI::Render() {
 	// リロード中は表示なし
 	if (weapon->reload)
 		return;
-	// 画像描画位置を計算
+	// 画面中心に描画できるように計算
 	float centerWidth = GameConst::WINDOW_WIDTH * 0.5f;
 	float centerHeight = GameConst::WINDOW_HEIGHT * 0.5f;
 	int graphSizeWidth;
 	int graphSizeHeight;
 	if (!reticleGraphHandle) return;
+	// 画面中心座標から画像のサイズを引いた値が最終座標
 	GetGraphSize(reticleGraphHandle, &graphSizeWidth, &graphSizeHeight);
 	float drawPosX = centerWidth - graphSizeWidth * 0.5f;
 	float drawPosY = centerHeight - graphSizeHeight * 0.5f;
+	
 	// 描画
 	DrawGraph(drawPosX, drawPosY, reticleGraphHandle, TRUE);
 }

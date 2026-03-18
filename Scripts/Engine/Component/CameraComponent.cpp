@@ -14,14 +14,14 @@
 using namespace InputUtility;
 
 CameraComponent::CameraComponent()
-	: sensitivity(0.005f)
-	, playerDistancePos(500)
+	: sensitivity(0.001f)
 	, state(GameEnum::CameraState::FPS)
 
 	, CAMERA_ROTATION_X_MAX(1.5f)
 	, CAMERA_ROTATION_X_MIN(-1.5f)
-	, PLAYER_HEAD_HEIGHT(310)
-	, DEFAULT_DEBUG_MOVE_SPEED(1500.0f) {}
+	, PLAYER_HEAD_HEIGHT(310.0f)
+	, TPS_PLAYER_DISTANCE_POS(500.0f)
+	, DEFAULT_DEBUG_MOVE_SPEED(2000.0f) {}
 
 /*
  *	最初のUpdateの直前に呼び出される処理
@@ -64,9 +64,7 @@ void CameraComponent::Update(float deltaTime) {
 		CameraRotate(camera, axisX, axisY);
 
 		// プレイヤーの背後に位置調整
-		Vector3 playerHeadPos = player->position;
-		playerHeadPos.y += PLAYER_HEAD_HEIGHT;
-		camera->position = playerHeadPos - ForwardDir(camera->rotation) * playerDistancePos;
+		camera->position = GetTPSCameraPosition(player);
 		break;
 	}
 	case GameEnum::CameraState::Event:
@@ -134,13 +132,23 @@ void CameraComponent::Update(float deltaTime) {
 	}
 	}
 
-
 	// カメラの設定に反映する
 	SetCameraPositionAndAngle(
 		Vector3::ToVECTOR(camera->position),
 		camera->rotation.x,
 		camera->rotation.y,
 		camera->rotation.z);
+}
+
+/*
+ *	TPSカメラの位置取得
+ */
+Vector3 CameraComponent::GetTPSCameraPosition(GameObjectPtr player) {
+	Vector3 pos;
+	Vector3 playerHeadPos = player->position;
+	playerHeadPos.y += PLAYER_HEAD_HEIGHT;
+	pos = playerHeadPos - ForwardDir(GetOwner()->rotation) * TPS_PLAYER_DISTANCE_POS;
+	return pos;
 }
 
 /*
@@ -158,3 +166,4 @@ void CameraComponent::CameraRotate(GameObject* camera, float axisX, float axisY)
 	// x軸の角度は制限を掛ける
 	camera->rotation.x = Clamp(camera->rotation.x, CAMERA_ROTATION_X_MIN, CAMERA_ROTATION_X_MAX);
 }
+
