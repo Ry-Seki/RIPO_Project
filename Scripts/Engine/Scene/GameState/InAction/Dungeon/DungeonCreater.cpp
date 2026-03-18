@@ -11,12 +11,14 @@
 #include "../../../../Stage/StageUtility.h"
 #include "../../../../Stage/StageObject/StageObjectUtility.h"
 #include "../../../../Stage/StageObject/Treasure/Treasure.h"
+#include "../../../../Component/Character/EnemyDataUtility.h"
 #include "../../../../GameConst.h"
 
 using namespace GameObjectUtility;
 using namespace CharacterUtility;
 using namespace StageUtility;
 using namespace StageObjectUtility;
+using namespace EnemyDataUtility;
 
 /*
  *	@brief		‰Šú‰»ˆ—
@@ -157,7 +159,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 			if (!bossCharacter) continue;
 
 			bossCharacter->position = bossSpawnPos[0];
-			bossCharacter->scale = { 3, 3, 3 };
+			bossCharacter->scale = GetBossScale(dungeonID);
 			// ƒ‚ƒfƒ‹‚Ìİ’è
 			SetCharacterModel(bossCharacter.get(), bossHandle);
 		}
@@ -335,7 +337,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 			if (!bossCharacter) continue;
 
 			bossCharacter->position = bossSpawnPos[0];
-			bossCharacter->scale = { 3, 3, 3 };
+			bossCharacter->scale = GetBossScale(dungeonID);
 			// ƒ‚ƒfƒ‹‚Ìİ’è
 			SetCharacterModel(bossCharacter.get(), bossHandle);
 		}

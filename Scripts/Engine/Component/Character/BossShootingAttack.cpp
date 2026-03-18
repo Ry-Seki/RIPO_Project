@@ -105,7 +105,7 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 			RapidFire(boss, deltaTime, 1000000 * deltaTime);
 		}
 		else {
-			ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime);
+			ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime, 400);
 		}
 
 		break;
@@ -113,7 +113,7 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 
 		boss->rotation.y = atan2(direction.x, direction.z) + Pi;
 		SlowBall(boss, deltaTime, 300000 * deltaTime, 0.3f, 0.3f);
-		ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime);
+		ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime, 250);
 
 		break;
 	default:
@@ -154,7 +154,7 @@ void BossShootingAttack::ShootingAttack(GameObject* boss, float deltaTime, float
 	}
 }
 
-void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, float shotSpeed)
+void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, float shotSpeed, float positionY)
 {
 	animator->Play(0, 2000 * deltaTime);
 
@@ -165,7 +165,7 @@ void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, floa
 		if (!shootFlag) {
 			// ’e”­ŽË
 			BulletManager::GetInstance().BulletShot(
-				{ boss->position.x, boss->position.y + 250, boss->position.z },
+				{ boss->position.x, boss->position.y + positionY, boss->position.z },
 				boss->rotation,
 				{ 1.0f, 1.0f, 1.0f },
 				direction,
@@ -182,7 +182,7 @@ void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, floa
 		if (!secondFlag) {
 			// ’e”­ŽË
 			BulletManager::GetInstance().BulletShot(
-				{ boss->position.x, boss->position.y + 250, boss->position.z },
+				{ boss->position.x, boss->position.y + positionY, boss->position.z },
 				boss->rotation,
 				{ 1.0f, 1.0f, 1.0f },
 				direction,
@@ -199,7 +199,7 @@ void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, floa
 		if (!thirdFlag) {
 			// ’e”­ŽË
 			BulletManager::GetInstance().BulletShot(
-				{ boss->position.x, boss->position.y + 250, boss->position.z },
+				{ boss->position.x, boss->position.y + positionY, boss->position.z },
 				boss->rotation,
 				{ 1.0f, 1.0f, 1.0f },
 				direction,

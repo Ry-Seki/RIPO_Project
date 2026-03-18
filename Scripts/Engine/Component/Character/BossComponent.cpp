@@ -49,7 +49,7 @@ BossComponent::~BossComponent()
 void BossComponent::Start()
 {
 	// ƒ‚ƒfƒ‹ƒnƒ“ƒhƒ‹‚Ì“Ç‚Ýž‚Ý
-	modelHandle = MV1LoadModel("Res/Model/Enemy/Boss/Boss.mv1");
+	modelHandle = MV1LoadModel("Res/Model/Enemy/Boss/Stage1Boss.mv1");
 	boss = GetOwner();
 	if (boss == nullptr) return;
 	animator = boss->GetComponent<AnimatorComponent>();
