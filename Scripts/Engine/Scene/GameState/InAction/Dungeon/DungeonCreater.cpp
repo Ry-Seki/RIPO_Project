@@ -62,7 +62,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	int goalCount = floorData.goalSpawnCount;
 
 	// プレイヤー生成
-	GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, {-100, 0, -100}, {100,  300,  100}, {0, 100, 0}, {0,  200,  0}, 200);
+	GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, {0, 100, 0}, {0,  200,  0}, 200);
 	// カメラ生成
 	CameraManager::GetInstance().CreateCamera("camera", V_ZERO, { 0, 180 * Deg2Rad, 0 });
 	// 敵の生成

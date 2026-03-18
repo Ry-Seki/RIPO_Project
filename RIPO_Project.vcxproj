@@ -190,6 +190,7 @@
     <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\MoveComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\OBBCollider.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\StatusComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Engine\Input\ActionMapBase.cpp" />
@@ -384,6 +385,7 @@
     <ClInclude Include="Scripts\Engine\Component\OBBCollider.h" />
     <ClInclude Include="Scripts\Engine\Component\RenderComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\SpriteRenderer.h" />
+    <ClInclude Include="Scripts\Engine\Component\StatusComponent.h" />
     <ClInclude Include="Scripts\Engine\Engine.h" />
     <ClInclude Include="Scripts\Engine\Fade\BlackFade.h" />
     <ClInclude Include="Scripts\Engine\Fade\FadeBase.h" />
