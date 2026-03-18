@@ -93,6 +93,10 @@ private:
 
 public:
 	/*
+	 *	@brief	
+	 */
+	inline bool IsBlocking() const override { return true; }
+	/*
 	 *	@brief		コールバックの登録
 	 *	@param[in]	std::function<void()> setCallback
 	 */
@@ -101,6 +105,7 @@ public:
 
 		Callback = setCallback;
 	}
+
 };
 
 #endif // !_MENU_DIALOG_H_

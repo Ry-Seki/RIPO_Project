@@ -104,6 +104,11 @@ public:
 	 */
 	template <class T, typename = std::enable_if_t<std::is_base_of_v<MenuBase, T>>>
 	void OpenMenu() {
+		// メニューリストが空でなければ、一番上の上書き判定を確認
+		if (!useMenuList.empty()) {
+			auto& topMenu = useMenuList.back();
+			if (!topMenu || topMenu->IsBlocking()) return;
+		}
 		auto menu = GetMenu<T>();
 		if (!menu) return;
 
@@ -113,9 +118,9 @@ public:
 		auto itr = std::find(useMenuList.begin(), useMenuList.end(), menu);
 		if (itr != useMenuList.end()) {
 			// 既存メニューの場合は再開
+			useMenuList.erase(itr);
 			useMenuList.push_back(menu);
 			menu->Resume();
-			useMenuList.erase(itr);
 		} else {
 			useMenuList.push_back(menu);
 			// 初回表示
