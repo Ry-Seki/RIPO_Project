@@ -209,39 +209,6 @@ void MenuSelectSaveSlot::Resume() {
     if (saveMode == GameEnum::SaveSlotMenuMode::Load) UpdateSlotButtonState();
 }
 /*
- *	@brief		セーブ処理
- *  @param[in]  int slotIndex
- */
-void MenuSelectSaveSlot::ExecuteSave(int slotIndex, Engine& engine) {
-    auto& save = SaveDataManager::GetInstance();
-    auto& menu = MenuManager::GetInstance();
-    save.SelectSlot(slotIndex);
-    if (!save.SaveCurrentSlot()) {
-        assert(false && "セーブに失敗しました");
-        return;
-    }else {
-        auto& entry = slotButtonList[slotIndex];
-        UpdateSaveSlot(entry);
-    }
-}
-/*
- *	@brief		ロード処理
- *  @param[in]  int slotIndex
- */
-void MenuSelectSaveSlot::ExecuteLoad(int slotIndex, Engine& engine) {
-    auto& save = SaveDataManager::GetInstance();
-    auto& menu = MenuManager::GetInstance();
-    save.SelectSlot(slotIndex);
-    save.ResetClearSaveData();
-    if (!save.LoadCurrentSlot()) {
-        assert(false && "ロードに失敗しました");
-        return;
-    }else {
-        engine.SetNextScene(std::make_shared<MainGameScene>());
-        menu.CloseAllMenu();
-    }
-}
-/*
  *	@brief		ボタンのコールバック登録
  *	@param[in]	int slotIndex
  */
@@ -445,4 +412,39 @@ std::string MenuSelectSaveSlot::ChangePlayTimeText(int playTime) {
     int seconds = playTimeSec % _ONE_MINUTE_TIME_PER;
     playTimeText += std::to_string(seconds);
     return playTimeText;
+}
+/*
+ *	@brief		セーブ処理
+ *  @param[in]  int slotIndex
+ */
+void MenuSelectSaveSlot::ExecuteSave(int slotIndex, Engine& engine) {
+    auto& save = SaveDataManager::GetInstance();
+    auto& menu = MenuManager::GetInstance();
+    save.SelectSlot(slotIndex);
+    if (!save.SaveCurrentSlot()) {
+        assert(false && "セーブに失敗しました");
+        return;
+    }
+    else {
+        auto& entry = slotButtonList[slotIndex];
+        UpdateSaveSlot(entry);
+    }
+}
+/*
+ *	@brief		ロード処理
+ *  @param[in]  int slotIndex
+ */
+void MenuSelectSaveSlot::ExecuteLoad(int slotIndex, Engine& engine) {
+    auto& save = SaveDataManager::GetInstance();
+    auto& menu = MenuManager::GetInstance();
+    save.SelectSlot(slotIndex);
+    save.ResetClearSaveData();
+    if (!save.LoadCurrentSlot()) {
+        assert(false && "ロードに失敗しました");
+        return;
+    }
+    else {
+        engine.SetNextScene(std::make_shared<MainGameScene>());
+        menu.CloseAllMenu();
+    }
 }

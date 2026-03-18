@@ -102,17 +102,6 @@ public:
 	 */
 	void Resume() override;
 
-public:
-	/*
-	 *	@brief		セーブ処理
-	 *  @param[in]  int slotIndex
-	 */
-	void ExecuteSave(int slotIndex, Engine& engine);
-	/*
-	 *	@brief		ロード処理
-	 *  @param[in]  int slotIndex
-	 */
-	void ExecuteLoad(int slotIndex, Engine& engine);
 
 private:
 	/*
@@ -170,6 +159,18 @@ private:
 	 *	@return		std::string
 	 */
 	std::string ChangePlayTimeText(int playTime);
+
+public:
+	/*
+	 *	@brief		セーブ処理
+	 *  @param[in]  int slotIndex
+	 */
+	void ExecuteSave(int slotIndex, Engine& engine);
+	/*
+	 *	@brief		ロード処理
+	 *  @param[in]  int slotIndex
+	 */
+	void ExecuteLoad(int slotIndex, Engine& engine);
 
 public:
 	/*
