@@ -29,6 +29,7 @@ namespace GameEnum {
 		NewGame,		// ニューゲーム
 		LoadGame,		// ロードゲーム
 		System,			// システム
+		EndGame,		// ゲーム終了
 		Max
 	};
 	/*
@@ -138,8 +139,10 @@ namespace GameEnum {
 	 *	@author	Seki
 	 */
 	enum class SaveSlotMenuMode {
+		Invalid = -1,
 		Save,
-		Load
+		Load,
+		Max
 	};
 	/*
 	 *	@brief	ボタンの種類
@@ -202,6 +205,7 @@ namespace GameEnum {
 	 *	@author	Seki
 	 */
 	enum class ConfirmResult {
+		Invalid,
 		Yes,
 		No
 	};

@@ -1,0 +1,20 @@
+{
+  "GameModeButtons": [
+    {
+      "ButtonName": "NewGame",
+      "GameMode": "NewGame"
+    },
+    {
+      "ButtonName": "LoadGame",
+      "GameMode": "LoadGame"
+    },
+    {
+      "ButtonName": "System",
+      "GameMode": "System"
+    },
+    {
+      "ButtonName": "EndGame",
+      "GameMode": "EndGame"
+    }
+  ]
+}

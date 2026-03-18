@@ -8,6 +8,20 @@
 
 #include <DxLib.h>
 
+namespace {
+	constexpr float _REPEATE_INTERVAL_PER = 0.3f;
+}
+/*
+ *	@brief	ボタンの状態リセット
+ */
+void LongPressButton::ResetState() {
+	UIButtonBase::ResetState();
+	holdElapsed = 0.0f;
+	repeatElapsed = 0.0f;
+
+	// 次回のために初期値へ戻す
+	repeatInterval = _REPEATE_INTERVAL_PER;
+}
 /*
  *	@brief	初期化処理
  */
@@ -45,6 +59,7 @@ void LongPressButton::Update(float unscaledDeltaTime) {
  */
 void LongPressButton::Render() {
 	if (handleList.empty()) return;
+	// TODO : 描画インターフェースでの描画
 	int handle = handleList[static_cast<int>(GetRendererState())];
 
 	if (handle != -1) {
@@ -93,11 +108,5 @@ void LongPressButton::OnPress(float unscaledDeltaTime) {
  *	@brief	離れた瞬間
  */
 void LongPressButton::OnPressUp() {
-	inputState = GameEnum::ButtonInputState::Idle;
-
-	holdElapsed = 0.0f;
-	repeatElapsed = 0.0f;
-
-	// 次回のために初期値へ戻す
-	repeatInterval = 0.3f;
+	ResetState();
 }

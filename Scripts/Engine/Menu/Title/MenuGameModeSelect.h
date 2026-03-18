@@ -13,6 +13,8 @@
 #include "../../GameEnum.h"
 #include "../../GameConst.h"
 
+#include <unordered_map>
+
 // 前方宣言
 class Engine;
 
@@ -20,15 +22,11 @@ class Engine;
  *	@brief	ゲームモードを選択するメニュー
  */
 class MenuGameModeSelect : public MenuBase {
-	float animTimer = 0.0f;
-	int animFrame = 0;
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
-
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Title/SelectGameMode/SelectGameModeMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/SelectGameMode/SelectGameModeMenuNavigation.json";
+	std::unordered_map<std::string, UIButtonBase*> buttonMap;
 
 public:
 	/*
@@ -62,10 +60,6 @@ public:
 	 */
 	void Close(Engine& engine) override;
 	/*
-	 *	@brief	メニューを中断
-	 */
-	void Suspend() override;
-	/*
 	 *	@brief	メニューを再開
 	 */
 	void Resume() override;
@@ -73,13 +67,53 @@ public:
 private:
 	/*
 	 *	@brief		ボタンの押された時の処理
-	 *	@param[in]	int buttonIndex
+	 *	@param[in]	GameEnum::GameMode mode
 	 */
-	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	void SelectButtonExecute(GameEnum::GameMode mode, Engine& engine);
+	/*
+	 *	@brief		ゲームモードボタンの初期化処理
+	 *	@param[in]	const JSON& json
+	 */
+	void InitializeGameModeButtons(const JSON& json, Engine& engine);
+	/*
+	 *	@brief		確認メニューを開く
+	 *	@param[in]	GameEnum::GameMode mode
+	 */
+	void OpenConfirmMenu(GameEnum::GameMode mode, Engine& engine);
 	/*
 	 *	@brief		ゲーム終了処理
 	 */
 	void CheckEndGame(Engine& engine);
+	/*
+	 *	@brief		名前でのボタン検索
+	 *	@param[in]	const std::string& buttonName
+	 *	@return		UIButtonBase*
+	 */
+	UIButtonBase* FindButtonByName(const std::string& buttonName);
+
+public:
+	/*
+	 *	@brief		ニューゲーム実行処理
+	 */
+	void ExecuteNewGame(Engine& engine);
+	/*
+	 *	@brief		ロードゲーム実行処理
+	 */
+	void ExecuteLoadGame(Engine& engine);
+	/*
+	 *	@brief		システム実行処理
+	 */
+	void ExecuteSystem(Engine& engine);
+	/*
+	 *	@brief		ゲーム終了実行処理
+	 */
+	void ExecuteEndGame(Engine& engine);
+	/*
+	 *	@brief		確認メニューを開くか判定
+	 *	@param[in]	GameEnum::GameMode mode
+	 */
+	bool IsCheckConfirm(GameEnum::GameMode mode) const;
+
 };
 
 #endif // !_MENU_GAME_MODE_SELECT_H_

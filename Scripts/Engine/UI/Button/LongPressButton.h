@@ -35,6 +35,12 @@ public:
 	 */
 	~LongPressButton() override = default;
 	
+protected:
+	/*
+	 *	@brief	ボタンの状態リセット
+	 */
+	void ResetState() override;
+
 public:
 	/*
 	 *	@brief	初期化処理

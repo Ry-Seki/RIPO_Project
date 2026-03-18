@@ -19,6 +19,7 @@
  */
 class SinglePressButton : public UIButtonBase {
 private:
+	bool inputHandle = false;
 
 public:
 	/*
@@ -34,11 +35,21 @@ public:
 	 */
 	~SinglePressButton() override = default;
 
+protected:
+	/*
+	 *	@brief	ボタンの状態のリセット
+	 */
+	void ResetState() override;
+
 public:
 	/*
 	 *	@brief	初期化処理
 	 */
 	void Initialize() override;
+	/*
+	 *	@brief	準備前処理
+	 */
+	void Setup() override;
 	/*
 	 *	@brief	更新処理
 	 */
