@@ -59,7 +59,7 @@ struct StairsPosData {
  *  @brief  リスポーン生成位置データ
  */
 struct RespawnPosData {
-	Vector3 position = V_ZERO;
+	std::vector<Vector3> position;
 };
 
 /*
@@ -129,11 +129,12 @@ public:
 	 *  @param[in]	dungeonID	現在のダンジョンID
 	 */
 	void LoadFromJSON(const JSON& json, int dungeonID, int floorID) {
+		dungeonCreatePosMap.clear();
 		auto& data = dungeonCreatePosMap[dungeonID];
 
 		LoadStartPos(json, data);			// 開始位置の設定
 		LoadGoalPos(json, data);			// 出口位置の設定
-		LoadEnemySpawn(json, data);			// 敵生成位置の設定
+		LoadEnemySpawn(json, data,floorID);	// 敵生成位置の設定
 		LoadBossSpawn(json, data);			// ボス生成位置の設定
 		LoadPointLight(json, data);			// ポイントライト生成位置の設定
 		LoadStairs(json, data);				// 階段生成位置の設定
@@ -191,27 +192,41 @@ private:
 	/*
 	 * 敵生成位置
 	 */
-	void LoadEnemySpawn(const JSON& json, CreatePosData& data) {
+	void LoadEnemySpawn(const JSON& json, CreatePosData& data, int floorID) {
+		// Enemyノードが無ければ終了
 		if (!json.contains(GameConst::_CREATE_POSNAME_ENEMY)) return;
 
 		const auto& enemy = json[GameConst::_CREATE_POSNAME_ENEMY];
 
+		// SpawnPosが無ければ終了
 		if (!enemy.contains(GameConst::_CREATE_POSITION_SPAWN)) return;
 
-		const auto& spawnRoot =
-			enemy[GameConst::_CREATE_POSITION_SPAWN];
+		const auto& spawnRoot = enemy[GameConst::_CREATE_POSITION_SPAWN];
 
-		for (auto it = spawnRoot.begin(); it != spawnRoot.end(); ++it) {
+		// floorIDを文字列に変換
+		const std::string floorKey = std::to_string(floorID);
+
+		// 該当階層が無ければ終了
+		if (!spawnRoot.contains(floorKey)) return;
+
+		const auto& enemyObj = spawnRoot[floorKey];
+
+		// 敵IDごとのフレーム名を取得
+		for (auto it = enemyObj.begin(); it != enemyObj.end(); ++it) {
+
+			// enemyID取得
 			int enemyID = std::stoi(it.key());
 
 			if (!it.value().is_string()) continue;
 
-			std::string frameName = it.value();
+			// フレーム名取得
+			std::string frameName = it.value().get<std::string>();
 
-			data.enemy.position.emplace(
-				enemyID,
-				GetFramePosition(frameName)
-			);
+			// フレーム座標取得
+			Vector3 pos = GetFramePosition(frameName);
+
+			// mapに追加
+			data.enemy.position.emplace(enemyID, pos);
 		}
 	}
 
@@ -292,13 +307,16 @@ private:
 	void LoadRespawn(const JSON& json, CreatePosData& data) {
 		if (!json.contains(GameConst::_CREATE_POSNAME_PLAYER)) return;
 
+		// 
 		const auto& player = json[GameConst::_CREATE_POSNAME_PLAYER];
+		if (!player.contains(GameConst::_CREATE_POSITION_RESPAWNPOS)) return;
 
-		if (!player.contains("RespawnPos")) return;
+		const auto& arr = player[GameConst::_CREATE_POSITION_RESPAWNPOS];
 
-		std::string frameName = player["RespawnPos"];
-
-		data.respawn.position = GetFramePosition(frameName);
+		for (const auto& elem : arr) {
+			if (!elem.is_string())continue;
+			data.respawn.position.push_back(GetFramePosition(elem.get<std::string>()));
+		}
 	}
 
 	/*
@@ -309,7 +327,7 @@ private:
 	 */
 	void LoadTreasure(const JSON& json, CreatePosData& data, int floorID) {
 		if (!json.contains(GameConst::_CREATE_POSNAME_TREASURE))return;
-		
+
 		const auto& treasure = json[GameConst::_CREATE_POSNAME_TREASURE];
 		if (!treasure.contains(GameConst::_CREATE_POSITION_SPAWN))return;
 		// ルートを設定
@@ -346,7 +364,7 @@ public:
 	 * 各データ取得
 	 */
 
-	bool GetCreatePosData(int dungeonID, CreatePosData& data)  {
+	bool GetCreatePosData(int dungeonID, CreatePosData& data) {
 		auto it = dungeonCreatePosMap.find(dungeonID);
 
 		if (it == dungeonCreatePosMap.end())
@@ -356,6 +374,9 @@ public:
 
 		return true;
 	}
+
+	// データ構造体の取得
+
 };
 
 #endif

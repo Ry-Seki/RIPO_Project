@@ -13,6 +13,8 @@
 #include "../../../../Stage/StageObject/Treasure/Treasure.h"
 #include "../../../../Component/Character/EnemyDataUtility.h"
 #include "../../../../GameConst.h"
+#include "../../../../Stage/StageObject/Respawn.h"
+
 
 using namespace GameObjectUtility;
 using namespace CharacterUtility;
@@ -62,6 +64,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	int treasureCount = floorData.treasureSpawnCount;
 	int stairCount = floorData.stairSpawnCount;
 	int goalCount = floorData.goalSpawnCount;
+	int respawnCount = floorData.respawnSpawnCount;
 
 	// プレイヤー生成
 	GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, {-100, 0, -100}, {100,  300,  100}, {0, 100, 0}, {0,  200,  0}, 200);
@@ -223,13 +226,17 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	GameObjectList exitList = GetObjectByName(GameConst::_CREATE_POSNAME_GOAL);
 	// 生成位置の取得
 	std::vector<Vector3> exitSpawnPos = createPosDataList.goal.position;
+	
 	for (int i = 0; i < goalCount; i++) {
 		if (exitList.size() <= 0) break;
 		auto exit = exitList[i];
 		if (!exit) continue;
-
+		// 出口にスタート位置の情報を渡す
+		exit->GetComponent<ExitPoint>()->SetDungeonCreateData(createPosDataList.start.position);
 		exit->position = exitSpawnPos[i];
 	}
+	// ライトの座標をStageManagerに渡す
+	SetLightPos(createPosDataList.light.position);
 }
 /*
  *	@brief		ダンジョンの再生成
@@ -256,6 +263,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	int treasureCount = floorData.treasureSpawnCount;
 	int stairCount = floorData.stairSpawnCount;
 	int goalCount = floorData.goalSpawnCount;
+	int respawnCount = floorData.respawnSpawnCount;
 
 	// 敵の再生成
 	for (int i = 0; i < enemyCount; i++) {
@@ -292,14 +300,6 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	for (int i = 0; i < goalCount; i++) {
 		GenerateExit(goalData.name, goalData.position, goalData.rotation, goalData.center, goalData.angle,goalData.size);
 	}
-	// オブジェクトの設定
-	Vector3 respawnPos = createPosDataList.respawn.position;
-	// プレイヤー
-	// プレイヤーオブジェクトの取得
-	auto player = GetUseObject(0);
-	if (!player) return;
-	// 位置の設定
-	player->position = respawnPos;
 
 	// 敵
 	std::unordered_map<int, Vector3> enemySpawnPos = createPosDataList.enemy.position;
@@ -410,6 +410,13 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 		stairComponent->SetStairID(stairID);
 	}
 
+	// プレイヤー
+	// プレイヤーオブジェクトの取得
+	auto player = GetUseObject(0);
+	if (!player) return;
+
+	player->position = createPosDataList.respawn.position[0];
+
 	// 出口の設定
 	GameObjectList exitList = GetObjectByName(GameConst::_CREATE_POSNAME_GOAL);
 	// 生成位置の取得
@@ -418,9 +425,13 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 		if (exitList.size() <= 0) break;
 		auto exit = exitList[i];
 		if (!exit) continue;
-
+		// 出口にスタート位置の情報を渡す
+		exit->GetComponent<ExitPoint>()->SetDungeonCreateData(createPosDataList.start.position);
 		exit->position = exitSpawnPos[i];
 	}
+
+	// ライトの座標をStageManagerに渡す
+	SetLightPos(createPosDataList.light.position);
 }
 /*
  *	@brief	階段、出口のデータの設定

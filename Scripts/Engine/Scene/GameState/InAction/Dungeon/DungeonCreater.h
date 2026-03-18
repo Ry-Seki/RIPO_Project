@@ -25,6 +25,7 @@ private:
 	FloorData floorData;
 	std::vector<EntranceData> entranceDataList;
 	std::vector<EntranceData> stairDataList;
+	std::vector<EntranceData> respawnDataList;
 	EntranceData goalData;
 	DungeonResourceData dungeonResourceData;
 	DungeonEntranceData dungeonEntranceData;

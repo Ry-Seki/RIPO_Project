@@ -13,7 +13,11 @@
   *  コンストラクタ
   */
 StageManager::StageManager()
-	: engine(nullptr) {
+	: engine(nullptr) 
+	, lightDirection(0.2f, -20.0f, 0.3f)	// 光源の向き
+	, pointLightColor(1.0f, 0.8f, 0.6f)		// ポイントライトの色
+	, pointLightRange(10000.0f)				// ポイントライトの範囲
+{
 }
 
 /*
@@ -53,6 +57,8 @@ void StageManager::LoadStage(const std::vector<int> modelHandleBase) {
 			stageState.SetCurrentStageIndex(0);
 		}
 	}
+
+	
 }
 
 /*
@@ -64,7 +70,7 @@ void StageManager::ChangeStage() {
 
 
 	loadedStage->SetModelHandle(currentHandle);
-
+	
 }
 
 /*
@@ -105,6 +111,7 @@ void StageManager::Update() {
  */
 void StageManager::Render() {
 	WithCurrentStage([](StageBase& stage) { stage.Render(); });
+	LightSettings();
 }
 
 
@@ -121,263 +128,27 @@ void StageManager::Execute() {
 }
 
 /*
- *	スタート位置の取得
+ *	ステージライトの設定
  */
-Vector3 StageManager::GetStartPos() const {
-	if (!loadedStage)return Vector3();
+void StageManager::LightSettings() {
+	// 古いライトを削除
+	DeleteLightHandleAll();
 
-	// ステージのモデルハンドルの取得
-	int modelHandle = loadedStage->GetStageModelHandle();
-	if (modelHandle == -1) return Vector3();
+	// マップ全体のライト設定
+	// アンビエントカラーの設定
+	SetLightAmbColor(GameConst::_MAP_AMB_COLOR);
+	// ライトの方向を設定する
+	SetLightDirection(ToVECTOR(lightDirection));
+	SetLightDifColor(GameConst::_MAP_DIF_COLOR);
+	SetLightSpcColor(GameConst::_MAP_SPC_COLOR);
 
-	// 開始位置の名前の取得
-	// jsonファイルの文字列がなかった場合のnullCheck
-	if (
-		!json.contains(GameConst::_CREATE_POSNAME_PLAYER) ||
-		!json[GameConst::_CREATE_POSNAME_PLAYER].contains(GameConst::_CREATE_POSITION_STARTPOS)
-		)
-		return Vector3();
-
-	std::string frameName = json[GameConst::_CREATE_POSNAME_PLAYER][GameConst::_CREATE_POSITION_STARTPOS];
-	// string型→const char* 型への型変換
-	const char* cstr = frameName.c_str();
-
-	// スタート位置のフレーム番号を取得
-	int frameIndex = MV1SearchFrame(modelHandle, cstr);
-	if (frameIndex == -1)return Vector3();
-
-	// スタート位置の座標を取得
-	VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
-
-	// VECTOR型をVector3型に変換
-	Vector3 startPos = FromVECTOR(framePos);
-
-	// 座標を返す
-	return startPos;
-}
-
-
-/*
- *	ゴール位置の取得
- */
-std::vector<Vector3> StageManager::GetGoalPos() const {
-	std::vector<Vector3> result;
-	if (!loadedStage)return result;
-
-	// ステージのモデルハンドルの取得
-	int modelHandle = loadedStage->GetStageModelHandle();
-	if (modelHandle == -1) return result;
-
-	// 終了位置の名前の取得
-	// jsonファイルの文字列がなかった場合のnullCheck
-	if (
-		!json.contains(GameConst::_CREATE_POSNAME_PLAYER) ||
-		!json[GameConst::_CREATE_POSNAME_PLAYER].contains(GameConst::_CREATE_POSITION_GOALPOS)
-		)
-		return result;
-
-	// フレーム名を取得
-	std::string framName = json[GameConst::_CREATE_POSNAME_PLAYER][GameConst::_CREATE_POSITION_GOALPOS];
-
-	// string型→const char* 型への型変換
-	const char* cstr = framName.c_str();
-
-	// 終了位置のフレーム番号を取得
-	int frameIndex = MV1SearchFrame(modelHandle, cstr);
-	if (frameIndex == -1)return result;
-
-	// 終了位置の座標を取得
-	VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
-
-	// VECTOR型をVector3型に変換
-	Vector3 goalPos = FromVECTOR(framePos);
-	result.push_back(FromVECTOR(framePos));
-	// 座標を返す
-	return result;
-
-}
-
-/*
- * お宝の生成位置の取得
- */
-std::unordered_map<int, Vector3> StageManager::GetTreasureSpawnPos(int setValue)const {
-	// 空の配列を作成
-	std::unordered_map<int, Vector3> treasureSpawnPositions;
-
-	if (!loadedStage) return treasureSpawnPositions;
-
-	// ステージのモデルハンドルを取得
-	int modelHandle = loadedStage->GetStageModelHandle();
-	if (modelHandle == -1) return treasureSpawnPositions;
-
-	// jsonの中を検索
-	if (!json.contains(GameConst::_CREATE_POSNAME_TREASURE)) return treasureSpawnPositions;
-	if (!json[GameConst::_CREATE_POSNAME_TREASURE].contains(GameConst::_CREATE_POSITION_SPAWN)) return treasureSpawnPositions;
-
-	const auto& spawnRoot =
-		json[GameConst::_CREATE_POSNAME_TREASURE]
-		[GameConst::_CREATE_POSITION_SPAWN];
-
-	// 階層が存在するかどうか
-	// 引数の階層IDを文字列に変換
-	const std::string setKey = std::to_string(setValue);
-	if (!spawnRoot.contains(setKey)) return treasureSpawnPositions;
-
-	// お宝の生成位置を階層別に取得
-	const auto& spawnObj = spawnRoot[setKey];
-
-
-	// お宝毎のフレームを探す
-	for (auto it = spawnObj.begin(); it != spawnObj.end(); ++it) {
-
-		// お宝のIDをint型に変換して取得
-		int treasureID = std::stoi(it.key());
-		// フレーム名を取得
-		const std::string frameName = it.value().get<std::string>();
-
-		// モデルにフレーム名があるか検索
-		int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
-		if (frameIndex == -1) continue;
-
-		// フレームのワールド座標を取得
-		VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
-
-		// Vector3に変換して配列に追加
-		treasureSpawnPositions.emplace(treasureID, FromVECTOR(framePos));
+	// ポイントライトがおける場所がある分、ポイントライトを配置する
+	for (const auto& pos : pointLightPos) {
+		// ポイントライトのハンドルを作成
+		int pLight = CreatePointLightHandle(ToVECTOR(pos), pointLightRange, _POINT_ATTAN.Atten0, _POINT_ATTAN.Atten1, _POINT_ATTAN.Atten2);
+		// ポイントライトの色を指定する
+		SetLightDifColorHandle(pLight, GetColorF(pointLightColor.x, pointLightColor.y, pointLightColor.z, Vector3::one.x));
+		SetLightSpcColorHandle(pLight, GameConst::_POINT_SPC_COLOR);
+		SetLightEnableHandle(pLight, TRUE);
 	}
-
-	// 座標の位置を返す
-	return treasureSpawnPositions;
-
-}
-
-/*
- *	ポイントライト生成位置の取得
- */
-std::vector<Vector3> StageManager::GetPointLightPos()const {
-	std::vector<Vector3> result;
-
-	if (!loadedStage)return result;
-
-	// ステージのモデルハンドルの取得
-	int modelHandle = loadedStage->GetStageModelHandle();
-	if (modelHandle == -1) return result;
-
-	// jsonから座標を取得
-	if (json.contains(GameConst::_CREATE_POSNAME_LIGHT) && json[GameConst::_CREATE_POSNAME_LIGHT].contains(GameConst::_CREATE_POSITION_LIGHTPOS)) {
-		auto spawnArray = json[GameConst::_CREATE_POSNAME_LIGHT][GameConst::_CREATE_POSITION_LIGHTPOS];
-		for (const auto& frameNameJson : spawnArray) {
-			std::string frameName = frameNameJson.get<std::string>();
-			int frameIndex = MV1SearchFrame(modelHandle, frameName.c_str());
-			if (frameIndex == -1) continue;
-
-			VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
-			result.push_back(FromVECTOR(framePos));
-		}
-	}
-
-	return result;
-
-}
-
-/*
- *	階層移動用階段位置の取得
- */
-std::vector<Vector3> StageManager::GetStairsPos() const {
-	// 空の配列を作成
-	std::vector<Vector3> result;
-	// ロードしたステージが無ければ、空の配列を返す
-	if (!loadedStage)return result;
-
-	// ステージのモデルハンドルの取得
-	int modelHandle = loadedStage->GetStageModelHandle();
-	if (modelHandle == -1) return result;
-
-	// jsonから階段の位置を取得
-	if (!json.contains(GameConst::_CREATE_POSNAME_PLAYER) ||
-		!json[GameConst::_CREATE_POSNAME_PLAYER].contains(GameConst::_CREATE_POSITION_STAIRPOS)) {
-		return result;
-	}
-
-	const auto& stairsJson = json[GameConst::_CREATE_POSNAME_PLAYER][GameConst::_CREATE_POSITION_STAIRPOS];
-	std::vector<std::string>frameNames;
-
-	if (stairsJson.is_string()) {
-		frameNames.push_back(stairsJson.get<std::string>());
-	}
-	else if (stairsJson.is_array()) {
-		for (const auto& elem : stairsJson) {
-			if (elem.is_string()) {
-				frameNames.push_back(elem.get<std::string>());
-			}
-		}
-	}
-
-	if (frameNames.empty()) return result;
-
-
-	for (const auto& name : frameNames) {
-
-		const char* cstr = name.c_str();
-
-
-		int frameIndex = MV1SearchFrame(modelHandle, cstr);
-		if (frameIndex == -1) continue;
-
-
-		VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
-
-
-		result.push_back(FromVECTOR(framePos));
-	}
-
-	return result;
-
-}
-
-/*
- *	階段手前のリスポーン位置の取得
- */
-Vector3 StageManager::GetRespawnPos() const {
-	if (!loadedStage)return Vector3();
-
-	// ステージモデルハンドルの取得
-	int modelHandle = loadedStage->GetStageModelHandle();
-	if (modelHandle == -1) return Vector3();
-
-	// 開始位置の名前の取得
-	// jsonファイルの文字列のなかった場合のnullCheck
-	if (!json.contains(GameConst::_CREATE_POSNAME_PLAYER) ||
-		!json[GameConst::_CREATE_POSNAME_PLAYER].contains("RespawnPos")) {
-		return Vector3();
-	}
-
-	const auto& respawnJson = json[GameConst::_CREATE_POSNAME_PLAYER]["RespawnPos"];
-
-	std::string frameName;
-
-
-	if (respawnJson.is_string()) {
-		frameName = respawnJson.get<std::string>();
-	}
-
-	else if (respawnJson.is_array() && !respawnJson.empty()) {
-
-		if (respawnJson[0].is_string()) {
-			frameName = respawnJson[0].get<std::string>();
-		}
-	}
-	if (frameName.empty()) return Vector3();
-	// string型→const char* 型への型変換
-	const char* cstr = frameName.c_str();
-
-	// スタート位置のフレーム番号を取得
-	int frameIndex = MV1SearchFrame(modelHandle, cstr);
-	if (frameIndex == -1) return Vector3();
-
-	// スタート位置の座標を取得
-	VECTOR framePos = MV1GetFramePosition(modelHandle, frameIndex);
-
-	return FromVECTOR(framePos);
-
 }

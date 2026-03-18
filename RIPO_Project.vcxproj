@@ -503,6 +503,7 @@
     <ClInclude Include="Scripts\Engine\Stage\StageCollision.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageMemoryProfiler.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\ExitPoint.h" />
+    <ClInclude Include="Scripts\Engine\Stage\StageObject\Respawn.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectBase.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\StageObjectUtility.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Stair.h" />
