@@ -22,6 +22,15 @@
 #include "../../../Scene/GameState/InAction/PartTime/MiniGame/MiniGameBase.h"
 #include "../../../Scene/GameState/InAction/PartTime/MiniGame/Sokoban/MiniGameSokoban.h"
 
+namespace {
+    /*
+     *  @brief  ファイルパス
+     */
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/PartTime/MiniGame/MiniGameMenuResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/PartTime/MiniGame/MiniGameMenuNavigation.json";
+
+    // const std::unordered_map<std::string, >
+}
 /*
  *	@brief	初期化処理
  */
@@ -31,13 +40,13 @@ void MenuMiniGame::Initialize(Engine& engine) {
 
     load.SetOnComplete([this, &engine, menuJSON]() {
         MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
-        for (auto& button : result.buttonList) {
+        spriteList = std::move(result.spriteList);
+        buttonList = std::move(result.buttonList);
+        for (auto& button : buttonList) {
             if (!button) continue;
 
             eventSystem.RegisterButton(button.get());
         }
-        spriteList = std::move(result.spriteList);
-        buttonList = std::move(result.buttonList);
         for (int i = 0, max = buttonList.size(); i < max; i++) {
             UIButtonBase* button = buttonList[i].get();
             if (!button) continue;
@@ -133,6 +142,7 @@ void MenuMiniGame::Render() {
 void MenuMiniGame::Close(Engine& engine) {
     MenuBase::Close(engine);
     miniGame = nullptr;
+    AudioUtility::StopBGM();
 }
 /*
  *	@brief	メニューを再開

@@ -74,7 +74,7 @@
       "UseFont": "MiniSizeFont",
       "Alignment": "Left",
       "Position": {
-        "X": 1500,
+        "X": 1400,
         "Y": 424
       }
     },
@@ -84,7 +84,7 @@
       "UseFont": "MiniSizeFont",
       "Alignment": "Left",
       "Position": {
-        "X": 1500,
+        "X": 1400,
         "Y": 549
       }
     },
@@ -94,7 +94,7 @@
       "UseFont": "MiniSizeFont",
       "Alignment": "Left",
       "Position": {
-        "X": 1500,
+        "X": 1400,
         "Y": 674
       }
     },
@@ -104,7 +104,7 @@
       "UseFont": "MiniSizeFont",
       "Alignment": "Left",
       "Position": {
-        "X": 1500,
+        "X": 1400,
         "Y": 799
       }
     }
