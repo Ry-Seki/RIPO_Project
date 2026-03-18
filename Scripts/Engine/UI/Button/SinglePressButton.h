@@ -35,6 +35,12 @@ public:
 	 */
 	~SinglePressButton() override = default;
 
+protected:
+	/*
+	 *	@brief	ボタンの状態のリセット
+	 */
+	void ResetState() override;
+
 public:
 	/*
 	 *	@brief	初期化処理

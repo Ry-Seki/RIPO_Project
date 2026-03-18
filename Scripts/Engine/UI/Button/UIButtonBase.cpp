@@ -53,7 +53,17 @@ void UIButtonBase::Update(float unscaledDeltaTime) {
  *	@brief	発火イベント
  */
 void UIButtonBase::OnClickEvent() {
+	if (!isHover) {
+		ResetState();
+		return;
+	}
 	if (OnClick) OnClick();
+}
+/*
+ *	@brief	状態のリセット
+ */
+void UIButtonBase::ResetState() {
+	inputState = GameEnum::ButtonInputState::Idle;
 }
 /*
  *	@brief	デバック用描画処理

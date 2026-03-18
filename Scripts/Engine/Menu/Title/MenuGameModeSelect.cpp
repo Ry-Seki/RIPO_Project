@@ -235,6 +235,12 @@ void MenuGameModeSelect::SelectButtonExecute(GameEnum::GameMode mode, Engine& en
 		}
 			break;
 		case GameEnum::GameMode::System:
+			isInteractive = false;
+			for (const auto& button: buttonList) {
+				if (!button) continue;
+
+				button->SetIsVisible(false);
+			}
 			menu.OpenMenu<MenuSystem>();
 			break;
 		case GameEnum::GameMode::EndGame:

@@ -8,6 +8,14 @@
 
 #include <DxLib.h>
 
+ /*
+  *	@brief	ボタンの状態のリセット
+  */
+void SinglePressButton::ResetState() {
+	UIButtonBase::ResetState();
+	inputHandle = false;
+}
+
 /*
  *	@brief	初期化処理
  */
@@ -79,11 +87,6 @@ void SinglePressButton::OnPress(float unscaledDeltaTime) {
  *	@brief	離した瞬間
  */
 void SinglePressButton::OnPressUp() {
-	if (!isHover) {
-		inputHandle = false;
-		inputState = GameEnum::ButtonInputState::Idle;
-		return;
-	}
 	if (inputState != GameEnum::ButtonInputState::Press) return;
 
 	OnClickEvent();

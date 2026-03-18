@@ -56,6 +56,10 @@ protected:
 	 */
 	virtual void OnClickEvent();
 	/*
+	 *	@brief	状態のリセット
+	 */
+	virtual void ResetState();
+	/*
 	 *	@brief	デバック用描画
 	 */
 	virtual void DebugRender();
