@@ -75,7 +75,7 @@ void EventCamera::Update(GameObject* camera, float deltaTime) {
  *	FPS¨TPS‘JˆÚƒCƒxƒ“ƒg‚Ìİ’è
  */
 void EventCamera::ChangeViewEventSetting(GameObject* camera) {
-	auto event = events[GameEnum::CameraEvent::ChangeView];
+	auto& event = events[GameEnum::CameraEvent::ChangeView];
 	event.commands.clear();
 	
 	// ƒJƒƒ‰‚ÌˆÚ“®æ‚ğŒvZ
@@ -97,7 +97,7 @@ void EventCamera::ChangeViewEventSetting(GameObject* camera) {
  */
 void EventCamera::DeadEventSetting(GameObject* camera) {
 	auto player = GetPlayer()->GetComponent<PlayerComponent>();
-	auto event = events[GameEnum::CameraEvent::Dead];
+	auto& event = events[GameEnum::CameraEvent::Dead];
 	event.commands.clear();
 	
 	// ‰ñ“]‚ÌŠJnŠp“x

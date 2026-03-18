@@ -188,6 +188,7 @@
     <ClCompile Include="Scripts\Engine\Component\Character\WeaponBase.cpp" />
     <ClCompile Include="Scripts\Engine\Component\EffectComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\MoveComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\OBBCollider.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />

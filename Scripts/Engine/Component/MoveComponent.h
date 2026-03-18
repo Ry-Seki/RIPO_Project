@@ -18,8 +18,16 @@ public:
 	~MoveComponent() override = default;
 
 public:
-	void Start() override;
+	/*
+	 *	更新処理
+	 */
 	void Update(float deltaTime) override;
+
+public:
+	/*
+	 *	速度ベクトルをセット
+	 */
+	void SetVelocity(Vector3 direction, float speed);
 
 };
 

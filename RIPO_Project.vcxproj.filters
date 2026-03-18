@@ -162,6 +162,7 @@
     <ClCompile Include="Scripts\Main.cpp" />
     <ClCompile Include="Scripts\Engine\Component\OBBCollider.cpp" />
     <ClCompile Include="Scripts\Engine\Input\DebugCameraActionMap.cpp" />
+    <ClCompile Include="Scripts\Engine\Component\MoveComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Data\Dungeon\DungeonData.h" />
