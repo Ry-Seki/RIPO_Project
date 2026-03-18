@@ -96,8 +96,6 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
 
-	animator->Play(11, animationSpeed * deltaTime);
-
 	// プレイヤーとの距離
 	playerDistance = Distance(player->position, boss->position);
 	auto baseSEVolume = AudioUtility::GetSEVolume();
@@ -114,6 +112,8 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 	switch (bossComponent->GetBossID())
 	{
 	case 101:
+		// 歩行アニメーション
+		animator->Play(11, animationSpeed * deltaTime);
 
 		// 射程距離判定
 		if (closeRangeAttackDistance > Distance(player->position, boss->position)) {
@@ -134,6 +134,9 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 		break;
 
 	case 102:
+		// 歩行アニメーション
+		animator->Play(3, animationSpeed * deltaTime);
+
 		// 近距離判定内
 		if (closeRangeAttackDistance > Distance(player->position, boss->position)) {
 			bossComponent->SetCloseRangeAttackDistanceFlag(true);

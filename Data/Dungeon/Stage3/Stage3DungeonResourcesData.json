@@ -28,7 +28,7 @@
         "7": "Res/Model/Enemy/TutorialEnemy/EnemyModel.mv1"
       }
     },
-    "BossData": "Res/Model/Enemy/Boss/Boss.mv1"
+    "BossData": "Res/Model/Enemy/Boss/Stage3Boss.mv1"
   },
   "Treasure": {
     "0": {

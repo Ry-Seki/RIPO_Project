@@ -30,7 +30,7 @@ BulletComponent::BulletComponent()
 	, hitDamage(0.0f)
 	, shotOwner(nullptr)
 	, moveSpeed(10000) 
-	, MOVE_STEP(10){
+	, MOVE_STEP(20){
 }
 
 void BulletComponent::Update(float deltaTime) {

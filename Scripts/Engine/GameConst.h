@@ -16,13 +16,13 @@ public:
 	//----------------------------------------------------
 	//				プレイヤー関連の定数
 	//----------------------------------------------------
-	static constexpr   int PLAYER_MAX_HITCOLL = 1024;		 // 処理するコリジョンポリゴンの最大数
-	static constexpr float PLAYER_ENUM_DEFAULT_SIZE = 20000.0f;	 // 周囲のポリゴン検出に使用するサイズ
-	static constexpr float PLAYER_HIT_HEIGHT = 200.0f;		 // 当たり判定カプセルの半径 
-	static constexpr const char* _STATUS_KEY = "InitStatus";	 // プレイヤーのステータスキー
-	static constexpr const char* _RASE_KEY = "RiseValue";	 // プレイヤーのステータス上昇値のキー
+	static constexpr   int PLAYER_MAX_HITCOLL = 1024;			// 処理するコリジョンポリゴンの最大数
+	static constexpr float PLAYER_ENUM_DEFAULT_SIZE = 20000.0f;	// 周囲のポリゴン検出に使用するサイズ
+	static constexpr float PLAYER_HIT_HEIGHT = 200.0f;			// 当たり判定カプセルの半径 
+	static constexpr const char* _STATUS_KEY = "InitStatus";	// プレイヤーのステータスキー
+	static constexpr const char* _RASE_KEY = "RiseValue";		// プレイヤーのステータス上昇値のキー
 
-	static constexpr const char* STATUS_PART[4] = {			 // プレイヤーの各ステータスキー
+	static constexpr const char* STATUS_PART[4] = {				// プレイヤーの各ステータスキー
 		"HP",
 		"Stamina",
 		"Strength",
@@ -55,7 +55,7 @@ public:
 	//				ステージ関連の定数
 	//----------------------------------------------------
 	static constexpr int HIT_TRYNUM = 16;								// 壁押し出し処理の最大試行回数
-	static constexpr float HIT_SLIDE_LENGTH = 50.0f;						// 一度の壁押し出し処理でスライドさせる距離
+	static constexpr float HIT_SLIDE_LENGTH = 50.0f;					// 一度の壁押し出し処理でスライドさせる距離
 	static constexpr const float VIEW_RADIUS = 60.0f;					// 取得範囲
 
 
@@ -91,9 +91,11 @@ public:
 	//----------------------------------------------------
 	//					色
 	//----------------------------------------------------
-	const unsigned int WHITE = GetColor(255, 255, 255);
-	const unsigned int GRAY = GetColor(75, 75, 75);
-	const unsigned int BRACK = GetColor(0, 0, 0);
+	static constexpr VECTOR COLOR_WHITE = { 255, 255, 255 };			// 白
+	static constexpr VECTOR COLOR_GRAY = { 75, 75, 75 };				// 灰
+	static constexpr VECTOR COLOR_BRACK = { 0, 0, 0 };					// 黒
+	static constexpr VECTOR COLOR_PURPLE = { 175, 50, 190 };			// 紫
+	static constexpr VECTOR COLOR_YELLOW_GREEN = { 210, 255, 145 };		// 黄緑
 	//----------------------------------------------------
 	//					BGMの命名
 	//----------------------------------------------------

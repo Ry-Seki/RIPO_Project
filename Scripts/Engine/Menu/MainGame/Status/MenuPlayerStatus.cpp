@@ -27,6 +27,9 @@
 namespace {
     constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Status/StatusMenuResources.json";
     constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Status/StatusMenuNavigation.json";
+
+    constexpr const char* _PLUS_STATUS_FRONT = " ( +";
+    constexpr const char* _PLUS_STATUS_BACK = " )";
 }
 /*
  *	@brief	初期化処理
@@ -186,10 +189,10 @@ void MenuPlayerStatus::ComparisonStatus() {
 
     const PlayerStatusValue& prev = prevStatus.base;
     const PlayerStatusValue& current = currentStatus.base;
-    const int _STATUS_COUNT = 4;
+    int statusCount = static_cast<int>(GameEnum::PlayerStatusType::Max);
     const std::string _INVALID = "";
 
-    for (int i = 0; i < _STATUS_COUNT; i++) {
+    for (int i = 0; i < statusCount; i++) {
         std::string prevText = std::to_string(prev[i]);
         std::string currentText = std::to_string(current[i]);
         // 現在のステータスと前回のステータスの差の比較
@@ -206,9 +209,17 @@ void MenuPlayerStatus::ComparisonStatus() {
             currentTextList[i]->SetText(currentText);
             continue;
         }
-        std::string diffText = (diff > 0 ? "+" : _INVALID) + std::to_string(diff);
-        currentText += diffText;
+        std::string diffText;
 
+        // 差が0より上の場合は差分を入れる
+        if (diff > 0) {
+            diffText += _PLUS_STATUS_FRONT;
+            diffText += std::to_string(diff);
+            diffText += _PLUS_STATUS_BACK;
+        }else {
+            diffText += _INVALID;
+        }
+        currentText += diffText;
         prevTextList[i]->SetText(prevText);
         currentTextList[i]->SetText(currentText);
     }

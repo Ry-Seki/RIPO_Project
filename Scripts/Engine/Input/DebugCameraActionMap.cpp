@@ -60,5 +60,4 @@ void DebugCameraActionMap::Initialize() {
 	state.buttonDown[static_cast<int>(GameEnum::DebugCameraAction::ChangePlayerAction)] = false;
 
 	isActive = false;
-
 }

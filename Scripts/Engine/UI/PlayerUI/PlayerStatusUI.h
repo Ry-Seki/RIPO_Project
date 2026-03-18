@@ -17,9 +17,14 @@ private:
 	static constexpr const char* HP_PATH = "Res/PlayerUI/hp.png";
 	static constexpr const char* STAMINA_PATH = "Res/PlayerUI/stamina.png";
 	static constexpr const char* STRENGTH_PATH = "Res/PlayerUI/strength.png";
+	const float GRAPH_WIDTH_POS_RATIO;			// 画像用の横幅に対する位置の割合
+	const float TEXT_WIDTH_POS_RATIO;			// テキスト用の横幅に対する位置の割合
+	const float HP_UI_HEIGHT_POS_RATIO;			// HP関連UI用の縦幅に対する位置の割合
+	const float STAMINA_UI_HEIGHT_POS_RATIO;	// スタミナ関連UI用の縦幅に対する位置の割合
+	const float STRENGTH_UI_HEIGHT_POS_RATIO;	// ストレングス関連UI用の縦幅に対する位置の割合
 
 public:
-	PlayerStatusUI() = default;
+	PlayerStatusUI();
 	~PlayerStatusUI() = default;
 
 public:

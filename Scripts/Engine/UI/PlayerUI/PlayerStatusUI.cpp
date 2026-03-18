@@ -13,6 +13,14 @@
 
 using namespace CharacterUtility;
 
+PlayerStatusUI::PlayerStatusUI() 
+	: GRAPH_WIDTH_POS_RATIO(0.02f)
+	, TEXT_WIDTH_POS_RATIO(0.1f)
+	, HP_UI_HEIGHT_POS_RATIO(0.05f)
+	, STAMINA_UI_HEIGHT_POS_RATIO(0.15f)
+	, STRENGTH_UI_HEIGHT_POS_RATIO(0.25f)
+{}
+
 /*
  *	初期化処理
  */
@@ -45,17 +53,26 @@ void PlayerStatusUI::Render() {
 		stamina = " " + stamina;
 	}
 	std::string strength = std::to_string(playerStatus.strength);
-	// Yの位置だけずらして3種画像と文字の描画
-	float graphPosX = GameConst::WINDOW_WIDTH * 0.02f;
-	float posX = GameConst::WINDOW_WIDTH * 0.1f;
-	float posY = GameConst::WINDOW_HEIGHT * 0.05f;
-	FontManager::GetInstance().Draw("playerStatus", posX, posY, hp + " / " + hpMax, GetColor(0, 255, 0));
+	
+	// 3種画像とテキストの描画
+	float graphPosX = GameConst::WINDOW_WIDTH * GRAPH_WIDTH_POS_RATIO;
+	float textPosX = GameConst::WINDOW_WIDTH * TEXT_WIDTH_POS_RATIO;
+	float posY = GameConst::WINDOW_HEIGHT * HP_UI_HEIGHT_POS_RATIO;
+
+	// HPの画像とテキストの描画
+	FontManager::GetInstance().Draw("playerStatus", textPosX, posY, hp + " / " + hpMax, GetColor(0, 255, 0));
 	DrawGraph(graphPosX, posY, HPGraphHandle, TRUE);
-	posY = GameConst::WINDOW_HEIGHT * 0.15f;
-	FontManager::GetInstance().Draw("playerStatus", posX, posY, stamina + " / " + staminaMax, GetColor(255, 255, 0));
+	
+	// Y座標だけずらして
+	posY = GameConst::WINDOW_HEIGHT * STAMINA_UI_HEIGHT_POS_RATIO;
+	// スタミナの画像とテキストの描画
+	FontManager::GetInstance().Draw("playerStatus", textPosX, posY, stamina + " / " + staminaMax, GetColor(255, 255, 0));
 	DrawGraph(graphPosX, posY, staminaGraphHandle, TRUE);
-	posY = GameConst::WINDOW_HEIGHT * 0.25f;
-	FontManager::GetInstance().Draw("playerStatus", posX, posY, strength, GetColor(255, 0, 0));
+	
+	// Y座標だけずらして
+	posY = GameConst::WINDOW_HEIGHT * STRENGTH_UI_HEIGHT_POS_RATIO;
+	// ストレングスの画像とテキストの描画
+	FontManager::GetInstance().Draw("playerStatus", textPosX, posY, strength, GetColor(255, 0, 0));
 	DrawGraph(graphPosX, posY, strengthGraphHandle, TRUE);
 
 }

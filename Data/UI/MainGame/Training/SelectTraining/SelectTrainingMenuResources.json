@@ -25,6 +25,22 @@
       "Resources": [
         "Res/Menu/MainGame/Training/Trealine_Training_Training_Info.png"
       ]
+    },
+    {
+      "Name": "Character_Detail",
+      "Rect": {
+        "X": 51,
+        "Y": 181,
+        "Width": 1240,
+        "Height": 152
+      },
+      "Resources": [
+        "Res/Menu/MainGame/Training/Trealine_StatusIdle.png",
+        "Res/Menu/MainGame/Training/Trealine_HPUP.png",
+        "Res/Menu/MainGame/Training/Trealine_StaminaUP.png",
+        "Res/Menu/MainGame/Training/Trealine_StrengthUP.png",
+        "Res/Menu/MainGame/Training/Trealine_ResistTimeUP.png"
+      ]
     }
   ],
   "Buttons": [
