@@ -34,7 +34,15 @@ namespace {
 
 	// 別名定義
 	using GameMode = GameEnum::GameMode;
-
+	// 関数ポインタの別名定義
+	using ExecuteSelectMode = void(MenuGameModeSelect::*)(Engine&);
+	// モード選択処理の関数テーブル
+	const ExecuteSelectMode execute[static_cast<int>(GameMode::Max)] = {
+		&MenuGameModeSelect::ExecuteNewGame,
+		&MenuGameModeSelect::ExecuteLoadGame,
+		&MenuGameModeSelect::ExecuteSystem,
+		&MenuGameModeSelect::ExecuteEndGame
+	};
 	/*
 	 *	@brief	ゲームモードのマップ
 	 */
@@ -114,7 +122,7 @@ void MenuGameModeSelect::Initialize(Engine& engine) {
 		// イベントシステムの初期化
 		eventSystem.Initialize(0);
 		// ボタンの準備前処理
-		SetupGameModeButtons(buttonData->GetData(), engine);
+		InitializeGameModeButtons(buttonData->GetData(), engine);
 		// イベントシステムのnavigationの設定
 		eventSystem.LoadNavigation(navigation->GetData());
 	});
@@ -172,6 +180,7 @@ void MenuGameModeSelect::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
 		int frameCount = sprite->GetFrameCount();
 		if (frameCount <= 1) continue;
 
+		int animFrame = sprite->GetCurrentFrame();
 		animFrame = (animFrame + 1) % frameCount;
 		sprite->SetFrameIndex(animFrame);
 	}
@@ -214,41 +223,19 @@ void MenuGameModeSelect::SelectButtonExecute(GameEnum::GameMode mode, Engine& en
 	auto confirm = menu.GetMenu<MenuConfirm>();
 	AudioUtility::PlaySE("DebugSE");
 
-	switch (mode) {
-		case GameEnum::GameMode::NewGame:
-			confirm->SetCallback([this, confirm, &menu, &engine](GameEnum::ConfirmResult result) {
-				AudioUtility::PlaySE("DebugSE");
-				menu.CloseTopMenu();
-				if (result != GameEnum::ConfirmResult::Yes) return;
-				isInteractive = false;
-				menu.CloseAllMenu();
-				engine.SetNextScene(std::make_shared<TutorialScene>());
-			});
-			menu.OpenMenu<MenuConfirm>();
-			break;
-		case GameEnum::GameMode::LoadGame:{
-			isInteractive = false;
-			FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::Out, FadeMode::Stop);
-			FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-				menu.OpenMenu<MenuSelectLoadGame>();
-			});
-		}
-			break;
-		case GameEnum::GameMode::System:
-			menu.OpenMenu<MenuSystem>();
-			break;
-		case GameEnum::GameMode::EndGame:
-			CheckEndGame(engine);
-			break;
-		default:
-			break;
+	if (IsCheckConfirm(mode)) {
+		// 確認メニューを開く
+		OpenConfirmMenu(mode, engine);
+		return;
 	}
+	// 実行処理
+	(this->*execute[static_cast<int>(mode)])(engine);
 }
 /*
- *	@brief		ゲームモードボタンの準備前処理
+ *	@brief		ゲームモードボタンの初期化処理
  *	@param[in]	const JSON& json
  */
-void MenuGameModeSelect::SetupGameModeButtons(const JSON& json, Engine& engine) {
+void MenuGameModeSelect::InitializeGameModeButtons(const JSON& json, Engine& engine) {
 	auto gameModeData = ParseGameModeButtonData(json);
 	for (const auto& entry : gameModeData) {
 		UIButtonBase* button = FindButtonByName(entry.name);
@@ -263,6 +250,23 @@ void MenuGameModeSelect::SetupGameModeButtons(const JSON& json, Engine& engine) 
 			eventSystem.UpdateSelectButton(button);
 		});
 	}
+}
+/*
+ *	@brief		確認メニューを開く
+ *	@param[in]	GameEnum::GameMode mode
+ */
+void MenuGameModeSelect::OpenConfirmMenu(GameEnum::GameMode mode, Engine& engine) {
+	auto& menu = MenuManager::GetInstance();
+	auto confirm = menu.GetMenu<MenuConfirm>();
+
+	confirm->SetCallback([this, &menu, mode, &engine](GameEnum::ConfirmResult result) {
+		AudioUtility::PlaySE("DebugSE");
+		menu.CloseTopMenu();	// このメニュー
+		if (result != GameEnum::ConfirmResult::Yes) return;
+		// 関数の実行処理
+		(this->*execute[static_cast<int>(mode)])(engine);
+	});
+	menu.OpenMenu<MenuConfirm>();
 }
 /*
  *	@brief		ゲーム終了処理
@@ -292,4 +296,56 @@ UIButtonBase* MenuGameModeSelect::FindButtonByName(const std::string& buttonName
 	if (itr == buttonMap.end()) return nullptr;
 
 	return itr->second;
+}
+/*
+ *	@brief		ニューゲーム実行処理
+ */
+void MenuGameModeSelect::ExecuteNewGame(Engine& engine) {
+	auto& menu = MenuManager::GetInstance();
+	isInteractive = false;
+	menu.CloseAllMenu();
+	engine.SetNextScene(std::make_shared<TutorialScene>());
+}
+/*
+ *	@brief		ロードゲーム実行処理
+ */
+void MenuGameModeSelect::ExecuteLoadGame(Engine& engine) {
+	auto& menu = MenuManager::GetInstance();
+	isInteractive = false;
+	FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::Out, FadeMode::Stop);
+	FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+		menu.OpenMenu<MenuSelectLoadGame>();
+	});
+}
+/*
+ *	@brief		システム実行処理
+ */
+void MenuGameModeSelect::ExecuteSystem(Engine& engine) {
+	auto& menu = MenuManager::GetInstance();
+	isInteractive = false;
+	// 全てのボタンを非表示にする
+	for (const auto& button : buttonList) {
+		if (!button) continue;
+
+		button->SetIsVisible(false);
+	}
+	// システムメニューを開く
+	menu.OpenMenu<MenuSystem>();
+}
+/*
+ *	@brief		ゲーム終了処理
+ */
+void MenuGameModeSelect::ExecuteEndGame(Engine& engine) {
+	auto& menu = MenuManager::GetInstance();
+	isInteractive = false;
+	menu.CloseAllMenu();
+	engine.SetIsGameEnd(true);
+}
+/*
+ *	@brief		確認メニューを開くか判定
+ *	@param[in]	GameEnum::GameMode mode
+ */
+bool MenuGameModeSelect::IsCheckConfirm(GameEnum::GameMode mode) const {
+	return mode == GameEnum::GameMode::NewGame
+		|| mode == GameEnum::GameMode::EndGame;
 }

@@ -18,7 +18,6 @@ class MenuBase {
 protected:
 	int currentIndex = -1;
 	float animTimer = 0.0f;
-	int animFrame = 0;
 
 	bool isInteractive = false;		// 操作可能フラグ
 	bool isVisible = false;			// 描画フラグ
@@ -89,6 +88,11 @@ public:
 	}
 
 public:
+	/*
+	 *	@brief		メニューの上書き(対象メニューが開いている状態で新たに開けるか)判定
+	 *	@return		bool
+	 */
+	inline virtual bool IsBlocking() const { return false; }
 	/*
 	 *	@brief		描画判定
 	 *	@return		bool

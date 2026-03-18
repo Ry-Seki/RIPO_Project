@@ -202,6 +202,7 @@ void MenuSelectAction::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
 
+        int animFrame = sprite->GetCurrentFrame();
         animFrame = (animFrame + 1) % frameCount;
         sprite->SetFrameIndex(animFrame);
     }

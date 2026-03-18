@@ -161,9 +161,11 @@ void MenuSystem::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer = 0;
 
     for (auto& sprite : spriteList) {
+        if (!sprite) continue;
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
 
+        int animFrame = sprite->GetCurrentFrame();
         animFrame = (animFrame + 1) % frameCount;
         sprite->SetFrameIndex(animFrame);
     }
@@ -206,22 +208,20 @@ void MenuSystem::Resume() {
  */
 void MenuSystem::SelectButtonExecute(GameEnum::SystemMode type) {
     auto& menu = MenuManager::GetInstance();
+    AudioUtility::PlaySE("DebugSE");
     FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
 
     switch (type) {
         case GameEnum::SystemMode::Invalid:
-            AudioUtility::PlaySE("DebugSE");
             menu.CloseTopMenu();
             break;
         case GameEnum::SystemMode::Settings:
-            AudioUtility::PlaySE("DebugSE");
             isInteractive = false;
             FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
                 menu.OpenMenu<MenuVolumeSettings>();
             });
             break;
         case GameEnum::SystemMode::Credit:
-            AudioUtility::PlaySE("DebugSE");
             isInteractive = false;
             menu.OpenMenu<MenuCredit>();
             break;

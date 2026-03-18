@@ -4,6 +4,7 @@
       "Stair": [
         {
           "MoveID": 1,
+          "RespawnID": 0,
           "name": "Stair",
           "position": 0,
           "rotation": 0,
@@ -13,6 +14,7 @@
         },
         {
           "MoveID": 2,
+          "RespawnID": 0,
           "name": "Stair",
           "position": 0,
           "rotation": 0,
@@ -30,18 +32,15 @@
           "angle": 50.0,
           "size": [ 600, 600, 50 ]
         }
-      ]
-    },
-    {
-      "Stair": [
+      ],
+      "Respawn": [
         {
-          "MoveID": 0,
-          "name": "Stair",
-          "position": 0,
-          "rotation": 0,
-          "center": [ 0, 100, 0 ],
-          "angle": 30.0,
-          "size": [ 600, 600, 600 ]
+          "ID": 0,
+          "name": "Respawn"
+        },
+        {
+          "ID": 1,
+          "name": "Respawn"
         }
       ]
     },
@@ -49,12 +48,39 @@
       "Stair": [
         {
           "MoveID": 0,
+          "RespawnID": 0,
+          "name": "Stair",
+          "position": 0,
+          "rotation": 0,
+          "center": [ 0, 100, 0 ],
+          "angle": 30.0,
+          "size": [ 600, 600, 600 ]
+        }
+      ],
+      "Respawn": [
+        {
+          "ID": 0,
+          "name": "Respawn"
+        }
+      ]
+    },
+    {
+      "Stair": [
+        {
+          "MoveID": 0,
+          "RespawnID": 1,
           "name": "Stair",
           "position": 0,
           "rotation": 0,
           "center": [ 0, 100, 0 ],
           "angle": 0.0,
           "size": [ 600, 600, 200 ]
+        }
+      ],
+      "Respawn": [
+        {
+          "ID": 0,
+          "name": "Respawn"
         }
       ]
     }

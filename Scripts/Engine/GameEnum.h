@@ -161,7 +161,8 @@ namespace GameEnum {
 	enum class SaveSlotMenuMode {
 		Invalid = -1,
 		Save,
-		Load
+		Load,
+		Max,
 	};
 	/*
 	 *	@brief	ƒ{ƒ^ƒ“‚ÌŽí—Þ

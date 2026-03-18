@@ -71,10 +71,15 @@ private:
 	 */
 	void SelectButtonExecute(GameEnum::GameMode mode, Engine& engine);
 	/*
-	 *	@brief		ゲームモードボタンの準備前処理
+	 *	@brief		ゲームモードボタンの初期化処理
 	 *	@param[in]	const JSON& json
 	 */
-	void SetupGameModeButtons(const JSON& json, Engine& engine);
+	void InitializeGameModeButtons(const JSON& json, Engine& engine);
+	/*
+	 *	@brief		確認メニューを開く
+	 *	@param[in]	GameEnum::GameMode mode
+	 */
+	void OpenConfirmMenu(GameEnum::GameMode mode, Engine& engine);
 	/*
 	 *	@brief		ゲーム終了処理
 	 */
@@ -85,6 +90,30 @@ private:
 	 *	@return		UIButtonBase*
 	 */
 	UIButtonBase* FindButtonByName(const std::string& buttonName);
+
+public:
+	/*
+	 *	@brief		ニューゲーム実行処理
+	 */
+	void ExecuteNewGame(Engine& engine);
+	/*
+	 *	@brief		ロードゲーム実行処理
+	 */
+	void ExecuteLoadGame(Engine& engine);
+	/*
+	 *	@brief		システム実行処理
+	 */
+	void ExecuteSystem(Engine& engine);
+	/*
+	 *	@brief		ゲーム終了実行処理
+	 */
+	void ExecuteEndGame(Engine& engine);
+	/*
+	 *	@brief		確認メニューを開くか判定
+	 *	@param[in]	GameEnum::GameMode mode
+	 */
+	bool IsCheckConfirm(GameEnum::GameMode mode) const;
+
 };
 
 #endif // !_MENU_GAME_MODE_SELECT_H_

@@ -164,9 +164,11 @@ void MenuSelectMiniGameLevel::AnimUpdate(Engine& engine, float unscaledDeltaTime
     animTimer = 0;
 
     for (auto& sprite : spriteList) {
+        if (!sprite) continue;
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
 
+        int animFrame = sprite->GetCurrentFrame();
         animFrame = (animFrame + 1) % frameCount;
         sprite->SetFrameIndex(animFrame);
     }

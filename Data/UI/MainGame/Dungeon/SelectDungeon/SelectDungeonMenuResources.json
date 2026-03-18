@@ -40,18 +40,6 @@
         "Res/Menu/MainGame/Dungeon/Trealine_Dungeon3.png",
         "Res/Menu/MainGame/Dungeon/Trealine_Dungeon4.png"
       ]
-    },
-    {
-      "Name": "EventSprite",
-      "Rect": {
-        "X": 65,
-        "Y": 189,
-        "Width": 1920,
-        "Height": 1080
-      },
-      "Resources": [
-        "Res/Menu/MainGame/Dungeon/Trealine_EventSprite.png"
-      ]
     }
   ],
   "Texts": [

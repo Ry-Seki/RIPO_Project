@@ -28,7 +28,6 @@ void UIButtonBase::Initialize() {
 void UIButtonBase::Setup() {
 	isEnable = true;
 	isVisible = true;
-	inputHandle = false;
 	inputState = GameEnum::ButtonInputState::Idle;
 }
 /*
@@ -41,7 +40,7 @@ void UIButtonBase::Update(float unscaledDeltaTime) {
 	InputUtility::GetMousePosition(mouseX, mouseY);
 
 	// 触れているか判定
-	bool isHover = rect.IsHovered(mouseX, mouseY);
+	isHover = rect.IsHovered(mouseX, mouseY);
 	if (inputState != GameEnum::ButtonInputState::Press) {
 		if (isHover) {
 			inputState = GameEnum::ButtonInputState::Hover;
@@ -54,7 +53,17 @@ void UIButtonBase::Update(float unscaledDeltaTime) {
  *	@brief	発火イベント
  */
 void UIButtonBase::OnClickEvent() {
+	if (!isHover) {
+		ResetState();
+		return;
+	}
 	if (OnClick) OnClick();
+}
+/*
+ *	@brief	状態のリセット
+ */
+void UIButtonBase::ResetState() {
+	inputState = GameEnum::ButtonInputState::Idle;
 }
 /*
  *	@brief	デバック用描画処理
@@ -112,7 +121,7 @@ GameEnum::ButtonRendererState UIButtonBase::GetRendererState() const {
 	return GameEnum::ButtonRendererState::Idle;
 }
 /*
- *	@brief		押していたものが離れた瞬間を判定
+ *	@brief		ボタンに触れている状態で、押していたものが離れた瞬間を判定
  *	@return		bool
  */
 bool UIButtonBase::OnReleasedUp() const {

@@ -10,6 +10,7 @@
 #include "../System/World/WorldProgressManager.h"
 #include "../Scene/GameState/ActionContext.h"
 #include "../Manager/WeaponManager.h"
+#include "../Time.h"
 
 namespace {
     constexpr int _SAVE_VERSION = 1;						// 将来のバージョン管理用
@@ -19,6 +20,7 @@ namespace {
     constexpr const char* _SAVE_FILE_PATH = "SaveData/";	// ファイルパス
     constexpr const char* _JSON_PATH = ".json";				// JSON拡張子
     constexpr const char* _AUTO_SAVE = "AutoSave";			// オートセーブ
+    constexpr int MAX_PLAY_TIME_SEC = 999 * 60 * 60;        // 999時間
 }
 /*
  *	@brief	初期化処理
@@ -281,6 +283,7 @@ DungeonProgressData SaveDataManager::DungeonDataFromJSON(const JSON& json, int d
  */
 bool SaveDataManager::SaveCurrentSlot() {
     currentSaveData.isUsed = true;
+    currentSaveData.game.playTime = CalcTotalPlayTime();
     return Save(currentSaveData, currentSlotPath);
 }
 /*
@@ -289,6 +292,7 @@ bool SaveDataManager::SaveCurrentSlot() {
  */
 bool SaveDataManager::AutoSave() {
     currentSaveData.isUsed = true;
+    currentSaveData.game.playTime = CalcTotalPlayTime();
     return Save(currentSaveData, _AUTO_SAVE);
 }
 /*
@@ -314,6 +318,10 @@ void SaveDataManager::SelectSlot(int selectSlot) {
         currentSlotIndex = selectSlot;
         currentSlotPath = _SLOT_STRING + std::to_string(selectSlot);
     } else {
+        if (selectSlot != 0) {
+            assert(false && "無効なセーブスロットが選択されました");
+            return;
+        }
         currentSlotIndex = 0;
         currentSlotPath = _AUTO_SAVE;
     }
@@ -352,6 +360,7 @@ void SaveDataManager::CollectSaveData(const ActionContext& context) {
     currentSaveData.game = context.GetSaveData();
     currentSaveData.game.currentMoney
         = MoneyManager::GetInstance().GetCurrentMoney();
+
     currentSaveData.game.totalTreasureCount =
         currentSaveData.world.getTreasureIDList.size();
     currentSaveData.game.isWeapon
@@ -360,8 +369,6 @@ void SaveDataManager::CollectSaveData(const ActionContext& context) {
     // Player
     currentSaveData.player
         = PlayerStatusManager::GetInstance().GetSaveData();
-
-
 }
 /*
  *	@brief		セーブデータからデータを渡す
@@ -472,16 +479,33 @@ std::string SaveDataManager::MakeFilePath(const std::string& slotPath) {
     return _SAVE_FILE_PATH + slotPath + _JSON_PATH;
 }
 /*
- *	@brief		最小スロット数の取得
+ *	@brief		最小スロット数の取得(オートセーブを除く)
  *	@return		int
  */
-int SaveDataManager::GetMinSaveSlot() const {
+int SaveDataManager::GetMinSelectSlot() const {
     return _SELECT_SAVE_SLOT_MIN;
+}
+/*
+ *	@brief		最大スロット数の取得(オートセーブを除く)
+ *	@return		int
+ */
+int SaveDataManager::GetMaxSelectSlot() const {
+    return _SELECT_SAVE_SLOT_MAX;
 }
 /*
  *	@brief		最大スロット数の取得
  *	@return		int
  */
 int SaveDataManager::GetMaxSaveSlot() const {
-    return _SELECT_SAVE_SLOT_MAX;
+    return _SELECT_SAVE_SLOT_MAX + 1;
+}
+/*
+ *	@brief		累計プレイ時間の計算
+ *	@return		int
+ */
+int SaveDataManager::CalcTotalPlayTime() {
+    int playTime = 0;
+    int totalTime = static_cast<int>(Time::totalTime);
+    playTime += (std::min) (totalTime, MAX_PLAY_TIME_SEC);
+    return playTime;
 }
