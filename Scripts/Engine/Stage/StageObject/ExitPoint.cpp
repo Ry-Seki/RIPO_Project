@@ -30,6 +30,13 @@ ExitPoint::ExitPoint()
 	, onTrigger(false) {
 }
 
+ExitPoint::~ExitPoint() {
+	if (pViewingEffect) {
+		pViewingEffect->EffectStop();
+		pViewingEffect = nullptr;
+	}
+}
+
 /*
  *	XV
  */

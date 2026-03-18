@@ -21,14 +21,14 @@ private:
 
 
 	EffectComponent* pViewingEffect;			// 表示用エフェクト
-	Vector3 startPos;			// 生成位置の参照データ
+	Vector3 startPos;							// 生成位置の参照データ
 
 public:
 	/*
 	 *	コンストラクタ
 	 */
 	ExitPoint();
-	~ExitPoint() override {};
+	~ExitPoint() override;
 
 public:
 
