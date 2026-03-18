@@ -64,7 +64,6 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	int treasureCount = floorData.treasureSpawnCount;
 	int stairCount = floorData.stairSpawnCount;
 	int goalCount = floorData.goalSpawnCount;
-	int respawnCount = floorData.respawnSpawnCount;
 
 	// ƒvƒŒƒCƒ„[¶¬
 	GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, {-100, 0, -100}, {100,  300,  100}, {0, 100, 0}, {0,  200,  0}, 200);
@@ -263,7 +262,6 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	int treasureCount = floorData.treasureSpawnCount;
 	int stairCount = floorData.stairSpawnCount;
 	int goalCount = floorData.goalSpawnCount;
-	int respawnCount = floorData.respawnSpawnCount;
 
 	// “G‚ÌÄ¶¬
 	for (int i = 0; i < enemyCount; i++) {
