@@ -60,19 +60,22 @@ void PlayerStatusUI::Render() {
 	float posY = GameConst::WINDOW_HEIGHT * HP_UI_HEIGHT_POS_RATIO;
 
 	// HPの画像とテキストの描画
-	FontManager::GetInstance().Draw("playerStatus", textPosX, posY, hp + " / " + hpMax, GetColor(0, 255, 0));
+	auto g = GameConst::COLOR_GREEN;
+	FontManager::GetInstance().Draw("playerStatus", textPosX, posY, hp + " / " + hpMax, GetColor(g.x, g.y, g.z));
 	DrawGraph(graphPosX, posY, HPGraphHandle, TRUE);
 	
 	// Y座標だけずらして
 	posY = GameConst::WINDOW_HEIGHT * STAMINA_UI_HEIGHT_POS_RATIO;
 	// スタミナの画像とテキストの描画
-	FontManager::GetInstance().Draw("playerStatus", textPosX, posY, stamina + " / " + staminaMax, GetColor(255, 255, 0));
+	auto y = GameConst::COLOR_YELLOW;
+	FontManager::GetInstance().Draw("playerStatus", textPosX, posY, stamina + " / " + staminaMax, GetColor(y.x, y.y, y.z));
 	DrawGraph(graphPosX, posY, staminaGraphHandle, TRUE);
 	
 	// Y座標だけずらして
 	posY = GameConst::WINDOW_HEIGHT * STRENGTH_UI_HEIGHT_POS_RATIO;
 	// ストレングスの画像とテキストの描画
-	FontManager::GetInstance().Draw("playerStatus", textPosX, posY, strength, GetColor(255, 0, 0));
+	auto r = GameConst::COLOR_RED;
+	FontManager::GetInstance().Draw("playerStatus", textPosX, posY, strength, GetColor(r.x, r.y, r.z));
 	DrawGraph(graphPosX, posY, strengthGraphHandle, TRUE);
 
 }

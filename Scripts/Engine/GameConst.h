@@ -96,6 +96,9 @@ public:
 	static constexpr VECTOR COLOR_BRACK = { 0, 0, 0 };					// çï
 	static constexpr VECTOR COLOR_PURPLE = { 175, 50, 190 };			// éá
 	static constexpr VECTOR COLOR_YELLOW_GREEN = { 210, 255, 145 };		// â©óŒ
+	static constexpr VECTOR COLOR_GREEN = { 0, 255, 0 };				// óŒ
+	static constexpr VECTOR COLOR_YELLOW = { 255, 255, 0 };				// â©
+	static constexpr VECTOR COLOR_RED = { 255, 0, 0 };					// ê‘
 	//----------------------------------------------------
 	//					BGMÇÃñΩñº
 	//----------------------------------------------------
