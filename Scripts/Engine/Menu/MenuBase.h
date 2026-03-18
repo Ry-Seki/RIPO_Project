@@ -18,7 +18,6 @@ class MenuBase {
 protected:
 	int currentIndex = -1;
 	float animTimer = 0.0f;
-	int animFrame = 0;
 
 	bool isInteractive = false;		// 操作可能フラグ
 	bool isVisible = false;			// 描画フラグ
