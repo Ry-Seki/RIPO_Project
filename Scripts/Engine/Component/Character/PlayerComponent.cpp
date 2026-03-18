@@ -15,9 +15,12 @@
 #include "../../Load/Audio/LoadAudio.h"
 #include "../../Load/Model/LoadModel.h"
 #include "../../Audio/AudioUtility.h"
-#include "../../Manager/StageManager.h"
 #include "CharacterUtility.h"
 #include "../MoveComponent.h"
+#include "../HPComponent.h"
+#include "../StaminaComponent.h"
+#include "../StrengthComponent.h"
+#include "../ResistTimeComponent.h"
 #include "DxLib.h"
 
 using namespace InputUtility;
@@ -29,8 +32,6 @@ PlayerComponent::PlayerComponent()
 	, acceleration(0.0f)
 	, avoidMoveValue(0.0f)
 	, avoidCoolTime(0.0f)
-	, staminaHealCoolTime(0.0f)
-	, staminaChangePoint(0.0f)
 	, resistTimePoint(0.0f)
 	, resistDownSpeed(0.0f)
 	, lastMoveDirection(V_ZERO)
@@ -50,10 +51,8 @@ PlayerComponent::PlayerComponent()
 	, AVOID_ACCELERATION_MAX(6.0f)
 	, AVOID_MOVE_VALUE_MAX(1000.0f)
 	, AVOID_COOL_TIME_MAX(1.0f)
-	, STAMINA_HEAL_COOL_TIME_MAX(50.0f)
 	, STAMINA_RUN_COST(0.3f)
 	, STAMINA_AVOID_COST(10.0f)
-	, STAMINA_HEAL_VALUE(0.2f)
 	, JUMP_POWER(1400.0f)
 	, BACK_ACCELERATION(0.5f)
 	, HP_DECREASE_RATE(0.2f) 
@@ -94,22 +93,6 @@ void PlayerComponent::Update(float deltaTime) {
 	// プレイヤーの入力情報
 	action = GetInputState(GameEnum::ActionMap::PlayerAction);
 	moveVec = player->GetComponent<MoveComponent>()->GetMoveVec();
-
-	// クールタイムが開け次第スタミナ回復
-	if (staminaHealCoolTime <= 0) {
-		if (status.stamina < baseStatus.stamina) {
-			if (staminaChangePoint >= 1) {
-				status.stamina += 1;
-				staminaChangePoint = 0;
-			}
-			else {
-				staminaChangePoint += STAMINA_HEAL_VALUE;
-			}
-		}
-	}
-	else {
-		staminaHealCoolTime -= 1;
-	}
 
 	// 耐性値を削っていく
 	resistTimePoint -= deltaTime * resistDownSpeed;
@@ -164,7 +147,7 @@ void PlayerComponent::Update(float deltaTime) {
 	// 回避中は処理しない
 	if (!isAvoid) {
 		// 速度調節
-		SpeedControl(deltaTime);
+		SpeedControl(player, deltaTime);
 		// 移動処理
 		PlayerMove(player, deltaTime);
 	}
@@ -276,7 +259,7 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 /*
  *	速度調節
  */
-void PlayerComponent::SpeedControl(float deltaTime) {
+void PlayerComponent::SpeedControl(GameObject* player, float deltaTime) {
 	// ダッシュ
 	int run = static_cast<int>(GameEnum::PlayerAction::Run);
 	int forwardMove = static_cast<int>(GameEnum::PlayerAction::ForwardMove);
@@ -288,14 +271,7 @@ void PlayerComponent::SpeedControl(float deltaTime) {
 			acceleration = RUN_ACCELERATION_MAX;
 
 		// スタミナを消費していく
-		if (staminaChangePoint <= -1) {
-			status.stamina -= 1;
-			staminaChangePoint = 0;
-		}
-		else {
-			staminaChangePoint -= STAMINA_RUN_COST;
-		}
-		staminaHealCoolTime = STAMINA_HEAL_COOL_TIME_MAX;
+		player->GetComponent<StaminaComponent>()->UseStamina(STAMINA_RUN_COST);
 	}
 	else {
 		// なめらかな減速
@@ -322,8 +298,7 @@ void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 		isAvoid = true;
 		moveSpeed = DEFAULT_MOVE_SPEED * AVOID_ACCELERATION_MAX;
 		// スタミナ消費
-		status.stamina -= STAMINA_AVOID_COST;
-		staminaHealCoolTime = STAMINA_HEAL_COOL_TIME_MAX;
+		player->GetComponent<StaminaComponent>()->UseStamina(STAMINA_AVOID_COST);
 		// SE再生
 		PlaySE("avoidSE");
 	}

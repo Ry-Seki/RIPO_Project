@@ -14,6 +14,10 @@
 #include "../Component/Character/HPBarComponent.h"
 #include "../Component/Character/BossHPBarComponentr.h"
 #include "../Component/MoveComponent.h"
+#include "../Component/HPComponent.h"
+#include "../Component/StaminaComponent.h"
+#include "../Component/StrengthComponent.h"
+#include "../Component/ResistTimeComponent.h"
 
 CharacterManager::CharacterManager()
 	: engine(nullptr) {
@@ -53,6 +57,8 @@ GameObjectPtr CharacterManager::CreateCharacter(
 	characterObject->AddComponent<AnimatorComponent>();
 	// 移動コンポーネント追加
 	characterObject->AddComponent<MoveComponent>();
+	// HPコンポーネント追加
+	characterObject->AddComponent<HPComponent>();
 	// データのセット
 	characterObject->SetObjectData(name, position, rotation);
 	// キャラクターを返す
@@ -89,6 +95,12 @@ GameObjectPtr CharacterManager::GeneratePlayer(
 	player = CreateCharacter<PlayerComponent>(name, position, rotation, capsuleStart, capsuleEnd, capsuleRadius);
 	// ウデアクションコンポーネント追加
 	player->AddComponent<ArmActionComponent>();
+	// スタミナコンポーネント追加
+	player->AddComponent<StaminaComponent>();
+	// ストレングスコンポーネント追加
+	player->AddComponent<StrengthComponent>();
+	// レジストタイムコンポーネント追加
+	player->AddComponent<ResistTimeComponent>();
 	// カメラのターゲットに追加
 	CameraManager::GetInstance().SetTarget(player);
 	// シーンが持つゲームオブジェクト配列に追加

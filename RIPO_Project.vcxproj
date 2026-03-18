@@ -190,7 +190,6 @@
     <ClCompile Include="Scripts\Engine\Component\GravityComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\MoveComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\OBBCollider.cpp" />
-    <ClCompile Include="Scripts\Engine\Component\StatusComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Engine\Input\ActionMapBase.cpp" />
@@ -381,12 +380,15 @@
     <ClInclude Include="Scripts\Engine\Component\EffectComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\GaugeBase.h" />
     <ClInclude Include="Scripts\Engine\Component\GravityComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\HPComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\ModelRenderer.h" />
     <ClInclude Include="Scripts\Engine\Component\MoveComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\OBBCollider.h" />
     <ClInclude Include="Scripts\Engine\Component\RenderComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\ResistTimeComponent.h" />
     <ClInclude Include="Scripts\Engine\Component\SpriteRenderer.h" />
-    <ClInclude Include="Scripts\Engine\Component\StatusComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\StaminaComponent.h" />
+    <ClInclude Include="Scripts\Engine\Component\StrengthComponent.h" />
     <ClInclude Include="Scripts\Engine\Engine.h" />
     <ClInclude Include="Scripts\Engine\Fade\BlackFade.h" />
     <ClInclude Include="Scripts\Engine\Fade\FadeBase.h" />

@@ -18,8 +18,6 @@ private:
 	float acceleration;								// 加速度
 	float avoidMoveValue;							// 回避の移動量
 	float avoidCoolTime;							// 回避のクールタイム
-	float staminaHealCoolTime;						// スタミナが回復し始めるまでの時間
-	float staminaChangePoint;						// スタミナの回復＆消費を調節するためのfloat型変数
 	float resistTimePoint;							// 耐性値の減少を調節するためのfloat型変数
 	float resistDownSpeed;							// 耐性値の減少スピード
 	float walkSECoolTime;							// 歩きSEのクールタイム
@@ -41,10 +39,8 @@ private:
 	const float AVOID_ACCELERATION_MAX;			// 回避の最大加速度
 	const float AVOID_MOVE_VALUE_MAX;			// 回避の最大移動距離
 	const float AVOID_COOL_TIME_MAX;			// 回避のクールタイムの最大
-	const float STAMINA_HEAL_COOL_TIME_MAX;		// スタミナ回復クールタイムの最大
 	const float STAMINA_RUN_COST;				// ダッシュによるスタミナ消費量
 	const float STAMINA_AVOID_COST;				// 回避によるスタミナ消費量
-	const float STAMINA_HEAL_VALUE;				// スタミナの回復量
 	const float JUMP_POWER;						// ジャンプ力
 	const float BACK_ACCELERATION;				// 後ろ歩き時の加速度
 	const float HP_DECREASE_RATE;				// HPの減少倍率
@@ -81,7 +77,7 @@ private:
 	/*
 	 *	速度調節
 	 */
-	void SpeedControl(float deltaTime);
+	void SpeedControl(GameObject* player, float deltaTime);
 	/*
 	 *	回避
 	 */
