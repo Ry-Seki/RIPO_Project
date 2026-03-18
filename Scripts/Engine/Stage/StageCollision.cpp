@@ -357,6 +357,45 @@ void StageCollision::ProcessFloorCollision(
 
 }
 
+/*
+ *	オブジェクトをグリッドに登録
+ *  @param[in]	obj	走査する対象
+ */
+void StageCollision::RegisterObject(GameObject* obj) {
+	if (!obj) return;
+
+	// 座標からセルを求める
+	GridCoord coord = WorldToGrid(obj->position);
+
+	// そのセルに追加
+	grid[coord].push_back(obj);
+}
+
+/*
+ *	周囲のセルを取得
+ *  @param[in]	pos	プレイヤーの座標
+ */
+std::vector<GameObject*> StageCollision::GetNearByObjects(const Vector3& pos) {
+	std::vector<GameObject*> result;
+
+	GridCoord center = WorldToGrid(pos);
+
+	// 3x3セルを見る
+	for (int dz = -1; dz <= 1; dz++) {
+		for (int dx = -1; dx <= 1; dx++) {
+			GridCoord coord{ center.x + dx, center.z + dz };
+
+			// セルが存在する場合
+			auto it = grid.find(coord);
+			if (it != grid.end()) {
+				// 中のオブジェクトを追加
+				result.insert(result.end(), it->second.begin(), it->second.end());
+			}
+		}
+	}
+
+	return result;
+}
 
 /*
  *	ステージの当たり判定の描画
@@ -404,4 +443,52 @@ void StageCollision::StageColliderRenderer(GameObject* other, Vector3 MoveVec, V
 
 	// 使用した衝突判定データを解放
 	MV1CollResultPolyDimTerminate(*hitDim);
+}
+
+/*
+ *	グリッドを表示
+ *  @param[in]	player	参照するプレイヤー
+ */
+void StageCollision::DrawGrid(GameObject* player) {
+	Vector3 playerPos = player->position;
+	GridCoord playerCell = WorldToGrid(playerPos);
+
+	const int RANGE = 10; // 周囲10マスだけ
+
+	for (int z = -RANGE; z <= RANGE; z++) {
+		for (int x = -RANGE; x <= RANGE; x++) {
+			GridCoord coord{ playerCell.x + x, playerCell.z + z };
+
+			float worldX = coord.x * GRID_SIZE;
+			float worldZ = coord.z * GRID_SIZE;
+
+			// グリッドに登録されているか
+			bool hasObject = (grid.find(coord) != grid.end());
+
+			// プレイヤーセル
+			bool isPlayer = (coord.x == playerCell.x && coord.z == playerCell.z);
+
+			unsigned int color;
+
+			if (isPlayer)
+				color = GetColor(255, 0, 0);
+			else if (hasObject)
+				color = GetColor(0, 255, 0);
+			else
+				color = GetColor(100, 100, 100);
+
+			float y = playerPos.y - 1.0f;
+
+			VECTOR p1 = VGet(worldX, y, worldZ);
+			VECTOR p2 = VGet(worldX + GRID_SIZE, y, worldZ);
+			VECTOR p3 = VGet(worldX + GRID_SIZE, y, worldZ + GRID_SIZE);
+			VECTOR p4 = VGet(worldX, y, worldZ + GRID_SIZE);
+
+			DrawLine3D(p1, p2, color);
+			DrawLine3D(p2, p3, color);
+			DrawLine3D(p3, p4, color);
+			DrawLine3D(p4, p1, color);
+		}
+	}
+
 }
