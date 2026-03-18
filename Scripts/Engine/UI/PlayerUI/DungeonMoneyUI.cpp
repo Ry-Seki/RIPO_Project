@@ -15,6 +15,7 @@ void DungeonMoneyUI::Initialize()
 	load.SetOnComplete([this, moneySprite]() {
 		MoneyGraphHandle = moneySprite->GetHandle();
 		});
+	displayTime = 0;
 }
 
 void DungeonMoneyUI::Update(float unscaledDeltaTime)

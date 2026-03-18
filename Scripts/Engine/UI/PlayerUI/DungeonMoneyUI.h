@@ -37,12 +37,6 @@ public:
 	 */
 	void Render() override;
 
-private :
-	/*
-	 *	Š‹à‰ÁZ•\¦
-	 */
-	void AddMoneyUI(FontManager& font);
-
 };
 
 #endif // !_DUNGEONMONEYUI_H_
