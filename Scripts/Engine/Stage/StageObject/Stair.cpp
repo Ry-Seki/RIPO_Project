@@ -16,7 +16,11 @@
 void Stair::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
 	// フラグの変更
 	if (other->GetOwner()->name == GameConst::_CREATE_POSNAME_PLAYER) {
+
 		SetStairMove(true);
+		if (respawnID == -1)return;
+
+		StageObjectUtility::SetRespawnID(respawnID);
 		// 移動先フロアIDの取得
 		StageObjectUtility::SetMoveStairID(stairID);
 	}

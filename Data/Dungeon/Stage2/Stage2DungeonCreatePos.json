@@ -3,7 +3,12 @@
     "StartPos": "Col_StartPos",
     "GoalPos": "Col_GoalPos",
     "StairsPos": "Col_StairsPos",
-    "RespawnPos": "Col_RespownPos"
+    "RespawnPos": [
+      {
+        "ID": 0,
+        "Path": "Col_RespownPos"
+      }
+    ]
   },
   "Enemy": {
     "SpawnPos": {
