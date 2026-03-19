@@ -34,9 +34,9 @@ public:
 	/*
 	 *	セットアップ
 	 */
-	void Setup(float setValue) {
-		stamina = setValue;
-		maxStamina = setValue;
+	void Setup(float setStamina) {
+		stamina = setStamina;
+		maxStamina = setStamina;
 	}
 
 	/*

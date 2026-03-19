@@ -18,8 +18,6 @@ private:
 	float acceleration;								// 加速度
 	float avoidMoveValue;							// 回避の移動量
 	float avoidCoolTime;							// 回避のクールタイム
-	float resistTimePoint;							// 耐性値の減少を調節するためのfloat型変数
-	float resistDownSpeed;							// 耐性値の減少スピード
 	float walkSECoolTime;							// 歩きSEのクールタイム
 	Vector3 lastMoveDirection;						// 最後に動いた方向
 	Vector3 moveVec;								// プレイヤーの移動量
