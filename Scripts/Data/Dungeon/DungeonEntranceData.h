@@ -18,7 +18,6 @@
   *	@brief	出口、階段、生成位置データ
   */
 struct EntranceData {
-	int ID = 0;
 	int moveID = 0;
 	int RespawnID = 0;
 	std::string name = "";
@@ -88,9 +87,6 @@ public:
 		// Entrance配列を走査
 		for (size_t i = 0; i < entranceArray.size(); i++) {
 			EntranceData data;
-
-			// ID
-			data.ID = entranceArray[i].value("ID", 0);
 
 			// RespawnID
 			data.RespawnID = entranceArray[i].value("RespawnID", 0);

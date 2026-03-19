@@ -10,8 +10,11 @@
       {
         "ID": 0,
         "Path": "Col_RespownPos_0"
+      },
+      {
+        "ID": 1,
+        "Path": "Col_RespownPos_1"
       }
-      "Col_RespownPos_1"
     ]
   },
   "Enemy": {

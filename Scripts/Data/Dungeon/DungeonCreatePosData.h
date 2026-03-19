@@ -59,8 +59,7 @@ struct StairsPosData {
  *  @brief  リスポーン生成位置データ
  */
 struct RespawnPosData {
-	int ID;
-	std::vector<Vector3> position;
+	std::unordered_map<int, Vector3> respawnMap;
 };
 
 /*
@@ -85,6 +84,9 @@ class DungeonCreatePosData {
 private:
 	int modelHandle = -1;
 	std::unordered_map<int, CreatePosData> dungeonCreatePosMap;
+
+	static constexpr const char* _ID = "ID";
+	static constexpr const char* _PATH = "Path";
 
 private:
 
@@ -306,18 +308,39 @@ private:
 	 * リスポーン
 	 */
 	void LoadRespawn(const JSON& json, CreatePosData& data) {
+		// "Player"が泣ければ終了
 		if (!json.contains(GameConst::_CREATE_POSNAME_PLAYER)) return;
-
-		// 
 		const auto& player = json[GameConst::_CREATE_POSNAME_PLAYER];
-		if (!player.contains(GameConst::_CREATE_POSITION_RESPAWNPOS)) return;
 
+		// "RespawnPos"が無ければ終了
+		if (!player.contains(GameConst::_CREATE_POSITION_RESPAWNPOS)) return;
 		const auto& arr = player[GameConst::_CREATE_POSITION_RESPAWNPOS];
 
+		// 配列をループ
 		for (const auto& elem : arr) {
-			if (!elem.is_string())continue;
-			data.respawn.position.push_back(GetFramePosition(elem.get<std::string>()));
+
+			// オブジェクトでなければ無視
+			if (!elem.is_object()) continue;
+
+			// IDが無ければ無視
+			if (!elem.contains(_ID)) continue;
+
+			// Pathが無ければ無視
+			if (!elem.contains(_PATH)) continue;
+
+			// ID取得
+			int id = elem[_ID].get<int>();
+
+			// フレーム名取得
+			std::string frameName = elem[_PATH].get<std::string>();
+
+			// フレーム座標取得
+			Vector3 pos = GetFramePosition(frameName);
+
+			// mapに追加
+			data.respawn.respawnMap.emplace(id, pos);
 		}
+
 	}
 
 	/*
