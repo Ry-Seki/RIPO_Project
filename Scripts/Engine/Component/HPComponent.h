@@ -10,9 +10,9 @@
 
 class HPComponent : public Component {
 private:
-	float HP = -1;		// åªç›HP
-	float maxHP = -1;	// ç≈ëÂHP
-	bool dead = false;	// éÄÇÒÇ≈ÇÈÇ©Ç«Ç§Ç©
+	float HP = 0.0f;		// åªç›HP
+	float maxHP = 0.0f;		// ç≈ëÂHP
+	bool isDead = false;		// éÄÇÒÇ≈ÇÈÇ©Ç«Ç§Ç©
 
 public:
 	/*
@@ -29,7 +29,7 @@ public:
 	void AddDamage(float damage) {
 		if (HP - damage <= 0) {
 			HP = 0;
-			dead = true;
+			isDead = true;
 		}
 		else {
 			HP - damage;
@@ -50,7 +50,7 @@ public:
 	/*
 	 *	éÄÇÒÇ≈ÇÈÇ©î€Ç©
 	 */
-	inline bool IsDead() const { return dead; }
+	inline bool IsDead() const { return isDead; }
 };
 
 #endif // !_HPCOMPONENT_H_

@@ -10,9 +10,9 @@
 
 class ResistTimeComponent : public Component {
 private:
-	float resistTime = -1;		// 現在のレジスト値
-	float maxResistTime = -1;	// 最大のレジスト値
-	float resistDownSpeed = -1;	// レジスト値の減少スピード
+	float resistTime = 0.0f;		// 現在のレジスト値
+	float maxResistTime = 0.0f;	// 最大のレジスト値
+	float resistDownSpeed = 0.0f;	// レジスト値の減少スピード
 
 public:
 	/*
