@@ -76,5 +76,7 @@ public:
 	 */
 	inline float GetMaxStamina() const { return maxStamina; }
 };
+// •Ê–¼’è‹`
+using StaminaComponentPtr = std::shared_ptr<StaminaComponent>;
 
 #endif // !_STAMINACOMPONENT_H_

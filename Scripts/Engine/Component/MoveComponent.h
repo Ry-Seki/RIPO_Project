@@ -40,5 +40,7 @@ public:
 	 */
 	inline Vector3 GetMoveVec() const { return moveVec; }
 };
+// •Ê–¼’è‹`
+using MoveComponentPtr = std::shared_ptr<MoveComponent>;
 
 #endif // !_MOVECOMPONENT_H_

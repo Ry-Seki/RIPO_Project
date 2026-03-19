@@ -12,7 +12,7 @@ class HPComponent : public Component {
 private:
 	float HP = 0.0f;		// åªç›HP
 	float maxHP = 0.0f;		// ç≈ëÂHP
-	bool isDead = false;		// éÄÇÒÇ≈ÇÈÇ©Ç«Ç§Ç©
+	bool isDead = false;	// éÄÇÒÇ≈ÇÈÇ©Ç«Ç§Ç©
 
 public:
 	/*
@@ -52,5 +52,7 @@ public:
 	 */
 	inline bool IsDead() const { return isDead; }
 };
+// ï ñºíËã`
+using HPComponentPtr = std::shared_ptr<HPComponent>;
 
 #endif // !_HPCOMPONENT_H_

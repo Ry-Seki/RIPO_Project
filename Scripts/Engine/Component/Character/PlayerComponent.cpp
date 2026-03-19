@@ -16,11 +16,7 @@
 #include "../../Load/Model/LoadModel.h"
 #include "../../Audio/AudioUtility.h"
 #include "CharacterUtility.h"
-#include "../MoveComponent.h"
-#include "../HPComponent.h"
-#include "../StaminaComponent.h"
-#include "../StrengthComponent.h"
-#include "../ResistTimeComponent.h"
+
 #include "DxLib.h"
 
 using namespace InputUtility;
@@ -38,8 +34,6 @@ PlayerComponent::PlayerComponent()
 	, isAvoid(false)
 	, hasResolvedInitialGrounding(false)
 	, isDead(false)
-	, animator(nullptr)
-	, status({ -1, -1, -1, -1 })
 	, playerModelHandle(-1)
 
 	, PLAYER_MODEL_ANGLE_CORRECTION(89.98f)
@@ -56,17 +50,29 @@ PlayerComponent::PlayerComponent()
 	, HP_DECREASE_RATE(0.2f) 
 	, WALK_SE_COOL_TIME_MAX(33.0f)
 	, WALK_RATE(0.066f)
+	, RESIST_DOWN_RATE(0.7f)
 {}
 
 void PlayerComponent::Start() {
-	animator = GetOwner()->GetComponent<AnimatorComponent>();
-	// プレイヤーの基礎ステータスを受け取る
-	status = PlayerStatusManager::GetInstance().GetPlayerStatusData().base;
-
-	// ダンジョンによって耐性値減少スピードを変える
+	// コンポーネント
+	auto owner = GetOwner();
+	animator = owner->GetComponent<AnimatorComponent>();
+	move = owner->GetComponent<MoveComponent>();
+	HP = owner->GetComponent<HPComponent>();
+	stamina = owner->GetComponent<StaminaComponent>();
+	strength = owner->GetComponent<StrengthComponent>();
+	resist = owner->GetComponent<ResistTimeComponent>();
+	
+	// ステータスのセットアップ
+	auto status = PlayerStatusManager::GetInstance().GetPlayerStatusData().base;
+	GetOwner()->GetComponent<HPComponent>()->Setup(status.HP);
+	GetOwner()->GetComponent<StaminaComponent>()->Setup(status.stamina);
+	GetOwner()->GetComponent<StrengthComponent>()->Setup(status.strength);
+	// ダンジョンによってレジスト値減少スピードを変える
 	int dungeonID = StageManager::GetInstance().GetCurrentStage()->GetDungeonID();
-	//resistDownSpeed = dungeonID;
-
+	GetOwner()->GetComponent<ResistTimeComponent>()->Setup(status.resistTime, dungeonID * RESIST_DOWN_RATE);
+	
+	// ロード
 	auto playerModel = LoadManager::GetInstance().LoadResource<LoadModel>("Res/Model/Player/RIPO_Model.mv1");
 	auto avoidSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Avoid.mp3");
 	auto changeWeaponSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/ChangeWeapon.mp3");
@@ -86,34 +92,30 @@ void PlayerComponent::Start() {
 
 void PlayerComponent::Update(float deltaTime) {
 	GameObject* player = GetOwner();
-	// プレイヤーの基礎ステータス
-	PlayerStatusValue baseStatus = PlayerStatusManager::GetInstance().GetPlayerStatusData().base;
 	// プレイヤーの入力情報
 	action = GetInputState(GameEnum::ActionMap::PlayerAction);
-	moveVec = player->GetComponent<MoveComponent>()->GetMoveVec();
+	// 移動量保存
+	moveVec = move->GetMoveVec();
 
-	// 耐性値がなくなった場合はHPが割合で削れる
-	if (player->GetComponent<ResistTimeComponent>()->GetResistTime() <= 0) {
-		if (status.HP > 0)
-			status.HP -= baseStatus.HP * HP_DECREASE_RATE;
-		else
-			status.HP = 0;
+	// レジスト値がなくなった場合はHPが割合で削れる
+	if (resist->GetResistTime() <= 0) {
+		HP->AddDamage(HP->GetMaxHP() * HP_DECREASE_RATE);
 	}
 
-	// HPがなくなったら死亡
-	//if (status.HP <= 0) {
-	//	auto cameraState = CameraManager::GetInstance().GetCameraState();
-	//	if (cameraState == GameEnum::CameraState::TPS || cameraState == GameEnum::CameraState::FPS) {
-	//		// 視点変更イベント再生
-	//		CameraManager::GetInstance().CameraEventPlay(GameEnum::CameraEvent::Dead);
-	//		// プレイヤーの描画モデル変更
-	//		SetCharacterModel(GetOwner(), playerModelHandle);
-	//		// アニメーションのループをしない
-	//		animator->LoadIndex(false);
-	//		// アニメーション
-	//		animator->Play(static_cast<int>(PlayerAnimNum::Deth), 30);
-	//	}
-	//}
+	// 死亡処理
+	if (HP->IsDead()) {
+		auto cameraState = CameraManager::GetInstance().GetCameraState();
+		if (cameraState == GameEnum::CameraState::TPS || cameraState == GameEnum::CameraState::FPS) {
+			// 視点変更イベント再生
+			CameraManager::GetInstance().CameraEventPlay(GameEnum::CameraEvent::Dead);
+			// プレイヤーの描画モデル変更
+			SetCharacterModel(GetOwner(), playerModelHandle);
+			// アニメーションのループをしない
+			animator->LoadIndex(false);
+			// アニメーション
+			animator->Play(static_cast<int>(PlayerAnimNum::Deth), 30);
+		}
+	}
 		
 	// 武器変更
 	int first = static_cast<int>(GameEnum::PlayerAction::FirstWeapon);
@@ -161,7 +163,7 @@ void PlayerComponent::OnCollision(const std::shared_ptr<Component>& self, const 
 		if (bullet->GetShotOwner() == GetOwner())
 			return;
 
-		status.HP -= bullet->GetHitDamage();
+		HP->AddDamage(bullet->GetHitDamage());
 		// SE再生
 		PlaySE("bulletHitSE");
 	}
@@ -188,7 +190,7 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	moveDir = moveDir.Normalized();
 	// 移動方向があるなら移動
 	if (moveDir != V_ZERO) {
-		player->GetComponent<MoveComponent>()->SetVelocity(moveDir, moveSpeed);
+		move->SetVelocity(moveDir, moveSpeed);
 		lastMoveDirection = moveDir;
 	}
 
@@ -252,7 +254,7 @@ void PlayerComponent::SpeedControl(GameObject* player, float deltaTime) {
 	// ダッシュ
 	int run = static_cast<int>(GameEnum::PlayerAction::Run);
 	int forwardMove = static_cast<int>(GameEnum::PlayerAction::ForwardMove);
-	if (action.button[run] && action.axis[forwardMove] == 1.0f && status.stamina > 0) {
+	if (action.button[run] && action.axis[forwardMove] == 1.0f && stamina->GetStamina() > 0) {
 		// なめらかな加速
 		if (acceleration < RUN_ACCELERATION_MAX)
 			acceleration += sinf(Deg2Rad * deltaTime * ACCELERATION_RATE);
@@ -260,7 +262,7 @@ void PlayerComponent::SpeedControl(GameObject* player, float deltaTime) {
 			acceleration = RUN_ACCELERATION_MAX;
 
 		// スタミナを消費していく
-		player->GetComponent<StaminaComponent>()->UseStamina(STAMINA_RUN_COST);
+		stamina->UseStamina(STAMINA_RUN_COST);
 	}
 	else {
 		// なめらかな減速
@@ -282,18 +284,18 @@ void PlayerComponent::SpeedControl(GameObject* player, float deltaTime) {
 void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 	// 回避開始
 	int avoid = static_cast<int>(GameEnum::PlayerAction::Avoid);
-	if (action.button[avoid] && canAvoid && status.stamina > STAMINA_AVOID_COST) {
+	if (action.button[avoid] && canAvoid && stamina->GetStamina() > STAMINA_AVOID_COST) {
 		canAvoid = false;
 		isAvoid = true;
 		moveSpeed = DEFAULT_MOVE_SPEED * AVOID_ACCELERATION_MAX;
 		// スタミナ消費
-		player->GetComponent<StaminaComponent>()->UseStamina(STAMINA_AVOID_COST);
+		stamina->UseStamina(STAMINA_AVOID_COST);
 		// SE再生
 		PlaySE("avoidSE");
 	}
 	if (isAvoid) {
 		// プレイヤーの向いている方向に移動
-		player->GetComponent<MoveComponent>()->SetVelocity(lastMoveDirection, moveSpeed);
+		move->SetVelocity(lastMoveDirection, moveSpeed);
 		// 移動量を加算
 		avoidMoveValue += moveSpeed * deltaTime;
 		// 特定の距離動いたら回避終了
@@ -321,3 +323,4 @@ void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 void PlayerComponent::SetModelHandle(int setModelHandle) {
 	playerModelHandle = setModelHandle;
 }
+

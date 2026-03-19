@@ -7,6 +7,11 @@
 
 #include "CharacterBase.h"
 #include "../AnimatorComponent.h"
+#include "../MoveComponent.h"
+#include "../HPComponent.h"
+#include "../StaminaComponent.h"
+#include "../StrengthComponent.h"
+#include "../ResistTimeComponent.h"
 #include "../../System/Status/PlayerStatusManager.h"
 #include "../../Engine.h"
 #include "../../GameEnum.h"
@@ -25,10 +30,14 @@ private:
 	bool isAvoid;									// 回避中か否か
 	bool hasResolvedInitialGrounding;				// 初期接地処理を行ったかどうか
 	bool isDead;									// 死亡しているか否か
-	std::shared_ptr<AnimatorComponent> animator;	// アニメーターコンポーネント
-	PlayerStatusValue status;						// プレイヤーのステータス
-	ActionMapBase::ActionState action;				// プレイヤーのアクション状態
 	int playerModelHandle;							// プレイヤーのモデルハンドル
+	AnimatorComponentPtr animator;					// アニメーターコンポーネント
+	MoveComponentPtr move;							// 移動コンポーネント
+	HPComponentPtr HP;								// HPコンポーネント
+	StaminaComponentPtr stamina;					// スタミナコンポーネント
+	StrengthComponentPtr strength;					// ストレングスコンポーネント
+	ResistTimeComponentPtr resist;					// レジストタイムコンポーネント
+	ActionMapBase::ActionState action;				// プレイヤーのアクション状態
 
 	const float PLAYER_MODEL_ANGLE_CORRECTION;	// プレイヤーのモデル角度を補正する値
 	const float DEFAULT_MOVE_SPEED;				// デフォルトの移動速度
@@ -44,6 +53,7 @@ private:
 	const float HP_DECREASE_RATE;				// HPの減少倍率
 	const float WALK_SE_COOL_TIME_MAX;			// 歩きSEのクールタイムの最大
 	const float WALK_RATE;						// 歩き倍率
+	const float RESIST_DOWN_RATE;
 
 	// プレイヤーのアニメーション番号
 	enum class PlayerAnimNum {
@@ -85,20 +95,12 @@ private:
 	 *	モデルセット
 	 */
 	void SetModelHandle(int setModelHandle);
-	
+
 public:
 	/*
 	 *	移動量の取得
 	 */
 	inline Vector3 GetMoveVec()const { return moveVec; }
-	/*
-	 *	プレイヤーのステータス取得
-	 */
-	inline PlayerStatusValue GetPlayerStatus()const { return status; }
-	/*
-	 *	プレイヤーのステータス更新
-	 */
-	inline void SetPlayerStatus(PlayerStatusValue setStatus) { status = setStatus; }
 	/*
 	 *	死亡フラグの取得
 	 */
