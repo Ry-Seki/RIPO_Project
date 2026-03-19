@@ -72,7 +72,6 @@ void MenuInGame::Initialize(Engine& engine) {
 void MenuInGame::Open() {
     MenuBase::Open();
     animTimer = 0.0f;
-    animFrame = 0;
     for (auto& sprite : spriteList) {
         sprite->Setup();
     }
@@ -121,6 +120,7 @@ void MenuInGame::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
 
+        int animFrame = sprite->GetCurrentFrame();
         animFrame = (animFrame + 1) % frameCount;
         sprite->SetFrameIndex(animFrame);
     }

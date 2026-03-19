@@ -18,12 +18,10 @@ private:
 	float acceleration;								// 加速度
 	float avoidMoveValue;							// 回避の移動量
 	float avoidCoolTime;							// 回避のクールタイム
-	float staminaHealCoolTime;						// スタミナが回復し始めるまでの時間
-	float staminaChangePoint;						// スタミナの回復＆消費を調節するためのfloat型変数
 	float resistTimePoint;							// 耐性値の減少を調節するためのfloat型変数
 	float resistDownSpeed;							// 耐性値の減少スピード
-	float moveDirectionY;							// y軸の移動方向
 	float walkSECoolTime;							// 歩きSEのクールタイム
+	Vector3 lastMoveDirection;						// 最後に動いた方向
 	Vector3 moveVec;								// プレイヤーの移動量
 	bool canAvoid;									// 回避可能か否か
 	bool isAvoid;									// 回避中か否か
@@ -41,26 +39,25 @@ private:
 	const float AVOID_ACCELERATION_MAX;			// 回避の最大加速度
 	const float AVOID_MOVE_VALUE_MAX;			// 回避の最大移動距離
 	const float AVOID_COOL_TIME_MAX;			// 回避のクールタイムの最大
-	const float STAMINA_HEAL_COOL_TIME_MAX;		// スタミナ回復クールタイムの最大
 	const float STAMINA_RUN_COST;				// ダッシュによるスタミナ消費量
 	const float STAMINA_AVOID_COST;				// 回避によるスタミナ消費量
-	const float STAMINA_HEAL_VALUE;				// スタミナの回復量
 	const float JUMP_POWER;						// ジャンプ力
 	const float BACK_ACCELERATION;				// 後ろ歩き時の加速度
 	const float HP_DECREASE_RATE;				// HPの減少倍率
-	const float WORK_SE_COOL_TIME_MAX;			// 歩きSEのクールタイムの最大
+	const float WALK_SE_COOL_TIME_MAX;			// 歩きSEのクールタイムの最大
+	const float WALK_RATE;						// 歩き倍率
 
 	// プレイヤーのアニメーション番号
 	enum class PlayerAnimNum {
 		Invalid = -1,
-		Carry = 0,		// 運び開始時アニメーション
-		Deth = 1,		// 死亡時アニメーション
-		Idle = 2,		// 通常待機アニメーション
-		CarryIdle = 3,	// 運び時待機アニメーション
-		Walk = 4,		// 前方歩きアニメーション
-		BackWalk = 5,	// 後ろ歩きアニメーション
-		LeftWalk = 6,	// 左歩きアニメーション
-		RightWalk = 7,	// 右歩きアニメーション
+		Carry,		// 運び開始時アニメーション
+		Deth,		// 死亡時アニメーション
+		Idle,		// 通常待機アニメーション
+		CarryIdle,	// 運び時待機アニメーション
+		Walk,		// 前方歩きアニメーション
+		BackWalk,	// 後ろ歩きアニメーション
+		LeftWalk,	// 左歩きアニメーション
+		RightWalk,	// 右歩きアニメーション
 	};
 
 public:
@@ -74,13 +71,13 @@ public:
 
 private:
 	/*
-	 *	プレイヤーの移動
+	 *	プレイヤーの行動
 	 */
 	void PlayerMove(GameObject* player, float deltaTime);
 	/*
 	 *	速度調節
 	 */
-	void SpeedControl(float deltaTime);
+	void SpeedControl(GameObject* player, float deltaTime);
 	/*
 	 *	回避
 	 */

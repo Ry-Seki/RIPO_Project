@@ -28,7 +28,7 @@ class SaveDataManager : public Singleton<SaveDataManager> {
 
 private:
 	int currentSlotIndex = -1;							// 現在のスロット番号
-	std::string currentSlotPath;							// 現在のスロット
+	std::string currentSlotPath;						// 現在のスロット
 	SaveData currentSaveData;							// 現在プレイ中のスロット
 	SaveData autoSaveData;								// オートセーブ専用
 
@@ -190,15 +190,25 @@ public:
 	 */
 	std::string MakeFilePath(const std::string& slotPath);
 	/*
-	 *	@brief		最小スロット数の取得
+	 *	@brief		最小スロット数の取得(オートセーブを除く)
 	 *	@return		int
 	 */
-	int GetMinSaveSlot() const;
+	int GetMinSelectSlot() const;
+	/*
+	 *	@brief		最大スロット数の取得(オートセーブを除く)
+	 *	@return		int
+	 */
+	int GetMaxSelectSlot() const;
 	/*
 	 *	@brief		最大スロット数の取得
 	 *	@return		int
 	 */
 	int GetMaxSaveSlot() const;
+	/*
+	 *	@brief		累計プレイ時間の計算
+	 *	@return		int
+	 */
+	int CalcTotalPlayTime();
 
 public:
 	/*
@@ -210,12 +220,12 @@ public:
 	 *	@brief		セーブデータの取得
 	 *	@return		SaveData&
 	 */
-	inline SaveData& GetSaveData() { return currentSaveData; }
+	inline SaveData& GetCurrentSaveData() { return currentSaveData; }
 	/*
 	 *	@brief		セーブデータの取得
 	 *	@return		const SaveData&
 	 */
-	inline const SaveData& GetSaveData() const { return currentSaveData; }
+	inline const SaveData& GetCurrentSaveData() const { return currentSaveData; }
 
 	/*
 	 *	@brief		オートセーブデータの取得

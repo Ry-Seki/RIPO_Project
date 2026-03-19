@@ -8,6 +8,9 @@
 
 MoveComponent::MoveComponent()
 	: velocity(V_ZERO)
+	, moveVec(V_ZERO)
+
+	, INERTIA_RATE(0.75f)
 {}
 
 /*
@@ -16,9 +19,11 @@ MoveComponent::MoveComponent()
 void MoveComponent::Update(float deltaTime) {
 	// ƒI[ƒi‚ğ“®‚©‚·
 	auto owner = GetOwner();
-	owner->position = velocity * deltaTime;
+	moveVec = velocity * deltaTime;
+	owner->position += moveVec;
 
-	velocity *= 0.9f;
+	// Šµ«‚Ì‚½‚ß‚ÉŒ¸­•û®
+	velocity *= INERTIA_RATE;
 }
 
 /*

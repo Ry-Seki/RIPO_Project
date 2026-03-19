@@ -13,18 +13,31 @@
 #include "../Component/AnimatorComponent.h"
 #include "../Component/Character/HPBarComponent.h"
 #include "../Component/Character/BossHPBarComponentr.h"
+#include "../Component/MoveComponent.h"
+#include "../Component/HPComponent.h"
+#include "../Component/StaminaComponent.h"
+#include "../Component/StrengthComponent.h"
+#include "../Component/ResistTimeComponent.h"
 
 CharacterManager::CharacterManager()
 	: engine(nullptr) {
 }
 
+/*
+ *	キャラクター生成
+ *	@param	setID			キャラクターの識別ID
+ *	@param	name			キャラクターの名前
+ *	@param	position		生成位置
+ *  @param	rotation		生成角度
+ *  @param	capsuleStart	カプセルの下端
+ *  @param	capsuleEnd		カプセルの上端
+ *  @param	capsuleRadius	カプセルの半径
+ */
 template <typename T>
 GameObjectPtr CharacterManager::CreateCharacter(
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation,
-	const Vector3& AABBMin,
-	const Vector3& AABBMax,
 	const Vector3& capsuleStart,
 	const Vector3& capsuleEnd,
 	const float& capsuleRadius) {
@@ -32,11 +45,7 @@ GameObjectPtr CharacterManager::CreateCharacter(
 	GameObjectPtr characterObject = GameObjectManager::GetInstance().GetUnuseObject();
 	// キャラクターコンポーネント追加
 	characterObject->AddComponent<T>();
-	// コライダーコンポーネント追加
-	// AABB
-	//AABBColliderPtr aabbCollider = characterObject->AddComponent<AABBCollider>();
-	//aabbCollider->aabb = { AABBMin, AABBMax };
-	// Capsule
+	// カプセルコライダー追加
 	CapsuleColliderPtr capsuleCollider = characterObject->AddComponent<CapsuleCollider>();
 	capsuleCollider->capsule = { capsuleStart, capsuleEnd, capsuleRadius };
 
@@ -44,6 +53,12 @@ GameObjectPtr CharacterManager::CreateCharacter(
 	characterObject->AddComponent<ModelRenderer>();
 	// 重力コンポーネント追加
 	characterObject->AddComponent<GravityComponent>();
+	// アニメーターコンポーネント追加
+	characterObject->AddComponent<AnimatorComponent>();
+	// 移動コンポーネント追加
+	characterObject->AddComponent<MoveComponent>();
+	// HPコンポーネント追加
+	characterObject->AddComponent<HPComponent>();
 	// データのセット
 	characterObject->SetObjectData(name, position, rotation);
 	// キャラクターを返す
@@ -62,22 +77,30 @@ void CharacterManager::Initialize(Engine& setEngine) {
 
 /*
  *	プレイヤー生成
+ *	@param	name			プレイヤーの名前
+ *	@param	position		生成位置
+ *  @param	rotation		生成角度
+ *  @param	capsuleStart	カプセルの下端
+ *  @param	capsuleEnd		カプセルの上端
+ *  @param	capsuleRadius	カプセルの半径
  */
 GameObjectPtr CharacterManager::GeneratePlayer(
 	const std::string& name,
 	const Vector3& position,
 	const Vector3& rotation,
-	const Vector3& AABBMin,
-	const Vector3& AABBMax,
 	const Vector3& capsuleStart,
 	const Vector3& capsuleEnd,
 	const float& capsuleRadius) {
 	// プレイヤーのベース作成
-	player = CreateCharacter<PlayerComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
+	player = CreateCharacter<PlayerComponent>(name, position, rotation, capsuleStart, capsuleEnd, capsuleRadius);
 	// ウデアクションコンポーネント追加
 	player->AddComponent<ArmActionComponent>();
-	// アニメーターコンポーネント追加
-	player->AddComponent<AnimatorComponent>();
+	// スタミナコンポーネント追加
+	player->AddComponent<StaminaComponent>();
+	// ストレングスコンポーネント追加
+	player->AddComponent<StrengthComponent>();
+	// レジストタイムコンポーネント追加
+	player->AddComponent<ResistTimeComponent>();
 	// カメラのターゲットに追加
 	CameraManager::GetInstance().SetTarget(player);
 	// シーンが持つゲームオブジェクト配列に追加
@@ -89,6 +112,15 @@ GameObjectPtr CharacterManager::GeneratePlayer(
 
 /*
  *	エネミー生成
+ *	@param	name			エネミーの名前
+ *	@param	position		生成位置
+ *  @param	rotation		生成角度
+ *  @param	AABBMin			AABBの各軸に置ける最小値
+ *  @param	AABBMax			AABBの各軸に置ける最大値
+ *  @param	capsuleStart	カプセルの下端
+ *  @param	capsuleEnd		カプセルの上端
+ *  @param	capsuleRadius	カプセルの半径
+ *  @author	kuu
  */
 GameObjectPtr CharacterManager::GenerateEnemy(
 	const std::string& name,
@@ -101,9 +133,7 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 	const float& capsuleRadius,
 	int enemyID) {
 	// 敵のベース作成
-   	enemy = CreateCharacter<EnemyComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
-	// アニメーターコンポーネント追加
-	enemy->AddComponent<AnimatorComponent>();
+   	enemy = CreateCharacter<EnemyComponent>(name, position, rotation, capsuleStart, capsuleEnd, capsuleRadius);
 	// HPバーコンポーネント追加
 	enemy->AddComponent<HPBarComponent>();
 	// AABBコライダーコンポーネント追加
@@ -122,6 +152,15 @@ GameObjectPtr CharacterManager::GenerateEnemy(
 
 /*
  *	ボス生成
+ *	@param	name			ボスの名前
+ *	@param	position		生成位置
+ *  @param	rotation		生成角度
+ *  @param	AABBMin			AABBの各軸に置ける最小値
+ *  @param	AABBMax			AABBの各軸に置ける最大値
+ *  @param	capsuleStart	カプセルの下端
+ *  @param	capsuleEnd		カプセルの上端
+ *  @param	capsuleRadius	カプセルの半径
+ *  @author	kuu
  */
 GameObjectPtr CharacterManager::GenerateBoss(
 	const std::string& name,
@@ -134,9 +173,7 @@ GameObjectPtr CharacterManager::GenerateBoss(
 	const float& capsuleRadius,
 	const int bossID) {
 	// ボスのベース作成
-	boss = CreateCharacter<BossComponent>(name, position, rotation, AABBMin, AABBMax, capsuleStart, capsuleEnd, capsuleRadius);
-	// アニメーターコンポーネント追加
-	boss->AddComponent<AnimatorComponent>();
+	boss = CreateCharacter<BossComponent>(name, position, rotation, capsuleStart, capsuleEnd, capsuleRadius);
 	// ボスのHPバーコンポーネント追加
 	boss->AddComponent<BossHPBarComponent>();
 	// AABBコライダーコンポーネント追加

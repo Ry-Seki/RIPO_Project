@@ -29,7 +29,7 @@ void MenuManager::Update(float unscaledDeltaTime) {
 	if (useMenuList.empty()) return;
 
 	// 一番上のメニューのみ操作可能
-	auto topMenu = useMenuList.back();
+	auto& topMenu = useMenuList.back();
 	if (topMenu->IsInteractive()) topMenu->Update(*engine, unscaledDeltaTime);
 
 	// メニューの更新(操作以外)
@@ -54,7 +54,7 @@ void MenuManager::Render() {
 void MenuManager::CloseTopMenu() {
 	if (useMenuList.empty()) return;
 
-	auto topMenu = useMenuList.back();
+	auto& topMenu = useMenuList.back();
 	if (!topMenu) return;
 	// 一番後ろの要素を削除する
 	topMenu->Close(*engine);
