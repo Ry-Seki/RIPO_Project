@@ -112,10 +112,7 @@ void SelectDetail_Dungeon::StartDungeonDataLoad(int dungeonID) {
 	DungeonData dungeonData = dungeonDataList[dungeonID];
 	// ファイルパスの取得
 	std::string filePath = dungeonData.dungeonPath;
-	if (filePath.empty()) {
-		assert(false && "ダンジョンリソースデータファイルパスがありません");
-		return;
-	}
+	if (filePath.empty()) return;
 	// ダンジョンステージデータの読み込み
 	std::vector<std::shared_ptr<LoadJSON>> jsonList;
 	jsonList.push_back(load.LoadResource<LoadJSON>(filePath));
