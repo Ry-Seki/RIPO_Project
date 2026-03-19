@@ -40,18 +40,18 @@
     "ID": 102,
     "HP": 3000,
     "Attack": 30,
-    "Bounty": 50
+    "Bounty": 25aaa0
   },
   "Stage3Boss": {
     "ID": 103,
     "HP": 4000,
     "Attack": 60,
-    "Bounty": 50
+    "Bounty": 500
   },
   "Stage4Boss": {
     "ID": 104,
     "HP": 10000,
     "Attack": 100,
-    "Bounty": 200
+    "Bounty": 1000
   }
 }
