@@ -16,6 +16,7 @@ using namespace CharacterUtility;
 BossDeath::BossDeath()
 	: animator(nullptr)
 	, animationTime(0)
+	, animationNumber(0)
 {
 }
 
@@ -27,6 +28,24 @@ void BossDeath::Start(GameObject* boss)
 {
 	animator = boss->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
+
+	switch (boss->GetComponent<BossComponent>()->GetBossID())
+	{
+	case 101:
+		animationNumber = 6;
+		break;
+	case 102:
+		animationNumber = 1;
+		break;
+	case 103:
+		animationNumber = 2;
+		break;
+	case 104:
+		animationNumber = 3;
+		break;
+	default:
+		break;
+	}
 }
 
 /*
@@ -41,7 +60,7 @@ void BossDeath::Update(GameObject* boss, float deltaTime)
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
 	// アニメーション再生
-	animator->Play(6, 30);
+	animator->Play(animationNumber, 30);
 	animationTime += deltaTime;
 	// アニメーションが終わるまで待つ
 	if (animationTime >= 2.4f) {

@@ -14,6 +14,8 @@ private:
 	std::shared_ptr<AnimatorComponent> animator;
 	// アニメーション経過時間
 	float animationTime;
+	// アニメーション番号
+	int animationNumber;
 
 public:
 	/*
