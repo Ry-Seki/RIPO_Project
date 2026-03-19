@@ -16,6 +16,8 @@ private:
 	int prevMoney = 0;
 	// Š‹à‰æ‘œ‚Ìƒnƒ“ƒhƒ‹
 	int MoneyGraphHandle = -1;
+	// Update‚ÌdeltaTime•Û‘¶—p
+	float deltaTime = 0;
 
 	static constexpr const char* MONEY_PATH = "Res/PlayerUI/money.png";
 
