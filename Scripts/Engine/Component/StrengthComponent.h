@@ -10,7 +10,7 @@
 
 class StrengthComponent : public Component {
 private:
-	float strength = -1;
+	float strength = 0.0f;
 
 public:
 	/*

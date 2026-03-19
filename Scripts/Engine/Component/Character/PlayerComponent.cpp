@@ -101,19 +101,19 @@ void PlayerComponent::Update(float deltaTime) {
 	}
 
 	// HPがなくなったら死亡
-	if (status.HP <= 0) {
-		auto cameraState = CameraManager::GetInstance().GetCameraState();
-		if (cameraState == GameEnum::CameraState::TPS || cameraState == GameEnum::CameraState::FPS) {
-			// 視点変更イベント再生
-			CameraManager::GetInstance().CameraEventPlay(GameEnum::CameraEvent::Dead);
-			// プレイヤーの描画モデル変更
-			SetCharacterModel(GetOwner(), playerModelHandle);
-			// アニメーションのループをしない
-			animator->LoadIndex(false);
-			// アニメーション
-			animator->Play(static_cast<int>(PlayerAnimNum::Deth), 30);
-		}
-	}
+	//if (status.HP <= 0) {
+	//	auto cameraState = CameraManager::GetInstance().GetCameraState();
+	//	if (cameraState == GameEnum::CameraState::TPS || cameraState == GameEnum::CameraState::FPS) {
+	//		// 視点変更イベント再生
+	//		CameraManager::GetInstance().CameraEventPlay(GameEnum::CameraEvent::Dead);
+	//		// プレイヤーの描画モデル変更
+	//		SetCharacterModel(GetOwner(), playerModelHandle);
+	//		// アニメーションのループをしない
+	//		animator->LoadIndex(false);
+	//		// アニメーション
+	//		animator->Play(static_cast<int>(PlayerAnimNum::Deth), 30);
+	//	}
+	//}
 		
 	// 武器変更
 	int first = static_cast<int>(GameEnum::PlayerAction::FirstWeapon);
