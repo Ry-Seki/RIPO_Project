@@ -41,8 +41,6 @@ private:
 	 *	@param	name			キャラクターの名前
 	 *	@param	position		生成位置
 	 *  @param	rotation		生成角度
-	 *  @param	AABBMin			AABBの各軸に置ける最小値
-	 *  @param	AABBMax			AABBの各軸に置ける最大値
 	 *  @param	capsuleStart	カプセルの下端
 	 *  @param	capsuleEnd		カプセルの上端
 	 *  @param	capsuleRadius	カプセルの半径
@@ -52,21 +50,21 @@ private:
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
-		const Vector3& AABBMin,
-		const Vector3& AABBMax,
 		const Vector3& capsuleStart,
 		const Vector3& capsuleEnd,
 		const float& capsuleRadius);
 
 public:
+	/*
+	 *	初期化処理
+	 */
 	void Initialize(Engine& setEngine);
+
 	/*
 	 *	プレイヤー生成
 	 *	@param	name			プレイヤーの名前
 	 *	@param	position		生成位置
 	 *  @param	rotation		生成角度
-	 *  @param	AABBMin			AABBの各軸に置ける最小値
-	 *  @param	AABBMax			AABBの各軸に置ける最大値
 	 *  @param	capsuleStart	カプセルの下端
 	 *  @param	capsuleEnd		カプセルの上端
 	 *  @param	capsuleRadius	カプセルの半径
@@ -75,8 +73,6 @@ public:
 		const std::string& name,
 		const Vector3& position,
 		const Vector3& rotation,
-		const Vector3& AABBMin,
-		const Vector3& AABBMax,
 		const Vector3& capsuleStart,
 		const Vector3& capsuleEnd,
 		const float& capsuleRadius
@@ -84,11 +80,14 @@ public:
 
 	/*
 	 *	エネミー生成
-	 *	@param	name		エネミーの名前
-	 *	@param	position	生成位置
-	 *  @param	rotation	生成角度
-	 *  @param	AABBMin		AABBの各軸に置ける最小値
-	 *  @param	AABBMax		AABBの各軸に置ける最大値
+	 *	@param	name			エネミーの名前
+	 *	@param	position		生成位置
+	 *  @param	rotation		生成角度
+	 *  @param	AABBMin			AABBの各軸に置ける最小値
+	 *  @param	AABBMax			AABBの各軸に置ける最大値
+	 *  @param	capsuleStart	カプセルの下端
+	 *  @param	capsuleEnd		カプセルの上端
+	 *  @param	capsuleRadius	カプセルの半径
 	 *  @author	kuu
 	 */
 	GameObjectPtr GenerateEnemy(
@@ -104,11 +103,14 @@ public:
 
 	/*
 	 *	ボス生成
-	 *	@param	name		ボスの名前
-	 *	@param	position	生成位置
-	 *  @param	rotation	生成角度
-	 *  @param	AABBMin		AABBの各軸に置ける最小値
-	 *  @param	AABBMax		AABBの各軸に置ける最大値
+	 *	@param	name			ボスの名前
+	 *	@param	position		生成位置
+	 *  @param	rotation		生成角度
+	 *  @param	AABBMin			AABBの各軸に置ける最小値
+	 *  @param	AABBMax			AABBの各軸に置ける最大値
+	 *  @param	capsuleStart	カプセルの下端
+	 *  @param	capsuleEnd		カプセルの上端
+	 *  @param	capsuleRadius	カプセルの半径
 	 *  @author	kuu
 	 */
 	GameObjectPtr GenerateBoss(

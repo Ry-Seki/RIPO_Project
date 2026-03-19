@@ -15,8 +15,12 @@
 #include "../../Load/Audio/LoadAudio.h"
 #include "../../Load/Model/LoadModel.h"
 #include "../../Audio/AudioUtility.h"
-#include "../../Manager/StageManager.h"
 #include "CharacterUtility.h"
+#include "../MoveComponent.h"
+#include "../HPComponent.h"
+#include "../StaminaComponent.h"
+#include "../StrengthComponent.h"
+#include "../ResistTimeComponent.h"
 #include "DxLib.h"
 
 using namespace InputUtility;
@@ -28,11 +32,9 @@ PlayerComponent::PlayerComponent()
 	, acceleration(0.0f)
 	, avoidMoveValue(0.0f)
 	, avoidCoolTime(0.0f)
-	, staminaHealCoolTime(0.0f)
-	, staminaChangePoint(0.0f)
 	, resistTimePoint(0.0f)
 	, resistDownSpeed(0.0f)
-	, moveDirectionY(0.0f)
+	, lastMoveDirection(V_ZERO)
 	, walkSECoolTime(0.0f)
 	, canAvoid(true)
 	, isAvoid(false)
@@ -49,14 +51,14 @@ PlayerComponent::PlayerComponent()
 	, AVOID_ACCELERATION_MAX(6.0f)
 	, AVOID_MOVE_VALUE_MAX(1000.0f)
 	, AVOID_COOL_TIME_MAX(1.0f)
-	, STAMINA_HEAL_COOL_TIME_MAX(50.0f)
 	, STAMINA_RUN_COST(0.3f)
 	, STAMINA_AVOID_COST(10.0f)
-	, STAMINA_HEAL_VALUE(0.2f)
 	, JUMP_POWER(1400.0f)
 	, BACK_ACCELERATION(0.5f)
 	, HP_DECREASE_RATE(0.2f) 
-	, WORK_SE_COOL_TIME_MAX(33.0f){}
+	, WALK_SE_COOL_TIME_MAX(33.0f)
+	, WALK_RATE(0.066f)
+{}
 
 void PlayerComponent::Start() {
 	animator = GetOwner()->GetComponent<AnimatorComponent>();
@@ -90,23 +92,7 @@ void PlayerComponent::Update(float deltaTime) {
 	PlayerStatusValue baseStatus = PlayerStatusManager::GetInstance().GetPlayerStatusData().base;
 	// プレイヤーの入力情報
 	action = GetInputState(GameEnum::ActionMap::PlayerAction);
-	moveVec = Vector3::zero;
-
-	// クールタイムが開け次第スタミナ回復
-	if (staminaHealCoolTime <= 0) {
-		if (status.stamina < baseStatus.stamina) {
-			if (staminaChangePoint >= 1) {
-				status.stamina += 1;
-				staminaChangePoint = 0;
-			}
-			else {
-				staminaChangePoint += STAMINA_HEAL_VALUE;
-			}
-		}
-	}
-	else {
-		staminaHealCoolTime -= 1;
-	}
+	moveVec = player->GetComponent<MoveComponent>()->GetMoveVec();
 
 	// 耐性値を削っていく
 	resistTimePoint -= deltaTime * resistDownSpeed;
@@ -161,7 +147,7 @@ void PlayerComponent::Update(float deltaTime) {
 	// 回避中は処理しない
 	if (!isAvoid) {
 		// 速度調節
-		SpeedControl(deltaTime);
+		SpeedControl(player, deltaTime);
 		// 移動処理
 		PlayerMove(player, deltaTime);
 	}
@@ -198,41 +184,32 @@ void PlayerComponent::OnCollision(const std::shared_ptr<Component>& self, const 
 void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
 
-	// 重力コンポーネントの取得
-	auto gravity = player->GetComponent<GravityComponent>();
-	// カメラの角度のsin,cos
-	const float cameraSin = sinf(camera->rotation.y);
-	const float cameraCos = cosf(camera->rotation.y);
-
 	// 移動
-	moveVec = V_ZERO;
-	float right = action.axis[static_cast<int>(GameEnum::PlayerAction::RightMove)];
+	// カメラの角度のsin,cos
+	float cameraSin = sinf(camera->rotation.y);
+	float cameraCos = cosf(camera->rotation.y);
+	// 移動方向ベクトルを出す
+	Vector3 moveDir = V_ZERO;
+	Vector3 forwardDir = { cameraSin, 0.0f, cameraCos };
+	Vector3 rightDir = { cameraCos, 0.0f, -cameraSin };
 	float forward = action.axis[static_cast<int>(GameEnum::PlayerAction::ForwardMove)];
-	// カメラから見て右の移動
-	if (right != 0) {
-		moveVec.x += right * moveSpeed * cameraCos * deltaTime;
-		moveVec.z += right * moveSpeed * -cameraSin * deltaTime;
+	float right = action.axis[static_cast<int>(GameEnum::PlayerAction::RightMove)];
+	moveDir += forwardDir * forward;
+	moveDir += rightDir * right;
+	moveDir = moveDir.Normalized();
+	// 移動方向があるなら移動
+	if (moveDir != V_ZERO) {
+		player->GetComponent<MoveComponent>()->SetVelocity(moveDir, moveSpeed);
+		lastMoveDirection = moveDir;
 	}
-	// カメラから見て前の移動
-	if (forward != 0) {
-		moveVec.x += forward * moveSpeed * cameraSin * deltaTime;
-		moveVec.z += forward * moveSpeed * cameraCos * deltaTime;
-	}
-	// 2方向に入力されていたら移動量半減
-	if (fabs(right) + fabs(forward) == 2) {
-		moveVec *= 0.5f;
-	}
-	player->position.x += moveVec.x;
-	player->position.z += moveVec.z;
-	// 移動方向を保存
-	if (moveVec.x && moveVec.z)
-		moveDirectionY = atan2f(moveVec.x, moveVec.z);
+
 	// プレイヤーの向きはカメラに合わせる
 	player->rotation.y = camera->rotation.y;
 	// 角度を補正
 	player->rotation.y += PLAYER_MODEL_ANGLE_CORRECTION * Deg2Rad;
 
 	// ジャンプ
+	auto gravity = player->GetComponent<GravityComponent>();
 	int jump = static_cast<int>(GameEnum::PlayerAction::Jump);
 	if (action.button[jump] && gravity->GetGroundingFrag()) {
 		gravity->AddFallSpeed(-JUMP_POWER);
@@ -245,19 +222,19 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 		if (moveVec != V_ZERO) {
 			if (forward == 1.0f) {
 				// 前移動
-				animator->Play(static_cast<int>(PlayerAnimNum::Walk), moveSpeed * 0.066f);
+				animator->Play(static_cast<int>(PlayerAnimNum::Walk), moveSpeed * WALK_RATE);
 			}
 			else if (forward == -1.0f) {
 				// 後ろ移動
-				animator->Play(static_cast<int>(PlayerAnimNum::BackWalk), moveSpeed * 0.066f);
+				animator->Play(static_cast<int>(PlayerAnimNum::BackWalk), moveSpeed * WALK_RATE);
 			}
 			else if (right == 1.0f) {
 				// 左移動
-				animator->Play(static_cast<int>(PlayerAnimNum::LeftWalk), moveSpeed * 0.066f);
+				animator->Play(static_cast<int>(PlayerAnimNum::LeftWalk), moveSpeed * WALK_RATE);
 			}
 			else if (right == -1.0f) {
 				// 右移動
-				animator->Play(static_cast<int>(PlayerAnimNum::RightWalk), moveSpeed * 0.066f);
+				animator->Play(static_cast<int>(PlayerAnimNum::RightWalk), moveSpeed * WALK_RATE);
 			}
 		}
 		else {
@@ -269,12 +246,12 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	// SE再生
 	if (gravity->GetGroundingFrag() && moveVec != V_ZERO) {
 		// SE再生クールタイム
-		if (walkSECoolTime >= WORK_SE_COOL_TIME_MAX) {
+		if (walkSECoolTime >= WALK_SE_COOL_TIME_MAX) {
 			PlaySE("walkSE");
 			walkSECoolTime = 0;
 		}
 		else {
-			walkSECoolTime += deltaTime * moveSpeed * 0.066f;
+			walkSECoolTime += deltaTime * moveSpeed * WALK_RATE;
 		}
 	}
 }
@@ -282,7 +259,7 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 /*
  *	速度調節
  */
-void PlayerComponent::SpeedControl(float deltaTime) {
+void PlayerComponent::SpeedControl(GameObject* player, float deltaTime) {
 	// ダッシュ
 	int run = static_cast<int>(GameEnum::PlayerAction::Run);
 	int forwardMove = static_cast<int>(GameEnum::PlayerAction::ForwardMove);
@@ -294,14 +271,7 @@ void PlayerComponent::SpeedControl(float deltaTime) {
 			acceleration = RUN_ACCELERATION_MAX;
 
 		// スタミナを消費していく
-		if (staminaChangePoint <= -1) {
-			status.stamina -= 1;
-			staminaChangePoint = 0;
-		}
-		else {
-			staminaChangePoint -= STAMINA_RUN_COST;
-		}
-		staminaHealCoolTime = STAMINA_HEAL_COOL_TIME_MAX;
+		player->GetComponent<StaminaComponent>()->UseStamina(STAMINA_RUN_COST);
 	}
 	else {
 		// なめらかな減速
@@ -328,18 +298,13 @@ void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 		isAvoid = true;
 		moveSpeed = DEFAULT_MOVE_SPEED * AVOID_ACCELERATION_MAX;
 		// スタミナ消費
-		status.stamina -= STAMINA_AVOID_COST;
-		staminaHealCoolTime = STAMINA_HEAL_COOL_TIME_MAX;
+		player->GetComponent<StaminaComponent>()->UseStamina(STAMINA_AVOID_COST);
 		// SE再生
 		PlaySE("avoidSE");
 	}
 	if (isAvoid) {
-		// プレイヤーの角度のsin,cos
-		const float playerSin = sinf(moveDirectionY);
-		const float playerCos = cosf(moveDirectionY);
 		// プレイヤーの向いている方向に移動
-		player->position.x += moveSpeed * playerSin * deltaTime;
-		player->position.z += moveSpeed * playerCos * deltaTime;
+		player->GetComponent<MoveComponent>()->SetVelocity(lastMoveDirection, moveSpeed);
 		// 移動量を加算
 		avoidMoveValue += moveSpeed * deltaTime;
 		// 特定の距離動いたら回避終了
