@@ -16,6 +16,8 @@ private:
 	int prevMoney = 0;
 	// 所持金画像のハンドル
 	int MoneyGraphHandle = -1;
+	// UpdateのdeltaTime保存用
+	float deltaTime = 0;
 
 	static constexpr const char* MONEY_PATH = "Res/PlayerUI/money.png";
 
@@ -36,12 +38,6 @@ public:
 	 *	描画処理
 	 */
 	void Render() override;
-
-private :
-	/*
-	 *	所持金加算表示
-	 */
-	void AddMoneyUI(FontManager& font);
 
 };
 

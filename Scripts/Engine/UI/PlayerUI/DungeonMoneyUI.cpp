@@ -19,7 +19,7 @@ void DungeonMoneyUI::Initialize()
 
 void DungeonMoneyUI::Update(float unscaledDeltaTime)
 {
- 	displayTime -= unscaledDeltaTime;
+	deltaTime = unscaledDeltaTime;
 }
 
 void DungeonMoneyUI::Render()
@@ -35,9 +35,10 @@ void DungeonMoneyUI::Render()
 	font.Draw("NormalSizeFont", 1550, 100, showMoneyStr, GetColor(255, 255, 255));
 
 	int addMoney = money.GetCurrentMoney() - money.GetPrevMoney();
+	displayTime -= deltaTime;
 	// Šl“¾‚µ‚½‹à‚Ì•\Ž¦
 	if (money.GetCurrentMoney() - prevMoney > 0) {
-		displayTime = 2.0f;
+		displayTime = 1.5f;
 	}
 	// ˆê’èŽžŠÔ•\Ž¦
 	if (displayTime > 0) {
