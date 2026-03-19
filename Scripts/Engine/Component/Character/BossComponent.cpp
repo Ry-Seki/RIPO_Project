@@ -142,8 +142,8 @@ void BossComponent::OnCollision(const std::shared_ptr<Component>& self, const st
 		// €–S”»’è
 		if (HP <= 0 && state != nullptr) {
 			damageIsTriger = true;
-			state = new BossDeath();
-			state->Start(boss);
+			/*state = new BossDeath();
+			state->Start(boss);*/
 		}
 		// €‚È‚È‚©‚Á‚½ê‡
 		else {
