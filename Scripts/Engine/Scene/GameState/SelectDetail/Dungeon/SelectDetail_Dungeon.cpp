@@ -103,12 +103,19 @@ void SelectDetail_Dungeon::DecideDungeonDetail(int dungeonID) {
  *	@brief	ダンジョンステージデータの読み込み
  */
 void SelectDetail_Dungeon::StartDungeonDataLoad(int dungeonID) {
+	if (dungeonID == -1 || dungeonID >= dungeonDataList.size()) {
+		owner->GetOwner()->ChageState(GameEnum::GameState::SelectAction);
+		return;
+	}
 	this->dungeonID = dungeonID;
 	LoadManager& load = LoadManager::GetInstance();
 	DungeonData dungeonData = dungeonDataList[dungeonID];
 	// ファイルパスの取得
 	std::string filePath = dungeonData.dungeonPath;
-	if (filePath.empty()) return;
+	if (filePath.empty()) {
+		assert(false && "ダンジョンリソースデータファイルパスがありません");
+		return;
+	}
 	// ダンジョンステージデータの読み込み
 	std::vector<std::shared_ptr<LoadJSON>> jsonList;
 	jsonList.push_back(load.LoadResource<LoadJSON>(filePath));
@@ -124,8 +131,10 @@ void SelectDetail_Dungeon::SetDungeonData(const std::vector<std::shared_ptr<Load
 	// JSONデータの取得
 	JSON dungeonData = setDataList[0]->GetData();
 	JSON dungeonfloorData = setDataList[1]->GetData();
-	if (dungeonData.empty() || dungeonfloorData.empty()) return;
-
+	if (dungeonData.empty() || dungeonfloorData.empty()) {
+		assert(false && "JSONファイルが見つかりませんでした");
+		return;
+	}
 	auto& context = owner->GetOwner()->GetActionContext();
 	// それぞれのデータを初期化
 	context.dungeonID = dungeonID;

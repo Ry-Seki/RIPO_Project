@@ -11,6 +11,7 @@
 
 #include <vector>
 #include <memory>
+#include <cassert>
 
 // ‘O•ûéŒ¾
 class DungeonDataLoader;
