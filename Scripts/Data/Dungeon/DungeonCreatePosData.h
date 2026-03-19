@@ -59,6 +59,7 @@ struct StairsPosData {
  *  @brief  リスポーン生成位置データ
  */
 struct RespawnPosData {
+	int ID;
 	std::vector<Vector3> position;
 };
 

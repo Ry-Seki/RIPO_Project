@@ -7,7 +7,10 @@
       "Col_StairsPos_1"
     ],
     "RespawnPos": [
-      "Col_RespownPos_0",
+      {
+        "ID": 0,
+        "Path": "Col_RespownPos_0"
+      }
       "Col_RespownPos_1"
     ]
   },
