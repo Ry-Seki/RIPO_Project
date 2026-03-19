@@ -16,6 +16,7 @@
 #include "../../Load/LoadManager.h"
 #include "../../Load/Audio/LoadAudio.h"
 #include "../../Load/Model/LoadModel.h"
+#include "../../Component/StrengthComponent.h"
 
 using namespace StageObjectUtility;
 using namespace CharacterUtility;
@@ -23,18 +24,21 @@ using namespace AudioUtility;
 
 HandArm::HandArm()
 	: liftObject(nullptr)
+	, playerModelHandle(-1)
 	
-	, LEFTABLE_DISTANCE(1000)
+	, LIFT_POS_RATE(500)
+	, LIFTABLE_DISTANCE(1000)
 {}
 
 void HandArm::Start() {
+	// ロード
 	auto playerModel = LoadManager::GetInstance().LoadResource<LoadModel>("Res/Model/Player/RIPO_Model.mv1");
 	auto liftSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Lift.mp3");
 	auto notStrengthSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/NotStrength.mp3");
 	LoadManager::GetInstance().SetOnComplete([this, playerModel, liftSE, notStrengthSE]() {
 		SetModelHandle(playerModel->GetHandle());
-		RegisterSEHandle("liftSE", liftSE->GetHandle());
-		RegisterSEHandle("notStrengthSE", notStrengthSE->GetHandle());
+		RegisterSEHandle(GameConst::_PLAYER_LIFT_SE, liftSE->GetHandle());
+		RegisterSEHandle(GameConst::_PLAYER_NOT_STRENGTH_SE, notStrengthSE->GetHandle());
 	});
 }
 
@@ -61,7 +65,7 @@ void HandArm::LiftTreasure(GameObjectPtr player, Engine* engine) {
 		ray, hitInfo,
 		[this](const ColliderBasePtr& col, float distance) {
 			// 交点が指定値以内かつプレイヤー以外の宝オブジェクト
-			return distance < LEFTABLE_DISTANCE &&
+			return distance < LIFTABLE_DISTANCE &&
 				col &&
 				col->GetOwner()->name != GameConst::_CREATE_POSNAME_PLAYER &&
 				col->GetOwner()->name == GameConst::_CREATE_POSNAME_TREASURE;
@@ -72,18 +76,18 @@ void HandArm::LiftTreasure(GameObjectPtr player, Engine* engine) {
 	if (!hit)
 		return;
 	if (auto treasure = hitInfo.collider->GetOwner()->GetComponent<Treasure>()) {
-		int playerStrength = player->GetComponent<PlayerComponent>()->GetPlayerStatus().strength;
+		int playerStrength = player->GetComponent<StrengthComponent>()->GetStrength();
 		if (liftObject)
 			return;
 		if (treasure->GetStrength() > playerStrength) {
 			// SE再生
-			PlaySE("notStrengthSE");
+			PlaySE(GameConst::_PLAYER_NOT_STRENGTH_SE);
 			return;
 		}
 
 		liftObject = hitInfo.collider->GetOwner();
 		// SE再生
-		PlaySE("liftSE");
+		PlaySE(GameConst::_PLAYER_LIFT_SE);
 		// 視点変更イベント再生
 		CameraManager::GetInstance().CameraEventPlay(GameEnum::CameraEvent::ChangeView);
 		// プレイヤーの描画モデル変更
@@ -100,7 +104,7 @@ void HandArm::CarryTreasure(GameObjectPtr player) {
 	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
 	auto cameraRot = camera->rotation;
 	cameraRot.x = 0;
-	liftObject->position = player->position + (ForwardDir(cameraRot) * 500);
+	liftObject->position = player->position + (ForwardDir(cameraRot) * LIFT_POS_RATE);
 }
 
 /*

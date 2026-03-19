@@ -15,6 +15,7 @@
 #include "BulletComponent.h"
 #include "HPBarComponent.h"
 #include "../CameraComponent.h"
+#include "../HPComponent.h"
  /*
   *	コンストラクタ
   */
@@ -100,10 +101,7 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 			// エフェクトを出す
 			EffectManager::GetInstance().Instantiate("AllEnemyHitEffect", other->GetOwner()->position);
 			// 当たったらダメージを与える
-			auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
-			playerStatus.HP = playerStatus.HP - status.attack;
-			// ダメージを反映
-			player->GetComponent<PlayerComponent>()->SetPlayerStatus(playerStatus);
+			player->GetComponent<HPComponent>()->AddDamage(status.attack);
 
 			attackIsTriger = true;
 		}
@@ -113,7 +111,7 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 	}
 
 	// ダメージ判定
-	if (!damageIsTriger && other->GetOwner()->name == "bullet") {
+	if (!damageIsTriger && other->GetOwner()->name == "Bullet") {
 		// ダメージを受ける
 		HP -= other->GetOwner()->GetComponent<BulletComponent>()->GetHitDamage();;
 		if (HP <= 0) {

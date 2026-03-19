@@ -142,13 +142,6 @@ public:
 	 *  @author		Seki
 	 */
 	void SetModelHandle(GameObject* gameObject, const int modelHandle);
-	/*
-	 *	キャラクターのオーナーオブジェクトの取得
-	 *  @param[in]	const CharacterBasePtr& setCharacter
-	 *  @return		GameObject*
-	 *  @author		Seki
-	 */
-	GameObject* GetCharacterOwner(const CharacterBasePtr& setCharacter) const;
 
 	/*
 	 *	プレイヤーの取得

@@ -47,12 +47,16 @@ PlayerComponent::PlayerComponent()
 	, STAMINA_AVOID_COST(10.0f)
 	, JUMP_POWER(1400.0f)
 	, BACK_ACCELERATION(0.5f)
-	, HP_DECREASE_RATE(0.2f) 
+	, HP_DECREASE_RATE(0.2f)
 	, WALK_SE_COOL_TIME_MAX(33.0f)
 	, WALK_RATE(0.066f)
 	, RESIST_DOWN_RATE(0.7f)
+	, DEATH_ANIMATION_SPEED(30.0f)
 {}
 
+/*
+ *	最初のUpdateの直前に呼び出される処理
+ */
 void PlayerComponent::Start() {
 	// コンポーネント
 	auto owner = GetOwner();
@@ -81,15 +85,18 @@ void PlayerComponent::Start() {
 	auto bulletHitSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/BulletHit.mp3");
 	LoadManager::GetInstance().SetOnComplete([this, playerModel, avoidSE, changeWeaponSE, walkSE, jumpSE, bulletHitSE]() {
 		SetModelHandle(playerModel->GetHandle());
-		RegisterSEHandle("avoidSE", avoidSE->GetHandle());
-		RegisterSEHandle("changeWeaponSE", changeWeaponSE->GetHandle());
-		RegisterSEHandle("walkSE", walkSE->GetHandle());
-		RegisterSEHandle("jumpSE", jumpSE->GetHandle());
-		RegisterSEHandle("bulletHitSE", bulletHitSE->GetHandle());
+		RegisterSEHandle(GameConst::_PLAYER_AVOID_SE, avoidSE->GetHandle());
+		RegisterSEHandle(GameConst::_CHANGE_WEAPON_SE, changeWeaponSE->GetHandle());
+		RegisterSEHandle(GameConst::_PLAYER_WALK_SE, walkSE->GetHandle());
+		RegisterSEHandle(GameConst::_PLAYER_JUMP_SE, jumpSE->GetHandle());
+		RegisterSEHandle(GameConst::_BULLET_HIT_SE, bulletHitSE->GetHandle());
 	});
 
 }
 
+/*
+ *	更新処理
+ */
 void PlayerComponent::Update(float deltaTime) {
 	GameObject* player = GetOwner();
 	// プレイヤーの入力情報
@@ -103,35 +110,10 @@ void PlayerComponent::Update(float deltaTime) {
 	}
 
 	// 死亡処理
-	if (HP->IsDead()) {
-		auto cameraState = CameraManager::GetInstance().GetCameraState();
-		if (cameraState == GameEnum::CameraState::TPS || cameraState == GameEnum::CameraState::FPS) {
-			// 視点変更イベント再生
-			CameraManager::GetInstance().CameraEventPlay(GameEnum::CameraEvent::Dead);
-			// プレイヤーの描画モデル変更
-			SetCharacterModel(GetOwner(), playerModelHandle);
-			// アニメーションのループをしない
-			animator->LoadIndex(false);
-			// アニメーション
-			animator->Play(static_cast<int>(PlayerAnimNum::Deth), 30);
-		}
-	}
+	OnDead();
 		
 	// 武器変更
-	int first = static_cast<int>(GameEnum::PlayerAction::FirstWeapon);
-	int second = static_cast<int>(GameEnum::PlayerAction::SecondWeapon);
-	if (action.buttonDown[first]) {
-		// リボルバーに変更
-		WeaponManager::GetInstance().SetCurrentWeapon(GameEnum::Weapon::Revolver);
-		// SE再生
-		PlaySE("changeWeaponSE");
-	}
-	if (action.buttonDown[second]) {
-		// SMGに変更
-		WeaponManager::GetInstance().SetCurrentWeapon(GameEnum::Weapon::SubmachineGun);
-		// SE再生
-		PlaySE("changeWeaponSE");
-	}
+	ChangeWeapon();
 
 	// 回避
 	PlayerAvoid(player, deltaTime);
@@ -157,6 +139,9 @@ void PlayerComponent::Update(float deltaTime) {
 #endif
 }
 
+/*
+ *	衝突が起きたときに呼び出される処理
+ */
 void PlayerComponent::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
 	// プレイヤー以外が発射した弾が当たったらダメージ
 	if (auto bullet = other->GetOwner()->GetComponent<BulletComponent>()) {
@@ -165,7 +150,7 @@ void PlayerComponent::OnCollision(const std::shared_ptr<Component>& self, const 
 
 		HP->AddDamage(bullet->GetHitDamage());
 		// SE再生
-		PlaySE("bulletHitSE");
+		PlaySE(GameConst::_BULLET_HIT_SE);
 	}
 }
 
@@ -205,7 +190,7 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	if (action.button[jump] && gravity->GetGroundingFrag()) {
 		gravity->AddFallSpeed(-JUMP_POWER);
 		// SE再生
-		PlaySE("jumpSE");
+		PlaySE(GameConst::_PLAYER_JUMP_SE);
 	}
 
 	// アニメーション再生
@@ -238,7 +223,7 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	if (gravity->GetGroundingFrag() && moveVec != V_ZERO) {
 		// SE再生クールタイム
 		if (walkSECoolTime >= WALK_SE_COOL_TIME_MAX) {
-			PlaySE("walkSE");
+			PlaySE(GameConst::_PLAYER_WALK_SE);
 			walkSECoolTime = 0;
 		}
 		else {
@@ -291,7 +276,7 @@ void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 		// スタミナ消費
 		stamina->UseStamina(STAMINA_AVOID_COST);
 		// SE再生
-		PlaySE("avoidSE");
+		PlaySE(GameConst::_PLAYER_AVOID_SE);
 	}
 	if (isAvoid) {
 		// プレイヤーの向いている方向に移動
@@ -314,6 +299,45 @@ void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 		else {
 			avoidCoolTime -= deltaTime;
 		}
+	}
+}
+
+/*
+ *	死亡した時に呼ばれる処理
+ */
+void PlayerComponent::OnDead() {
+	if (HP->IsDead()) {
+		auto cameraState = CameraManager::GetInstance().GetCameraState();
+		if (cameraState == GameEnum::CameraState::TPS || cameraState == GameEnum::CameraState::FPS) {
+			// 視点変更イベント再生
+			CameraManager::GetInstance().CameraEventPlay(GameEnum::CameraEvent::Dead);
+			// プレイヤーの描画モデル変更
+			SetCharacterModel(GetOwner(), playerModelHandle);
+			// アニメーションのループをしない
+			animator->LoadIndex(false);
+			// アニメーション
+			animator->Play(static_cast<int>(PlayerAnimNum::Deth), DEATH_ANIMATION_SPEED);
+		}
+	}
+}
+
+/*
+ *	武器変更
+ */
+void PlayerComponent::ChangeWeapon() {
+	int first = static_cast<int>(GameEnum::PlayerAction::FirstWeapon);
+	int second = static_cast<int>(GameEnum::PlayerAction::SecondWeapon);
+	if (action.buttonDown[first]) {
+		// リボルバーに変更
+		WeaponManager::GetInstance().SetCurrentWeapon(GameEnum::Weapon::Revolver);
+		// SE再生
+		PlaySE(GameConst::_CHANGE_WEAPON_SE);
+	}
+	if (action.buttonDown[second]) {
+		// SMGに変更
+		WeaponManager::GetInstance().SetCurrentWeapon(GameEnum::Weapon::SubmachineGun);
+		// SE再生
+		PlaySE(GameConst::_CHANGE_WEAPON_SE);
 	}
 }
 

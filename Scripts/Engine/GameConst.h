@@ -79,6 +79,7 @@ public:
 	static constexpr const char* _CREATE_POSITION_STAIRPOS = "StairsPos";			// 階段スポーンポジションの名前
 	static constexpr const char* _CREATE_POSITION_LIGHTPOS = "LightPos";			// 階段スポーンポジションの名前
 	static constexpr const char* _CREATE_POSITION_RESPAWNPOS = "RespawnPos";		// 再生成位置の名前
+	static constexpr const char* _BULLET = "Bullet";								// 弾の名前
 
 	//----------------------------------------------------
 	//					お宝の名前
@@ -114,15 +115,23 @@ public:
 	static constexpr const char* _TRAINING_BGM = "trainingBGM";			// トレーニング画面のBGM名
 	static constexpr const char* _MENU_BGM = "menuBGM";					// メニュー画面のBGM名
 	static constexpr const char* _SHOP_BGM = "shopBGM";					// ショップ画面のBGM名
-	static constexpr const char* _PART_BGM = "partBGM";				// パート画面のBGM名
+	static constexpr const char* _PART_BGM = "partBGM";					// パート画面のBGM名
 	//----------------------------------------------------
 	//					SEの命名
 	//----------------------------------------------------
-	static constexpr const char* _TRAINING_SE = "trainingSE";			// トレーニング完了時のSE
-	static constexpr const char* _BOXMOVE_SE = "boxMoveSE";				// 箱が移動している時のSE
-	static constexpr const char* _BOXBROCK_SE = "beepSE";				// 箱が壁にあたった時のSE
-	static constexpr const char* _PARTCOP_SE = "copSE";					// 箱が目的位置についたときのSE
-
+	static constexpr const char* _TRAINING_SE = "trainingSE";						// トレーニング完了時のSE
+	static constexpr const char* _BOXMOVE_SE = "boxMoveSE";							// 箱が移動している時のSE
+	static constexpr const char* _BOXBROCK_SE = "beepSE";							// 箱が壁にあたった時のSE
+	static constexpr const char* _PARTCOP_SE = "copSE";								// 箱が目的位置についたときのSE
+	static constexpr const char* _PLAYER_AVOID_SE = "playerAvoidSE";				// プレイヤーの回避時のSE
+	static constexpr const char* _CHANGE_WEAPON_SE = "changeWeaponSE";				// 武器変更時のSE
+	static constexpr const char* _PLAYER_WALK_SE = "playerWalkSE";					// プレイヤーの足音
+	static constexpr const char* _PLAYER_JUMP_SE = "playerJumpSE";					// プレイヤーのジャンプ時のSE
+	static constexpr const char* _BULLET_HIT_SE = "bulletHitSE";					// 弾が当たった時のSE
+	static constexpr const char* _BULLET_SHOT_SE = "bulletShotSE";					// 弾を撃った時のSE
+	static constexpr const char* _WEAPON_RELOAD_SE = "weaponReloadSE";				// 武器のリロード時のSE
+	static constexpr const char* _PLAYER_LIFT_SE = "playerLiftSE";					// プレイヤーがお宝を持ち上げるときのSE
+	static constexpr const char* _PLAYER_NOT_STRENGTH_SE = "playerNosStrengthSE";	// プレイヤーのストレングスが足りずに持ち上げられないときのSE
 
 };
 #endif // !_GAMECONST_H_

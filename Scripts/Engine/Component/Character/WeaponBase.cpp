@@ -13,8 +13,8 @@
 #include "RevolverArm.h"
 #include "../../Component/Character/CharacterUtility.h"
 #include "../../Load/Audio/LoadAudio.h"
-#include "../../Load/LoadManager.h"
 #include "../../Audio/AudioUtility.h"
+#include "../../Component/StrengthComponent.h"
 
 using namespace AudioUtility;
 using namespace CharacterUtility;
@@ -37,11 +37,12 @@ WeaponBase::WeaponBase()
  *	最初のUpdateの直前に呼び出される処理
  */
 void WeaponBase::Start() {
+	// ロード
 	auto shotSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Shot.mp3");
 	auto reloadSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Reload.mp3");
 	LoadManager::GetInstance().SetOnComplete([this, shotSE, reloadSE]() {
-		RegisterSEHandle("shotSE", shotSE->GetHandle());
-		RegisterSEHandle("reloadSE", reloadSE->GetHandle());
+		RegisterSEHandle(GameConst::_BULLET_SHOT_SE, shotSE->GetHandle());
+		RegisterSEHandle(GameConst::_WEAPON_RELOAD_SE, reloadSE->GetHandle());
 	});
 }
 
@@ -56,7 +57,7 @@ void WeaponBase::ArmUpdate(float deltaTime, ActionMapBase::ActionState action, E
 	int reload = static_cast<int>(GameEnum::PlayerAction::BulletReload);
 	if (action.buttonDown[reload] && weapon->ammoCount != weapon->ammoCountMax && !weapon->reload) {
 		weapon->reload = true;
-		PlaySE("reloadSE");
+		PlaySE(GameConst::_WEAPON_RELOAD_SE);
 	}
 
 	// リロード
@@ -77,12 +78,12 @@ void WeaponBase::ShotBullet(Engine* engine) {
 			// プレイヤーと自分以外のオブジェクト
 			return !col ||
 				(col->GetOwner()->name != GameConst::_CREATE_POSNAME_PLAYER &&
-					col->GetOwner()->name != "bullet");
+					col->GetOwner()->name != GameConst::_BULLET);
 		}
 	);
 	Vector3 moveDirection = Direction(camera->position, hitInfo.point);
 	// ダメージ設定
-	float playerStrength = GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus().strength;
+	float playerStrength = GetPlayer()->GetComponent<StrengthComponent>()->GetStrength();
 	auto weaponNumber = WeaponManager::GetInstance().GetCurrentWeaponNum();
 	float defaultDamage = WeaponDataManager::GetInstance().GetWeaponData(weaponNumber).defaultDamage;
 	float hitDamage = defaultDamage + (defaultDamage * playerStrength * 0.1f);
@@ -93,7 +94,7 @@ void WeaponBase::ShotBullet(Engine* engine) {
 		BULLET_SCALE, moveDirection,
 		GetPlayer().get(), BULLET_SPEED, hitDamage);
 
-	PlaySE("shotSE");	
+	PlaySE(GameConst::_BULLET_SHOT_SE);	
 }
 
 /*

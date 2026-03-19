@@ -5,7 +5,7 @@
 #ifndef _ENEMYCOMPONENT_H_
 #define _ENEMYCOMPONENT_H_
 
-#include "CharacterBase.h"
+#include "../Component.h"
 #include "EnemyState.h"
 #include "../../Engine.h"
 #include "../AnimatorComponent.h"
@@ -14,7 +14,7 @@
 #include "../../Load/Audio/LoadAudio.h"
 #include "../../Audio/AudioUtility.h"
 
-class EnemyComponent : public CharacterBase {
+class EnemyComponent : public Component {
 	//private:
 	//	/*
 	//	 *	エネミーのベースステータ構造体

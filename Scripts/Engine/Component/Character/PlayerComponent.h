@@ -5,7 +5,7 @@
 #ifndef _PLAYERCOMPONENT_H_
 #define _PLAYERCOMPONENT_H_
 
-#include "CharacterBase.h"
+#include "../Component.h"
 #include "../AnimatorComponent.h"
 #include "../MoveComponent.h"
 #include "../HPComponent.h"
@@ -17,7 +17,7 @@
 #include "../../GameEnum.h"
 #include "../../Input/ActionMapBase.h"
 
-class PlayerComponent : public CharacterBase {
+class PlayerComponent : public Component {
 private:
 	float moveSpeed;								// 移動速度
 	float acceleration;								// 加速度
@@ -53,7 +53,8 @@ private:
 	const float HP_DECREASE_RATE;				// HPの減少倍率
 	const float WALK_SE_COOL_TIME_MAX;			// 歩きSEのクールタイムの最大
 	const float WALK_RATE;						// 歩き倍率
-	const float RESIST_DOWN_RATE;
+	const float RESIST_DOWN_RATE;				// レジスト減少倍率
+	const float DEATH_ANIMATION_SPEED;			// 死亡アニメーションのスピード
 
 	// プレイヤーのアニメーション番号
 	enum class PlayerAnimNum {
@@ -73,8 +74,19 @@ public:
 	~PlayerComponent() = default;
 
 public:
+	/*
+	 *	最初のUpdateの直前に呼び出される処理
+	 */
 	void Start() override;
+	
+	/*
+	 *	更新処理
+	 */
 	void Update(float deltaTime) override;
+	
+	/*
+	 *	衝突が起きたときに呼び出される処理
+	 */
 	void OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other);
 
 private:
@@ -82,14 +94,26 @@ private:
 	 *	プレイヤーの行動
 	 */
 	void PlayerMove(GameObject* player, float deltaTime);
+	
 	/*
 	 *	速度調節
 	 */
 	void SpeedControl(GameObject* player, float deltaTime);
+	
 	/*
 	 *	回避
 	 */
 	void PlayerAvoid(GameObject* player, float deltaTime);
+	
+	/*
+	 *	死亡した時に呼ばれる処理
+	 */
+	void OnDead();
+
+	/*
+	 *	武器変更
+	 */
+	void ChangeWeapon();
 
 	/*
 	 *	モデルセット

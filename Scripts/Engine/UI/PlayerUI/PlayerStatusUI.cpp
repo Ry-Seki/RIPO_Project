@@ -25,6 +25,7 @@ PlayerStatusUI::PlayerStatusUI()
  *	初期化処理
  */
 void PlayerStatusUI::Initialize() {
+	// ロード
 	FontManager::GetInstance().LoadFont(80, "playerStatus");
 	LoadManager& load = LoadManager::GetInstance();
 	auto hpSprite = load.LoadResource<LoadSprite>(HP_PATH);
@@ -39,20 +40,23 @@ void PlayerStatusUI::Initialize() {
  *	描画処理
  */
 void PlayerStatusUI::Render() {
+	auto player = GetPlayer();
+	auto playerHP = static_cast<int>(player->GetComponent<HPComponent>()->GetHP());
+	auto playerStamina = static_cast<int>(player->GetComponent<StaminaComponent>()->GetStamina());
+	auto playerStrength = static_cast<int>(player->GetComponent<StrengthComponent>()->GetStrength());
 	// 最大値と文字幅を合わせる
-	auto playerStatus = GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus();
 	auto baseStatus = PlayerStatusManager::GetInstance().GetPlayerStatusData().base;
-	std::string hp = std::to_string(playerStatus.HP);
+	std::string hp = std::to_string(playerHP);
 	std::string hpMax = std::to_string(baseStatus.HP);
 	while (hp.size() < hpMax.size()) {
 		hp = " " + hp;
 	}
-	std::string stamina = std::to_string(playerStatus.stamina);
+	std::string stamina = std::to_string(playerStamina);
 	std::string staminaMax = std::to_string(baseStatus.stamina);
 	while (stamina.size() < staminaMax.size()) {
 		stamina = " " + stamina;
 	}
-	std::string strength = std::to_string(playerStatus.strength);
+	std::string strength = std::to_string(playerStrength);
 	
 	// 3種画像とテキストの描画
 	float graphPosX = GameConst::WINDOW_WIDTH * GRAPH_WIDTH_POS_RATIO;

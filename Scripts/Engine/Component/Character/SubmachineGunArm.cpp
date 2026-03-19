@@ -41,7 +41,7 @@ void SubmachineGunArm::WeaponUpdate(float deltaTime, ActionMapBase::ActionState 
 		else if (action.buttonDown[shot] && !reload) {
 			// ’e‚ª‚È‚©‚Á‚½‚çƒŠƒ[ƒh
 			reload = true;
-			PlaySE("reloadSE");
+			PlaySE(GameConst::_WEAPON_RELOAD_SE);
 		}
 	}
 	else {

@@ -6,6 +6,7 @@
 #include "../../Manager/GameObjectManager.h"
 #include "BossStandby.h"
 #include "PlayerComponent.h"
+#include "../HPComponent.h"
 #include "../../Manager/CameraManager.h"
 #include "../../Manager/StageManager.h"
 #include "BossDeath.h"
@@ -116,11 +117,8 @@ void BossComponent::OnCollision(const std::shared_ptr<Component>& self, const st
 			// エフェクトを出す
 			EffectManager::GetInstance().Instantiate("AllEnemyHitEffect", other->GetOwner()->position);
 			// 当たったらダメージを与える
-			auto playerStatus = player->GetComponent<PlayerComponent>()->GetPlayerStatus();
-			playerStatus.HP = playerStatus.HP - status.attack;
-			// ダメージを反映
-			player->GetComponent<PlayerComponent>()->SetPlayerStatus(playerStatus);
-
+			player->GetComponent<HPComponent>()->AddDamage(status.attack);
+			
 			attackIsTriger = true;
 		}
 	}
