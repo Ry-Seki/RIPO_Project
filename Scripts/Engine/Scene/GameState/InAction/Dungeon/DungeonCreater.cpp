@@ -95,7 +95,9 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 					  stairDataList[i].rotation,
 					  stairDataList[i].center,
 					  stairDataList[i].angle,
-					  stairDataList[i].size);
+					  stairDataList[i].size,
+					  stairDataList[i].RespawnID
+		);
 	}
 	// oŒû‚Ì¶¬ˆ—
 	for (int i = 0; i < goalCount; i++) {
@@ -291,7 +293,8 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 					  stairDataList[i].rotation,
 					  stairDataList[i].center,
 					  stairDataList[i].angle,
-					  stairDataList[i].size
+					  stairDataList[i].size,
+					  stairDataList[i].RespawnID
 			);
 	}
 	// oŒû‚Ì¶¬ˆ—
@@ -413,7 +416,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	auto player = GetUseObject(0);
 	if (!player) return;
 
-	player->position = createPosDataList.respawn.position[0];
+	player->position = createPosDataList.respawn.respawnMap[respawnID];
 
 	// oŒû‚Ìİ’è
 	GameObjectList exitList = GetObjectByName(GameConst::_CREATE_POSNAME_GOAL);

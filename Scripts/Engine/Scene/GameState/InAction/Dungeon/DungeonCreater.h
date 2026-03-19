@@ -22,6 +22,7 @@
 class DungeonCreater {
 private:
 	int dungeonID = -1;
+	int respawnID = -1;
 	FloorData floorData;
 	std::vector<EntranceData> entranceDataList;
 	std::vector<EntranceData> stairDataList;
@@ -93,6 +94,12 @@ public:
 	 *	@param[in]	FloorData& setFloorData
 	 */
 	inline void SetFloorData(FloorData& setFloorData) { floorData = setFloorData; }
+
+	/*
+	 *	ダンジョンのリスポーンIDの取得
+	 *  @param[in]	id  IDs
+	 */
+	void SetRespawnID(int id) { respawnID = id; }
 };
 
 #endif // !_DUNGEON_CREATER_H_

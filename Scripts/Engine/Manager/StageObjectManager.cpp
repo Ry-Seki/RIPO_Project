@@ -115,7 +115,8 @@ void StageObjectManager::GenerateStair(
 	const Vector3& rotation,
 	const Vector3& center,
 	const float& angle,
-	const Vector3& size
+	const Vector3& size,
+	const int id
 	) {
 	GameObjectPtr createStair;
 	// リストの空きに生成
@@ -123,6 +124,8 @@ void StageObjectManager::GenerateStair(
 	stairList.push_back(createStair->GetComponent<Stair>().get());
 	OBBColliderPtr collider = createStair->AddComponent<OBBCollider>();
 	collider->obb = { center,angle,size };
+	// リスポーンIDをセット
+	createStair->GetComponent<Stair>()->SetRespawnID(id);
 	// オブジェクトのリストに保存
 	createStageObjectList.push_back(createStair);
 	// シーンが持つゲームオブジェクト配列に入れる

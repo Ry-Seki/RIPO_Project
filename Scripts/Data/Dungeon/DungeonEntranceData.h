@@ -15,10 +15,11 @@
 #include <string>
 
  /*
-  *	@brief	出口、階段データ
+  *	@brief	出口、階段、生成位置データ
   */
 struct EntranceData {
 	int moveID = 0;
+	int RespawnID = 0;
 	std::string name = "";
 	Vector3 position = V_ZERO;
 	Vector3 rotation = V_ZERO;
@@ -86,6 +87,9 @@ public:
 		// Entrance配列を走査
 		for (size_t i = 0; i < entranceArray.size(); i++) {
 			EntranceData data;
+
+			// RespawnID
+			data.RespawnID = entranceArray[i].value("RespawnID", 0);
 
 			// MoveID
 			data.moveID = entranceArray[i].value("MoveID", 0);

@@ -31,6 +31,7 @@ private:
 
 	const size_t CREATE_STAGEOBJ_COUNT = 16;	// 事前に生成する数
 
+	int respawnID = -1;
 private:
 	StageObjectManager() = default;
 	~StageObjectManager() = default;
@@ -110,7 +111,8 @@ public:
 		const Vector3& rotation,
 		const Vector3& center,
 		const float& angle,
-		const Vector3& size
+		const Vector3& size,
+		const int id
 	);
 	/*
 	 *	ID指定のステージオブジェクト削除
@@ -205,6 +207,17 @@ public:
 	 *  @author		Seki
 	 */
 	GameObject* GetStageObjectOwner(const StageObjectBasePtr& setStageObject) const;
+
+	/*
+	 *	リスポーンIDの設定
+	 *  @param[in]	int	自身が持つリスポーン位置のID
+	 */
+	inline void SetRespawnID(int setValue) { respawnID = setValue; }
+
+	/*
+	 *	リスポーンIDの取得
+	 */
+	inline int GetRespawnID()const { return respawnID; }
 };
 
 #endif // !_STAGEOBJECTMANAGER_H_

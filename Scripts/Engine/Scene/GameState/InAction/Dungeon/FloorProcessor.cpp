@@ -221,6 +221,7 @@ void FloorProcessor::ChangeFloor() {
 	// 当たり判定の解除
 	GameObjectUtility::SetUseObjectColliderFlag(false);
 	InputUtility::SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, false);
+	dungeonCreater.SetRespawnID(StageObjectUtility::GetRepawnID());
 	// 現在のフロアの片付け処理
 	TeardownCurrentFloor();
 	// フロアの変更

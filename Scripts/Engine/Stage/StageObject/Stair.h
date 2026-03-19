@@ -14,6 +14,7 @@ private:
 	bool isStairMoved = false;		// 階層移動フラグ
 	int	stairID = -1;				// 階段のID
 	int nextID = -1;				// 次の階層のID
+	int respawnID = -1;				// リスポーン位置のID
 
 public:
 	Stair() :isStairMoved(false) {};		// コンストラクタ
@@ -70,6 +71,16 @@ public:
 	 */
 	inline void SetNextID(int setValue) { nextID = setValue; }
 
+	/*
+	 *	リスポーンIDの設定
+	 *  @param[in]	int	自身が持つリスポーン位置のID
+	 */
+	inline void SetRespawnID(int setValue) { respawnID = setValue; }
+
+	/*
+	 *	リスポーンIDの取得
+	 */
+	inline int GetRespawnID()const { return respawnID; }
 };
 #endif // !_STAIR_H_
 

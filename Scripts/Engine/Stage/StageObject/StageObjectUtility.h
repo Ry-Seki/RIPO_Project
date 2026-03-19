@@ -55,6 +55,7 @@ namespace StageObjectUtility {
 	 *  @param	rotation	生成角度
 	 *  @param	AABBMin		AABBの各軸における最小値
 	 *  @param	AABBMax		AABBの各軸における最大値
+	 *  @param	id			リスポーン位置のID
 	 */
 	inline void GenerateStair(
 		const std::string& name,
@@ -62,9 +63,10 @@ namespace StageObjectUtility {
 		const Vector3& rotation,
 		const Vector3& center,
 		const float& angle,
-		const Vector3& size
+		const Vector3& size,
+		const int id
 	) {
-		StageObjectManager::GetInstance().GenerateStair(name, position, rotation, center, angle, size);
+		StageObjectManager::GetInstance().GenerateStair(name, position, rotation, center, angle, size, id);
 	}
 	/*
 	 *	ID指定のステージオブジェクト削除
@@ -156,6 +158,23 @@ namespace StageObjectUtility {
 	inline GameObject* GetStageObjectOwner(const StageObjectBasePtr& setStageObject) {
 		return StageObjectManager::GetInstance().GetStageObjectOwner(setStageObject);
 	}
+	/*
+	 *	階段からリスポーンIDをセット
+	 *  @param[in]	int	ID
+	 *  @author oorui
+	 */
+	inline void SetRespawnID(int setValue) {
+		StageObjectManager::GetInstance().SetRespawnID(setValue);
+	}
+	/*
+	 *	階段からリスポーンIDをゲット
+	 *  @param[in]	int	ID
+	 *  @author oorui
+	 */
+	inline int GetRepawnID() {
+		return StageObjectManager::GetInstance().GetRespawnID();
+	}
+
 };
 
 #endif // !_STAGE_OBJECT_UTILITY_H_
