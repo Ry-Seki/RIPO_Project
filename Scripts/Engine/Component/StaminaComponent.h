@@ -10,11 +10,11 @@
 
 class StaminaComponent : public Component {
 private:
-	float stamina = -1;								// 現在スタミナ
-	float maxStamina = -1;							// 最大スタミナ
-	float staminaHealCoolTime = -1;					// スタミナが回復し始めるまでの時間
-	const float STAMINA_HEAL_COOL_TIME_MAX = 50.0f;	// スタミナ回復クールタイムの最大
-	const float STAMINA_AUTO_HEAL_VALUE = 0.2f;		// スタミナの自動回復量
+	float stamina = 0.0f;								// 現在スタミナ
+	float maxStamina = 0.0f;							// 最大スタミナ
+	float staminaHealCoolTime = 0.0f;					// スタミナが回復し始めるまでの時間
+	const float STAMINA_HEAL_COOL_TIME_MAX = 50.0f;		// スタミナ回復クールタイムの最大
+	const float STAMINA_AUTO_HEAL_VALUE = 0.2f;			// スタミナの自動回復量
 
 public:
 	/*
