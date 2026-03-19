@@ -10,14 +10,14 @@
 
 class StrengthComponent : public Component {
 private:
-	float strength;
+	float strength = -1;
 
 public:
 	/*
 	 *	セットアップ
 	 */
-	void Setup(float setValue) {
-		strength = setValue;
+	void Setup(float setStrength) {
+		strength = setStrength;
 	}
 
 public:

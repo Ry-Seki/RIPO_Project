@@ -32,8 +32,6 @@ PlayerComponent::PlayerComponent()
 	, acceleration(0.0f)
 	, avoidMoveValue(0.0f)
 	, avoidCoolTime(0.0f)
-	, resistTimePoint(0.0f)
-	, resistDownSpeed(0.0f)
 	, lastMoveDirection(V_ZERO)
 	, walkSECoolTime(0.0f)
 	, canAvoid(true)
@@ -67,7 +65,7 @@ void PlayerComponent::Start() {
 
 	// ダンジョンによって耐性値減少スピードを変える
 	int dungeonID = StageManager::GetInstance().GetCurrentStage()->GetDungeonID();
-	resistDownSpeed = dungeonID;
+	//resistDownSpeed = dungeonID;
 
 	auto playerModel = LoadManager::GetInstance().LoadResource<LoadModel>("Res/Model/Player/RIPO_Model.mv1");
 	auto avoidSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/PlayerSE/Avoid.mp3");
@@ -94,21 +92,12 @@ void PlayerComponent::Update(float deltaTime) {
 	action = GetInputState(GameEnum::ActionMap::PlayerAction);
 	moveVec = player->GetComponent<MoveComponent>()->GetMoveVec();
 
-	// 耐性値を削っていく
-	resistTimePoint -= deltaTime * resistDownSpeed;
-	if (resistTimePoint <= -1) {
-		if (status.resistTime > 0) {
-			status.resistTime -= 1;
-		}
-		// 耐性値がなくなった場合はHPが割合で削れる
-		else {
-			status.resistTime = 0;
-			if (status.HP > 0)
-				status.HP -= baseStatus.HP * HP_DECREASE_RATE;
-			else
-				status.HP = 0;
-		}
-		resistTimePoint = 0;
+	// 耐性値がなくなった場合はHPが割合で削れる
+	if (player->GetComponent<ResistTimeComponent>()->GetResistTime() <= 0) {
+		if (status.HP > 0)
+			status.HP -= baseStatus.HP * HP_DECREASE_RATE;
+		else
+			status.HP = 0;
 	}
 
 	// HPがなくなったら死亡

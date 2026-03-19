@@ -10,22 +10,26 @@
 
 class ResistTimeComponent : public Component {
 private:
-	float resistTime;		// 現在のレジスト値
-	float maxResistTime;	// 最大のレジスト値
+	float resistTime = -1;		// 現在のレジスト値
+	float maxResistTime = -1;	// 最大のレジスト値
+	float resistDownSpeed = -1;	// レジスト値の減少スピード
 
 public:
 	/*
 	 *	更新処理
 	 */
-	void Update(float deltaTime) override;
+	void Update(float deltaTime) override {
+		DownResist(resistDownSpeed * deltaTime);
+	}
 
 public:
 	/*
 	 *	セットアップ
 	 */
-	void Setup(float setValue) {
-		resistTime = setValue;
-		maxResistTime = setValue;
+	void Setup(float setResistTime, float setDownSpeed) {
+		resistTime = setResistTime;
+		maxResistTime = setResistTime;
+		resistDownSpeed = setDownSpeed;
 	}
 
 	/*
