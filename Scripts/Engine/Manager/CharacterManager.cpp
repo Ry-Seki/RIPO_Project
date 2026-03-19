@@ -237,16 +237,3 @@ void CharacterManager::SetModelHandle(GameObject* gameObject, const int modelHan
 	animator->SetModelHandle(modelRenderer->GetModelHandle());
 	animator->LoadIndex(true);
 }
-/*
- *	キャラクターのオーナーオブジェクトの取得
- *  @param[in]	const CharacterBasePtr& setCharacter
- *  @return		GameObject*
- *  @author		Seki
- */
-GameObject* CharacterManager::GetCharacterOwner(const CharacterBasePtr& setCharacter) const {
-	if (!setCharacter) return nullptr;
-	GameObject* owner = setCharacter->GetOwner();
-	if (!owner) return nullptr;
-
-	return owner;
-}

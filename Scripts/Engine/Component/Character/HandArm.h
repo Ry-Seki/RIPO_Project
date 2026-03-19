@@ -15,9 +15,10 @@
 class HandArm : public ArmBase {
 private:
 	GameObject* liftObject;			// 運ぶオブジェクト
+	int playerModelHandle;			// プレイヤーのモデルハンドル
 
-	int playerModelHandle;
-	const float LEFTABLE_DISTANCE;	// 運べる距離
+	const float LIFT_POS_RATE;		// 掴む位置調整
+	const float LIFTABLE_DISTANCE;	// 掴める距離
 
 public:
 	HandArm();

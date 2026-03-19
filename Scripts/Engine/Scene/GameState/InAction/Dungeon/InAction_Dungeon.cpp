@@ -25,6 +25,10 @@
 #include "../../../../Manager/WeaponManager.h"
 #include "../../../../Component/Character/HPBarComponent.h"
 #include "../../../../Component/Character/BossHPBarComponentr.h"
+#include "../../../../Component/HPComponent.h"
+#include "../../../../Component/StaminaComponent.h"
+#include "../../../../Component/StrengthComponent.h"
+#include "../../../../Component/ResistTimeComponent.h"
 #include "../../../../Scene/Scene.h"
 
  /*
@@ -191,8 +195,12 @@ void InAction_Dungeon::Render() {
 		}
 
 	}
+	auto player = GetPlayer();
+	PlayerStatusValue playerStatus = { static_cast<int>(player->GetComponent<HPComponent>()->GetHP()),
+									   static_cast<int>(player->GetComponent<StaminaComponent>()->GetStamina()),
+									   static_cast<int>(player->GetComponent<StrengthComponent>()->GetStrength()),
+									   static_cast<int>(player->GetComponent<ResistTimeComponent>()->GetResistTime()) };
 	PlayerStatusData BaseStatus = PlayerStatusManager::GetInstance().GetPlayerStatusData();
-	PlayerStatusValue playerStatus = GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus();
 	DrawFormatString(450, 20, GetColor(255, 255, 255), "HP : %d / %d", playerStatus.HP, BaseStatus.base.HP);
 	DrawFormatString(450, 40, GetColor(255, 255, 255), "Stamina : %d / %d", playerStatus.stamina, BaseStatus.base.stamina);
 	DrawFormatString(450, 60, GetColor(255, 255, 255), "Strength : %d", BaseStatus.base.strength);

@@ -110,8 +110,9 @@ public:
 	 */
 	inline bool	IsPlaying() const { return isPlaying; }
 
-
-
 };
+// •Ê–¼’è‹`
+using AnimatorComponentPtr = std::shared_ptr<AnimatorComponent>;
+
 #endif // !_ANIMATORCOMPONENT_H_
 

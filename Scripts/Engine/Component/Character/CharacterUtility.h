@@ -114,15 +114,6 @@ namespace CharacterUtility {
 		CharacterManager::GetInstance().RemoveAllCharacter();
 	}
 
-
-	/*
-	 *	キャラクターのオーナーオブジェクトの取得
-	 *  @param[in]	const CharacterBasePtr& setCharacter
-	 *  @return		GameObject*
-	 */
-	inline GameObject* GetOwnerObject(const CharacterBasePtr& setCharacter) {
-		return CharacterManager::GetInstance().GetCharacterOwner(setCharacter);
-	}
 	/*
 	 *	キャラクターにモデルハンドルをセット
 	 *	@param[in]	GameObject* gameObject		セットするモデル

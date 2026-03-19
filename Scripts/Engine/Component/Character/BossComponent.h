@@ -5,7 +5,7 @@
 #ifndef _BOSSCOMPONENT_H_
 #define _BOSSCOMPONENT_H_
 
-#include "CharacterBase.h"
+#include "../Component.h"
 #include "BossState.h"
 #include "../AnimatorComponent.h"
 #include "../ModelRenderer.h"
@@ -14,7 +14,7 @@
 #include "../../Load/Audio/LoadAudio.h"
 #include "../../Audio/AudioUtility.h"
 
-class BossComponent : public CharacterBase {
+class BossComponent : public Component {
 private:
 	GameObject* boss;
 	GameObjectPtr player;

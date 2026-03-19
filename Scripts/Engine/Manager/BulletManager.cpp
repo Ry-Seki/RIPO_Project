@@ -8,13 +8,13 @@
 #include "../Component/CapsuleCollider.h"
 #include "../Component/ModelRenderer.h"
 #include "../Load/LoadManager.h"
+#include "../GameConst.h"
 
 #include <DxLib.h>
 
 BulletManager::BulletManager()
 	: engine(nullptr)
 
-	, BULLET_NAME("bullet")
 	, BULLET_CAPSULE_START(V_ZERO)
 	, BULLET_CAPSULE_END(V_ZERO)
 	, BULLET_CAPSULE_RADIUS(15)
@@ -88,7 +88,7 @@ void BulletManager::BulletShot(
 	const float damage,
 	const float destroyTime) {
 	// 弾生成 
-	BulletComponentPtr bullet = GenerateBullet(BULLET_NAME, position, rotation, BULLET_CAPSULE_START, BULLET_CAPSULE_END, BULLET_CAPSULE_RADIUS);
+	BulletComponentPtr bullet = GenerateBullet(GameConst::_BULLET, position, rotation, BULLET_CAPSULE_START, BULLET_CAPSULE_END, BULLET_CAPSULE_RADIUS);
 	// セットアップ
 	bullet->Setup(direction, scale, shotOwner, damage, speed, destroyTime);
 }

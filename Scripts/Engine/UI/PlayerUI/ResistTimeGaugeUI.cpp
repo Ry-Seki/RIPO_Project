@@ -37,7 +37,7 @@ void ResistTimeGaugeUI::Initialize() {
  */
 void ResistTimeGaugeUI::Render() {
 	// ÉQÅ[ÉWï`âÊà íuåvéZ
-	float playerResist = static_cast<float>(GetPlayer()->GetComponent<PlayerComponent>()->GetPlayerStatus().resistTime);
+	float playerResist = GetPlayer()->GetComponent<ResistTimeComponent>()->GetResistTime();
 	float baseResist = static_cast<float>(PlayerStatusManager::GetInstance().GetPlayerStatusData().base.resistTime);
 	float posSX = GameConst::WINDOW_WIDTH * GAUGE_START_WIDTH_POS_RATIO;
 	float posSY = GameConst::WINDOW_HEIGHT * GAUGE_START_HEIGHT_POS_RATIO;
