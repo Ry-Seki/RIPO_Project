@@ -488,6 +488,10 @@ void StageCollision::DrawGrid(GameObject* player) {
 			DrawLine3D(p2, p3, color);
 			DrawLine3D(p3, p4, color);
 			DrawLine3D(p4, p1, color);
+
+			// ê‘Ç≠Ç∑ÇÈ
+			//DrawTriangle3D(p1, p2, p3, color, TRUE);
+			//DrawTriangle3D(p1, p3, p4, color, TRUE);
 		}
 	}
 
