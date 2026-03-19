@@ -40,7 +40,7 @@ public:
 			resistTime = 0;
 		}
 		else {
-			resistTime - downValue;
+			resistTime -= downValue;
 		}
 	}
 

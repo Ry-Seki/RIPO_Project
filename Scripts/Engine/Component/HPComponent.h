@@ -32,7 +32,7 @@ public:
 			isDead = true;
 		}
 		else {
-			HP - damage;
+			HP -= damage;
 		}
 	}
 

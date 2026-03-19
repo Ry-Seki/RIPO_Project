@@ -68,6 +68,9 @@ void WeaponBase::ArmUpdate(float deltaTime, ActionMapBase::ActionState action, E
  *	e‚ðŒ‚‚Âˆ—
  */
 void WeaponBase::ShotBullet(Engine* engine) {
+	// ƒŠƒ[ƒh’†‚Í‹ÖŽ~
+	if (reload) return;
+
 	// ’…’e’n“_‚ðŠm”F
 	GameObjectPtr camera = CameraManager::GetInstance().GetCamera();
 	Ray ray = { camera->position, ForwardDir(camera->rotation) };

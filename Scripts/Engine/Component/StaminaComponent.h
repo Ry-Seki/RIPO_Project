@@ -47,7 +47,7 @@ public:
 			stamina = 0;
 		}
 		else {
-			stamina - useValue;
+			stamina -= useValue;
 		}
 		// スタミナ自動回復クールタイム
 		staminaHealCoolTime = STAMINA_HEAL_COOL_TIME_MAX;
@@ -61,7 +61,7 @@ public:
 			stamina = maxStamina;
 		}
 		else {
-			stamina + healValue;
+			stamina += healValue;
 		}
 	}
 
