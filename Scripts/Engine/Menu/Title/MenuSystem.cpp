@@ -150,6 +150,7 @@ void MenuSystem::SelectButtonExecute(Engine& engine, int buttonIndex) {
     auto& menu = MenuManager::GetInstance();
     AudioUtility::PlaySE("DebugSE");
     if (buttonIndex == 0) {
+        isInteractive = false;
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
             menu.OpenMenu<MenuVolumeSettings>();
@@ -157,6 +158,7 @@ void MenuSystem::SelectButtonExecute(Engine& engine, int buttonIndex) {
     } else if (buttonIndex == 1) {
         // TODO : ゲームが完全に出来次第クレジットをオープンするようにする
     } else if (buttonIndex == 2) {
+        isInteractive = false;
         menu.CloseTopMenu();
     }
 }
