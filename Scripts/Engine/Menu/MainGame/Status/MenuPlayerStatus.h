@@ -77,7 +77,7 @@ private:
 	/*
 	 *	@brief	ボタンの押された時の処理
 	 */
-	void SelectButtonExecute(Engine& engine);
+	void SelectButtonExecute();
 	/*
 	 *	@brief	現在のステータスの描画
 	 */

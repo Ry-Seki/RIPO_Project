@@ -23,18 +23,12 @@ class Engine;
  */
 class MenuPlayerDeath : public MenuBase {
 private:
-	float animTimer = 0.0f;
-	int animFrame = 0;
-
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 
 	std::function<void()> Callback = nullptr;
-
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Dungeon/Result/PlayerDeathMenuResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Dungeon/Result/PlayerDeathMenuNavigation.json";
 
 public:
 	/*
@@ -76,7 +70,7 @@ private:
 	/*
 	 *	@brief	ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—
 	 */
-	void SelectButtonExecute(Engine& engine);
+	void SelectButtonExecute();
 
 public:
 	/*

@@ -449,6 +449,7 @@
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuSelectLoadGame.h" />
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuSystem.h" />
     <ClInclude Include="Scripts\Engine\Menu\Title\MenuTitle.h" />
+    <ClInclude Include="Scripts\Engine\MyAssert.h" />
     <ClInclude Include="Scripts\Engine\Random.h" />
     <ClInclude Include="Scripts\Engine\Save\SaveDataManager.h" />
     <ClInclude Include="Scripts\Engine\Scene\DebugScene.h" />

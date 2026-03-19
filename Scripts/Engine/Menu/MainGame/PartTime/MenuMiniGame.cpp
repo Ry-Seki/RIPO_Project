@@ -29,7 +29,6 @@ namespace {
     constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/PartTime/MiniGame/MiniGameMenuResources.json";
     constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/PartTime/MiniGame/MiniGameMenuNavigation.json";
 
-    // const std::unordered_map<std::string, >
 }
 /*
  *	@brief	‰Šú‰»ˆ—
@@ -115,9 +114,11 @@ void MenuMiniGame::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer = 0;
 
     for (auto& sprite : spriteList) {
+        if (!sprite) continue;
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
 
+        int animFrame = sprite->GetCurrentFrame();
         animFrame = (animFrame + 1) % frameCount;
         sprite->SetFrameIndex(animFrame);
     }

@@ -16,6 +16,10 @@
 #include "../../MenuResourcesFactory.h"
 #include "../../MenuManager.h"
 
+namespace {
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Dungeon/Result/PlayerDeathMenuResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Dungeon/Result/PlayerDeathMenuNavigation.json";
+}
 /*
  *	@brief	‰Šú‰»ˆ—
  */
@@ -42,8 +46,8 @@ void MenuPlayerDeath::Initialize(Engine& engine) {
                 eventSystem.UpdateSelectButton(button);
             });
 
-            button->RegisterOnClick([this, &engine]() {
-                SelectButtonExecute(engine);
+            button->RegisterOnClick([this]() {
+                SelectButtonExecute();
             });
         }
         eventSystem.LoadNavigation(navigation->GetData());
@@ -82,8 +86,7 @@ void MenuPlayerDeath::Update(Engine& engine, float unscaledDeltaTime) {
     auto button = eventSystem.GetCurrentSelectButton();
     if (!button) return;
 
-    if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
-        inputHandle = true;
+    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
         button->OnPressDown();
     }
 }
@@ -97,9 +100,11 @@ void MenuPlayerDeath::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer = 0;
 
     for (auto& sprite : spriteList) {
+        if (!sprite) continue;
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
-
+        
+        int animFrame = sprite->GetCurrentFrame();
         animFrame = (animFrame + 1) % frameCount;
         sprite->SetFrameIndex(animFrame);
     }
@@ -135,9 +140,10 @@ void MenuPlayerDeath::Resume() {
 /*
  *	@brief	ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—
  */
-void MenuPlayerDeath::SelectButtonExecute(Engine& engine) {
-    AudioUtility::PlaySE("DebugSE");
+void MenuPlayerDeath::SelectButtonExecute() {
     auto& menu = MenuManager::GetInstance();
+    AudioUtility::PlaySE("DebugSE");
+    isInteractive = false;
     FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
         if (Callback) Callback();

@@ -24,6 +24,69 @@
 #include "../../../Manager/FontManager.h"
 #include "../../../Audio/AudioUtility.h"
 
+namespace {
+    /*
+     *  @brief  ファイルパス
+     */
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Shop/PurchaseCount/PurchaseMenuResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Shop/PurchaseCount/PurchaseMenuNavigation.json";
+    constexpr const char* _PURCHASE_BUTTON_DATA_PATH = "Data/UI/MainGame/Shop/PurchaseCount/PurchaseButtonData.json";
+    constexpr const char* _BUY_SE_PATH = "Res/Audio/SE/BuyItem.mp3";
+
+    // 別名定義
+    using PurchaseButtonType = MenuPurchaseCount::PurchaseButtonType;
+    
+    /*
+     *  @brief  購入ボタンの種類マップ
+     */
+    const std::unordered_map<std::string, PurchaseButtonType> purchaseTypeButton = {
+        { "AddCount", PurchaseButtonType::AddButton },
+        { "SubCount", PurchaseButtonType::SubButton },
+        { "Buy", PurchaseButtonType::BuyButton },
+        { "Cancel", PurchaseButtonType::CancelButton }
+    };
+    /*
+     *  @brief  購入ボタン構造体
+     */
+    struct PurchaseButtonData {
+        std::string name = "";
+        PurchaseButtonType type = PurchaseButtonType::Invalid;
+    };
+    /*
+     *  @brief      購入ボタンの種類識別
+     *  @param[in]  const std::string& typeKey
+     *  @return     PurchaseButtonType
+     */
+    PurchaseButtonType StringToPurchaseButtonType(const std::string& typeKey) {
+        auto itr = purchaseTypeButton.find(typeKey);
+
+        if (itr != purchaseTypeButton.end()) return itr->second;
+
+        return PurchaseButtonType::Invalid;
+    }
+    /*
+     *  @brief      JSON->購入ボタン情報へ変換
+     *  @param[in]  const JSON& json
+     */
+    std::vector<PurchaseButtonData> ParsePurchaseButtonData(const JSON& json) {
+        std::vector<PurchaseButtonData> result;
+
+        auto array = json["PurchaseButtons"];
+
+        for (const auto& node : array) {
+            PurchaseButtonData entry;
+
+            entry.name = node["ButtonName"].get<std::string>();
+
+            std::string typeString = node["PurchaseButtonType"].get<std::string>();
+            entry.type = StringToPurchaseButtonType(typeString);
+
+            result.push_back(entry);
+        }
+        return result;
+    }
+}
+
 /*
  *	@brief	初期化処理
  */
@@ -31,36 +94,33 @@ void MenuPurchaseCount::Initialize(Engine& engine) {
     auto& load = LoadManager::GetInstance();
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
+    auto buttonData = load.LoadResource<LoadJSON>(_PURCHASE_BUTTON_DATA_PATH);
+    auto buySE = load.LoadResource<LoadAudio>(_BUY_SE_PATH);
 
-    load.SetOnComplete([this, &engine, menuJSON, navigation]() {
+    load.SetOnComplete([this, &engine, menuJSON, navigation, buttonData, buySE]() {
+        // メニューUI生成
         MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
-        for (auto& button : result.buttonList) {
-            if (!button) continue;
-
-            eventSystem.RegisterButton(button.get());
-        }
-        eventSystem.Initialize(0);
+        // メニューUIの所有権移動
         spriteList = std::move(result.spriteList);
         textList = std::move(result.textList);
         buttonList = std::move(result.buttonList);
-        for (int i = 0, max = buttonList.size(); i < max; i++) {
-            UIButtonBase* button = buttonList[i].get();
-            if (!button) continue;
+        // ボタンの登録
+        for (const auto& entry : buttonList) {
+            if (!entry) continue;
 
-            button->RegisterUpdateSelectButton([this, button]() {
-                eventSystem.UpdateSelectButton(button);
-            });
-
-            button->RegisterOnClick([this, &engine, i]() {
-                SelectButtonExecute(engine, i);
-            });
+            UIButtonBase* button = entry.get();
+            // ボタンの登録
+            eventSystem.RegisterButton(button);
+            // マップに登録
+            buttonMap[button->GetName()] = button;
         }
-        // 購入ボタン要素数の設定
-        buyButtonIndex = static_cast<int>(MenuPurchaseCount::ButtonType::BuyButton);
+        // イベントシステムの初期化
+        eventSystem.Initialize(0);
+        // ボタンの準備前処理
+        SetupPurchaseButtons(buttonData->GetData());
+        // イベントシステムのnavigationの設定
         eventSystem.LoadNavigation(navigation->GetData());
-    });
-    auto buySE = load.LoadResource<LoadAudio>("Res/Audio/SE/BuyItem.mp3");
-    load.SetOnComplete([this, buySE]() {
+        // SEの登録
         AudioUtility::RegisterSEHandle("BuySE", buySE->GetHandle());
     });
 }
@@ -84,7 +144,8 @@ void MenuPurchaseCount::Open() {
     }
     // 購入ボタンの制限
     if (currentMoney <= 0) {
-        buttonList[buyButtonIndex]->SetIsEnable(false);
+        auto button = FindButtonByName("Buy");
+        if (button) button->SetIsEnable(false);
     }
     eventSystem.ApplySelection();
     InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
@@ -95,12 +156,15 @@ void MenuPurchaseCount::Open() {
 void MenuPurchaseCount::Update(Engine& engine, float unscaledDeltaTime) {
     auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
 
-    auto& buyButton = buttonList[buyButtonIndex];
-    // 購入数が0の時は購入ボタンの操作可能フラグをfalseにする
-    if (buyButton->IsEnable()) {
-        if(purchaseCount <= 0) buyButton->SetIsEnable(false);
-    }else {
-        if (purchaseCount > 0) buyButton->SetIsEnable(true);
+    auto buyButton = FindButtonByName("Buy");
+    if (buyButton) {
+        // 購入数が0の時は購入ボタンの操作可能フラグをfalseにする
+        if (buyButton->IsEnable()) {
+            if (purchaseCount <= 0) buyButton->SetIsEnable(false);
+        }
+        else {
+            if (purchaseCount > 0) buyButton->SetIsEnable(true);
+        }
     }
 
     // イベントシステムの更新
@@ -132,9 +196,24 @@ void MenuPurchaseCount::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
 
+        int animFrame = sprite->GetCurrentFrame();
         animFrame = (animFrame + 1) % frameCount;
         sprite->SetFrameIndex(animFrame);
     }
+    // テキストの更新
+    std::string textStringList[3] = {
+    std::to_string(leastMoney),
+    std::to_string(purchaseCount),
+    std::to_string(purchaseMoney)
+    };
+    // テキストのセット
+    for (int i = 0; i < 3; i++) {
+        auto& text = textList[i];
+        if (!text) continue;
+
+        text->SetText(textStringList[i]);
+    }
+
 }
 /*
  *	@brief	描画処理
@@ -148,14 +227,6 @@ void MenuPurchaseCount::Render() {
     for (auto& button : buttonList) {
         button->Render();
     }
-    const int white = GetColor(255, 255, 255);
-    std::string money = std::to_string(leastMoney);
-    std::string buyCount = std::to_string(purchaseCount);
-    std::string buyMoney = std::to_string(purchaseMoney);
-
-    textList[0]->SetText(money);
-    textList[1]->SetText(buyCount);
-    textList[2]->SetText(buyMoney);
     for (auto& text : textList) {
         text->Render();
     }
@@ -180,42 +251,38 @@ void MenuPurchaseCount::Resume() {
 }
 /*
  *	@brief		ボタンの押された時の処理
- *	@param[in]	int buttonIndex
+ *	@param[in]	PurchaseButtonType type
  */
-void MenuPurchaseCount::SelectButtonExecute(Engine& engine, int buttonIndex) {
+void MenuPurchaseCount::SelectButtonExecute(MenuPurchaseCount::PurchaseButtonType type) {
     auto& menu = MenuManager::GetInstance();
     auto confirm = menu.GetMenu<MenuConfirm>();
+    AudioUtility::PlaySE("DebugSE");
 
-    if (buttonIndex == 0) {
-        AudioUtility::PlaySE("DebugSE");
-        AddPurchaseCount();
-    }
-    else if (buttonIndex == 1) {
-        AudioUtility::PlaySE("DebugSE");
-        SubPurchaseCount();
-    }
-    else if (buttonIndex == 2) {
-        AudioUtility::PlaySE("DebugSE");
-        confirm->SetCallback([this, &menu](GameEnum::ConfirmResult result) {
-            if (result == GameEnum::ConfirmResult::Yes) {
+    switch (type) {
+        case MenuPurchaseCount::PurchaseButtonType::AddButton:
+            AddPurchaseCount();
+            break;
+        case MenuPurchaseCount::PurchaseButtonType::SubButton:
+            SubPurchaseCount();
+            break;
+        case MenuPurchaseCount::PurchaseButtonType::BuyButton:{
+            confirm->SetCallback([this, &menu](GameEnum::ConfirmResult result) {
                 AudioUtility::PlaySE("DebugSE");
-                // 自身を閉じる
-                menu.CloseTopMenu();
+                menu.CloseTopMenu();        // 確認メニュー
+                if (result != GameEnum::ConfirmResult::Yes) return;
                 // 購入処理
                 ConfirmPurchaseItem();
                 // このメニューを閉じる
-                menu.CloseTopMenu();
-            }
-            else {
-                AudioUtility::PlaySE("DebugSE");
-                menu.CloseTopMenu();
-            }
-        });
-        menu.OpenMenu<MenuConfirm>();
-    }
-    else if (buttonIndex == 3) {
-        // 自身を閉じる
-        menu.CloseTopMenu();
+                menu.CloseTopMenu();    // このメニュー
+            });
+            menu.OpenMenu<MenuConfirm>();
+        }
+            break;
+        case MenuPurchaseCount::PurchaseButtonType::CancelButton:
+            menu.CloseTopMenu();
+            break;
+        default:
+            break;
     }
 }
 /*
@@ -298,4 +365,36 @@ void MenuPurchaseCount::SubPurchaseCount() {
     // 購入金額
     purchaseMoney = price * purchaseCount;
     leastMoney = currentMoney - purchaseMoney;
+}
+/*
+ *	@brief		購入ボタンの準備前処理
+ *	@param[in]	const JSON& json
+ */
+void MenuPurchaseCount::SetupPurchaseButtons(const JSON& json) {
+    auto purchaseData = ParsePurchaseButtonData(json);
+
+    for (const auto& entry : purchaseData) {
+        UIButtonBase* button = FindButtonByName(entry.name);
+        if (!button) continue;
+        const auto type = entry.type;
+        // ボタン実行処理の登録
+        button->RegisterOnClick([this, type]() {
+            SelectButtonExecute(type);
+        });
+        // ボタンに navigation 更新処理を登録
+        button->RegisterUpdateSelectButton([this, button]() {
+            eventSystem.UpdateSelectButton(button);
+        });
+    }
+}
+/*
+ *	@brief		名前でのボタン検索
+ *	@param[in]	const std::string& buttonName
+ *	@return		UIButtonBase*
+ */
+UIButtonBase* MenuPurchaseCount::FindButtonByName(const std::string& buttonName) {
+    auto itr = buttonMap.find(buttonName);
+    if (itr == buttonMap.end()) return nullptr;
+
+    return itr->second;
 }

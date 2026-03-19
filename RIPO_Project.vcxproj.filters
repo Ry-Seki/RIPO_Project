@@ -390,5 +390,6 @@
     <ClInclude Include="Scripts\Engine\VecMath.h" />
     <ClInclude Include="Scripts\Engine\Vision.h" />
     <ClInclude Include="Scripts\Engine\Component\OBBCollider.h" />
+    <ClInclude Include="Scripts\Engine\MyAssert.h" />
   </ItemGroup>
 </Project>

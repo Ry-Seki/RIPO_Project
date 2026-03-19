@@ -131,7 +131,7 @@ void SelectDetail_Dungeon::SetDungeonData(const std::vector<std::shared_ptr<Load
 	// JSONデータの取得
 	JSON dungeonData = setDataList[0]->GetData();
 	JSON dungeonfloorData = setDataList[1]->GetData();
-	if (dungeonData.empty() || dungeonfloorData.empty()) {
+ 	if (dungeonData.empty() || dungeonfloorData.empty()) {
 		assert(false && "JSONファイルが見つかりませんでした");
 		return;
 	}

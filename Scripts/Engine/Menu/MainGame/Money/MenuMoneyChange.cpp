@@ -23,9 +23,10 @@
 #include "../../../Manager/FontManager.h"
 
 namespace {
-    static constexpr float _CHANGE_DURATION = 1.0f;
-    static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Money/ChangeMoneyMenuResources.json";
-    static constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Money/ChangeMoneyMenuNavigation.json";
+    constexpr float _CHANGE_DURATION = 1.0f;
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Money/ChangeMoneyMenuResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Money/ChangeMoneyMenuNavigation.json";
+    constexpr const char* _GET_MONEY_SE_PATH = "Res/Audio/SE/GetMoney.mp3";
 }
 
 /*
@@ -55,13 +56,13 @@ void MenuMoneyChange::Initialize(Engine& engine) {
                 eventSystem.UpdateSelectButton(button);
             });
 
-            button->RegisterOnClick([this, &engine, i]() {
-                SelectButtonExecute(engine, i);
+            button->RegisterOnClick([this]() {
+                SelectButtonExecute();
             });
         }
         eventSystem.LoadNavigation(navigation->GetData());
     });
-    auto getSE = load.LoadResource<LoadAudio>("Res/Audio/SE/GetMoney.mp3");
+    auto getSE = load.LoadResource<LoadAudio>(_GET_MONEY_SE_PATH);
     load.SetOnComplete([this, getSE]() {
         AudioUtility::RegisterSEHandle("GetMoney", getSE->GetHandle());
     });
@@ -95,17 +96,17 @@ void MenuMoneyChange::Update(Engine& engine, float unscaledDeltaTime) {
 
     // イベントシステムの更新
     eventSystem.Update(unscaledDeltaTime);
-    // ボタンの更新
-    for (auto& button : buttonList) {
-        if (button) button->Update(unscaledDeltaTime);
-    }
+    // アニメーション処理
     if (isAnimationEnd) {
+        // ボタンの更新
+        for (auto& button : buttonList) {
+            if (button) button->Update(unscaledDeltaTime);
+        }
         // 現在選択されているボタンの取得
         auto button = eventSystem.GetCurrentSelectButton();
         if (!button) return;
 
-        if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
-            inputHandle = true;
+        if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
             button->OnPressDown();
         }
     } else {
@@ -122,9 +123,11 @@ void MenuMoneyChange::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer = 0;
 
     for (auto& sprite : spriteList) {
+        if (!sprite) continue;
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
 
+        int animFrame = sprite->GetCurrentFrame();
         animFrame = (animFrame + 1) % frameCount;
         sprite->SetFrameIndex(animFrame);
     }
@@ -175,11 +178,11 @@ void MenuMoneyChange::Resume() {
 }
 /*
  *	@brief		ボタンの押された時の処理
- *	@param[in]	int buttonIndex
  */
-void MenuMoneyChange::SelectButtonExecute(Engine& engine, int buttonIndex) {
-    AudioUtility::PlaySE("DebugSE");
+void MenuMoneyChange::SelectButtonExecute() {
     auto& menu = MenuManager::GetInstance();
+    AudioUtility::PlaySE("DebugSE");
+    isInteractive = false;
     FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
         menu.CloseAllMenu();

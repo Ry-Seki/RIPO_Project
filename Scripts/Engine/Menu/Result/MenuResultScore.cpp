@@ -17,9 +17,14 @@
 #include "../../Scene/TitleScene.h"
 #include "../../Manager/FontManager.h"
 #include "../../Engine.h"
+#include "../../Audio/AudioUtility.h"
 
 #include <DxLib.h>
 
+namespace {
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Result/ResultResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/Result/ResultNavigation.json";
+}
 /*
  *	@brief	èâä˙âªèàóù
  */
@@ -47,8 +52,8 @@ void MenuResultScore::Initialize(Engine& engine) {
                 eventSystem.UpdateSelectButton(button);
             });
 
-            button->RegisterOnClick([this, &engine, i]() {
-                SelectButtonExecute(engine, i);
+            button->RegisterOnClick([this, &engine]() {
+                SelectButtonExecute(engine);
             });
         }
         eventSystem.LoadNavigation(navigation->GetData());
@@ -110,9 +115,11 @@ void MenuResultScore::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer = 0;
 
     for (auto& sprite : spriteList) {
+        if (!sprite) continue;
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
 
+        int animFrame = sprite->GetCurrentFrame();
         animFrame = (animFrame + 1) % frameCount;
         sprite->SetFrameIndex(animFrame);
     }
@@ -159,21 +166,21 @@ void MenuResultScore::Resume() {
 }
 /*
  *	@brief		É{É^ÉìÇÃâüÇ≥ÇÍÇΩéûÇÃèàóù
- *	@param[in]	int buttonIndex
  */
-void MenuResultScore::SelectButtonExecute(Engine& engine, int buttonIndex) {
+void MenuResultScore::SelectButtonExecute(Engine& engine) {
     auto& menu = MenuManager::GetInstance();
     auto confirm = menu.GetMenu<MenuConfirm>();
+    AudioUtility::PlaySE("DebugSE");
     confirm->SetCallback([this, &menu, &engine](GameEnum::ConfirmResult result) {
-        if (result == GameEnum::ConfirmResult::Yes) {
-            FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-            FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
-                menu.CloseAllMenu();
-                engine.SetNextScene(std::make_shared<TitleScene>());
-            });
-        } else {
-            menu.CloseTopMenu();
-        }
+        AudioUtility::PlaySE("DebugSE");
+        menu.CloseTopMenu();
+        if (result != GameEnum::ConfirmResult::Yes) return;
+        isInteractive = false;
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
+            menu.CloseAllMenu();
+            engine.SetNextScene(std::make_shared<TitleScene>());
+        });
     });
     menu.OpenMenu<MenuConfirm>();
 }

@@ -13,15 +13,14 @@
 #include <queue>
 
 /*
- *  フェード管理処理
+ *  @brief  フェード管理処理
  */
 class FadeManager : public Singleton<FadeManager>{
     // フレンド宣言
     friend class Singleton<FadeManager>;
 private:
     FadeBasePtr currentFade;
-    std::function<void()> onFadeFinished; // フェード終了時のコールバック
-    std::queue<std::function<void()>> onFadeFinishList;
+    std::function<void()> FadeCallback; // フェードのコールバック
 
 private:
     /*
@@ -38,8 +37,14 @@ public:
      *  フェード開始処理
      */
     void StartFade(const std::shared_ptr<FadeBase>& setFade, std::function<void()> callback = nullptr) {
+        // すでにフェード中ならコールバックの実行
+        if (currentFade && FadeCallback) {
+            auto prevCallback = FadeCallback;
+            FadeCallback = nullptr;
+            prevCallback();
+        }
         currentFade = setFade;
-        onFadeFinished = callback;
+        FadeCallback = callback;
     }
     /*
      *  更新処理
@@ -52,9 +57,9 @@ public:
 
         // フェード終了時
         if (currentFade->IsFinished()) {
-            auto callback = onFadeFinished; 
-            currentFade.reset(); 
-            onFadeFinished = nullptr;
+            auto callback = FadeCallback; 
+            currentFade = nullptr;
+            FadeCallback = nullptr;
 
             // コールバック処理
             if (callback) callback();

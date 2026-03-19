@@ -58,8 +58,8 @@ void MenuPlayerStatus::Initialize(Engine& engine) {
                 eventSystem.UpdateSelectButton(button);
             });
 
-            button->RegisterOnClick([this, &engine]() {
-                SelectButtonExecute(engine);
+            button->RegisterOnClick([this]() {
+                SelectButtonExecute();
             });
         }
         SortStatusText();
@@ -166,9 +166,10 @@ void MenuPlayerStatus::Close(Engine& engine) {
 /*
  *	@brief	ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—
  */
-void MenuPlayerStatus::SelectButtonExecute(Engine& engine) {
-    AudioUtility::PlaySE("DebugSE");
+void MenuPlayerStatus::SelectButtonExecute() {
     auto& menu = MenuManager::GetInstance();
+    AudioUtility::PlaySE("DebugSE");
+    isInteractive = false;
     FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
         ExecuteCallback();
