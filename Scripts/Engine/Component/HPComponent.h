@@ -18,9 +18,9 @@ public:
 	/*
 	 *	セットアップ
 	 */
-	void Setup(float setValue) {
-		HP = setValue;
-		maxHP = setValue;
+	void Setup(float setHP) {
+		HP = setHP;
+		maxHP = setHP;
 	}
 
 	/*
