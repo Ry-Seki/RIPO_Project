@@ -67,7 +67,8 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 
 	// プレイヤー生成
 	GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, { 0, 100, 0 }, { 0,  200,  0 }, 200);
-
+	// カメラ生成
+	CameraManager::GetInstance().CreateCamera("camera", V_ZERO, { 0, 180 * Deg2Rad, 0 });
 	// 敵の生成
 	for (int i = 0; i < enemyCount; i++) {
 		GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, { 0, 180 * Deg2Rad, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 100, 0 }, { 0,  400,  0 }, 200, this->dungeonID);
@@ -240,8 +241,6 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	// ライトの座標をStageManagerに渡す
 	SetLightPos(createPosDataList.light.position);
 
-	// カメラ生成
-	CameraManager::GetInstance().CreateCamera("camera", V_ZERO, { 0, -cameraRota, 0 });
 }
 /*
  *	@brief		ダンジョンの再生成
@@ -422,7 +421,8 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	// プレイヤーオブジェクトの取得
 	auto player = GetUseObject(0);
 	if (!player) return;
-	camera->rotation = { 0.0f,-strota,0.0f };
+	// カメラの角度の変更 カメラの方向をスタート位置の角度に合わせる
+	camera->rotation = { 0.0f,-strota * Deg2Rad,0.0f };
 	player->position = createPosDataList.respawn.respawnMap[respawnID];
 
 	// 出口の設定
