@@ -21,6 +21,18 @@
 #include "../../../../UI/PlayerUI/PlayerUI.h"
 #include "../../../../Audio/AudioUtility.h"
 
+namespace {
+	/*
+	 *	@brief	ダンジョン内BGMの名前配列
+	 */
+	const std::array<std::string, static_cast<int>(GameEnum::DungeonType::Max)> dungeonBGMList = {
+		GameConst::_DUNGEON_BGM01,
+		GameConst::_DUNGEON_BGM01,
+		GameConst::_DUNGEON_BGM02,
+		GameConst::_DUNGEON_BGM01,
+		GameConst::_DUNGEON_BGM02
+	};
+}
 /*
  *	@brief	現在のフロアの片付け処理
  */
@@ -188,33 +200,13 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart, std::v
 			player->GetComponent<GravityComponent>()->SetGravity(true);
 			// プレイヤーのアクションマップをアクティブ化
 			InputUtility::SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, true);
+			// BGMの設定
+			AudioUtility::ChangeBGM(dungeonBGMList[dungeonID]);
+			//BGMの再生
+			AudioUtility::PlayBGM();
 			// ダンジョン開始
 			isDungeonStart = true;
 		});
-		// BGM仮
-		// author oorui
-		switch (dungeonID) {
-		case   0:
-			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM01);
-			AudioUtility::PlayBGM();
-			break;
-		case 1:
-			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM01);
-			AudioUtility::PlayBGM();
-			break;
-		case 2:
-			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM02);
-			AudioUtility::PlayBGM();
-			break;
-		case 3:
-			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM01);
-			AudioUtility::PlayBGM();
-			break;
-		case 4:
-			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM02);
-			AudioUtility::PlayBGM();
-			break;
-		}
 	});
 }
 /*
@@ -245,7 +237,6 @@ void FloorProcessor::EndDungeon() {
 	isEventDay = false;
 	isDungeonStart = false;
 	enemyFloorList.clear();
-	// TODO : 違うダンジョンだった時のみにする
 	resourceData.ClearResourceData();
 	stageData.ClearDungeonStageMap();
 	dungeonCreater.Teardown();
