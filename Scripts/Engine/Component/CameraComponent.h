@@ -16,12 +16,15 @@ class CameraComponent : public Component {
 private:
 	float sensitivity;				// 感度
 	GameEnum::CameraState state;	// カメラの状態
+	float shakeTime;				// シェイクの経過時間
 
 	const float CAMERA_ROTATION_X_MAX;		// カメラの角度のxの最大
 	const float CAMERA_ROTATION_X_MIN;		// カメラの角度のxの最小
 	const float PLAYER_HEAD_HEIGHT;			// プレイヤーの頭の高さ
 	const float TPS_PLAYER_DISTANCE_POS;	// プレイヤーから離れる距離
 	const float DEFAULT_DEBUG_MOVE_SPEED;	// デバックの移動速度のデフォルト
+	const float SHAKE_POWER;				// シェイクのパワー
+	const float SHAKE_TIME_MAX;				// シェイクの再生時間
 
 public:
 	EventCameraPtr eventCamera;		// イベントカメラ

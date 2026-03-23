@@ -16,12 +16,16 @@ using namespace InputUtility;
 CameraComponent::CameraComponent()
 	: sensitivity(0.001f)
 	, state(GameEnum::CameraState::FPS)
+	, shakeTime(0.0f)
 
 	, CAMERA_ROTATION_X_MAX(1.5f)
 	, CAMERA_ROTATION_X_MIN(-1.5f)
 	, PLAYER_HEAD_HEIGHT(310.0f)
 	, TPS_PLAYER_DISTANCE_POS(500.0f)
-	, DEFAULT_DEBUG_MOVE_SPEED(2000.0f) {}
+	, DEFAULT_DEBUG_MOVE_SPEED(2000.0f)
+	, SHAKE_POWER(100.0f)
+	, SHAKE_TIME_MAX(0.5f)
+{}
 
 /*
  *	ç≈èâÇÃUpdateÇÃíºëOÇ…åƒÇ—èoÇ≥ÇÍÇÈèàóù

@@ -22,6 +22,7 @@
 #include "../UI/PlayerUI/PlayerUI.h"
 #include "../Scripts/Engine/Manager/EnemyDataManager.h"
 #include "../Menu/Dungeon/DungeonTreasureUI.h"
+#include "../Manager/ScreenEffectManager.h"
 
  /*
   *  @brief  デストラクタ
@@ -81,6 +82,7 @@ void MainGameScene::Render() {
 	gameState->Render();
 	Scene::Render();
 	EffectManager::GetInstance().Render();
+	ScreenEffectManager::GetInstance().ScreenEffectRender();
 
 #if _DEBUG
 	// 全オブジェクトのCollider描画

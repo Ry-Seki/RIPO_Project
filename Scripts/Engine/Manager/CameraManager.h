@@ -18,10 +18,10 @@ class CameraManager : public Singleton<CameraManager> {
 	friend class Singleton<CameraManager>;
 
 private:
-	Engine* engine;
-	GameObjectPtr camera;
-	CameraComponentPtr cameraComponent;
-	GameObjectPtr target;
+	Engine* engine;						// エンジン
+	GameObjectPtr camera;				// カメラオブジェクト
+	CameraComponentPtr cameraComponent;	// カメラコンポーネント
+	GameObjectPtr target;				// カメラのターゲット
 
 private:
 	CameraManager();
@@ -49,6 +49,11 @@ public:
 	 */
 	void CameraEventPlay(GameEnum::CameraEvent event);
 	
+	/*
+	 *	カメラのシェイク
+	 */
+	void CameraShake();
+
 public:
 	/*
 	 *	追従するターゲットをセット

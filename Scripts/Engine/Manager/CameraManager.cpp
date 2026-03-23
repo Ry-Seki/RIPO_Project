@@ -11,8 +11,9 @@ using namespace GameObjectUtility;
 using namespace InputUtility;
 
 CameraManager::CameraManager() 
-	: engine(nullptr){
-}
+	: engine(nullptr)
+	
+{}
 
 /*
  *	初期化処理
@@ -49,11 +50,17 @@ void CameraManager::ResetCamera() {
  *	カメライベントの再生
  */
 void CameraManager::CameraEventPlay(GameEnum::CameraEvent event) {
-	// のちに修正予定
 	// プレイヤーの入力を切る
 	SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, false);
 	// カメラステートをイベントに
 	CameraComponentPtr cameraCom =  camera->GetComponent<CameraComponent>();
 	cameraCom->SetState(GameEnum::CameraState::Event);
 	cameraCom->eventCamera->Initialize(camera.get(), event);
+}
+
+/*
+ *	カメラのシェイク
+ */
+void CameraManager::CameraShake() {
+	
 }

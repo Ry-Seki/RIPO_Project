@@ -212,6 +212,7 @@
     <ClCompile Include="Scripts\Engine\Manager\EffectManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\FontManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\GaugeManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Manager\ScreenEffectManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\StageObjectManager.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\WeaponManager.cpp" />
@@ -427,6 +428,7 @@
     <ClInclude Include="Scripts\Engine\Manager\EnemyDataManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\FontManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\GaugeManager.h" />
+    <ClInclude Include="Scripts\Engine\Manager\ScreenEffectManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\StageObjectManager.h" />
     <ClInclude Include="Scripts\Engine\Manager\WeaponManager.h" />
