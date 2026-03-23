@@ -191,6 +191,7 @@
     <ClCompile Include="Scripts\Engine\Component\MoveComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\OBBCollider.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
+    <ClCompile Include="Scripts\Engine\Fade\FadeManager.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Engine\Input\ActionMapBase.cpp" />
     <ClCompile Include="Scripts\Engine\Input\DebugCameraActionMap.cpp" />
@@ -318,6 +319,7 @@
     <ClInclude Include="Scripts\Data\Dungeon\DungeonProgressData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonResourceData.h" />
     <ClInclude Include="Scripts\Data\Dungeon\DungeonStageData.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\StairData.h" />
     <ClInclude Include="Scripts\Data\DxLibResourcesManager.h" />
     <ClInclude Include="Scripts\Data\ItemCatalogData.h" />
     <ClInclude Include="Scripts\Data\PlayerStatusData.h" />

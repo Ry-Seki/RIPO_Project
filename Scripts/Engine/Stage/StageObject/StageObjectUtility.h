@@ -64,9 +64,10 @@ namespace StageObjectUtility {
 		const Vector3& center,
 		const float& angle,
 		const Vector3& size,
-		const int id
+		const int id,
+		const float& resAngle
 	) {
-		StageObjectManager::GetInstance().GenerateStair(name, position, rotation, center, angle, size, id);
+		StageObjectManager::GetInstance().GenerateStair(name, position, rotation, center, angle, size, id, resAngle);
 	}
 	/*
 	 *	ID指定のステージオブジェクト削除

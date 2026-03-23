@@ -112,7 +112,8 @@ public:
 		const Vector3& center,
 		const float& angle,
 		const Vector3& size,
-		const int id
+		const int id,
+		const float& resAngle
 	);
 	/*
 	 *	ID指定のステージオブジェクト削除

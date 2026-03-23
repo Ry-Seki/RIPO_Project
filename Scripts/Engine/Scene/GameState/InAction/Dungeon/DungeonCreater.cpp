@@ -14,6 +14,7 @@
 #include "../../../../Component/Character/EnemyDataUtility.h"
 #include "../../../../GameConst.h"
 #include "../../../../Stage/StageObject/Respawn.h"
+#include "../../../../../Data/Dungeon/StairData.h"
 
 
 using namespace GameObjectUtility;
@@ -44,6 +45,7 @@ void DungeonCreater::Teardown() {
 	dungeonResourceData.ClearResourceData();
 	dungeonEntranceData.ClearEntranceData();
 	dungeonCreatePosData.ClearCreatePosData();
+	StairData::GetInstance().Reset();
 }
 /*
  *	@brief		ダンジョン生成
@@ -66,7 +68,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	int goalCount = floorData.goalSpawnCount;
 
 	// プレイヤー生成
-	GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, {0, 100, 0}, {0,  200,  0}, 200);
+	GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	// カメラ生成
 	CameraManager::GetInstance().CreateCamera("camera", V_ZERO, { 0, 180 * Deg2Rad, 0 });
 	// 敵の生成
@@ -80,28 +82,29 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	// お宝の生成処理
 	int normalIndex = GameConst::NORMAL_TREASURE_INDEX;
 	for (int i = 0, max = treasureIDList[normalIndex].size(); i < max; i++) {
-		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO, 
-						 { -100,0,-100 }, { 100,300,100 }, treasureIDList[normalIndex][i]);
+		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO,
+			{ -100,0,-100 }, { 100,300,100 }, treasureIDList[normalIndex][i]);
 	}
 	int eventIndex = GameConst::EVENT_TREASURE_INDEX;
 	for (int i = 0, max = treasureIDList[eventIndex].size(); i < max; i++) {
-		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO, 
-						 { -100,0,-100 }, { 100,300,100 }, treasureIDList[eventIndex][i]);
+		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO,
+			{ -100,0,-100 }, { 100,300,100 }, treasureIDList[eventIndex][i]);
 	}
 	// 階段の生成処理
 	for (int i = 0; i < stairCount; i++) {
 		GenerateStair(stairDataList[i].name,
-					  stairDataList[i].position,
-					  stairDataList[i].rotation,
-					  stairDataList[i].center,
-					  stairDataList[i].angle,
-					  stairDataList[i].size,
-					  stairDataList[i].RespawnID
+			stairDataList[i].position,
+			stairDataList[i].rotation,
+			stairDataList[i].center,
+			stairDataList[i].angle,
+			stairDataList[i].size,
+			stairDataList[i].RespawnID,
+			stairDataList[i].respawnAngle
 		);
 	}
 	// 出口の生成処理
 	for (int i = 0; i < goalCount; i++) {
-		GenerateExit(goalData.name, goalData.position, goalData.rotation, goalData.center, goalData.angle,goalData.size);
+		GenerateExit(goalData.name, goalData.position, goalData.rotation, goalData.center, goalData.angle, goalData.size);
 	}
 
 	// ステージハンドルの設定
@@ -156,7 +159,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	}
 	if (bossCount > 0) {
 		// ボスの生成位置の取得
-		std::unordered_map<int, Vector3> bossSpawnPos =createPosDataList.boss.position;
+		std::unordered_map<int, Vector3> bossSpawnPos = createPosDataList.boss.position;
 		// ボスの取得
 		std::vector<GameObjectPtr> bossList = GetObjectByName("Boss");
 		// モデルハンドルの取得
@@ -210,6 +213,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	// 階段の設定
 	// 生成位置の取得
 	std::vector<Vector3> stairSpawnPos = createPosDataList.stair.position;
+	float cameraRota = 0.0f;
 	// 階段の設定
 	for (int i = 0; i < stairCount; i++) {
 		if (stairList.size() <= 0) break;
@@ -218,6 +222,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 		int stairID = stairDataList[i].moveID;
 		if (!stair) continue;
 		stair->position = stairSpawnPos[i];
+		cameraRota = stairDataList[i].angle;
 		auto stairComponent = stair->GetComponent<Stair>();
 		if (!stairComponent) continue;
 		stairComponent->SetStairID(stairID);
@@ -227,7 +232,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	GameObjectList exitList = GetObjectByName(GameConst::_CREATE_POSNAME_GOAL);
 	// 生成位置の取得
 	std::vector<Vector3> exitSpawnPos = createPosDataList.goal.position;
-	
+
 	for (int i = 0; i < goalCount; i++) {
 		if (exitList.size() <= 0) break;
 		auto exit = exitList[i];
@@ -238,6 +243,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	}
 	// ライトの座標をStageManagerに渡す
 	SetLightPos(createPosDataList.light.position);
+
 }
 /*
  *	@brief		ダンジョンの再生成
@@ -264,7 +270,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	int treasureCount = floorData.treasureSpawnCount;
 	int stairCount = floorData.stairSpawnCount;
 	int goalCount = floorData.goalSpawnCount;
-
+	auto camera = CameraManager::GetInstance().GetCamera();
 	// 敵の再生成
 	for (int i = 0; i < enemyCount; i++) {
 		GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, { 0, 180 * Deg2Rad, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 100, 0 }, { 0,  400,  0 }, 200, dungeonID);
@@ -276,30 +282,31 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	// お宝の生成処理
 	int normalIndex = GameConst::NORMAL_TREASURE_INDEX;
 	for (int i = 0, max = treasureIDList[normalIndex].size(); i < max; i++) {
-		if(treasureIDList[normalIndex][i] != holdTreasureID)
-		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO,
-						 { -100,0,-100 }, { 100,300,100 }, treasureIDList[normalIndex][i]);
+		if (treasureIDList[normalIndex][i] != holdTreasureID)
+			GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO,
+				{ -100,0,-100 }, { 100,300,100 }, treasureIDList[normalIndex][i]);
 	}
 	int eventIndex = GameConst::EVENT_TREASURE_INDEX;
 	for (int i = 0, max = treasureIDList[eventIndex].size(); i < max; i++) {
 		if (treasureIDList[eventIndex][i] != holdTreasureID)
-		GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO,
-						 { -100,0,-100 }, { 100,300,100 }, treasureIDList[eventIndex][i]);
-	}	
+			GenerateTreasure(GameConst::_CREATE_POSNAME_TREASURE, V_ZERO, V_ZERO,
+				{ -100,0,-100 }, { 100,300,100 }, treasureIDList[eventIndex][i]);
+	}
 	// 階段の生成処理
 	for (int i = 0; i < stairCount; i++) {
 		GenerateStair(stairDataList[i].name,
-					  stairDataList[i].position,
-					  stairDataList[i].rotation,
-					  stairDataList[i].center,
-					  stairDataList[i].angle,
-					  stairDataList[i].size,
-					  stairDataList[i].RespawnID
-			);
+			stairDataList[i].position,
+			stairDataList[i].rotation,
+			stairDataList[i].center,
+			stairDataList[i].angle,
+			stairDataList[i].size,
+			stairDataList[i].RespawnID,
+			stairDataList[i].respawnAngle
+		);
 	}
 	// 出口の生成処理
 	for (int i = 0; i < goalCount; i++) {
-		GenerateExit(goalData.name, goalData.position, goalData.rotation, goalData.center, goalData.angle,goalData.size);
+		GenerateExit(goalData.name, goalData.position, goalData.rotation, goalData.center, goalData.angle, goalData.size);
 	}
 
 	// 敵
@@ -323,7 +330,8 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 		// enemySpawnIDListのサイズで変更する
 		if (enemySpawnIDList.size() > 0) {
 			spawnID = enemySpawnIDList[i];
-		} else {
+		}
+		else {
 			spawnID = i;
 		}
 		enemyCharacter->position = enemySpawnPos[spawnID];
@@ -369,7 +377,8 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 				if (component->GetTreasureID() == holdTreasureID) {
 					RemoveStageObject(treasure->ID);
 					continue;
-				}else {
+				}
+				else {
 					// お宝IDの取得
 					int treasureID = component->GetTreasureID();
 					// 位置の取得
@@ -396,6 +405,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 	auto stairMoveData = dungeonResourceData.stageFloorResource->GetData();
 	// 生成位置の取得
 	std::vector<Vector3> stairSpawnPos = createPosDataList.stair.position;
+	float strota = 0.0f;
 	// 階段の設定
 	for (int i = 0; i < stairCount; i++) {
 		if (stairList.size() <= 0) break;
@@ -407,16 +417,18 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 		stair->position = stairSpawnPos[i];
 		auto stairComponent = stair->GetComponent<Stair>();
 		if (!stairComponent) continue;
-
+		strota = stairDataList[i].angle;
 		stairComponent->SetStairID(stairID);
 	}
-
+	// 共有データを取得
+	const auto& data = StairData::GetInstance().GetTouchData();
 	// プレイヤー
 	// プレイヤーオブジェクトの取得
 	auto player = GetUseObject(0);
 	if (!player) return;
-
-	player->position = createPosDataList.respawn.respawnMap[respawnID];
+	// カメラの角度の変更 カメラの方向をスタート位置の角度に合わせる
+	camera->rotation = { 0.0f,-data.angle * Deg2Rad,0.0f };
+	player->position = createPosDataList.respawn.respawnMap[data.respawnID];
 
 	// 出口の設定
 	GameObjectList exitList = GetObjectByName(GameConst::_CREATE_POSNAME_GOAL);
@@ -443,7 +455,8 @@ void DungeonCreater::SeparateEntranceData() {
 	for (const auto& data : entranceDataList) {
 		if (data.name == GameConst::_CREATE_POSNAME_STAIR) {
 			stairDataList.push_back(data);
-		}else if(data.name == GameConst::_CREATE_POSNAME_GOAL){
+		}
+		else if (data.name == GameConst::_CREATE_POSNAME_GOAL) {
 			goalData = data;
 		}
 	}

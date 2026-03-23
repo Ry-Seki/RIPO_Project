@@ -20,6 +20,10 @@ void Stair::OnCollision(const std::shared_ptr<Component>& self, const std::share
 		SetStairMove(true);
 		if (respawnID == -1)return;
 
+		touchData.angle = angle;
+		touchData.respawnID = respawnID;
+		// データをセット
+		StairData::GetInstance().SetTouchData(touchData);
 		StageObjectUtility::SetRespawnID(respawnID);
 		// 移動先フロアIDの取得
 		StageObjectUtility::SetMoveStairID(stairID);

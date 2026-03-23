@@ -8,6 +8,7 @@
 
 #include "StageObjectBase.h"
 #include "../../JSON.h"
+#include "../../../Data/Dungeon/StairData.h"
 
 class Stair : public StageObjectBase {
 private:
@@ -15,7 +16,10 @@ private:
 	int	stairID = -1;				// 階段のID
 	int nextID = -1;				// 次の階層のID
 	int respawnID = -1;				// リスポーン位置のID
+	float angle = 0.0f;				// 自身の角度
 
+	StairTouchData touchData;
+	int dataID = -1;
 public:
 	Stair() :isStairMoved(false) {};		// コンストラクタ
 	~Stair() override {};		// デストラクタ
@@ -60,6 +64,8 @@ public:
 	 */
 	inline void SetStairID(int setValue) { stairID = setValue; }
 
+	inline void SetStairDataID(int setValue) { dataID = setValue; }
+
 	/*
 	 *	次の階層IDの取得
 	 */
@@ -81,6 +87,19 @@ public:
 	 *	リスポーンIDの取得
 	 */
 	inline int GetRespawnID()const { return respawnID; }
+
+	/*
+	 *	角度の設定
+	 *  @param[in]	float 自身が持つ角度
+	 */
+	inline void SetAngle(float setValue) { angle = setValue; }
+
+	/* 
+	 *	角度の取得
+	 */
+	inline float GetAngle()const { return angle; }
+
+
 };
 #endif // !_STAIR_H_
 
