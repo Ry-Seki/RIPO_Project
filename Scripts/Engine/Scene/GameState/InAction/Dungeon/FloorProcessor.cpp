@@ -21,6 +21,18 @@
 #include "../../../../UI/PlayerUI/PlayerUI.h"
 #include "../../../../Audio/AudioUtility.h"
 
+namespace {
+	/*
+	 *	@brief	ダンジョン内BGMの名前配列
+	 */
+	const std::array<std::string, static_cast<int>(GameEnum::DungeonType::Max)> dungeonBGMList = {
+		GameConst::_DUNGEON_BGM01,
+		GameConst::_DUNGEON_BGM01,
+		GameConst::_DUNGEON_BGM02,
+		GameConst::_DUNGEON_BGM01,
+		GameConst::_DUNGEON_BGM02
+	};
+}
 /*
  *	@brief	現在のフロアの片付け処理
  */
@@ -140,6 +152,7 @@ void FloorProcessor::SetupNextFloor() {
  */
 void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart, std::vector<std::vector<int>>& treasureIDList) {
 	currentFloor = 0;
+	isDungeonStart = false;
 	enemyFloorList.resize(16);
 	// データの取得
 	dungeonID = setContext.dungeonID;
@@ -180,38 +193,20 @@ void FloorProcessor::CreateFloor(ActionContext setContext, bool& isStart, std::v
 		MenuManager::GetInstance().OpenMenu<PlayerUI>();
 		// フェードイン
 		FadeBasePtr fade = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::NonStop);
-		FadeManager::GetInstance().StartFade(fade, [&isStart]() {
+		FadeManager::GetInstance().StartFade(fade, [this, &isStart]() {
 			// 重力
 			auto player = CharacterManager::GetInstance().GetPlayer();
 			GameObjectManager::GetInstance().SetObjectColliderFlag(true);
 			player->GetComponent<GravityComponent>()->SetGravity(true);
 			// プレイヤーのアクションマップをアクティブ化
 			InputUtility::SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, true);
+			// BGMの設定
+			AudioUtility::ChangeBGM(dungeonBGMList[dungeonID]);
+			//BGMの再生
+			AudioUtility::PlayBGM();
+			// ダンジョン開始
+			isDungeonStart = true;
 		});
-		// BGM仮
-		// author oorui
-		switch (dungeonID) {
-		case   0:
-			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM01);
-			AudioUtility::PlayBGM();
-			break;
-		case 1:
-			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM01);
-			AudioUtility::PlayBGM();
-			break;
-		case 2:
-			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM02);
-			AudioUtility::PlayBGM();
-			break;
-		case 3:
-			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM01);
-			AudioUtility::PlayBGM();
-			break;
-		case 4:
-			AudioUtility::ChangeBGM(GameConst::_DUNGEON_BGM02);
-			AudioUtility::PlayBGM();
-			break;
-		}
 	});
 }
 /*
@@ -221,7 +216,6 @@ void FloorProcessor::ChangeFloor() {
 	// 当たり判定の解除
 	GameObjectUtility::SetUseObjectColliderFlag(false);
 	InputUtility::SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, false);
-	dungeonCreater.SetRespawnID(StageObjectUtility::GetRepawnID());
 	// 現在のフロアの片付け処理
 	TeardownCurrentFloor();
 	// フロアの変更
@@ -243,7 +237,6 @@ void FloorProcessor::EndDungeon() {
 	isEventDay = false;
 	isDungeonStart = false;
 	enemyFloorList.clear();
-	// TODO : 違うダンジョンだった時のみにする
 	resourceData.ClearResourceData();
 	stageData.ClearDungeonStageMap();
 	dungeonCreater.Teardown();
@@ -446,6 +439,9 @@ int FloorProcessor::GetSpawnTreasureCount(){
  *	@return		int
  */
 int FloorProcessor::GetHoldTreasureID() const {
+	// ダンジョンが開始していなければ-1を返す
+	if (!isDungeonStart) return -1;
+
 	// プレイヤーが所持しているお宝を取得
 	auto holdTreasure = StageManager::GetInstance().GetLiftObject();
 	if (!holdTreasure) return -1;
