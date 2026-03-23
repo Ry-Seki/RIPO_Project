@@ -10,18 +10,16 @@
 #include "../Singleton.h"
 
 #include <functional>
-#include <queue>
 
 /*
- *  フェード管理処理
+ *  @brief  フェード管理処理
  */
 class FadeManager : public Singleton<FadeManager>{
     // フレンド宣言
     friend class Singleton<FadeManager>;
 private:
     FadeBasePtr currentFade;
-    std::function<void()> onFadeFinished; // フェード終了時のコールバック
-    std::queue<std::function<void()>> onFadeFinishList;
+    std::function<void()> FadeCallback; // フェードのコールバック
 
 private:
     /*
@@ -35,51 +33,33 @@ private:
 
 public:
     /*
-     *  フェード開始処理
+     *  @brief      フェード開始処理
+     *  @param[in]  const FadeBasePtr& setFade
+     *  @param[in]  std::function<void()> callback = nullptr
      */
-    void StartFade(const std::shared_ptr<FadeBase>& setFade, std::function<void()> callback = nullptr) {
-        currentFade = setFade;
-        onFadeFinished = callback;
-    }
+    void StartFade(const FadeBasePtr& setFade, std::function<void()> callback = nullptr);
     /*
-     *  更新処理
+     *  @brief      更新処理
      */
-    void Update(float unscaledDeltaTime) {
-        if (!currentFade) return;
-
-        // フェードの更新処理の呼び出し
-        currentFade->Update(unscaledDeltaTime);
-
-        // フェード終了時
-        if (currentFade->IsFinished()) {
-            auto callback = onFadeFinished; 
-            currentFade.reset(); 
-            onFadeFinished = nullptr;
-
-            // コールバック処理
-            if (callback) callback();
-        }
-    }
+    void Update(float unscaledDeltaTime);
     /*
-     *  描画処理
+     *  @brief      描画処理
      */
-    void Render() {
-        if (currentFade) currentFade->Render();
-    }
+    void Render();
 
 public:
     /*
-     *  フェードモード取得
+     *  @brief      フェードモード取得
      *  @return     FadeMode
      */
-    FadeMode GetMode() const {
+    inline FadeMode GetMode() const {
         return currentFade ? currentFade->GetMode() : FadeMode::NonStop;
     }
     /*
-     *  フェード中かどうか
+     *  @brief      フェード中かどうか
      *  @return     bool
      */
-    bool IsFading() const {
+    inline bool IsFading() const {
         return currentFade != nullptr;
     }
 }; 
