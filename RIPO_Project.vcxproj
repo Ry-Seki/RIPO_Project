@@ -191,6 +191,7 @@
     <ClCompile Include="Scripts\Engine\Component\MoveComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Component\OBBCollider.cpp" />
     <ClCompile Include="Scripts\Engine\Engine.cpp" />
+    <ClCompile Include="Scripts\Engine\Fade\FadeManager.cpp" />
     <ClCompile Include="Scripts\Engine\GameObject.cpp" />
     <ClCompile Include="Scripts\Engine\Input\ActionMapBase.cpp" />
     <ClCompile Include="Scripts\Engine\Input\DebugCameraActionMap.cpp" />
