@@ -14,6 +14,7 @@
 #include "../../../../Component/Character/EnemyDataUtility.h"
 #include "../../../../GameConst.h"
 #include "../../../../Stage/StageObject/Respawn.h"
+#include "../../../../../Data/Dungeon/StairData.h"
 
 
 using namespace GameObjectUtility;
@@ -44,6 +45,7 @@ void DungeonCreater::Teardown() {
 	dungeonResourceData.ClearResourceData();
 	dungeonEntranceData.ClearEntranceData();
 	dungeonCreatePosData.ClearCreatePosData();
+	StairData::GetInstance().Reset();
 }
 /*
  *	@brief		ダンジョン生成
@@ -96,7 +98,8 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 			stairDataList[i].center,
 			stairDataList[i].angle,
 			stairDataList[i].size,
-			stairDataList[i].RespawnID
+			stairDataList[i].RespawnID,
+			stairDataList[i].respawnAngle
 		);
 	}
 	// 出口の生成処理
@@ -297,7 +300,8 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 			stairDataList[i].center,
 			stairDataList[i].angle,
 			stairDataList[i].size,
-			stairDataList[i].RespawnID
+			stairDataList[i].RespawnID,
+			stairDataList[i].respawnAngle
 		);
 	}
 	// 出口の生成処理
@@ -416,14 +420,15 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 		strota = stairDataList[i].angle;
 		stairComponent->SetStairID(stairID);
 	}
-
+	// 共有データを取得
+	const auto& data = StairData::GetInstance().GetTouchData();
 	// プレイヤー
 	// プレイヤーオブジェクトの取得
 	auto player = GetUseObject(0);
 	if (!player) return;
 	// カメラの角度の変更 カメラの方向をスタート位置の角度に合わせる
-	camera->rotation = { 0.0f,-strota * Deg2Rad,0.0f };
-	player->position = createPosDataList.respawn.respawnMap[respawnID];
+	camera->rotation = { 0.0f,-data.angle * Deg2Rad,0.0f };
+	player->position = createPosDataList.respawn.respawnMap[data.respawnID];
 
 	// 出口の設定
 	GameObjectList exitList = GetObjectByName(GameConst::_CREATE_POSNAME_GOAL);

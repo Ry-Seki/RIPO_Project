@@ -25,6 +25,7 @@ struct EntranceData {
 	Vector3 rotation = V_ZERO;
 	Vector3 center = V_ZERO;
 	float angle = 0.0f;
+	float respawnAngle = 0.0f;
 	Vector3 size = V_ZERO;
 };
 
@@ -38,6 +39,7 @@ private:
 	static constexpr const char* _CENTER = "center";
 	static constexpr const char* _ANGLE = "angle";
 	static constexpr const char* _SIZE = "size";
+	static constexpr const char* _RESANGLE = "respawnAngle";
 public:
 	/*
 	 *	@brief	コンストラクタ
@@ -121,6 +123,10 @@ public:
 			// 角度を取得
 			if (entranceArray[i].contains(_ANGLE)) {
 				data.angle = entranceArray[i][_ANGLE];
+			}
+			// リスポーン後の角度を取得
+			if (entranceArray[i].contains(_RESANGLE)) {
+				data.respawnAngle = entranceArray[i][_RESANGLE];
 			}
 
 			// サイズを取得

@@ -9,6 +9,7 @@
           "rotation": 0,
           "center": [ 0, 200, 0 ],
           "angle": 0.0,
+          "respawnAngle": 180.0,
           "size": [ 500, 500, 10 ]
         }
       ],
@@ -32,6 +33,7 @@
           "rotation": 0,
           "center": [ 0, 200, 0 ],
           "angle": 180.0,
+          "respawnAngle": 0.0,
           "size": [ 500, 500, 10 ]
         }
       ]
