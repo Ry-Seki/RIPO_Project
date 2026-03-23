@@ -15,14 +15,25 @@ class BossAttack : public BossState {
 private:
 	std::shared_ptr<AnimatorComponent> animator;
 	std::shared_ptr<BossComponent> bossComponent;
+	GameObjectPtr player;
 	float coolTime;
 	float elapsedTime;
+	// SEの音量
+	float SEVolume;
+	// SEの元の音量
+	float baseSEVolume;
+	// SEのクールタイム
+	float coolTimeSE;
 	// エフェクトを一回しか出さないためのフラグ
 	bool FirstEffectFlag;
 	// 音を一回しか鳴らさないためのフラグ
 	bool FirstSEFlag;
+	// 待機アニメーション
+	int standbyAnimation;
 	// 突進アニメーションの番号
 	int headlongAnimation;
+	// 前方攻撃アニメーションの番号
+	int forwardAttackAnimation;
 	// プレイヤーの方向保存用
 	Vector3 playerDirection;
 

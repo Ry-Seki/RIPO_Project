@@ -18,6 +18,7 @@ BossStandby::BossStandby()
 	, animator(nullptr)
 	, modelHandle(-1)
 	, viewAngle(4000)
+	, elapsedTime(0)
 {
 }
 
@@ -35,6 +36,8 @@ void BossStandby::Start(GameObject* boss)
 	if (boss->GetComponent<BossComponent>()->GetMoveFrag()) {
 		viewAngle = 10000;
 	}
+
+	elapsedTime = 0;
 }
 
 /*
@@ -51,8 +54,23 @@ void BossStandby::Update(GameObject* boss, float deltaTime)
 
 	auto bossComponent = boss->GetComponent<BossComponent>();
 
+	elapsedTime += deltaTime;
+
 	switch (bossComponent->GetBossID())
 	{
+	case 102:
+
+		// Œ©¸‚Á‚½‚ç‰ŠúˆÊ’u‚Ö
+		if (elapsedTime > 10) {
+			boss->position = bossComponent->GetHomePosition();
+		}
+
+		// ó‘Ô‘JˆÚ
+		if (Vision(boss, -ForwardDir(boss->rotation), player->position, 180, viewAngle)) {
+			boss->GetComponent<BossComponent>()->SetState(new BossChase());
+		}
+
+		break;
 	case 103:
 
 		// ó‘Ô‘JˆÚ

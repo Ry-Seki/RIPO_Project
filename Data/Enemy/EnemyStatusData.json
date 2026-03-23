@@ -32,14 +32,14 @@
 
   "Stage1Boss": {
     "ID": 101,
-    "HP": 1000,
+    "HP": 2000,
     "Attack": 20,
     "Bounty": 50
   },
   "Stage2Boss": {
     "ID": 102,
     "HP": 3000,
-    "Attack": 30,
+    "Attack": 25,
     "Bounty": 250
   },
   "Stage3Boss": {
@@ -51,7 +51,7 @@
   "Stage4Boss": {
     "ID": 104,
     "HP": 10000,
-    "Attack": 100,
+    "Attack": 70,
     "Bounty": 1000
   }
 }

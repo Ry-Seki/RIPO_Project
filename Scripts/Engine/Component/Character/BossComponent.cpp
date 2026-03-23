@@ -61,8 +61,6 @@ void BossComponent::Start()
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
 
-	homePosition = boss->position;
-
 	if (state == nullptr)
 		state = new BossStandby();
 	state->Start(boss);
@@ -100,6 +98,10 @@ void BossComponent::Update(float deltaTime)
 	randTime = randTime / 1000000;
 	randomCoolTime += randTime;
 
+	if (homePosition == Vector3::zero) {
+		homePosition = boss->position;
+	}
+
 	// ステージとの当たり判定
 	StageManager::GetInstance().StageCollider(boss, moveVec);
 }
@@ -122,7 +124,9 @@ void BossComponent::OnCollision(const std::shared_ptr<Component>& self, const st
 			attackIsTriger = true;
 		}
 	}
-	coolTime = 2;
+	if (other->GetOwner()->name == "Player") {
+		coolTime = 1;
+	}
 
 	// ダメージ判定
 	auto otherOwner = other->GetOwner();
