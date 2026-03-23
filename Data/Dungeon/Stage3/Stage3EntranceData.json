@@ -19,7 +19,7 @@
           "position": 0,
           "rotation": 0,
           "center": [ 0, 100, -100 ],
-          "angle": 10.0,
+          "angle": 170.0,
           "size": [ 600, 600, 400 ]
         }
       ],
@@ -43,7 +43,7 @@
           "position": 0,
           "rotation": 0,
           "center": [ 0, 100, 0 ],
-          "angle": 30.0,
+          "angle": -50.0,
           "size": [ 600, 600, 600 ]
         }
       ]
@@ -57,7 +57,7 @@
           "position": 0,
           "rotation": 0,
           "center": [ 0, 100, 0 ],
-          "angle": 0.0,
+          "angle": 180.0,
           "size": [ 600, 600, 200 ]
         }
       ]
