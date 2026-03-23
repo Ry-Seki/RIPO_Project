@@ -21,8 +21,7 @@ class BulletManager : public Singleton<BulletManager> {
 private:
 	Engine* engine;
 	std::shared_ptr<LoadModel> bulletModel;
-
-	const std::string BULLET_NAME;  // ’e‚Ì–¼‘O
+	
 	const Vector3 BULLET_CAPSULE_START;	// ’e‚ÌCapsule‚ÌStart
 	const Vector3 BULLET_CAPSULE_END;	// ’e‚ÌCapsule‚ÌEnd
 	const float BULLET_CAPSULE_RADIUS;	// ’e‚ÌCapsule‚Ì”¼Œa

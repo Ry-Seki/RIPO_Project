@@ -40,7 +40,7 @@ public:
 			resistTime = 0;
 		}
 		else {
-			resistTime - downValue;
+			resistTime -= downValue;
 		}
 	}
 
@@ -50,5 +50,7 @@ public:
 	 */
 	inline float GetResistTime() const { return resistTime; }
 };
+// •Ê–¼’è‹`
+using ResistTimeComponentPtr = std::shared_ptr<ResistTimeComponent>;
 
 #endif // !_RESISTTIMECOMPONENT_H_

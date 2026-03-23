@@ -26,5 +26,7 @@ public:
 	 */
 	inline float GetStrength() const { return strength; }
 };
+// •Ê–¼’è‹`
+using StrengthComponentPtr = std::shared_ptr<StrengthComponent>;
 
 #endif // !_STRENGTHCOMPONENT_H_

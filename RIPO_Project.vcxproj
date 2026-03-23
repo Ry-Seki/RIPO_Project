@@ -360,7 +360,6 @@
     <ClInclude Include="Scripts\Engine\Component\Character\BossStandby.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BossState.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\BulletComponent.h" />
-    <ClInclude Include="Scripts\Engine\Component\Character\CharacterBase.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\CharacterUtility.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyAttack.h" />
     <ClInclude Include="Scripts\Engine\Component\Character\EnemyChase.h" />
