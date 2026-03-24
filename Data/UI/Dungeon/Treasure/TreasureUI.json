@@ -1,7 +1,7 @@
 {
   "TreasureUI": {
     "0": {
-      "ImagePath": "Res/TreasureUI/StrengthUI_Tutorial.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID0.png"
     },
     "1": {
       "ImagePath": "Res/TreasureUI/StrengthUI_ID1.png"
@@ -22,34 +22,34 @@
       "ImagePath": "Res/TreasureUI/StrengthUI_ID6.png"
     },
     "7": {
-      "ImagePath": "Res/TreasureUI/StrengthUI_BETA.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID8.png"
     },
     "8": {
-      "ImagePath": "Res/TreasureUI/StrengthUI_BETA.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID7.png"
     },
     "9": {
-      "ImagePath": "Res/TreasureUI/StrengthUI_BETA.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID9.png"
     },
     "10": {
-      "ImagePath": "Res/TreasureUI/StrengthUI_BETA.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID10.png"
     },
     "11": {
-      "ImagePath": "Res/TreasureUI/StrengthUI_BETA.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID11.png"
     },
     "12": {
-      "ImagePath": "Res/TreasureUI/StrengthUI_BETA.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID12.png"
     },
     "13": {
-      "ImagePath": "Res/TreasureUI/StrengthUI_BETA.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID13.png"
     },
     "14": {
-      "ImagePath": "Res/TreasureUI/StrengthUI_BETA.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID14.png"
     },
     "15": {
-      "ImagePath": "Res/TreasureUI/StrengthUI_BETA.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID15.png"
     },
     "16": {
-      "ImagePath": "Res/TreasureUI/StrengthUI_Tutorial.png"
+      "ImagePath": "Res/TreasureUI/StrengthUI_ID0.png"
     }
   }
 }
