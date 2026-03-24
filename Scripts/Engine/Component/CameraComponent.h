@@ -17,6 +17,7 @@ private:
 	float sensitivity;				// 感度
 	GameEnum::CameraState state;	// カメラの状態
 	float shakeTime;				// シェイクの経過時間
+	bool isShaking;					// シェイク中
 
 	const float CAMERA_ROTATION_X_MAX;		// カメラの角度のxの最大
 	const float CAMERA_ROTATION_X_MIN;		// カメラの角度のxの最小
@@ -45,6 +46,16 @@ public:
 
 public:
 	/*
+	 *	TPSカメラの位置取得
+	 */
+	Vector3 GetTPSCameraPosition(GameObjectPtr player);
+	/*
+	 *	カメラのシェイクを作動
+	 */
+	void CameraShakeActivate();
+
+public:
+	/*
 	 *	カメラの状態変更
 	 */
 	inline void SetState(const GameEnum::CameraState setState) { state = setState; };
@@ -52,16 +63,28 @@ public:
 	 *	カメラの状態取得
 	 */
 	inline GameEnum::CameraState GetState() const { return state; }
-	/*
-	 *	TPSカメラの位置取得
-	 */
-	Vector3 GetTPSCameraPosition(GameObjectPtr player);
-
+	
 private:
 	/*
 	 *	カメラの回転
 	 */
 	void CameraRotate(GameObject* camera, float axisX, float axisY);
+	/*
+	 *	FPSカメラ更新
+	 */
+	void FPSUpdate(GameObject* camera, GameObjectPtr player, float deltaTime);
+	/*
+	 *	TPSカメラ更新
+	 */
+	void TPSUpdate(GameObject* camera, GameObjectPtr player, float deltaTime);
+	/*
+	 *	デバックカメラ更新
+	 */
+	void DebugUpdate(GameObject* camera, GameObjectPtr player, float deltaTime);
+	/*
+	 *	カメラシェイク
+	 */
+	void CameraShake(GameObject* camera, float deltaTime);
 };
 // 別名定義
 using CameraComponentPtr = std::shared_ptr<CameraComponent>;

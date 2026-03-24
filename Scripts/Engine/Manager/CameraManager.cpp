@@ -53,14 +53,13 @@ void CameraManager::CameraEventPlay(GameEnum::CameraEvent event) {
 	// プレイヤーの入力を切る
 	SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, false);
 	// カメラステートをイベントに
-	CameraComponentPtr cameraCom =  camera->GetComponent<CameraComponent>();
-	cameraCom->SetState(GameEnum::CameraState::Event);
-	cameraCom->eventCamera->Initialize(camera.get(), event);
+	cameraComponent->SetState(GameEnum::CameraState::Event);
+	cameraComponent->eventCamera->Initialize(camera.get(), event);
 }
 
 /*
  *	カメラのシェイク
  */
 void CameraManager::CameraShake() {
-	
+	cameraComponent->CameraShakeActivate();
 }

@@ -8,6 +8,7 @@
 
 #include "Component.h"
 #include "../Manager/ScreenEffectManager.h"
+#include "../Manager/CameraManager.h"
 #include "../GameConst.h"
 
 class HPComponent : public Component {
@@ -35,9 +36,10 @@ public:
 		}
 		else {
 			HP -= damage;
-			// プレイヤーなら画面効果を描画
+			// プレイヤーなら画面効果再生
 			if (GetOwner()->name == GameConst::_CREATE_POSNAME_PLAYER) {
-				ScreenEffectManager::GetInstance().DamageFlash();
+				//ScreenEffectManager::GetInstance().DamageFlash();
+				CameraManager::GetInstance().CameraShake();
 			}
 		}
 	}

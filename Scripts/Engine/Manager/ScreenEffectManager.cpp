@@ -10,7 +10,7 @@
 /*
  *	‰æ–ÊŒø‰Ê•`‰æ
  */
-void ScreenEffectManager::Sc)reenEffectRender() {
+void ScreenEffectManager::ScreenEffectRender() {
 	// ƒJƒEƒ“ƒg‚ª0‚É‚È‚é‚Ü‚Å•`‰æ
 	if (renderCounter > 0) {
 		renderEffect();
