@@ -118,7 +118,13 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 			if (bossComponent->GetShootingDuration() > 5) {
 				// 待機
 				animator->Play(3, 1 * deltaTime);
-				overheatCoolTime += deltaTime;//これだと一発撃ってオーバーヒートの可能性
+				overheatCoolTime += deltaTime;
+				// オーバーヒート明け
+				if (overheatCoolTime >= 3) {
+					bossComponent->SetShootingDuration(0);
+					overheatCoolTime = 0;
+					bossComponent->SetOutVisionTime(1);
+				}
 			}
 			else if (coolTime <= 0) {
 				//SlowBall(boss, deltaTime, 100000 * deltaTime, 3.0f, 0.1f, 400);
