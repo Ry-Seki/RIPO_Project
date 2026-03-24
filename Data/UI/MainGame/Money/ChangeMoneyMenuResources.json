@@ -17,8 +17,8 @@
     {
       "Name": "ChangeMoney",
       "Rect": {
-        "X": 51,
-        "Y": 39,
+        "X": 56,
+        "Y": 40,
         "Width": 1737,
         "Height": 690
       },
@@ -29,23 +29,23 @@
   ],
   "Texts": [
     {
-      "Name": "ResultRank",
+      "Name": "CurrentMoneyText",
       "Type": "Dynamic",
       "UseFont": "NormalSizeFont",
       "Alignment": "Left",
       "Position": {
-        "X": 1550,
-        "Y": 490
+        "X": 1500,
+        "Y": 443
       }
     },
     {
-      "Name": "ResultRank",
+      "Name": "InCreaseMoneyText",
       "Type": "Dynamic",
       "UseFont": "NormalSizeFont",
       "Alignment": "Left",
       "Position": {
-        "X": 1550,
-        "Y": 638
+        "X": 1500,
+        "Y": 610
       }
     }
   ],
