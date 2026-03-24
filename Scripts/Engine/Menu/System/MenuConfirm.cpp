@@ -210,7 +210,7 @@ void MenuConfirm::Resume() {
  */
 void MenuConfirm::SelectButtonExecute(GameEnum::ConfirmResult result) {
     AudioUtility::PlaySE("DebugSE");
-
+    isInteractive = false;
     if (Callback) Callback(result);
     Callback = nullptr;
 }

@@ -25,6 +25,8 @@ private:
 	int modelHandle;
 	// Ž‹–ìŠp‚Ì”¼Œa
 	float viewAngle;
+	// Œo‰ßŽžŠÔ
+	float elapsedTime;
 
 public:
 	/*

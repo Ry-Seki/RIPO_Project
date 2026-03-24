@@ -42,10 +42,10 @@
     {
       "Name": "CurrentMoney",
       "Rect": {
-        "X": 50,
-        "Y": 898,
-        "Width": 735,
-        "Height": 182
+        "X": 60,
+        "Y": 882,
+        "Width": 695,
+        "Height": 200
       },
       "Resources": [
         "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Money.png"
@@ -70,7 +70,7 @@
       "Alignment": "Left",
       "Position": {
         "X": 455,
-        "Y": 973
+        "Y": 929
       }
     }
   ],
@@ -177,6 +177,26 @@
         "Hover": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDayButton.png",
         "Press": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDayButton_Select.png",
         "Select": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDayButton_Select.png"
+      }
+    },
+    {
+      "Name": "InGameMenu",
+      "Type": "Single",
+      "Position": {
+        "X": 6,
+        "Y": 18
+      },
+      "Rect": {
+        "X": 6,
+        "Y": 18,
+        "Width": 249,
+        "Height": 196
+      },
+      "Resources": {
+        "Idle": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_MenuButton.png",
+        "Hover": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_MenuButton_Select.png",
+        "Press": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_MenuButton_Press.png",
+        "Select": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_MenuButton_Select.png"
       }
     }
   ]

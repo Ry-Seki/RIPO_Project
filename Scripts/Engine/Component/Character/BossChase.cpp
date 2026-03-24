@@ -63,9 +63,9 @@ void BossChase::Start(GameObject* boss) {
 
 		moveSpeed = 1000.0f;
 		animationSpeed = 1714.29f;
-		closeRangeAttackDistance = 800.0f;
+		closeRangeAttackDistance = 700.0f;
 		longRangeAttackDistance = 4000.0f;
-		coolTimeSE = 0.7f;
+		coolTimeSE = 0.5f;
 
 		break;
 
@@ -153,7 +153,7 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 			AudioUtility::SetSEVolume(SEVolume);
 			AudioUtility::PlaySE("bossWalkSE");
 			AudioUtility::SetSEVolume(baseSEVolume);
-			coolTimeSE = 1.0f;
+			coolTimeSE = 0.85f;
 		}
 		
 		break;

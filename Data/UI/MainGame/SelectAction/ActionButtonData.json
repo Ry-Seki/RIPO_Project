@@ -19,6 +19,10 @@
     {
       "ButtonName": "Status",
       "ActionType": "Status"
+    },
+    {
+      "ButtonName": "InGameMenu",
+      "ActionType": "InGameMenu"
     }
   ]
 }

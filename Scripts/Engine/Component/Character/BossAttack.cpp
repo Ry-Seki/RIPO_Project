@@ -7,6 +7,7 @@
 #include "BossComponent.h"
 #include "BossStandby.h"
 #include "../../Manager/EffectManager.h"
+#include "../../Manager/CameraManager.h"
 
 
  /*
@@ -15,11 +16,17 @@
 BossAttack::BossAttack()
 	: animator(nullptr)
 	, bossComponent(nullptr)
+	, player(nullptr)
 	, coolTime(0)
 	, elapsedTime(0)
+	, SEVolume(0)
+	, baseSEVolume(0)
+	, coolTimeSE(0)
 	, FirstEffectFlag(false)
 	, FirstSEFlag(false)
+	, standbyAnimation(0)
 	, headlongAnimation(0)
+	, forwardAttackAnimation(0)
 	, playerDirection(Vector3::zero)
 	, ANIMATION_SPEED(1250)
 	, MOVE_SPEED(6000.0f)
@@ -35,6 +42,8 @@ void BossAttack::Start(GameObject* boss)
 	animator = boss->GetComponent<AnimatorComponent>();
 	if (animator == nullptr) return;
 	bossComponent = boss->GetComponent<BossComponent>();
+	player = CameraManager::GetInstance().GetTarget();
+	if (player == nullptr) return;
 
 	switch (bossComponent->GetBossID())
 	{
@@ -49,7 +58,10 @@ void BossAttack::Start(GameObject* boss)
 
 		coolTime = 2;
 		elapsedTime = 0;
+		standbyAnimation = 0;
 		headlongAnimation = 4;
+		forwardAttackAnimation = 1;
+		coolTimeSE = 0.1f;
 
 		break;
 
@@ -76,7 +88,18 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
 
+	// プレイヤーとの距離
+	auto playerDistance = Distance(player->position, boss->position);
+	baseSEVolume = AudioUtility::GetSEVolume();
+	// 1～0に変換する
+	SEVolume = 1.0f - (playerDistance / 10000);
+	SEVolume = SEVolume * baseSEVolume;
+	if (SEVolume < 0) {
+		SEVolume = 0;
+	}
+
 	coolTime -= deltaTime;
+	coolTimeSE -= deltaTime;
 
 	// 攻撃中は被ダメ判定は取らない
 	bossComponent->SetHitFlag(true);
@@ -171,10 +194,10 @@ void BossAttack::ForwardAttack(GameObject* boss, float deltaTime)
 {
 	// AABBコライダーを前方に置く
 	auto aabbCollider = boss->GetComponent<AABBCollider>();
-	float value = 200;
-	Vector3 aabbDirection = { value * playerDirection.x, 0, value * playerDirection.z };
-	const Vector3 aabbMin = { -100, 0, -100 };
-	const Vector3 aabbMax = { 100, 300, 100 };
+	float value = 100;
+	Vector3 aabbDirection = { value * bossComponent->GetBossToPlayerDirection().x, 0, value * bossComponent->GetBossToPlayerDirection().z };
+	const Vector3 aabbMin = { -70, 0, -70 };
+	const Vector3 aabbMax = { 70, 100, 70 };
 
 	if (coolTime <= 1.5f) {
 		// 前方に当たり判定を出す
@@ -194,12 +217,12 @@ void BossAttack::ForwardAttack(GameObject* boss, float deltaTime)
 	}
 	if (coolTime <= 0.7f) {
 		// 待機アニメーション
-		animator->Play(7, 5000 * deltaTime);
+		animator->Play(standbyAnimation, 5000 * deltaTime);
 	}
 	// 待機再生中は攻撃アニメーションは再生しない
 	else {
 		// 攻撃アニメーション
-		animator->Play(2, 5000 * deltaTime);
+		animator->Play(forwardAttackAnimation, 5000 * deltaTime);
 	}
 	if (coolTime <= 0) {
 		bossComponent->SetCloseRangeAttackDistanceFlag(false);
@@ -223,7 +246,7 @@ void BossAttack::HeadlongAttack(GameObject* boss, float deltaTime, float attackS
 		if (playerDirection == Vector3::zero) {
 			playerDirection = bossComponent->GetBossToPlayerDirection();
 		}
-		animator->Play(headlongAnimation, 5000 * deltaTime);
+		animator->Play(headlongAnimation, 10000 * deltaTime);
 
 		// 攻撃中判定開始
 		bossComponent->SetBossAttackTimeFlag(true);
@@ -232,6 +255,14 @@ void BossAttack::HeadlongAttack(GameObject* boss, float deltaTime, float attackS
 		auto posZ = playerDirection.z * MOVE_SPEED * deltaTime;
 		boss->position.x += posX;
 		boss->position.z += posZ;
+
+		if (coolTimeSE < 0) {
+			// 歩行音を再生
+			AudioUtility::SetSEVolume(SEVolume);
+			AudioUtility::PlaySE("bossWalkSE");
+			AudioUtility::SetSEVolume(baseSEVolume);
+			coolTimeSE = 0.1f;
+		}
 
 		if (elapsedTime > attackStateTime + 1.5f) {
 			// 攻撃中判定終了

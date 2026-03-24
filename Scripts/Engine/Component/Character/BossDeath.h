@@ -14,6 +14,10 @@ private:
 	std::shared_ptr<AnimatorComponent> animator;
 	// アニメーション経過時間
 	float animationTime;
+	// アニメーション終了時間
+	float animationEndTime;
+	// アニメーション再生速度
+	float animationSpeed;
 	// アニメーション番号
 	int animationNumber;
 

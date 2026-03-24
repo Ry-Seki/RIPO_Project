@@ -85,10 +85,10 @@ private:
 	 */
 	void SelectButtonExecute(GameEnum::ActionType type);
 	/*
-	 *	@brief		アクションボタンの準備前処理
+	 *	@brief		アクションボタンの初期化処理
 	 *	@param[in]	const JSON& json
 	 */
-	void SetupActionButtons(const JSON& json);
+	void InitializeActionButtons(const JSON& json);
 	/*
 	 *	@brief		フェード後->コールバックの実行処理
 	 *	@param[in]	GameEnum::ActionType type
