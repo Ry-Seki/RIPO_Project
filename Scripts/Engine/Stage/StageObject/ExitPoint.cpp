@@ -17,6 +17,7 @@
 #include "../../Input/InputUtility.h"
 #include "../../Stage/StageUtility.h"
 #include "../../Fade/FadeManager.h"
+#include "../../Manager/CameraManager.h"
 
 using namespace CharacterUtility;
 using namespace InputUtility;
@@ -75,12 +76,13 @@ void ExitPoint::OnCollision(const std::shared_ptr<Component>& self, const std::s
 		return;
 	// 出口に触れていなければ
 	if (!onTrigger) {
+		
 		// 出口に触れたときにtrueにする
 		onTrigger = true;
 
 		// プレイヤーの入力を停止
 		SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, false);
-		
+
 		// メニューの入力を開始
 		SetMouseVisible(true);
 		SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
@@ -116,10 +118,11 @@ void ExitPoint::OnCollision(const std::shared_ptr<Component>& self, const std::s
 			}
 			// 認可されなければ
 			else if (result == GameEnum::ConfirmResult::No) {
+				auto camera = CameraManager::GetInstance().GetCamera();
 				SetMouseVisible(false);
 				// フェード
-				FadeBasePtr fadeout = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
-				FadeManager::GetInstance().StartFade(fadeout);
+				//FadeBasePtr fadeout = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+				//FadeManager::GetInstance().StartFade(fadeout);
 				onTrigger = false;
 				// スタート位置に戻す
 				auto player = GetPlayer();
@@ -127,6 +130,7 @@ void ExitPoint::OnCollision(const std::shared_ptr<Component>& self, const std::s
 
 				// プレイヤーの位置をそのダンジョンのスタート位置に戻す
 				player->position = startPos;
+				camera->rotation = { 0.0f, -goalAngle * Deg2Rad, 0.0f };
 				// プレイヤーの入力受付を開始
 				SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, true);
 
