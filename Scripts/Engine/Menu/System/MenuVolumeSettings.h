@@ -25,12 +25,10 @@ class Engine;
  */
 class MenuVolumeSettings : public MenuBase {
 private:
-	float animTimer = 0.0f;
-	int animFrame = 0;
-
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 	std::vector<std::shared_ptr<TextBase>> textList;
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
+	std::unordered_map<std::string, UIButtonBase*> buttonMap;
 	EventSystem eventSystem;
 
 	std::vector<int> volumeTextList;
@@ -67,10 +65,11 @@ public:
 
 private:
 	/*
-	 *	@brief		ボタンの押された時の処理
-	 *	@param[in]	int buttonIndex
+	 *	@brief		ボタンが押されたときの処理
+	 *	@param[in]	GameEnum::VolumeType volumeType
+	 *	@param[in]	GameEnum::VolumeChangeType changeType
 	 */
-	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	void SelectButtonExecute(GameEnum::VolumeType volumeType, GameEnum::VolumeChangeType changeType);
 	/*
 	 *	@brief		セーブデータから音量テキストの設定
 	 */
@@ -80,6 +79,21 @@ private:
 	 *	@param[in]	int textNum
 	 */
 	void ChangeVolumeText(int textNum);
+	/*
+	 *	@brief		音量ボタンの初期化処理
+	 *	@param[in]	const JSON& json
+	 */
+	void InitializeVolumeButtons(const JSON& json);
+	/*
+	 *	@brief		確認メニューを開く
+	 */
+	void OpenConfirmMenu();
+	/*
+	 *	@brief		名前でのボタン検索
+	 *	@param[in]	const std::string& buttonName
+	 *	@return		UIButtonBase*
+	 */
+	UIButtonBase* FindButtonByName(const std::string& buttonName);
 };
 
 #endif // !_MENU_SETTINGS_H_

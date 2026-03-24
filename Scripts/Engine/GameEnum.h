@@ -166,6 +166,27 @@ namespace GameEnum {
 		Max,
 	};
 	/*
+	 *	@brief	音量の種類
+	 *	@author	Seki
+	 */
+	enum class VolumeType {
+		Invalid = -1,
+		Master,
+		BGM,
+		SE,
+		Max
+	};
+	/*
+	 *	@brief	音量調整の種類
+	 *	@author	Seki
+	 */
+	enum class VolumeChangeType {
+		Invalid = -1,
+		Down,
+		Up,
+		Max
+	};
+	/*
 	 *	@brief	ボタンの種類
 	 *	@author	Seki
 	 */
@@ -372,18 +393,6 @@ namespace GameEnum {
 		Max
 	};
 	/*
-	 *	@brief	音量の種類
-	 *	@author	Seki
-	 */
-	enum class VolumeType {
-		Invalid = -1,
-		Master,
-		BGM,
-		SE,
-
-		Max
-	};
-	/*
 	 *	@brief	文字の揃いの種類
 	 *	@author	Seki
 	 */
@@ -395,7 +404,6 @@ namespace GameEnum {
 
 		Max
 	};
-
 	/*
 	 *	エフェクトの再生タイプ
 	 */
