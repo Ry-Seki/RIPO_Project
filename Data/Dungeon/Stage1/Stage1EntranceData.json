@@ -19,7 +19,7 @@
           "position": 0,
           "rotation": 0,
           "center": [ 0, 200, 0 ],
-          "angle": 0.0,
+          "angle": 180.0,
           "size": [ 800, 800, 10 ]
         }
       ]
