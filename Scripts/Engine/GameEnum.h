@@ -80,6 +80,7 @@ namespace GameEnum {
 		Save,
 		Settings,
 		ReturnTitle,
+		Back,
 
 		Max
 	};
