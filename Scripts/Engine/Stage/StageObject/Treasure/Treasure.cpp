@@ -30,10 +30,20 @@ Treasure::Treasure()
  *	デストラクタ
  */
 Treasure::~Treasure() {
+	// エフェクト再生を止める
 	if (pViewingEffect) {
 		pViewingEffect->EffectStop();
 		pViewingEffect = nullptr;
 	}
+
+	// UI削除
+	auto menu = MenuManager::GetInstance().GetMenu<DungeonTreasureUI>();
+	if (menu) {
+		menu->HideTreasureUI();
+
+	}
+
+
 }
 void Treasure::Start() {
 }
@@ -81,7 +91,7 @@ void Treasure::OnCollected() {
 	// UI削除
 	auto menu = MenuManager::GetInstance().GetMenu<DungeonTreasureUI>();
 	if (menu) {
-		menu->HideTreasureUI(GetOwner()->ID);
+		menu->HideTreasureUI();
 
 	}
 }
@@ -133,7 +143,7 @@ void Treasure::UnCollected() {
 
 		// 自分が表示権を持っている時だけ閉じる
 		if (treasureMenu->GetOwnerObjectID() == GetOwner()->ID) {
-			treasureMenu->HideTreasureUI(GetOwner()->ID);
+			treasureMenu->HideTreasureUI();
 			menu.CloseMenu(treasureMenu);
 		}
 	}

@@ -78,7 +78,7 @@ public:
 	/*
 	 *	UI‚ð”ñ•\Ž¦‚É‚·‚é
 	 */
-	void HideTreasureUI(int ownerID);
+	void HideTreasureUI();
 
 	/*
 	 *	•\Ž¦’†
