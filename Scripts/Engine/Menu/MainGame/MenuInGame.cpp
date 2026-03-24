@@ -28,11 +28,72 @@ namespace {
      */
     constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/InGame/InGameMenuResources.json";
     constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/InGame/InGameMenuNavigation.json";
+    constexpr const char* _MENU_BUTTON_DATA_PATH = "Data/UI/MainGame/InGame/InGameMenuButtonData.json";
 
+    // 別名定義
+    using InGameMenuType = GameEnum::InGameMenuType;
+    // 関数ポインタの別名定義
+    using ExecuteMenuButton = void(MenuInGame::*)(Engine&);
+
+    // メニュー処理の関数テーブル
+    const std::array<ExecuteMenuButton, static_cast<int>(InGameMenuType::Max)> execute = {
+        &MenuInGame::ExecuteLoadMenu,
+        &MenuInGame::ExecuteSaveMenu,
+        &MenuInGame::ExecuteSettingsMenu,
+        &MenuInGame::ExecuteReturnTitle,
+        &MenuInGame::ExecuteReturnPrevMenu
+    };
     /*
      *  @brief  インゲームメニューの種類マップ
      */
-    // const std::unordered_map<std::string,>
+    const std::unordered_map<std::string, InGameMenuType> inGameMenuMap = {
+        { "Load", InGameMenuType::Load },
+        { "Save", InGameMenuType::Save },
+        { "Settings", InGameMenuType::Settings },
+        { "ReturnTitle", InGameMenuType::ReturnTitle },
+        { "Back", InGameMenuType::Back }
+    };
+    /*
+     *  @brief  メニューボタンデータ構造体
+     */
+    struct MenuButtonData {
+        std::string name = "";
+        InGameMenuType type = InGameMenuType::Invalid;
+    };
+    /*
+     *	@brief	    メニューの種類識別
+     *  @param[in]  const std::string& typeKey
+     *  @return     InGameMenuType
+     */
+    InGameMenuType StringToMenuType(const std::string& typeKey) {
+        auto itr = inGameMenuMap.find(typeKey);
+
+        if (itr != inGameMenuMap.end()) return itr->second;
+
+        return InGameMenuType::Invalid;
+    }
+    /*
+     *  @brief      JSON->メニューボタン情報へ変換
+     *  @param[in]  const JSON& json
+     *  @return     std::vector<MenuButtonData>
+     */
+    std::vector<MenuButtonData> ParseMenuButtonData(const JSON& json) {
+        std::vector<MenuButtonData> result;
+
+        auto array = json["MenuButtons"];
+
+        for (const auto& node : array) {
+            MenuButtonData entry;
+
+            entry.name = node["ButtonName"].get<std::string>();
+
+            std::string typeString = node["MenuType"].get<std::string>();
+            entry.type = StringToMenuType(typeString);
+
+            result.push_back(entry);
+        }
+        return result;
+    }
 }
 /*
  *	@brief	初期化処理
@@ -41,28 +102,29 @@ void MenuInGame::Initialize(Engine& engine) {
     auto& load = LoadManager::GetInstance();
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
-    load.SetOnComplete([this, &engine, menuJSON, navigation]() {
-        MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
-        for (auto& button : result.buttonList) {
-            if (!button) continue;
+    auto buttonData = load.LoadResource<LoadJSON>(_MENU_BUTTON_DATA_PATH);
 
-            eventSystem.RegisterButton(button.get());
-        }
-        eventSystem.Initialize(0);
+    load.SetOnComplete([this, &engine, menuJSON, navigation, buttonData]() {
+        // メニューUI生成
+        MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
+        // メニューUIの所有権移動
         spriteList = std::move(result.spriteList);
         buttonList = std::move(result.buttonList);
-        for (int i = 0, max = buttonList.size(); i < max; i++) {
-            UIButtonBase* button = buttonList[i].get();
-            if (!button) continue;
+        // ボタンの登録
+        for (const auto& entry : buttonList) {
+            if (!entry) continue;
 
-            button->RegisterUpdateSelectButton([this, button]() {
-                eventSystem.UpdateSelectButton(button);
-            });
-
-            button->RegisterOnClick([this, &engine, i]() {
-                SelectButtonExecute(engine, i);
-            });
+            UIButtonBase* button = entry.get();
+            // ボタンの登録
+            eventSystem.RegisterButton(button);
+            // マップに登録
+            buttonMap[button->GetName()] = button;
         }
+        // イベントシステムの初期化
+        eventSystem.Initialize(0);
+        // ボタンの準備前処理
+        InitializeMenuButtons(buttonData->GetData(), engine);
+        // イベントシステムのnavigationの設定
         eventSystem.LoadNavigation(navigation->GetData());
     });
 }
@@ -71,7 +133,6 @@ void MenuInGame::Initialize(Engine& engine) {
  */
 void MenuInGame::Open() {
     MenuBase::Open();
-    animTimer = 0.0f;
     for (auto& sprite : spriteList) {
         sprite->Setup();
     }
@@ -164,55 +225,106 @@ void MenuInGame::Resume() {
 }
 /*
  *	@brief		ボタンの押された時の処理
- *	@param[in]	int buttonIndex
+ *	@param[in]	GameEnum::InGameMenuType type
  */
-void MenuInGame::SelectButtonExecute(Engine& engine, int buttonIndex) {
-    auto& menu = MenuManager::GetInstance();
-    if (buttonIndex == 0) {
-        isInteractive = false;
-        AudioUtility::PlaySE("DebugSE");
-        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            menu.OpenMenu<MenuLoadMode>();
+void MenuInGame::SelectButtonExecute(GameEnum::InGameMenuType type, Engine& engine) {
+    AudioUtility::PlaySE("DebugSE");
+    // タイトルに戻るボタン
+    if (type == GameEnum::InGameMenuType::ReturnTitle) {
+        ExecuteReturnTitle(engine);
+        return;
+    }
+    StartFadeEndCallback(type, engine);
+}
+/*
+ *	@brief		メニューボタンの初期化処理
+ *	@param[in]	const JSON& json
+ */
+void MenuInGame::InitializeMenuButtons(const JSON& json, Engine& engine) {
+    auto actionData = ParseMenuButtonData(json);
+
+    for (const auto& entry : actionData) {
+        UIButtonBase* button = FindButtonByName(entry.name);
+        if (!button) continue;
+        const auto type = entry.type;
+        // ボタン実行処理の登録
+        button->RegisterOnClick([this, type, &engine]() {
+            SelectButtonExecute(type, engine);
         });
-    } else if (buttonIndex == 1) {
-        isInteractive = false;
-        AudioUtility::PlaySE("DebugSE");
-        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            menu.OpenMenu<MenuSaveMode>();
-        });
-    } else if (buttonIndex == 2) {
-        isInteractive = false;
-        AudioUtility::PlaySE("DebugSE");
-        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            menu.OpenMenu<MenuVolumeSettings>();
-        });
-    } else if (buttonIndex == 3) {
-        isInteractive = false;
-        AudioUtility::PlaySE("DebugSE");
-        auto confirm = menu.GetMenu<MenuConfirm>();
-        confirm->SetCallback([&engine, this, &menu](GameEnum::ConfirmResult result) {
-            if (result == GameEnum::ConfirmResult::Yes) {
-                FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-                FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
-                    menu.CloseAllMenu();
-                    engine.SetNextScene(std::make_shared<TitleScene>());
-                });
-            }else {
-                menu.CloseTopMenu();
-            }
-        });
-        menu.OpenMenu<MenuConfirm>();
-    } else {
-        isInteractive = false;
-        AudioUtility::PlaySE("DebugSE");
-        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
-            menu.CloseTopMenu();
-            FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
-            FadeManager::GetInstance().StartFade(fadeIn);
+        // ボタンに navigation 更新処理を登録
+        button->RegisterUpdateSelectButton([this, button]() {
+            eventSystem.UpdateSelectButton(button);
         });
     }
+}
+/*
+ *	@brief		フェード後->コールバックの実行処理
+ *	@param[in]	GameEnum::InGameMenuType type
+ */
+void MenuInGame::StartFadeEndCallback(GameEnum::InGameMenuType type, Engine& engine) {
+    isInteractive = false;
+    FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+    FadeManager::GetInstance().StartFade(fadeOut, [this, type, &engine]() {
+        // アクションの実行
+        (this->*execute[static_cast<int>(type)])(engine);
+    });
+}
+/*
+ *	@brief		名前でのボタン検索
+ *	@param[in]	const std::string& buttonName
+ *	@return		UIButtonBase*
+ */
+UIButtonBase* MenuInGame::FindButtonByName(const std::string& buttonName) {
+    auto itr = buttonMap.find(buttonName);
+    if (itr == buttonMap.end()) return nullptr;
+
+    return itr->second;
+}
+/*
+ *	@brief	ロード画面を開く
+ */
+void MenuInGame::ExecuteLoadMenu(Engine& engine) {
+    auto& menu = MenuManager::GetInstance();
+    menu.OpenMenu<MenuLoadMode>();
+}
+/*
+ *	@brief	セーブ画面を開く
+ */
+void MenuInGame::ExecuteSaveMenu(Engine& engine) {
+    auto& menu = MenuManager::GetInstance();
+    menu.OpenMenu<MenuSaveMode>();
+}
+/*
+ *	@brief	設定画面を開く
+ */
+void MenuInGame::ExecuteSettingsMenu(Engine& engine) {
+    auto& menu = MenuManager::GetInstance();
+    menu.OpenMenu<MenuVolumeSettings>();
+}
+/*
+ *	@brief	タイトル画面に戻る
+ */
+void MenuInGame::ExecuteReturnTitle(Engine& engine) {
+    auto& menu = MenuManager::GetInstance();
+    auto confirm = menu.GetMenu<MenuConfirm>();
+    confirm->SetCallback([&engine, this, &menu](GameEnum::ConfirmResult result) {
+        menu.CloseTopMenu();    // 確認メニュー
+        if (result != GameEnum::ConfirmResult::Yes) return;
+        isInteractive = false;
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
+            menu.CloseAllMenu();    // 全てのメニュー
+            engine.SetNextScene(std::make_shared<TitleScene>());
+        });
+    });
+    menu.OpenMenu<MenuConfirm>();
+}
+/*
+ *	@brief	前の画面に戻る
+ */
+void MenuInGame::ExecuteReturnPrevMenu(Engine& engine) {
+    auto& menu = MenuManager::GetInstance();
+    menu.CloseTopMenu();    // このメニュー
+    FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
+    FadeManager::GetInstance().StartFade(fadeIn);
 }

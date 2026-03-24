@@ -14,6 +14,7 @@
 #include "../../../Menu/MainGame/MenuSelectAction.h"
 #include "../../../Menu/MainGame/Status/MenuPlayerStatus.h"
 #include "../../../System/Status/PlayerStatusManager.h"
+#include "../../../Menu/MainGame/MenuInGame.h"
 
 #include <DxLib.h>
 
@@ -53,7 +54,6 @@ void GameState_SelectAction::Render() {
  *	@brief	片付け処理
  */
 void GameState_SelectAction::Teardown() {
-    inputHandle = false;
 }
 /*
  *	@brief		アクションの決定
@@ -61,8 +61,11 @@ void GameState_SelectAction::Teardown() {
  */
 void GameState_SelectAction::DecideActionType(GameEnum::ActionType type) {
     auto& menu = MenuManager::GetInstance();
-    // Maxの場合はステータス画面を開く 
-    if (type == GameEnum::ActionType::Max) {
+    if (type == GameEnum::ActionType::Invalid) {
+        // メニュー画面を開く 
+        menu.OpenMenu<MenuInGame>();
+    } else if (type == GameEnum::ActionType::Max) {
+        // ステータス画面を開く 
         auto status = menu.GetMenu<MenuPlayerStatus>();
         status->SetIsCallback(false);
         status->SetPrevStatusData(PlayerStatusManager::GetInstance().GetPlayerStatusData());

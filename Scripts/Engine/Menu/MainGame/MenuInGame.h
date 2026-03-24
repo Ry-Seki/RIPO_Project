@@ -23,12 +23,11 @@ class Engine;
  */
 class MenuInGame : public MenuBase {
 private:
-	int currentSlot = -1;
-
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
 	std::vector<std::shared_ptr<Sprite>> spriteList;
+	std::unordered_map<std::string, UIButtonBase*> buttonMap;
 
 public:
 	/*
@@ -73,10 +72,47 @@ public:
 private:
 	/*
 	 *	@brief		ボタンの押された時の処理
-	 *	@param[in]	int buttonIndex
+	 *	@param[in]	GameEnum::InGameMenuType type
 	 */
-	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	void SelectButtonExecute(GameEnum::InGameMenuType type, Engine& engine);
+	/*
+	 *	@brief		メニューボタンの初期化処理
+	 *	@param[in]	const JSON& json
+	 */
+	void InitializeMenuButtons(const JSON& json, Engine& engine);
+	/*
+	 *	@brief		フェード後->コールバックの実行処理
+	 *	@param[in]	GameEnum::InGameMenuType type
+	 */
+	void StartFadeEndCallback(GameEnum::InGameMenuType type, Engine& engine);
+	/*
+	 *	@brief		名前でのボタン検索
+	 *	@param[in]	const std::string& buttonName
+	 *	@return		UIButtonBase*
+	 */
+	UIButtonBase* FindButtonByName(const std::string& buttonName);
 
+public:
+	/*
+	 *	@brief	ロード画面を開く
+	 */
+	void ExecuteLoadMenu(Engine& engine);
+	/*
+	 *	@brief	セーブ画面を開く
+	 */
+	void ExecuteSaveMenu(Engine& engine);
+	/*
+	 *	@brief	設定画面を開く
+	 */
+	void ExecuteSettingsMenu(Engine& engine);
+	/*
+	 *	@brief	タイトル画面に戻る
+	 */
+	void ExecuteReturnTitle(Engine& engine);
+	/*
+	 *	@brief	前の画面に戻る
+	 */
+	void ExecuteReturnPrevMenu(Engine& engine);
 };
 
 #endif // !_MENU_IN_GAME_H_
