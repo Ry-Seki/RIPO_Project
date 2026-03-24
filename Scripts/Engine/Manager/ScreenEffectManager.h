@@ -16,12 +16,22 @@ private:
 	std::function<void()> renderEffect;	// 描画する画面効果
 	float renderMaxCount;				// 描画時間
 	float renderCounter;				// 描画時間カウンター
+	int damageFlashGraphHandle;	
+
+	const float DAMAGE_FLASH_COUNT;
+	const float DAMAGE_FLASH_PARAM;
+	static constexpr const char* DAMAGE_FLASH_PATH = "Res/ScreenEffect/DamageFlash.png";
 
 private:
-	ScreenEffectManager() = default;
+	ScreenEffectManager();
 	~ScreenEffectManager() = default;
 
 public:
+	/*
+	 *	初期化
+	 */
+	void Initialize();
+
 	/*
 	 *	画面効果描画
 	 */
@@ -32,6 +42,11 @@ public:
 	 */
 	void DamageFlash();
 
+private:
+	/*
+	 *	グラフハンドルセット
+	 */
+	inline void SetGraphHandle(int setGraph) { damageFlashGraphHandle = setGraph; }
 };
 
 #endif // !_SCREENEFFECTMANAGER_H_

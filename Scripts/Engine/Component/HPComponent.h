@@ -38,7 +38,7 @@ public:
 			HP -= damage;
 			// ƒvƒŒƒCƒ„[‚È‚ç‰æ–ÊŒø‰ÊÄ¶
 			if (GetOwner()->name == GameConst::_CREATE_POSNAME_PLAYER) {
-				//ScreenEffectManager::GetInstance().DamageFlash();
+				ScreenEffectManager::GetInstance().DamageFlash();
 				CameraManager::GetInstance().CameraShake();
 			}
 		}
