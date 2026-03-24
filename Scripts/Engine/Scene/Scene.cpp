@@ -10,6 +10,7 @@
 #include "../Component/AABBCollider.h"
 #include "../Component/OBBCollider.h"
 #include "../Component/CapsuleCollider.h"
+#include "../Component/Character/BulletComponent.h"
 #include "../Manager/StageManager.h"
 #include <algorithm>
 
@@ -105,6 +106,10 @@ void Scene::HandleWorldColliderCollision(
 			if (!colA->origin->isCollider || !colB->origin->isCollider)
 				continue;
 
+			// 弾用の事前準備
+			BulletSetup(colA);
+			BulletSetup(colB);
+
 			// 衝突判定
 			Vector3 penetration;
 			if (Intersect(colA->world, colB->world, penetration)) {
@@ -119,6 +124,30 @@ void Scene::HandleWorldColliderCollision(
 				if (objA->IsDestroyed() || objB->IsDestroyed())
 					return;
 			}
+		}
+	}
+}
+/*
+ *  弾用当たり判定事前準備
+ */
+void Scene::BulletSetup(WorldColliderPtr collider) {
+	auto owner = collider->origin->GetOwner();
+	if (owner->name == GameConst::_BULLET) {
+		auto bullet = owner->GetComponent<BulletComponent>();
+		// 弾の現在と1フレーム前位置の間にコライダーがあるかどうか
+		float hitLength = 0;
+		Ray ray = { bullet->GetPrevPos(), bullet->GetMoveDirection()};
+		Scene::RayCastHit hitInfo;
+		bool hit = RayCast(
+			ray, hitInfo,
+			[this, bullet, owner](const ColliderBasePtr& col, float distance) {
+				// 交点が指定範囲内
+				return distance * distance < Dot(bullet->GetPrevPos(), owner->position) && col;
+			}
+		);
+		// 衝突
+		if (hit) {
+			owner->position = hitInfo.point;
 		}
 	}
 }

@@ -13,8 +13,9 @@ private:
 	float stamina = 0.0f;								// 現在スタミナ
 	float maxStamina = 0.0f;							// 最大スタミナ
 	float staminaHealCoolTime = 0.0f;					// スタミナが回復し始めるまでの時間
-	const float STAMINA_HEAL_COOL_TIME_MAX = 50.0f;		// スタミナ回復クールタイムの最大
-	const float STAMINA_AUTO_HEAL_VALUE = 0.2f;			// スタミナの自動回復量
+	
+	const float STAMINA_HEAL_COOL_TIME_MAX = 2.0f;		// スタミナ回復クールタイムの最大
+	const float STAMINA_AUTO_HEAL_RATE = 0.3f;			// スタミナの自動回復割合
 
 public:
 	/*
@@ -23,10 +24,10 @@ public:
 	void Update(float deltaTime) override {
 		// クールタイムが開け次第スタミナ回復
 		if (staminaHealCoolTime <= 0) {
-			HealStamina(STAMINA_AUTO_HEAL_VALUE);
+			HealStamina(STAMINA_AUTO_HEAL_RATE * maxStamina * deltaTime);
 		}
 		else {
-			staminaHealCoolTime -= 1;
+			staminaHealCoolTime -= deltaTime;
 		}
 	}
 

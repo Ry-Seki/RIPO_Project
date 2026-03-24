@@ -93,6 +93,10 @@ private:
     void HandleWorldColliderCollision(
         WorldColliderList* colliderA, 
         WorldColliderList* colliderB);
+    /*
+     *  ’e—p“–‚½‚è”»’è–‘O€”õ
+     */
+    void BulletSetup(WorldColliderPtr collider);
 
 public:
     /*

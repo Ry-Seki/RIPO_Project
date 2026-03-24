@@ -30,7 +30,8 @@ WeaponBase::WeaponBase()
 	, reload(false) 
 
 	, BULLET_SCALE(0.5f, 0.5f, 0.5f)
-	, BULLET_SPEED(30000.0f){
+	, BULLET_SPEED(30000.0f)
+	, BULLET_DAMAGE_RATE(0.1f){
 }
 
 /*
@@ -89,14 +90,14 @@ void WeaponBase::ShotBullet(Engine* engine) {
 	float playerStrength = GetPlayer()->GetComponent<StrengthComponent>()->GetStrength();
 	auto weaponNumber = WeaponManager::GetInstance().GetCurrentWeaponNum();
 	float defaultDamage = WeaponDataManager::GetInstance().GetWeaponData(weaponNumber).defaultDamage;
-	float hitDamage = defaultDamage + (defaultDamage * playerStrength * 0.1f);
+	float hitDamage = defaultDamage + (defaultDamage * playerStrength * BULLET_DAMAGE_RATE);
 
 	// íeî≠éÀ
 	BulletManager::GetInstance().BulletShot(
 		camera->position, camera->rotation, 
 		BULLET_SCALE, moveDirection,
 		GetPlayer().get(), BULLET_SPEED, hitDamage);
-
+	// SEçƒê∂
 	PlaySE(GameConst::_BULLET_SHOT_SE);	
 }
 
