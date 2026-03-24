@@ -16,6 +16,7 @@ BossShootingAttack::BossShootingAttack()
 	, player(nullptr)
 	, coolTime(0)
 	, rapidCoolTime(0)
+	, overheatCoolTime(0)
 	, shootFlag(false)
 	, secondFlag(false)
 	, thirdFlag(false)
@@ -46,13 +47,13 @@ void BossShootingAttack::Start(GameObject* boss)
 		break;
 
 	case 103:
-		coolTime = MAX_COOL_TIME;
 
 		// HP半分以下で攻撃変化
 		if (bossComponent->GetBossHP() <= bossComponent->GetBossMaxHP() / 2) {
 			rapidCoolTime = 0.3f;
 		}
 		else {
+			coolTime = MAX_COOL_TIME;
 			// エフェクトを出す
 			EffectManager::GetInstance().Instantiate("BossShootEffect", boss->position);
 			// 射撃待機音を出す
@@ -101,10 +102,31 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 		boss->rotation.y = atan2(direction.x, direction.z) + Pi;
 		// HP半分以下で攻撃変化
 		if (bossComponent->GetBossHP() <= bossComponent->GetBossMaxHP() / 2) {
-			SlowBall(boss, deltaTime, 100000 * deltaTime, 0.3f, 0.3f);
-			RapidFire(boss, deltaTime, 1000000 * deltaTime);
+			// 壁に隠れてから見つけたら最初に攻撃ディレイ
+			if (bossComponent->GetOutVisionTime() > 0.3f) {
+				coolTime = 0.7f;
+				bossComponent->SetShootingDuration(0);
+				// エフェクトを出す
+				EffectManager::GetInstance().Instantiate("BossShootEffect", boss->position);
+				// 射撃待機音を出す
+				AudioUtility::PlaySE("bossShootActiveSE");
+			}
+			bossComponent->SetShootingDuration(bossComponent->GetShootingDuration() + deltaTime);
+			bossComponent->SetOutVisionTime(0);
+			coolTime -= deltaTime;
+			// 連射し続けたらオーバーヒート
+			if (bossComponent->GetShootingDuration() > 5) {
+				// 待機
+				animator->Play(3, 1 * deltaTime);
+				overheatCoolTime += deltaTime;//これだと一発撃ってオーバーヒートの可能性
+			}
+			else if (coolTime <= 0) {
+				//SlowBall(boss, deltaTime, 100000 * deltaTime, 3.0f, 0.1f, 400);
+				RapidFire(boss, deltaTime, 1000000 * deltaTime, 400);
+			}
 		}
 		else {
+			animator->Play(0, 1000 * deltaTime);
 			ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime, 400);
 		}
 
@@ -112,7 +134,7 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 	case 104:
 
 		boss->rotation.y = atan2(direction.x, direction.z) + Pi;
-		SlowBall(boss, deltaTime, 300000 * deltaTime, 0.3f, 0.3f);
+		SlowBall(boss, deltaTime, 300000 * deltaTime, 0.3f, 0.3f, 250);
 		ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime, 250);
 
 		break;
@@ -156,7 +178,6 @@ void BossShootingAttack::ShootingAttack(GameObject* boss, float deltaTime, float
 
 void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, float shotSpeed, float positionY)
 {
-	animator->Play(0, 2000 * deltaTime);
 
 	// アニメーションが終わるまで待ちたい
 	// 仮
@@ -215,14 +236,15 @@ void BossShootingAttack::ThreeRoundBurst(GameObject* boss, float deltaTime, floa
 	if (coolTime <= 0) {
 		shootFlag = false;
 		bossComponent->SetHitFlag(false);
+		animator->Play(3, 1 * deltaTime);
 		// 状態遷移
 		bossComponent->SetState(new BossStandby());
 	}
 }
 
-void BossShootingAttack::RapidFire(GameObject* boss, float deltaTime, float shotSpeed)
+void BossShootingAttack::RapidFire(GameObject* boss, float deltaTime, float shotSpeed, float positionY)
 {
-	animator->Play(0, 20000 * deltaTime);
+	animator->Play(0, 5000 * deltaTime);
 
 	// アニメーションが終わるまで待ちたい
 	rapidCoolTime -= deltaTime;
@@ -230,7 +252,7 @@ void BossShootingAttack::RapidFire(GameObject* boss, float deltaTime, float shot
 		if (!shootFlag) {
 			// 弾発射
 			BulletManager::GetInstance().BulletShot(
-				{ boss->position.x, boss->position.y + 250, boss->position.z },
+				{ boss->position.x, boss->position.y + positionY, boss->position.z },
 				boss->rotation,
 				{ 1.0f, 1.0f, 1.0f },
 				direction,
@@ -251,14 +273,14 @@ void BossShootingAttack::RapidFire(GameObject* boss, float deltaTime, float shot
 	}
 }
 
-void BossShootingAttack::SlowBall(GameObject* boss, float deltaTime, float shotSpeed, float coolTime, float fireTime)
+void BossShootingAttack::SlowBall(GameObject* boss, float deltaTime, float shotSpeed, float coolTime, float fireTime, float positionY)
 {
 	coolTime -= deltaTime;
 	if (coolTime <= fireTime) {
 		if (!slowFlag) {
 			// 弾発射
 			BulletManager::GetInstance().BulletShot(
-				{ boss->position.x, boss->position.y + 250, boss->position.z },
+				{ boss->position.x, boss->position.y + positionY, boss->position.z },
 				boss->rotation,
 				{ 1.0f, 1.0f, 1.0f },
 				direction,

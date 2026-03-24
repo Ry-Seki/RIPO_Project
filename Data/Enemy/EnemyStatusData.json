@@ -45,7 +45,7 @@
   "Stage3Boss": {
     "ID": 103,
     "HP": 4000,
-    "Attack": 60,
+    "Attack": 20,
     "Bounty": 500
   },
   "Stage4Boss": {

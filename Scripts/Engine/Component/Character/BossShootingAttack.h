@@ -19,6 +19,7 @@
 		GameObjectPtr player;
 		float coolTime;
 		float rapidCoolTime;
+		float overheatCoolTime;
 		// 弾撃ちフラグ
 		bool shootFlag;
 		bool secondFlag;
@@ -75,7 +76,7 @@
 		 *  param[in]	float		shotSpeed	弾の発射速度
 		 *	param[in]	float		positionY	自分の位置からYポジションを加減する値
 		 */
-		void RapidFire(GameObject* boss, float deltaTime, float shotSpeed);
+		void RapidFire(GameObject* boss, float deltaTime, float shotSpeed, float positionY);
 
 		/*
 		 *	サブ弾幕用低速攻撃
@@ -84,8 +85,9 @@
 		 *  param[in]	float		shotSpeed	弾の発射速度
 		 *	param[in]	float		coolTime	弾のクールタイム
 		 *	param[in]	float		fireTime	coolTime-fireTimeが発射までの時間(coolTimeと同数にすればディレイなし)
+		 *	param[in]	float		positionY	自分の位置からYポジションを加減する値
 		 */
-		void SlowBall(GameObject* boss, float deltaTime, float shotSpeed, float coolTime, float fireTime);
+		void SlowBall(GameObject* boss, float deltaTime, float shotSpeed, float coolTime, float fireTime, float positionY);
 
 };
 

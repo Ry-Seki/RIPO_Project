@@ -31,6 +31,10 @@ private:
 	float coolTime;
 	// ランダム攻撃のクールタイム
 	float randomCoolTime;
+	// 見ていない時間
+	float outVisionTime;
+	// 連射継続時間
+	float shootingDuration = 0;
 	// 攻撃衝突判定フラグ
 	bool attackIsTriger;
 	// ダメージ衝突判定フラグ
@@ -222,6 +226,26 @@ public:
 	 *	ランダムクールタイムの変更
 	 */
 	inline void SetRandomCoolTime(float setValue) { randomCoolTime = setValue; }
+
+	/* 
+	 *	見ていない時間の取得
+	 */
+	inline float GetOutVisionTime() const { return outVisionTime; }
+
+	/*
+	 *	見ていない時間の変更
+	 */
+	inline void SetOutVisionTime(float setValue) { outVisionTime = setValue; }
+
+	/*
+	 *	連射継続時間の取得
+	 */
+	inline float GetShootingDuration() const { return shootingDuration; }
+
+	/*
+	 *	連射継続時間の変更
+	 */
+	inline void SetShootingDuration(float setValue) { shootingDuration = setValue; }
 };
 
 #endif // !_BOSSCOMPONENT_H_

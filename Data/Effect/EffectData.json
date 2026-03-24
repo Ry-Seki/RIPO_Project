@@ -27,7 +27,7 @@
     {
       "file": "Res/Effect/Enemy/AllEnemyHit.efkefc",
       "name": "AllEnemyHitEffect",
-      "magnification": 100.0,
+      "magnification": 50.0,
       "loop": false
     },
     {
