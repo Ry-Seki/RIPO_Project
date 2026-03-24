@@ -16,12 +16,17 @@ using namespace InputUtility;
 CameraComponent::CameraComponent()
 	: sensitivity(0.001f)
 	, state(GameEnum::CameraState::FPS)
+	, shakeTime(0.0f)
+	, isShaking(false)
 
 	, CAMERA_ROTATION_X_MAX(1.5f)
 	, CAMERA_ROTATION_X_MIN(-1.5f)
 	, PLAYER_HEAD_HEIGHT(310.0f)
 	, TPS_PLAYER_DISTANCE_POS(500.0f)
-	, DEFAULT_DEBUG_MOVE_SPEED(2000.0f) {}
+	, DEFAULT_DEBUG_MOVE_SPEED(2000.0f)
+	, SHAKE_POWER(10.0f)
+	, SHAKE_TIME_MAX(0.2f)
+{}
 
 /*
  *	最初のUpdateの直前に呼び出される処理
@@ -42,94 +47,25 @@ void CameraComponent::Update(float deltaTime) {
 	// カメラの状態によって更新
 	switch (state) {
 	case GameEnum::CameraState::FPS:
-	{
-		// カメラの回転
-		auto playerAction = GetInputState(GameEnum::ActionMap::PlayerAction);
-		float axisX = playerAction.axis[static_cast<int>(GameEnum::PlayerAction::CameraRotateX)];
-		float axisY = playerAction.axis[static_cast<int>(GameEnum::PlayerAction::CameraRotateY)];
-		CameraRotate(camera, axisX, axisY);
-
-		// プレイヤーの頭に位置調整
-		Vector3 playerHeadPos = player->position;
-		playerHeadPos.y += PLAYER_HEAD_HEIGHT;
-		camera->position = playerHeadPos;
+		// FPSカメラの更新
+		FPSUpdate(camera, player, deltaTime);
 		break;
-	}
+
 	case GameEnum::CameraState::TPS:
-	{
-		// カメラの回転
-		auto playerAction = GetInputState(GameEnum::ActionMap::PlayerAction);
-		float axisX = playerAction.axis[static_cast<int>(GameEnum::PlayerAction::CameraRotateX)];
-		float axisY = playerAction.axis[static_cast<int>(GameEnum::PlayerAction::CameraRotateY)];
-		CameraRotate(camera, axisX, axisY);
-
-		// プレイヤーの背後に位置調整
-		camera->position = GetTPSCameraPosition(player);
+		// TPSカメラの更新
+		TPSUpdate(camera, player, deltaTime);
 		break;
-	}
+	
 	case GameEnum::CameraState::Event:
 		// イベントカメラの更新
 		eventCamera->Update(camera, deltaTime);
 		break;
+	
 	case GameEnum::CameraState::Debug:
-	{
-		// カメラの回転
-		auto cameraAction = GetInputState(GameEnum::ActionMap::DebugCameraAction);
-		float axisX = cameraAction.axis[static_cast<int>(GameEnum::DebugCameraAction::RotateX)];
-		float axisY = cameraAction.axis[static_cast<int>(GameEnum::DebugCameraAction::RotateY)];
-		CameraRotate(camera, axisX, axisY);
-
-		// カメラの角度のsin,cos
-		const float cameraSin = sinf(camera->rotation.y);
-		const float cameraCos = cosf(camera->rotation.y);
-
-		// 移動
-		Vector3 moveVec = V_ZERO;
-		float right = cameraAction.axis[static_cast<int>(GameEnum::DebugCameraAction::RightMove)];
-		float forward = cameraAction.axis[static_cast<int>(GameEnum::DebugCameraAction::ForwardMove)];
-		float up = cameraAction.axis[static_cast<int>(GameEnum::DebugCameraAction::UpMove)];
-		// 移動速度
-		float moveSpeed = DEFAULT_DEBUG_MOVE_SPEED;
-		if (cameraAction.button[static_cast<int>(GameEnum::DebugCameraAction::Run)]) {
-			moveSpeed *= 2;
-		}
-
-		// カメラから見て右の移動
-		if (right != 0) {
-			moveVec.x += right * moveSpeed * cameraCos * deltaTime;
-			moveVec.z += right * moveSpeed * -cameraSin * deltaTime;
-		}
-		// カメラから見て前の移動
-		if (forward != 0) {
-			moveVec.x += forward * moveSpeed * cameraSin * deltaTime;
-			moveVec.z += forward * moveSpeed * cameraCos * deltaTime;
-		}
-		// カメラから見て上の移動
-		if (up != 0) {
-			moveVec.y += up * moveSpeed * deltaTime;
-		}
-		// 2方向に入力されていたら移動量半減
-		if (fabs(right) + fabs(forward) == 2) {
-			moveVec *= 0.5f;
-		}
-		camera->position += moveVec;
-
-		// プレイヤー操作に切り替え
-		if (!player) break;
-		if (cameraAction.buttonDown[static_cast<int>(GameEnum::DebugCameraAction::ChangePlayerAction)]) {
-			// アクションマップの切り替え
-			SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, true);
-			SetActionMapIsActive(GameEnum::ActionMap::DebugCameraAction, false);
-			// カメラステートの切り替え
-			if (!player->GetComponent<ArmActionComponent>()->GetLiftObject()) {
-				state = GameEnum::CameraState::FPS;
-			}
-			else {
-				state = GameEnum::CameraState::TPS;
-			}
-		}
+		// デバックカメラの更新
+		DebugUpdate(camera, player, deltaTime);
 		break;
-	}
+	
 	}
 
 	// カメラの設定に反映する
@@ -152,6 +88,14 @@ Vector3 CameraComponent::GetTPSCameraPosition(GameObjectPtr player) {
 }
 
 /*
+ *	カメラのシェイクを作動
+ */
+void CameraComponent::CameraShakeActivate() { 
+	isShaking = true;
+	shakeTime = SHAKE_TIME_MAX;
+}
+
+/*
  *	カメラの回転
  */
 void CameraComponent::CameraRotate(GameObject* camera, float axisX, float axisY) {
@@ -165,5 +109,115 @@ void CameraComponent::CameraRotate(GameObject* camera, float axisX, float axisY)
 	camera->rotation += moveRotation;
 	// x軸の角度は制限を掛ける
 	camera->rotation.x = Clamp(camera->rotation.x, CAMERA_ROTATION_X_MIN, CAMERA_ROTATION_X_MAX);
+}
+
+/*
+ *	FPSカメラ更新
+ */
+void CameraComponent::FPSUpdate(GameObject* camera, GameObjectPtr player, float deltaTime) {
+	// カメラの回転
+	auto playerAction = GetInputState(GameEnum::ActionMap::PlayerAction);
+	float axisX = playerAction.axis[static_cast<int>(GameEnum::PlayerAction::CameraRotateX)];
+	float axisY = playerAction.axis[static_cast<int>(GameEnum::PlayerAction::CameraRotateY)];
+	CameraRotate(camera, axisX, axisY);
+
+	// プレイヤーの頭に位置調整
+	Vector3 playerHeadPos = player->position;
+	playerHeadPos.y += PLAYER_HEAD_HEIGHT;
+	camera->position = playerHeadPos;
+
+	// シェイク
+	CameraShake(camera, deltaTime);
+}
+
+/*
+ *	TPSカメラ更新
+ */
+void CameraComponent::TPSUpdate(GameObject* camera, GameObjectPtr player, float deltaTime) {
+	// カメラの回転
+	auto playerAction = GetInputState(GameEnum::ActionMap::PlayerAction);
+	float axisX = playerAction.axis[static_cast<int>(GameEnum::PlayerAction::CameraRotateX)];
+	float axisY = playerAction.axis[static_cast<int>(GameEnum::PlayerAction::CameraRotateY)];
+	CameraRotate(camera, axisX, axisY);
+
+	// プレイヤーの背後に位置調整
+	camera->position = GetTPSCameraPosition(player);
+
+	// シェイク
+	CameraShake(camera, deltaTime);
+}
+
+/*
+ *	デバックカメラ更新
+ */
+void CameraComponent::DebugUpdate(GameObject* camera, GameObjectPtr player, float deltaTime) {
+	// カメラの回転
+	auto cameraAction = GetInputState(GameEnum::ActionMap::DebugCameraAction);
+	float axisX = cameraAction.axis[static_cast<int>(GameEnum::DebugCameraAction::RotateX)];
+	float axisY = cameraAction.axis[static_cast<int>(GameEnum::DebugCameraAction::RotateY)];
+	CameraRotate(camera, axisX, axisY);
+
+	// カメラの角度のsin,cos
+	const float cameraSin = sinf(camera->rotation.y);
+	const float cameraCos = cosf(camera->rotation.y);
+
+	// 移動
+	Vector3 moveVec = V_ZERO;
+	float right = cameraAction.axis[static_cast<int>(GameEnum::DebugCameraAction::RightMove)];
+	float forward = cameraAction.axis[static_cast<int>(GameEnum::DebugCameraAction::ForwardMove)];
+	float up = cameraAction.axis[static_cast<int>(GameEnum::DebugCameraAction::UpMove)];
+	// 移動速度
+	float moveSpeed = DEFAULT_DEBUG_MOVE_SPEED;
+	if (cameraAction.button[static_cast<int>(GameEnum::DebugCameraAction::Run)]) {
+		moveSpeed *= 2;
+	}
+
+	// カメラから見て右の移動
+	if (right != 0) {
+		moveVec.x += right * moveSpeed * cameraCos * deltaTime;
+		moveVec.z += right * moveSpeed * -cameraSin * deltaTime;
+	}
+	// カメラから見て前の移動
+	if (forward != 0) {
+		moveVec.x += forward * moveSpeed * cameraSin * deltaTime;
+		moveVec.z += forward * moveSpeed * cameraCos * deltaTime;
+	}
+	// カメラから見て上の移動
+	if (up != 0) {
+		moveVec.y += up * moveSpeed * deltaTime;
+	}
+	// 2方向に入力されていたら移動量半減
+	if (fabs(right) + fabs(forward) == 2) {
+		moveVec *= 0.5f;
+	}
+	camera->position += moveVec;
+
+	// プレイヤー操作に切り替え
+	if (!player) return;
+	if (cameraAction.buttonDown[static_cast<int>(GameEnum::DebugCameraAction::ChangePlayerAction)]) {
+		// アクションマップの切り替え
+		SetActionMapIsActive(GameEnum::ActionMap::PlayerAction, true);
+		SetActionMapIsActive(GameEnum::ActionMap::DebugCameraAction, false);
+		// カメラステートの切り替え
+		if (!player->GetComponent<ArmActionComponent>()->GetLiftObject()) {
+			state = GameEnum::CameraState::FPS;
+		}
+		else {
+			state = GameEnum::CameraState::TPS;
+		}
+	}
+}
+
+/*
+ *	カメラシェイク
+ */
+void CameraComponent::CameraShake(GameObject* camera, float deltaTime) {
+	if (isShaking) {
+		camera->position += V_ONE * (GetRand(SHAKE_POWER * 2) - SHAKE_POWER);
+		shakeTime -= deltaTime;
+		if (shakeTime <= 0) {
+			isShaking = false;
+		}
+	}
 }
 
