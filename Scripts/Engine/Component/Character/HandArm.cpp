@@ -26,8 +26,9 @@ HandArm::HandArm()
 	: liftObject(nullptr)
 	, playerModelHandle(-1)
 	
-	, LIFT_POS_RATE(500)
+	, LIFT_POS_RATE(300)
 	, LIFTABLE_DISTANCE(1000)
+	, LIFT_HEIGHT(200)
 {}
 
 void HandArm::Start() {
@@ -105,6 +106,7 @@ void HandArm::CarryTreasure(GameObjectPtr player) {
 	auto cameraRot = camera->rotation;
 	cameraRot.x = 0;
 	liftObject->position = player->position + (ForwardDir(cameraRot) * LIFT_POS_RATE);
+	liftObject->position.y += LIFT_HEIGHT;
 }
 
 /*

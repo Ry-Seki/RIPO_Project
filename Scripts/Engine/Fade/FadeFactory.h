@@ -8,13 +8,11 @@
 
 #include "FadeBase.h"
 #include "BlackFade.h"
-#include "SpiralFade.h"
 #include "TileFade.h"
 #include "InkSpreadFade.h"
 
 enum class FadeType {
     Black,
-    Spiral,
     Tile,
     InkSpread,
 
@@ -33,8 +31,6 @@ public:
         switch (type) {
             case FadeType::Black:
                 return std::make_shared<BlackFade>(duration, dir, mode);
-            case FadeType::Spiral:
-                return std::make_shared<SpiralFade>(duration, dir, mode);
             case FadeType::Tile:
                 return std::make_shared<TileFade>(duration, dir, mode);
             case FadeType::InkSpread:

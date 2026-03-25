@@ -12,8 +12,8 @@
   *	@brief	ボタンの状態のリセット
   */
 void SinglePressButton::ResetState() {
-	UIButtonBase::ResetState();
 	inputHandle = false;
+	UIButtonBase::ResetState();
 }
 
 /*
@@ -58,7 +58,6 @@ void SinglePressButton::Update(float unscaledDeltaTime) {
  */
 void SinglePressButton::Render() {
 	if (handleList.empty()) return;
-	// TODO : 描画インターフェースでの描画
 	int handle = handleList[static_cast<int>(GetRendererState())];
 
 	if (handle != -1) {

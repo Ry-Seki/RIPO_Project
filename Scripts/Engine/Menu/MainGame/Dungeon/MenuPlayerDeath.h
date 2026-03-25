@@ -23,9 +23,6 @@ class Engine;
  */
 class MenuPlayerDeath : public MenuBase {
 private:
-	float animTimer = 0.0f;
-	int animFrame = 0;
-
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;

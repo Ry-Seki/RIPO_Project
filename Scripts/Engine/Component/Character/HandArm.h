@@ -19,6 +19,7 @@ private:
 
 	const float LIFT_POS_RATE;		// ’Í‚ŞˆÊ’u’²®
 	const float LIFTABLE_DISTANCE;	// ’Í‚ß‚é‹——£
+	const float LIFT_HEIGHT;			// ’Í‚Ş‚‚³
 
 public:
 	HandArm();

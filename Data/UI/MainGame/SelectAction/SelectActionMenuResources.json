@@ -56,11 +56,11 @@
     {
       "Name": "ElapsedDayText",
       "Type": "Dynamic",
-      "UseFont": "NormalSizeFont",
+      "UseFont": "BigSizeFont",
       "Alignment": "Left",
       "Position": {
-        "X": 190,
-        "Y": 510
+        "X": 260,
+        "Y": 500
       }
     },
     {
@@ -175,7 +175,7 @@
       "Resources": {
         "Idle": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDayButton.png",
         "Hover": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDayButton.png",
-        "Press": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDayButton_Select.png",
+        "Press": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDayButton_Press.png",
         "Select": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_ElapsedDayButton_Select.png"
       }
     },
@@ -187,10 +187,10 @@
         "Y": 18
       },
       "Rect": {
-        "X": 6,
-        "Y": 18,
-        "Width": 249,
-        "Height": 196
+        "X": 67,
+        "Y": 49,
+        "Width": 120,
+        "Height": 120
       },
       "Resources": {
         "Idle": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_MenuButton.png",

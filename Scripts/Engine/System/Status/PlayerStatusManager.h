@@ -23,8 +23,9 @@ class PlayerStatusManager : public Singleton<PlayerStatusManager> {
 
 private:
 	PlayerStatusData playerStatus;		// プレイヤーステータスデータ
-
-	static constexpr const char* _PLAYER_STATUS_DATA_PATH = "Data/Player/PlayerStatusData.json";
+	GameEnum::StatusValueType RiseType = GameEnum::StatusValueType::Invalid;
+	PlayerStatusValue StatusRiseList[(int)GameEnum::StatusValueType::Max];
+	PlayerStatusValue initStatus;
 
 private:
 	/*
@@ -56,16 +57,18 @@ public:
 	void Initialize();
 	/*
 	 *	@brief		レベル指定のプレイヤーステータス設定
+	 * 	@param[in]	GameEnum::StatusValueType type
 	 *	@param[in]	int statusPart
 	 *	@param[in]	int setLevel
 	 */
-	void SetPlayerStatus(int statusPart, int setLevel);
+	void SetPlayerStatus(GameEnum::StatusValueType type ,int statusPart, int setLevel);
 	/*
 	 *	@brief		レベル指定のプレイヤーのステータス上昇
+	 *  @param[in]	GameEnum::StatusValueType type
 	 *  @param[in]	int statusPart		上昇するステータス
 	 *  @param[in]	int setLevel = 1	上がった回数
 	 */
-	void AddPlayerStatus(int statusPart, int setLevel = 1);
+	void AddPlayerStatus(GameEnum::StatusValueType type, int statusPart, int setLevel = 1);
 	/*
 	 *	@brief		セーブ用ステータスレベルデータの収集
 	 *	@return		PlayerStatusLevelData

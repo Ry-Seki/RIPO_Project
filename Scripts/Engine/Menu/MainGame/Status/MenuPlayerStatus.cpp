@@ -112,8 +112,7 @@ void MenuPlayerStatus::Update(Engine& engine, float unscaledDeltaTime) {
     auto button = eventSystem.GetCurrentSelectButton();
     if (!button) return;
 
-    if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
-        inputHandle = true;
+    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
         button->OnPressDown();
     }
 }
@@ -167,12 +166,12 @@ void MenuPlayerStatus::Close(Engine& engine) {
  *	@brief	ボタンの押された時の処理
  */
 void MenuPlayerStatus::SelectButtonExecute(Engine& engine) {
-    AudioUtility::PlaySE("DebugSE");
     auto& menu = MenuManager::GetInstance();
+    AudioUtility::PlaySE("DebugSE");
+    isInteractive = false;
     FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
         ExecuteCallback();
-        menu.CloseTopMenu();
     });
 }
 /*
@@ -228,9 +227,12 @@ void MenuPlayerStatus::ComparisonStatus() {
  *	@brief	コールバックの実行
  */
 void MenuPlayerStatus::ExecuteCallback() {
+    auto& menu = MenuManager::GetInstance();
+
     if (isCallback && Callback) {
         Callback();
     } else {
+        menu.CloseTopMenu();    // このメニュー
         FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeIn);
     }

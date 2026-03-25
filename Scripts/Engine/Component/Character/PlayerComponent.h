@@ -134,6 +134,11 @@ public:
 	 */
 	inline void SetIsDead(bool setIsDead) { isDead = setIsDead; }
 	
+	/*
+	 *	‰ñ”ğó‘Ô‚ÌƒŠƒZƒbƒg
+	 *  @author oorui
+	 */
+	inline void ResetAvoid();
 };
 
 #endif // !_PLAYERCOMPONENT_H_

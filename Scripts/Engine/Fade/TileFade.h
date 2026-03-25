@@ -10,6 +10,8 @@
 #include "../GameConst.h"
 #include "../ScreenSize.h"
 
+#include <algorithm>
+
 class TileFade : public FadeBase {
 private:
     int color;

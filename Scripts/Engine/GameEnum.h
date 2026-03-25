@@ -416,5 +416,16 @@ namespace GameEnum {
 		Max
 	};
 
+	/*
+	 *	ステータス強化幅の種類
+	 */
+	enum class  StatusValueType {
+		Invalid = -1,
+		Shop,
+		Training,
+
+		Max
+	};
+
 }
 #endif // !_GAME_ENUM_H_

@@ -50,7 +50,6 @@ struct PlayerStatusValue {
  */
 struct PlayerStatusData {
 	PlayerStatusValue base;
-	PlayerStatusValue rise;
 	PlayerStatusValue lv;
 };
 

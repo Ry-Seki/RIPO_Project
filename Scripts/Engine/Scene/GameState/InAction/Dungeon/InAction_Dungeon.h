@@ -21,6 +21,8 @@ private:
 
 	static constexpr const char* _DUNGEON01_BGMPATH = "Res/Audio/BGM/Dungeon/Dungeon_1/星の詩.mp3";					// ダンジョン1のBGMパス
 	static constexpr const char* _DUNGEON02_BGMPATH = "Res/Audio/BGM/Dungeon/Dungeon_2/Apparition’s_Lullaby.mp3";	// ダンジョン2のBGMパス
+	static constexpr const char* _DUNGEON03_BGMPATH = "Res/Audio/BGM/Dungeon/Dungeon_3/Soldiers.mp3";	// ダンジョン3のBGMパス
+	static constexpr const char* _DUNGEON04_BGMPATH = "Res/Audio/BGM/Dungeon/Dungeon_4/六つの鐘が鳴る頃に.mp3";	// ダンジョン4のBGMパス
 	static constexpr const char* _DUNGEONSELECT_BGMPATH = "Res/Audio/BGM/Dungeon/DungeonSelectBGM.mp3";				// ダンジョン選択画面のBGMパス
 
 public:

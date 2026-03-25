@@ -111,8 +111,7 @@ void MenuMoneyChange::Update(Engine& engine, float unscaledDeltaTime) {
         auto button = eventSystem.GetCurrentSelectButton();
         if (!button) return;
 
-        if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
-            inputHandle = true;
+        if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
             button->OnPressDown();
         }
     } else {
@@ -186,8 +185,9 @@ void MenuMoneyChange::Resume() {
  *	@brief		ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—
  */
 void MenuMoneyChange::SelectButtonExecute() {
-    AudioUtility::PlaySE("DebugSE");
     auto& menu = MenuManager::GetInstance();
+    AudioUtility::PlaySE("DebugSE");
+    isInteractive = false;
     FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
         menu.CloseAllMenu();

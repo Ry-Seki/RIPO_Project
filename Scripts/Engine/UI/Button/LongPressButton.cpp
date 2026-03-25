@@ -59,7 +59,6 @@ void LongPressButton::Update(float unscaledDeltaTime) {
  */
 void LongPressButton::Render() {
 	if (handleList.empty()) return;
-	// TODO : 描画インターフェースでの描画
 	int handle = handleList[static_cast<int>(GetRendererState())];
 
 	if (handle != -1) {
