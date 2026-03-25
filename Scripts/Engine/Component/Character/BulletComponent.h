@@ -18,6 +18,7 @@ private:
 	GameObject* shotOwner;		// 射撃者
 	float hitDamage;			// 当たった時に与えるダメージ
 	float moveSpeed;			// 弾の速さ
+	Vector3 prevPos;			// 1フレーム前の位置
 	
 	const int MOVE_STEP;		// 移動をどれだけ刻むか
 
@@ -52,6 +53,17 @@ public:
 		float setDamage,
 		float setSpeed,
 		float setDestroyTime);
+
+public:
+	/*
+	 *	1フレーム前の位置取得
+	 */
+	inline Vector3 GetPrevPos() const { return prevPos; }
+
+	/*
+	 *	移動方向の取得
+	 */
+	inline Vector3 GetMoveDirection() const { return moveDirection; }
 
 public:
 	inline float GetHitDamage() { return hitDamage; }
