@@ -22,7 +22,6 @@ protected:
 	bool isInteractive = false;		// 操作可能フラグ
 	bool isVisible = false;			// 描画フラグ
 	bool isStart = false;			// 開始フラグ
-	bool inputHandle = false;		// 入力フラグ
 	bool isAnimation = false;		// アニメーションフラグ
 
 public:
@@ -47,7 +46,6 @@ public:
 		isVisible = true;
 		isInteractive = true;
 		isStart = false;
-		inputHandle = false;
 		isAnimation = true;
 	}
 	/*
@@ -84,7 +82,6 @@ public:
 		isVisible = true;
 		isInteractive = true;
 		isStart = true;
-		inputHandle = false;
 	}
 
 public:

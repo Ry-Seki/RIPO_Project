@@ -12,8 +12,8 @@
   *	@brief	ボタンの状態のリセット
   */
 void SinglePressButton::ResetState() {
-	UIButtonBase::ResetState();
 	inputHandle = false;
+	UIButtonBase::ResetState();
 }
 
 /*
