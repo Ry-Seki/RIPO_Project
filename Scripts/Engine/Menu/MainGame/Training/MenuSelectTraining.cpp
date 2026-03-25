@@ -139,8 +139,6 @@ void MenuSelectTraining::Open() {
     }
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
-        // TODO : ƒCƒxƒ“ƒg‚²‚Æ‚É‰æ‘œ·‚µ‘Ö‚¦
-
         eventSystem.ApplySelection();
         InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
     });
