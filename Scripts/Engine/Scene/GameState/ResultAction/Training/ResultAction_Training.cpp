@@ -35,7 +35,7 @@ void ResultAction_Training::Setup() {
 		AdvanceDay();
 	});
 	auto& context = owner->GetOwner()->GetActionContext();
-	player.AddPlayerStatus(static_cast<int>(context.statusType));
+	player.AddPlayerStatus(GameEnum::StatusValueType::Training , static_cast<int>(context.statusType));
 	menu.OpenMenu<MenuPlayerStatus>();
 	AudioUtility::PlaySE(GameConst::_TRAINING_SE);
 }
