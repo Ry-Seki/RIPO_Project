@@ -397,6 +397,26 @@ std::vector<GameObject*> StageCollision::GetNearByObjects(const Vector3& pos) {
 	return result;
 }
 
+std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> StageCollision::SetupDebugCollision(GameObject* other) {
+	auto capsule = other->GetComponent<CapsuleCollider>();
+	if (!capsule) return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
+
+	Vector3 pos = other->position;
+
+	// セルサイズ分の球で取得
+	float radius = GRID_SIZE;
+
+	auto hitDim = std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
+	*hitDim = MV1CollCheck_Sphere(
+		modelHandle,
+		-1,
+		ToVECTOR(pos),
+		radius
+	);
+
+	return hitDim;
+}
+
 /*
  *	ステージの当たり判定の描画
  */
@@ -404,7 +424,10 @@ void StageCollision::StageColliderRenderer(GameObject* other, Vector3 MoveVec, V
 	// モデルハンドルが無効な場合は処理を中止
 	if (modelHandle < 0) return;
 
-	auto hitDim = SetupCollision(other, MoveVec);
+	auto hitDim = SetupDebugCollision(other);
+
+	// プレイヤーの現在グリッドセルを取得
+	GridCoord playerCell = WorldToGrid(other->position);
 
 	// 壁と床を区別するための色情報を設定
 	unsigned int wallColor = GetColor(255, 100, 100);
@@ -415,20 +438,33 @@ void StageCollision::StageColliderRenderer(GameObject* other, Vector3 MoveVec, V
 	for (int i = 0; i < hitDim->HitNum; i++) {
 		const auto& poly = hitDim->Dim[i];
 
+		// 三角形の頂点取得
+		Vector3 p0 = FromVECTOR(poly.Position[0]);
+		Vector3 p1 = FromVECTOR(poly.Position[1]);
+		Vector3 p2 = FromVECTOR(poly.Position[2]);
+
+		// 各頂点のグリッドを取得
+		GridCoord c0 = WorldToGrid(p0);
+		GridCoord c1 = WorldToGrid(p1);
+		GridCoord c2 = WorldToGrid(p2);
+
+		// どれか1つでもプレイヤーセルに含まれていれば描画
+		if (!(c0 == playerCell || c1 == playerCell || c2 == playerCell)) continue;
+
 		// 壁
 		bool isWall = (poly.Normal.y < _POLYGON_HEIGHT);
 		// 床
 		bool isFloor = (poly.Normal.y >= _FLOOR_LIMIT);
+
 		unsigned int drawColor;
 
-		// 壁かどうか
+		// 床
 		if (isFloor) {
-			// 壁ポリゴン配列に追加する
 			drawColor = floorColor;
 		}
 
+		// 壁
 		if (isWall) {
-			// 床ポリゴン配列に追加する
 			drawColor = wallColor;
 		}
 
