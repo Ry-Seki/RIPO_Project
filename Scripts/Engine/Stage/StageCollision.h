@@ -54,7 +54,7 @@ private:
 	// グリッド空間
 	std::unordered_map<GridCoord, std::vector<GameObject*>, GridCoordHash> grid;
 	// グリッド設定
-	static constexpr float GRID_SIZE = 1000.0f;   // 1マスの大きさ
+	static constexpr float GRID_SIZE = 5000.0f;   // 1マスの大きさ
 	static constexpr int GRID_NUM = 1<<10;		     // 片側の数
 
 public:
@@ -153,6 +153,8 @@ private:
 	 */
 	std::vector<GameObject*> GetNearByObjects(const Vector3& pos);
 
+	std::unique_ptr<MV1_COLL_RESULT_POLY_DIM>SetupDebugCollision(GameObject* other);
+
 public:
 
 	/*
@@ -181,6 +183,8 @@ public:
 	void ClearGrid() {
 		grid.clear();
 	}
+
+
 };
 
 
