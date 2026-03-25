@@ -40,6 +40,54 @@
         "Res/Menu/MainGame/Dungeon/Trealine_Dungeon3.png",
         "Res/Menu/MainGame/Dungeon/Trealine_Dungeon4.png"
       ]
+    },
+    {
+      "Name": "EventSprite1",
+      "Rect": {
+        "X": 65,
+        "Y": 189,
+        "Width": 64,
+        "Height": 64
+      },
+      "Resources": [
+        "Res/Menu/MainGame/Dungeon/Trealine_EventSprite.png"
+      ]
+    },
+    {
+      "Name": "EventSprite2",
+      "Rect": {
+        "X": 641,
+        "Y": 189,
+        "Width": 64,
+        "Height": 64
+      },
+      "Resources": [
+        "Res/Menu/MainGame/Dungeon/Trealine_EventSprite.png"
+      ]
+    },
+    {
+      "Name": "EventSprite3",
+      "Rect": {
+        "X": 1043,
+        "Y": 189,
+        "Width": 64,
+        "Height": 64
+      },
+      "Resources": [
+        "Res/Menu/MainGame/Dungeon/Trealine_EventSprite.png"
+      ]
+    },
+    {
+      "Name": "EventSprite4",
+      "Rect": {
+        "X": 1445,
+        "Y": 189,
+        "Width": 64,
+        "Height": 64
+      },
+      "Resources": [
+        "Res/Menu/MainGame/Dungeon/Trealine_EventSprite.png"
+      ]
     }
   ],
   "Texts": [

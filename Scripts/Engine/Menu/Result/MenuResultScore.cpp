@@ -20,6 +20,10 @@
 
 #include <DxLib.h>
 
+namespace {
+    constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Result/ResultResources.json";
+    constexpr const char* _NAVIGATION_PATH = "Data/UI/Result/ResultNavigation.json";
+}
 /*
  *	@brief	初期化処理
  */
@@ -110,9 +114,11 @@ void MenuResultScore::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer = 0;
 
     for (auto& sprite : spriteList) {
+        if (!sprite) continue;
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
 
+        int animFrame = sprite->GetCurrentFrame();
         animFrame = (animFrame + 1) % frameCount;
         sprite->SetFrameIndex(animFrame);
     }
@@ -159,22 +165,19 @@ void MenuResultScore::Resume() {
 }
 /*
  *	@brief		ボタンの押された時の処理
- *	@param[in]	int buttonIndex
  */
-void MenuResultScore::SelectButtonExecute(Engine& engine, int buttonIndex) {
+void MenuResultScore::SelectButtonExecute(Engine& engine) {
     auto& menu = MenuManager::GetInstance();
     auto confirm = menu.GetMenu<MenuConfirm>();
     confirm->SetCallback([this, &menu, &engine](GameEnum::ConfirmResult result) {
-        if (result == GameEnum::ConfirmResult::Yes) {
-            FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
-            FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
-                // TODO : お金のリセット
-                menu.CloseAllMenu();
-                engine.SetNextScene(std::make_shared<TitleScene>());
-            });
-        } else {
-            menu.CloseTopMenu();
-        }
+        menu.CloseTopMenu();    // 確認メニュー
+        if (result != GameEnum::ConfirmResult::Yes) return;
+        isInteractive = false;
+        FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.2f, FadeDirection::Out, FadeMode::Stop);
+        FadeManager::GetInstance().StartFade(fadeOut, [this, &menu, &engine]() {
+            menu.CloseAllMenu();
+            engine.SetNextScene(std::make_shared<TitleScene>());
+        });
     });
     menu.OpenMenu<MenuConfirm>();
 }

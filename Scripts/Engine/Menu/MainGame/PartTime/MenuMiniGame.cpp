@@ -29,7 +29,6 @@ namespace {
     constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/PartTime/MiniGame/MiniGameMenuResources.json";
     constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/PartTime/MiniGame/MiniGameMenuNavigation.json";
 
-    // const std::unordered_map<std::string, >
 }
 /*
  *	@brief	‰Šú‰»ˆ—

@@ -15,7 +15,6 @@
 #include "../../GameEnum.h"
 #include "../../GameConst.h"
 
-
 // 前方宣言
 class Engine;
 
@@ -24,8 +23,6 @@ class Engine;
  */
 class MenuResultScore : public MenuBase {
 private:
-	float animTimer = 0.0f;
-	int animFrame = 0;
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<Sprite>> spriteList;
@@ -34,9 +31,6 @@ private:
 
 	ResultScoreData resultScore;
 	GameEnum::ResultRank rank = GameEnum::ResultRank::Invalid;
-
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/Result/ResultResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Result/ResultNavigation.json";
 
 public:
 	/*
@@ -71,9 +65,8 @@ public:
 private:
 	/*
 	 *	@brief		ボタンの押された時の処理
-	 *	@param[in]	int buttonIndex
 	 */
-	void SelectButtonExecute(Engine& engine, int buttonIndex);
+	void SelectButtonExecute(Engine& engine);
 	/*
 	 *	@brief		スコア->ランク判定
 	 *	@param[in]	int playerScore

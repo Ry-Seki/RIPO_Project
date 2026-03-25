@@ -29,12 +29,15 @@
 #include <DxLib.h>
 
 namespace {
+	constexpr const char* _COMPLETE_TEXT = "Complete!";
+	constexpr const char* _NONE_TEXT = "NONE";
 	/*
 	 *	@brief	ファイルパス
 	 */
 	constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/Dungeon/SelectDungeon/SelectDungeonMenuResources.json";
 	constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/Dungeon/SelectDungeon/SelectDungeonMenuNavigation.json";
 	constexpr const char* _DUNGEON_BUTTON_DATA_PATH = "Data/UI/MainGame/Dungeon/SelectDungeon/DungeonButton.json";
+	constexpr const char* _EVENT_SRPITE_DATA_PATH = "Data/UI/MainGame/Dungeon/SelectDungeon/DungeonEventSprite.json";
 
 	// 別名定義
 	using DungeonType = GameEnum::DungeonType;
@@ -53,6 +56,13 @@ namespace {
 	 *	@brief	ダンジョンボタン構造体
 	 */
 	struct DungeonButtonData {
+		std::string name = "";
+		DungeonType type = DungeonType::Invalid;
+	};
+	/*
+	 *	@brief	イベント画像構造体
+	 */
+	struct EventSrpteData {
 		std::string name = "";
 		DungeonType type = DungeonType::Invalid;
 	};
@@ -90,6 +100,28 @@ namespace {
 		}
 		return result;
 	}
+	/*
+	 *  @brief      JSON->イベント画像情報へ変換
+	 *  @param[in]  const JSON& json
+	 *	@return		std::vector<EventSrpteData>
+	 */
+	std::vector<EventSrpteData> ParseEventSpriteData(const JSON& json) {
+		std::vector<EventSrpteData> result;
+
+		auto array = json["DungeonEventSprite"];
+
+		for (auto& node : array) {
+			EventSrpteData entry;
+
+			entry.name = node["SpriteName"].get<std::string>();
+
+			std::string typeString = node["DungeonType"].get<std::string>();
+			entry.type = StringToDungeonType(typeString);
+
+			result.push_back(entry);
+		}
+		return result;
+	}
 }
  /*
   *	@brief	初期化処理
@@ -100,8 +132,9 @@ void MenuSelectDungeon::Initialize(Engine& engine) {
 	auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
 	auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
 	auto buttonData = load.LoadResource<LoadJSON>(_DUNGEON_BUTTON_DATA_PATH);
+	auto spriteData = load.LoadResource<LoadJSON>(_EVENT_SRPITE_DATA_PATH);
 
-	load.SetOnComplete([this, &engine, menuJSON, navigation, buttonData]() {
+	load.SetOnComplete([this, &engine, menuJSON, navigation, buttonData, spriteData]() {
 		// メニューUI生成
 		MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
 		// メニューUIの所有権移動
@@ -119,12 +152,18 @@ void MenuSelectDungeon::Initialize(Engine& engine) {
 		}
 		// ダンジョン画像の取得
 		for (auto& sprite : spriteList) {
+			if (!sprite) continue;
+			// マップに登録
+			spriteMap[sprite->GetName()] = sprite.get();
+
 			if (sprite->GetName() == "DungeonSprite") dungeonSprite = sprite.get();
 		}
 		// イベントシステムの初期化
 		eventSystem.Initialize(0);
-		// ボタンの準備前処理
-		SetupDungeonButtons(buttonData->GetData());
+		// ボタンの初期化処理
+		InitializeDungeonButtons(buttonData->GetData());
+		// 画像の初期化処理
+		InitializeEventSprites(spriteData->GetData());
 		// イベントシステムのnavigationの設定
 		eventSystem.LoadNavigation(navigation->GetData());
 	});
@@ -150,6 +189,8 @@ void MenuSelectDungeon::Open() {
 	CreateDungeonInfoData();
 	// ダンジョン情報の準備前処理
 	SetupDungeonInfo();
+	// イベント画像の準備前処理
+	SetupEventSprite();
 	FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
 	FadeManager::GetInstance().StartFade(fadeIn, [this]() {
 		InputUtility::SetActionMapIsActive(GameEnum::ActionMap::MenuAction, true);
@@ -293,17 +334,24 @@ void MenuSelectDungeon::SetupDungeonInfo() {
 	dungeonSprite->SetFrameIndex(currentIndex);
 	// ダンジョン情報テキストの設定
 	auto& entry = dungeonMenuList[currentIndex];
+	// ダンジョンレベルテキストの設定
 	entry.level->SetText(std::to_string(entry.info.levelOfDanger));
+	// ストレングステキストの設定
 	entry.strength->SetText(
 		std::to_string(entry.info.minStrength)
 		+ " ～ "
 		+ std::to_string(entry.info.maxStrength));
-	entry.treasureCount->SetText(
-		std::to_string(entry.info.treasureCount)
-		+ " / "
-		+ std::to_string(entry.info.maxTreasureCount));
-
-	SortDungeonMenuEntry(entry);
+	// お宝情報テキストの設定
+	if (entry.info.treasureCount == entry.info.maxTreasureCount) {
+		entry.treasureCount->SetText(_COMPLETE_TEXT);
+	}else {
+		entry.treasureCount->SetText(
+			std::to_string(entry.info.treasureCount)
+			+ " / "
+			+ std::to_string(entry.info.maxTreasureCount));
+	}
+	// イベントお宝情報の整理
+	SortDungeonEventText(entry);
 }
 /*
  *	@brief		ダンジョン情報の描画
@@ -358,11 +406,12 @@ void MenuSelectDungeon::OpenConfirmMenu(int dungeonID) {
  *	@brief		イベント情報を整理
  *	@param[in]	DungeonMenuEntry& entry
  */
-void MenuSelectDungeon::SortDungeonMenuEntry(DungeonMenuEntry& entry) {
+void MenuSelectDungeon::SortDungeonEventText(DungeonMenuEntry& entry) {
 	std::string eventStr = "";
+
 	// すでに獲得していた場合、クリアとする
 	if (entry.info.isEventClear) {
-		eventStr = "Complete!";
+		eventStr = _COMPLETE_TEXT;
 	}
 	else {
 		// もしイベント中なら、イベント日を入れる
@@ -370,17 +419,34 @@ void MenuSelectDungeon::SortDungeonMenuEntry(DungeonMenuEntry& entry) {
 			eventStr = std::to_string(entry.info.eventStartDay)
 				+ " ～ "
 				+ std::to_string(entry.info.eventEndDay);
+			
 		}else {
-			eventStr = "NONE";
+			eventStr = _NONE_TEXT;
 		}
 	}
-	entry.eventInfo->SetText(eventStr);
+	if(entry.eventInfo) entry.eventInfo->SetText(eventStr);
 }
 /*
- *	@brief		ダンジョンボタンの準備前処理
+ *	@brief		イベント画像の準備前処理
+ */
+void MenuSelectDungeon::SetupEventSprite() {
+	for (const auto& [type, sprite] : eventSpriteMap) {
+		// ダンジョンデータの取得
+		auto& infoData = GetDungeonInfoData(type);
+		// イベントフラグの取得
+		bool isEvent = infoData.isEventDay;
+		bool isEventClear = infoData.isEventClear;
+		// すでにイベントお宝を獲得していた場合、falseにする
+		if (isEventClear) isEvent = false;
+		// 表示フラグの設定
+		if (sprite) sprite->SetIsVisible(isEvent);
+	}
+}
+/*
+ *	@brief		ダンジョンボタンの初期化処理
  *	@param[in]	const JSON& json
  */
-void MenuSelectDungeon::SetupDungeonButtons(const JSON& json) {
+void MenuSelectDungeon::InitializeDungeonButtons(const JSON& json) {
 	auto dungeonData = ParseDungeonButtonData(json);
 
 	for (const auto& entry : dungeonData) {
@@ -399,6 +465,21 @@ void MenuSelectDungeon::SetupDungeonButtons(const JSON& json) {
 	}
 }
 /*
+ *	@brief		イベント画像の初期化処理
+ *	@param[in]	const JSON& json
+ */
+void MenuSelectDungeon::InitializeEventSprites(const JSON& json) {
+	auto spriteData = ParseEventSpriteData(json);
+
+	for (const auto& entry : spriteData) {
+		Sprite* sprite = FindSpriteByName(entry.name);
+		if (!sprite) continue;
+		const auto type = entry.type;
+		// イベント画像マップに登録
+		eventSpriteMap[type] = sprite;
+	}
+}
+/*
  *	@brief		名前でのボタン検索
  *	@param[in]	const std::string& buttonName
  *	@return		UIButtonBase*
@@ -408,4 +489,32 @@ UIButtonBase* MenuSelectDungeon::FindButtonByName(const std::string& buttonName)
 	if (itr == buttonMap.end()) return nullptr;
 
 	return itr->second;
+}
+/*
+ *	@brief		名前での画像検索
+ *	@param[in]	const std::string& spriteName
+ *	@return		Sprite*
+ */
+Sprite* MenuSelectDungeon::FindSpriteByName(const std::string& spriteName) {
+	auto itr = spriteMap.find(spriteName);
+	if (itr == spriteMap.end()) return nullptr;
+
+	return itr->second;
+}
+/*
+ *	@brief		ダンジョンの種類からダンジョンのメニュー構造体の取得
+ *	@param[in]	GameEnum::DungeonType type
+ *	@return		DungeonInfoData&
+ */
+DungeonInfoData& MenuSelectDungeon::GetDungeonInfoData(GameEnum::DungeonType type) {
+	DungeonInfoData data{};
+	for (auto& entry : dungeonMenuList) {
+		auto& info = entry.info;
+		// 同じダンジョンの種類のデータを探す
+		if (type == info.dungeonType) {
+			data = info;
+			break;
+		}
+	}
+	return data;
 }

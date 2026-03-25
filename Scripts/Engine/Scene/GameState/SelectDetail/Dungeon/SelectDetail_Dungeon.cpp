@@ -143,8 +143,10 @@ void SelectDetail_Dungeon::SetDungeonData(const std::vector<std::shared_ptr<Load
 std::vector<DungeonInfoData> SelectDetail_Dungeon::ToDungeonInfoData() {
 	std::vector<DungeonInfoData> dataList;
 	auto& world = WorldProgressManager::GetInstance();
+	// チュートリアルダンジョンを含めないようにインデックスは1から
 	for (int i = 1, max = dungeonDataList.size(); i < max; i++) {
 		DungeonInfoData data{};
+		data.dungeonType = static_cast<GameEnum::DungeonType>(i);
 		data.isEventClear = world.GetEventTreasureCount(i) > 0;
 		data.isEventDay = dungeonDataList[i].isEventDay;
 		data.eventStartDay = dungeonDataList[i].eventStartDay;

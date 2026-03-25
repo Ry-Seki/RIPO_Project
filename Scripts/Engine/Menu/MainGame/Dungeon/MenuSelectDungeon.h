@@ -26,13 +26,6 @@
 class MenuSelectDungeon : public MenuBase {	
 private:
 	/*
-	 *	@brief	ダンジョンイベント構造体
-	 */
-	struct DungeonEventEntry {
-		UIButtonBase* button = nullptr;	// イベント対象ボタン
-		Sprite* eventSprite = nullptr;	// イベント用画像
-	};
-	/*
 	 *	@brief	ダンジョンメニュー構造体
 	 */
 	struct DungeonMenuEntry {
@@ -41,16 +34,12 @@ private:
 		TextBase* strength = nullptr;		// 最小-最大Strength
 		TextBase* treasureCount = nullptr;	// お宝情報テキスト
 		TextBase* eventInfo = nullptr;		// イベント情報
-		DungeonEventEntry dungeonEvent;		// ダンジョンイベント
 	};
 
 private:
 	int prevIndex = -1;
-
 	std::vector<DungeonInfoData> dungeonInfoList;
-
 	EventSystem eventSystem;
-
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 	std::vector<std::shared_ptr<TextBase>> textList;
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
@@ -58,6 +47,8 @@ private:
 
 	std::vector<DungeonMenuEntry> dungeonMenuList;
 	std::unordered_map<std::string, UIButtonBase*> buttonMap;
+	std::unordered_map<std::string, Sprite*> spriteMap;
+	std::unordered_map<GameEnum::DungeonType, Sprite*> eventSpriteMap;
 
 	std::function<void(int)> Callback = nullptr;
 
@@ -126,21 +117,42 @@ private:
 	 */
 	void OpenConfirmMenu(int dungeonID);
 	/*
-	 *	@brief		イベント情報を整理
+	 *	@brief		イベント情報テキストを整理
 	 *	@param[in]	DungeonMenuEntry& entry
 	 */
-	void SortDungeonMenuEntry(DungeonMenuEntry& entry);
+	void SortDungeonEventText(DungeonMenuEntry& entry);
 	/*
-	 *	@brief		ダンジョンボタンの準備前処理
+	 *	@brief		イベント画像の準備前処理
+	 */
+	void SetupEventSprite();
+	/*
+	 *	@brief		ダンジョンボタンの初期化処理
 	 *	@param[in]	const JSON& json
 	 */
-	void SetupDungeonButtons(const JSON& json);
+	void InitializeDungeonButtons(const JSON& json);
+	/*
+	 *	@brief		イベント画像の初期化処理
+	 *	@param[in]	const JSON& json
+	 */
+	void InitializeEventSprites(const JSON& json);
 	/*
 	 *	@brief		名前でのボタン検索
 	 *	@param[in]	const std::string& buttonName
 	 *	@return		UIButtonBase*
 	 */
 	UIButtonBase* FindButtonByName(const std::string& buttonName);
+	/*
+	 *	@brief		名前での画像検索
+	 *	@param[in]	const std::string& spriteName
+	 *	@return		Sprite*
+	 */
+	Sprite* FindSpriteByName(const std::string& spriteName);
+	/*
+	 *	@brief		ダンジョンの種類からダンジョンのメニュー構造体の取得
+	 *	@param[in]	GameEnum::DungeonType type
+	 *	@return		DungeonInfoData&
+	 */
+	DungeonInfoData& GetDungeonInfoData(GameEnum::DungeonType type);
 
 public:
 	/*

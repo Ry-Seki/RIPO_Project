@@ -186,8 +186,9 @@ void MenuMoneyChange::Resume() {
  *	@brief		ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—
  */
 void MenuMoneyChange::SelectButtonExecute() {
-    AudioUtility::PlaySE("DebugSE");
     auto& menu = MenuManager::GetInstance();
+    AudioUtility::PlaySE("DebugSE");
+    isInteractive = false;
     FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
         menu.CloseAllMenu();

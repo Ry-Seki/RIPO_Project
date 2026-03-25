@@ -1,0 +1,20 @@
+{
+  "DungeonEventSprite": [
+    {
+      "SpriteName": "EventSprite1",
+      "DungeonType": "Dungeon1"
+    },
+    {
+      "SpriteName": "EventSprite2",
+      "DungeonType": "Dungeon2"
+    },
+    {
+      "SpriteName": "EventSprite3",
+      "DungeonType": "Dungeon3"
+    },
+    {
+      "SpriteName": "EventSprite4",
+      "DungeonType": "Dungeon4"
+    }
+  ]
+}
