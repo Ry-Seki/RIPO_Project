@@ -34,7 +34,7 @@ void ResultAction_Shop::Setup() {
 	});
 	auto& context = owner->GetOwner()->GetActionContext();
 	for (int i = 0, max = context.buyStatusIDList.size(); i < max; i++) {
-		PlayerStatusManager::GetInstance().AddPlayerStatus(context.buyStatusIDList[i]);
+		PlayerStatusManager::GetInstance().AddPlayerStatus(GameEnum::StatusValueType::Shop,context.buyStatusIDList[i]);
 	}
 	menu.OpenMenu<MenuPlayerStatus>();
 }

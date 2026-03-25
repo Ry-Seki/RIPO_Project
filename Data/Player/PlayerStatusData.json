@@ -5,10 +5,18 @@
     "Strength": 0,
     "ResistTime": 180
   },
-  "RiseValue": {
-    "HP": 20,
-    "Stamina": 10,
-    "Strength": 1,
-    "ResistTime": 30
-  }
+  "RiseValue": [
+    {
+      "HP": 5,
+      "Stamina": 2,
+      "Strength": 1,
+      "ResistTime": 10
+    },
+    {
+      "HP": 25,
+      "Stamina": 10,
+      "Strength": 5,
+      "ResistTime": 50
+    }
+  ]
 }
