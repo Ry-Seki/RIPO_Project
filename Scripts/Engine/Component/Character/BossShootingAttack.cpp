@@ -21,6 +21,7 @@ BossShootingAttack::BossShootingAttack()
 	, secondFlag(false)
 	, thirdFlag(false)
 	, slowFlag(false)
+	, overheatSEFlag(false)
 	, direction(Vector3::zero)
 	, MAX_COOL_TIME(2.3f)
 {
@@ -119,21 +120,27 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 				// 待機
 				animator->Play(3, 1 * deltaTime);
 				overheatCoolTime += deltaTime;
+				if (!overheatSEFlag && overheatCoolTime > 0.5f) {
+					// オーバーヒート音を出す
+					AudioUtility::PlaySE("overheatSE");
+					overheatSEFlag = true;
+				}
 				// オーバーヒート明け
 				if (overheatCoolTime >= 3) {
 					bossComponent->SetShootingDuration(0);
 					overheatCoolTime = 0;
 					bossComponent->SetOutVisionTime(1);
+					overheatSEFlag = false;
 				}
 			}
 			else if (coolTime <= 0) {
-				//SlowBall(boss, deltaTime, 100000 * deltaTime, 3.0f, 0.1f, 400);
-				RapidFire(boss, deltaTime, 1000000 * deltaTime, 400);
+				//SlowBall(boss, deltaTime, 100000 * deltaTime, 3.0f, 3.0f, 300);
+				RapidFire(boss, deltaTime, 1000000 * deltaTime, 300);
 			}
 		}
 		else {
 			animator->Play(0, 1000 * deltaTime);
-			ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime, 400);
+			ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime, 300);
 		}
 
 		break;

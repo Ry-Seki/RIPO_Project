@@ -25,6 +25,8 @@
 		bool secondFlag;
 		bool thirdFlag;
 		bool slowFlag;
+		// SEフラグ
+		bool overheatSEFlag;
 		// プレイヤーの方向
 		Vector3 direction;
 
