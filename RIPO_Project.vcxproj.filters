@@ -148,7 +148,6 @@
     <ClCompile Include="Scripts\Engine\UI\PlayerUI\DungeonMoneyUI.cpp" />
     <ClCompile Include="Scripts\Engine\UI\PlayerUI\PlayerStatusUI.cpp" />
     <ClCompile Include="Scripts\Engine\UI\PlayerUI\PlayerUI.cpp" />
-    <ClCompile Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.cpp" />
     <ClCompile Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.cpp" />
     <ClCompile Include="Scripts\Engine\UI\PlayerUI\Reticle.cpp" />
     <ClCompile Include="Scripts\Engine\UI\Sprite\Sprite.cpp" />
@@ -164,6 +163,7 @@
     <ClCompile Include="Scripts\Engine\Input\DebugCameraActionMap.cpp" />
     <ClCompile Include="Scripts\Engine\Component\MoveComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\ScreenEffectManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Fade\FadeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Data\Dungeon\DungeonData.h" />
@@ -379,7 +379,6 @@
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerStatusUI.h" />
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUI.h" />
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\PlayerUIBase.h" />
-    <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReloadGaugeUI.h" />
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\ResistTimeGaugeUI.h" />
     <ClInclude Include="Scripts\Engine\UI\PlayerUI\ReticleUI.h" />
     <ClInclude Include="Scripts\Engine\UI\Rect.h" />
@@ -402,5 +401,6 @@
     <ClInclude Include="Scripts\Engine\Component\StrengthComponent.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Respawn.h" />
     <ClInclude Include="Scripts\Engine\Manager\ScreenEffectManager.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\StairData.h" />
   </ItemGroup>
 </Project>

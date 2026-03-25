@@ -111,6 +111,8 @@ public:
 	//----------------------------------------------------
 	static constexpr const char* _DUNGEON_BGM01 = "dungeonBGM01";		// ダンジョン1のBGM名
 	static constexpr const char* _DUNGEON_BGM02 = "dungeonBGM02";		// ダンジョン2のBGM名
+	static constexpr const char* _DUNGEON_BGM03 = "dungeonBGM03";		// ダンジョン3のBGM名
+	static constexpr const char* _DUNGEON_BGM04 = "dungeonBGM04";		// ダンジョン4のBGM名
 	static constexpr const char* _DUNGEONSELECT_BGM = "selectDungeon";	// ダンジョン選択画面のBGM名
 	static constexpr const char* _TRAINING_BGM = "trainingBGM";			// トレーニング画面のBGM名
 	static constexpr const char* _MENU_BGM = "menuBGM";					// メニュー画面のBGM名

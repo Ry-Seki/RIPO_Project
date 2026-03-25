@@ -29,8 +29,8 @@ namespace {
 		GameConst::_DUNGEON_BGM01,
 		GameConst::_DUNGEON_BGM01,
 		GameConst::_DUNGEON_BGM02,
-		GameConst::_DUNGEON_BGM01,
-		GameConst::_DUNGEON_BGM02
+		GameConst::_DUNGEON_BGM03,
+		GameConst::_DUNGEON_BGM04
 	};
 }
 /*

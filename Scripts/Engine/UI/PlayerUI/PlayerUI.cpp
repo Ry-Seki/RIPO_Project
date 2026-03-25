@@ -6,7 +6,6 @@
 #include "PlayerUI.h"
 #include "ReticleUI.h"
 #include "AmmoCountUI.h"
-#include "ReloadGaugeUI.h"
 #include "ResistTimeGaugeUI.h"
 #include "PlayerStatusUI.h"
 #include "DungeonMoneyUI.h"
@@ -18,7 +17,6 @@ void PlayerUI::Initialize(Engine& engine) {
 	// UIÇÃêîê∂ê¨
 	UIs.push_back(std::make_shared<ReticleUI>());
 	UIs.push_back(std::make_shared<AmmoCountUI>());
-	UIs.push_back(std::make_shared<ReloadGaugeUI>());
 	UIs.push_back(std::make_shared<ResistTimeGaugeUI>());
 	UIs.push_back(std::make_shared<PlayerStatusUI>());
 	UIs.push_back(std::make_shared<DungeonMoneyUI>());

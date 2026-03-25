@@ -8,7 +8,6 @@
 #include "../../Load/Sprite/LoadSprite.h"
 #include "../../GameConst.h"
 #include "AmmoCountUI.h"
-#include "ReloadGaugeUI.h"
 #include "../../Manager/WeaponManager.h"
 #include "../../Manager/CameraManager.h"
 
