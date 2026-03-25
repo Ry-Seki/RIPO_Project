@@ -90,8 +90,7 @@ void MenuPlayerDeath::Update(Engine& engine, float unscaledDeltaTime) {
     auto button = eventSystem.GetCurrentSelectButton();
     if (!button) return;
 
-    if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
-        inputHandle = true;
+    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
         button->OnPressDown();
     }
 }

@@ -142,8 +142,7 @@ void MenuConfirm::Update(Engine& engine, float unscaledDeltaTime) {
     auto button = eventSystem.GetCurrentSelectButton();
     if (!button) return;
 
-    if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
-        inputHandle = true;
+    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
         button->OnPressDown();
     }
 }
@@ -157,9 +156,11 @@ void MenuConfirm::AnimUpdate(Engine& engine, float unscaledDeltaTime) {
     animTimer = 0;
 
     for (auto& sprite : spriteList) {
+        if (!sprite) continue;
         int frameCount = sprite->GetFrameCount();
         if (frameCount <= 1) continue;
 
+        int animFrame = sprite->GetCurrentFrame();
         animFrame = (animFrame + 1) % frameCount;
         sprite->SetFrameIndex(animFrame);
     }
