@@ -51,8 +51,8 @@ void MenuResultScore::Initialize(Engine& engine) {
                 eventSystem.UpdateSelectButton(button);
             });
 
-            button->RegisterOnClick([this, &engine, i]() {
-                SelectButtonExecute(engine, i);
+            button->RegisterOnClick([this, &engine]() {
+                SelectButtonExecute(engine);
             });
         }
         eventSystem.LoadNavigation(navigation->GetData());

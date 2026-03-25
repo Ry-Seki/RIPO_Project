@@ -189,8 +189,8 @@
       "Rect": {
         "X": 6,
         "Y": 18,
-        "Width": 249,
-        "Height": 196
+        "Width": 120,
+        "Height": 120
       },
       "Resources": {
         "Idle": "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_MenuButton.png",
