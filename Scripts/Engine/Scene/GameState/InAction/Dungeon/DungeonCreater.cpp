@@ -66,11 +66,12 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	int treasureCount = floorData.treasureSpawnCount;
 	int stairCount = floorData.stairSpawnCount;
 	int goalCount = floorData.goalSpawnCount;
-
+	
 	// プレイヤー生成
 	GeneratePlayer(GameConst::_CREATE_POSNAME_PLAYER, V_ZERO, V_ZERO, { 0, 100, 0 }, { 0,  200,  0 }, 200);
 	// カメラ生成
 	CameraManager::GetInstance().CreateCamera("camera", V_ZERO, { 0, 180 * Deg2Rad, 0 });
+	auto camera = CameraManager::GetInstance().GetCamera();
 	// 敵の生成
 	for (int i = 0; i < enemyCount; i++) {
 		GenerateEnemy(GameConst::_CREATE_POSNAME_ENEMY, V_ZERO, { 0, 180 * Deg2Rad, 0 }, { 0, 0, 0 }, { 0, 0, 0 }, { 0, 100, 0 }, { 0,  400,  0 }, 200, this->dungeonID);
@@ -128,7 +129,9 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 	auto player = GetUseObject(0);
 	if (!player) return;
 	// 位置の設定
+	float cameraAngle = goalData.angle;
 	player->position = createPosDataList.start.position;
+	camera->rotation = { 0.0f, -cameraAngle * Deg2Rad , 0.0f };
 	// モデルの設定
 	SetCharacterModel(player.get(), playerHandle);
 
@@ -227,7 +230,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 		if (!stairComponent) continue;
 		stairComponent->SetStairID(stairID);
 	}
-
+	
 	// 出口の設定
 	GameObjectList exitList = GetObjectByName(GameConst::_CREATE_POSNAME_GOAL);
 	// 生成位置の取得
@@ -238,6 +241,7 @@ void DungeonCreater::GenerateDungeon(int floorID, const std::vector<std::vector<
 		auto exit = exitList[i];
 		if (!exit) continue;
 		// 出口にスタート位置の情報を渡す
+		exit->GetComponent<ExitPoint>()->SetDungeonExitData(goalData.angle);
 		exit->GetComponent<ExitPoint>()->SetDungeonCreateData(createPosDataList.start.position);
 		exit->position = exitSpawnPos[i];
 	}
@@ -439,6 +443,7 @@ void DungeonCreater::RegenerateDungeon(int floorID, const std::vector<int>& enem
 		auto exit = exitList[i];
 		if (!exit) continue;
 		// 出口にスタート位置の情報を渡す
+		exit->GetComponent<ExitPoint>()->SetDungeonExitData(goalData.angle);
 		exit->GetComponent<ExitPoint>()->SetDungeonCreateData(createPosDataList.start.position);
 		exit->position = exitSpawnPos[i];
 	}

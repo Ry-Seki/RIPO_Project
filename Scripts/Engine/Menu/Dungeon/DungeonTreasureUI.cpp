@@ -119,12 +119,10 @@ void DungeonTreasureUI::ShowTreasureUI(int treasureID, int ownerID, const Vector
 /*
  *	UI‚ð”ñ•\Ž¦‚É‚·‚é
  */
-void DungeonTreasureUI::HideTreasureUI(int ownerID) {
-	if (ownerObjectID != ownerID) return;
+void DungeonTreasureUI::HideTreasureUI() {
 
 	currentTreasureID = -1;
 	ownerObjectID = -1;
-
-	//if (!isInteract)
-
 }
+
+

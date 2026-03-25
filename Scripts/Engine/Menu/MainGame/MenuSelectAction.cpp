@@ -48,6 +48,7 @@ namespace {
         { "Shop", ActionType::Shop },
         { "PartTime", ActionType::PartTime },
         { "Status", ActionType::Max },
+        { "InGameMenu", ActionType::Invalid }
     };
     /*
      *  @brief  アクションボタン構造体
@@ -61,7 +62,7 @@ namespace {
      *  @param[in]  const std::string& typeKey
      *  @return     ActionType
      */
-    ActionType StringToPlayerStatusType(const std::string& typeKey) {
+    ActionType StringToActionType(const std::string& typeKey) {
         auto itr = actionTypeMap.find(typeKey);
 
         if (itr != actionTypeMap.end()) return itr->second;
@@ -84,7 +85,7 @@ namespace {
             entry.name = node["ButtonName"].get<std::string>();
 
             std::string typeString = node["ActionType"].get<std::string>();
-            entry.type = StringToPlayerStatusType(typeString);
+            entry.type = StringToActionType(typeString);
 
             result.push_back(entry);
         }
@@ -124,7 +125,7 @@ void MenuSelectAction::Initialize(Engine& engine) {
         // イベントシステムの初期化
         eventSystem.Initialize(0);
         // ボタンの準備前処理
-        SetupActionButtons(buttonData->GetData());
+        InitializeActionButtons(buttonData->GetData());
         // イベントシステムのnavigationの設定
         eventSystem.LoadNavigation(navigation->GetData());
         AudioUtility::RegisterBGMHandle(GameConst::_MENU_BGM, selectMenuBGM->GetHandle());
@@ -167,6 +168,7 @@ void MenuSelectAction::Update(Engine& engine, float unscaledDeltaTime) {
     auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
 
     if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Cancel)]) {
+        isInteractive = false;
         FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::Out, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeOut, [this]() {
             MenuManager::GetInstance().OpenMenu<MenuInGame>();
@@ -272,10 +274,10 @@ void MenuSelectAction::SelectButtonExecute(GameEnum::ActionType type) {
     StartFadeEndCallback(type);
 }
 /*
- *	@brief		アクションボタンの準備前処理
+ *	@brief		アクションボタンの初期化処理
  *	@param[in]	const JSON& json
  */
-void MenuSelectAction::SetupActionButtons(const JSON& json) {
+void MenuSelectAction::InitializeActionButtons(const JSON& json) {
     auto actionData = ParseActionButtonData(json);
 
     for (const auto& entry : actionData) {

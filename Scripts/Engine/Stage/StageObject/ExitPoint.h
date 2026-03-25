@@ -21,7 +21,8 @@ private:
 
 
 	EffectComponent* pViewingEffect;			// 表示用エフェクト
-	Vector3 startPos;							// 生成位置の参照データ
+	float goalAngle;							// データが持つ自身の角度
+	Vector3 startPos;							// データが持つスタートの位置
 
 public:
 	/*
@@ -59,6 +60,11 @@ public:
 	 */
 	void SetExitTrigger(bool setValue) { exitTriger = setValue; }
 
+	/*
+	 *	生成位置データの設定
+	 *  @param[in]	creator		参照する生成位置データ
+	 */
+	void SetDungeonExitData(float setValue) { goalAngle = setValue; }
 	/*
 	 *	生成位置データの設定
 	 *  @param[in]	creator		参照する生成位置データ

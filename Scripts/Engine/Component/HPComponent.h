@@ -7,6 +7,9 @@
 #define _HPCOMPONENT_H_
 
 #include "Component.h"
+#include "../Manager/ScreenEffectManager.h"
+#include "../Manager/CameraManager.h"
+#include "../GameConst.h"
 
 class HPComponent : public Component {
 private:
@@ -33,6 +36,11 @@ public:
 		}
 		else {
 			HP -= damage;
+			// ƒvƒŒƒCƒ„[‚È‚ç‰æ–ÊŒø‰ÊÄ¶
+			if (GetOwner()->name == GameConst::_CREATE_POSNAME_PLAYER) {
+				ScreenEffectManager::GetInstance().DamageFlash();
+				CameraManager::GetInstance().CameraShake();
+			}
 		}
 	}
 

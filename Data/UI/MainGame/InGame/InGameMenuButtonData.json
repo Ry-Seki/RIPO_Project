@@ -1,0 +1,24 @@
+{
+  "MenuButtons": [
+    {
+      "ButtonName": "Load",
+      "MenuType": "Load"
+    },
+    {
+      "ButtonName": "Save",
+      "MenuType": "Save"
+    },
+    {
+      "ButtonName": "Settings",
+      "MenuType": "Settings"
+    },
+    {
+      "ButtonName": "ReturnTitle",
+      "MenuType": "ReturnTitle"
+    },
+    {
+      "ButtonName": "Back",
+      "MenuType": "Back"
+    }
+  ]
+}

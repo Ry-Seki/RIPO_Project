@@ -1,0 +1,39 @@
+{
+  "VolumeButtons": [
+    {
+      "ButtonName": "SubMasterVolume",
+      "VolumeType": "Master",
+      "ChangeType": "Down"
+    },
+    {
+      "ButtonName": "AddMasterVolume",
+      "VolumeType": "Master",
+      "ChangeType": "Up"
+    },
+    {
+      "ButtonName": "SubBGMVolume",
+      "VolumeType": "BGM",
+      "ChangeType": "Down"
+    },
+    {
+      "ButtonName": "AddBGMVolume",
+      "VolumeType": "BGM",
+      "ChangeType": "Up"
+    },
+    {
+      "ButtonName": "SubSEVolume",
+      "VolumeType": "SE",
+      "ChangeType": "Down"
+    },
+    {
+      "ButtonName": "AddSEVolume",
+      "VolumeType": "SE",
+      "ChangeType": "Up"
+    },
+    {
+      "ButtonName": "Back",
+      "VolumeType": "",
+      "ChangeType": ""
+    }
+  ]
+}

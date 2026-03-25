@@ -29,6 +29,3 @@ void Stair::OnCollision(const std::shared_ptr<Component>& self, const std::share
 		StageObjectUtility::SetMoveStairID(stairID);
 	}
 }
-
-void Stair::ModelLoad(const int modelHandleBase) {
-}

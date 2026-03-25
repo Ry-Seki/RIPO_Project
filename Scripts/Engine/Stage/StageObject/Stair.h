@@ -41,8 +41,6 @@ public:
 	inline bool GetStairMove()const {
 		return isStairMoved;
 	}
-	// モデルの読み込み
-	void ModelLoad(const int modelHandleBase) override;
 	/*
 	 *	階段移動のフラグに変更を加える
 	 *  @param	setValue

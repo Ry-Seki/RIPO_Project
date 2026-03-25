@@ -43,8 +43,8 @@
       "Rect": {
         "X": 1178,
         "Y": 754,
-        "Width": 735,
-        "Height": 182
+        "Width": 700,
+        "Height": 170
       },
       "Resources": [
         "Res/Menu/MainGame/SelectAction/Trealine_SelectAction_Money.png"
@@ -69,7 +69,7 @@
       "Alignment": "Left",
       "Position": {
         "X": 1611,
-        "Y": 830
+        "Y": 800
       }
     }
   ],
