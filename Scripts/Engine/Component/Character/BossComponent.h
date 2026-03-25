@@ -51,6 +51,8 @@ private:
 	bool longRangeAttackDistanceFlag = false;
 	// 範囲攻撃判定
 	bool rangeAttackFlag = false;
+	// HP半減判定
+	bool HPHalfDownFlag = false;
 	// 定位置
 	Vector3 homePosition;
 	// 移動量
@@ -258,6 +260,16 @@ public:
 	 *	連射継続時間の変更
 	 */
 	inline void SetShootingDuration(float setValue) { shootingDuration = setValue; }
+
+	/*
+	 *	HP半減判定の取得
+	 */
+	inline bool GetHPHalfDownFlag() const { return HPHalfDownFlag; }
+
+	/*
+	 *	HP半減判定の変更
+	 */
+	inline void SetHPHalfDownFlag(bool setValue) { HPHalfDownFlag = setValue; }
 };
 
 #endif // !_BOSSCOMPONENT_H_

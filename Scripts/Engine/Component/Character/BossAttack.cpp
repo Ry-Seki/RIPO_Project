@@ -129,19 +129,20 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 		break;
 	case 104:
 
+		//if (bossComponent->GetRangeAttackFlag()) {
+		//	// プレイヤーの場所まで移動する
+		//	auto posX = bossComponent->GetBossToPlayerDirection().x * MOVE_SPEED * deltaTime;
+		//	auto posZ = bossComponent->GetBossToPlayerDirection().z * MOVE_SPEED * deltaTime;
+		//	boss->position.x += posX;
+		//	boss->position.z += posZ;
+		//	animator->Play(2, ANIMATION_SPEED * deltaTime);
+		//	RangeAttack(boss, deltaTime);
+		//}
 		if (bossComponent->GetCloseRangeAttackDistanceFlag()) {
 			ForwardAttack(boss, deltaTime);
 		}
 		else if (bossComponent->GetLongRangeAttackDistanceFlag()) {
 			HeadlongAttack(boss, deltaTime, 0.5f);
-		}
-		else if (bossComponent->GetRangeAttackFlag()) {
-			// プレイヤーの場所まで移動する
-			auto posX = bossComponent->GetBossToPlayerDirection().x * MOVE_SPEED * deltaTime;
-			auto posZ = bossComponent->GetBossToPlayerDirection().z * MOVE_SPEED * deltaTime;
-			boss->position.x += posX;
-			boss->position.z += posZ;
-			RangeAttack(boss, deltaTime);
 		}
 
 		break;

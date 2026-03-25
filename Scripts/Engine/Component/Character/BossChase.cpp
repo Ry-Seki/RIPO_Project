@@ -30,8 +30,8 @@ BossChase::BossChase()
 	, animationSpeed(0.0f)
 	, closeRangeAttackDistance(0.0f)
 	, longRangeAttackDistance(0.0f)
+	, headlongCoolTime(0.0f)
 	, halfHPFlag(false)
-	, trueFlag(false)
 	, ROTATE_SPEED(3.0f)
 	, SE_DISTANCE(10000) {
 }
@@ -78,6 +78,7 @@ void BossChase::Start(GameObject* boss) {
 		closeRangeAttackDistance = 800.0f;
 		longRangeAttackDistance = 4000.0f;
 		coolTimeSE = 0.7f;
+		headlongCoolTime = 500;
 
 		break;
 	default:
@@ -172,23 +173,23 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 		animator->Play(7, animationSpeed * deltaTime);
 
 		// HP‚ª”¼•ª‚É‚È‚Á‚½
-		if (!trueFlag) {
-			if (bossComponent->GetBossHP() <= bossComponent->GetBossMaxHP() / 2) {
-				halfHPFlag = true;
-			}
+		if (bossComponent->GetBossHP() <= bossComponent->GetBossMaxHP() / 2) {
+			halfHPFlag = true;
+			headlongCoolTime = 300;
+			moveSpeed = 2000;
 		}
 
 		// ”ÍˆÍUŒ‚
-		if (halfHPFlag) {
-			if (!trueFlag) {
-				trueFlag = true;
+		/*if (halfHPFlag) {
+			if (!bossComponent->GetHPHalfDownFlag()) {
+				bossComponent->SetHPHalfDownFlag(true);
 				bossComponent->SetRangeAttackFlag(true);
 				bossComponent->SetState(new BossAttack());
 			}
-		}
+		}*/
 
 		// ƒ‰ƒ“ƒ_ƒ€‚Å“Ëi
-		if (bossComponent->GetRandomCoolTime() >= 500) {
+		if (bossComponent->GetRandomCoolTime() >= headlongCoolTime) {
 			bossComponent->SetRandomCoolTime(0);
 			bossComponent->SetLongRangeAttackDistanceFlag(true);
 			bossComponent->SetState(new BossAttack());
