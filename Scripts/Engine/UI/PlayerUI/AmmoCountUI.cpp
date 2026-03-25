@@ -11,8 +11,10 @@
 #include "../../GameEnum.h"
 
 AmmoCountUI::AmmoCountUI() 
-	: WIDTH_POS_RATIO(0.8f)
-	, HEIGHT_POS_RATIO(0.85f)
+	: START_WIDTH_POS_RATIO(0.9f)
+	, START_HEIGHT_POS_RATIO(0.8f)
+	, END_WIDTH_POS_RATIO(0.95f)
+	, END_POS_Y_MOVE_RATE(0.5f)
 {}
 
 /*
@@ -32,15 +34,30 @@ void AmmoCountUI::Render() {
 	auto weapon = WeaponManager::GetInstance().GetCurrentWeapon();
 	if (!weapon)
 		return;
-	// êîéöÇ™1åÖÇÃèÍçáÇÕãÛîíÇí«â¡Ç≈ï`âÊ
-	float posX = GameConst::WINDOW_WIDTH * WIDTH_POS_RATIO;
-	float posY = GameConst::WINDOW_HEIGHT * HEIGHT_POS_RATIO;
-	std::string ammoCount = std::to_string(weapon->ammoCount);
-	if (weapon->ammoCount < 10)
-		ammoCount = " " + ammoCount;
-	std::string ammoCountMax = std::to_string(weapon->ammoCountMax);
-	if (weapon->ammoCountMax < 10)
-		ammoCountMax = " " + ammoCountMax;
+	// ï`âÊà íuåvéZ
+	float posSX = GameConst::WINDOW_WIDTH * START_WIDTH_POS_RATIO;
+	float posSY = GameConst::WINDOW_HEIGHT * START_HEIGHT_POS_RATIO;
+	float posEX = GameConst::WINDOW_WIDTH * END_WIDTH_POS_RATIO;
+	// écíeêîÇÉQÅ[ÉWÇ≈ï\é¶
+	float ammoChangeRate = 1 - ((static_cast<float>(weapon->ammoCount) / static_cast<float>(weapon->ammoCountMax)));
+	// ÉäÉçÅ[ÉhíÜÇÕèôÅXÇ…è„è∏
+	float reloadChangeRate = 1 - (weapon->reloadingTime / weapon->reloadingTimeMax);
+	float changeRate = reloadChangeRate * ammoChangeRate * END_POS_Y_MOVE_RATE;
+	float posEY = posSY * END_POS_Y_MOVE_RATE + posSY * changeRate;
+
+	// ÉQÅ[ÉWï`âÊ
+	auto p = GameConst::COLOR_PURPLE;
+	DrawBox(posSX, posSY, posEX, posEY, GetColor(p.x, p.y, p.z), TRUE);
+
+	// ÉQÅ[ÉWògï`âÊ
 	auto w = GameConst::COLOR_WHITE;
-	FontManager::GetInstance().Draw("ammo", posX, posY, ammoCount + " / " + ammoCountMax, GetColor(w.x, w.y, w.z));
+	posEY = posSY * END_POS_Y_MOVE_RATE;
+	DrawBox(posSX, posSY, posEX, posEY, GetColor(w.x, w.y, w.z), FALSE);
+
+	// ÉQÅ[ÉWÉÅÉÇÉäï`âÊ
+	for (int i = 1; i < weapon->ammoCountMax; i++) {
+		float lineX = posSX + ((posEX - posSX) * 0.5f);
+		float lineY = posEY + ((posSY - posEY) * 1 / static_cast<float>(weapon->ammoCountMax) * i);
+		DrawLine(posSX, lineY, lineX, lineY, GetColor(w.x, w.y, w.z));
+	}
 }
