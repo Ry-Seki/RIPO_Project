@@ -106,7 +106,7 @@ void PlayerComponent::Update(float deltaTime) {
 
 	// レジスト値がなくなった場合はHPが割合で削れる
 	if (resist->GetResistTime() <= 0) {
-		HP->AddDamage(HP->GetMaxHP() * HP_DECREASE_RATE);
+		HP->AddDamage(HP->GetMaxHP() * HP_DECREASE_RATE * deltaTime);
 	}
 
 	// 死亡処理
