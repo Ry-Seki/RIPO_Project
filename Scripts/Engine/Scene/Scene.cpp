@@ -106,16 +106,20 @@ void Scene::HandleWorldColliderCollision(
 			if (!colA->origin->isCollider || !colB->origin->isCollider)
 				continue;
 
-			// 弾用の事前準備
-			BulletSetup(colA);
-			BulletSetup(colB);
+			// 弾用の当たり判定
+			GameObject* objA = colA->origin->GetOwner();
+			GameObject* objB = colB->origin->GetOwner();
+			if (BulletCollision(colA, colB)) {
+				// イベントの結果、どちらかが削除予定が入ったら処理を抜ける
+				if (objA->IsDestroyed() || objB->IsDestroyed()) {
+					return;
+				}
+				continue;
+			}
 
 			// 衝突判定
 			Vector3 penetration;
 			if (Intersect(colA->world, colB->world, penetration)) {
-				GameObject* objA = colA->origin->GetOwner();
-				GameObject* objB = colB->origin->GetOwner();
-
 				// イベントの発火
 				objA->OnCollision(colA->origin, colB->origin);
 				objB->OnCollision(colB->origin, colA->origin);
@@ -128,28 +132,58 @@ void Scene::HandleWorldColliderCollision(
 	}
 }
 /*
- *  弾用当たり判定事前準備
+ *  弾用当たり判定
+ *  @param  colliderA   判定対象のコライダー配列1
+ *  @param  colliderB   判定対象のコライダー配列2
+ *  @author Riku
  */
-void Scene::BulletSetup(WorldColliderPtr collider) {
-	auto owner = collider->origin->GetOwner();
-	if (owner->name == GameConst::_BULLET) {
-		auto bullet = owner->GetComponent<BulletComponent>();
-		// 弾の現在と1フレーム前位置の間にコライダーがあるかどうか
-		float hitLength = 0;
-		Ray ray = { bullet->GetPrevPos(), bullet->GetMoveDirection()};
-		Scene::RayCastHit hitInfo;
-		bool hit = RayCast(
-			ray, hitInfo,
-			[this, bullet, owner](const ColliderBasePtr& col, float distance) {
-				// 交点が指定範囲内
-				return distance * distance < Dot(bullet->GetPrevPos(), owner->position) && col;
-			}
-		);
-		// 衝突
-		if (hit) {
-			owner->position = hitInfo.point;
-		}
+bool Scene::BulletCollision(
+	WorldColliderPtr colliderA, 
+	WorldColliderPtr colliderB) {
+	bool hit = false;
+	if (colliderA->origin->GetOwner()->name == GameConst::_BULLET) {
+		// 弾の移動で当たったコライダーがいたかどうか
+		hit = BulletRay(colliderA, colliderB);
+		
 	}
+	if (colliderB->origin->GetOwner()->name == GameConst::_BULLET) {
+		// 弾の移動で当たったコライダーがいたかどうか
+		hit = BulletRay(colliderB, colliderA);
+		
+	}
+	return hit;
+}
+/*
+ *  弾の現在と前の位置のレイ判定
+ *  @param  bulletObj   判定対象の弾
+ *  @param  target      判定のターゲット
+ *  @author Riku
+ */
+bool Scene::BulletRay(
+	WorldColliderPtr bullet,
+	WorldColliderPtr target) {
+	auto bulletObj = bullet->origin->GetOwner();
+	auto targetObj = target->origin->GetOwner();
+	auto bulletComp = bulletObj->GetComponent<BulletComponent>();
+	// 弾の現在と1フレーム前位置の間にコライダーがあるかどうか
+	float hitLength = 0;
+	Ray ray = { bulletComp->GetPrevPos(), bulletComp->GetMoveDirection() };
+	Scene::RayCastHit hitInfo;
+	bool hit = RayCast(
+		ray, hitInfo,
+		[this, bulletComp, bulletObj, targetObj](const ColliderBasePtr& col, float distance) {
+			// 交点が指定範囲内かつ判定のターゲットであるか
+			return distance * distance < Dot(bulletComp->GetPrevPos() - bulletObj->position, bulletComp->GetPrevPos() - bulletObj->position) &&
+				col && col->GetOwner() == targetObj;
+		}
+	);
+	// 衝突
+	if (hit) {
+		// イベント発火
+		targetObj->OnCollision(target->origin, bullet->origin);
+		bulletObj->OnCollision(bullet->origin, target->origin);
+	}
+	return hit;
 }
 /*
  *  ゲームオブジェクトの追加

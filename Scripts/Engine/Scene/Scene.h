@@ -88,15 +88,29 @@ private:
      *  コライダー単位の当たり判定
      *  @param  colliderA   判定対象のコライダー配列1
      *  @param  colliderB   判定対象のコライダー配列2
-     *  @autohr Riku
+     *  @author Riku
      */
     void HandleWorldColliderCollision(
         WorldColliderList* colliderA, 
         WorldColliderList* colliderB);
     /*
-     *  弾用当たり判定事前準備
+     *  弾用当たり判定
+     *  @param  colliderA   判定対象のコライダー配列1
+     *  @param  colliderB   判定対象のコライダー配列2
+     *  @author Riku
      */
-    void BulletSetup(WorldColliderPtr collider);
+    bool BulletCollision(
+        WorldColliderPtr colliderA,
+        WorldColliderPtr colliderB);
+    /*
+     *  弾の現在と前の位置のレイ判定
+     *  @param  bullet  判定対象の弾
+     *  @param  target  判定のターゲット
+     *  @author Riku
+     */
+    bool BulletRay(
+        WorldColliderPtr bullet, 
+        WorldColliderPtr target);
 
 public:
     /*
