@@ -285,9 +285,8 @@ void PlayerComponent::PlayerAvoid(GameObject* player, float deltaTime) {
 		avoidMoveValue += moveSpeed * deltaTime;
 		// 特定の距離動いたら回避終了
 		if (AVOID_MOVE_VALUE_MAX < avoidMoveValue) {
-			avoidMoveValue = 0;
-			isAvoid = false;
-			avoidCoolTime = AVOID_COOL_TIME_MAX;
+			// 回避状態のリセット
+			ResetAvoid();
 		}
 	}
 	else {
@@ -346,5 +345,15 @@ void PlayerComponent::ChangeWeapon() {
  */
 void PlayerComponent::SetModelHandle(int setModelHandle) {
 	playerModelHandle = setModelHandle;
+}
+
+/*
+ *	回避状態のリセット
+ *  @author oorui
+ */
+inline void PlayerComponent::ResetAvoid() {
+	avoidMoveValue = 0;
+	isAvoid = false;
+	avoidCoolTime = AVOID_COOL_TIME_MAX;
 }
 
