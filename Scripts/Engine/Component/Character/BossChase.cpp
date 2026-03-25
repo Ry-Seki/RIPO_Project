@@ -30,6 +30,8 @@ BossChase::BossChase()
 	, animationSpeed(0.0f)
 	, closeRangeAttackDistance(0.0f)
 	, longRangeAttackDistance(0.0f)
+	, halfHPFlag(false)
+	, trueFlag(false)
 	, ROTATE_SPEED(3.0f)
 	, SE_DISTANCE(10000) {
 }
@@ -72,7 +74,7 @@ void BossChase::Start(GameObject* boss) {
 	case 104:
 
 		moveSpeed = 1000.0f;
-		animationSpeed = 1714.29f;
+		animationSpeed = 1650.0f;
 		closeRangeAttackDistance = 800.0f;
 		longRangeAttackDistance = 4000.0f;
 		coolTimeSE = 0.7f;
@@ -166,9 +168,27 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 		break;
 
 	case 104:
+		// 歩行アニメーション
+		animator->Play(7, animationSpeed * deltaTime);
+
+		// HPが半分になった
+		if (!trueFlag) {
+			if (bossComponent->GetBossHP() <= bossComponent->GetBossMaxHP() / 2) {
+				halfHPFlag = true;
+			}
+		}
+
+		// 範囲攻撃
+		if (halfHPFlag) {
+			if (!trueFlag) {
+				trueFlag = true;
+				bossComponent->SetRangeAttackFlag(true);
+				bossComponent->SetState(new BossAttack());
+			}
+		}
 
 		// ランダムで突進
-		if (bossComponent->GetRandomCoolTime() >= 700) {
+		if (bossComponent->GetRandomCoolTime() >= 500) {
 			bossComponent->SetRandomCoolTime(0);
 			bossComponent->SetLongRangeAttackDistanceFlag(true);
 			bossComponent->SetState(new BossAttack());

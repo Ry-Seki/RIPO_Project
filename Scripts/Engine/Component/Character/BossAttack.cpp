@@ -28,6 +28,7 @@ BossAttack::BossAttack()
 	, headlongAnimation(0)
 	, forwardAttackAnimation(0)
 	, playerDirection(Vector3::zero)
+	, firstPlayerDirection(Vector3::zero)
 	, ANIMATION_SPEED(1250)
 	, MOVE_SPEED(6000.0f)
 {
@@ -69,6 +70,9 @@ void BossAttack::Start(GameObject* boss)
 
 		coolTime = 2;
 		elapsedTime = 0;
+		standbyAnimation = 4;
+		forwardAttackAnimation = 0;
+		headlongAnimation = 7;
 
 		break;
 	default:
@@ -108,6 +112,7 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 	{
 	case 101:
 
+		animator->Play(3, ANIMATION_SPEED * deltaTime);
 		RangeAttack(boss, deltaTime);
 
 		break;
@@ -130,6 +135,14 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
 		else if (bossComponent->GetLongRangeAttackDistanceFlag()) {
 			HeadlongAttack(boss, deltaTime, 0.5f);
 		}
+		else if (bossComponent->GetRangeAttackFlag()) {
+			// プレイヤーの場所まで移動する
+			auto posX = bossComponent->GetBossToPlayerDirection().x * MOVE_SPEED * deltaTime;
+			auto posZ = bossComponent->GetBossToPlayerDirection().z * MOVE_SPEED * deltaTime;
+			boss->position.x += posX;
+			boss->position.z += posZ;
+			RangeAttack(boss, deltaTime);
+		}
 
 		break;
 	default:
@@ -145,8 +158,6 @@ void BossAttack::Update(GameObject* boss, float deltaTime)
  */
 void BossAttack::RangeAttack(GameObject* boss, float deltaTime)
 {
-	animator->Play(3, ANIMATION_SPEED * deltaTime);
-
 	// 攻撃の当たり判定
 	auto aabbCollider = boss->GetComponent<AABBCollider>();
 	Vector3 aabbDirection = { 0, 0, 0 };
@@ -154,7 +165,6 @@ void BossAttack::RangeAttack(GameObject* boss, float deltaTime)
 	const Vector3 aabbMax = { 500, 50, 500 };
 
 	// アニメーションが終わるまで待ちたい
-	// 仮
 	if (coolTime <= 1.85f) {
 		if (!FirstEffectFlag) {
 			// エフェクトを出す
@@ -238,7 +248,11 @@ void BossAttack::ForwardAttack(GameObject* boss, float deltaTime)
  */
 void BossAttack::HeadlongAttack(GameObject* boss, float deltaTime, float attackStateTime)
 {
-	boss->rotation.y = atan2(playerDirection.x, playerDirection.z) + Pi;
+	// プレイヤーの方向を向く
+	if (firstPlayerDirection == Vector3::zero) {
+		firstPlayerDirection = bossComponent->GetBossToPlayerDirection();
+	}
+	boss->rotation.y = atan2(firstPlayerDirection.x, firstPlayerDirection.z) + Pi;
 	elapsedTime += deltaTime;
 
 	animator->Play(headlongAnimation, 10 * deltaTime);

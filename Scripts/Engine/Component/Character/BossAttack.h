@@ -36,6 +36,8 @@ private:
 	int forwardAttackAnimation;
 	// プレイヤーの方向保存用
 	Vector3 playerDirection;
+	// 突進前プレイヤー方向
+	Vector3 firstPlayerDirection;
 
 	const float ANIMATION_SPEED;
 	// 移動スピード

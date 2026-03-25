@@ -49,6 +49,8 @@ private:
 	bool closeRangeAttackDistanceFlag = false;
 	// 遠距離攻撃範囲判定
 	bool longRangeAttackDistanceFlag = false;
+	// 範囲攻撃判定
+	bool rangeAttackFlag = false;
 	// 定位置
 	Vector3 homePosition;
 	// 移動量
@@ -211,6 +213,16 @@ public:
 	 *	遠距離攻撃範囲判定の変更
 	 */
 	inline void SetLongRangeAttackDistanceFlag(bool setValue) { longRangeAttackDistanceFlag = setValue; }
+
+	/*
+	 *	範囲攻撃判定の取得
+	 */
+	inline bool GetRangeAttackFlag() const { return rangeAttackFlag; }
+
+	/*
+	 *	範囲攻撃判定の変更
+	 */
+	inline void SetRangeAttackFlag(bool setValue) { rangeAttackFlag = setValue; }
 
 	/*
 	 *	ボスから見たプレイヤーの方向

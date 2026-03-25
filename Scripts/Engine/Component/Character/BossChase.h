@@ -32,6 +32,10 @@ private:
 	float closeRangeAttackDistance;
 	// 遠距離攻撃用プレイヤー検知距離
 	float longRangeAttackDistance;
+	// HPが半分になったかフラグ
+	bool halfHPFlag;
+	// 判定フラグ
+	bool trueFlag;
 	// 移動量
 	Vector3 moveVec;
 

@@ -67,7 +67,7 @@ void BossStandby::Update(GameObject* boss, float deltaTime)
 
 		// ó‘Ô‘JˆÚ
 		if (Vision(boss, -ForwardDir(boss->rotation), player->position, 180, viewAngle)) {
-			boss->GetComponent<BossComponent>()->SetState(new BossChase());
+			bossComponent->SetState(new BossChase());
 		}
 
 		break;
@@ -78,7 +78,7 @@ void BossStandby::Update(GameObject* boss, float deltaTime)
 
 		// ó‘Ô‘JˆÚ
 		if (Vision(boss, -ForwardDir(boss->rotation), player->position, 180, viewAngle)) {
-			boss->GetComponent<BossComponent>()->SetState(new BossShootingAttack());
+			bossComponent->SetState(new BossShootingAttack());
 		}
 
 		break;
@@ -86,7 +86,7 @@ void BossStandby::Update(GameObject* boss, float deltaTime)
 
 		// ó‘Ô‘JˆÚ
 		if (Vision(boss, -ForwardDir(boss->rotation), player->position, 180, viewAngle)) {
-			boss->GetComponent<BossComponent>()->SetState(new BossChase());
+			bossComponent->SetState(new BossChase());
 		}
 
 		break;

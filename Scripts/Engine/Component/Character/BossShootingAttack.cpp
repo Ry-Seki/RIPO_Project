@@ -145,8 +145,9 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 
 		break;
 	case 104:
-
 		boss->rotation.y = atan2(direction.x, direction.z) + Pi;
+
+		animator->Play(1, 3000 * deltaTime);
 		SlowBall(boss, deltaTime, 300000 * deltaTime, 0.3f, 0.3f, 250);
 		ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime, 250);
 
