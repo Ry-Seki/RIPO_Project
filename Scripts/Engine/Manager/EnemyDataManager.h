@@ -116,7 +116,7 @@ public:
 			return bossScale;
 			break;
 		case 3:
-			bossScale = { 0.4, 0.4, 0.4 };
+			bossScale = { 0.3, 0.3, 0.3 };
 			return bossScale;
 			break;
 		case 4:

@@ -72,6 +72,9 @@ void BossStandby::Update(GameObject* boss, float deltaTime)
 
 		break;
 	case 103:
+		animator->Play(3, 1 * deltaTime);
+
+		bossComponent->SetOutVisionTime(bossComponent->GetOutVisionTime() + deltaTime);
 
 		// ó‘Ô‘JˆÚ
 		if (Vision(boss, -ForwardDir(boss->rotation), player->position, 180, viewAngle)) {

@@ -32,6 +32,7 @@ public:
 
 	const Vector3 BULLET_SCALE;		// 弾のサイズ
 	const float BULLET_SPEED;		// 弾のスピード
+	const float BULLET_DAMAGE_RATE;	// 弾のダメージ倍率
 
 public:
 	WeaponBase();

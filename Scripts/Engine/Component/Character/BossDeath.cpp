@@ -45,8 +45,8 @@ void BossDeath::Start(GameObject* boss)
 		break;
 	case 103:
 		animationNumber = 2;
-		animationSpeed = 50;
-		animationEndTime = 3.0f;
+		animationSpeed = 15;
+		animationEndTime = 1.3f;
 		break;
 	case 104:
 		animationNumber = 3;

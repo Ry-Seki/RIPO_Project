@@ -35,6 +35,8 @@ BulletComponent::BulletComponent()
 
 void BulletComponent::Update(float deltaTime) {
   	if (!bullet) return;
+	// 1ƒtƒŒ‘O‚ÌˆÊ’u‚ð•Û‘¶
+	prevPos = bullet->position;
 	
 	// ‚·‚è”²‚¯‘Îô‚Ìˆ×‚ñ‚ÅˆÚ“®
 	for (int i = 0; i < MOVE_STEP; i++) {
