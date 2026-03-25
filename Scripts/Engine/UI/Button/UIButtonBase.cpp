@@ -55,11 +55,15 @@ void UIButtonBase::Update(float unscaledDeltaTime) {
 void UIButtonBase::OnClickEvent() {
 	bool isInputMouse = InputUtility::GetPrevInputMouse();
 
-	if (isInputMouse && !isHover) {
-		ResetState();
-		return;
+	if (isInputMouse) {
+		if (!isHover) {
+			ResetState();
+		}else {
+			if (OnClick) OnClick();
+		}
+	} else {
+		if (OnClick) OnClick();
 	}
-	if (OnClick) OnClick();
 }
 /*
  *	@brief	ó‘Ô‚ÌƒŠƒZƒbƒg

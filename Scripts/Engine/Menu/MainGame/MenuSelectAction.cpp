@@ -184,8 +184,7 @@ void MenuSelectAction::Update(Engine& engine, float unscaledDeltaTime) {
     auto button = eventSystem.GetCurrentSelectButton();
     if (!button) return;
 
-    if (!inputHandle && input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
-        inputHandle = true;
+    if (input.buttonDown[static_cast<int>(GameEnum::MenuAction::Decide)]) {
         button->OnPressDown();
     }
 }
@@ -257,9 +256,8 @@ void MenuSelectAction::Resume() {
 void MenuSelectAction::CreateElapsedDayText() {
     const int gray = GetColor(75, 75, 75);
     std::string elapsedDayStr = std::to_string(elapsedDay);
-    std::string maxDayStr = " / " + std::to_string(GameConst::END_DAY);
     std::string money = std::to_string(MoneyManager::GetInstance().GetCurrentMoney());
-    textList[0]->SetText(elapsedDayStr + maxDayStr);
+    textList[0]->SetText(elapsedDayStr);
     textList[1]->SetText(money);
     for (auto& text : textList) {
         text->SetColor(gray);

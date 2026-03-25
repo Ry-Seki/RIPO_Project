@@ -20,8 +20,6 @@ class Engine;
  *	@brief	タイトルメニュー
  */
 class MenuTitle : public MenuBase{
-	float animTimer = 0.0f;
-	int animFrame = 0;
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;

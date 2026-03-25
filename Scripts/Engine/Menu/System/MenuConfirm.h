@@ -23,8 +23,6 @@ class Engine;
  */
 class MenuConfirm : public MenuBase {
 private:
-	float animTimer = -1;
-	int animFrame = -1;
 	EventSystem eventSystem;
 
 	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
