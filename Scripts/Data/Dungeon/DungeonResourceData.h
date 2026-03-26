@@ -32,7 +32,6 @@ public:
 
 	// Character
 	std::shared_ptr<LoadModel> playerResource;
-	// TODO:Enemy‚ÍŒã‚Ù‚Ç•ÏX‚ğ‰Á‚¦‚é‚æ‚¤‚É‚·‚é
 	std::vector<std::shared_ptr<LoadModel>> enemyResource;
 	std::shared_ptr<LoadModel> bossResource;
 

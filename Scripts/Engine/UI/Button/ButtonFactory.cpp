@@ -19,7 +19,6 @@
 std::shared_ptr<UIButtonBase> ButtonFactory::CreateButton(const ButtonInfo& buttonInfo) {
     std::shared_ptr<UIButtonBase> button;
 	// ボタンの生成
-	// TODO : ここをスイッチ分をできるだけ使わないようにしたい
 	switch (buttonInfo.type) {
 		case GameEnum::ButtonType::SinglePressButton:
 			button = std::make_shared<SinglePressButton>(buttonInfo.x, buttonInfo.y, buttonInfo.rect);
