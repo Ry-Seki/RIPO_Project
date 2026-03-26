@@ -24,6 +24,7 @@ void MoveComponent::Update(float deltaTime) {
 
 	// Šµ«‚Ì‚½‚ß‚ÉŒ¸­•û®
 	velocity *= INERTIA_RATE;
+	isMove = false;
 }
 
 /*
@@ -31,4 +32,5 @@ void MoveComponent::Update(float deltaTime) {
  */
 void MoveComponent::SetVelocity(Vector3 direction, float speed) {
 	velocity = direction * speed;
+	isMove = true;
 }
