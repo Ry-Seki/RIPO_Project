@@ -11,6 +11,10 @@
 #include "../../../../Load/LoadManager.h"
 #include "../../../../Audio/AudioUtility.h"
 
+namespace {
+	constexpr const char* _TRAININGBGM_PATH = "Res/Audio/BGM/Training/TrainingBGM.mp3";
+	constexpr const char* _TRAININGSE_PATH = "Res/Audio/SE/TrainingComplete.mp3";
+}
 /*
  *	@brief	‰Šú‰»ˆ—
  */

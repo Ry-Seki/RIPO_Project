@@ -15,6 +15,9 @@
 #include "../../../../Menu/MenuManager.h"
 #include "../../../../Menu/MainGame/Money/MenuMoneyChange.h"
 
+namespace {
+	constexpr const char* _SOKOBAN_REWARD_PATH = "Data/MiniGame/Sokoban/SokobanReward.json";
+}
 /*
  *	@brief	‰Šú‰»ˆ—
  */

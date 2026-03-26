@@ -12,6 +12,9 @@
 #include "../../../../Audio/AudioUtility.h"
 #include "../../../../Load/Audio/LoadAudio.h"
 
+namespace {
+	constexpr const char* _SHOP_BGMPATH = "Res/Audio/BGM/Shop/ShopBGM.mp3";
+}
 /*
  *	@brief	‰Šú‰»ˆ—
  */

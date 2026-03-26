@@ -17,6 +17,8 @@ BossShootingAttack::BossShootingAttack()
 	, coolTime(0)
 	, rapidCoolTime(0)
 	, overheatCoolTime(0)
+	, shotSpeed(0)
+	, slowShotSpeed(0)
 	, shootFlag(false)
 	, secondFlag(false)
 	, thirdFlag(false)
@@ -65,6 +67,14 @@ void BossShootingAttack::Start(GameObject* boss)
 
 	case 104:
 		coolTime = MAX_COOL_TIME;
+		if (bossComponent->GetHPHalfDownFlag()) {
+			shotSpeed = 2000000;
+			slowShotSpeed = 300000;
+		}
+		else {
+			shotSpeed = 1000000;
+			slowShotSpeed = 600000;
+		}
 
 		// エフェクトを出す
 		EffectManager::GetInstance().Instantiate("BossShootEffect", boss->position);
@@ -149,7 +159,7 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 
 		animator->Play(1, 3000 * deltaTime);
 		SlowBall(boss, deltaTime, 300000 * deltaTime, 0.3f, 0.3f, 250);
-		ThreeRoundBurst(boss, deltaTime, 1000000 * deltaTime, 250);
+		ThreeRoundBurst(boss, deltaTime, shotSpeed * deltaTime, 250);
 
 		break;
 	default:

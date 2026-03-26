@@ -28,11 +28,14 @@ void EventSystem::Update(float unscaledDeltaTime) {
 	if (IsPressButton()) return;
 
 	auto input = InputUtility::GetInputState(GameEnum::ActionMap::MenuAction);
+	// マウスカーソルの制御
+	bool isMouse = InputUtility::GetPrevInputMouse();
+	InputUtility::SetMouseVisible(isMouse);
+	// 軸入力の取得
 	float vertical = input.axis[static_cast<int>(GameEnum::MenuAction::Vertical)];
 	float horizontal = input.axis[static_cast<int>(GameEnum::MenuAction::Horizontal)];
 
 	int nextIndex = currentIndex;
-
 	// 入力処理
 #pragma region	入力管理は別クラスがすべき
 	if (isInput) {

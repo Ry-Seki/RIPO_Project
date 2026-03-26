@@ -43,12 +43,7 @@ void ResultAction_Training::Setup() {
  *	@brief	XVˆ—
  */
 void ResultAction_Training::Update(float deltaTime) {
-	if (!inputHandle && CheckHitKey(KEY_INPUT_SPACE)) {
-		// SE‚ÌÄ¶
-		AudioUtility::PlaySE("DebugSE");
-		inputHandle = true;
-		AdvanceDay();
-	}
+
 }
 /*
  *	@brief	•`‰æˆ—
