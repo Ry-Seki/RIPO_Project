@@ -40,7 +40,7 @@ int Engine::Initialize() {
 	//ウィンドウのサイズを変更する
 	SetGraphMode(GameConst::WINDOW_WIDTH, GameConst::WINDOW_HEIGHT, 32, 0);
 	//起動時のウィンドウのモードの設定
-	ChangeWindowMode(TRUE);			// true : Windowモード, false : FullScreen
+	ChangeWindowMode(FALSE);			// true : Windowモード, false : FullScreen
 	//背景色の設定
 	SetBackgroundColor(196, 196, 196);
 
@@ -50,7 +50,8 @@ int Engine::Initialize() {
 	//DxLibの初期化
 	if (DxLib_Init() == -1)
 		return 0;
-
+	SetMainWindowText("Trealine");
+	SetWindowIconID(222);
 	dxlibInitialized = true;
 	//Effekseerの初期化
 	//Effecseer_Init(引数) 引数は最大のパーティクル量

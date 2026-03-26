@@ -164,6 +164,7 @@
     <ClCompile Include="Scripts\Engine\Input\DebugCameraActionMap.cpp" />
     <ClCompile Include="Scripts\Engine\Component\MoveComponent.cpp" />
     <ClCompile Include="Scripts\Engine\Manager\ScreenEffectManager.cpp" />
+    <ClCompile Include="Scripts\Engine\Fade\FadeManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Scripts\Data\Dungeon\DungeonData.h" />
@@ -402,5 +403,9 @@
     <ClInclude Include="Scripts\Engine\Component\StrengthComponent.h" />
     <ClInclude Include="Scripts\Engine\Stage\StageObject\Respawn.h" />
     <ClInclude Include="Scripts\Engine\Manager\ScreenEffectManager.h" />
+    <ClInclude Include="Scripts\Data\Dungeon\StairData.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="c.rc" />
   </ItemGroup>
 </Project>

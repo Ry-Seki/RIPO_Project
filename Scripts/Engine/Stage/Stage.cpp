@@ -21,8 +21,7 @@ using namespace CharacterUtility;
  *  コンストラクタ
  */
 Stage::Stage()
-	: StageBase()
-{
+	: StageBase() {
 	modelHandle = -1;
 }
 
@@ -71,10 +70,10 @@ void Stage::Render() {
 			// プレイヤーの直前の位置を計算
 			Vector3 prevPos = player->GetComponent<PlayerComponent>()->GetOwner()->position - player->GetComponent<PlayerComponent>()->GetMoveVec();
 			// ステージ当たり判定描画
-			// collision->StageColliderRenderer(player.get(), player->GetComponent<PlayerComponent>()->GetMoveVec(), prevPos);
-			// collision->ClearGrid();
-			// collision->DrawGrid(player.get());
-			
+			collision->StageColliderRenderer(player.get(), player->GetComponent<PlayerComponent>()->GetMoveVec(), prevPos);
+			collision->ClearGrid();
+			collision->DrawGrid(player.get());
+
 		}
 #endif // _DEBUG
 
