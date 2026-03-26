@@ -12,9 +12,6 @@
  *	@brief	トレーニングアクションリザルト
  */
 class ResultAction_Training : public ResultActionBase {
-private:
-	bool inputHandle = false;
-
 public:
 	/*
 	 *	@brief	初期化処理

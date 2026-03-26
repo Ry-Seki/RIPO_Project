@@ -28,6 +28,7 @@
 #include <DxLib.h>
 
 namespace {
+    constexpr const char* _DAY_TEXT = "Day";
     /*
      *  @brief  ファイルパス
      */
@@ -256,9 +257,11 @@ void MenuSelectAction::Resume() {
 void MenuSelectAction::CreateElapsedDayText() {
     const int gray = GetColor(75, 75, 75);
     std::string elapsedDayStr = std::to_string(elapsedDay);
+    std::string maxDayStr = std::to_string(GameConst::END_DAY);
     std::string money = std::to_string(MoneyManager::GetInstance().GetCurrentMoney());
     textList[0]->SetText(elapsedDayStr);
-    textList[1]->SetText(money);
+    textList[1]->SetText(maxDayStr);
+    textList[2]->SetText(money);
     for (auto& text : textList) {
         text->SetColor(gray);
     }

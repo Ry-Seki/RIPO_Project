@@ -50,8 +50,8 @@ void PlayerStatusManager::SetupData(const JSON& setJSON) {
  */
 void PlayerStatusManager::SetPlayerStatus(GameEnum::StatusValueType type,int statusPart, int setLevel) {
 	if (setLevel == 0) return;
-	playerStatus.lv[statusPart] = std::clamp(setLevel, initStatus[statusPart], _MAXSTATUS);
-	playerStatus.base[statusPart] += std::clamp(StatusRiseList[(int)type][statusPart] * setLevel,initStatus[statusPart], _MAXSTATUS);
+	playerStatus.lv[statusPart] = setLevel;
+	playerStatus.base[statusPart] +=StatusRiseList[(int)type][statusPart] * setLevel;
 }
 /*
  *	@brief		レベル指定のプレイヤーのステータス上昇
@@ -61,8 +61,8 @@ void PlayerStatusManager::SetPlayerStatus(GameEnum::StatusValueType type,int sta
  */
 void PlayerStatusManager::AddPlayerStatus(GameEnum::StatusValueType type, int statusPart, int setLevel) {
 	if (setLevel == 0) return;
-	playerStatus.lv[statusPart] += std::clamp(setLevel, initStatus[statusPart], _MAXSTATUS);
-	playerStatus.base[statusPart] += std::clamp(StatusRiseList[(int)type][statusPart] * setLevel, initStatus[statusPart],_MAXSTATUS);
+	playerStatus.lv[statusPart] += setLevel;
+	playerStatus.base[statusPart] += StatusRiseList[(int)type][statusPart] * setLevel;
 }
 /*
  *	@brief		セーブ用ステータスレベルデータの収集

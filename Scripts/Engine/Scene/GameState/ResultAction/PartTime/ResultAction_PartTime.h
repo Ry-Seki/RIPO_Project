@@ -18,7 +18,6 @@
 class ResultAction_PartTime : public ResultActionBase {
 private:
 	std::vector<int> rewardList;
-	static constexpr const char* _SOKOBAN_REWARD_PATH = "Data/MiniGame/Sokoban/SokobanReward.json";
 
 public:
 	/*

@@ -25,7 +25,6 @@ private:
 	float avoidCoolTime;							// 回避のクールタイム
 	float walkSECoolTime;							// 歩きSEのクールタイム
 	Vector3 lastMoveDirection;						// 最後に動いた方向
-	Vector3 moveVec;								// プレイヤーの移動量
 	bool canAvoid;									// 回避可能か否か
 	bool isAvoid;									// 回避中か否か
 	bool hasResolvedInitialGrounding;				// 初期接地処理を行ったかどうか
@@ -121,10 +120,6 @@ private:
 	void SetModelHandle(int setModelHandle);
 
 public:
-	/*
-	 *	移動量の取得
-	 */
-	inline Vector3 GetMoveVec()const { return moveVec; }
 	/*
 	 *	死亡フラグの取得
 	 */

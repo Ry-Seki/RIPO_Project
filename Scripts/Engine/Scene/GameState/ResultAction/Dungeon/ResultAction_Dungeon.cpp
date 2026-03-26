@@ -30,35 +30,25 @@ void ResultAction_Dungeon::Initialize() {
  *	@brief	準備前処理
  */
 void ResultAction_Dungeon::Setup() {
-	inputHandle = false;
-	isStart = false;
 	ResultPlayerAction();
 }
 /*
  *	@brief	更新処理
  */
 void ResultAction_Dungeon::Update(float deltaTime) {
-	if (!isStart) return;
-
-	if (!inputHandle && CheckHitKey(KEY_INPUT_SPACE)) {
-		// SEの再生
-		AudioUtility::PlaySE("DebugSE");
-		inputHandle = true;
-		AdvanceDay();
-	}
+	
 }
 /*
  *	@brief	描画処理
  */
 void ResultAction_Dungeon::Render() {
-	if (!isStart) return;
 
 }
 /*
  *	@brief	片付け処理
  */
 void ResultAction_Dungeon::Teardown() {
-	inputHandle = false;
+
 }
 /*
  *	@brief	日にち進行処理

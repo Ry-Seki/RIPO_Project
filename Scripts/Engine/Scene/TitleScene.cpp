@@ -27,13 +27,12 @@
   *  初期化処理
   */
 void TitleScene::Initialize(Engine& engine) {
-	isStart = false;
-	inputHandle = false;
 	MenuManager::GetInstance().GetMenu<MenuTitle>();
 	MenuManager::GetInstance().GetMenu<MenuGameModeSelect>();
 	MenuManager::GetInstance().GetMenu<MenuSystem>();
 	MenuManager::GetInstance().GetMenu<MenuSelectSaveSlot>();
 	MenuManager::GetInstance().GetMenu<MenuConfirm>();
+	MenuManager::GetInstance().GetMenu<MenuCredit>();
 	auto titleBGM = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/BGM/Title/Peritune_Zephyr_Fields_loop.mp3");
 	auto debugSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/ButtonPush_Debug.mp3");
 	auto goalSE = LoadManager::GetInstance().LoadResource<LoadAudio>("Res/Audio/SE/GoalSE.mp3");
@@ -51,7 +50,6 @@ void TitleScene::Initialize(Engine& engine) {
  *  ロード済みデータの設定 (コールバック)
  */
 void TitleScene::SetupData(Engine& engine) {
-	isStart = true;
 	MenuManager::GetInstance().OpenMenu<MenuTitle>();
 }
 /*

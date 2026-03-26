@@ -13,6 +13,15 @@
 #include "../../../../Load/Audio/LoadAudio.h"
 #include "../../../../Load/LoadManager.h"
 
+namespace {
+	constexpr const char* _PART_BGMPATH = "Res/Audio/BGM/Part/GameBGM.mp3";				// 倉庫番のBGMのパス
+	constexpr const char* _PART_SE01PATH = "Res/Audio/SE/SOKOBAN/ビープ音2.mp3";			// 倉庫番の壁にあたったときのSEのパス
+	constexpr const char* _PART_SE02PATH = "Res/Audio/SE/SOKOBAN/自動ドアが開く.mp3";	// 倉庫番の移動時のSEのパス
+	constexpr const char* _PART_SE03PATH = "Res/Audio/SE/SOKOBAN/決定ボタンを押す7.mp3"; // 倉庫番の指定位置についたときのSEのパス
+	constexpr const char* _SELECTPART_BGMPATH = "Res/Audio/BGM/Part/Dall_Tube_Heaven.mp3";
+
+}
+
 /*
  *	@brief	初期化処理
  */
@@ -23,14 +32,16 @@ void InAction_PartTime::Initialize(Engine& engine) {
 		CompleteMiniGame(level);
 	});
 	auto partBGM = LoadManager::GetInstance().LoadResource<LoadAudio>(_PART_BGMPATH);
+	auto selectPartBGM = LoadManager::GetInstance().LoadResource<LoadAudio>(_SELECTPART_BGMPATH);
 	auto boxBrock = LoadManager::GetInstance().LoadResource<LoadAudio>(_PART_SE01PATH);
 	auto boxMove = LoadManager::GetInstance().LoadResource<LoadAudio>(_PART_SE02PATH);
 	auto boxCop = LoadManager::GetInstance().LoadResource<LoadAudio>(_PART_SE03PATH);
-	LoadManager::GetInstance().SetOnComplete([&engine, this, partBGM, boxBrock,boxMove,boxCop]() {
+	LoadManager::GetInstance().SetOnComplete([&engine, this, partBGM, selectPartBGM,boxBrock,boxMove,boxCop]() {
 		AudioUtility::RegisterBGMHandle(GameConst::_PART_BGM, partBGM->GetHandle());
 		AudioUtility::RegisterSEHandle(GameConst::_BOXBROCK_SE, boxBrock->GetHandle());
 		AudioUtility::RegisterSEHandle(GameConst::_BOXMOVE_SE, boxMove->GetHandle());
 		AudioUtility::RegisterSEHandle(GameConst::_PARTCOP_SE, boxCop->GetHandle());
+		AudioUtility::RegisterBGMHandle(GameConst::_PARTSELECT_BGM, selectPartBGM->GetHandle());
 
 		});
 }
