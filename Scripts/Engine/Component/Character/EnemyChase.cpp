@@ -28,6 +28,7 @@ EnemyChase::EnemyChase()
 	, SEVolume(0.0f)
 	, baseSEVolume(0.0f)
 	, playerDistance(0.0f)
+	, elapsedTime(0.0f)
 	, closePlayer(false)
 	, chasePlayer(false)
 	, ROTATE_SPEED(13.0f)
@@ -185,11 +186,14 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 		enemy->position.x += moveX;
 		enemy->position.z += moveZ;
 
+		elapsedTime += deltaTime;
+
 		// 移動量を更新
 		moveVec = { moveX,0.0f,moveZ };
 		// 目標地点についたらターゲットを変える
-		if (distance < differenceTarget) {
+		if (distance < differenceTarget || elapsedTime > 4) {
 			chasePlayer = false;
+			elapsedTime = 0;
 			enemyComponent->SetChaseTargetChangeFrag(targetChange);
 			enemyComponent->SetState(new EnemyStandby());
 		}

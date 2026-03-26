@@ -25,9 +25,6 @@ private:
 	std::vector<DungeonData> dungeonDataList;				// ダンジョンデータ配列
 	std::shared_ptr<DungeonDataLoader> dungeonDataLoader;	// ダンジョン用読み込みクラス
 
-	static constexpr const char* _DUNGEON_LIST_PATH = "Data/Dungeon/DungeonList.csv";
-	static constexpr const char* _DUNGEON_FLOOR_PATH = "Data/Dungeon/DungeonFloorData.json";
-
 public:
 	/*
 	 *	@brief	初期化処理

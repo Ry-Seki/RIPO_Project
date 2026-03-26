@@ -175,7 +175,8 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 		// HP‚ª”¼•ª‚É‚È‚Á‚½
 		if (bossComponent->GetBossHP() <= bossComponent->GetBossMaxHP() / 2) {
 			halfHPFlag = true;
-			headlongCoolTime = 300;
+			bossComponent->SetHPHalfDownFlag(true);
+			headlongCoolTime = 500;
 			moveSpeed = 2000;
 		}
 

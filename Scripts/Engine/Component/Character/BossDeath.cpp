@@ -50,8 +50,8 @@ void BossDeath::Start(GameObject* boss)
 		break;
 	case 104:
 		animationNumber = 3;
-		animationSpeed = 50;
-		animationEndTime = 3.0f;
+		animationSpeed = 30;
+		animationEndTime = 1.8f;
 		break;
 	default:
 		break;

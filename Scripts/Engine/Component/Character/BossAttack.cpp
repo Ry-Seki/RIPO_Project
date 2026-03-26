@@ -22,6 +22,7 @@ BossAttack::BossAttack()
 	, SEVolume(0)
 	, baseSEVolume(0)
 	, coolTimeSE(0)
+	, attackTime(0)
 	, FirstEffectFlag(false)
 	, FirstSEFlag(false)
 	, standbyAnimation(0)
@@ -30,7 +31,7 @@ BossAttack::BossAttack()
 	, playerDirection(Vector3::zero)
 	, firstPlayerDirection(Vector3::zero)
 	, ANIMATION_SPEED(1250)
-	, MOVE_SPEED(6000.0f)
+	, moveSpeed(6000.0f)
 {
 }
 
@@ -63,6 +64,7 @@ void BossAttack::Start(GameObject* boss)
 		headlongAnimation = 4;
 		forwardAttackAnimation = 1;
 		coolTimeSE = 0.1f;
+		attackTime = 1.5f;
 
 		break;
 
@@ -73,6 +75,12 @@ void BossAttack::Start(GameObject* boss)
 		standbyAnimation = 4;
 		forwardAttackAnimation = 0;
 		headlongAnimation = 7;
+		attackTime = 1.5f;
+		
+		if (bossComponent->GetHPHalfDownFlag()) {
+			moveSpeed = 10000;
+			attackTime = 0.8f;
+		}
 
 		break;
 	default:
@@ -266,8 +274,8 @@ void BossAttack::HeadlongAttack(GameObject* boss, float deltaTime, float attackS
 		// 攻撃中判定開始
 		bossComponent->SetBossAttackTimeFlag(true);
 		// プレイヤーがいた方向に突進
-		auto posX = playerDirection.x * MOVE_SPEED * deltaTime;
-		auto posZ = playerDirection.z * MOVE_SPEED * deltaTime;
+		auto posX = playerDirection.x * moveSpeed * deltaTime;
+		auto posZ = playerDirection.z * moveSpeed * deltaTime;
 		boss->position.x += posX;
 		boss->position.z += posZ;
 
@@ -279,7 +287,7 @@ void BossAttack::HeadlongAttack(GameObject* boss, float deltaTime, float attackS
 			coolTimeSE = 0.1f;
 		}
 
-		if (elapsedTime > attackStateTime + 1.5f) {
+		if (elapsedTime > attackStateTime + attackTime) {
 			// 攻撃中判定終了
 			bossComponent->SetBossAttackTimeFlag(false);
 			bossComponent->SetLongRangeAttackDistanceFlag(false);
