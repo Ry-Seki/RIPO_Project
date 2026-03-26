@@ -7,6 +7,11 @@
 #define _MENU_CREDIT_H_
 
 #include "../MenuBase.h"
+#include "../../UI/Button/UIButtonBase.h"
+#include "../../UI/Sprite/Sprite.h"
+#include "../../UI/EventSystem.h"
+#include "../../GameEnum.h"
+#include "../../GameConst.h"
 
 // 前方宣言
 class Engine;
@@ -16,9 +21,10 @@ class Engine;
  */
 class MenuCredit : public MenuBase {
 private:
+	EventSystem eventSystem;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/System/Confirm/ConfirmResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/Confirm/ConfirmNavigation.json";
+	std::vector<std::shared_ptr<UIButtonBase>> buttonList;
+	std::vector<std::shared_ptr<Sprite>> spriteList;
 
 public:
 	/*
@@ -40,13 +46,19 @@ public:
 	 */
 	void Update(Engine& engine, float unscaledDeltaTime) override;
 	/*
+	 *	@brief	アニメーション等の更新
+	 */
+	void AnimUpdate(Engine& engine, float unscaledDeltaTime) override;
+	/*
 	 *	@brief	描画処理
 	 */
 	void Render() override;
+
+private:
 	/*
-	 *	@brief	メニューを閉じる
+	 *	@brief	ボタンの押された時の処理
 	 */
-	void Close(Engine& engine) override;
+	void SelectButtonExecute();
 
 };
 

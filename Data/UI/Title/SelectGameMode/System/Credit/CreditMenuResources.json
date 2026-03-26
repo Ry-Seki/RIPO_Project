@@ -1,0 +1,52 @@
+{
+  "Sprites": [
+    {
+      "Name": "BackGround",
+      "Rect": {
+        "X": 0,
+        "Y": 0,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/BackGround/Trealine_LoadBackground_black1.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black2.jpg",
+        "Res/BackGround/Trealine_LoadBackground_black3.jpg"
+      ]
+    },
+    {
+      "Name": "Credit",
+      "Rect": {
+        "X": 0,
+        "Y": 0,
+        "Width": 1920,
+        "Height": 1080
+      },
+      "Resources": [
+        "Res/Menu/Title/System/Credit/Trealine_Credit.png"
+      ]
+    }
+  ],
+  "Buttons": [
+    {
+      "Name": "Back",
+      "Type": "Single",
+      "Position": {
+        "X": 1584,
+        "Y": 925
+      },
+      "Rect": {
+        "X": 1584,
+        "Y": 925,
+        "Width": 288,
+        "Height": 89
+      },
+      "Resources": {
+        "Idle": "Res/Menu/Title/System/Trealine_SelectBackButton.png",
+        "Hover": "Res/Menu/Title/System/Trealine_SelectBackButton.png",
+        "Press": "Res/Menu/Title/System/Trealine_SelectButton_Select.png",
+        "Select": "Res/Menu/Title/System/Trealine_SelectButton_Press.png"
+      }
+    }
+  ]
+}

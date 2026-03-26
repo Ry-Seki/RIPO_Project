@@ -160,7 +160,7 @@ void MenuPlayerStatus::Render() {
  */
 void MenuPlayerStatus::Close(Engine& engine) {
     MenuBase::Close(engine);
-    isCallback = false;
+    //isCallback = false;
 }
 /*
  *	@brief	ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—
