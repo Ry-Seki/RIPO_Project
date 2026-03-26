@@ -9,6 +9,7 @@
 MoveComponent::MoveComponent()
 	: velocity(V_ZERO)
 	, moveVec(V_ZERO)
+	, isMove(false)
 
 	, INERTIA_RATE(0.75f)
 {}
