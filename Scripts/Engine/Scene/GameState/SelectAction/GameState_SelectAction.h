@@ -16,9 +16,6 @@ class Engine;
  *	@brief	s“®‘I‘ğó‘Ô
  */
 class GameState_SelectAction : public GameStateBase {
-private:
-	bool inputHandle = false;											
-
 public:
 	/*
 	 *	@brief	‰Šú‰»ˆ—

@@ -21,6 +21,10 @@
 #include "../../../../System/Money/MoneyManager.h"
 #include "../../../../System/World/WorldProgressManager.h"
 
+namespace {
+	constexpr const char* _DUNGEON_LIST_PATH = "Data/Dungeon/DungeonList.csv";
+	constexpr const char* _DUNGEON_FLOOR_PATH = "Data/Dungeon/DungeonFloorData.json";
+}
 /*
  *	@brief	‰Šú‰»ˆ—
  */
