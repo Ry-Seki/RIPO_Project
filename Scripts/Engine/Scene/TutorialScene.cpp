@@ -99,6 +99,9 @@ void TutorialScene::Render() {
 		auto aabb = obj->GetComponent<AABBCollider>();
 		if (aabb != nullptr)
 			aabb->DebugRender();
+		auto obb = obj->GetComponent<OBBCollider>();
+		if (obb != nullptr)
+			obb->DebugRender();
 		auto capsule = obj->GetComponent<CapsuleCollider>();
 		if (capsule != nullptr)
 			capsule->DebugRender();

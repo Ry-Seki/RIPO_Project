@@ -2,25 +2,25 @@
   "0": {
     "0": {
       "Name": "HPUPツール",
-      "Price": 10,
+      "Price": 20,
       "OpenDay": 0,
       "BuyCount": false
     },
     "1": {
       "Name": "StaminaUPツール",
-      "Price": 10,
+      "Price": 20,
       "OpenDay": 0,
       "BuyCount": false
     },
     "2": {
       "Name": "StrengthUPツール",
-      "Price": 15,
+      "Price": 30,
       "OpenDay": 0,
       "BuyCount": false
     },
     "3": {
       "Name": "ResistTimeUPツール",
-      "Price": 15,
+      "Price": 30,
       "OpenDay": 0,
       "BuyCount": false
     }

@@ -118,6 +118,7 @@ public:
 	static constexpr const char* _MENU_BGM = "menuBGM";					// メニュー画面のBGM名
 	static constexpr const char* _SHOP_BGM = "shopBGM";					// ショップ画面のBGM名
 	static constexpr const char* _PART_BGM = "partBGM";					// パート画面のBGM名
+	static constexpr const char* _PARTSELECT_BGM = "partSelectBGM";		// パート画面のBGM名
 	//----------------------------------------------------
 	//					SEの命名
 	//----------------------------------------------------

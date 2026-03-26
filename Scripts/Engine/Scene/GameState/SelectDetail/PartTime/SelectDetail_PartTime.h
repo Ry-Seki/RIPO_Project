@@ -14,6 +14,7 @@
  */
 class SelectDetail_PartTime : public SelectDetailBase {
 
+	
 public:
 	/*
 	 *	@brief	‰Šú‰»ˆ—

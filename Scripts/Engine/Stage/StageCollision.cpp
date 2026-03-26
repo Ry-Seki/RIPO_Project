@@ -425,7 +425,7 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> StageCollision::SetupDebugCollision(Ga
 /*
  *	ステージの当たり判定の描画
  */
-void StageCollision::StageColliderRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos) {
+void StageCollision::StageColliderGridRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos) {
 	// モデルハンドルが無効な場合は処理を中止
 	if (modelHandle < 0) return;
 
@@ -470,6 +470,54 @@ void StageCollision::StageColliderRenderer(GameObject* other, Vector3 MoveVec, V
 
 		// 壁
 		if (isWall) {
+			drawColor = wallColor;
+		}
+
+		// ポリゴンを半透明で描画
+		DrawTriangle3D(poly.Position[0], poly.Position[1], poly.Position[2], drawColor, TRUE);
+
+		// ポリゴンを白線で描画
+		DrawLine3D(poly.Position[0], poly.Position[1], lineColor);
+		DrawLine3D(poly.Position[1], poly.Position[2], lineColor);
+		DrawLine3D(poly.Position[2], poly.Position[0], lineColor);
+	}
+
+	// 使用した衝突判定データを解放
+	MV1CollResultPolyDimTerminate(*hitDim);
+}
+
+/*
+ *	ステージの当たり判定の描画
+ */
+void StageCollision::StageColliderRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos) {
+	// モデルハンドルが無効な場合は処理を中止
+	if (modelHandle < 0) return;
+
+	auto hitDim = SetupCollision(other, MoveVec);
+
+	// 壁と床を区別するための色情報を設定
+	unsigned int wallColor = GetColor(255, 100, 100);
+	unsigned int floorColor = GetColor(100, 255, 100);
+	unsigned int lineColor = GetColor(255, 255, 255);
+
+	// 当たった全てのポリゴンに対して描画処理を実行
+	for (int i = 0; i < hitDim->HitNum; i++) {
+		const auto& poly = hitDim->Dim[i];
+
+		// 壁
+		bool isWall = (poly.Normal.y < _POLYGON_HEIGHT);
+		// 床
+		bool isFloor = (poly.Normal.y >= _FLOOR_LIMIT);
+		unsigned int drawColor;
+
+		// 壁かどうか
+		if (isFloor) {
+			// 壁ポリゴン配列に追加する
+			drawColor = floorColor;
+		}
+
+		if (isWall) {
+			// 床ポリゴン配列に追加する
 			drawColor = wallColor;
 		}
 
