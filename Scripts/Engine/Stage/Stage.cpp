@@ -70,8 +70,8 @@ void Stage::Render() {
 			// プレイヤーの直前の位置を計算
 			Vector3 prevPos = player->position - player->GetComponent<MoveComponent>()->GetMoveVec();
 			// ステージ当たり判定描画
-			collision->StageColliderRenderer(player.get(), player->GetComponent<MoveComponent>()->GetMoveVec(), prevPos);
-			//collision->StageColliderGridRenderer(player.get(), player->GetComponent<PlayerComponent>()->GetMoveVec(), prevPos);
+			//collision->StageColliderRenderer(player.get(), player->GetComponent<MoveComponent>()->GetMoveVec(), prevPos);
+			collision->StageColliderGridRenderer(player.get(), player->GetComponent<MoveComponent>()->GetMoveVec(), prevPos);
 			collision->ClearGrid();
 			collision->DrawGrid(player.get());
 

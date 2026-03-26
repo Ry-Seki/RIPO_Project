@@ -362,41 +362,20 @@ void StageCollision::ProcessFloorCollision(
  *  @param[in]	obj	走査する対象
  */
 void StageCollision::RegisterObject(GameObject* obj) {
+	// グリッドにオブジェクトがなければ抜ける
 	if (!obj) return;
 
-	// 座標からセルを求める
+	// ワールド座標からグリッド画像に変換
 	GridCoord coord = WorldToGrid(obj->position);
 
-	// そのセルに追加
+	// セルにオブジェクトを追加
 	grid[coord].push_back(obj);
 }
 
 /*
  *	周囲のセルを取得
- *  @param[in]	pos	プレイヤーの座標
+ *  @param[in]	other	セル内にいるキャラクター
  */
-std::vector<GameObject*> StageCollision::GetNearByObjects(const Vector3& pos) {
-	std::vector<GameObject*> result;
-
-	GridCoord center = WorldToGrid(pos);
-
-	// 3x3セルを見る
-	for (int dz = -1; dz <= 1; dz++) {
-		for (int dx = -1; dx <= 1; dx++) {
-			GridCoord coord{ center.x + dx, center.z + dz };
-
-			// セルが存在する場合
-			auto it = grid.find(coord);
-			if (it != grid.end()) {
-				// 中のオブジェクトを追加
-				result.insert(result.end(), it->second.begin(), it->second.end());
-			}
-		}
-	}
-
-	return result;
-}
-
 std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> StageCollision::SetupDebugCollision(GameObject* other) {
 	// カプセルを取得
 	auto capsule = other->GetComponent<CapsuleCollider>();
@@ -414,7 +393,7 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> StageCollision::SetupDebugCollision(Ga
 	*hitDim = MV1CollCheck_Sphere(
 		modelHandle,		// ダンジョンモデル
 		-1,	
-		ToVECTOR(pos),		// 
+		ToVECTOR(pos),		// プレイヤーの座標をVECTOR型に変換して渡す
 		radius
 	);
 
@@ -426,12 +405,13 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> StageCollision::SetupDebugCollision(Ga
  *	ステージの当たり判定の描画
  */
 void StageCollision::StageColliderGridRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos) {
-	// モデルハンドルが無効な場合は処理を中止
+	// モデルハンドルがない場合は抜ける
 	if (modelHandle < 0) return;
 
+	// 周囲のセルを取得
 	auto hitDim = SetupDebugCollision(other);
 
-	// プレイヤーの現在グリッドセルを取得
+	// プレイヤーのいるセルを取得
 	GridCoord playerCell = WorldToGrid(other->position);
 
 	// 壁と床を区別するための色情報を設定
@@ -453,8 +433,8 @@ void StageCollision::StageColliderGridRenderer(GameObject* other, Vector3 MoveVe
 		GridCoord c1 = WorldToGrid(p1);
 		GridCoord c2 = WorldToGrid(p2);
 
-		// どれか1つでもプレイヤーセルに含まれていれば描画
-		if (!(c0 == playerCell || c1 == playerCell || c2 == playerCell)) continue;
+		// 三角形がプレイヤーセルに含まれていなければスキップ
+		if (!IsTriangleInCell(p0, p1, p2, playerCell)) continue;
 
 		// 壁
 		bool isWall = (poly.Normal.y < _POLYGON_HEIGHT);
@@ -487,6 +467,55 @@ void StageCollision::StageColliderGridRenderer(GameObject* other, Vector3 MoveVe
 }
 
 /*
+ *	三角形がグリッドセル内に存在するか判定する
+ *  @param[in]	Vector3		三角形の頂点
+ *  @param[in]	GridCoord	判定するセル
+ *  @return		セル内に三角形が存在するか
+ */
+bool StageCollision::IsTriangleInCell(const Vector3& p0, const Vector3& p1, const Vector3& p2, const GridCoord& cell) {
+	// 各頂点のグリッドを取得
+	GridCoord c0 = WorldToGrid(p0);
+	GridCoord c1 = WorldToGrid(p1);
+	GridCoord c2 = WorldToGrid(p2);
+
+	// 頂点がセルに含まれているか判定
+	bool inside =
+		(c0 == cell || c1 == cell || c2 == cell);
+
+	// 三角形のAABBを作成
+	Vector3 triMin, triMax;
+
+	// 三角形の最小値を求める（AABBの最小点）
+	triMin.x = min(p0.x, min(p1.x, p2.x));
+	triMin.y = min(p0.y, min(p1.y, p2.y));
+	triMin.z = min(p0.z, min(p1.z, p2.z));
+
+	// 三角形の最大値を求める（AABBの最大点）
+	triMax.x = max(p0.x, max(p1.x, p2.x));
+	triMax.y = max(p0.y, max(p1.y, p2.y));
+	triMax.z = max(p0.z, max(p1.z, p2.z));
+
+	// セルのAABBを作成
+	Vector3 cellMin;
+	cellMin.x = cell.x * GRID_SIZE;
+	cellMin.y = -FLT_MAX;  // Y方向は無限として扱う
+	cellMin.z = cell.z * GRID_SIZE;
+
+	Vector3 cellMax;
+	cellMax.x = cellMin.x + GRID_SIZE;
+	cellMax.y = FLT_MAX;
+	cellMax.z = cellMin.z + GRID_SIZE;
+
+	// AABB同士の衝突判定
+	bool overlap =
+		(triMin.x <= cellMax.x && triMax.x >= cellMin.x) &&
+		(triMin.z <= cellMax.z && triMax.z >= cellMin.z);
+
+	// 頂点またはAABBが重なっていればtrue
+	return (inside || overlap);
+}
+
+/*
  *	ステージの当たり判定の描画
  */
 void StageCollision::StageColliderRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos) {
@@ -500,7 +529,7 @@ void StageCollision::StageColliderRenderer(GameObject* other, Vector3 MoveVec, V
 	unsigned int floorColor = GetColor(100, 255, 100);
 	unsigned int lineColor = GetColor(255, 255, 255);
 
-	// 当たった全てのポリゴンに対して描画処理を実行
+	// 当たったポリゴンの処理を実行
 	for (int i = 0; i < hitDim->HitNum; i++) {
 		const auto& poly = hitDim->Dim[i];
 
@@ -539,10 +568,13 @@ void StageCollision::StageColliderRenderer(GameObject* other, Vector3 MoveVec, V
  *  @param[in]	player	参照するプレイヤー
  */
 void StageCollision::DrawGrid(GameObject* player) {
+	// プレイヤーの座標
 	Vector3 playerPos = player->position;
+	// プレイヤーのいるセルを取得
 	GridCoord playerCell = WorldToGrid(playerPos);
 
-	const int RANGE = 10; // 周囲10マスだけ
+	// 描画を周囲10マスに絞る
+	const int RANGE = 10;
 
 	for (int z = -RANGE; z <= RANGE; z++) {
 		for (int x = -RANGE; x <= RANGE; x++) {

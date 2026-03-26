@@ -22,7 +22,7 @@ struct GridCoord
 {
 	int x;
 	int z;
-	
+
 	// グリッド用演算子
 	bool operator==(const GridCoord& other) const {
 		return x == other.x && z == other.z;
@@ -49,13 +49,13 @@ private:
 	static constexpr float _HALF = 0.5f;						// 半分
 	static constexpr float _POLYGON_HEIGHT = 0.9f;				// 壁の角度
 	static constexpr float _FLOOR_LIMIT = 0.5f;					// 床の角度
-	
-	
+
+
 	// グリッド空間
 	std::unordered_map<GridCoord, std::vector<GameObject*>, GridCoordHash> grid;
 	// グリッド設定
 	static constexpr float GRID_SIZE = 5000.0f;   // 1マスの大きさ
-	static constexpr int GRID_NUM = 1<<10;		     // 片側の数
+	static constexpr int GRID_NUM = 1 << 10;		     // 片側の数
 
 public:
 	/*
@@ -133,7 +133,7 @@ private:
 	/*
 	 *	座標変換
 	 *  @param[in]	pos		プレイヤーの位置
-	 */ 
+	 */
 	GridCoord WorldToGrid(const Vector3& pos) {
 		return {
 			(int)floor(pos.x / GRID_SIZE),  // X方向のセル
@@ -147,14 +147,20 @@ private:
 	 */
 	void RegisterObject(GameObject* obj);
 
+
 	/*
 	 *	周囲のセルを取得
-	 *  @param[in]	pos	プレイヤーの座標
+	 *  @param[in]	other	セル内にいるキャラクター
 	 */
-	std::vector<GameObject*> GetNearByObjects(const Vector3& pos);
-
 	std::unique_ptr<MV1_COLL_RESULT_POLY_DIM>SetupDebugCollision(GameObject* other);
 
+	/*
+	 *	三角形がグリッドセル内に存在するか判定する
+	 *  @param[in]	Vector3		三角形の頂点 
+	 *  @param[in]	GridCoord	判定するセル
+	 *  @return		セル内に三角形が存在するか
+	 */
+	bool IsTriangleInCell(const Vector3& p0, const Vector3& p1, const Vector3& p2, const GridCoord& cell);
 public:
 
 	/*
@@ -169,24 +175,24 @@ public:
 	 *  @param	Vector3		移動量
 	 *  @param	Vector3		直前の移動量
 	 */
-	void StageColliderGridRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos);
-	void StageColliderRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos);
+	void StageColliderGridRenderer(GameObject * other, Vector3 MoveVec, Vector3 prevPos);
+	void StageColliderRenderer(GameObject * other, Vector3 MoveVec, Vector3 prevPos);
 
 	/*
 	 *	グリッドを表示
 	 *  @param[in]	player	参照するプレイヤー
 	 */
-	void DrawGrid(GameObject* player);
+	void DrawGrid(GameObject * player);
 
 	/*
-	 *	グリッドをクリアーする
+	 *	グリッドをクリアする
 	 */
 	void ClearGrid() {
 		grid.clear();
 	}
 
 
-};
+	};
 
 
 #endif // !_STAGECOLLISION_H_
