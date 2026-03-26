@@ -30,6 +30,7 @@ private:	//メンバ変数
 	int prevMousePosY;		// 直前のマウス位置Y
 	bool mouseVisible;		// マウスカーソルの表示非表示フラグ
 	bool prevInputMouse;	// 直前の入力がマウスかどうか
+	bool mouseMoveSkip;		// マウスの中央固定を1フレームスキップするためのフラグ
 	
 	std::unordered_map<GameEnum::ActionMap, std::shared_ptr<ActionMapBase>> actionMaps;		// 各アクションマップ
 private:	    //コンストラクタとデストラクタ
@@ -127,8 +128,14 @@ public:		//マウス用入力管理
 	 *  @outhor Riku
 	 */
 	inline void GetMousePosition(int& mousePosX, int& mousePosY) {
-		mousePosX = nowMousePosX;
-		mousePosY = nowMousePosY;
+		if (!mouseVisible) {
+			mousePosX = -1;
+			mousePosY = -1;
+		}
+		else {
+			mousePosX = nowMousePosX;
+			mousePosY = nowMousePosY;
+		}
 	}
 
 public: // マウスとキーの両方入力
@@ -202,7 +209,7 @@ public:
 	 */
 	inline void SetMouseVisible(bool setVisible) {
 		mouseVisible = setVisible;
-		SetMouseDispFlag(setVisible);
+		mouseMoveSkip = true;
 	}
 	/*
 	 *	直前の入力がマウスかどうか取得
