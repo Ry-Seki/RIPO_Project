@@ -47,6 +47,9 @@ void InputManager::Initialize() {
  *	更新処理
  */
 void InputManager::Update() {
+	// マウスの表示非表示切り替え
+	SetMouseDispFlag(mouseVisible);
+
 	//1フレーム前のマウスのボタンの状態を保存
 	prevMouseInput = nowMouseInput;
 	//現在のマウスのボタンの状態を取得
@@ -64,14 +67,20 @@ void InputManager::Update() {
 	GetMousePoint(&nowMousePosX, &nowMousePosY);
 	// マウスカーソルが非表示ならカーソルは中央固定
 	if (!mouseVisible) {
-		// 画面中央
-		int windowWidthCenter = GameConst::WINDOW_WIDTH / 2;
-		int windowHeightCenter = GameConst::WINDOW_HEIGHT / 2;
-		// マウスを画面中央に固定
-		SetMousePoint(windowWidthCenter, windowHeightCenter);
-		// 1フレーム前位置は画面中央とする
-		prevMousePosX = windowWidthCenter;
-		prevMousePosY = windowHeightCenter;
+		// 1フレーム目はスキップ
+		if (mouseMoveSkip) {
+			mouseMoveSkip = false;
+		}
+		else {
+			// 画面中央
+			int windowWidthCenter = GameConst::WINDOW_WIDTH / 2;
+			int windowHeightCenter = GameConst::WINDOW_HEIGHT / 2;
+			// マウスを画面中央に固定
+			SetMousePoint(windowWidthCenter, windowHeightCenter);
+			// 1フレーム前位置は画面中央とする
+			prevMousePosX = windowWidthCenter;
+			prevMousePosY = windowHeightCenter;
+		}
 	}
 
 	// 直前の入力がマウスかどうか管理
