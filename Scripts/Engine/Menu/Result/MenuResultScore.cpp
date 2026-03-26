@@ -191,7 +191,7 @@ GameEnum::ResultRank MenuResultScore::JudgeRank(int playerScore) {
             return static_cast<GameEnum::ResultRank>(i);
         }
     }
-    return GameEnum::ResultRank::Invalid;
+    return GameEnum::ResultRank::D;
 }
 /*
  *	@brief		ƒ‰ƒ“ƒN‚©‚ç->•¶Žš—ñŒ^‚É•ÏŠ·
