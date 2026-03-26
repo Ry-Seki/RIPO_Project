@@ -101,8 +101,6 @@ void PlayerComponent::Update(float deltaTime) {
 	GameObject* player = GetOwner();
 	// プレイヤーの入力情報
 	action = GetInputState(GameEnum::ActionMap::PlayerAction);
-	// 移動量保存
-	moveVec = move->GetMoveVec();
 
 	// レジスト値がなくなった場合はHPが割合で削れる
 	if (resist->GetResistTime() <= 0) {
@@ -125,7 +123,7 @@ void PlayerComponent::Update(float deltaTime) {
 		PlayerMove(player, deltaTime);
 	}
 	// ステージとの当たり判定
-	StageManager::GetInstance().StageCollider(player, moveVec);
+	StageManager::GetInstance().StageCollider(player, move->GetMoveVec());
 
 	// デバック用カメラ切り替え
 #if _DEBUG
@@ -195,7 +193,7 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 
 	// アニメーション再生
 	if (CameraManager::GetInstance().GetCameraState() == GameEnum::CameraState::TPS) {
-		if (moveVec != V_ZERO) {
+		if (move->IsMove()) {
 			if (forward == 1.0f) {
 				// 前移動
 				animator->Play(static_cast<int>(PlayerAnimNum::Walk), moveSpeed * WALK_RATE);
@@ -220,7 +218,7 @@ void PlayerComponent::PlayerMove(GameObject* player, float deltaTime) {
 	}
 
 	// SE再生
-	if (gravity->GetGroundingFrag() && moveVec != V_ZERO) {
+	if (gravity->GetGroundingFrag() && move->IsMove()) {
 		// SE再生クールタイム
 		if (walkSECoolTime >= WALK_SE_COOL_TIME_MAX) {
 			PlaySE(GameConst::_PLAYER_WALK_SE);
@@ -332,7 +330,7 @@ void PlayerComponent::ChangeWeapon() {
 		// SE再生
 		PlaySE(GameConst::_CHANGE_WEAPON_SE);
 	}
-	if (action.buttonDown[second]) {
+	if (action.buttonDown[second] && WeaponManager::GetInstance().IsSubmachineGun()) {
 		// SMGに変更
 		WeaponManager::GetInstance().SetCurrentWeapon(GameEnum::Weapon::SubmachineGun);
 		// SE再生
