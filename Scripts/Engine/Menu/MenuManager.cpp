@@ -17,12 +17,14 @@ void MenuManager::Initialize(Engine& engine) {
 	fontNameList.push_back("MiniSizeFont");
 	fontNameList.push_back("ElapsedDayFont");
 	fontNameList.push_back("BigSizeFont");
+	fontNameList.push_back("MaxSizeFont");
 	FontManager::GetInstance().LoadFont(86, fontNameList[0]);
 	FontManager::GetInstance().LoadFont(16, fontNameList[1]);
 	FontManager::GetInstance().LoadFont(64, fontNameList[2]);
 	FontManager::GetInstance().LoadFont(32, fontNameList[3]);
 	FontManager::GetInstance().LoadFont(48, fontNameList[4]);
 	FontManager::GetInstance().LoadFont(98, fontNameList[5]);
+	FontManager::GetInstance().LoadFont(128, fontNameList[6]);
 }
 /*
  *	@brief	çXêVèàóù

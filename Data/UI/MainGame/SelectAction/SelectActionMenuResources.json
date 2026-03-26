@@ -30,9 +30,9 @@
     {
       "Name": "SelectAction_Detail",
       "Rect": {
-        "X": 785,
-        "Y": 170,
-        "Width": 1135,
+        "X": 67,
+        "Y": 161,
+        "Width": 1826,
         "Height": 910
       },
       "Resources": [
@@ -56,11 +56,21 @@
     {
       "Name": "ElapsedDayText",
       "Type": "Dynamic",
-      "UseFont": "BigSizeFont",
+      "UseFont": "MaxSizeFont",
       "Alignment": "Left",
       "Position": {
-        "X": 260,
-        "Y": 500
+        "X": 190,
+        "Y": 420
+      }
+    },
+    {
+      "Name": "MaxDayText",
+      "Type": "Dynamic",
+      "UseFont": "MiniSizeFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 350,
+        "Y": 540
       }
     },
     {
