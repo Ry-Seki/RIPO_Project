@@ -171,6 +171,7 @@ void MenuPlayerStatus::SelectButtonExecute(Engine& engine) {
     isInteractive = false;
     FadeBasePtr fadeOut = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::Out, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+        menu.CloseTopMenu();    // このメニュー
         ExecuteCallback();
     });
 }
@@ -232,7 +233,6 @@ void MenuPlayerStatus::ExecuteCallback() {
     if (isCallback && Callback) {
         Callback();
     } else {
-        menu.CloseTopMenu();    // このメニュー
         FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 0.5f, FadeDirection::In, FadeMode::Stop);
         FadeManager::GetInstance().StartFade(fadeIn);
     }
