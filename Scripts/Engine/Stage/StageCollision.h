@@ -169,6 +169,7 @@ public:
 	 *  @param	Vector3		ˆÚ“®—Ê
 	 *  @param	Vector3		’¼‘O‚ÌˆÚ“®—Ê
 	 */
+	void StageColliderGridRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos);
 	void StageColliderRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos);
 
 	/*
