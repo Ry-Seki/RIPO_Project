@@ -30,9 +30,6 @@ void WeaponManager::Initialize() {
 void WeaponManager::SetCurrentWeapon(GameEnum::Weapon setWeapon) {
 	if (currentWeapon == weapons[setWeapon])
 		return;
-	// サブマシンガンが解放されていないならスキップ(修正予定)
-	if (setWeapon == GameEnum::Weapon::SubmachineGun && !submachineGun)
-		return;
 	currentWeapon = weapons[setWeapon];
 }
 

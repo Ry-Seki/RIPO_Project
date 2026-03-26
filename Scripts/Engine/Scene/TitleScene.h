@@ -13,11 +13,6 @@
  *  タイトルシーン
  */
 class TitleScene : public Scene {
-private:
-    bool isStart = false;
-    bool inputHandle = false;
-    GameEnum::GameMode gameMode = GameEnum::GameMode::Invalid;
-
 public:
     /*
      *  初期化処理

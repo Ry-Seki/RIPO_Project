@@ -197,9 +197,12 @@ void MenuSystem::Close(Engine& engine) {
  */
 void MenuSystem::Resume() {
     MenuBase::Resume();
-    for (auto& button : buttonList) {
-        button->Setup();
-    }
+    FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
+    FadeManager::GetInstance().StartFade(fadeIn, [this]() {
+        for (auto& button : buttonList) {
+            button->Setup();
+        }
+    });
 }
 /*
  *	@brief		ƒ{ƒ^ƒ“‚Ì‰Ÿ‚³‚ê‚½‚Ìˆ—
@@ -222,7 +225,9 @@ void MenuSystem::SelectButtonExecute(GameEnum::SystemMode type) {
             break;
         case GameEnum::SystemMode::Credit:
             isInteractive = false;
-            menu.OpenMenu<MenuCredit>();
+            FadeManager::GetInstance().StartFade(fadeOut, [this, &menu]() {
+                menu.OpenMenu<MenuCredit>();
+            });
             break;
         default:
             break;
