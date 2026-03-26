@@ -35,10 +35,6 @@ private:
 	std::vector<SokobanBox> boxList;			// 箱リスト
 
 	int screenWidth = 0, screenHeight = 0;
-	const float _MOVE_DURATION = 0.15f;			// 補間時間
-	const int _TILE_SIZE = 64;					// タイルサイズ
-
-	static constexpr const char* _SOKOBAN_PATH = "Data/MiniGame/Sokoban/Map/";
 
 public:
 	/*

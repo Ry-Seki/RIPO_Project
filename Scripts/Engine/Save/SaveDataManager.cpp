@@ -446,6 +446,7 @@ void SaveDataManager::ResetClearSaveData() {
     WorldProgressManager::GetInstance().SetWorldProgressData(worldData);
 
     data.game.currentMoney = 0;
+    data.game.elapsedDay = 0;
     data.game.elapsedDay++;
     data.game.isHalfDay = false;
     data.game.isClear = false;

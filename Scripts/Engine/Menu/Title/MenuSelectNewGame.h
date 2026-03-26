@@ -22,9 +22,6 @@ class SinglePressButton;
 class MenuSelectNewGame : public MenuBase {
 private:
 	std::vector<std::shared_ptr<SinglePressButton>> buttonList;
-	EventSystem eventSystem;
-
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/SaveSlotNavigation.json";
 
 public:
 	/*

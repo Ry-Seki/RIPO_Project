@@ -69,9 +69,6 @@ private:
 
 	std::vector<SaveSlotData> slotDataList;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/System/SaveLoad/SaveSlotResources.json";
-	static constexpr const char* _NAVIGATION_PATH = "Data/UI/System/SaveLoad/SaveSlotNavigation.json";
-
 public:
 	/*
 	 *	@brief	‰Šú‰»ˆ—

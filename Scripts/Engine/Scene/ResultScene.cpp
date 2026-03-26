@@ -17,6 +17,9 @@
 
 #include <DxLib.h>	
 
+namespace {
+    constexpr const char* _RESULT_SCORE_PATH = "Data/Scene/Result/ResultScoreRankData.json";
+}
 /*
  *	@brief	‰Šú‰»ˆ—
  */
