@@ -398,22 +398,27 @@ std::vector<GameObject*> StageCollision::GetNearByObjects(const Vector3& pos) {
 }
 
 std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> StageCollision::SetupDebugCollision(GameObject* other) {
+	// カプセルを取得
 	auto capsule = other->GetComponent<CapsuleCollider>();
 	if (!capsule) return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
-
+	// プレイヤーの座標を設定
 	Vector3 pos = other->position;
 
 	// セルサイズ分の球で取得
 	float radius = GRID_SIZE;
 
+	// ポリゴン構造体作成
 	auto hitDim = std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
+
+	// 球とポリゴンの判定を取る
 	*hitDim = MV1CollCheck_Sphere(
-		modelHandle,
-		-1,
-		ToVECTOR(pos),
+		modelHandle,		// ダンジョンモデル
+		-1,	
+		ToVECTOR(pos),		// 
 		radius
 	);
 
+	// 当たったポリゴンを返す
 	return hitDim;
 }
 
