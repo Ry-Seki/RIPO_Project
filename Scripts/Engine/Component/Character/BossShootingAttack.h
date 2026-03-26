@@ -20,6 +20,8 @@
 		float coolTime;
 		float rapidCoolTime;
 		float overheatCoolTime;
+		float shotSpeed;
+		float slowShotSpeed;
 		// ’eŒ‚‚¿ƒtƒ‰ƒO
 		bool shootFlag;
 		bool secondFlag;

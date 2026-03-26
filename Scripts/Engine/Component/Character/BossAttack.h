@@ -24,6 +24,10 @@ private:
 	float baseSEVolume;
 	// SEのクールタイム
 	float coolTimeSE;
+	// 移動スピード
+	float moveSpeed;
+	// 攻撃時間
+	float attackTime;
 	// エフェクトを一回しか出さないためのフラグ
 	bool FirstEffectFlag;
 	// 音を一回しか鳴らさないためのフラグ
@@ -40,8 +44,6 @@ private:
 	Vector3 firstPlayerDirection;
 
 	const float ANIMATION_SPEED;
-	// 移動スピード
-	const float MOVE_SPEED;
 
 public:
 	/*

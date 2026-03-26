@@ -37,6 +37,8 @@ private:
 	float baseSEVolume;
 	// プレイヤーまでの距離
 	float playerDistance;
+	// 移動経過時間
+	float elapsedTime;
 	// プレイヤーの距離判定フラグ
 	bool closePlayer;
 	// プレイヤー追跡判定
