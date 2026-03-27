@@ -9,14 +9,32 @@
 #include "../GameConst.h"
 #include "../Stage/StageMemoryProfiler.h"
 #include "../StringUtility.h"
+
+namespace {
+	// 光の減衰を扱う構造体
+	struct Attenuation {
+		float Atten0;
+		float Atten1;
+		float Atten2;
+	};
+	// 光の減衰率 x, y, z
+	constexpr Attenuation _POINT_ATTEN = { 0.0f, 0.0005f, 0.0f };
+	// 光源の向き
+	constexpr VECTOR _LIGHTDIRECTION_NUM = { 0.2f, -20.0f, 0.3f };
+	// ポイントライトの色
+	constexpr VECTOR _POINTLIGHT_COLOR = { 1.0f, 0.8f, 0.6f };
+	// ポイントライトの範囲
+	constexpr float _POINTLIGHT_RANGE = 10000.0f;
+}
+
  /*
   *  コンストラクタ
   */
 StageManager::StageManager()
 	: engine(nullptr) 
-	, lightDirection(0.2f, -20.0f, 0.3f)	// 光源の向き
-	, pointLightColor(1.0f, 0.8f, 0.6f)		// ポイントライトの色
-	, pointLightRange(10000.0f)				// ポイントライトの範囲
+	, lightDirection(FromVECTOR(_LIGHTDIRECTION_NUM))	// 光源の向き
+	, pointLightColor(FromVECTOR(_POINTLIGHT_COLOR))	// ポイントライトの色
+	, pointLightRange(_POINTLIGHT_RANGE)				// ポイントライトの範囲
 {
 }
 
@@ -145,7 +163,7 @@ void StageManager::LightSettings() {
 	// ポイントライトがおける場所がある分、ポイントライトを配置する
 	for (const auto& pos : pointLightPos) {
 		// ポイントライトのハンドルを作成
-		int pLight = CreatePointLightHandle(ToVECTOR(pos), pointLightRange, _POINT_ATTAN.Atten0, _POINT_ATTAN.Atten1, _POINT_ATTAN.Atten2);
+		int pLight = CreatePointLightHandle(ToVECTOR(pos), pointLightRange, _POINT_ATTEN.Atten0, _POINT_ATTEN.Atten1, _POINT_ATTEN.Atten2);
 		// ポイントライトの色を指定する
 		SetLightDifColorHandle(pLight, GetColorF(pointLightColor.x, pointLightColor.y, pointLightColor.z, Vector3::one.x));
 		SetLightSpcColorHandle(pLight, GameConst::_POINT_SPC_COLOR);

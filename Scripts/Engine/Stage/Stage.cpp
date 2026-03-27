@@ -65,15 +65,15 @@ void Stage::Render() {
 
 #if _DEBUG
 		// プレイヤーの取得
-		player = GetPlayer();
+		auto player = GetPlayer();
 		if (player != nullptr) {
 			// プレイヤーの直前の位置を計算
 			Vector3 prevPos = player->position - player->GetComponent<MoveComponent>()->GetMoveVec();
-			// ステージ当たり判定描画
-			collision->StageColliderRenderer(player.get(), player->GetComponent<MoveComponent>()->GetMoveVec(), prevPos);
-			//collision->StageColliderGridRenderer(player.get(), player->GetComponent<PlayerComponent>()->GetMoveVec(), prevPos);
-			collision->ClearGrid();
-			collision->DrawGrid(player.get());
+			// 通常描画描画
+			//collision->StageColliderRenderer(player.get(), player->GetComponent<MoveComponent>()->GetMoveVec(), prevPos);
+
+			// グリッド描画
+			collision->StageGridCollisionRenderer(modelHandle,player.get(), player->GetComponent<MoveComponent>()->GetMoveVec(), prevPos);
 
 		}
 #endif // _DEBUG

@@ -26,7 +26,6 @@ private:
 	std::string modelPath;						// モデルのパス
 	
 	std::unique_ptr<StageCollision> collision;	// 当たり判定管理クラス
-	GameObjectPtr player;				// プレイヤー
 
 
 public:

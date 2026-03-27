@@ -358,135 +358,6 @@ void StageCollision::ProcessFloorCollision(
 }
 
 /*
- *	オブジェクトをグリッドに登録
- *  @param[in]	obj	走査する対象
- */
-void StageCollision::RegisterObject(GameObject* obj) {
-	if (!obj) return;
-
-	// 座標からセルを求める
-	GridCoord coord = WorldToGrid(obj->position);
-
-	// そのセルに追加
-	grid[coord].push_back(obj);
-}
-
-/*
- *	周囲のセルを取得
- *  @param[in]	pos	プレイヤーの座標
- */
-std::vector<GameObject*> StageCollision::GetNearByObjects(const Vector3& pos) {
-	std::vector<GameObject*> result;
-
-	GridCoord center = WorldToGrid(pos);
-
-	// 3x3セルを見る
-	for (int dz = -1; dz <= 1; dz++) {
-		for (int dx = -1; dx <= 1; dx++) {
-			GridCoord coord{ center.x + dx, center.z + dz };
-
-			// セルが存在する場合
-			auto it = grid.find(coord);
-			if (it != grid.end()) {
-				// 中のオブジェクトを追加
-				result.insert(result.end(), it->second.begin(), it->second.end());
-			}
-		}
-	}
-
-	return result;
-}
-
-std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> StageCollision::SetupDebugCollision(GameObject* other) {
-	// カプセルを取得
-	auto capsule = other->GetComponent<CapsuleCollider>();
-	if (!capsule) return std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
-	// プレイヤーの座標を設定
-	Vector3 pos = other->position;
-
-	// セルサイズ分の球で取得
-	float radius = GRID_SIZE;
-
-	// ポリゴン構造体作成
-	auto hitDim = std::make_unique<MV1_COLL_RESULT_POLY_DIM>();
-
-	// 球とポリゴンの判定を取る
-	*hitDim = MV1CollCheck_Sphere(
-		modelHandle,		// ダンジョンモデル
-		-1,	
-		ToVECTOR(pos),		// 
-		radius
-	);
-
-	// 当たったポリゴンを返す
-	return hitDim;
-}
-
-/*
- *	ステージの当たり判定の描画
- */
-void StageCollision::StageColliderGridRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos) {
-	// モデルハンドルが無効な場合は処理を中止
-	if (modelHandle < 0) return;
-
-	auto hitDim = SetupDebugCollision(other);
-
-	// プレイヤーの現在グリッドセルを取得
-	GridCoord playerCell = WorldToGrid(other->position);
-
-	// 壁と床を区別するための色情報を設定
-	unsigned int wallColor = GetColor(255, 100, 100);
-	unsigned int floorColor = GetColor(100, 255, 100);
-	unsigned int lineColor = GetColor(255, 255, 255);
-
-	// 当たった全てのポリゴンに対して描画処理を実行
-	for (int i = 0; i < hitDim->HitNum; i++) {
-		const auto& poly = hitDim->Dim[i];
-
-		// 三角形の頂点取得
-		Vector3 p0 = FromVECTOR(poly.Position[0]);
-		Vector3 p1 = FromVECTOR(poly.Position[1]);
-		Vector3 p2 = FromVECTOR(poly.Position[2]);
-
-		// 各頂点のグリッドを取得
-		GridCoord c0 = WorldToGrid(p0);
-		GridCoord c1 = WorldToGrid(p1);
-		GridCoord c2 = WorldToGrid(p2);
-
-		// どれか1つでもプレイヤーセルに含まれていれば描画
-		if (!(c0 == playerCell || c1 == playerCell || c2 == playerCell)) continue;
-
-		// 壁
-		bool isWall = (poly.Normal.y < _POLYGON_HEIGHT);
-		// 床
-		bool isFloor = (poly.Normal.y >= _FLOOR_LIMIT);
-
-		unsigned int drawColor;
-
-		// 床
-		if (isFloor) {
-			drawColor = floorColor;
-		}
-
-		// 壁
-		if (isWall) {
-			drawColor = wallColor;
-		}
-
-		// ポリゴンを半透明で描画
-		DrawTriangle3D(poly.Position[0], poly.Position[1], poly.Position[2], drawColor, TRUE);
-
-		// ポリゴンを白線で描画
-		DrawLine3D(poly.Position[0], poly.Position[1], lineColor);
-		DrawLine3D(poly.Position[1], poly.Position[2], lineColor);
-		DrawLine3D(poly.Position[2], poly.Position[0], lineColor);
-	}
-
-	// 使用した衝突判定データを解放
-	MV1CollResultPolyDimTerminate(*hitDim);
-}
-
-/*
  *	ステージの当たり判定の描画
  */
 void StageCollision::StageColliderRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos) {
@@ -500,7 +371,7 @@ void StageCollision::StageColliderRenderer(GameObject* other, Vector3 MoveVec, V
 	unsigned int floorColor = GetColor(100, 255, 100);
 	unsigned int lineColor = GetColor(255, 255, 255);
 
-	// 当たった全てのポリゴンに対して描画処理を実行
+	// 当たったポリゴンの処理を実行
 	for (int i = 0; i < hitDim->HitNum; i++) {
 		const auto& poly = hitDim->Dim[i];
 
@@ -535,53 +406,20 @@ void StageCollision::StageColliderRenderer(GameObject* other, Vector3 MoveVec, V
 }
 
 /*
- *	グリッドを表示
- *  @param[in]	player	参照するプレイヤー
+ *	ステージの当たり判定の描画
+ *  @param[in]	modelhandle		ダンジョンモデル
+ *  @param[in]	other			キャラクター
+ *  @param[in]	MoveVec			移動量
+ *  @param[in]	PrevPos			直前の移動量
  */
-void StageCollision::DrawGrid(GameObject* player) {
-	Vector3 playerPos = player->position;
-	GridCoord playerCell = WorldToGrid(playerPos);
+void StageCollision::StageGridCollisionRenderer(int modelhandle, GameObject* other, Vector3 MoveVec, Vector3 prevPos) {
+	// モデルハンドルが無効な場合は処理を中止
+	if (modelHandle < 0) return;
 
-	const int RANGE = 10; // 周囲10マスだけ
-
-	for (int z = -RANGE; z <= RANGE; z++) {
-		for (int x = -RANGE; x <= RANGE; x++) {
-			GridCoord coord{ playerCell.x + x, playerCell.z + z };
-
-			float worldX = coord.x * GRID_SIZE;
-			float worldZ = coord.z * GRID_SIZE;
-
-			// グリッドに登録されているか
-			bool hasObject = (grid.find(coord) != grid.end());
-
-			// プレイヤーセル
-			bool isPlayer = (coord.x == playerCell.x && coord.z == playerCell.z);
-
-			unsigned int color;
-
-			if (isPlayer)
-				color = GetColor(255, 0, 0);
-			else if (hasObject)
-				color = GetColor(0, 255, 0);
-			else
-				color = GetColor(100, 100, 100);
-
-			float y = playerPos.y - 1.0f;
-
-			VECTOR p1 = VGet(worldX, y, worldZ);
-			VECTOR p2 = VGet(worldX + GRID_SIZE, y, worldZ);
-			VECTOR p3 = VGet(worldX + GRID_SIZE, y, worldZ + GRID_SIZE);
-			VECTOR p4 = VGet(worldX, y, worldZ + GRID_SIZE);
-
-			DrawLine3D(p1, p2, color);
-			DrawLine3D(p2, p3, color);
-			DrawLine3D(p3, p4, color);
-			DrawLine3D(p4, p1, color);
-
-			// 赤くする
-			//DrawTriangle3D(p1, p2, p3, color, TRUE);
-			//DrawTriangle3D(p1, p3, p4, color, TRUE);
-		}
-	}
-
+	// グリッドを描画
+	grid.Clear();
+	grid.DrawGrid(other);
+	// セル内のポリゴンを描画
+	grid.StageColliderGridRenderer(modelhandle, other, MoveVec, prevPos);
 }
+
