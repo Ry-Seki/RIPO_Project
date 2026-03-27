@@ -66,10 +66,13 @@ void BulletComponent::Update(float deltaTime) {
 }
 
 void BulletComponent::OnCollision(const std::shared_ptr<Component>& self, const std::shared_ptr<Component>& other) {
-	// 射撃者と弾以外の衝突で破棄
+	// 射撃者、階段、出入口、弾以外の衝突で破棄
 	GameObject* otherOwner = other->GetOwner();
 	auto isBullet = otherOwner->GetComponent<BulletComponent>();
-	if (otherOwner == shotOwner || isBullet)return;
+	if (otherOwner == shotOwner ||
+		isBullet ||
+		otherOwner->name == GameConst::_CREATE_POSNAME_STAIR ||
+		otherOwner->name == GameConst::_CREATE_POSNAME_GOAL)return;
 	// エフェクトを出す
 	EffectManager::GetInstance().Instantiate("BulletEliminationEffect", bullet->position);
 	ResetObject(bullet);
