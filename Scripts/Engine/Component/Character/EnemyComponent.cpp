@@ -33,7 +33,6 @@ EnemyComponent::EnemyComponent()
 	, damageIsTriger(false)
 	, turnDelay(0.0f)
 	, modelHandle(0)
-	, HP(0)
 	, coolTime(1.0f)
 	, TOP_VALUE(5000)
 	, RANDOM_RANGE(100)
@@ -113,12 +112,11 @@ void EnemyComponent::OnCollision(const std::shared_ptr<Component>& self, const s
 	// ダメージ判定
 	if (!damageIsTriger && other->GetOwner()->name == "Bullet") {
 		// ダメージを受ける
-		HP -= other->GetOwner()->GetComponent<BulletComponent>()->GetHitDamage();;
-		if (HP <= 0) {
-			HP = 0;
-		}
+		auto HPComp = enemy->GetComponent<HPComponent>();
+		float damage = other->GetOwner()->GetComponent<BulletComponent>()->GetHitDamage();
+		HPComp->AddDamage(damage);
 		// 死亡判定
-		if (HP <= 0 && state != nullptr) {
+		if (HPComp->IsDead() && state != nullptr) {
 			damageIsTriger = true;
 			state = new EnemyDeath();
 			state->Start(enemy);
@@ -164,7 +162,7 @@ void EnemyComponent::SetEnemyStart(int ID)
 		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage4Enemy);
 		break;
 	}
-	HP = status.HP;
+	enemy->GetComponent<HPComponent>()->Setup(status.HP);
 
 	if (state == nullptr) {
 		// IDに応じて処理を変える

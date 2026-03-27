@@ -28,8 +28,6 @@ void SelectDetail_Training::Initialize() {
  *	@brief	€”õ‘Oˆ—
  */
 void SelectDetail_Training::Setup() {
-	isStart = false;
-	inputHandle = false;
 	auto& context = owner->GetOwner()->GetActionContext();
 	context.statusType = GameEnum::PlayerStatusType::Invalid;
 	MenuManager::GetInstance().OpenMenu<MenuSelectTraining>();

@@ -8,6 +8,7 @@
 #include "BossStandby.h"
 #include "../../Manager/EffectManager.h"
 #include "../../Manager/CameraManager.h"
+#include "../MoveComponent.h"
 
 
  /*
@@ -274,11 +275,8 @@ void BossAttack::HeadlongAttack(GameObject* boss, float deltaTime, float attackS
 		// 攻撃中判定開始
 		bossComponent->SetBossAttackTimeFlag(true);
 		// プレイヤーがいた方向に突進
-		auto posX = playerDirection.x * moveSpeed * deltaTime;
-		auto posZ = playerDirection.z * moveSpeed * deltaTime;
-		boss->position.x += posX;
-		boss->position.z += posZ;
-
+		boss->GetComponent<MoveComponent>()->SetVelocity({ playerDirection.x, 0, playerDirection.z }, moveSpeed);
+		
 		if (coolTimeSE < 0) {
 			// 歩行音を再生
 			AudioUtility::SetSEVolume(SEVolume);

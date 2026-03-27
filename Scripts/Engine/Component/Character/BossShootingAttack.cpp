@@ -36,6 +36,9 @@ void BossShootingAttack::Start(GameObject* boss)
 	player = CameraManager::GetInstance().GetTarget();
 	if (player == nullptr) return;
 	bossComponent = boss->GetComponent<BossComponent>();
+	if (bossComponent == nullptr) return;
+	HPComp = boss->GetComponent<HPComponent>();
+	if (HPComp == nullptr) return;
 
 	switch (bossComponent->GetBossID())
 	{
@@ -52,7 +55,7 @@ void BossShootingAttack::Start(GameObject* boss)
 	case 103:
 
 		// HP”¼•ªˆÈ‰º‚ÅUŒ‚•Ï‰»
-		if (bossComponent->GetBossHP() <= bossComponent->GetBossMaxHP() / 2) {
+		if (HPComp->GetHP() <= HPComp->GetMaxHP() / 2) {
 			rapidCoolTime = 0.3f;
 		}
 		else {
@@ -112,7 +115,7 @@ void BossShootingAttack::Update(GameObject* boss, float deltaTime)
 
 		boss->rotation.y = atan2(direction.x, direction.z) + Pi;
 		// HP”¼•ªˆÈ‰º‚ÅUŒ‚•Ï‰»
-		if (bossComponent->GetBossHP() <= bossComponent->GetBossMaxHP() / 2) {
+		if (HPComp->GetHP() <= HPComp->GetMaxHP() / 2) {
 			// •Ç‚É‰B‚ê‚Ä‚©‚çŒ©‚Â‚¯‚½‚çÅ‰‚ÉUŒ‚ƒfƒBƒŒƒC
 			if (bossComponent->GetOutVisionTime() > 0.3f) {
 				coolTime = 0.7f;

@@ -10,6 +10,7 @@
 #include "EnemyAttack.h"
 #include "../ModelRenderer.h"
 #include "EnemyStandby.h"
+#include "../MoveComponent.h"
 
  /*
   *	コンストラクタ
@@ -162,13 +163,14 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 	}
 
 	auto distance = Distance(wayPoint, enemy->position);
+	auto moveComp = enemy->GetComponent<MoveComponent>();
+	if (moveComp == nullptr) return;
 	// 標的判定
 	if (player && wayPoint == player->position) {
 		chasePlayer = true;
 		// 攻撃射程判定
 		if (distance > DIFFERENCE_PLAYER) {
-			enemy->position.x += direction.x * moveSpeed * deltaTime;
-			enemy->position.z += direction.z * moveSpeed * deltaTime;
+			moveComp->SetVelocity({ direction.x, 0, direction.z }, moveSpeed);
 		}
 		else {
 			// 攻撃状態遷移
@@ -177,19 +179,12 @@ void EnemyChase::ChaseWayPoint(GameObject* enemy, Vector3 wayPoint, bool targetC
 	}
 	else {
 		viewAngle = 30;
-		float moveX = 0;
-		float moveZ = 0;
-		// 目標の方向に進む
-		moveX += direction.x * moveSpeed * deltaTime;
-		moveZ += direction.z * moveSpeed * deltaTime;
-
-		enemy->position.x += moveX;
-		enemy->position.z += moveZ;
+		moveComp->SetVelocity({ direction.x, 0, direction.z }, moveSpeed);
 
 		elapsedTime += deltaTime;
 
 		// 移動量を更新
-		moveVec = { moveX,0.0f,moveZ };
+		moveVec = moveComp->GetMoveVec();
 		// 目標地点についたらターゲットを変える
 		if (distance < differenceTarget || elapsedTime > 4) {
 			chasePlayer = false;

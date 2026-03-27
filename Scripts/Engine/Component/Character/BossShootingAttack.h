@@ -7,6 +7,7 @@
 
 #include "BossState.h"
 #include "../AnimatorComponent.h"
+#include "../HPComponent.h"
 
 
 /*
@@ -16,6 +17,7 @@
 	private:
 		std::shared_ptr<AnimatorComponent> animator;
 		std::shared_ptr<BossComponent> bossComponent;
+		HPComponentPtr HPComp;
 		GameObjectPtr player;
 		float coolTime;
 		float rapidCoolTime;

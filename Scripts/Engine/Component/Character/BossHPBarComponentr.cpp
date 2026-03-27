@@ -42,7 +42,7 @@ void BossHPBarComponent::Start()
  */
 void BossHPBarComponent::Update(float deltaTime)
 {
-	currentHP = boss->GetComponent<BossComponent>()->GetBossHP();
+	currentHP = boss->GetComponent<HPComponent>()->GetHP();
 
 	// ダメージバーの速度
 	float speed = 100.0f;

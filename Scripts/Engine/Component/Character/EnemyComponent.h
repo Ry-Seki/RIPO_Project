@@ -59,8 +59,6 @@ private:
 	int enemySpawnID = 0;
 	// 仮モデルハンドル
 	int modelHandle;
-	// 敵のHP
-	int HP;
 	// 敵のID
 	int ID = -1;
 	// 疑似クールタイム(苦肉の策)
@@ -211,21 +209,6 @@ public:
 	inline void SetEnemyRotation(Vector3 setValue) {
 		enemy->rotation = setValue;
 	}
-
-	/*
-	 *	HPの取得
-	 */
-	inline int GetEnemyHP() const { return HP; }
-
-	/*
-	 *	HPの変更
-	 */
-	inline void SetEnemyHP(int setValue) { HP -= setValue; }
-
-	/*
-	 *	最大HPの取得
-	 */
-	inline int GetEnemyMaxHP() const { return status.HP; }
 
 	/*
 	 *	IDデータの取得

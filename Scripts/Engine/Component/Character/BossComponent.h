@@ -13,6 +13,7 @@
 #include "../../GameEnum.h"
 #include "../../Load/Audio/LoadAudio.h"
 #include "../../Audio/AudioUtility.h"
+#include "../HPComponent.h"
 
 class BossComponent : public Component {
 private:
@@ -23,8 +24,6 @@ private:
 	struct EnemyDataManager::EnemyStatus status;
 	// モデルハンドル
 	int modelHandle;
-	// ボスのHP
-	int HP;
 	// ボスのID
 	int ID = -1;
 	// クールタイム
@@ -128,21 +127,6 @@ public:
 	 *	定位置の取得
 	 */
 	inline Vector3 GetHomePosition() const { return homePosition; }
-
-	/*
-	 *	HPの取得
-	 */
-	inline int GetBossHP() const { return HP; }
-
-	/*
-	 *	HPの変更
-	 */
-	inline void SetBossHP(int setValue) { HP -= setValue; }
-
-	/*
-	 *	最大HPの取得
-	 */
-	inline int GetBossMaxHP() const { return status.HP; }
 
 	/*
 	 *	攻撃力の取得

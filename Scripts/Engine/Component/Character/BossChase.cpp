@@ -12,6 +12,8 @@
 #include "BossAttack.h"
 #include "BossShootingAttack.h"
 #include "../../Stage/StageUtility.h"
+#include "../MoveComponent.h"
+
 
 using namespace StageUtility;
 
@@ -77,7 +79,7 @@ void BossChase::Start(GameObject* boss) {
 		animationSpeed = 1650.0f;
 		closeRangeAttackDistance = 800.0f;
 		longRangeAttackDistance = 4000.0f;
-		coolTimeSE = 0.7f;
+		coolTimeSE = 0.6f;
 		headlongCoolTime = 500;
 
 		break;
@@ -98,6 +100,9 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 	auto modelRenderer = boss->GetComponent<ModelRenderer>()->GetModelHandle();
 	if (modelRenderer == -1) return;
 	animator->SetModelHandle(modelRenderer);
+	
+	auto HPComp = boss->GetComponent<HPComponent>();
+	if (HPComp == nullptr) return;
 
 	// プレイヤーとの距離
 	playerDistance = Distance(player->position, boss->position);
@@ -173,21 +178,12 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 		animator->Play(7, animationSpeed * deltaTime);
 
 		// HPが半分になった
-		if (bossComponent->GetBossHP() <= bossComponent->GetBossMaxHP() / 2) {
+		if (HPComp->GetHP() <= HPComp->GetMaxHP() / 2) {
 			halfHPFlag = true;
 			bossComponent->SetHPHalfDownFlag(true);
 			headlongCoolTime = 500;
 			moveSpeed = 2000;
 		}
-
-		// 範囲攻撃
-		/*if (halfHPFlag) {
-			if (!bossComponent->GetHPHalfDownFlag()) {
-				bossComponent->SetHPHalfDownFlag(true);
-				bossComponent->SetRangeAttackFlag(true);
-				bossComponent->SetState(new BossAttack());
-			}
-		}*/
 
 		// ランダムで突進
 		if (bossComponent->GetRandomCoolTime() >= headlongCoolTime) {
@@ -212,7 +208,7 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 			AudioUtility::SetSEVolume(SEVolume);
 			AudioUtility::PlaySE("bossWalkSE");
 			AudioUtility::SetSEVolume(baseSEVolume);
-			coolTimeSE = 1.0f;
+			coolTimeSE = 1.05f;
 		}
 
 		break;
@@ -248,16 +244,11 @@ void BossChase::ChaseWayPoint(GameObject* boss, Vector3 wayPoint, float deltaTim
 		boss->rotation.y += (angleDiff > 0 ? rotateStep : -rotateStep);
 	}
 
-	auto distance = Distance(wayPoint, boss->position);
-	float moveX = 0;
-	float moveZ = 0;
+	auto moveComp = boss->GetComponent<MoveComponent>();
 	// プレイヤーの手前で止まる
 	if (player && wayPoint == player->position) {
-		moveX += direction.x * moveSpeed * deltaTime;
-		moveZ += direction.z * moveSpeed * deltaTime;
-		boss->position.x += moveX;
-		boss->position.z += moveZ;
+		moveComp->SetVelocity({ direction.x, 0, direction.z }, moveSpeed);
 	}
 	// 移動量を更新
-	moveVec = { moveX,0.0f,moveZ };
+	moveVec = moveComp->GetMoveVec();
 }
