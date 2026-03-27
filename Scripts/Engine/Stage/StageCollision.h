@@ -11,32 +11,12 @@
 #include <DxLib.h>
 #include <unordered_map>
 #include "../VecMath.h"
+#include "SpatialGrid.h"
 
  // 前方宣言
 class GameObject;
 class CapsuleCollider;
 class GravityComponent;
-
-// グリッド座標
-struct GridCoord
-{
-	int x;
-	int z;
-
-	// グリッド用演算子
-	bool operator==(const GridCoord& other) const {
-		return x == other.x && z == other.z;
-	}
-};
-
-// GridCoord用ハッシュ
-struct GridCoordHash
-{
-	std::size_t operator()(const GridCoord& coord) const {
-		// xとzを混ぜる
-		return std::hash<int>()(coord.x) ^ (std::hash<int>()(coord.z) << 1);
-	}
-};
 
 /*
  *	ステージの当たり判定を行うクラス
@@ -50,12 +30,7 @@ private:
 	static constexpr float _POLYGON_HEIGHT = 0.9f;				// 壁の角度
 	static constexpr float _FLOOR_LIMIT = 0.5f;					// 床の角度
 
-
-	// グリッド空間
-	std::unordered_map<GridCoord, std::vector<GameObject*>, GridCoordHash> grid;
-	// グリッド設定
-	static constexpr float GRID_SIZE = 5000.0f;   // 1マスの大きさ
-	static constexpr int GRID_NUM = 1 << 10;		     // 片側の数
+	SpatialGrid grid;
 
 public:
 	/*
@@ -130,37 +105,6 @@ private:
 		Vector3 moveVec
 	);
 
-	/*
-	 *	座標変換
-	 *  @param[in]	pos		プレイヤーの位置
-	 */
-	GridCoord WorldToGrid(const Vector3& pos) {
-		return {
-			(int)floor(pos.x / GRID_SIZE),  // X方向のセル
-			(int)floor(pos.z / GRID_SIZE)   // Z方向のセル
-		};
-	}
-
-	/*
-	 *	オブジェクトをグリッドに登録
-	 *  @param[in]	obj	走査する対象
-	 */
-	void RegisterObject(GameObject* obj);
-
-
-	/*
-	 *	周囲のセルを取得
-	 *  @param[in]	other	セル内にいるキャラクター
-	 */
-	std::unique_ptr<MV1_COLL_RESULT_POLY_DIM>SetupDebugCollision(GameObject* other);
-
-	/*
-	 *	三角形がグリッドセル内に存在するか判定する
-	 *  @param[in]	Vector3		三角形の頂点 
-	 *  @param[in]	GridCoord	判定するセル
-	 *  @return		セル内に三角形が存在するか
-	 */
-	bool IsTriangleInCell(const Vector3& p0, const Vector3& p1, const Vector3& p2, const GridCoord& cell);
 public:
 
 	/*
@@ -175,24 +119,11 @@ public:
 	 *  @param	Vector3		移動量
 	 *  @param	Vector3		直前の移動量
 	 */
-	void StageColliderGridRenderer(GameObject * other, Vector3 MoveVec, Vector3 prevPos);
-	void StageColliderRenderer(GameObject * other, Vector3 MoveVec, Vector3 prevPos);
-
-	/*
-	 *	グリッドを表示
-	 *  @param[in]	player	参照するプレイヤー
-	 */
-	void DrawGrid(GameObject * player);
-
-	/*
-	 *	グリッドをクリアする
-	 */
-	void ClearGrid() {
-		grid.clear();
-	}
+	void StageColliderRenderer(GameObject* other, Vector3 MoveVec, Vector3 prevPos);
+	void StageGridCollisionRenderer(int modelhandle, GameObject* other, Vector3 MoveVec, Vector3 prevPos);
 
 
-	};
+};
 
 
 #endif // !_STAGECOLLISION_H_
