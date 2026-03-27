@@ -24,6 +24,11 @@
 #include "../Menu/Dungeon/DungeonTreasureUI.h"
 #include "../Manager/ScreenEffectManager.h"
 
+namespace {
+	constexpr const char* _TREASURE_DATA_PATH = "Data/Treasure/TreasureDataList.json";
+	constexpr const char* _ITEM_DATA_PATH = "Data/Item/ItemCatalogData.json";
+	constexpr const char* _EFFECT_DATA_PATH = "Data/Effect/EffectData.json";
+}
  /*
   *  @brief  デストラクタ
   */

@@ -23,8 +23,6 @@ private:
 	bool isStart = false;
 	bool inputHandle = false;
 
-	static constexpr const char* _RESULT_SCORE_PATH = "Data/Scene/Result/ResultScoreRankData.json";
-
 public:
 	/*
 	 *	@brief	コンストラクタ

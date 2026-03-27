@@ -14,6 +14,9 @@
 #include "../../Load/LoadManager.h"
 #include "../../Input/InputUtility.h"
 
+namespace {
+	constexpr const char* _NAVIGATION_PATH = "Data/UI/Title/SaveSlotNavigation.json";
+}
 /*
  *	@brief	‰Šú‰»ˆ—
  */

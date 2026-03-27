@@ -28,8 +28,6 @@ private:
 
 	std::vector<std::shared_ptr<Sprite>> spriteList;
 
-	static constexpr const char* _MENU_RESOURCES_PATH = "";
-
 public:
 	/*
 	 *	@brief	デストラクタ

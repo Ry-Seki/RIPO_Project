@@ -11,6 +11,12 @@
 
 #include <DxLib.h>
 
+namespace {
+    constexpr float _MOVE_DURATION = 0.15f;			// 補間時間
+    constexpr int _TILE_SIZE = 64;					// タイルサイズ
+
+    static constexpr const char* _SOKOBAN_PATH = "Data/MiniGame/Sokoban/Map/";
+}
 /*
  *  @brief ミニゲーム開始時処理
  */

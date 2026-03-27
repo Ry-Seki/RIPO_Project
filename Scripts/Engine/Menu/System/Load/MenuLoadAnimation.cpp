@@ -14,6 +14,9 @@
 #include "../../MenuResourcesFactory.h"
 #include "../../MenuManager.h"
 
+namespace {
+    constexpr const char* _MENU_RESOURCES_PATH = "";
+}
 /*
  *	@brief	‰Šú‰»ˆ—
  */
