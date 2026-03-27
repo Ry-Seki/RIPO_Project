@@ -79,7 +79,7 @@ void BossChase::Start(GameObject* boss) {
 		animationSpeed = 1650.0f;
 		closeRangeAttackDistance = 800.0f;
 		longRangeAttackDistance = 4000.0f;
-		coolTimeSE = 0.7f;
+		coolTimeSE = 0.6f;
 		headlongCoolTime = 500;
 
 		break;
@@ -185,15 +185,6 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 			moveSpeed = 2000;
 		}
 
-		// ”ÍˆÍUŒ‚
-		/*if (halfHPFlag) {
-			if (!bossComponent->GetHPHalfDownFlag()) {
-				bossComponent->SetHPHalfDownFlag(true);
-				bossComponent->SetRangeAttackFlag(true);
-				bossComponent->SetState(new BossAttack());
-			}
-		}*/
-
 		// ƒ‰ƒ“ƒ_ƒ€‚Å“Ëi
 		if (bossComponent->GetRandomCoolTime() >= headlongCoolTime) {
 			bossComponent->SetRandomCoolTime(0);
@@ -217,7 +208,7 @@ void BossChase::Update(GameObject* boss, float deltaTime) {
 			AudioUtility::SetSEVolume(SEVolume);
 			AudioUtility::PlaySE("bossWalkSE");
 			AudioUtility::SetSEVolume(baseSEVolume);
-			coolTimeSE = 1.0f;
+			coolTimeSE = 1.05f;
 		}
 
 		break;
