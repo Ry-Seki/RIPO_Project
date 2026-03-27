@@ -8,17 +8,61 @@
 namespace {
 	constexpr float _POLYGON_HEIGHT = 0.9f;				// 壁の角度
 	constexpr float _FLOOR_LIMIT = 0.5f;				// 床の角度
-	// グリッドサイズ
-	constexpr float GRID_SIZE = 2000.0f;
+	constexpr float GRID_SIZE = 2000.0f;				// グリッドサイズ
+#if _DEBUG
+	/*
+	 * 立方体グリッドをワイヤーフレームで描画する
+	 * @param[in] worldX  ワールド座標X
+	 * @param[in] worldY  ワールド座標Y
+	 * @param[in] worldZ  ワールド座標Z
+	 * @param[in] color   描画色
+	 */
+	void DrawGridCube(float worldX, float worldY, float worldZ, unsigned int color) {
+		
+		// 立方体の8頂点を作成
+
+		// 下の四角形の頂点
+		VECTOR p000 = VGet(worldX, worldY, worldZ);
+		VECTOR p100 = VGet(worldX + GRID_SIZE, worldY, worldZ);
+		VECTOR p110 = VGet(worldX + GRID_SIZE, worldY, worldZ + GRID_SIZE);
+		VECTOR p010 = VGet(worldX, worldY, worldZ + GRID_SIZE);
+
+		// 上の四角形の頂点
+		VECTOR p001 = VGet(worldX, worldY + GRID_SIZE, worldZ);
+		VECTOR p101 = VGet(worldX + GRID_SIZE, worldY + GRID_SIZE, worldZ);
+		VECTOR p111 = VGet(worldX + GRID_SIZE, worldY + GRID_SIZE, worldZ + GRID_SIZE);
+		VECTOR p011 = VGet(worldX, worldY + GRID_SIZE, worldZ + GRID_SIZE);
+
+		// 下の面
+		DrawLine3D(p000, p100, color);
+		DrawLine3D(p100, p110, color);
+		DrawLine3D(p110, p010, color);
+		DrawLine3D(p010, p000, color);
+
+		// 上の面
+		DrawLine3D(p001, p101, color);
+		DrawLine3D(p101, p111, color);
+		DrawLine3D(p111, p011, color);
+		DrawLine3D(p011, p001, color);
+
+		// 縦線
+		DrawLine3D(p000, p001, color);
+		DrawLine3D(p100, p101, color);
+		DrawLine3D(p110, p111, color);
+		DrawLine3D(p010, p011, color);
+	}
+
+#endif // _DEBUG
 }
 
- /*
-  *	ワールド座標からグリッド座標に変換
-  *  @param[in]	pos		変換対象の座標
-  */
+/*
+ *	ワールド座標からグリッド座標に変換
+ *  @param[in]	pos		変換対象の座標
+ */
 GridCoord SpatialGrid::WorldToGrid(const Vector3& pos) {
 	return {
 	(int)floor(pos.x / GRID_SIZE),  // X方向のセル
+	(int)floor(pos.y / GRID_SIZE),  // Y方向のセル
 	(int)floor(pos.z / GRID_SIZE)   // Z方向のセル
 	};
 }
@@ -55,22 +99,23 @@ bool SpatialGrid::IsTriangleInCell(const Vector3& p0, const Vector3& p1, const V
 	// セルのAABBを作成
 	Vector3 cellMin;
 	cellMin.x = cell.x * GRID_SIZE;
-	cellMin.y = -FLT_MAX;  // Y方向は無限として扱う
+	cellMin.y = cell.y * GRID_SIZE;
 	cellMin.z = cell.z * GRID_SIZE;
 
 	Vector3 cellMax;
 	cellMax.x = cellMin.x + GRID_SIZE;
-	cellMax.y = FLT_MAX;
+	cellMax.y = cellMin.y + GRID_SIZE;
 	cellMax.z = cellMin.z + GRID_SIZE;
 
 	// AABB同士の衝突判定
 	bool overlap =
 		(triMin.x <= cellMax.x && triMax.x >= cellMin.x) &&
+		(triMin.y <= cellMax.y && triMax.y >= cellMin.y) &&
 		(triMin.z <= cellMax.z && triMax.z >= cellMin.z);
 
 	// 頂点またはAABBが重なっていればtrue
 	return (inside || overlap);
-	
+
 }
 
 /*
@@ -78,51 +123,65 @@ bool SpatialGrid::IsTriangleInCell(const Vector3& p0, const Vector3& p1, const V
  *  @param[in]	player	参照するプレイヤー
  */
 void SpatialGrid::DrawGrid(GameObject* player) {
-	// プレイヤーの座標
+	// プレイヤーの座標を取得
 	Vector3 playerPos = player->position;
+
 	// プレイヤーのいるセルを取得
 	GridCoord playerCell = WorldToGrid(playerPos);
 
-	// 描画を周囲10マスに絞る
-	const int RANGE = 10;
+	// 描画範囲
+	const int RANGE = 2;
 
+	// Z方向の範囲ループ
 	for (int z = -RANGE; z <= RANGE; z++) {
+
+		// X方向の範囲ループ
 		for (int x = -RANGE; x <= RANGE; x++) {
-			GridCoord coord{ playerCell.x + x, playerCell.z + z };
 
-			float worldX = coord.x * GRID_SIZE;
-			float worldZ = coord.z * GRID_SIZE;
+			// Y方向の範囲ループ
+			for (int y = -RANGE; y <= RANGE; y++) {
 
-			// グリッドに登録されているか
-			bool hasObject = (grid.find(coord) != grid.end());
+				// 描画するグリッド座標を計算
+				// プレイヤーのセルを中心として周囲のセルを取得
+				GridCoord coord{
+					playerCell.x + x,
+					playerCell.y + y,
+					playerCell.z + z
+				};
 
-			// プレイヤーセル
-			bool isPlayer = (coord.x == playerCell.x && coord.z == playerCell.z);
+				// グリッド座標をワールド座標に変換
+				float worldX = coord.x * GRID_SIZE;
+				float worldY = coord.y * GRID_SIZE;
+				float worldZ = coord.z * GRID_SIZE;
 
-			unsigned int color;
+				// このセルにオブジェクトが登録されているか確認
+				bool hasObject = (grid.find(coord) != grid.end());
 
-			if (isPlayer)
-				color = GetColor(255, 0, 0);
-			else if (hasObject)
-				color = GetColor(0, 255, 0);
-			else
-				color = GetColor(100, 100, 100);
+				// プレイヤーがいるセルか判定
+				bool isPlayer =
+					(coord.x == playerCell.x &&
+						coord.y == playerCell.y &&
+						coord.z == playerCell.z);
 
-			float y = playerPos.y - 1.0f;
+				// 描画色
+				unsigned int color;
 
-			VECTOR p1 = VGet(worldX, y, worldZ);
-			VECTOR p2 = VGet(worldX + GRID_SIZE, y, worldZ);
-			VECTOR p3 = VGet(worldX + GRID_SIZE, y, worldZ + GRID_SIZE);
-			VECTOR p4 = VGet(worldX, y, worldZ + GRID_SIZE);
+				// プレイヤーセルは赤
+				if (isPlayer)
+					color = GetColor(255, 0, 0);
 
-			DrawLine3D(p1, p2, color);
-			DrawLine3D(p2, p3, color);
-			DrawLine3D(p3, p4, color);
-			DrawLine3D(p4, p1, color);
+				// オブジェクトがあるセルは緑
+				else if (hasObject)
+					color = GetColor(0, 255, 0);
 
-			// 赤くする
-			//DrawTriangle3D(p1, p2, p3, color, TRUE);
-			//DrawTriangle3D(p1, p3, p4, color, TRUE);
+				// 何もないセルは灰色
+				else
+					color = GetColor(100, 100, 100);
+
+
+				// 立方体の8頂点を作成
+				DrawGridCube(worldX, worldY, worldZ, color);
+			}
 		}
 	}
 }
@@ -165,10 +224,10 @@ std::unique_ptr<MV1_COLL_RESULT_POLY_DIM> SpatialGrid::SetupDebugCollision(int m
  *  @param	Vector3		移動量
  *  @param	Vector3		直前の移動量
  */
-void SpatialGrid::StageColliderGridRenderer(int modelHandle,GameObject* other, Vector3 MoveVec, Vector3 prevPos) {
+void SpatialGrid::StageColliderGridRenderer(int modelHandle, GameObject* other, Vector3 MoveVec, Vector3 prevPos) {
 
 	// 周囲のセルを取得
-	auto hitDim = SetupDebugCollision(modelHandle,other);
+	auto hitDim = SetupDebugCollision(modelHandle, other);
 
 	// プレイヤーのいるセルを取得
 	GridCoord playerCell = WorldToGrid(other->position);

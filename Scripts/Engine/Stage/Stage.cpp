@@ -65,7 +65,7 @@ void Stage::Render() {
 
 #if _DEBUG
 		// プレイヤーの取得
-		player = GetPlayer();
+		auto player = GetPlayer();
 		if (player != nullptr) {
 			// プレイヤーの直前の位置を計算
 			Vector3 prevPos = player->position - player->GetComponent<MoveComponent>()->GetMoveVec();
