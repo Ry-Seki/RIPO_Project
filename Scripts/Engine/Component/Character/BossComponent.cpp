@@ -30,7 +30,6 @@ BossComponent::BossComponent(BossState* initState)
 	, animator(nullptr)
 	, state(initState)
 	, modelHandle(-1)
-	, HP(0)
 	, coolTime(3)
 	, randomCoolTime(0)
 	, outVisionTime(1)
@@ -140,12 +139,11 @@ void BossComponent::OnCollision(const std::shared_ptr<Component>& self, const st
 
 	if (!damageIsTriger && bulletComp->GetShotOwner() == player.get()) {
 		// ƒ_ƒ[ƒW‚ðŽó‚¯‚é
-		HP -= other->GetOwner()->GetComponent<BulletComponent>()->GetHitDamage();;
-		if (HP <= 0) {
-			HP = 0;
-		}
+		auto HPComp = boss->GetComponent<HPComponent>();
+		float damage = other->GetOwner()->GetComponent<BulletComponent>()->GetHitDamage();
+		HPComp->AddDamage(damage);
 		// Ž€–S”»’è
-		if (HP <= 0 && state != nullptr) {
+		if (HPComp->IsDead() && state != nullptr) {
 			damageIsTriger = true;
 			state = new BossDeath();
 			state->Start(boss);
@@ -179,7 +177,7 @@ void BossComponent::SetBossStart(int ID)
 		status = EnemyDataManager::GetInstance().GetEnemyData(GameEnum::EnemyType::Stage4Boss);
 		break;
 	}
-	HP = status.HP;
+	boss->GetComponent<HPComponent>()->Setup(status.HP);
 
 	boss->GetComponent<BossHPBarComponent>()->SetMaxHP(status.HP);
 	boss->GetComponent<BossHPBarComponent>()->SetDisplayHP();

@@ -18,7 +18,7 @@ MoveComponent::MoveComponent()
  *	更新処理
  */
 void MoveComponent::Update(float deltaTime) {
-	// オーナを動かす
+	// オーナーを動かす
 	auto owner = GetOwner();
 	moveVec = velocity * deltaTime;
 	owner->position += moveVec;

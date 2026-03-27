@@ -4,6 +4,7 @@
  */
 #include "HPBarComponent.h"
 #include "EnemyComponent.h"
+#include "../HPComponent.h"
 #include "../../Scene/Scene.h"
 
 /*
@@ -29,7 +30,7 @@ void HPBarComponent::Start()
 	enemy = GetOwner();
 	if (enemy == nullptr) return;
 	//maxHP = enemy->GetComponent<EnemyComponent>()->GetEnemyMaxHP();
-	currentHP = maxHP;
+	currentHP = enemy->GetComponent<HPComponent>()->GetMaxHP();
 
 	//displayHP = maxHP;
 }
@@ -40,7 +41,7 @@ void HPBarComponent::Start()
  */
 void HPBarComponent::Update(float deltaTime)
 {
-	currentHP = enemy->GetComponent<EnemyComponent>()->GetEnemyHP();
+	currentHP = enemy->GetComponent<HPComponent>()->GetHP();
 
 	// ダメージバーの速度
 	float speed = 100.0f;
