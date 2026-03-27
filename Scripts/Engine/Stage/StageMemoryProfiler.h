@@ -23,7 +23,7 @@ public:
 	/*
 	 *	初期化
 	 *  @param	const std::string& ファイルパス
-	 *  @tips	csvファイルを指定場所に作成、あれば中身をクリアしてうわガキ
+	 *  @tips	csvファイルを指定場所に作成、あれば中身をクリアして上書き
 	 */
 	static void Initialize(const std::string& filePath);
 
