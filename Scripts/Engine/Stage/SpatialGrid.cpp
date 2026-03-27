@@ -4,6 +4,7 @@
  */
 
 #include "SpatialGrid.h"
+#include "../GameConst.h"
 
 namespace {
 	constexpr float _POLYGON_HEIGHT = 0.9f;				// 壁の角度
@@ -18,7 +19,7 @@ namespace {
 	 * @param[in] color   描画色
 	 */
 	void DrawGridCube(float worldX, float worldY, float worldZ, unsigned int color) {
-		
+
 		// 立方体の8頂点を作成
 
 		// 下の四角形の頂点
@@ -60,10 +61,13 @@ namespace {
  *  @param[in]	pos		変換対象の座標
  */
 GridCoord SpatialGrid::WorldToGrid(const Vector3& pos) {
+	// ワールド座標をグリッド座標へ変換
 	return {
-	(int)floor(pos.x / GRID_SIZE),  // X方向のセル
-	(int)floor(pos.y / GRID_SIZE),  // Y方向のセル
-	(int)floor(pos.z / GRID_SIZE)   // Z方向のセル
+		Vector3(
+			(int)floor(pos.x / GRID_SIZE),  // X方向
+			(int)floor(pos.y / GRID_SIZE),  // Y方向
+			(int)floor(pos.z / GRID_SIZE)   // Z方向
+		)
 	};
 }
 
@@ -87,25 +91,19 @@ bool SpatialGrid::IsTriangleInCell(const Vector3& p0, const Vector3& p1, const V
 	Vector3 triMin, triMax;
 
 	// 三角形の最小値を求める
-	triMin.x = min(p0.x, min(p1.x, p2.x));
-	triMin.y = min(p0.y, min(p1.y, p2.y));
-	triMin.z = min(p0.z, min(p1.z, p2.z));
-
+	triMin = Min(p0, Min(p1, p2));
 	// 三角形の最大値を求める
-	triMax.x = max(p0.x, max(p1.x, p2.x));
-	triMax.y = max(p0.y, max(p1.y, p2.y));
-	triMax.z = max(p0.z, max(p1.z, p2.z));
+	triMax = Max(p0, Max(p1, p2));
 
 	// セルのAABBを作成
-	Vector3 cellMin;
-	cellMin.x = cell.x * GRID_SIZE;
-	cellMin.y = cell.y * GRID_SIZE;
-	cellMin.z = cell.z * GRID_SIZE;
+	Vector3 cellMin = cell.grid * GRID_SIZE;
 
-	Vector3 cellMax;
-	cellMax.x = cellMin.x + GRID_SIZE;
-	cellMax.y = cellMin.y + GRID_SIZE;
-	cellMax.z = cellMin.z + GRID_SIZE;
+	// セルの最大値を計算
+	Vector3 cellMax = Vector3(
+		cellMin.x + GRID_SIZE,
+		cellMin.y + GRID_SIZE,
+		cellMin.z + GRID_SIZE
+	);
 
 	// AABB同士の衝突判定
 	bool overlap =
@@ -144,24 +142,25 @@ void SpatialGrid::DrawGrid(GameObject* player) {
 				// 描画するグリッド座標を計算
 				// プレイヤーのセルを中心として周囲のセルを取得
 				GridCoord coord{
-					playerCell.x + x,
-					playerCell.y + y,
-					playerCell.z + z
+					Vector3(
+						playerCell.grid.x + x,
+						playerCell.grid.y + y,
+						playerCell.grid.z + z
+					)
 				};
 
 				// グリッド座標をワールド座標に変換
-				float worldX = coord.x * GRID_SIZE;
-				float worldY = coord.y * GRID_SIZE;
-				float worldZ = coord.z * GRID_SIZE;
+				Vector3 worldPos = coord.grid * GRID_SIZE;
 
 				// このセルにオブジェクトが登録されているか確認
 				bool hasObject = (grid.find(coord) != grid.end());
 
 				// プレイヤーがいるセルか判定
-				bool isPlayer =
-					(coord.x == playerCell.x &&
-						coord.y == playerCell.y &&
-						coord.z == playerCell.z);
+				bool isPlayer = (
+					coord.grid.x == playerCell.grid.x &&
+					coord.grid.y == playerCell.grid.y &&
+					coord.grid.z == playerCell.grid.z
+					);
 
 				// 描画色
 				unsigned int color;
@@ -180,7 +179,7 @@ void SpatialGrid::DrawGrid(GameObject* player) {
 
 
 				// 立方体の8頂点を作成
-				DrawGridCube(worldX, worldY, worldZ, color);
+				DrawGridCube(worldPos.x, worldPos.y, worldPos.z, color);
 			}
 		}
 	}
