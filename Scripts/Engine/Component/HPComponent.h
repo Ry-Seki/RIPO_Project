@@ -31,8 +31,15 @@ public:
 	 */
 	void AddDamage(float damage) {
 		if (HP - damage <= 0) {
-			HP = 0;
-			isDead = true;
+			if (!isDead) {
+				HP = 0;
+				isDead = true;
+				// ƒvƒŒƒCƒ„[‚È‚ç‰æ–ÊŒø‰ÊÄ¶
+				if (GetOwner()->name == GameConst::_CREATE_POSNAME_PLAYER) {
+					ScreenEffectManager::GetInstance().DamageFlash();
+					CameraManager::GetInstance().CameraShake();
+				}
+			}
 		}
 		else {
 			HP -= damage;
