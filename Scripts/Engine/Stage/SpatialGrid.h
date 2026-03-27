@@ -19,16 +19,15 @@ class GameObject;
  */
 struct GridCoord
 {
-	int x;
-	int y;
-	int z;
+	Vector3 grid;
 
 	// グリッド用演算子
 	bool operator==(const GridCoord& other) const {
-		return 
-			x == other.x &&
-			y == other.y &&
-			z == other.z;
+		return
+			grid.x == other.grid.x &&
+			grid.y == other.grid.y &&
+			grid.z == other.grid.z;
+			
 	}
 };
 
@@ -39,9 +38,9 @@ struct GridCoordHash
 {
 	std::size_t operator()(const GridCoord& coord) const {
 		return
-			std::hash<int>()(coord.x) ^
-			(std::hash<int>()(coord.y) << 1) ^
-			(std::hash<int>()(coord.z) << 2);
+			std::hash<int>()((int)coord.grid.x) ^
+			(std::hash<int>()((int)coord.grid.y) << 1) ^
+			(std::hash<int>()((int)coord.grid.z) << 2);
 	}
 };
 
