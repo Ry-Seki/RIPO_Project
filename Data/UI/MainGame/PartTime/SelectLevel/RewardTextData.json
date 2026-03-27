@@ -1,0 +1,20 @@
+{
+  "RewardTexts": [
+    {
+      "TextName": "EasyRewardText",
+      "MiniGameLevel": "Easy"
+    },
+    {
+      "TextName": "NormalRewardText",
+      "MiniGameLevel": "Normal"
+    },
+    {
+      "TextName": "HardRewardText",
+      "MiniGameLevel": "Hard"
+    },
+    {
+      "TextName": "RetireRewardText",
+      "MiniGameLevel": "Retire"
+    }
+  ]
+}

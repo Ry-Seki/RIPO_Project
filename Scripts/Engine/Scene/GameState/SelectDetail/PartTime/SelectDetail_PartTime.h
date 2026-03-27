@@ -8,12 +8,15 @@
 
 #include "../SelectDetailBase.h"
 #include "../../../../GameEnum.h"
+#include "../../../../JSON.h"
+
+#include <vector>
 
 /*
  *	@brief	アルバイト内容を選択するクラス
  */
 class SelectDetail_PartTime : public SelectDetailBase {
-
+	std::vector<int> rewardList;
 	
 public:
 	/*
@@ -38,6 +41,11 @@ public:
 	void Teardown() override;
 
 private:
+	/*
+	 *	@brief		JSON->rewardListに変換
+	 *	@param[in]	const JSON& json
+	 */
+	void ToRewardList(const JSON& json);
 	/*
 	 *	@brief		ミニゲーム難易度の決定
 	 *	@param[in]	GameEnum::MiniGameLevel level

@@ -46,14 +46,12 @@ void SelectDetail_Shop::Setup() {
  *	@brief	XVˆ—
  */
 void SelectDetail_Shop::Update(float deltaTime) {
-	if (!isStart) return;
 
 }
 /*
  *	@brief	•`‰æˆ—
  */
 void SelectDetail_Shop::Render() {
-	if (!isStart) return;
 }
 /*
  *	@brief	•Ğ•t‚¯ˆ—
