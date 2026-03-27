@@ -24,20 +24,6 @@
 using namespace CharacterUtility;
 
 /*
- *	敵の出現位置の構造体
- */
-struct EnemySpawnPoint {
-	int id;           // スポーンID
-	Vector3 pos;      // 座標
-};
-
-struct Attenuation {
-	float Atten0;
-	float Atten1;
-	float Atten2;
-};
-
-/*
  *	ステージ全体の管理
  */
 class StageManager : public Singleton<StageManager> {
@@ -46,18 +32,16 @@ class StageManager : public Singleton<StageManager> {
 
 private:
 
-	Engine* engine;						// ゲームエンジン参照
-	JSON json;							// JSONデータ
-	StageState stageState;				// ステージの状態保持
+	Engine* engine;							// ゲームエンジン参照
+	JSON json;								// JSONデータ
+	StageState stageState;					// ステージの状態保持
 
 	std::unique_ptr<StageBase> loadedStage;	// 読み込み済みステージデータ
-	EnemySpawnPoint enemySpawnID;
 
-	static constexpr Attenuation _POINT_ATTAN = { 0.0f, 0.0005f, 0.0f };	// Attan
-	Vector3 lightDirection;				// ライトの距離
-	Vector3 pointLightColor;			// 色
-	std::vector<Vector3>pointLightPos;	// 位置
-	float pointLightRange;				// 効果範囲
+	Vector3 lightDirection;					// ライトの距離
+	Vector3 pointLightColor;				// 色
+	std::vector<Vector3>pointLightPos;		// 位置
+	float pointLightRange;					// 効果範囲
 
 
 private:
@@ -170,12 +154,6 @@ public:
 		return treasure;
 
 	}
-
-	/*
-	 *	敵のスポーン位置のIDを取得
-	 *  @return	enemySpawnID
-	 */
-	int GetEnemySpawnID()const { return enemySpawnID.id; }
 	/*
 	 *	ライトの座標設定
 	 *  @param[in]	setValue	ライトの座標
