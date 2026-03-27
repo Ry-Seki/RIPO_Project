@@ -10,7 +10,6 @@ namespace {
 	constexpr float _POLYGON_HEIGHT = 0.9f;				// 壁の角度
 	constexpr float _FLOOR_LIMIT = 0.5f;				// 床の角度
 	constexpr float GRID_SIZE = 2000.0f;				// グリッドサイズ
-#if _DEBUG
 	/*
 	 * 立方体グリッドをワイヤーフレームで描画する
 	 * @param[in] worldX  ワールド座標X
@@ -53,7 +52,6 @@ namespace {
 		DrawLine3D(p010, p011, color);
 	}
 
-#endif // _DEBUG
 }
 
 /*
