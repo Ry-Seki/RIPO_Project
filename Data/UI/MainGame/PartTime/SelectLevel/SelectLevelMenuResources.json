@@ -27,6 +27,48 @@
       ]
     }
   ],
+  "Texts": [
+    {
+      "Name": "EasyRewardText",
+      "Type": "Dynamic",
+      "UseFont": "ElapsedDayFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1390,
+        "Y": 390
+      }
+    },
+    {
+      "Name": "NormalRewardText",
+      "Type": "Dynamic",
+      "UseFont": "ElapsedDayFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1390,
+        "Y": 650
+      }
+    },
+    {
+      "Name": "HardRewardText",
+      "Type": "Dynamic",
+      "UseFont": "ElapsedDayFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 1390,
+        "Y": 900
+      }
+    },
+    {
+      "Name": "RetireRewardText",
+      "Type": "Dynamic",
+      "UseFont": "ElapsedDayFont",
+      "Alignment": "Left",
+      "Position": {
+        "X": 567,
+        "Y": 870
+      }
+    }
+  ],
     "Buttons" :[
       {
         "Name": "Easy",

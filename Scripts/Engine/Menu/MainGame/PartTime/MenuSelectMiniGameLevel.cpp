@@ -27,6 +27,7 @@ namespace {
     constexpr const char* _MENU_RESOURCES_PATH = "Data/UI/MainGame/PartTime/SelectLevel/SelectLevelMenuResources.json";
     constexpr const char* _NAVIGATION_PATH = "Data/UI/MainGame/PartTime/SelectLevel/SelectLevelMenuNavigation.json";
     constexpr const char* _LEVEL_BUTTON_DATA_PATH = "Data/UI/MainGame/PartTime/SelectLevel/LevelButtonData.json";
+    constexpr const char* _REWARD_TEXT_DATA_PATH = "Data/UI/MainGame/PartTime/SelectLevel/RewardTextData.json";
 
     // 別名定義
     using MiniGameLevel = GameEnum::MiniGameLevel;
@@ -38,12 +39,20 @@ namespace {
         { "Easy", MiniGameLevel::Easy },
         { "Normal", MiniGameLevel::Normal },
         { "Hard", MiniGameLevel::Hard },
-        { "Back", MiniGameLevel::Invalid },
+        { "Retire", MiniGameLevel::Retire },
+        { "Back", MiniGameLevel::Invalid }
     };
     /*
      *  @brief  ミニゲーム難易度ボタン構造体
      */
     struct LevelButtonData {
+        std::string name = "";
+        MiniGameLevel level = MiniGameLevel::Invalid;
+    };
+    /*
+     *  @brief  ミニゲーム難易度テキスト構造体
+     */
+    struct LevelRewardData {
         std::string name = "";
         MiniGameLevel level = MiniGameLevel::Invalid;
     };
@@ -81,6 +90,28 @@ namespace {
         }
         return result;
     }
+    /*
+     *  @brief      JSON->難易度報酬情報へ変換
+     *  @param[in]  const JSON& json
+     *	@return		std::vector<LevelRewardData>
+     */
+    std::vector<LevelRewardData> ParseLevelRewardData(const JSON& json) {
+        std::vector<LevelRewardData> result;
+
+        auto array = json["RewardTexts"];
+
+        for (auto& node : array) {
+            LevelRewardData entry;
+
+            entry.name = node["TextName"].get<std::string>();
+
+            std::string typeString = node["MiniGameLevel"].get<std::string>();
+            entry.level = StringToMiniGameLevel(typeString);
+
+            result.push_back(entry);
+        }
+        return result;
+    }
 }
 
 /*
@@ -91,12 +122,14 @@ void MenuSelectMiniGameLevel::Initialize(Engine& engine) {
     auto menuJSON = load.LoadResource<LoadJSON>(_MENU_RESOURCES_PATH);
     auto navigation = load.LoadResource<LoadJSON>(_NAVIGATION_PATH);
     auto buttonData = load.LoadResource<LoadJSON>(_LEVEL_BUTTON_DATA_PATH);
+    auto textData = load.LoadResource<LoadJSON>(_REWARD_TEXT_DATA_PATH);
 
-    load.SetOnComplete([this, &engine, menuJSON, navigation, buttonData]() {
+    load.SetOnComplete([this, &engine, menuJSON, navigation, buttonData, textData]() {
         // メニューUI生成
         MenuInfo result = MenuResourcesFactory::Create(menuJSON->GetData());
         // メニューUIの所有権移動
         spriteList = std::move(result.spriteList);
+        textList = std::move(result.textList);
         buttonList = std::move(result.buttonList);
         // ボタンの登録
         for (const auto& entry : buttonList) {
@@ -108,10 +141,19 @@ void MenuSelectMiniGameLevel::Initialize(Engine& engine) {
             // マップに登録
             buttonMap[button->GetName()] = button;
         }
+        // テキストの登録
+        for (const auto& entry : textList) {
+            if (!entry) continue;
+
+            TextBase* text = entry.get();
+            textMap[text->GetName()] = text;
+        }
         // イベントシステムの初期化
         eventSystem.Initialize(0);
-        // ボタンの準備前処理
-        SetupLevelButtons(buttonData->GetData());
+        // ボタンの初期化処理
+        InitializeLevelButtons(buttonData->GetData());
+        // 報酬テキストの初期化処化
+        InitializeRewardTexts(textData->GetData());
         // イベントシステムのnavigationの設定
         eventSystem.LoadNavigation(navigation->GetData());
     });
@@ -126,6 +168,9 @@ void MenuSelectMiniGameLevel::Open() {
     }
     for (auto& button : buttonList) {
         button->Setup();
+    }
+    for (auto& text : textList) {
+        text->Setup();
     }
     FadeBasePtr fadeIn = FadeFactory::CreateFade(FadeType::Black, 1.0f, FadeDirection::In, FadeMode::Stop);
     FadeManager::GetInstance().StartFade(fadeIn, [this]() {
@@ -177,12 +222,16 @@ void MenuSelectMiniGameLevel::AnimUpdate(Engine& engine, float unscaledDeltaTime
  */
 void MenuSelectMiniGameLevel::Render() {
     for (auto& sprite : spriteList) {
-        if (!sprite->IsVisible()) continue;
+        if (!sprite || !sprite->IsVisible()) continue;
         sprite->Render();
     }
     for (auto& button : buttonList) {
-        if (!button->IsVisible()) continue;
+        if (!button || !button->IsVisible()) continue;
         button->Render();
+    }
+    for (auto& text : textList) {
+        if (!text) continue;
+        text->Render();
     }
 }
 /*
@@ -250,10 +299,10 @@ void MenuSelectMiniGameLevel::OpenConfirmMenu(GameEnum::MiniGameLevel level) {
  *	@brief		難易度ボタンの準備前処理
  *	@param[in]	const JSON& json
  */
-void MenuSelectMiniGameLevel::SetupLevelButtons(const JSON& json) {
-    auto trainingData = ParseLevelButtonData(json);
+void MenuSelectMiniGameLevel::InitializeLevelButtons(const JSON& json) {
+    auto levelData = ParseLevelButtonData(json);
 
-    for (const auto& entry : trainingData) {
+    for (const auto& entry : levelData) {
         UIButtonBase* button = FindButtonByName(entry.name);
         if (!button) continue;
         const auto level = entry.level;
@@ -268,6 +317,21 @@ void MenuSelectMiniGameLevel::SetupLevelButtons(const JSON& json) {
     }
 }
 /*
+ *	@brief		難易度別報酬テキストの準備前処理
+ *	@param[in]	const JSON& json
+ */
+void MenuSelectMiniGameLevel::InitializeRewardTexts(const JSON& json) {
+    auto levelData = ParseLevelRewardData(json);
+
+    for (const auto& entry : levelData) {
+        TextBase* text = FindTextByName(entry.name);
+        if (!text) continue;
+        const auto level = entry.level;
+        if (level == GameEnum::MiniGameLevel::Invalid) continue;
+        rewardMap[level] = text;
+    }
+}
+/*
  *	@brief		名前でのボタン検索
  *	@param[in]	const std::string& buttonName
  *	@return		UIButtonBase*
@@ -277,4 +341,33 @@ UIButtonBase* MenuSelectMiniGameLevel::FindButtonByName(const std::string& butto
     if (itr == buttonMap.end()) return nullptr;
 
     return itr->second;
+}
+/*
+ *	@brief		名前でのテキスト検索
+ *	@param[in]	const std::string& textName
+ *	@return		TextBase*
+ */
+TextBase* MenuSelectMiniGameLevel::FindTextByName(const std::string& textName) {
+    auto itr = textMap.find(textName);
+    if (itr == textMap.end()) return nullptr;
+
+    return itr->second;
+}
+/*
+ *	@brief		難易度別報酬テキストの設定
+ */
+void MenuSelectMiniGameLevel::SetRewardTexts() {
+    const int white = GetColor(75, 75, 75);
+    const int commonReward = rewardList[static_cast<int>(GameEnum::MiniGameLevel::Retire)];
+
+    for (const auto& [level, text] : rewardMap) {
+        if (level == GameEnum::MiniGameLevel::Invalid || !text) continue;
+        // 報酬の計算
+        const int reward = rewardList[static_cast<int>(level)];
+        const int clearBonus = reward - commonReward;
+        std::string rewardText = std::to_string(clearBonus);
+        // テキストに登録
+        text->SetText(rewardText);
+        text->SetColor(white);
+    }
 }
