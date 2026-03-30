@@ -362,12 +362,18 @@ void MenuSelectMiniGameLevel::SetRewardTexts() {
 
     for (const auto& [level, text] : rewardMap) {
         if (level == GameEnum::MiniGameLevel::Invalid || !text) continue;
-        // •ñV‚ÌŒvZ
-        const int reward = rewardList[static_cast<int>(level)];
-        const int clearBonus = reward - commonReward;
-        std::string rewardText = std::to_string(clearBonus);
-        // ƒeƒLƒXƒg‚É“o˜^
-        text->SetText(rewardText);
+
+        if (level == GameEnum::MiniGameLevel::Retire) {
+            text->SetText(std::to_string(commonReward));
+        }else {
+            // •ñV‚ÌŒvZ
+            const int reward = rewardList[static_cast<int>(level)];
+            const int clearBonus = reward - commonReward;
+            std::string rewardText = std::to_string(clearBonus);
+            // ƒeƒLƒXƒg‚É“o˜^
+            text->SetText(rewardText);
+        }
+        // F‚Ìİ’è
         text->SetColor(white);
     }
 }
